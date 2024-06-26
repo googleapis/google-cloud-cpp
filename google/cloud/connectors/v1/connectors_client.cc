@@ -86,8 +86,8 @@ StatusOr<google::longrunning::Operation> ConnectorsClient::CreateConnection(
   request.set_parent(parent);
   *request.mutable_connection() = connection;
   request.set_connection_id(connection_id);
-  return connection_->CreateConnection(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateConnection(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
@@ -99,21 +99,20 @@ ConnectorsClient::CreateConnection(
 }
 
 StatusOr<google::longrunning::Operation> ConnectorsClient::CreateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::connectors::v1::CreateConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateConnection(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateConnection(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsClient::CreateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateConnection(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->CreateConnection(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
@@ -135,8 +134,8 @@ StatusOr<google::longrunning::Operation> ConnectorsClient::UpdateConnection(
   google::cloud::connectors::v1::UpdateConnectionRequest request;
   *request.mutable_connection() = connection;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateConnection(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateConnection(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
@@ -148,21 +147,20 @@ ConnectorsClient::UpdateConnection(
 }
 
 StatusOr<google::longrunning::Operation> ConnectorsClient::UpdateConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateConnection(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateConnection(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsClient::UpdateConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateConnection(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->UpdateConnection(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
@@ -178,8 +176,8 @@ StatusOr<google::longrunning::Operation> ConnectorsClient::DeleteConnection(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::DeleteConnectionRequest request;
   request.set_name(name);
-  return connection_->DeleteConnection(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteConnection(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
@@ -191,21 +189,20 @@ ConnectorsClient::DeleteConnection(
 }
 
 StatusOr<google::longrunning::Operation> ConnectorsClient::DeleteConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteConnection(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteConnection(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
 ConnectorsClient::DeleteConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteConnection(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->DeleteConnection(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::connectors::v1::Provider>
@@ -337,8 +334,8 @@ ConnectorsClient::RefreshConnectionSchemaMetadata(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest request;
   request.set_name(name);
-  return connection_->RefreshConnectionSchemaMetadata(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RefreshConnectionSchemaMetadata(ExperimentalTag{},
+                                                      NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
@@ -352,22 +349,22 @@ ConnectorsClient::RefreshConnectionSchemaMetadata(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsClient::RefreshConnectionSchemaMetadata(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RefreshConnectionSchemaMetadata(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RefreshConnectionSchemaMetadata(ExperimentalTag{},
+                                                      NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
 ConnectorsClient::RefreshConnectionSchemaMetadata(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RefreshConnectionSchemaMetadata(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->RefreshConnectionSchemaMetadata(ExperimentalTag{},
+                                                      operation);
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>

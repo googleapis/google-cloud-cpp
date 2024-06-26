@@ -250,13 +250,13 @@ class ReservationsClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           DeleteReservationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteReservation(google::cloud::ExperimentalTag,
+  DeleteReservation(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -471,13 +471,13 @@ class ReservationsClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           InsertReservationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertReservation(google::cloud::ExperimentalTag,
+  InsertReservation(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -649,13 +649,13 @@ class ReservationsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -881,13 +881,13 @@ class ReservationsClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           UpdateReservationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateReservation(google::cloud::ExperimentalTag,
+  UpdateReservation(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 

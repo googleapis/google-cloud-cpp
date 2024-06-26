@@ -176,13 +176,13 @@ class BackendServicesClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::backend_services::v1::
           AddSignedUrlKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -348,14 +348,14 @@ class BackendServicesClient {
                        Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::backend_services::v1::
           DeleteBackendServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteBackendService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -443,14 +443,14 @@ class BackendServicesClient {
                      Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::backend_services::v1::
           DeleteSignedUrlKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSignedUrlKey(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -733,14 +733,14 @@ class BackendServicesClient {
                        Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::backend_services::v1::
           InsertBackendServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertBackendService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -993,14 +993,14 @@ class BackendServicesClient {
                       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::backend_services::v1::
           PatchBackendServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1090,14 +1090,14 @@ class BackendServicesClient {
                         Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::backend_services::v1::
           SetEdgeSecurityPolicyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1255,13 +1255,13 @@ class BackendServicesClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::backend_services::v1::
           SetSecurityPolicyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::ExperimentalTag,
+  SetSecurityPolicy(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -1417,14 +1417,14 @@ class BackendServicesClient {
                        Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::backend_services::v1::
           UpdateBackendServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateBackendService(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

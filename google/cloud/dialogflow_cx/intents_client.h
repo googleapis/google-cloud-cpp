@@ -465,12 +465,12 @@ class IntentsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportIntents(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
-  ImportIntents(google::cloud::ExperimentalTag,
+  ImportIntents(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -524,12 +524,12 @@ class IntentsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ExportIntents(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
-  ExportIntents(google::cloud::ExperimentalTag,
+  ExportIntents(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 

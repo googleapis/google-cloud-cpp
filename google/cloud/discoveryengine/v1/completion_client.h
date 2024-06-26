@@ -166,7 +166,7 @@ class CompletionServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           ImportSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
@@ -174,8 +174,8 @@ class CompletionServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::
                       ImportSuggestionDenyListEntriesResponse>>
   ImportSuggestionDenyListEntries(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -222,7 +222,7 @@ class CompletionServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
@@ -230,8 +230,8 @@ class CompletionServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::
                       PurgeSuggestionDenyListEntriesResponse>>
   PurgeSuggestionDenyListEntries(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<CompletionServiceConnection> connection_;

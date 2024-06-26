@@ -55,8 +55,8 @@ DataTaxonomyServiceClient::CreateDataTaxonomy(
   request.set_parent(parent);
   *request.mutable_data_taxonomy() = data_taxonomy;
   request.set_data_taxonomy_id(data_taxonomy_id);
-  return connection_->CreateDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDataTaxonomy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
@@ -69,21 +69,20 @@ DataTaxonomyServiceClient::CreateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::CreateDataTaxonomy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDataTaxonomy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceClient::CreateDataTaxonomy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->CreateDataTaxonomy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
@@ -106,8 +105,8 @@ DataTaxonomyServiceClient::UpdateDataTaxonomy(
   google::cloud::dataplex::v1::UpdateDataTaxonomyRequest request;
   *request.mutable_data_taxonomy() = data_taxonomy;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDataTaxonomy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
@@ -120,21 +119,20 @@ DataTaxonomyServiceClient::UpdateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::UpdateDataTaxonomy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDataTaxonomy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceClient::UpdateDataTaxonomy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->UpdateDataTaxonomy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -153,8 +151,8 @@ DataTaxonomyServiceClient::DeleteDataTaxonomy(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteDataTaxonomyRequest request;
   request.set_name(name);
-  return connection_->DeleteDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDataTaxonomy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -167,21 +165,20 @@ DataTaxonomyServiceClient::DeleteDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::DeleteDataTaxonomy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDataTaxonomy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceClient::DeleteDataTaxonomy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataTaxonomy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->DeleteDataTaxonomy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
@@ -243,8 +240,8 @@ DataTaxonomyServiceClient::CreateDataAttributeBinding(
   request.set_parent(parent);
   *request.mutable_data_attribute_binding() = data_attribute_binding;
   request.set_data_attribute_binding_id(data_attribute_binding_id);
-  return connection_->CreateDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDataAttributeBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
@@ -258,22 +255,21 @@ DataTaxonomyServiceClient::CreateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::CreateDataAttributeBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDataAttributeBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceClient::CreateDataAttributeBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateDataAttributeBinding(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
@@ -298,8 +294,8 @@ DataTaxonomyServiceClient::UpdateDataAttributeBinding(
   google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest request;
   *request.mutable_data_attribute_binding() = data_attribute_binding;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDataAttributeBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
@@ -313,22 +309,21 @@ DataTaxonomyServiceClient::UpdateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::UpdateDataAttributeBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDataAttributeBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceClient::UpdateDataAttributeBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateDataAttributeBinding(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -348,8 +343,8 @@ DataTaxonomyServiceClient::DeleteDataAttributeBinding(ExperimentalTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest request;
   request.set_name(name);
-  return connection_->DeleteDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDataAttributeBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -363,22 +358,21 @@ DataTaxonomyServiceClient::DeleteDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::DeleteDataAttributeBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDataAttributeBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceClient::DeleteDataAttributeBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataAttributeBinding(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteDataAttributeBinding(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
@@ -438,8 +432,8 @@ DataTaxonomyServiceClient::CreateDataAttribute(
   request.set_parent(parent);
   *request.mutable_data_attribute() = data_attribute;
   request.set_data_attribute_id(data_attribute_id);
-  return connection_->CreateDataAttribute(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDataAttribute(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
@@ -452,21 +446,20 @@ DataTaxonomyServiceClient::CreateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::CreateDataAttribute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataAttribute(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDataAttribute(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceClient::CreateDataAttribute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataAttribute(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->CreateDataAttribute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
@@ -489,8 +482,8 @@ DataTaxonomyServiceClient::UpdateDataAttribute(
   google::cloud::dataplex::v1::UpdateDataAttributeRequest request;
   *request.mutable_data_attribute() = data_attribute;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateDataAttribute(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDataAttribute(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
@@ -503,21 +496,20 @@ DataTaxonomyServiceClient::UpdateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::UpdateDataAttribute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDataAttribute(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDataAttribute(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceClient::UpdateDataAttribute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDataAttribute(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->UpdateDataAttribute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -536,8 +528,8 @@ DataTaxonomyServiceClient::DeleteDataAttribute(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataplex::v1::DeleteDataAttributeRequest request;
   request.set_name(name);
-  return connection_->DeleteDataAttribute(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDataAttribute(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -550,21 +542,20 @@ DataTaxonomyServiceClient::DeleteDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceClient::DeleteDataAttribute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataAttribute(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDataAttribute(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceClient::DeleteDataAttribute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataAttribute(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->DeleteDataAttribute(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::dataplex::v1::DataAttribute>

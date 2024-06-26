@@ -176,12 +176,12 @@ class RepositoryManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(google::cloud::ExperimentalTag,
+  CreateConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -397,12 +397,12 @@ class RepositoryManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection(google::cloud::ExperimentalTag,
+  UpdateConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -482,12 +482,12 @@ class RepositoryManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteConnection(google::cloud::ExperimentalTag,
+  DeleteConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -578,12 +578,12 @@ class RepositoryManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateRepository(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository(google::cloud::ExperimentalTag,
+  CreateRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -678,14 +678,14 @@ class RepositoryManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
-  BatchCreateRepositories(google::cloud::ExperimentalTag,
+  BatchCreateRepositories(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -897,12 +897,12 @@ class RepositoryManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteRepository(google::cloud::ExperimentalTag,
+  DeleteRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

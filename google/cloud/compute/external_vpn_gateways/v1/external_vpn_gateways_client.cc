@@ -54,8 +54,8 @@ ExternalVpnGatewaysClient::DeleteExternalVpnGateway(
       DeleteExternalVpnGatewayRequest request;
   request.set_project(project);
   request.set_external_vpn_gateway(external_vpn_gateway);
-  return connection_->DeleteExternalVpnGateway(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteExternalVpnGateway(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -69,22 +69,21 @@ ExternalVpnGatewaysClient::DeleteExternalVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ExternalVpnGatewaysClient::DeleteExternalVpnGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         DeleteExternalVpnGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteExternalVpnGateway(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteExternalVpnGateway(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ExternalVpnGatewaysClient::DeleteExternalVpnGateway(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteExternalVpnGateway(google::cloud::ExperimentalTag{},
-                                               operation);
+  return connection_->DeleteExternalVpnGateway(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -135,8 +134,8 @@ ExternalVpnGatewaysClient::InsertExternalVpnGateway(
   request.set_project(project);
   *request.mutable_external_vpn_gateway_resource() =
       external_vpn_gateway_resource;
-  return connection_->InsertExternalVpnGateway(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertExternalVpnGateway(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -150,22 +149,21 @@ ExternalVpnGatewaysClient::InsertExternalVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ExternalVpnGatewaysClient::InsertExternalVpnGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         InsertExternalVpnGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertExternalVpnGateway(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertExternalVpnGateway(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ExternalVpnGatewaysClient::InsertExternalVpnGateway(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertExternalVpnGateway(google::cloud::ExperimentalTag{},
-                                               operation);
+  return connection_->InsertExternalVpnGateway(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ExternalVpnGateway>
@@ -217,8 +215,7 @@ ExternalVpnGatewaysClient::SetLabels(
   request.set_resource(resource);
   *request.mutable_global_set_labels_request_resource() =
       global_set_labels_request_resource;
-  return connection_->SetLabels(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -232,21 +229,20 @@ ExternalVpnGatewaysClient::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ExternalVpnGatewaysClient::SetLabels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::external_vpn_gateways::v1::
         SetLabelsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ExternalVpnGatewaysClient::SetLabels(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(google::cloud::ExperimentalTag{}, operation);
+  return connection_->SetLabels(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

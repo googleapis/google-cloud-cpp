@@ -239,21 +239,20 @@ AdminServiceClient::SeekSubscription(
 }
 
 StatusOr<google::longrunning::Operation> AdminServiceClient::SeekSubscription(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SeekSubscription(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->SeekSubscription(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
 AdminServiceClient::SeekSubscription(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SeekSubscription(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->SeekSubscription(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>

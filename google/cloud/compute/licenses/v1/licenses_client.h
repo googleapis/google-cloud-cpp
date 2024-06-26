@@ -166,13 +166,13 @@ class LicensesClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -390,13 +390,13 @@ class LicensesClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

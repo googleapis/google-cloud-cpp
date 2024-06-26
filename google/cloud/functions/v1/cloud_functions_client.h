@@ -272,13 +272,13 @@ class CloudFunctionsServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateFunction(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v1::CreateFunctionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> CreateFunction(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -357,13 +357,13 @@ class CloudFunctionsServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateFunction(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v1::UpdateFunctionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::functions::v1::CloudFunction>> UpdateFunction(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -444,12 +444,12 @@ class CloudFunctionsServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteFunction(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v1::DeleteFunctionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
-  DeleteFunction(google::cloud::ExperimentalTag,
+  DeleteFunction(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 

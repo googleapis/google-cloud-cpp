@@ -170,13 +170,13 @@ class ServicesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::CreateServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -387,13 +387,13 @@ class ServicesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::UpdateServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -475,13 +475,13 @@ class ServicesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::DeleteServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

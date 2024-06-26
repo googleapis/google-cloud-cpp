@@ -229,13 +229,13 @@ class JobControllerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

@@ -259,14 +259,14 @@ class ServiceAttachmentsClient {
                           Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           DeleteServiceAttachmentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteServiceAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -484,14 +484,14 @@ class ServiceAttachmentsClient {
                           Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           InsertServiceAttachmentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertServiceAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -666,14 +666,14 @@ class ServiceAttachmentsClient {
                          Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           PatchServiceAttachmentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchServiceAttachment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

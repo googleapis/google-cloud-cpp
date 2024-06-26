@@ -50,8 +50,7 @@ StatusOr<google::longrunning::Operation> EndpointServiceClient::CreateEndpoint(
   google::cloud::aiplatform::v1::CreateEndpointRequest request;
   request.set_parent(parent);
   *request.mutable_endpoint() = endpoint;
-  return connection_->CreateEndpoint(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
@@ -76,8 +75,7 @@ StatusOr<google::longrunning::Operation> EndpointServiceClient::CreateEndpoint(
   request.set_parent(parent);
   *request.mutable_endpoint() = endpoint;
   request.set_endpoint_id(endpoint_id);
-  return connection_->CreateEndpoint(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
@@ -89,21 +87,19 @@ EndpointServiceClient::CreateEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> EndpointServiceClient::CreateEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEndpoint(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
 EndpointServiceClient::CreateEndpoint(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEndpoint(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateEndpoint(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
@@ -169,8 +165,7 @@ StatusOr<google::longrunning::Operation> EndpointServiceClient::DeleteEndpoint(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteEndpointRequest request;
   request.set_name(name);
-  return connection_->DeleteEndpoint(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -182,21 +177,19 @@ EndpointServiceClient::DeleteEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> EndpointServiceClient::DeleteEndpoint(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEndpoint(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 EndpointServiceClient::DeleteEndpoint(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEndpoint(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteEndpoint(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
@@ -223,8 +216,7 @@ StatusOr<google::longrunning::Operation> EndpointServiceClient::DeployModel(
   *request.mutable_deployed_model() = deployed_model;
   *request.mutable_traffic_split() = {traffic_split.begin(),
                                       traffic_split.end()};
-  return connection_->DeployModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeployModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
@@ -236,20 +228,19 @@ EndpointServiceClient::DeployModel(
 }
 
 StatusOr<google::longrunning::Operation> EndpointServiceClient::DeployModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeployModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeployModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
 EndpointServiceClient::DeployModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployModel(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeployModel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
@@ -275,8 +266,7 @@ StatusOr<google::longrunning::Operation> EndpointServiceClient::UndeployModel(
   request.set_deployed_model_id(deployed_model_id);
   *request.mutable_traffic_split() = {traffic_split.begin(),
                                       traffic_split.end()};
-  return connection_->UndeployModel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UndeployModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
@@ -288,21 +278,19 @@ EndpointServiceClient::UndeployModel(
 }
 
 StatusOr<google::longrunning::Operation> EndpointServiceClient::UndeployModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UndeployModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployModel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UndeployModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
 EndpointServiceClient::UndeployModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployModel(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UndeployModel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
@@ -328,8 +316,8 @@ EndpointServiceClient::MutateDeployedModel(
   request.set_endpoint(endpoint);
   *request.mutable_deployed_model() = deployed_model;
   *request.mutable_update_mask() = update_mask;
-  return connection_->MutateDeployedModel(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->MutateDeployedModel(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
@@ -342,21 +330,20 @@ EndpointServiceClient::MutateDeployedModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceClient::MutateDeployedModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MutateDeployedModel(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->MutateDeployedModel(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
 EndpointServiceClient::MutateDeployedModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MutateDeployedModel(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->MutateDeployedModel(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

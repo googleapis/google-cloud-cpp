@@ -178,12 +178,12 @@ class SpecialistPoolServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(google::cloud::ExperimentalTag,
+  CreateSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -397,12 +397,12 @@ class SpecialistPoolServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(google::cloud::ExperimentalTag,
+  DeleteSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -486,12 +486,12 @@ class SpecialistPoolServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(google::cloud::ExperimentalTag,
+  UpdateSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 

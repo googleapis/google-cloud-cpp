@@ -133,12 +133,12 @@ class ServiceUsageClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> EnableService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::EnableServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService(google::cloud::ExperimentalTag,
+  EnableService(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -188,12 +188,12 @@ class ServiceUsageClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DisableService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::DisableServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService(google::cloud::ExperimentalTag,
+  DisableService(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -322,12 +322,12 @@ class ServiceUsageClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchEnableServices(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-  BatchEnableServices(google::cloud::ExperimentalTag,
+  BatchEnableServices(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 

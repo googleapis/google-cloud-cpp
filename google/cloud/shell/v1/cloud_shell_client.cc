@@ -58,21 +58,20 @@ CloudShellServiceClient::StartEnvironment(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceClient::StartEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::shell::v1::StartEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartEnvironment(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->StartEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceClient::StartEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartEnvironment(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->StartEnvironment(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
@@ -85,21 +84,20 @@ CloudShellServiceClient::AuthorizeEnvironment(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceClient::AuthorizeEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AuthorizeEnvironment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->AuthorizeEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceClient::AuthorizeEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AuthorizeEnvironment(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->AuthorizeEnvironment(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
@@ -111,20 +109,19 @@ CloudShellServiceClient::AddPublicKey(
 }
 
 StatusOr<google::longrunning::Operation> CloudShellServiceClient::AddPublicKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::shell::v1::AddPublicKeyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AddPublicKey(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->AddPublicKey(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceClient::AddPublicKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AddPublicKey(google::cloud::ExperimentalTag{}, operation);
+  return connection_->AddPublicKey(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
@@ -137,21 +134,19 @@ CloudShellServiceClient::RemovePublicKey(
 
 StatusOr<google::longrunning::Operation>
 CloudShellServiceClient::RemovePublicKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::shell::v1::RemovePublicKeyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RemovePublicKey(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->RemovePublicKey(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceClient::RemovePublicKey(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RemovePublicKey(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->RemovePublicKey(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -145,8 +145,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateNetwork(
   request.set_parent(parent);
   *request.mutable_network() = network;
   request.set_network_id(network_id);
-  return connection_->CreateNetwork(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateNetwork(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
@@ -158,21 +157,19 @@ EdgeNetworkClient::CreateNetwork(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::CreateNetworkRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateNetwork(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateNetwork(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
 EdgeNetworkClient::CreateNetwork(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateNetwork(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateNetwork(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -188,8 +185,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteNetwork(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteNetworkRequest request;
   request.set_name(name);
-  return connection_->DeleteNetwork(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteNetwork(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -201,21 +197,19 @@ EdgeNetworkClient::DeleteNetwork(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteNetwork(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNetwork(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteNetwork(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkClient::DeleteNetwork(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNetwork(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteNetwork(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Subnet>
@@ -270,8 +264,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateSubnet(
   request.set_parent(parent);
   *request.mutable_subnet() = subnet;
   request.set_subnet_id(subnet_id);
-  return connection_->CreateSubnet(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSubnet(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
@@ -283,20 +276,19 @@ EdgeNetworkClient::CreateSubnet(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::CreateSubnetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSubnet(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSubnet(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkClient::CreateSubnet(google::cloud::ExperimentalTag,
+EdgeNetworkClient::CreateSubnet(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSubnet(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateSubnet(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
@@ -318,8 +310,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkClient::UpdateSubnet(
   google::cloud::edgenetwork::v1::UpdateSubnetRequest request;
   *request.mutable_subnet() = subnet;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateSubnet(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateSubnet(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
@@ -331,20 +322,19 @@ EdgeNetworkClient::UpdateSubnet(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkClient::UpdateSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSubnet(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateSubnet(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
-EdgeNetworkClient::UpdateSubnet(google::cloud::ExperimentalTag,
+EdgeNetworkClient::UpdateSubnet(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSubnet(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateSubnet(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -360,8 +350,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteSubnet(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteSubnetRequest request;
   request.set_name(name);
-  return connection_->DeleteSubnet(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSubnet(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -373,20 +362,19 @@ EdgeNetworkClient::DeleteSubnet(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteSubnet(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSubnet(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSubnet(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteSubnet(google::cloud::ExperimentalTag,
+EdgeNetworkClient::DeleteSubnet(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSubnet(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteSubnet(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Interconnect>
@@ -497,8 +485,8 @@ EdgeNetworkClient::CreateInterconnectAttachment(
   request.set_parent(parent);
   *request.mutable_interconnect_attachment() = interconnect_attachment;
   request.set_interconnect_attachment_id(interconnect_attachment_id);
-  return connection_->CreateInterconnectAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateInterconnectAttachment(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
@@ -512,22 +500,22 @@ EdgeNetworkClient::CreateInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkClient::CreateInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInterconnectAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateInterconnectAttachment(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
 EdgeNetworkClient::CreateInterconnectAttachment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInterconnectAttachment(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateInterconnectAttachment(ExperimentalTag{},
+                                                   operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -546,8 +534,8 @@ EdgeNetworkClient::DeleteInterconnectAttachment(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest request;
   request.set_name(name);
-  return connection_->DeleteInterconnectAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInterconnectAttachment(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -561,22 +549,22 @@ EdgeNetworkClient::DeleteInterconnectAttachment(
 
 StatusOr<google::longrunning::Operation>
 EdgeNetworkClient::DeleteInterconnectAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInterconnectAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInterconnectAttachment(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkClient::DeleteInterconnectAttachment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInterconnectAttachment(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteInterconnectAttachment(ExperimentalTag{},
+                                                   operation);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Router>
@@ -647,8 +635,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateRouter(
   request.set_parent(parent);
   *request.mutable_router() = router;
   request.set_router_id(router_id);
-  return connection_->CreateRouter(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateRouter(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
@@ -660,20 +647,19 @@ EdgeNetworkClient::CreateRouter(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkClient::CreateRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::CreateRouterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateRouter(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateRouter(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkClient::CreateRouter(google::cloud::ExperimentalTag,
+EdgeNetworkClient::CreateRouter(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateRouter(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateRouter(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
@@ -695,8 +681,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkClient::UpdateRouter(
   google::cloud::edgenetwork::v1::UpdateRouterRequest request;
   *request.mutable_router() = router;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateRouter(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateRouter(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
@@ -708,20 +693,19 @@ EdgeNetworkClient::UpdateRouter(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkClient::UpdateRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::UpdateRouterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateRouter(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateRouter(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
-EdgeNetworkClient::UpdateRouter(google::cloud::ExperimentalTag,
+EdgeNetworkClient::UpdateRouter(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateRouter(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateRouter(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -737,8 +721,7 @@ StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteRouter(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgenetwork::v1::DeleteRouterRequest request;
   request.set_name(name);
-  return connection_->DeleteRouter(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteRouter(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
@@ -750,20 +733,19 @@ EdgeNetworkClient::DeleteRouter(
 }
 
 StatusOr<google::longrunning::Operation> EdgeNetworkClient::DeleteRouter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgenetwork::v1::DeleteRouterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRouter(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteRouter(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
-EdgeNetworkClient::DeleteRouter(google::cloud::ExperimentalTag,
+EdgeNetworkClient::DeleteRouter(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRouter(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteRouter(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

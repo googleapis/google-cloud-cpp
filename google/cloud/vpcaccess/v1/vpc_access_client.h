@@ -173,13 +173,13 @@ class VpcAccessServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateConnector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -390,12 +390,12 @@ class VpcAccessServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteConnector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(google::cloud::ExperimentalTag,
+  DeleteConnector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 

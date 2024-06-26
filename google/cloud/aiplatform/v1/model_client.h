@@ -168,13 +168,12 @@ class ModelServiceClient {
               Options opts = {});
 
   StatusOr<google::longrunning::Operation> UploadModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UploadModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-  UploadModel(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  UploadModel(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -550,14 +549,14 @@ class ModelServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-  UpdateExplanationDataset(google::cloud::ExperimentalTag,
+  UpdateExplanationDataset(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -652,13 +651,12 @@ class ModelServiceClient {
               Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModel(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  DeleteModel(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -753,12 +751,12 @@ class ModelServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteModelVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelVersion(google::cloud::ExperimentalTag,
+  DeleteModelVersion(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -926,13 +924,12 @@ class ModelServiceClient {
               Options opts = {});
 
   StatusOr<google::longrunning::Operation> ExportModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ExportModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-  ExportModel(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  ExportModel(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -1027,13 +1024,13 @@ class ModelServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CopyModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CopyModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

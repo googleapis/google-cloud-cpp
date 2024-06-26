@@ -175,14 +175,14 @@ class EnvironmentsClient {
                     Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           CreateEnvironmentRequest const& request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(google::cloud::ExperimentalTag,
+  CreateEnvironment(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -416,14 +416,14 @@ class EnvironmentsClient {
                     Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           UpdateEnvironmentRequest const& request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(google::cloud::ExperimentalTag,
+  UpdateEnvironment(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -505,14 +505,14 @@ class EnvironmentsClient {
                     Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(google::cloud::ExperimentalTag,
+  DeleteEnvironment(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1444,15 +1444,14 @@ class EnvironmentsClient {
                Options opts = {});
 
   StatusOr<google::longrunning::Operation> SaveSnapshot(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           SaveSnapshotRequest const& request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  SaveSnapshot(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -1499,15 +1498,14 @@ class EnvironmentsClient {
                Options opts = {});
 
   StatusOr<google::longrunning::Operation> LoadSnapshot(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           LoadSnapshotRequest const& request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  LoadSnapshot(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -1551,14 +1549,14 @@ class EnvironmentsClient {
                    Options opts = {});
 
   StatusOr<google::longrunning::Operation> DatabaseFailover(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           DatabaseFailoverRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                       DatabaseFailoverResponse>>
-  DatabaseFailover(google::cloud::ExperimentalTag,
+  DatabaseFailover(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

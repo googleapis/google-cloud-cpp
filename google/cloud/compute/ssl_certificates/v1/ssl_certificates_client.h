@@ -251,14 +251,14 @@ class SslCertificatesClient {
                        Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslCertificate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::ssl_certificates::v1::
           DeleteSslCertificateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSslCertificate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -407,14 +407,14 @@ class SslCertificatesClient {
                        Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslCertificate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::ssl_certificates::v1::
           InsertSslCertificateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSslCertificate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

@@ -116,8 +116,7 @@ StatusOr<google::longrunning::Operation> StorageControlClient::RenameFolder(
   google::storage::control::v2::RenameFolderRequest request;
   request.set_name(name);
   request.set_destination_folder_id(destination_folder_id);
-  return connection_->RenameFolder(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->RenameFolder(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
@@ -129,20 +128,19 @@ StorageControlClient::RenameFolder(
 }
 
 StatusOr<google::longrunning::Operation> StorageControlClient::RenameFolder(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::storage::control::v2::RenameFolderRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RenameFolder(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->RenameFolder(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
 StorageControlClient::RenameFolder(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RenameFolder(google::cloud::ExperimentalTag{}, operation);
+  return connection_->RenameFolder(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>

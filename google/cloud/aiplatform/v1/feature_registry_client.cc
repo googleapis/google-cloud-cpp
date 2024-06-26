@@ -55,8 +55,8 @@ FeatureRegistryServiceClient::CreateFeatureGroup(
   request.set_parent(parent);
   *request.mutable_feature_group() = feature_group;
   request.set_feature_group_id(feature_group_id);
-  return connection_->CreateFeatureGroup(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateFeatureGroup(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
@@ -69,21 +69,20 @@ FeatureRegistryServiceClient::CreateFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceClient::CreateFeatureGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFeatureGroup(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateFeatureGroup(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
 FeatureRegistryServiceClient::CreateFeatureGroup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFeatureGroup(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->CreateFeatureGroup(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
@@ -140,8 +139,8 @@ FeatureRegistryServiceClient::UpdateFeatureGroup(
   google::cloud::aiplatform::v1::UpdateFeatureGroupRequest request;
   *request.mutable_feature_group() = feature_group;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateFeatureGroup(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateFeatureGroup(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
@@ -154,21 +153,20 @@ FeatureRegistryServiceClient::UpdateFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceClient::UpdateFeatureGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateFeatureGroup(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateFeatureGroup(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
 FeatureRegistryServiceClient::UpdateFeatureGroup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateFeatureGroup(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->UpdateFeatureGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -189,8 +187,8 @@ FeatureRegistryServiceClient::DeleteFeatureGroup(ExperimentalTag, NoAwaitTag,
   google::cloud::aiplatform::v1::DeleteFeatureGroupRequest request;
   request.set_name(name);
   request.set_force(force);
-  return connection_->DeleteFeatureGroup(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteFeatureGroup(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -203,21 +201,20 @@ FeatureRegistryServiceClient::DeleteFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceClient::DeleteFeatureGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeatureGroup(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteFeatureGroup(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureRegistryServiceClient::DeleteFeatureGroup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeatureGroup(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->DeleteFeatureGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
@@ -243,8 +240,7 @@ FeatureRegistryServiceClient::CreateFeature(
   request.set_parent(parent);
   *request.mutable_feature() = feature;
   request.set_feature_id(feature_id);
-  return connection_->CreateFeature(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateFeature(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
@@ -257,21 +253,19 @@ FeatureRegistryServiceClient::CreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceClient::CreateFeature(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFeature(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateFeature(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
 FeatureRegistryServiceClient::CreateFeature(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFeature(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateFeature(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
@@ -327,8 +321,7 @@ FeatureRegistryServiceClient::UpdateFeature(
   google::cloud::aiplatform::v1::UpdateFeatureRequest request;
   *request.mutable_feature() = feature;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateFeature(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateFeature(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
@@ -341,21 +334,19 @@ FeatureRegistryServiceClient::UpdateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceClient::UpdateFeature(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateFeature(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateFeature(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
 FeatureRegistryServiceClient::UpdateFeature(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateFeature(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateFeature(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -374,8 +365,7 @@ FeatureRegistryServiceClient::DeleteFeature(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureRequest request;
   request.set_name(name);
-  return connection_->DeleteFeature(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteFeature(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -388,21 +378,19 @@ FeatureRegistryServiceClient::DeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceClient::DeleteFeature(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeature(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteFeature(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureRegistryServiceClient::DeleteFeature(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeature(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteFeature(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

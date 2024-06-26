@@ -50,8 +50,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::CreateDataset(
   google::cloud::automl::v1::CreateDatasetRequest request;
   request.set_parent(parent);
   *request.mutable_dataset() = dataset;
-  return connection_->CreateDataset(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDataset(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
@@ -63,21 +62,19 @@ AutoMlClient::CreateDataset(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::CreateDataset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::CreateDatasetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataset(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDataset(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
-AutoMlClient::CreateDataset(google::cloud::ExperimentalTag,
+AutoMlClient::CreateDataset(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataset(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateDataset(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlClient::GetDataset(
@@ -138,8 +135,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::DeleteDataset(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeleteDatasetRequest request;
   request.set_name(name);
-  return connection_->DeleteDataset(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDataset(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -151,21 +147,19 @@ AutoMlClient::DeleteDataset(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::DeleteDataset(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::DeleteDatasetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataset(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDataset(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeleteDataset(google::cloud::ExperimentalTag,
+AutoMlClient::DeleteDataset(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataset(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteDataset(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -186,8 +180,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::ImportData(
   google::cloud::automl::v1::ImportDataRequest request;
   request.set_name(name);
   *request.mutable_input_config() = input_config;
-  return connection_->ImportData(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportData(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -198,19 +191,18 @@ AutoMlClient::ImportData(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::ImportData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::ImportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportData(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportData(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ImportData(google::cloud::ExperimentalTag,
+AutoMlClient::ImportData(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportData(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ImportData(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -233,8 +225,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::ExportData(
   google::cloud::automl::v1::ExportDataRequest request;
   request.set_name(name);
   *request.mutable_output_config() = output_config;
-  return connection_->ExportData(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportData(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -245,19 +236,18 @@ AutoMlClient::ExportData(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::ExportData(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::ExportDataRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportData(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportData(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ExportData(google::cloud::ExperimentalTag,
+AutoMlClient::ExportData(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportData(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ExportData(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
@@ -293,8 +283,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::CreateModel(
   google::cloud::automl::v1::CreateModelRequest request;
   request.set_parent(parent);
   *request.mutable_model() = model;
-  return connection_->CreateModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
@@ -305,19 +294,18 @@ future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::CreateModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::CreateModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::Model>> AutoMlClient::CreateModel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateModel(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateModel(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlClient::GetModel(
@@ -361,8 +349,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::DeleteModel(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeleteModelRequest request;
   request.set_name(name);
-  return connection_->DeleteModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -374,20 +361,19 @@ AutoMlClient::DeleteModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::DeleteModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::DeleteModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeleteModel(google::cloud::ExperimentalTag,
+AutoMlClient::DeleteModel(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteModel(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteModel(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlClient::UpdateModel(
@@ -420,8 +406,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::DeployModel(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::DeployModelRequest request;
   request.set_name(name);
-  return connection_->DeployModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeployModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -433,20 +418,19 @@ AutoMlClient::DeployModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::DeployModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::DeployModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeployModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::DeployModel(google::cloud::ExperimentalTag,
+AutoMlClient::DeployModel(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployModel(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeployModel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -462,8 +446,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::UndeployModel(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::automl::v1::UndeployModelRequest request;
   request.set_name(name);
-  return connection_->UndeployModel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UndeployModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -475,21 +458,19 @@ AutoMlClient::UndeployModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::UndeployModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::UndeployModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployModel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UndeployModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::UndeployModel(google::cloud::ExperimentalTag,
+AutoMlClient::UndeployModel(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployModel(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UndeployModel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -512,8 +493,7 @@ StatusOr<google::longrunning::Operation> AutoMlClient::ExportModel(
   google::cloud::automl::v1::ExportModelRequest request;
   request.set_name(name);
   *request.mutable_output_config() = output_config;
-  return connection_->ExportModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -525,20 +505,19 @@ AutoMlClient::ExportModel(
 }
 
 StatusOr<google::longrunning::Operation> AutoMlClient::ExportModel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::automl::v1::ExportModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportModel(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportModel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
-AutoMlClient::ExportModel(google::cloud::ExperimentalTag,
+AutoMlClient::ExportModel(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportModel(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ExportModel(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>

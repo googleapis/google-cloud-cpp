@@ -350,13 +350,13 @@ class ReachabilityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(google::cloud::ExperimentalTag,
+  CreateConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -470,13 +470,13 @@ class ReachabilityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(google::cloud::ExperimentalTag,
+  UpdateConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -532,13 +532,13 @@ class ReachabilityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RerunConnectivityTest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  RerunConnectivityTest(google::cloud::ExperimentalTag,
+  RerunConnectivityTest(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -619,13 +619,13 @@ class ReachabilityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(google::cloud::ExperimentalTag,
+  DeleteConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 

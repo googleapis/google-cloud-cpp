@@ -167,14 +167,14 @@ class InterconnectsClient {
                      Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInterconnect(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::interconnects::v1::
           DeleteInterconnectRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnect(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -457,14 +457,14 @@ class InterconnectsClient {
                      Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInterconnect(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::interconnects::v1::
           InsertInterconnectRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInterconnect(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -633,13 +633,13 @@ class InterconnectsClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInterconnect(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::interconnects::v1::
           PatchInterconnectRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchInterconnect(google::cloud::ExperimentalTag,
+  PatchInterconnect(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -729,13 +729,13 @@ class InterconnectsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

@@ -51,8 +51,7 @@ StatusOr<google::longrunning::Operation> JobsClient::CreateJob(
   request.set_parent(parent);
   *request.mutable_job() = job;
   request.set_job_id(job_id);
-  return connection_->CreateJob(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsClient::CreateJob(
@@ -62,18 +61,17 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsClient::CreateJob(
 }
 
 StatusOr<google::longrunning::Operation> JobsClient::CreateJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::CreateJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateJob(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsClient::CreateJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateJob(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateJob(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::run::v2::Job> JobsClient::GetJob(
@@ -118,8 +116,7 @@ StatusOr<google::longrunning::Operation> JobsClient::UpdateJob(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::UpdateJobRequest request;
   *request.mutable_job() = job;
-  return connection_->UpdateJob(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsClient::UpdateJob(
@@ -129,18 +126,17 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsClient::UpdateJob(
 }
 
 StatusOr<google::longrunning::Operation> JobsClient::UpdateJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::UpdateJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateJob(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsClient::UpdateJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateJob(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateJob(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsClient::DeleteJob(
@@ -156,8 +152,7 @@ StatusOr<google::longrunning::Operation> JobsClient::DeleteJob(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::DeleteJobRequest request;
   request.set_name(name);
-  return connection_->DeleteJob(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsClient::DeleteJob(
@@ -167,18 +162,17 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsClient::DeleteJob(
 }
 
 StatusOr<google::longrunning::Operation> JobsClient::DeleteJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::DeleteJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteJob(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsClient::DeleteJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteJob(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteJob(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>> JobsClient::RunJob(
@@ -194,8 +188,7 @@ StatusOr<google::longrunning::Operation> JobsClient::RunJob(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::RunJobRequest request;
   request.set_name(name);
-  return connection_->RunJob(google::cloud::ExperimentalTag{},
-                             google::cloud::NoAwaitTag{}, request);
+  return connection_->RunJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>> JobsClient::RunJob(
@@ -205,18 +198,17 @@ future<StatusOr<google::cloud::run::v2::Execution>> JobsClient::RunJob(
 }
 
 StatusOr<google::longrunning::Operation> JobsClient::RunJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::RunJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunJob(google::cloud::ExperimentalTag{},
-                             google::cloud::NoAwaitTag{}, request);
+  return connection_->RunJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>> JobsClient::RunJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunJob(google::cloud::ExperimentalTag{}, operation);
+  return connection_->RunJob(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::iam::v1::Policy> JobsClient::GetIamPolicy(

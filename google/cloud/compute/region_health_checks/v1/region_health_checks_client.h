@@ -171,13 +171,13 @@ class RegionHealthChecksClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_checks::v1::
           DeleteHealthCheckRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteHealthCheck(google::cloud::ExperimentalTag,
+  DeleteHealthCheck(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -328,13 +328,13 @@ class RegionHealthChecksClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_checks::v1::
           InsertHealthCheckRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertHealthCheck(google::cloud::ExperimentalTag,
+  InsertHealthCheck(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -507,13 +507,13 @@ class RegionHealthChecksClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_checks::v1::
           PatchHealthCheckRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -604,13 +604,13 @@ class RegionHealthChecksClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_checks::v1::
           UpdateHealthCheckRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateHealthCheck(google::cloud::ExperimentalTag,
+  UpdateHealthCheck(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 

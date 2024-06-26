@@ -414,13 +414,13 @@ class RegionInstanceGroupsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

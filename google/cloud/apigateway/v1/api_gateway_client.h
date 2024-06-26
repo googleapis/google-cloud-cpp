@@ -304,13 +304,13 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateGateway(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateGatewayRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -394,13 +394,13 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateGateway(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -478,12 +478,12 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteGateway(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteGateway(google::cloud::ExperimentalTag,
+  DeleteGateway(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -700,13 +700,13 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateApi(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateApiRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -790,13 +790,13 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateApi(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateApiRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -875,13 +875,13 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteApi(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteApiRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1097,13 +1097,13 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateApiConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1187,13 +1187,13 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateApiConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1271,12 +1271,12 @@ class ApiGatewayServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteApiConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-  DeleteApiConfig(google::cloud::ExperimentalTag,
+  DeleteApiConfig(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 

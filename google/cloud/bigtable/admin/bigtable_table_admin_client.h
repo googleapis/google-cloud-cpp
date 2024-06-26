@@ -386,13 +386,13 @@ class BigtableTableAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateTable(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UpdateTableRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -521,13 +521,13 @@ class BigtableTableAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UndeleteTable(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UndeleteTableRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -616,12 +616,12 @@ class BigtableTableAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(google::cloud::ExperimentalTag,
+  CreateAuthorizedView(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -848,12 +848,12 @@ class BigtableTableAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(google::cloud::ExperimentalTag,
+  UpdateAuthorizedView(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -1248,13 +1248,13 @@ class BigtableTableAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateBackupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1558,13 +1558,13 @@ class BigtableTableAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RestoreTable(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::RestoreTableRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1666,13 +1666,13 @@ class BigtableTableAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CopyBackup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CopyBackupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

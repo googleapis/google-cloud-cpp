@@ -79,8 +79,7 @@ StatusOr<google::longrunning::Operation> TpuClient::CreateNode(
   request.set_parent(parent);
   *request.mutable_node() = node;
   request.set_node_id(node_id);
-  return connection_->CreateNode(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateNode(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::CreateNode(
@@ -90,18 +89,17 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::CreateNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuClient::CreateNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::CreateNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateNode(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateNode(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::CreateNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateNode(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateNode(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
@@ -117,8 +115,7 @@ StatusOr<google::longrunning::Operation> TpuClient::DeleteNode(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::tpu::v2::DeleteNodeRequest request;
   request.set_name(name);
-  return connection_->DeleteNode(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteNode(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
@@ -129,19 +126,18 @@ TpuClient::DeleteNode(google::cloud::tpu::v2::DeleteNodeRequest const& request,
 }
 
 StatusOr<google::longrunning::Operation> TpuClient::DeleteNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::DeleteNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNode(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteNode(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
-TpuClient::DeleteNode(google::cloud::ExperimentalTag,
+TpuClient::DeleteNode(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNode(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteNode(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::StopNode(
@@ -151,18 +147,17 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::StopNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuClient::StopNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::StopNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopNode(google::cloud::ExperimentalTag{},
-                               google::cloud::NoAwaitTag{}, request);
+  return connection_->StopNode(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::StopNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopNode(google::cloud::ExperimentalTag{}, operation);
+  return connection_->StopNode(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::StartNode(
@@ -172,18 +167,17 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::StartNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuClient::StartNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::StartNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartNode(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->StartNode(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::StartNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartNode(google::cloud::ExperimentalTag{}, operation);
+  return connection_->StartNode(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::UpdateNode(
@@ -203,8 +197,7 @@ StatusOr<google::longrunning::Operation> TpuClient::UpdateNode(
   google::cloud::tpu::v2::UpdateNodeRequest request;
   *request.mutable_node() = node;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateNode(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateNode(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::UpdateNode(
@@ -214,18 +207,17 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::UpdateNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuClient::UpdateNode(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::tpu::v2::UpdateNodeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateNode(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateNode(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuClient::UpdateNode(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateNode(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateNode(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>

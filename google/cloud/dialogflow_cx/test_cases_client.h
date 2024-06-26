@@ -448,13 +448,12 @@ class TestCasesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RunTestCase(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  RunTestCase(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -508,13 +507,13 @@ class TestCasesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchRunTestCases(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-  BatchRunTestCases(google::cloud::ExperimentalTag,
+  BatchRunTestCases(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -603,12 +602,12 @@ class TestCasesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportTestCases(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-  ImportTestCases(google::cloud::ExperimentalTag,
+  ImportTestCases(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -663,12 +662,12 @@ class TestCasesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ExportTestCases(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-  ExportTestCases(google::cloud::ExperimentalTag,
+  ExportTestCases(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 

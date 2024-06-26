@@ -41,20 +41,19 @@ AssetServiceClient::ExportAssets(
 }
 
 StatusOr<google::longrunning::Operation> AssetServiceClient::ExportAssets(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::asset::v1::ExportAssetsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportAssets(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportAssets(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceClient::ExportAssets(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportAssets(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ExportAssets(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::asset::v1::Asset> AssetServiceClient::ListAssets(
@@ -205,21 +204,20 @@ AssetServiceClient::AnalyzeIamPolicyLongrunning(
 
 StatusOr<google::longrunning::Operation>
 AssetServiceClient::AnalyzeIamPolicyLongrunning(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AnalyzeIamPolicyLongrunning(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->AnalyzeIamPolicyLongrunning(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceClient::AnalyzeIamPolicyLongrunning(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AnalyzeIamPolicyLongrunning(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->AnalyzeIamPolicyLongrunning(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>

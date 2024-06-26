@@ -200,13 +200,13 @@ class DomainMappingsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateDomainMapping(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateDomainMappingRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -250,13 +250,13 @@ class DomainMappingsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateDomainMapping(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateDomainMappingRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -300,12 +300,12 @@ class DomainMappingsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDomainMapping(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteDomainMappingRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(google::cloud::ExperimentalTag,
+  DeleteDomainMapping(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 

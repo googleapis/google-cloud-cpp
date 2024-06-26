@@ -173,12 +173,12 @@ class TensorboardServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateTensorboard(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  CreateTensorboard(google::cloud::ExperimentalTag,
+  CreateTensorboard(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -327,12 +327,12 @@ class TensorboardServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateTensorboard(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  UpdateTensorboard(google::cloud::ExperimentalTag,
+  UpdateTensorboard(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -489,12 +489,12 @@ class TensorboardServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTensorboard(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboard(google::cloud::ExperimentalTag,
+  DeleteTensorboard(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -970,13 +970,13 @@ class TensorboardServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardExperiment(google::cloud::ExperimentalTag,
+  DeleteTensorboardExperiment(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts = {});
 
@@ -1392,12 +1392,12 @@ class TensorboardServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardRun(google::cloud::ExperimentalTag,
+  DeleteTensorboardRun(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -1824,13 +1824,13 @@ class TensorboardServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardTimeSeries(google::cloud::ExperimentalTag,
+  DeleteTensorboardTimeSeries(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts = {});
 

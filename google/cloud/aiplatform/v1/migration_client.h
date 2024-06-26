@@ -261,13 +261,13 @@ class MigrationServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-  BatchMigrateResources(google::cloud::ExperimentalTag,
+  BatchMigrateResources(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 

@@ -140,8 +140,7 @@ RegionInstanceGroupsClient::SetNamedPorts(
   request.set_instance_group(instance_group);
   *request.mutable_region_instance_groups_set_named_ports_request_resource() =
       region_instance_groups_set_named_ports_request_resource;
-  return connection_->SetNamedPorts(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->SetNamedPorts(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -155,22 +154,20 @@ RegionInstanceGroupsClient::SetNamedPorts(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupsClient::SetNamedPorts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::region_instance_groups::v1::
         SetNamedPortsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetNamedPorts(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->SetNamedPorts(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupsClient::SetNamedPorts(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetNamedPorts(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->SetNamedPorts(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

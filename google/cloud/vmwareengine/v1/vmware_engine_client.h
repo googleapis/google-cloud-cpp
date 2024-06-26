@@ -335,12 +335,12 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreatePrivateCloud(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  CreatePrivateCloud(google::cloud::ExperimentalTag,
+  CreatePrivateCloud(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -442,12 +442,12 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdatePrivateCloud(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  UpdatePrivateCloud(google::cloud::ExperimentalTag,
+  UpdatePrivateCloud(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -558,12 +558,12 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeletePrivateCloud(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  DeletePrivateCloud(google::cloud::ExperimentalTag,
+  DeletePrivateCloud(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -653,13 +653,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UndeletePrivateCloud(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  UndeletePrivateCloud(google::cloud::ExperimentalTag,
+  UndeletePrivateCloud(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -901,13 +901,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1003,13 +1003,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1096,12 +1096,12 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteCluster(google::cloud::ExperimentalTag,
+  DeleteCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -1568,13 +1568,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateExternalAddress(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-  CreateExternalAddress(google::cloud::ExperimentalTag,
+  CreateExternalAddress(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -1675,13 +1675,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateExternalAddress(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
-  UpdateExternalAddress(google::cloud::ExperimentalTag,
+  UpdateExternalAddress(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -1769,13 +1769,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteExternalAddress(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteExternalAddress(google::cloud::ExperimentalTag,
+  DeleteExternalAddress(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -2010,13 +2010,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateSubnet(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2259,13 +2259,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateExternalAccessRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-  CreateExternalAccessRule(google::cloud::ExperimentalTag,
+  CreateExternalAccessRule(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -2358,13 +2358,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateExternalAccessRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
-  UpdateExternalAccessRule(google::cloud::ExperimentalTag,
+  UpdateExternalAccessRule(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -2448,13 +2448,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteExternalAccessRule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteExternalAccessRule(google::cloud::ExperimentalTag,
+  DeleteExternalAccessRule(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -2698,13 +2698,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateLoggingServer(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  CreateLoggingServer(google::cloud::ExperimentalTag,
+  CreateLoggingServer(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -2795,13 +2795,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateLoggingServer(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
-  UpdateLoggingServer(google::cloud::ExperimentalTag,
+  UpdateLoggingServer(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -2885,13 +2885,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteLoggingServer(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteLoggingServer(google::cloud::ExperimentalTag,
+  DeleteLoggingServer(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -3238,13 +3238,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ResetNsxCredentials(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  ResetNsxCredentials(google::cloud::ExperimentalTag,
+  ResetNsxCredentials(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -3330,13 +3330,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ResetVcenterCredentials(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
-  ResetVcenterCredentials(google::cloud::ExperimentalTag,
+  ResetVcenterCredentials(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -3487,13 +3487,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateDnsForwarding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
-  UpdateDnsForwarding(google::cloud::ExperimentalTag,
+  UpdateDnsForwarding(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -3744,13 +3744,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateNetworkPeering(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-  CreateNetworkPeering(google::cloud::ExperimentalTag,
+  CreateNetworkPeering(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -3840,13 +3840,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteNetworkPeering(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteNetworkPeering(google::cloud::ExperimentalTag,
+  DeleteNetworkPeering(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -3939,13 +3939,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateNetworkPeering(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
-  UpdateNetworkPeering(google::cloud::ExperimentalTag,
+  UpdateNetworkPeering(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -4128,13 +4128,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateHcxActivationKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
-  CreateHcxActivationKey(google::cloud::ExperimentalTag,
+  CreateHcxActivationKey(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -4521,13 +4521,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateNetworkPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  CreateNetworkPolicy(google::cloud::ExperimentalTag,
+  CreateNetworkPolicy(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -4638,13 +4638,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateNetworkPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
-  UpdateNetworkPolicy(google::cloud::ExperimentalTag,
+  UpdateNetworkPolicy(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -4732,13 +4732,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteNetworkPolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteNetworkPolicy(google::cloud::ExperimentalTag,
+  DeleteNetworkPolicy(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -4998,15 +4998,15 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateManagementDnsZoneBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::
           CreateManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   CreateManagementDnsZoneBinding(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5097,15 +5097,15 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateManagementDnsZoneBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::
           UpdateManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   UpdateManagementDnsZoneBinding(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5191,15 +5191,15 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteManagementDnsZoneBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::
           DeleteManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteManagementDnsZoneBinding(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5283,15 +5283,15 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RepairManagementDnsZoneBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::
           RepairManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   RepairManagementDnsZoneBinding(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -5397,13 +5397,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateVmwareEngineNetwork(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-  CreateVmwareEngineNetwork(google::cloud::ExperimentalTag,
+  CreateVmwareEngineNetwork(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -5499,13 +5499,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateVmwareEngineNetwork(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
-  UpdateVmwareEngineNetwork(google::cloud::ExperimentalTag,
+  UpdateVmwareEngineNetwork(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -5595,13 +5595,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteVmwareEngineNetwork(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeleteVmwareEngineNetwork(google::cloud::ExperimentalTag,
+  DeleteVmwareEngineNetwork(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -5852,13 +5852,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-  CreatePrivateConnection(google::cloud::ExperimentalTag,
+  CreatePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -6097,13 +6097,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdatePrivateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
-  UpdatePrivateConnection(google::cloud::ExperimentalTag,
+  UpdatePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -6191,13 +6191,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
-  DeletePrivateConnection(google::cloud::ExperimentalTag,
+  DeletePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -6376,13 +6376,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> GrantDnsBindPermission(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-  GrantDnsBindPermission(google::cloud::ExperimentalTag,
+  GrantDnsBindPermission(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -6546,13 +6546,13 @@ class VmwareEngineClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RevokeDnsBindPermission(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
-  RevokeDnsBindPermission(google::cloud::ExperimentalTag,
+  RevokeDnsBindPermission(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 

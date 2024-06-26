@@ -276,13 +276,13 @@ class MetricsScopesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-  CreateMonitoredProject(google::cloud::ExperimentalTag,
+  CreateMonitoredProject(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -368,13 +368,13 @@ class MetricsScopesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(google::cloud::ExperimentalTag,
+  DeleteMonitoredProject(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 

@@ -183,13 +183,13 @@ class NodeGroupControllerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateNodeGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -277,13 +277,13 @@ class NodeGroupControllerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ResizeNodeGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

@@ -185,13 +185,13 @@ class InstanceGroupManagerResizeRequestsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Cancel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           CancelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -288,14 +288,14 @@ class InstanceGroupManagerResizeRequestsClient {
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManagerResizeRequest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           DeleteInstanceGroupManagerResizeRequestRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroupManagerResizeRequest(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -462,14 +462,14 @@ class InstanceGroupManagerResizeRequestsClient {
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManagerResizeRequest(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           InsertInstanceGroupManagerResizeRequestRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroupManagerResizeRequest(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

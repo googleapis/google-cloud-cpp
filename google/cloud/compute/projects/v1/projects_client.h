@@ -162,13 +162,13 @@ class ProjectsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -257,14 +257,14 @@ class ProjectsClient {
                      Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::
           DisableXpnResourceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DisableXpnResource(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -344,13 +344,13 @@ class ProjectsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -442,13 +442,13 @@ class ProjectsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  EnableXpnResource(google::cloud::ExperimentalTag,
+  EnableXpnResource(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -807,12 +807,12 @@ class ProjectsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -908,13 +908,13 @@ class ProjectsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1006,13 +1006,13 @@ class ProjectsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetCloudArmorTier(google::cloud::ExperimentalTag,
+  SetCloudArmorTier(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -1100,15 +1100,14 @@ class ProjectsClient {
                             Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetCommonInstanceMetadata(google::cloud::ExperimentalTag,
-                            google::cloud::NoAwaitTag,
+  SetCommonInstanceMetadata(ExperimentalTag, NoAwaitTag,
                             google::cloud::cpp::compute::projects::v1::
                                 SetCommonInstanceMetadataRequest const& request,
                             Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCommonInstanceMetadata(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1201,14 +1200,14 @@ class ProjectsClient {
                         Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::
           SetDefaultNetworkTierRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDefaultNetworkTier(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1299,14 +1298,14 @@ class ProjectsClient {
                        Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::projects::v1::
           SetUsageExportBucketRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetUsageExportBucket(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

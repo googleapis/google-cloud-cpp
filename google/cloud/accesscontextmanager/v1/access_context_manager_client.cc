@@ -69,21 +69,20 @@ AccessContextManagerClient::CreateAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::CreateAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAccessPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAccessPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerClient::CreateAccessPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAccessPolicy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->CreateAccessPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
@@ -106,8 +105,8 @@ AccessContextManagerClient::UpdateAccessPolicy(
   google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest request;
   *request.mutable_policy() = policy;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateAccessPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAccessPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
@@ -121,22 +120,21 @@ AccessContextManagerClient::UpdateAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::UpdateAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAccessPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAccessPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerClient::UpdateAccessPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAccessPolicy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->UpdateAccessPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -156,8 +154,8 @@ AccessContextManagerClient::DeleteAccessPolicy(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest request;
   request.set_name(name);
-  return connection_->DeleteAccessPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAccessPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -172,23 +170,22 @@ AccessContextManagerClient::DeleteAccessPolicy(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::DeleteAccessPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAccessPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAccessPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerClient::DeleteAccessPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAccessPolicy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->DeleteAccessPolicy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
@@ -247,8 +244,8 @@ AccessContextManagerClient::CreateAccessLevel(
   google::identity::accesscontextmanager::v1::CreateAccessLevelRequest request;
   request.set_parent(parent);
   *request.mutable_access_level() = access_level;
-  return connection_->CreateAccessLevel(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAccessLevel(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
@@ -262,22 +259,21 @@ AccessContextManagerClient::CreateAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::CreateAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAccessLevel(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAccessLevel(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerClient::CreateAccessLevel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAccessLevel(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateAccessLevel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
@@ -300,8 +296,8 @@ AccessContextManagerClient::UpdateAccessLevel(
   google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest request;
   *request.mutable_access_level() = access_level;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateAccessLevel(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAccessLevel(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
@@ -315,22 +311,21 @@ AccessContextManagerClient::UpdateAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::UpdateAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAccessLevel(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAccessLevel(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerClient::UpdateAccessLevel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAccessLevel(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateAccessLevel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -350,8 +345,8 @@ AccessContextManagerClient::DeleteAccessLevel(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest request;
   request.set_name(name);
-  return connection_->DeleteAccessLevel(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAccessLevel(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -366,23 +361,22 @@ AccessContextManagerClient::DeleteAccessLevel(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::DeleteAccessLevel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAccessLevel(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAccessLevel(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerClient::DeleteAccessLevel(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAccessLevel(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->DeleteAccessLevel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -397,23 +391,22 @@ AccessContextManagerClient::ReplaceAccessLevels(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::ReplaceAccessLevels(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReplaceAccessLevels(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->ReplaceAccessLevels(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<
     google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
 AccessContextManagerClient::ReplaceAccessLevels(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReplaceAccessLevels(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->ReplaceAccessLevels(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
@@ -479,8 +472,8 @@ AccessContextManagerClient::CreateServicePerimeter(
       request;
   request.set_parent(parent);
   *request.mutable_service_perimeter() = service_perimeter;
-  return connection_->CreateServicePerimeter(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateServicePerimeter(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
@@ -494,22 +487,21 @@ AccessContextManagerClient::CreateServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::CreateServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateServicePerimeter(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateServicePerimeter(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerClient::CreateServicePerimeter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateServicePerimeter(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->CreateServicePerimeter(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
@@ -536,8 +528,8 @@ AccessContextManagerClient::UpdateServicePerimeter(
       request;
   *request.mutable_service_perimeter() = service_perimeter;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateServicePerimeter(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateServicePerimeter(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
@@ -551,22 +543,21 @@ AccessContextManagerClient::UpdateServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::UpdateServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateServicePerimeter(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateServicePerimeter(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerClient::UpdateServicePerimeter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateServicePerimeter(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->UpdateServicePerimeter(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -588,8 +579,8 @@ AccessContextManagerClient::DeleteServicePerimeter(ExperimentalTag, NoAwaitTag,
   google::identity::accesscontextmanager::v1::DeleteServicePerimeterRequest
       request;
   request.set_name(name);
-  return connection_->DeleteServicePerimeter(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteServicePerimeter(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -604,23 +595,22 @@ AccessContextManagerClient::DeleteServicePerimeter(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::DeleteServicePerimeter(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServicePerimeter(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteServicePerimeter(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     AccessContextManagerOperationMetadata>>
 AccessContextManagerClient::DeleteServicePerimeter(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServicePerimeter(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->DeleteServicePerimeter(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -635,23 +625,22 @@ AccessContextManagerClient::ReplaceServicePerimeters(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::ReplaceServicePerimeters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReplaceServicePerimeters(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ReplaceServicePerimeters(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     ReplaceServicePerimetersResponse>>
 AccessContextManagerClient::ReplaceServicePerimeters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReplaceServicePerimeters(google::cloud::ExperimentalTag{},
-                                               operation);
+  return connection_->ReplaceServicePerimeters(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -666,23 +655,22 @@ AccessContextManagerClient::CommitServicePerimeters(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::CommitServicePerimeters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CommitServicePerimeters(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CommitServicePerimeters(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     CommitServicePerimetersResponse>>
 AccessContextManagerClient::CommitServicePerimeters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CommitServicePerimeters(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->CommitServicePerimeters(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
@@ -749,8 +737,8 @@ AccessContextManagerClient::CreateGcpUserAccessBinding(
       request;
   request.set_parent(parent);
   *request.mutable_gcp_user_access_binding() = gcp_user_access_binding;
-  return connection_->CreateGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateGcpUserAccessBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<
@@ -765,23 +753,22 @@ AccessContextManagerClient::CreateGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::CreateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateGcpUserAccessBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<
     StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerClient::CreateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateGcpUserAccessBinding(ExperimentalTag{}, operation);
 }
 
 future<
@@ -809,8 +796,8 @@ AccessContextManagerClient::UpdateGcpUserAccessBinding(
       request;
   *request.mutable_gcp_user_access_binding() = gcp_user_access_binding;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateGcpUserAccessBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<
@@ -825,23 +812,22 @@ AccessContextManagerClient::UpdateGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::UpdateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateGcpUserAccessBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<
     StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
 AccessContextManagerClient::UpdateGcpUserAccessBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateGcpUserAccessBinding(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -864,8 +850,8 @@ AccessContextManagerClient::DeleteGcpUserAccessBinding(ExperimentalTag,
   google::identity::accesscontextmanager::v1::DeleteGcpUserAccessBindingRequest
       request;
   request.set_name(name);
-  return connection_->DeleteGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteGcpUserAccessBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -880,23 +866,22 @@ AccessContextManagerClient::DeleteGcpUserAccessBinding(
 
 StatusOr<google::longrunning::Operation>
 AccessContextManagerClient::DeleteGcpUserAccessBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteGcpUserAccessBinding(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::
                     GcpUserAccessBindingOperationMetadata>>
 AccessContextManagerClient::DeleteGcpUserAccessBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGcpUserAccessBinding(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteGcpUserAccessBinding(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerClient::SetIamPolicy(

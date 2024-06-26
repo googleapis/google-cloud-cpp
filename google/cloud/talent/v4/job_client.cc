@@ -66,8 +66,7 @@ StatusOr<google::longrunning::Operation> JobServiceClient::BatchCreateJobs(
   google::cloud::talent::v4::BatchCreateJobsRequest request;
   request.set_parent(parent);
   *request.mutable_jobs() = {jobs.begin(), jobs.end()};
-  return connection_->BatchCreateJobs(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchCreateJobs(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
@@ -79,21 +78,19 @@ JobServiceClient::BatchCreateJobs(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceClient::BatchCreateJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchCreateJobsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateJobs(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchCreateJobs(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
 JobServiceClient::BatchCreateJobs(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateJobs(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->BatchCreateJobs(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceClient::GetJob(
@@ -144,8 +141,7 @@ StatusOr<google::longrunning::Operation> JobServiceClient::BatchUpdateJobs(
   google::cloud::talent::v4::BatchUpdateJobsRequest request;
   request.set_parent(parent);
   *request.mutable_jobs() = {jobs.begin(), jobs.end()};
-  return connection_->BatchUpdateJobs(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchUpdateJobs(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
@@ -157,21 +153,19 @@ JobServiceClient::BatchUpdateJobs(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceClient::BatchUpdateJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchUpdateJobs(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchUpdateJobs(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
 JobServiceClient::BatchUpdateJobs(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchUpdateJobs(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->BatchUpdateJobs(ExperimentalTag{}, operation);
 }
 
 Status JobServiceClient::DeleteJob(std::string const& name, Options opts) {
@@ -205,8 +199,7 @@ StatusOr<google::longrunning::Operation> JobServiceClient::BatchDeleteJobs(
   google::cloud::talent::v4::BatchDeleteJobsRequest request;
   request.set_parent(parent);
   *request.mutable_names() = {names.begin(), names.end()};
-  return connection_->BatchDeleteJobs(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchDeleteJobs(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
@@ -218,21 +211,19 @@ JobServiceClient::BatchDeleteJobs(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceClient::BatchDeleteJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeleteJobs(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchDeleteJobs(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
 JobServiceClient::BatchDeleteJobs(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeleteJobs(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->BatchDeleteJobs(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::talent::v4::Job> JobServiceClient::ListJobs(

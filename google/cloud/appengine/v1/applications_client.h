@@ -189,13 +189,13 @@ class ApplicationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateApplication(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -241,13 +241,13 @@ class ApplicationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateApplicationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -297,13 +297,13 @@ class ApplicationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RepairApplication(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::RepairApplicationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<ApplicationsConnection> connection_;

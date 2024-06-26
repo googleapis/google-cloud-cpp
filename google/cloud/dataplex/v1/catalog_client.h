@@ -175,13 +175,13 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateEntryType(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::EntryType>> CreateEntryType(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -261,13 +261,13 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateEntryType(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -345,12 +345,12 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteEntryType(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType(google::cloud::ExperimentalTag,
+  DeleteEntryType(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -569,13 +569,13 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateAspectType(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::AspectType>> CreateAspectType(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -655,13 +655,13 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateAspectType(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -739,12 +739,12 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteAspectType(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType(google::cloud::ExperimentalTag,
+  DeleteAspectType(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -963,13 +963,13 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateEntryGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> CreateEntryGroup(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1049,13 +1049,13 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateEntryGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1133,12 +1133,12 @@ class CatalogServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteEntryGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup(google::cloud::ExperimentalTag,
+  DeleteEntryGroup(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

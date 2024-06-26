@@ -296,13 +296,13 @@ class TpuClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::CreateNodeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::tpu::v1::Node>> CreateNode(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -380,13 +380,13 @@ class TpuClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::DeleteNodeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -427,13 +427,13 @@ class TpuClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ReimageNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::ReimageNodeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -474,13 +474,13 @@ class TpuClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> StopNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::StopNodeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -521,13 +521,13 @@ class TpuClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> StartNode(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v1::StartNodeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

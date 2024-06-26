@@ -167,13 +167,13 @@ class IndexServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateIndex(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateIndexRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -389,13 +389,13 @@ class IndexServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateIndex(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateIndexRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -483,13 +483,12 @@ class IndexServiceClient {
               Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteIndex(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteIndexRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndex(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  DeleteIndex(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off

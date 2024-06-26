@@ -83,8 +83,7 @@ StatusOr<google::longrunning::Operation> EventarcClient::CreateTrigger(
   request.set_parent(parent);
   *request.mutable_trigger() = trigger;
   request.set_trigger_id(trigger_id);
-  return connection_->CreateTrigger(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTrigger(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
@@ -96,21 +95,19 @@ EventarcClient::CreateTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcClient::CreateTrigger(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::CreateTriggerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTrigger(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTrigger(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::CreateTrigger(google::cloud::ExperimentalTag,
+EventarcClient::CreateTrigger(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTrigger(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateTrigger(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
@@ -136,8 +133,7 @@ StatusOr<google::longrunning::Operation> EventarcClient::UpdateTrigger(
   *request.mutable_trigger() = trigger;
   *request.mutable_update_mask() = update_mask;
   request.set_allow_missing(allow_missing);
-  return connection_->UpdateTrigger(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTrigger(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
@@ -149,21 +145,19 @@ EventarcClient::UpdateTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcClient::UpdateTrigger(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTrigger(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTrigger(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::UpdateTrigger(google::cloud::ExperimentalTag,
+EventarcClient::UpdateTrigger(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTrigger(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateTrigger(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
@@ -183,8 +177,7 @@ StatusOr<google::longrunning::Operation> EventarcClient::DeleteTrigger(
   google::cloud::eventarc::v1::DeleteTriggerRequest request;
   request.set_name(name);
   request.set_allow_missing(allow_missing);
-  return connection_->DeleteTrigger(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTrigger(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
@@ -196,21 +189,19 @@ EventarcClient::DeleteTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcClient::DeleteTrigger(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTrigger(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTrigger(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcClient::DeleteTrigger(google::cloud::ExperimentalTag,
+EventarcClient::DeleteTrigger(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTrigger(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteTrigger(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel> EventarcClient::GetChannel(
@@ -264,8 +255,7 @@ StatusOr<google::longrunning::Operation> EventarcClient::CreateChannel(
   request.set_parent(parent);
   *request.mutable_channel() = channel;
   request.set_channel_id(channel_id);
-  return connection_->CreateChannel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateChannel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
@@ -277,21 +267,19 @@ EventarcClient::CreateChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcClient::CreateChannel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::CreateChannelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateChannel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateChannel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::CreateChannel(google::cloud::ExperimentalTag,
+EventarcClient::CreateChannel(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateChannel(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateChannel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
@@ -313,8 +301,7 @@ StatusOr<google::longrunning::Operation> EventarcClient::UpdateChannel(
   google::cloud::eventarc::v1::UpdateChannelRequest request;
   *request.mutable_channel() = channel;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateChannel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateChannel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
@@ -326,21 +313,19 @@ EventarcClient::UpdateChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcClient::UpdateChannel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::UpdateChannelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateChannel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateChannel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::UpdateChannel(google::cloud::ExperimentalTag,
+EventarcClient::UpdateChannel(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateChannel(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateChannel(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
@@ -356,8 +341,7 @@ StatusOr<google::longrunning::Operation> EventarcClient::DeleteChannel(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteChannelRequest request;
   request.set_name(name);
-  return connection_->DeleteChannel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteChannel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
@@ -369,21 +353,19 @@ EventarcClient::DeleteChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcClient::DeleteChannel(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::DeleteChannelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteChannel(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteChannel(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcClient::DeleteChannel(google::cloud::ExperimentalTag,
+EventarcClient::DeleteChannel(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteChannel(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteChannel(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::eventarc::v1::Provider> EventarcClient::GetProvider(
@@ -472,8 +454,8 @@ EventarcClient::CreateChannelConnection(
   request.set_parent(parent);
   *request.mutable_channel_connection() = channel_connection;
   request.set_channel_connection_id(channel_connection_id);
-  return connection_->CreateChannelConnection(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateChannelConnection(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -486,21 +468,20 @@ EventarcClient::CreateChannelConnection(
 
 StatusOr<google::longrunning::Operation>
 EventarcClient::CreateChannelConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateChannelConnection(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateChannelConnection(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcClient::CreateChannelConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateChannelConnection(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->CreateChannelConnection(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -517,8 +498,8 @@ EventarcClient::DeleteChannelConnection(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::eventarc::v1::DeleteChannelConnectionRequest request;
   request.set_name(name);
-  return connection_->DeleteChannelConnection(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteChannelConnection(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
@@ -531,21 +512,20 @@ EventarcClient::DeleteChannelConnection(
 
 StatusOr<google::longrunning::Operation>
 EventarcClient::DeleteChannelConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteChannelConnection(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteChannelConnection(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcClient::DeleteChannelConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteChannelConnection(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->DeleteChannelConnection(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>

@@ -61,20 +61,19 @@ ConfigServiceV2Client::CreateBucketAsync(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2Client::CreateBucketAsync(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::CreateBucketRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBucketAsync(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBucketAsync(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2Client::CreateBucketAsync(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBucketAsync(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateBucketAsync(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::logging::v2::LogBucket>>
@@ -86,20 +85,19 @@ ConfigServiceV2Client::UpdateBucketAsync(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2Client::UpdateBucketAsync(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::UpdateBucketRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBucketAsync(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBucketAsync(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2Client::UpdateBucketAsync(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBucketAsync(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateBucketAsync(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Client::CreateBucket(
@@ -269,8 +267,7 @@ StatusOr<google::longrunning::Operation> ConfigServiceV2Client::CreateLink(
   request.set_parent(parent);
   *request.mutable_link() = link;
   request.set_link_id(link_id);
-  return connection_->CreateLink(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateLink(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::logging::v2::Link>> ConfigServiceV2Client::CreateLink(
@@ -280,18 +277,17 @@ future<StatusOr<google::logging::v2::Link>> ConfigServiceV2Client::CreateLink(
 }
 
 StatusOr<google::longrunning::Operation> ConfigServiceV2Client::CreateLink(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::CreateLinkRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateLink(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateLink(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::logging::v2::Link>> ConfigServiceV2Client::CreateLink(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateLink(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateLink(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::logging::v2::LinkMetadata>>
@@ -307,8 +303,7 @@ StatusOr<google::longrunning::Operation> ConfigServiceV2Client::DeleteLink(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::logging::v2::DeleteLinkRequest request;
   request.set_name(name);
-  return connection_->DeleteLink(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteLink(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::logging::v2::LinkMetadata>>
@@ -319,19 +314,18 @@ ConfigServiceV2Client::DeleteLink(
 }
 
 StatusOr<google::longrunning::Operation> ConfigServiceV2Client::DeleteLink(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::DeleteLinkRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteLink(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteLink(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::logging::v2::LinkMetadata>>
 ConfigServiceV2Client::DeleteLink(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteLink(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteLink(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::logging::v2::Link> ConfigServiceV2Client::ListLinks(
@@ -495,20 +489,18 @@ ConfigServiceV2Client::CopyLogEntries(
 }
 
 StatusOr<google::longrunning::Operation> ConfigServiceV2Client::CopyLogEntries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::logging::v2::CopyLogEntriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CopyLogEntries(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CopyLogEntries(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
 ConfigServiceV2Client::CopyLogEntries(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CopyLogEntries(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CopyLogEntries(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -299,13 +299,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateSource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateSourceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -389,13 +389,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateSource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpdateSourceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -474,13 +474,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteSource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteSourceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteSource(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  DeleteSource(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -771,13 +770,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateUtilizationReport(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
-  CreateUtilizationReport(google::cloud::ExperimentalTag,
+  CreateUtilizationReport(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -857,13 +856,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteUtilizationReport(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteUtilizationReport(google::cloud::ExperimentalTag,
+  DeleteUtilizationReport(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -1088,13 +1087,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateDatacenterConnector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
-  CreateDatacenterConnector(google::cloud::ExperimentalTag,
+  CreateDatacenterConnector(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -1174,13 +1173,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDatacenterConnector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteDatacenterConnector(google::cloud::ExperimentalTag,
+  DeleteDatacenterConnector(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -1225,12 +1224,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpgradeAppliance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
-  UpgradeAppliance(google::cloud::ExperimentalTag,
+  UpgradeAppliance(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -1316,12 +1315,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateMigratingVm(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  CreateMigratingVm(google::cloud::ExperimentalTag,
+  CreateMigratingVm(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1539,12 +1538,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateMigratingVm(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
-  UpdateMigratingVm(google::cloud::ExperimentalTag,
+  UpdateMigratingVm(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1623,12 +1622,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteMigratingVm(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteMigratingVm(google::cloud::ExperimentalTag,
+  DeleteMigratingVm(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1710,12 +1709,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> StartMigration(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::StartMigrationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
-  StartMigration(google::cloud::ExperimentalTag,
+  StartMigration(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -1762,12 +1761,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ResumeMigration(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::ResumeMigrationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
-  ResumeMigration(google::cloud::ExperimentalTag,
+  ResumeMigration(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -1813,12 +1812,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> PauseMigration(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::PauseMigrationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
-  PauseMigration(google::cloud::ExperimentalTag,
+  PauseMigration(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -1900,12 +1899,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> FinalizeMigration(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
-  FinalizeMigration(google::cloud::ExperimentalTag,
+  FinalizeMigration(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1989,13 +1988,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCloneJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2072,12 +2071,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CancelCloneJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CancelCloneJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
-  CancelCloneJob(google::cloud::ExperimentalTag,
+  CancelCloneJob(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -2295,13 +2294,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCutoverJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2378,12 +2377,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CancelCutoverJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
-  CancelCutoverJob(google::cloud::ExperimentalTag,
+  CancelCutoverJob(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -2727,13 +2726,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2817,13 +2816,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpdateGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2901,13 +2900,12 @@ class VmMigrationClient {
               Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteGroup(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  DeleteGroup(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -2985,12 +2983,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AddGroupMigration(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
-  AddGroupMigration(google::cloud::ExperimentalTag,
+  AddGroupMigration(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -3070,13 +3068,13 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RemoveGroupMigration(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
-  RemoveGroupMigration(google::cloud::ExperimentalTag,
+  RemoveGroupMigration(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -3310,12 +3308,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateTargetProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  CreateTargetProject(google::cloud::ExperimentalTag,
+  CreateTargetProject(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -3409,12 +3407,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateTargetProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
-  UpdateTargetProject(google::cloud::ExperimentalTag,
+  UpdateTargetProject(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -3499,12 +3497,12 @@ class VmMigrationClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTargetProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-  DeleteTargetProject(google::cloud::ExperimentalTag,
+  DeleteTargetProject(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 

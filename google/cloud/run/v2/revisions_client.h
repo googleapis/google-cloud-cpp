@@ -297,13 +297,13 @@ class RevisionsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteRevision(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::DeleteRevisionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<RevisionsConnection> connection_;

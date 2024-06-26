@@ -180,12 +180,12 @@ class MetadataServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateMetadataStore(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-  CreateMetadataStore(google::cloud::ExperimentalTag,
+  CreateMetadataStore(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -404,13 +404,13 @@ class MetadataServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteMetadataStore(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-  DeleteMetadataStore(google::cloud::ExperimentalTag,
+  DeleteMetadataStore(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -756,12 +756,12 @@ class MetadataServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteArtifact(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteArtifact(google::cloud::ExperimentalTag,
+  DeleteArtifact(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -843,12 +843,12 @@ class MetadataServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> PurgeArtifacts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-  PurgeArtifacts(google::cloud::ExperimentalTag,
+  PurgeArtifacts(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -1193,12 +1193,12 @@ class MetadataServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteContext(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteContextRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteContext(google::cloud::ExperimentalTag,
+  DeleteContext(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -1280,12 +1280,12 @@ class MetadataServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> PurgeContexts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-  PurgeContexts(google::cloud::ExperimentalTag,
+  PurgeContexts(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -1916,12 +1916,12 @@ class MetadataServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteExecution(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteExecution(google::cloud::ExperimentalTag,
+  DeleteExecution(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -2003,12 +2003,12 @@ class MetadataServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> PurgeExecutions(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-  PurgeExecutions(google::cloud::ExperimentalTag,
+  PurgeExecutions(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 

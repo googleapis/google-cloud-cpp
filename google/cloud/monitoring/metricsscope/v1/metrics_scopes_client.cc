@@ -81,8 +81,8 @@ MetricsScopesClient::CreateMonitoredProject(
   google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest request;
   request.set_parent(parent);
   *request.mutable_monitored_project() = monitored_project;
-  return connection_->CreateMonitoredProject(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateMonitoredProject(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
@@ -96,22 +96,21 @@ MetricsScopesClient::CreateMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesClient::CreateMonitoredProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMonitoredProject(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateMonitoredProject(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesClient::CreateMonitoredProject(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMonitoredProject(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->CreateMonitoredProject(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
@@ -130,8 +129,8 @@ MetricsScopesClient::DeleteMonitoredProject(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest request;
   request.set_name(name);
-  return connection_->DeleteMonitoredProject(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteMonitoredProject(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
@@ -145,22 +144,21 @@ MetricsScopesClient::DeleteMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesClient::DeleteMonitoredProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMonitoredProject(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteMonitoredProject(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesClient::DeleteMonitoredProject(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMonitoredProject(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->DeleteMonitoredProject(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

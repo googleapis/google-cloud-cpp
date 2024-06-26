@@ -140,13 +140,13 @@ class AssetServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ExportAssets(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::asset::v1::ExportAssetsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -858,14 +858,14 @@ class AssetServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
           request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
-  AnalyzeIamPolicyLongrunning(google::cloud::ExperimentalTag,
+  AnalyzeIamPolicyLongrunning(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts = {});
 

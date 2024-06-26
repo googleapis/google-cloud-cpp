@@ -71,8 +71,8 @@ SiteSearchEngineServiceClient::CreateTargetSite(
   google::cloud::discoveryengine::v1::CreateTargetSiteRequest request;
   request.set_parent(parent);
   *request.mutable_target_site() = target_site;
-  return connection_->CreateTargetSite(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
@@ -85,21 +85,20 @@ SiteSearchEngineServiceClient::CreateTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceClient::CreateTargetSite(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTargetSite(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceClient::CreateTargetSite(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTargetSite(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->CreateTargetSite(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -114,23 +113,22 @@ SiteSearchEngineServiceClient::BatchCreateTargetSites(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceClient::BatchCreateTargetSites(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateTargetSites(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchCreateTargetSites(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<
     google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
 SiteSearchEngineServiceClient::BatchCreateTargetSites(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateTargetSites(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->BatchCreateTargetSites(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -168,8 +166,8 @@ SiteSearchEngineServiceClient::UpdateTargetSite(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::UpdateTargetSiteRequest request;
   *request.mutable_target_site() = target_site;
-  return connection_->UpdateTargetSite(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
@@ -182,21 +180,20 @@ SiteSearchEngineServiceClient::UpdateTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceClient::UpdateTargetSite(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTargetSite(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceClient::UpdateTargetSite(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTargetSite(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->UpdateTargetSite(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
@@ -215,8 +212,8 @@ SiteSearchEngineServiceClient::DeleteTargetSite(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::DeleteTargetSiteRequest request;
   request.set_name(name);
-  return connection_->DeleteTargetSite(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
@@ -229,21 +226,20 @@ SiteSearchEngineServiceClient::DeleteTargetSite(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceClient::DeleteTargetSite(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetSite(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
 SiteSearchEngineServiceClient::DeleteTargetSite(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetSite(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->DeleteTargetSite(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::TargetSite>
@@ -275,23 +271,22 @@ SiteSearchEngineServiceClient::EnableAdvancedSiteSearch(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceClient::EnableAdvancedSiteSearch(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableAdvancedSiteSearch(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->EnableAdvancedSiteSearch(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<
     google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceClient::EnableAdvancedSiteSearch(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableAdvancedSiteSearch(google::cloud::ExperimentalTag{},
-                                               operation);
+  return connection_->EnableAdvancedSiteSearch(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -306,23 +301,22 @@ SiteSearchEngineServiceClient::DisableAdvancedSiteSearch(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceClient::DisableAdvancedSiteSearch(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableAdvancedSiteSearch(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DisableAdvancedSiteSearch(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<
     google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceClient::DisableAdvancedSiteSearch(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableAdvancedSiteSearch(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DisableAdvancedSiteSearch(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
@@ -335,20 +329,19 @@ SiteSearchEngineServiceClient::RecrawlUris(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceClient::RecrawlUris(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RecrawlUris(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->RecrawlUris(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
 SiteSearchEngineServiceClient::RecrawlUris(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RecrawlUris(google::cloud::ExperimentalTag{}, operation);
+  return connection_->RecrawlUris(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -363,23 +356,22 @@ SiteSearchEngineServiceClient::BatchVerifyTargetSites(
 
 StatusOr<google::longrunning::Operation>
 SiteSearchEngineServiceClient::BatchVerifyTargetSites(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchVerifyTargetSites(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchVerifyTargetSites(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<
     google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
 SiteSearchEngineServiceClient::BatchVerifyTargetSites(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchVerifyTargetSites(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->BatchVerifyTargetSites(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::TargetSite>

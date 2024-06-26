@@ -615,14 +615,14 @@ class EntityTypesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
           request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
-  BatchUpdateEntityTypes(google::cloud::ExperimentalTag,
+  BatchUpdateEntityTypes(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -732,14 +732,14 @@ class EntityTypesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -910,13 +910,13 @@ class EntityTypesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1096,13 +1096,13 @@ class EntityTypesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1270,13 +1270,13 @@ class EntityTypesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<EntityTypesConnection> connection_;

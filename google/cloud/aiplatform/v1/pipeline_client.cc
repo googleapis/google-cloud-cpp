@@ -102,8 +102,8 @@ PipelineServiceClient::DeleteTrainingPipeline(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest request;
   request.set_name(name);
-  return connection_->DeleteTrainingPipeline(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTrainingPipeline(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -116,21 +116,20 @@ PipelineServiceClient::DeleteTrainingPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceClient::DeleteTrainingPipeline(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTrainingPipeline(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTrainingPipeline(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceClient::DeleteTrainingPipeline(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTrainingPipeline(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->DeleteTrainingPipeline(ExperimentalTag{}, operation);
 }
 
 Status PipelineServiceClient::CancelTrainingPipeline(std::string const& name,
@@ -218,8 +217,8 @@ PipelineServiceClient::DeletePipelineJob(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeletePipelineJobRequest request;
   request.set_name(name);
-  return connection_->DeletePipelineJob(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeletePipelineJob(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -232,21 +231,20 @@ PipelineServiceClient::DeletePipelineJob(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceClient::DeletePipelineJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePipelineJob(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeletePipelineJob(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceClient::DeletePipelineJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePipelineJob(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->DeletePipelineJob(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
@@ -268,8 +266,8 @@ PipelineServiceClient::BatchDeletePipelineJobs(
   google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest request;
   request.set_parent(parent);
   *request.mutable_names() = {names.begin(), names.end()};
-  return connection_->BatchDeletePipelineJobs(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchDeletePipelineJobs(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
@@ -283,22 +281,21 @@ PipelineServiceClient::BatchDeletePipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceClient::BatchDeletePipelineJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeletePipelineJobs(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchDeletePipelineJobs(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
 PipelineServiceClient::BatchDeletePipelineJobs(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeletePipelineJobs(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->BatchDeletePipelineJobs(ExperimentalTag{}, operation);
 }
 
 Status PipelineServiceClient::CancelPipelineJob(std::string const& name,
@@ -335,8 +332,8 @@ PipelineServiceClient::BatchCancelPipelineJobs(
   google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest request;
   request.set_parent(parent);
   *request.mutable_names() = {names.begin(), names.end()};
-  return connection_->BatchCancelPipelineJobs(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchCancelPipelineJobs(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
@@ -350,22 +347,21 @@ PipelineServiceClient::BatchCancelPipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceClient::BatchCancelPipelineJobs(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCancelPipelineJobs(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchCancelPipelineJobs(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
 PipelineServiceClient::BatchCancelPipelineJobs(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCancelPipelineJobs(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->BatchCancelPipelineJobs(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

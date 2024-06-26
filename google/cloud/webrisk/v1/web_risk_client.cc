@@ -122,19 +122,18 @@ WebRiskServiceClient::SubmitUri(
 }
 
 StatusOr<google::longrunning::Operation> WebRiskServiceClient::SubmitUri(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::webrisk::v1::SubmitUriRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SubmitUri(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->SubmitUri(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
-WebRiskServiceClient::SubmitUri(google::cloud::ExperimentalTag,
+WebRiskServiceClient::SubmitUri(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SubmitUri(google::cloud::ExperimentalTag{}, operation);
+  return connection_->SubmitUri(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

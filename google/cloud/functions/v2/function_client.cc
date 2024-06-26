@@ -85,8 +85,7 @@ StatusOr<google::longrunning::Operation> FunctionServiceClient::CreateFunction(
   request.set_parent(parent);
   *request.mutable_function() = function;
   request.set_function_id(function_id);
-  return connection_->CreateFunction(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateFunction(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
@@ -98,21 +97,19 @@ FunctionServiceClient::CreateFunction(
 }
 
 StatusOr<google::longrunning::Operation> FunctionServiceClient::CreateFunction(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::functions::v2::CreateFunctionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFunction(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateFunction(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceClient::CreateFunction(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFunction(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateFunction(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
@@ -134,8 +131,7 @@ StatusOr<google::longrunning::Operation> FunctionServiceClient::UpdateFunction(
   google::cloud::functions::v2::UpdateFunctionRequest request;
   *request.mutable_function() = function;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateFunction(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateFunction(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
@@ -147,21 +143,19 @@ FunctionServiceClient::UpdateFunction(
 }
 
 StatusOr<google::longrunning::Operation> FunctionServiceClient::UpdateFunction(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::functions::v2::UpdateFunctionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateFunction(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateFunction(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::Function>>
 FunctionServiceClient::UpdateFunction(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateFunction(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateFunction(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
@@ -177,8 +171,7 @@ StatusOr<google::longrunning::Operation> FunctionServiceClient::DeleteFunction(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::functions::v2::DeleteFunctionRequest request;
   request.set_name(name);
-  return connection_->DeleteFunction(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteFunction(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
@@ -190,21 +183,19 @@ FunctionServiceClient::DeleteFunction(
 }
 
 StatusOr<google::longrunning::Operation> FunctionServiceClient::DeleteFunction(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::functions::v2::DeleteFunctionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFunction(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteFunction(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
 FunctionServiceClient::DeleteFunction(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFunction(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteFunction(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>

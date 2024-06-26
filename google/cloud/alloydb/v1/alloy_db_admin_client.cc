@@ -84,8 +84,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::CreateCluster(
   request.set_parent(parent);
   *request.mutable_cluster() = cluster;
   request.set_cluster_id(cluster_id);
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -97,21 +96,19 @@ AlloyDBAdminClient::CreateCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminClient::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -133,8 +130,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::UpdateCluster(
   google::cloud::alloydb::v1::UpdateClusterRequest request;
   *request.mutable_cluster() = cluster;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -146,21 +142,19 @@ AlloyDBAdminClient::UpdateCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::UpdateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminClient::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -176,8 +170,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::DeleteCluster(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::DeleteClusterRequest request;
   request.set_name(name);
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -189,21 +182,19 @@ AlloyDBAdminClient::DeleteCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::DeleteClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminClient::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -219,8 +210,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::PromoteCluster(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::PromoteClusterRequest request;
   request.set_name(name);
-  return connection_->PromoteCluster(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->PromoteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -232,21 +222,19 @@ AlloyDBAdminClient::PromoteCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::PromoteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::PromoteClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PromoteCluster(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->PromoteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminClient::PromoteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PromoteCluster(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->PromoteCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -258,21 +246,19 @@ AlloyDBAdminClient::RestoreCluster(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::RestoreCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::RestoreClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreCluster(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->RestoreCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminClient::RestoreCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreCluster(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->RestoreCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -298,8 +284,8 @@ AlloyDBAdminClient::CreateSecondaryCluster(
   request.set_parent(parent);
   *request.mutable_cluster() = cluster;
   request.set_cluster_id(cluster_id);
-  return connection_->CreateSecondaryCluster(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSecondaryCluster(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -312,21 +298,20 @@ AlloyDBAdminClient::CreateSecondaryCluster(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminClient::CreateSecondaryCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSecondaryCluster(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSecondaryCluster(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminClient::CreateSecondaryCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSecondaryCluster(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->CreateSecondaryCluster(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::alloydb::v1::Instance>
@@ -381,8 +366,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::CreateInstance(
   request.set_parent(parent);
   *request.mutable_instance() = instance;
   request.set_instance_id(instance_id);
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -394,21 +378,19 @@ AlloyDBAdminClient::CreateInstance(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminClient::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -434,8 +416,8 @@ AlloyDBAdminClient::CreateSecondaryInstance(
   request.set_parent(parent);
   *request.mutable_instance() = instance;
   request.set_instance_id(instance_id);
-  return connection_->CreateSecondaryInstance(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSecondaryInstance(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -448,21 +430,20 @@ AlloyDBAdminClient::CreateSecondaryInstance(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminClient::CreateSecondaryInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSecondaryInstance(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSecondaryInstance(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminClient::CreateSecondaryInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSecondaryInstance(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->CreateSecondaryInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
@@ -475,21 +456,20 @@ AlloyDBAdminClient::BatchCreateInstances(
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminClient::BatchCreateInstances(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateInstances(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchCreateInstances(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
 AlloyDBAdminClient::BatchCreateInstances(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateInstances(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->BatchCreateInstances(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -511,8 +491,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::UpdateInstance(
   google::cloud::alloydb::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -524,21 +503,19 @@ AlloyDBAdminClient::UpdateInstance(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminClient::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -554,8 +531,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::DeleteInstance(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::DeleteInstanceRequest request;
   request.set_name(name);
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -567,21 +543,19 @@ AlloyDBAdminClient::DeleteInstance(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminClient::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -597,8 +571,8 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::FailoverInstance(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::FailoverInstanceRequest request;
   request.set_name(name);
-  return connection_->FailoverInstance(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->FailoverInstance(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -610,21 +584,20 @@ AlloyDBAdminClient::FailoverInstance(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::FailoverInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->FailoverInstance(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->FailoverInstance(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminClient::FailoverInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->FailoverInstance(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->FailoverInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -646,8 +619,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::InjectFault(
   google::cloud::alloydb::v1::InjectFaultRequest request;
   request.set_fault_type(fault_type);
   request.set_name(name);
-  return connection_->InjectFault(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->InjectFault(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -659,20 +631,19 @@ AlloyDBAdminClient::InjectFault(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::InjectFault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::InjectFaultRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InjectFault(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->InjectFault(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
-AlloyDBAdminClient::InjectFault(google::cloud::ExperimentalTag,
+AlloyDBAdminClient::InjectFault(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InjectFault(google::cloud::ExperimentalTag{}, operation);
+  return connection_->InjectFault(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -688,8 +659,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::RestartInstance(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::RestartInstanceRequest request;
   request.set_name(name);
-  return connection_->RestartInstance(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->RestartInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -701,21 +671,19 @@ AlloyDBAdminClient::RestartInstance(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::RestartInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::RestartInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestartInstance(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->RestartInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminClient::RestartInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestartInstance(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->RestartInstance(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::alloydb::v1::Backup> AlloyDBAdminClient::ListBackups(
@@ -767,8 +735,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::CreateBackup(
   request.set_parent(parent);
   *request.mutable_backup() = backup;
   request.set_backup_id(backup_id);
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
@@ -780,20 +747,19 @@ AlloyDBAdminClient::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::CreateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminClient::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
@@ -815,8 +781,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::UpdateBackup(
   google::cloud::alloydb::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
@@ -828,20 +793,19 @@ AlloyDBAdminClient::UpdateBackup(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::UpdateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::UpdateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminClient::UpdateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -857,8 +821,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminClient::DeleteBackup(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::alloydb::v1::DeleteBackupRequest request;
   request.set_name(name);
-  return connection_->DeleteBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
@@ -870,20 +833,19 @@ AlloyDBAdminClient::DeleteBackup(
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminClient::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::alloydb::v1::DeleteBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminClient::DeleteBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteBackup(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>

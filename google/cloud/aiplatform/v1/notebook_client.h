@@ -175,13 +175,13 @@ class NotebookServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
-  CreateNotebookRuntimeTemplate(google::cloud::ExperimentalTag,
+  CreateNotebookRuntimeTemplate(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts = {});
 
@@ -401,13 +401,13 @@ class NotebookServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntimeTemplate(google::cloud::ExperimentalTag,
+  DeleteNotebookRuntimeTemplate(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts = {});
 
@@ -569,13 +569,13 @@ class NotebookServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
-  AssignNotebookRuntime(google::cloud::ExperimentalTag,
+  AssignNotebookRuntime(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -794,13 +794,13 @@ class NotebookServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNotebookRuntime(google::cloud::ExperimentalTag,
+  DeleteNotebookRuntime(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -885,14 +885,14 @@ class NotebookServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
           request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
-  UpgradeNotebookRuntime(google::cloud::ExperimentalTag,
+  UpgradeNotebookRuntime(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -974,12 +974,12 @@ class NotebookServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> StartNotebookRuntime(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
-  StartNotebookRuntime(google::cloud::ExperimentalTag,
+  StartNotebookRuntime(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 

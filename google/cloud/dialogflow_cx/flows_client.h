@@ -510,13 +510,13 @@ class FlowsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> TrainFlow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::protobuf::Struct>> TrainFlow(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -666,13 +666,12 @@ class FlowsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportFlow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-  ImportFlow(google::cloud::ExperimentalTag,
-             google::longrunning::Operation const& operation,
+  ImportFlow(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});
 
   // clang-format off
@@ -727,13 +726,12 @@ class FlowsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ExportFlow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-  ExportFlow(google::cloud::ExperimentalTag,
-             google::longrunning::Operation const& operation,
+  ExportFlow(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});
 
  private:

@@ -119,20 +119,19 @@ AgentsClient::ExportAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsClient::ExportAgent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportAgent(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportAgent(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-AgentsClient::ExportAgent(google::cloud::ExperimentalTag,
+AgentsClient::ExportAgent(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportAgent(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ExportAgent(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsClient::RestoreAgent(
@@ -143,19 +142,18 @@ future<StatusOr<google::protobuf::Struct>> AgentsClient::RestoreAgent(
 }
 
 StatusOr<google::longrunning::Operation> AgentsClient::RestoreAgent(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreAgent(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->RestoreAgent(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>> AgentsClient::RestoreAgent(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreAgent(google::cloud::ExperimentalTag{}, operation);
+  return connection_->RestoreAgent(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>

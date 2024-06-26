@@ -59,8 +59,8 @@ DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(
   request.set_parent(parent);
   *request.mutable_deployment_resource_pool() = deployment_resource_pool;
   request.set_deployment_resource_pool_id(deployment_resource_pool_id);
-  return connection_->CreateDeploymentResourcePool(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDeploymentResourcePool(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
@@ -74,22 +74,22 @@ DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDeploymentResourcePool(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDeploymentResourcePool(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
 DeploymentResourcePoolServiceClient::CreateDeploymentResourcePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDeploymentResourcePool(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateDeploymentResourcePool(ExperimentalTag{},
+                                                   operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
@@ -142,8 +142,8 @@ DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest request;
   request.set_name(name);
-  return connection_->DeleteDeploymentResourcePool(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDeploymentResourcePool(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -157,22 +157,22 @@ DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDeploymentResourcePool(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDeploymentResourcePool(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDeploymentResourcePool(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteDeploymentResourcePool(ExperimentalTag{},
+                                                   operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

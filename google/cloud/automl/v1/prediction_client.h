@@ -348,13 +348,13 @@ class PredictionServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchPredict(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::BatchPredictRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<PredictionServiceConnection> connection_;

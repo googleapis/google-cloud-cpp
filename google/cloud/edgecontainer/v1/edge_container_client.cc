@@ -86,8 +86,7 @@ StatusOr<google::longrunning::Operation> EdgeContainerClient::CreateCluster(
   request.set_parent(parent);
   *request.mutable_cluster() = cluster;
   request.set_cluster_id(cluster_id);
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
@@ -99,21 +98,19 @@ EdgeContainerClient::CreateCluster(
 }
 
 StatusOr<google::longrunning::Operation> EdgeContainerClient::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
 EdgeContainerClient::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
@@ -135,8 +132,7 @@ StatusOr<google::longrunning::Operation> EdgeContainerClient::UpdateCluster(
   google::cloud::edgecontainer::v1::UpdateClusterRequest request;
   *request.mutable_cluster() = cluster;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
@@ -148,21 +144,19 @@ EdgeContainerClient::UpdateCluster(
 }
 
 StatusOr<google::longrunning::Operation> EdgeContainerClient::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
 EdgeContainerClient::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
@@ -188,8 +182,7 @@ StatusOr<google::longrunning::Operation> EdgeContainerClient::UpgradeCluster(
   request.set_name(name);
   request.set_target_version(target_version);
   request.set_schedule(schedule);
-  return connection_->UpgradeCluster(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpgradeCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
@@ -201,21 +194,19 @@ EdgeContainerClient::UpgradeCluster(
 }
 
 StatusOr<google::longrunning::Operation> EdgeContainerClient::UpgradeCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpgradeCluster(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpgradeCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
 EdgeContainerClient::UpgradeCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpgradeCluster(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpgradeCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -231,8 +222,7 @@ StatusOr<google::longrunning::Operation> EdgeContainerClient::DeleteCluster(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgecontainer::v1::DeleteClusterRequest request;
   request.set_name(name);
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -244,21 +234,19 @@ EdgeContainerClient::DeleteCluster(
 }
 
 StatusOr<google::longrunning::Operation> EdgeContainerClient::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerClient::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteCluster(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
@@ -350,8 +338,7 @@ StatusOr<google::longrunning::Operation> EdgeContainerClient::CreateNodePool(
   request.set_parent(parent);
   *request.mutable_node_pool() = node_pool;
   request.set_node_pool_id(node_pool_id);
-  return connection_->CreateNodePool(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateNodePool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
@@ -363,21 +350,19 @@ EdgeContainerClient::CreateNodePool(
 }
 
 StatusOr<google::longrunning::Operation> EdgeContainerClient::CreateNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateNodePool(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateNodePool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
 EdgeContainerClient::CreateNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateNodePool(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateNodePool(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
@@ -399,8 +384,7 @@ StatusOr<google::longrunning::Operation> EdgeContainerClient::UpdateNodePool(
   google::cloud::edgecontainer::v1::UpdateNodePoolRequest request;
   *request.mutable_node_pool() = node_pool;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateNodePool(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateNodePool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
@@ -412,21 +396,19 @@ EdgeContainerClient::UpdateNodePool(
 }
 
 StatusOr<google::longrunning::Operation> EdgeContainerClient::UpdateNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateNodePool(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateNodePool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
 EdgeContainerClient::UpdateNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateNodePool(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateNodePool(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -442,8 +424,7 @@ StatusOr<google::longrunning::Operation> EdgeContainerClient::DeleteNodePool(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgecontainer::v1::DeleteNodePoolRequest request;
   request.set_name(name);
-  return connection_->DeleteNodePool(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteNodePool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -455,21 +436,19 @@ EdgeContainerClient::DeleteNodePool(
 }
 
 StatusOr<google::longrunning::Operation> EdgeContainerClient::DeleteNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNodePool(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteNodePool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerClient::DeleteNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNodePool(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteNodePool(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::edgecontainer::v1::Machine>
@@ -560,8 +539,8 @@ EdgeContainerClient::CreateVpnConnection(
   request.set_parent(parent);
   *request.mutable_vpn_connection() = vpn_connection;
   request.set_vpn_connection_id(vpn_connection_id);
-  return connection_->CreateVpnConnection(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateVpnConnection(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
@@ -574,21 +553,20 @@ EdgeContainerClient::CreateVpnConnection(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerClient::CreateVpnConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateVpnConnection(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateVpnConnection(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
 EdgeContainerClient::CreateVpnConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateVpnConnection(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->CreateVpnConnection(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -607,8 +585,8 @@ EdgeContainerClient::DeleteVpnConnection(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest request;
   request.set_name(name);
-  return connection_->DeleteVpnConnection(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteVpnConnection(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
@@ -621,21 +599,20 @@ EdgeContainerClient::DeleteVpnConnection(
 
 StatusOr<google::longrunning::Operation>
 EdgeContainerClient::DeleteVpnConnection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteVpnConnection(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteVpnConnection(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
 EdgeContainerClient::DeleteVpnConnection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteVpnConnection(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->DeleteVpnConnection(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ServerConfig>

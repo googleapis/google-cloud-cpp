@@ -321,13 +321,13 @@ class RegionCommitmentsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_commitments::v1::
           InsertCommitmentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -500,13 +500,13 @@ class RegionCommitmentsClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_commitments::v1::
           UpdateCommitmentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

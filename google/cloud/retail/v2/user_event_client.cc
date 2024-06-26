@@ -57,21 +57,19 @@ UserEventServiceClient::PurgeUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceClient::PurgeUserEvents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::PurgeUserEventsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeUserEvents(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->PurgeUserEvents(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
 UserEventServiceClient::PurgeUserEvents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeUserEvents(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->PurgeUserEvents(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
@@ -84,21 +82,20 @@ UserEventServiceClient::ImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceClient::ImportUserEvents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::ImportUserEventsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportUserEvents(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportUserEvents(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceClient::ImportUserEvents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportUserEvents(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->ImportUserEvents(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
@@ -111,21 +108,20 @@ UserEventServiceClient::RejoinUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceClient::RejoinUserEvents(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::retail::v2::RejoinUserEventsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RejoinUserEvents(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->RejoinUserEvents(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceClient::RejoinUserEvents(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RejoinUserEvents(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->RejoinUserEvents(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -202,13 +202,13 @@ class BigtableInstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -436,13 +436,13 @@ class BigtableInstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> PartialUpdateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -589,13 +589,13 @@ class BigtableInstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateClusterRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -755,12 +755,12 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::Cluster const& request, Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::Cluster const& request, Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -863,13 +863,13 @@ class BigtableInstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> PartialUpdateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1199,13 +1199,13 @@ class BigtableInstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateAppProfile(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

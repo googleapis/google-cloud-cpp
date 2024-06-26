@@ -331,12 +331,12 @@ class PoliciesClient {
       google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreatePolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
 
   future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -387,12 +387,12 @@ class PoliciesClient {
       google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdatePolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
 
   future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -477,12 +477,12 @@ class PoliciesClient {
       google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeletePolicy(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
 
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<PoliciesConnection> connection_;

@@ -440,13 +440,13 @@ class WorkflowTemplateServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(google::cloud::ExperimentalTag,
+  InstantiateWorkflowTemplate(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts = {});
 
@@ -605,15 +605,15 @@ class WorkflowTemplateServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

@@ -338,8 +338,8 @@ StatusOr<google::longrunning::Operation> ProductSearchClient::ImportProductSets(
   google::cloud::vision::v1::ImportProductSetsRequest request;
   request.set_parent(parent);
   *request.mutable_input_config() = input_config;
-  return connection_->ImportProductSets(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportProductSets(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
@@ -351,21 +351,20 @@ ProductSearchClient::ImportProductSets(
 }
 
 StatusOr<google::longrunning::Operation> ProductSearchClient::ImportProductSets(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vision::v1::ImportProductSetsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportProductSets(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportProductSets(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchClient::ImportProductSets(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportProductSets(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->ImportProductSets(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
@@ -381,8 +380,7 @@ StatusOr<google::longrunning::Operation> ProductSearchClient::PurgeProducts(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::PurgeProductsRequest request;
   request.set_parent(parent);
-  return connection_->PurgeProducts(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->PurgeProducts(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
@@ -394,21 +392,19 @@ ProductSearchClient::PurgeProducts(
 }
 
 StatusOr<google::longrunning::Operation> ProductSearchClient::PurgeProducts(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vision::v1::PurgeProductsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeProducts(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->PurgeProducts(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchClient::PurgeProducts(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeProducts(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->PurgeProducts(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

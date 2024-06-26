@@ -178,13 +178,13 @@ class ModelServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::CreateModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -630,13 +630,13 @@ class ModelServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> TuneModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::TuneModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<ModelServiceConnection> connection_;

@@ -467,13 +467,13 @@ class FoldersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -589,13 +589,13 @@ class FoldersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -711,13 +711,13 @@ class FoldersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> MoveFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -820,13 +820,13 @@ class FoldersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -927,13 +927,13 @@ class FoldersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UndeleteFolder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

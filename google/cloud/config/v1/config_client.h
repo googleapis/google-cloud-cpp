@@ -305,13 +305,13 @@ class ConfigClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateDeployment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::CreateDeploymentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::config::v1::Deployment>> CreateDeployment(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -400,13 +400,13 @@ class ConfigClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateDeployment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::UpdateDeploymentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::config::v1::Deployment>> UpdateDeployment(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -483,13 +483,13 @@ class ConfigClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDeployment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::DeleteDeploymentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1009,13 +1009,13 @@ class ConfigClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> LockDeployment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::LockDeploymentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1094,13 +1094,13 @@ class ConfigClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UnlockDeployment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::UnlockDeploymentRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1237,13 +1237,13 @@ class ConfigClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreatePreview(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::CreatePreviewRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1454,13 +1454,13 @@ class ConfigClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeletePreview(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::DeletePreviewRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

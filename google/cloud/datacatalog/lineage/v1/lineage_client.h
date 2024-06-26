@@ -496,13 +496,13 @@ class LineageClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteProcess(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteProcess(google::cloud::ExperimentalTag,
+  DeleteProcess(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -838,13 +838,13 @@ class LineageClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteRun(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteRun(google::cloud::ExperimentalTag,
-            google::longrunning::Operation const& operation, Options opts = {});
+  DeleteRun(ExperimentalTag, google::longrunning::Operation const& operation,
+            Options opts = {});
 
   // clang-format off
   ///

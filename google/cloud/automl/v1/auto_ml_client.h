@@ -177,13 +177,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateDataset(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::CreateDatasetRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::Dataset>> CreateDataset(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -459,13 +459,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDataset(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::DeleteDatasetRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteDataset(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -568,13 +568,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportData(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::ImportDataRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ImportData(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -661,13 +661,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ExportData(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::ExportDataRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportData(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -812,13 +812,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::CreateModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::Model>> CreateModel(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1037,13 +1037,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::DeleteModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeleteModel(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1201,13 +1201,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeployModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::DeployModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> DeployModel(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1297,13 +1297,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UndeployModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::UndeployModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> UndeployModel(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1400,13 +1400,13 @@ class AutoMlClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ExportModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::ExportModelRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::automl::v1::OperationMetadata>> ExportModel(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

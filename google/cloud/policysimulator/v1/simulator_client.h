@@ -254,13 +254,13 @@ class SimulatorClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateReplay(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::policysimulator::v1::CreateReplayRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

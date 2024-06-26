@@ -68,8 +68,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminClient::CreateDatabase(
   google::spanner::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent(parent);
   request.set_create_statement(create_statement);
-  return connection_->CreateDatabase(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -81,21 +80,19 @@ DatabaseAdminClient::CreateDatabase(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminClient::CreateDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CreateDatabaseRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDatabase(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminClient::CreateDatabase(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDatabase(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateDatabase(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::spanner::admin::database::v1::Database>
@@ -133,8 +130,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminClient::UpdateDatabase(
   google::spanner::admin::database::v1::UpdateDatabaseRequest request;
   *request.mutable_database() = database;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateDatabase(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -146,21 +142,19 @@ DatabaseAdminClient::UpdateDatabase(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminClient::UpdateDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDatabase(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminClient::UpdateDatabase(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDatabase(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateDatabase(ExperimentalTag{}, operation);
 }
 
 future<
@@ -182,8 +176,8 @@ StatusOr<google::longrunning::Operation> DatabaseAdminClient::UpdateDatabaseDdl(
   google::spanner::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(database);
   *request.mutable_statements() = {statements.begin(), statements.end()};
-  return connection_->UpdateDatabaseDdl(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDatabaseDdl(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<
@@ -197,23 +191,22 @@ DatabaseAdminClient::UpdateDatabaseDdl(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminClient::UpdateDatabaseDdl(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDatabaseDdl(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDatabaseDdl(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminClient::UpdateDatabaseDdl(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDatabaseDdl(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateDatabaseDdl(ExperimentalTag{}, operation);
 }
 
 Status DatabaseAdminClient::DropDatabase(std::string const& database,
@@ -352,8 +345,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminClient::CreateBackup(
   request.set_parent(parent);
   *request.mutable_backup() = backup;
   request.set_backup_id(backup_id);
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
@@ -365,20 +357,19 @@ DatabaseAdminClient::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminClient::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CreateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 DatabaseAdminClient::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
@@ -406,8 +397,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminClient::CopyBackup(
   request.set_backup_id(backup_id);
   request.set_source_backup(source_backup);
   *request.mutable_expire_time() = expire_time;
-  return connection_->CopyBackup(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->CopyBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
@@ -419,20 +409,19 @@ DatabaseAdminClient::CopyBackup(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminClient::CopyBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::CopyBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CopyBackup(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->CopyBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
-DatabaseAdminClient::CopyBackup(google::cloud::ExperimentalTag,
+DatabaseAdminClient::CopyBackup(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CopyBackup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CopyBackup(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -521,8 +510,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminClient::RestoreDatabase(
   request.set_parent(parent);
   request.set_database_id(database_id);
   request.set_backup(backup);
-  return connection_->RestoreDatabase(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->RestoreDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -534,21 +522,19 @@ DatabaseAdminClient::RestoreDatabase(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminClient::RestoreDatabase(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreDatabase(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->RestoreDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminClient::RestoreDatabase(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreDatabase(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->RestoreDatabase(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::longrunning::Operation>

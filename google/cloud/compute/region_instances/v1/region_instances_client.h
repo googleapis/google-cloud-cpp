@@ -174,13 +174,13 @@ class RegionInstancesClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_instances::v1::
           BulkInsertRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

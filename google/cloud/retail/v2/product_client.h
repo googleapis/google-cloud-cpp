@@ -528,12 +528,12 @@ class ProductServiceClient {
                 Options opts = {});
 
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::PurgeProductsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-  PurgeProducts(google::cloud::ExperimentalTag,
+  PurgeProducts(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -584,12 +584,12 @@ class ProductServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportProducts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::ImportProductsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(google::cloud::ExperimentalTag,
+  ImportProducts(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -801,13 +801,12 @@ class ProductServiceClient {
                Options opts = {});
 
   StatusOr<google::longrunning::Operation> SetInventory(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::SetInventoryRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  SetInventory(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -968,12 +967,12 @@ class ProductServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(google::cloud::ExperimentalTag,
+  AddFulfillmentPlaces(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -1135,12 +1134,12 @@ class ProductServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(google::cloud::ExperimentalTag,
+  RemoveFulfillmentPlaces(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -1296,12 +1295,12 @@ class ProductServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AddLocalInventories(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(google::cloud::ExperimentalTag,
+  AddLocalInventories(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -1453,12 +1452,12 @@ class ProductServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RemoveLocalInventories(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-  RemoveLocalInventories(google::cloud::ExperimentalTag,
+  RemoveLocalInventories(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 

@@ -544,13 +544,13 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ActivateCertificateAuthority(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           ActivateCertificateAuthorityRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  ActivateCertificateAuthority(google::cloud::ExperimentalTag,
+  ActivateCertificateAuthority(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts = {});
 
@@ -650,13 +650,13 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCertificateAuthority(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           CreateCertificateAuthorityRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  CreateCertificateAuthority(google::cloud::ExperimentalTag,
+  CreateCertificateAuthority(ExperimentalTag,
                              google::longrunning::Operation const& operation,
                              Options opts = {});
 
@@ -740,13 +740,13 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DisableCertificateAuthority(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DisableCertificateAuthorityRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DisableCertificateAuthority(google::cloud::ExperimentalTag,
+  DisableCertificateAuthority(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts = {});
 
@@ -830,13 +830,13 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> EnableCertificateAuthority(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           EnableCertificateAuthorityRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  EnableCertificateAuthority(google::cloud::ExperimentalTag,
+  EnableCertificateAuthority(ExperimentalTag,
                              google::longrunning::Operation const& operation,
                              Options opts = {});
 
@@ -1157,13 +1157,13 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UndeleteCertificateAuthority(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UndeleteCertificateAuthorityRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UndeleteCertificateAuthority(google::cloud::ExperimentalTag,
+  UndeleteCertificateAuthority(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts = {});
 
@@ -1247,13 +1247,13 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCertificateAuthority(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DeleteCertificateAuthorityRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  DeleteCertificateAuthority(google::cloud::ExperimentalTag,
+  DeleteCertificateAuthority(ExperimentalTag,
                              google::longrunning::Operation const& operation,
                              Options opts = {});
 
@@ -1344,13 +1344,13 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCertificateAuthority(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateAuthorityRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
-  UpdateCertificateAuthority(google::cloud::ExperimentalTag,
+  UpdateCertificateAuthority(ExperimentalTag,
                              google::longrunning::Operation const& operation,
                              Options opts = {});
 
@@ -1439,14 +1439,14 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCaPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1528,14 +1528,14 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCaPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1753,14 +1753,13 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCaPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCaPool(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  DeleteCaPool(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -2065,7 +2064,7 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCertificateRevocationList(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateRevocationListRequest const& request,
       Options opts = {});
@@ -2073,8 +2072,8 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<
       google::cloud::security::privateca::v1::CertificateRevocationList>>
   UpdateCertificateRevocationList(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2169,13 +2168,13 @@ class CertificateAuthorityServiceClient {
                             Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCertificateTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           CreateCertificateTemplateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  CreateCertificateTemplate(google::cloud::ExperimentalTag,
+  CreateCertificateTemplate(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -2260,13 +2259,13 @@ class CertificateAuthorityServiceClient {
                             Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCertificateTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DeleteCertificateTemplateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
-  DeleteCertificateTemplate(google::cloud::ExperimentalTag,
+  DeleteCertificateTemplate(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -2499,13 +2498,13 @@ class CertificateAuthorityServiceClient {
                             Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCertificateTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateTemplateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
-  UpdateCertificateTemplate(google::cloud::ExperimentalTag,
+  UpdateCertificateTemplate(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 

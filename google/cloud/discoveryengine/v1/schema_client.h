@@ -312,13 +312,13 @@ class SchemaServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -359,13 +359,13 @@ class SchemaServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -447,13 +447,12 @@ class SchemaServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteSchema(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  DeleteSchema(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
  private:

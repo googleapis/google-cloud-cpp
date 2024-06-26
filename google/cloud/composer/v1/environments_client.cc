@@ -57,8 +57,8 @@ StatusOr<google::longrunning::Operation> EnvironmentsClient::CreateEnvironment(
       request;
   request.set_parent(parent);
   *request.mutable_environment() = environment;
-  return connection_->CreateEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<
@@ -72,23 +72,22 @@ EnvironmentsClient::CreateEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsClient::CreateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEnvironment(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateEnvironment(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
@@ -154,8 +153,8 @@ StatusOr<google::longrunning::Operation> EnvironmentsClient::UpdateEnvironment(
   request.set_name(name);
   *request.mutable_environment() = environment;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<
@@ -169,23 +168,22 @@ EnvironmentsClient::UpdateEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::UpdateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsClient::UpdateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEnvironment(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateEnvironment(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -204,8 +202,8 @@ StatusOr<google::longrunning::Operation> EnvironmentsClient::DeleteEnvironment(
   google::cloud::orchestration::airflow::service::v1::DeleteEnvironmentRequest
       request;
   request.set_name(name);
-  return connection_->DeleteEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<
@@ -219,23 +217,22 @@ EnvironmentsClient::DeleteEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::DeleteEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
 EnvironmentsClient::DeleteEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEnvironment(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->DeleteEnvironment(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -513,22 +510,21 @@ EnvironmentsClient::SaveSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::SaveSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SaveSnapshot(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->SaveSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
 EnvironmentsClient::SaveSnapshot(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SaveSnapshot(google::cloud::ExperimentalTag{}, operation);
+  return connection_->SaveSnapshot(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -542,22 +538,21 @@ EnvironmentsClient::LoadSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::LoadSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->LoadSnapshot(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->LoadSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
 EnvironmentsClient::LoadSnapshot(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->LoadSnapshot(google::cloud::ExperimentalTag{}, operation);
+  return connection_->LoadSnapshot(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -571,23 +566,22 @@ EnvironmentsClient::DatabaseFailover(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::DatabaseFailover(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DatabaseFailover(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->DatabaseFailover(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                     DatabaseFailoverResponse>>
 EnvironmentsClient::DatabaseFailover(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DatabaseFailover(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->DatabaseFailover(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::

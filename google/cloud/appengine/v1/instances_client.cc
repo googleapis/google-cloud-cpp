@@ -52,20 +52,18 @@ InstancesClient::DeleteInstance(
 }
 
 StatusOr<google::longrunning::Operation> InstancesClient::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DeleteInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-InstancesClient::DeleteInstance(google::cloud::ExperimentalTag,
+InstancesClient::DeleteInstance(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
@@ -76,20 +74,18 @@ InstancesClient::DebugInstance(
 }
 
 StatusOr<google::longrunning::Operation> InstancesClient::DebugInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::appengine::v1::DebugInstanceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DebugInstance(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DebugInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
-InstancesClient::DebugInstance(google::cloud::ExperimentalTag,
+InstancesClient::DebugInstance(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DebugInstance(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DebugInstance(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

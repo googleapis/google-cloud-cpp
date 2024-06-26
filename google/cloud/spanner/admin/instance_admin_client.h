@@ -432,13 +432,13 @@ class InstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateInstanceConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  CreateInstanceConfig(google::cloud::ExperimentalTag,
+  CreateInstanceConfig(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -636,13 +636,13 @@ class InstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  UpdateInstanceConfig(google::cloud::ExperimentalTag,
+  UpdateInstanceConfig(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -1182,13 +1182,13 @@ class InstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(google::cloud::ExperimentalTag,
+  CreateInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -1371,13 +1371,13 @@ class InstanceAdminClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(google::cloud::ExperimentalTag,
+  UpdateInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -1915,13 +1915,13 @@ class InstanceAdminClient {
                           Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateInstancePartition(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::
           CreateInstancePartitionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  CreateInstancePartition(google::cloud::ExperimentalTag,
+  CreateInstancePartition(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -2180,13 +2180,13 @@ class InstanceAdminClient {
                           Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateInstancePartition(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::
           UpdateInstancePartitionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  UpdateInstancePartition(google::cloud::ExperimentalTag,
+  UpdateInstancePartition(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 

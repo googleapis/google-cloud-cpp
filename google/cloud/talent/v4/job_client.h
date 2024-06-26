@@ -239,12 +239,12 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchCreateJobsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(google::cloud::ExperimentalTag,
+  BatchCreateJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -468,12 +468,12 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(google::cloud::ExperimentalTag,
+  BatchUpdateJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -623,12 +623,12 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(google::cloud::ExperimentalTag,
+  BatchDeleteJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 

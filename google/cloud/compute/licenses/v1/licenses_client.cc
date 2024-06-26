@@ -50,8 +50,7 @@ LicensesClient::DeleteLicense(ExperimentalTag, NoAwaitTag,
   google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest request;
   request.set_project(project);
   request.set_license(license);
-  return connection_->DeleteLicense(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteLicense(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -65,22 +64,20 @@ LicensesClient::DeleteLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesClient::DeleteLicense(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteLicense(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteLicense(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesClient::DeleteLicense(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteLicense(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteLicense(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::License> LicensesClient::GetLicense(
@@ -137,8 +134,7 @@ LicensesClient::InsertLicense(
   google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest request;
   request.set_project(project);
   *request.mutable_license_resource() = license_resource;
-  return connection_->InsertLicense(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertLicense(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -152,22 +148,20 @@ LicensesClient::InsertLicense(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 LicensesClient::InsertLicense(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertLicense(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertLicense(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 LicensesClient::InsertLicense(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertLicense(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->InsertLicense(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::License>

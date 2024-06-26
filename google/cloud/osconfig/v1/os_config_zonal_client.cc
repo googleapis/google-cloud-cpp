@@ -55,8 +55,8 @@ OsConfigZonalServiceClient::CreateOSPolicyAssignment(
   request.set_parent(parent);
   *request.mutable_os_policy_assignment() = os_policy_assignment;
   request.set_os_policy_assignment_id(os_policy_assignment_id);
-  return connection_->CreateOSPolicyAssignment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
@@ -69,21 +69,20 @@ OsConfigZonalServiceClient::CreateOSPolicyAssignment(
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceClient::CreateOSPolicyAssignment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateOSPolicyAssignment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceClient::CreateOSPolicyAssignment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateOSPolicyAssignment(google::cloud::ExperimentalTag{},
-                                               operation);
+  return connection_->CreateOSPolicyAssignment(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
@@ -106,8 +105,8 @@ OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
   google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest request;
   *request.mutable_os_policy_assignment() = os_policy_assignment;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateOSPolicyAssignment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
@@ -120,21 +119,20 @@ OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateOSPolicyAssignment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
 OsConfigZonalServiceClient::UpdateOSPolicyAssignment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateOSPolicyAssignment(google::cloud::ExperimentalTag{},
-                                               operation);
+  return connection_->UpdateOSPolicyAssignment(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -206,8 +204,8 @@ OsConfigZonalServiceClient::DeleteOSPolicyAssignment(ExperimentalTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest request;
   request.set_name(name);
-  return connection_->DeleteOSPolicyAssignment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<
@@ -221,22 +219,21 @@ OsConfigZonalServiceClient::DeleteOSPolicyAssignment(
 
 StatusOr<google::longrunning::Operation>
 OsConfigZonalServiceClient::DeleteOSPolicyAssignment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteOSPolicyAssignment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteOSPolicyAssignment(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<
     StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
 OsConfigZonalServiceClient::DeleteOSPolicyAssignment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteOSPolicyAssignment(google::cloud::ExperimentalTag{},
-                                               operation);
+  return connection_->DeleteOSPolicyAssignment(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>

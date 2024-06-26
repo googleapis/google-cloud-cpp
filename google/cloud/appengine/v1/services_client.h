@@ -196,13 +196,13 @@ class ServicesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::Service>> UpdateService(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -243,13 +243,13 @@ class ServicesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteService(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<ServicesConnection> connection_;

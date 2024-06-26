@@ -180,13 +180,13 @@ class DataScanServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateDataScan(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataScanRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -268,13 +268,13 @@ class DataScanServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateDataScan(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -354,12 +354,12 @@ class DataScanServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDataScan(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan(google::cloud::ExperimentalTag,
+  DeleteDataScan(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 

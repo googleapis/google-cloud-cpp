@@ -253,13 +253,13 @@ class TagBindingsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateTagBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-  CreateTagBinding(google::cloud::ExperimentalTag,
+  CreateTagBinding(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -341,13 +341,13 @@ class TagBindingsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-  DeleteTagBinding(google::cloud::ExperimentalTag,
+  DeleteTagBinding(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

@@ -251,12 +251,12 @@ class SecurityCenterClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
-  BulkMuteFindings(google::cloud::ExperimentalTag,
+  BulkMuteFindings(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

@@ -79,8 +79,8 @@ SnapshotSettingsClient::PatchSnapshotSettings(
   request.set_project(project);
   request.set_update_mask(update_mask);
   *request.mutable_snapshot_settings_resource() = snapshot_settings_resource;
-  return connection_->PatchSnapshotSettings(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->PatchSnapshotSettings(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,22 +94,21 @@ SnapshotSettingsClient::PatchSnapshotSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotSettingsClient::PatchSnapshotSettings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::snapshot_settings::v1::
         PatchSnapshotSettingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchSnapshotSettings(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->PatchSnapshotSettings(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsClient::PatchSnapshotSettings(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchSnapshotSettings(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->PatchSnapshotSettings(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

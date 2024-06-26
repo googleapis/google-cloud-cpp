@@ -198,13 +198,13 @@ class ConversationDatasetsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateConversationDataset(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
-  CreateConversationDataset(google::cloud::ExperimentalTag,
+  CreateConversationDataset(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -442,14 +442,14 @@ class ConversationDatasetsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteConversationDataset(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
-  DeleteConversationDataset(google::cloud::ExperimentalTag,
+  DeleteConversationDataset(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -507,14 +507,14 @@ class ConversationDatasetsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportConversationData(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
-  ImportConversationData(google::cloud::ExperimentalTag,
+  ImportConversationData(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 

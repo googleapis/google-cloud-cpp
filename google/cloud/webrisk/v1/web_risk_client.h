@@ -428,13 +428,13 @@ class WebRiskServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> SubmitUri(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::webrisk::v1::SubmitUriRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<WebRiskServiceConnection> connection_;

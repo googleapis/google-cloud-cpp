@@ -58,8 +58,7 @@ StatusOr<google::longrunning::Operation> DatastoreAdminClient::ExportEntities(
   *request.mutable_labels() = {labels.begin(), labels.end()};
   *request.mutable_entity_filter() = entity_filter;
   request.set_output_url_prefix(output_url_prefix);
-  return connection_->ExportEntities(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportEntities(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
@@ -71,21 +70,19 @@ DatastoreAdminClient::ExportEntities(
 }
 
 StatusOr<google::longrunning::Operation> DatastoreAdminClient::ExportEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::ExportEntitiesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportEntities(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportEntities(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
 DatastoreAdminClient::ExportEntities(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportEntities(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->ExportEntities(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
@@ -116,8 +113,7 @@ StatusOr<google::longrunning::Operation> DatastoreAdminClient::ImportEntities(
   *request.mutable_labels() = {labels.begin(), labels.end()};
   request.set_input_url(input_url);
   *request.mutable_entity_filter() = entity_filter;
-  return connection_->ImportEntities(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportEntities(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
@@ -129,21 +125,19 @@ DatastoreAdminClient::ImportEntities(
 }
 
 StatusOr<google::longrunning::Operation> DatastoreAdminClient::ImportEntities(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::ImportEntitiesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportEntities(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportEntities(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
 DatastoreAdminClient::ImportEntities(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportEntities(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->ImportEntities(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
@@ -155,20 +149,19 @@ DatastoreAdminClient::CreateIndex(
 }
 
 StatusOr<google::longrunning::Operation> DatastoreAdminClient::CreateIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::CreateIndexRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateIndex(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateIndex(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
 DatastoreAdminClient::CreateIndex(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateIndex(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateIndex(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
@@ -180,20 +173,19 @@ DatastoreAdminClient::DeleteIndex(
 }
 
 StatusOr<google::longrunning::Operation> DatastoreAdminClient::DeleteIndex(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::datastore::admin::v1::DeleteIndexRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteIndex(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteIndex(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::datastore::admin::v1::Index>>
 DatastoreAdminClient::DeleteIndex(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteIndex(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteIndex(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::datastore::admin::v1::Index> DatastoreAdminClient::GetIndex(

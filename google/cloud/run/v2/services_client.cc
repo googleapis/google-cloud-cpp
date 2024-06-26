@@ -52,8 +52,7 @@ StatusOr<google::longrunning::Operation> ServicesClient::CreateService(
   request.set_parent(parent);
   *request.mutable_service() = service;
   request.set_service_id(service_id);
-  return connection_->CreateService(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::CreateService(
@@ -63,19 +62,17 @@ future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::CreateService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesClient::CreateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::CreateServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateService(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::CreateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateService(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateService(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::run::v2::Service> ServicesClient::GetService(
@@ -120,8 +117,7 @@ StatusOr<google::longrunning::Operation> ServicesClient::UpdateService(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::UpdateServiceRequest request;
   *request.mutable_service() = service;
-  return connection_->UpdateService(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::UpdateService(
@@ -131,19 +127,17 @@ future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesClient::UpdateService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::UpdateServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateService(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::UpdateService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateService(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateService(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::DeleteService(
@@ -159,8 +153,7 @@ StatusOr<google::longrunning::Operation> ServicesClient::DeleteService(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::DeleteServiceRequest request;
   request.set_name(name);
-  return connection_->DeleteService(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::DeleteService(
@@ -170,19 +163,17 @@ future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesClient::DeleteService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::DeleteServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteService(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::DeleteService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteService(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteService(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::iam::v1::Policy> ServicesClient::GetIamPolicy(

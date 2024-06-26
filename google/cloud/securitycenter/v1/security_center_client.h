@@ -173,12 +173,12 @@ class SecurityCenterClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
-  BulkMuteFindings(google::cloud::ExperimentalTag,
+  BulkMuteFindings(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -2039,13 +2039,13 @@ class SecurityCenterClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RunAssetDiscovery(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
-  RunAssetDiscovery(google::cloud::ExperimentalTag,
+  RunAssetDiscovery(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 

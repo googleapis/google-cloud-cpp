@@ -122,8 +122,7 @@ StatusOr<google::longrunning::Operation> FlowsClient::TrainFlow(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::TrainFlowRequest request;
   request.set_name(name);
-  return connection_->TrainFlow(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->TrainFlow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
@@ -134,19 +133,18 @@ future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsClient::TrainFlow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TrainFlow(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->TrainFlow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TrainFlow(google::cloud::ExperimentalTag{}, operation);
+  return connection_->TrainFlow(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
@@ -183,20 +181,19 @@ FlowsClient::ImportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsClient::ImportFlow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportFlow(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportFlow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-FlowsClient::ImportFlow(google::cloud::ExperimentalTag,
+FlowsClient::ImportFlow(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportFlow(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ImportFlow(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
@@ -208,20 +205,19 @@ FlowsClient::ExportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsClient::ExportFlow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportFlow(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportFlow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-FlowsClient::ExportFlow(google::cloud::ExperimentalTag,
+FlowsClient::ExportFlow(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportFlow(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ExportFlow(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

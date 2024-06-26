@@ -54,8 +54,8 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsCluster(
   request.set_parent(parent);
   *request.mutable_aws_cluster() = aws_cluster;
   request.set_aws_cluster_id(aws_cluster_id);
-  return connection_->CreateAwsCluster(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAwsCluster(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
@@ -67,21 +67,20 @@ AwsClustersClient::CreateAwsCluster(
 }
 
 StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAwsCluster(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAwsCluster(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersClient::CreateAwsCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAwsCluster(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->CreateAwsCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
@@ -103,8 +102,8 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsCluster(
   google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest request;
   *request.mutable_aws_cluster() = aws_cluster;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateAwsCluster(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAwsCluster(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
@@ -116,21 +115,20 @@ AwsClustersClient::UpdateAwsCluster(
 }
 
 StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAwsCluster(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAwsCluster(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersClient::UpdateAwsCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAwsCluster(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->UpdateAwsCluster(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -178,8 +176,8 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsCluster(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest request;
   request.set_name(name);
-  return connection_->DeleteAwsCluster(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAwsCluster(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -191,21 +189,20 @@ AwsClustersClient::DeleteAwsCluster(
 }
 
 StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAwsCluster(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAwsCluster(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersClient::DeleteAwsCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAwsCluster(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->DeleteAwsCluster(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
@@ -248,8 +245,8 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsNodePool(
   request.set_parent(parent);
   *request.mutable_aws_node_pool() = aws_node_pool;
   request.set_aws_node_pool_id(aws_node_pool_id);
-  return connection_->CreateAwsNodePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAwsNodePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -261,21 +258,20 @@ AwsClustersClient::CreateAwsNodePool(
 }
 
 StatusOr<google::longrunning::Operation> AwsClustersClient::CreateAwsNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAwsNodePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAwsNodePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersClient::CreateAwsNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAwsNodePool(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateAwsNodePool(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -297,8 +293,8 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsNodePool(
   google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest request;
   *request.mutable_aws_node_pool() = aws_node_pool;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateAwsNodePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAwsNodePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -310,21 +306,20 @@ AwsClustersClient::UpdateAwsNodePool(
 }
 
 StatusOr<google::longrunning::Operation> AwsClustersClient::UpdateAwsNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAwsNodePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAwsNodePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersClient::UpdateAwsNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAwsNodePool(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateAwsNodePool(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -343,8 +338,8 @@ AwsClustersClient::RollbackAwsNodePoolUpdate(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest request;
   request.set_name(name);
-  return connection_->RollbackAwsNodePoolUpdate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RollbackAwsNodePoolUpdate(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -358,22 +353,21 @@ AwsClustersClient::RollbackAwsNodePoolUpdate(
 
 StatusOr<google::longrunning::Operation>
 AwsClustersClient::RollbackAwsNodePoolUpdate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RollbackAwsNodePoolUpdate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RollbackAwsNodePoolUpdate(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersClient::RollbackAwsNodePoolUpdate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RollbackAwsNodePoolUpdate(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->RollbackAwsNodePoolUpdate(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -421,8 +415,8 @@ StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsNodePool(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest request;
   request.set_name(name);
-  return connection_->DeleteAwsNodePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAwsNodePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -434,21 +428,20 @@ AwsClustersClient::DeleteAwsNodePool(
 }
 
 StatusOr<google::longrunning::Operation> AwsClustersClient::DeleteAwsNodePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAwsNodePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAwsNodePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersClient::DeleteAwsNodePool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAwsNodePool(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->DeleteAwsNodePool(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>

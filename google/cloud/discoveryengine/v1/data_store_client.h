@@ -196,12 +196,12 @@ class DataStoreServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateDataStore(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
-  CreateDataStore(google::cloud::ExperimentalTag,
+  CreateDataStore(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -438,12 +438,12 @@ class DataStoreServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDataStore(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
-  DeleteDataStore(google::cloud::ExperimentalTag,
+  DeleteDataStore(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 

@@ -291,13 +291,13 @@ class BatchServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::batch::v1::DeleteJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::batch::v1::OperationMetadata>> DeleteJob(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

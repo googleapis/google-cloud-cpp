@@ -323,13 +323,13 @@ class SecureSourceManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(google::cloud::ExperimentalTag,
+  CreateInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -409,13 +409,13 @@ class SecureSourceManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteInstance(google::cloud::ExperimentalTag,
+  DeleteInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -651,13 +651,13 @@ class SecureSourceManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateRepository(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(google::cloud::ExperimentalTag,
+  CreateRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -743,13 +743,13 @@ class SecureSourceManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteRepository(google::cloud::ExperimentalTag,
+  DeleteRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

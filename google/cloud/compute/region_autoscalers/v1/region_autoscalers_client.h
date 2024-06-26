@@ -170,13 +170,13 @@ class RegionAutoscalersClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_autoscalers::v1::
           DeleteAutoscalerRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -326,13 +326,13 @@ class RegionAutoscalersClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_autoscalers::v1::
           InsertAutoscalerRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -501,13 +501,13 @@ class RegionAutoscalersClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_autoscalers::v1::
           PatchAutoscalerRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -595,13 +595,13 @@ class RegionAutoscalersClient {
       Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_autoscalers::v1::
           UpdateAutoscalerRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

@@ -180,13 +180,13 @@ class EngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateEngine(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -276,13 +276,12 @@ class EngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteEngine(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  DeleteEngine(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off

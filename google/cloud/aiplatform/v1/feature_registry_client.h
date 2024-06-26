@@ -183,12 +183,12 @@ class FeatureRegistryServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(google::cloud::ExperimentalTag,
+  CreateFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -416,12 +416,12 @@ class FeatureRegistryServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(google::cloud::ExperimentalTag,
+  UpdateFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -506,12 +506,12 @@ class FeatureRegistryServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureGroup(google::cloud::ExperimentalTag,
+  DeleteFeatureGroup(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -605,13 +605,13 @@ class FeatureRegistryServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -845,13 +845,13 @@ class FeatureRegistryServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -931,12 +931,12 @@ class FeatureRegistryServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::cloud::ExperimentalTag,
+  DeleteFeature(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 

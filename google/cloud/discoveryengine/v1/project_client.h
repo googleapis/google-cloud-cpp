@@ -180,13 +180,13 @@ class ProjectServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ProvisionProject(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(google::cloud::ExperimentalTag,
+  ProvisionProject(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

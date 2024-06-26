@@ -72,8 +72,8 @@ JobControllerClient::SubmitJobAsOperation(
   request.set_project_id(project_id);
   request.set_region(region);
   *request.mutable_job() = job;
-  return connection_->SubmitJobAsOperation(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->SubmitJobAsOperation(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
@@ -86,21 +86,20 @@ JobControllerClient::SubmitJobAsOperation(
 
 StatusOr<google::longrunning::Operation>
 JobControllerClient::SubmitJobAsOperation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::SubmitJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SubmitJobAsOperation(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->SubmitJobAsOperation(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerClient::SubmitJobAsOperation(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SubmitJobAsOperation(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->SubmitJobAsOperation(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::GetJob(

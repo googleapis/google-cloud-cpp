@@ -84,8 +84,7 @@ StatusOr<google::longrunning::Operation> WorkflowsClient::CreateWorkflow(
   request.set_parent(parent);
   *request.mutable_workflow() = workflow;
   request.set_workflow_id(workflow_id);
-  return connection_->CreateWorkflow(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
@@ -97,21 +96,19 @@ WorkflowsClient::CreateWorkflow(
 }
 
 StatusOr<google::longrunning::Operation> WorkflowsClient::CreateWorkflow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workflows::v1::CreateWorkflowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateWorkflow(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsClient::CreateWorkflow(google::cloud::ExperimentalTag,
+WorkflowsClient::CreateWorkflow(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateWorkflow(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateWorkflow(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -127,8 +124,7 @@ StatusOr<google::longrunning::Operation> WorkflowsClient::DeleteWorkflow(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::workflows::v1::DeleteWorkflowRequest request;
   request.set_name(name);
-  return connection_->DeleteWorkflow(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -140,21 +136,19 @@ WorkflowsClient::DeleteWorkflow(
 }
 
 StatusOr<google::longrunning::Operation> WorkflowsClient::DeleteWorkflow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteWorkflow(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-WorkflowsClient::DeleteWorkflow(google::cloud::ExperimentalTag,
+WorkflowsClient::DeleteWorkflow(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteWorkflow(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteWorkflow(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
@@ -176,8 +170,7 @@ StatusOr<google::longrunning::Operation> WorkflowsClient::UpdateWorkflow(
   google::cloud::workflows::v1::UpdateWorkflowRequest request;
   *request.mutable_workflow() = workflow;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateWorkflow(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
@@ -189,21 +182,19 @@ WorkflowsClient::UpdateWorkflow(
 }
 
 StatusOr<google::longrunning::Operation> WorkflowsClient::UpdateWorkflow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateWorkflow(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
-WorkflowsClient::UpdateWorkflow(google::cloud::ExperimentalTag,
+WorkflowsClient::UpdateWorkflow(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateWorkflow(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateWorkflow(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

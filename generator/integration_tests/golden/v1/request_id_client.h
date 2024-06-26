@@ -216,10 +216,10 @@ class RequestIdServiceClient {
   RenameFoo(google::test::requestid::v1::RenameFooRequest const& request, Options opts = {});
 
   StatusOr<google::longrunning::Operation>
-  RenameFoo(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request, Options opts = {});
+  RenameFoo(ExperimentalTag, NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request, Options opts = {});
 
   future<StatusOr<google::test::requestid::v1::Foo>>
-  RenameFoo(google::cloud::ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
+  RenameFoo(ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

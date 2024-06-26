@@ -168,14 +168,14 @@ class HttpsHealthChecksClient {
                          Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpsHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::https_health_checks::v1::
           DeleteHttpsHealthCheckRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHttpsHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -325,14 +325,14 @@ class HttpsHealthChecksClient {
                          Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpsHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::https_health_checks::v1::
           InsertHttpsHealthCheckRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHttpsHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -504,14 +504,14 @@ class HttpsHealthChecksClient {
                         Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpsHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::https_health_checks::v1::
           PatchHttpsHealthCheckRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchHttpsHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -602,14 +602,14 @@ class HttpsHealthChecksClient {
                          Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpsHealthCheck(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::https_health_checks::v1::
           UpdateHttpsHealthCheckRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHttpsHealthCheck(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

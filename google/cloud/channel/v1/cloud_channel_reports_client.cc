@@ -43,20 +43,19 @@ CloudChannelReportsServiceClient::RunReportJob(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelReportsServiceClient::RunReportJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::RunReportJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunReportJob(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->RunReportJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
 CloudChannelReportsServiceClient::RunReportJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunReportJob(google::cloud::ExperimentalTag{}, operation);
+  return connection_->RunReportJob(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::channel::v1::Row>

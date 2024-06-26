@@ -205,13 +205,13 @@ class AttachedClustersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  CreateAttachedCluster(google::cloud::ExperimentalTag,
+  CreateAttachedCluster(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -314,13 +314,13 @@ class AttachedClustersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  UpdateAttachedCluster(google::cloud::ExperimentalTag,
+  UpdateAttachedCluster(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -430,13 +430,13 @@ class AttachedClustersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  ImportAttachedCluster(google::cloud::ExperimentalTag,
+  ImportAttachedCluster(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -688,13 +688,13 @@ class AttachedClustersClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAttachedCluster(google::cloud::ExperimentalTag,
+  DeleteAttachedCluster(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 

@@ -97,8 +97,7 @@ StatusOr<google::longrunning::Operation> CloudRedisClient::CreateInstance(
   request.set_parent(parent);
   request.set_instance_id(instance_id);
   *request.mutable_instance() = instance;
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -110,21 +109,19 @@ CloudRedisClient::CreateInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudRedisClient::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::CreateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -145,8 +142,7 @@ StatusOr<google::longrunning::Operation> CloudRedisClient::UpdateInstance(
   google::cloud::redis::v1::UpdateInstanceRequest request;
   *request.mutable_update_mask() = update_mask;
   *request.mutable_instance() = instance;
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -158,21 +154,19 @@ CloudRedisClient::UpdateInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudRedisClient::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::UpdateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -193,8 +187,7 @@ StatusOr<google::longrunning::Operation> CloudRedisClient::UpgradeInstance(
   google::cloud::redis::v1::UpgradeInstanceRequest request;
   request.set_name(name);
   request.set_redis_version(redis_version);
-  return connection_->UpgradeInstance(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpgradeInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -206,21 +199,19 @@ CloudRedisClient::UpgradeInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudRedisClient::UpgradeInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::UpgradeInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpgradeInstance(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpgradeInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::UpgradeInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpgradeInstance(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->UpgradeInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -241,8 +232,7 @@ StatusOr<google::longrunning::Operation> CloudRedisClient::ImportInstance(
   google::cloud::redis::v1::ImportInstanceRequest request;
   request.set_name(name);
   *request.mutable_input_config() = input_config;
-  return connection_->ImportInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -254,21 +244,19 @@ CloudRedisClient::ImportInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudRedisClient::ImportInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::ImportInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::ImportInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->ImportInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -289,8 +277,7 @@ StatusOr<google::longrunning::Operation> CloudRedisClient::ExportInstance(
   google::cloud::redis::v1::ExportInstanceRequest request;
   request.set_name(name);
   *request.mutable_output_config() = output_config;
-  return connection_->ExportInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -302,21 +289,19 @@ CloudRedisClient::ExportInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudRedisClient::ExportInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::ExportInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->ExportInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::ExportInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->ExportInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -341,8 +326,8 @@ StatusOr<google::longrunning::Operation> CloudRedisClient::FailoverInstance(
   google::cloud::redis::v1::FailoverInstanceRequest request;
   request.set_name(name);
   request.set_data_protection_mode(data_protection_mode);
-  return connection_->FailoverInstance(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->FailoverInstance(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -354,21 +339,20 @@ CloudRedisClient::FailoverInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudRedisClient::FailoverInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::FailoverInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->FailoverInstance(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->FailoverInstance(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::FailoverInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->FailoverInstance(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->FailoverInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
@@ -384,8 +368,7 @@ StatusOr<google::longrunning::Operation> CloudRedisClient::DeleteInstance(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::redis::v1::DeleteInstanceRequest request;
   request.set_name(name);
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
@@ -397,21 +380,19 @@ CloudRedisClient::DeleteInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudRedisClient::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::DeleteInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
 CloudRedisClient::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -439,8 +420,8 @@ CloudRedisClient::RescheduleMaintenance(
   request.set_name(name);
   request.set_reschedule_type(reschedule_type);
   *request.mutable_schedule_time() = schedule_time;
-  return connection_->RescheduleMaintenance(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RescheduleMaintenance(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
@@ -453,21 +434,20 @@ CloudRedisClient::RescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClient::RescheduleMaintenance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RescheduleMaintenance(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RescheduleMaintenance(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisClient::RescheduleMaintenance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RescheduleMaintenance(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->RescheduleMaintenance(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

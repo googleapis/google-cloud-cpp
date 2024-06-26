@@ -201,13 +201,13 @@ class AutokeyClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateKeyHandle(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::kms::v1::CreateKeyHandleRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

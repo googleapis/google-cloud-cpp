@@ -141,8 +141,8 @@ ConversationProfilesClient::SetSuggestionFeatureConfig(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
-  return connection_->SetSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->SetSuggestionFeatureConfig(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
@@ -172,8 +172,8 @@ ConversationProfilesClient::SetSuggestionFeatureConfig(
   request.set_conversation_profile(conversation_profile);
   request.set_participant_role(participant_role);
   *request.mutable_suggestion_feature_config() = suggestion_feature_config;
-  return connection_->SetSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->SetSuggestionFeatureConfig(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
@@ -187,22 +187,21 @@ ConversationProfilesClient::SetSuggestionFeatureConfig(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesClient::SetSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->SetSuggestionFeatureConfig(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesClient::SetSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->SetSuggestionFeatureConfig(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
@@ -221,8 +220,8 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest request;
   request.set_conversation_profile(conversation_profile);
-  return connection_->ClearSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ClearSuggestionFeatureConfig(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
@@ -252,8 +251,8 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(
   request.set_conversation_profile(conversation_profile);
   request.set_participant_role(participant_role);
   request.set_suggestion_feature_type(suggestion_feature_type);
-  return connection_->ClearSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ClearSuggestionFeatureConfig(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
@@ -267,22 +266,22 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(
 
 StatusOr<google::longrunning::Operation>
 ConversationProfilesClient::ClearSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ClearSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ClearSuggestionFeatureConfig(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
 ConversationProfilesClient::ClearSuggestionFeatureConfig(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ClearSuggestionFeatureConfig(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->ClearSuggestionFeatureConfig(ExperimentalTag{},
+                                                   operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

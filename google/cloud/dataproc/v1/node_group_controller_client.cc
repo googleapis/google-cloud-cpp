@@ -55,8 +55,7 @@ NodeGroupControllerClient::CreateNodeGroup(
   request.set_parent(parent);
   *request.mutable_node_group() = node_group;
   request.set_node_group_id(node_group_id);
-  return connection_->CreateNodeGroup(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
@@ -69,21 +68,19 @@ NodeGroupControllerClient::CreateNodeGroup(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerClient::CreateNodeGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateNodeGroup(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerClient::CreateNodeGroup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateNodeGroup(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->CreateNodeGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
@@ -104,8 +101,7 @@ NodeGroupControllerClient::ResizeNodeGroup(ExperimentalTag, NoAwaitTag,
   google::cloud::dataproc::v1::ResizeNodeGroupRequest request;
   request.set_name(name);
   request.set_size(size);
-  return connection_->ResizeNodeGroup(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->ResizeNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
@@ -118,21 +114,19 @@ NodeGroupControllerClient::ResizeNodeGroup(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerClient::ResizeNodeGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResizeNodeGroup(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->ResizeNodeGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerClient::ResizeNodeGroup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResizeNodeGroup(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->ResizeNodeGroup(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>

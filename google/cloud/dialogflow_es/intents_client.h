@@ -739,12 +739,12 @@ class IntentsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchUpdateIntents(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-  BatchUpdateIntents(google::cloud::ExperimentalTag,
+  BatchUpdateIntents(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -855,13 +855,13 @@ class IntentsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchDeleteIntents(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<IntentsConnection> connection_;

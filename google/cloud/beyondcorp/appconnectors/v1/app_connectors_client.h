@@ -328,13 +328,13 @@ class AppConnectorsServiceClient {
                      Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateAppConnector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           CreateAppConnectorRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(google::cloud::ExperimentalTag,
+  CreateAppConnector(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -425,13 +425,13 @@ class AppConnectorsServiceClient {
                      Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateAppConnector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           UpdateAppConnectorRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(google::cloud::ExperimentalTag,
+  UpdateAppConnector(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -513,14 +513,14 @@ class AppConnectorsServiceClient {
                      Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteAppConnector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                       AppConnectorOperationMetadata>>
-  DeleteAppConnector(google::cloud::ExperimentalTag,
+  DeleteAppConnector(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -608,14 +608,13 @@ class AppConnectorsServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ReportStatus(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  ReportStatus(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
  private:

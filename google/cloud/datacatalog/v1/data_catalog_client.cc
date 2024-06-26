@@ -546,21 +546,19 @@ DataCatalogClient::ReconcileTags(
 }
 
 StatusOr<google::longrunning::Operation> DataCatalogClient::ReconcileTags(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReconcileTags(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->ReconcileTags(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
 DataCatalogClient::ReconcileTags(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReconcileTags(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->ReconcileTags(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
@@ -676,21 +674,19 @@ DataCatalogClient::ImportEntries(
 }
 
 StatusOr<google::longrunning::Operation> DataCatalogClient::ImportEntries(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportEntries(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->ImportEntries(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
 DataCatalogClient::ImportEntries(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportEntries(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->ImportEntries(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

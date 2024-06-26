@@ -85,8 +85,7 @@ StatusOr<google::longrunning::Operation> CloudMemcacheClient::CreateInstance(
   request.set_parent(parent);
   *request.mutable_instance() = instance;
   request.set_instance_id(instance_id);
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -98,21 +97,19 @@ CloudMemcacheClient::CreateInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudMemcacheClient::CreateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::CreateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::CreateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -134,8 +131,7 @@ StatusOr<google::longrunning::Operation> CloudMemcacheClient::UpdateInstance(
   google::cloud::memcache::v1::UpdateInstanceRequest request;
   *request.mutable_instance() = instance;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -147,21 +143,19 @@ CloudMemcacheClient::UpdateInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudMemcacheClient::UpdateInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::UpdateInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -187,8 +181,8 @@ StatusOr<google::longrunning::Operation> CloudMemcacheClient::UpdateParameters(
   request.set_name(name);
   *request.mutable_update_mask() = update_mask;
   *request.mutable_parameters() = parameters;
-  return connection_->UpdateParameters(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateParameters(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -200,21 +194,20 @@ CloudMemcacheClient::UpdateParameters(
 }
 
 StatusOr<google::longrunning::Operation> CloudMemcacheClient::UpdateParameters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::UpdateParametersRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateParameters(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateParameters(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::UpdateParameters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateParameters(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->UpdateParameters(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
@@ -230,8 +223,7 @@ StatusOr<google::longrunning::Operation> CloudMemcacheClient::DeleteInstance(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::memcache::v1::DeleteInstanceRequest request;
   request.set_name(name);
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
@@ -243,21 +235,19 @@ CloudMemcacheClient::DeleteInstance(
 }
 
 StatusOr<google::longrunning::Operation> CloudMemcacheClient::DeleteInstance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheClient::DeleteInstance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -280,8 +270,7 @@ StatusOr<google::longrunning::Operation> CloudMemcacheClient::ApplyParameters(
   request.set_name(name);
   *request.mutable_node_ids() = {node_ids.begin(), node_ids.end()};
   request.set_apply_all(apply_all);
-  return connection_->ApplyParameters(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->ApplyParameters(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -293,21 +282,19 @@ CloudMemcacheClient::ApplyParameters(
 }
 
 StatusOr<google::longrunning::Operation> CloudMemcacheClient::ApplyParameters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::ApplyParametersRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ApplyParameters(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->ApplyParameters(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::ApplyParameters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ApplyParameters(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->ApplyParameters(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -335,8 +322,8 @@ CloudMemcacheClient::RescheduleMaintenance(
   request.set_instance(instance);
   request.set_reschedule_type(reschedule_type);
   *request.mutable_schedule_time() = schedule_time;
-  return connection_->RescheduleMaintenance(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RescheduleMaintenance(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -349,21 +336,20 @@ CloudMemcacheClient::RescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheClient::RescheduleMaintenance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RescheduleMaintenance(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RescheduleMaintenance(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheClient::RescheduleMaintenance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RescheduleMaintenance(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->RescheduleMaintenance(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

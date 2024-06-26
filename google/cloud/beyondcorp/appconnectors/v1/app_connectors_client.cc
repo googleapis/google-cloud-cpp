@@ -96,8 +96,8 @@ AppConnectorsServiceClient::CreateAppConnector(
   request.set_parent(parent);
   *request.mutable_app_connector() = app_connector;
   request.set_app_connector_id(app_connector_id);
-  return connection_->CreateAppConnector(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAppConnector(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
@@ -111,22 +111,21 @@ AppConnectorsServiceClient::CreateAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceClient::CreateAppConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appconnectors::v1::
         CreateAppConnectorRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAppConnector(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAppConnector(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceClient::CreateAppConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAppConnector(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->CreateAppConnector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
@@ -153,8 +152,8 @@ AppConnectorsServiceClient::UpdateAppConnector(
       request;
   *request.mutable_app_connector() = app_connector;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateAppConnector(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAppConnector(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
@@ -168,22 +167,21 @@ AppConnectorsServiceClient::UpdateAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceClient::UpdateAppConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appconnectors::v1::
         UpdateAppConnectorRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAppConnector(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAppConnector(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceClient::UpdateAppConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAppConnector(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->UpdateAppConnector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
@@ -205,8 +203,8 @@ AppConnectorsServiceClient::DeleteAppConnector(ExperimentalTag, NoAwaitTag,
   google::cloud::beyondcorp::appconnectors::v1::DeleteAppConnectorRequest
       request;
   request.set_name(name);
-  return connection_->DeleteAppConnector(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAppConnector(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
@@ -221,23 +219,22 @@ AppConnectorsServiceClient::DeleteAppConnector(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceClient::DeleteAppConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appconnectors::v1::
         DeleteAppConnectorRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAppConnector(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAppConnector(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                     AppConnectorOperationMetadata>>
 AppConnectorsServiceClient::DeleteAppConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAppConnector(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->DeleteAppConnector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
@@ -263,8 +260,7 @@ AppConnectorsServiceClient::ReportStatus(
   google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest request;
   request.set_app_connector(app_connector);
   *request.mutable_resource_info() = resource_info;
-  return connection_->ReportStatus(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->ReportStatus(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
@@ -278,21 +274,20 @@ AppConnectorsServiceClient::ReportStatus(
 
 StatusOr<google::longrunning::Operation>
 AppConnectorsServiceClient::ReportStatus(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReportStatus(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->ReportStatus(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
 AppConnectorsServiceClient::ReportStatus(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReportStatus(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ReportStatus(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

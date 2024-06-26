@@ -260,14 +260,14 @@ class InstanceTemplatesClient {
                          Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_templates::v1::
           DeleteInstanceTemplateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -484,14 +484,14 @@ class InstanceTemplatesClient {
                          Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_templates::v1::
           InsertInstanceTemplateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

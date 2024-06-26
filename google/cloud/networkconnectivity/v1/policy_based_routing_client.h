@@ -312,13 +312,13 @@ class PolicyBasedRoutingServiceClient {
                          Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::
           CreatePolicyBasedRouteRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(google::cloud::ExperimentalTag,
+  CreatePolicyBasedRoute(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -397,13 +397,13 @@ class PolicyBasedRoutingServiceClient {
                          Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::
           DeletePolicyBasedRouteRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(google::cloud::ExperimentalTag,
+  DeletePolicyBasedRoute(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 

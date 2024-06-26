@@ -203,13 +203,13 @@ class OsConfigZonalServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  CreateOSPolicyAssignment(google::cloud::ExperimentalTag,
+  CreateOSPolicyAssignment(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -313,13 +313,13 @@ class OsConfigZonalServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  UpdateOSPolicyAssignment(google::cloud::ExperimentalTag,
+  UpdateOSPolicyAssignment(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -646,14 +646,14 @@ class OsConfigZonalServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-  DeleteOSPolicyAssignment(google::cloud::ExperimentalTag,
+  DeleteOSPolicyAssignment(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 

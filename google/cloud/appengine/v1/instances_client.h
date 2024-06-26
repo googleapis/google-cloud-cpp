@@ -209,13 +209,13 @@ class InstancesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -263,13 +263,13 @@ class InstancesClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DebugInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DebugInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<InstancesConnection> connection_;

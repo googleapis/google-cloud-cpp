@@ -315,13 +315,13 @@ class WorkflowsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::CreateWorkflowRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -403,12 +403,12 @@ class WorkflowsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(google::cloud::ExperimentalTag,
+  DeleteWorkflow(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -499,13 +499,13 @@ class WorkflowsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<WorkflowsConnection> connection_;

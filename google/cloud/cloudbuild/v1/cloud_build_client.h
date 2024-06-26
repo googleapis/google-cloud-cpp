@@ -179,13 +179,13 @@ class CloudBuildClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateBuild(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -517,13 +517,13 @@ class CloudBuildClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RetryBuild(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -615,13 +615,13 @@ class CloudBuildClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ApproveBuild(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1042,13 +1042,13 @@ class CloudBuildClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RunBuildTrigger(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1171,12 +1171,12 @@ class CloudBuildClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateWorkerPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  CreateWorkerPool(google::cloud::ExperimentalTag,
+  CreateWorkerPool(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -1316,13 +1316,13 @@ class CloudBuildClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteWorkerPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-  DeleteWorkerPool(google::cloud::ExperimentalTag,
+  DeleteWorkerPool(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -1409,12 +1409,12 @@ class CloudBuildClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateWorkerPool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  UpdateWorkerPool(google::cloud::ExperimentalTag,
+  UpdateWorkerPool(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

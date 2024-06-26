@@ -173,12 +173,12 @@ class IndexEndpointServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-  CreateIndexEndpoint(google::cloud::ExperimentalTag,
+  CreateIndexEndpoint(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -452,12 +452,12 @@ class IndexEndpointServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndexEndpoint(google::cloud::ExperimentalTag,
+  DeleteIndexEndpoint(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -547,13 +547,12 @@ class IndexEndpointServiceClient {
               Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeployIndex(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeployIndexRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-  DeployIndex(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  DeployIndex(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -639,12 +638,12 @@ class IndexEndpointServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UndeployIndex(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-  UndeployIndex(google::cloud::ExperimentalTag,
+  UndeployIndex(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -733,12 +732,12 @@ class IndexEndpointServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> MutateDeployedIndex(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-  MutateDeployedIndex(google::cloud::ExperimentalTag,
+  MutateDeployedIndex(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 

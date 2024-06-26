@@ -155,14 +155,13 @@ class ConsumerProcurementServiceClient {
              Options opts = {});
 
   StatusOr<google::longrunning::Operation> PlaceOrder(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::commerce::consumer::procurement::v1::
           PlaceOrderRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
-  PlaceOrder(google::cloud::ExperimentalTag,
-             google::longrunning::Operation const& operation,
+  PlaceOrder(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});
 
   // clang-format off

@@ -146,8 +146,8 @@ CertificateAuthorityServiceClient::ActivateCertificateAuthority(
   google::cloud::security::privateca::v1::ActivateCertificateAuthorityRequest
       request;
   request.set_name(name);
-  return connection_->ActivateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ActivateCertificateAuthority(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -161,22 +161,22 @@ CertificateAuthorityServiceClient::ActivateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::ActivateCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ActivateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ActivateCertificateAuthority(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceClient::ActivateCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ActivateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->ActivateCertificateAuthority(ExperimentalTag{},
+                                                   operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -206,8 +206,8 @@ CertificateAuthorityServiceClient::CreateCertificateAuthority(
   request.set_parent(parent);
   *request.mutable_certificate_authority() = certificate_authority;
   request.set_certificate_authority_id(certificate_authority_id);
-  return connection_->CreateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCertificateAuthority(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -221,22 +221,21 @@ CertificateAuthorityServiceClient::CreateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::CreateCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCertificateAuthority(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceClient::CreateCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateCertificateAuthority(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -256,8 +255,8 @@ CertificateAuthorityServiceClient::DisableCertificateAuthority(
   google::cloud::security::privateca::v1::DisableCertificateAuthorityRequest
       request;
   request.set_name(name);
-  return connection_->DisableCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DisableCertificateAuthority(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -271,22 +270,21 @@ CertificateAuthorityServiceClient::DisableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::DisableCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DisableCertificateAuthority(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceClient::DisableCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableCertificateAuthority(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DisableCertificateAuthority(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -306,8 +304,8 @@ CertificateAuthorityServiceClient::EnableCertificateAuthority(
   google::cloud::security::privateca::v1::EnableCertificateAuthorityRequest
       request;
   request.set_name(name);
-  return connection_->EnableCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->EnableCertificateAuthority(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -321,22 +319,21 @@ CertificateAuthorityServiceClient::EnableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::EnableCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->EnableCertificateAuthority(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceClient::EnableCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableCertificateAuthority(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->EnableCertificateAuthority(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::security::privateca::v1::
@@ -415,8 +412,8 @@ CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
   google::cloud::security::privateca::v1::UndeleteCertificateAuthorityRequest
       request;
   request.set_name(name);
-  return connection_->UndeleteCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UndeleteCertificateAuthority(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -430,22 +427,22 @@ CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeleteCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UndeleteCertificateAuthority(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceClient::UndeleteCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeleteCertificateAuthority(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->UndeleteCertificateAuthority(ExperimentalTag{},
+                                                   operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -465,8 +462,8 @@ CertificateAuthorityServiceClient::DeleteCertificateAuthority(
   google::cloud::security::privateca::v1::DeleteCertificateAuthorityRequest
       request;
   request.set_name(name);
-  return connection_->DeleteCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCertificateAuthority(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -480,22 +477,21 @@ CertificateAuthorityServiceClient::DeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::DeleteCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCertificateAuthority(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceClient::DeleteCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCertificateAuthority(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteCertificateAuthority(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -522,8 +518,8 @@ CertificateAuthorityServiceClient::UpdateCertificateAuthority(
       request;
   *request.mutable_certificate_authority() = certificate_authority;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCertificateAuthority(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -537,22 +533,21 @@ CertificateAuthorityServiceClient::UpdateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::UpdateCertificateAuthority(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCertificateAuthority(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceClient::UpdateCertificateAuthority(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCertificateAuthority(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateCertificateAuthority(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
@@ -578,8 +573,7 @@ CertificateAuthorityServiceClient::CreateCaPool(
   request.set_parent(parent);
   *request.mutable_ca_pool() = ca_pool;
   request.set_ca_pool_id(ca_pool_id);
-  return connection_->CreateCaPool(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCaPool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
@@ -592,20 +586,19 @@ CertificateAuthorityServiceClient::CreateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::CreateCaPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCaPool(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCaPool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceClient::CreateCaPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCaPool(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateCaPool(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
@@ -628,8 +621,7 @@ CertificateAuthorityServiceClient::UpdateCaPool(
   google::cloud::security::privateca::v1::UpdateCaPoolRequest request;
   *request.mutable_ca_pool() = ca_pool;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCaPool(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCaPool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
@@ -642,20 +634,19 @@ CertificateAuthorityServiceClient::UpdateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::UpdateCaPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCaPool(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCaPool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceClient::UpdateCaPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCaPool(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateCaPool(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
@@ -708,8 +699,7 @@ CertificateAuthorityServiceClient::DeleteCaPool(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::security::privateca::v1::DeleteCaPoolRequest request;
   request.set_name(name);
-  return connection_->DeleteCaPool(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCaPool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -722,20 +712,19 @@ CertificateAuthorityServiceClient::DeleteCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::DeleteCaPool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCaPool(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCaPool(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceClient::DeleteCaPool(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCaPool(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteCaPool(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
@@ -818,8 +807,8 @@ CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
       request;
   *request.mutable_certificate_revocation_list() = certificate_revocation_list;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCertificateRevocationList(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCertificateRevocationList(ExperimentalTag{},
+                                                      NoAwaitTag{}, request);
 }
 
 future<
@@ -834,23 +823,23 @@ CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCertificateRevocationList(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCertificateRevocationList(ExperimentalTag{},
+                                                      NoAwaitTag{}, request);
 }
 
 future<
     StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
 CertificateAuthorityServiceClient::UpdateCertificateRevocationList(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCertificateRevocationList(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateCertificateRevocationList(ExperimentalTag{},
+                                                      operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
@@ -880,8 +869,8 @@ CertificateAuthorityServiceClient::CreateCertificateTemplate(
   request.set_parent(parent);
   *request.mutable_certificate_template() = certificate_template;
   request.set_certificate_template_id(certificate_template_id);
-  return connection_->CreateCertificateTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
@@ -895,22 +884,21 @@ CertificateAuthorityServiceClient::CreateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::CreateCertificateTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCertificateTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceClient::CreateCertificateTemplate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCertificateTemplate(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateCertificateTemplate(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -930,8 +918,8 @@ CertificateAuthorityServiceClient::DeleteCertificateTemplate(
   google::cloud::security::privateca::v1::DeleteCertificateTemplateRequest
       request;
   request.set_name(name);
-  return connection_->DeleteCertificateTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -945,22 +933,21 @@ CertificateAuthorityServiceClient::DeleteCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::DeleteCertificateTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCertificateTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceClient::DeleteCertificateTemplate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCertificateTemplate(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteCertificateTemplate(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -1024,8 +1011,8 @@ CertificateAuthorityServiceClient::UpdateCertificateTemplate(
       request;
   *request.mutable_certificate_template() = certificate_template;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCertificateTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
@@ -1039,22 +1026,21 @@ CertificateAuthorityServiceClient::UpdateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceClient::UpdateCertificateTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCertificateTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceClient::UpdateCertificateTemplate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCertificateTemplate(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateCertificateTemplate(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

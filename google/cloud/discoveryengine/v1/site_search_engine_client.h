@@ -243,13 +243,13 @@ class SiteSearchEngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateTargetSite(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(google::cloud::ExperimentalTag,
+  CreateTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -297,14 +297,14 @@ class SiteSearchEngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-  BatchCreateTargetSites(google::cloud::ExperimentalTag,
+  BatchCreateTargetSites(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -459,13 +459,13 @@ class SiteSearchEngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(google::cloud::ExperimentalTag,
+  UpdateTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -556,13 +556,13 @@ class SiteSearchEngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-  DeleteTargetSite(google::cloud::ExperimentalTag,
+  DeleteTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -688,14 +688,14 @@ class SiteSearchEngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-  EnableAdvancedSiteSearch(google::cloud::ExperimentalTag,
+  EnableAdvancedSiteSearch(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -740,14 +740,14 @@ class SiteSearchEngineServiceClient {
                             Options opts = {});
 
   StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           DisableAdvancedSiteSearchRequest const& request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-  DisableAdvancedSiteSearch(google::cloud::ExperimentalTag,
+  DisableAdvancedSiteSearch(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -791,13 +791,12 @@ class SiteSearchEngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RecrawlUris(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  RecrawlUris(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -844,14 +843,14 @@ class SiteSearchEngineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-  BatchVerifyTargetSites(google::cloud::ExperimentalTag,
+  BatchVerifyTargetSites(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 

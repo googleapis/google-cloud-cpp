@@ -85,8 +85,7 @@ StatusOr<google::longrunning::Operation> HubServiceClient::CreateHub(
   request.set_parent(parent);
   *request.mutable_hub() = hub;
   request.set_hub_id(hub_id);
-  return connection_->CreateHub(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateHub(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
@@ -98,20 +97,19 @@ HubServiceClient::CreateHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceClient::CreateHub(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateHub(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateHub(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-HubServiceClient::CreateHub(google::cloud::ExperimentalTag,
+HubServiceClient::CreateHub(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateHub(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateHub(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
@@ -133,8 +131,7 @@ StatusOr<google::longrunning::Operation> HubServiceClient::UpdateHub(
   google::cloud::networkconnectivity::v1::UpdateHubRequest request;
   *request.mutable_hub() = hub;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateHub(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateHub(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
@@ -146,20 +143,19 @@ HubServiceClient::UpdateHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceClient::UpdateHub(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateHub(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateHub(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-HubServiceClient::UpdateHub(google::cloud::ExperimentalTag,
+HubServiceClient::UpdateHub(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateHub(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateHub(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -175,8 +171,7 @@ StatusOr<google::longrunning::Operation> HubServiceClient::DeleteHub(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::DeleteHubRequest request;
   request.set_name(name);
-  return connection_->DeleteHub(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteHub(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -188,20 +183,19 @@ HubServiceClient::DeleteHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceClient::DeleteHub(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteHub(google::cloud::ExperimentalTag{},
-                                google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteHub(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-HubServiceClient::DeleteHub(google::cloud::ExperimentalTag,
+HubServiceClient::DeleteHub(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteHub(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteHub(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Spoke>
@@ -274,8 +268,7 @@ StatusOr<google::longrunning::Operation> HubServiceClient::CreateSpoke(
   request.set_parent(parent);
   *request.mutable_spoke() = spoke;
   request.set_spoke_id(spoke_id);
-  return connection_->CreateSpoke(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
@@ -287,20 +280,19 @@ HubServiceClient::CreateSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceClient::CreateSpoke(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSpoke(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-HubServiceClient::CreateSpoke(google::cloud::ExperimentalTag,
+HubServiceClient::CreateSpoke(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSpoke(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateSpoke(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
@@ -322,8 +314,7 @@ StatusOr<google::longrunning::Operation> HubServiceClient::UpdateSpoke(
   google::cloud::networkconnectivity::v1::UpdateSpokeRequest request;
   *request.mutable_spoke() = spoke;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateSpoke(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
@@ -335,20 +326,19 @@ HubServiceClient::UpdateSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceClient::UpdateSpoke(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSpoke(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-HubServiceClient::UpdateSpoke(google::cloud::ExperimentalTag,
+HubServiceClient::UpdateSpoke(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSpoke(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateSpoke(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
@@ -368,8 +358,7 @@ StatusOr<google::longrunning::Operation> HubServiceClient::RejectHubSpoke(
   google::cloud::networkconnectivity::v1::RejectHubSpokeRequest request;
   request.set_name(name);
   request.set_spoke_uri(spoke_uri);
-  return connection_->RejectHubSpoke(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->RejectHubSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
@@ -382,22 +371,20 @@ HubServiceClient::RejectHubSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceClient::RejectHubSpoke(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RejectHubSpoke(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->RejectHubSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
 HubServiceClient::RejectHubSpoke(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RejectHubSpoke(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->RejectHubSpoke(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
@@ -417,8 +404,7 @@ StatusOr<google::longrunning::Operation> HubServiceClient::AcceptHubSpoke(
   google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest request;
   request.set_name(name);
   request.set_spoke_uri(spoke_uri);
-  return connection_->AcceptHubSpoke(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->AcceptHubSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
@@ -431,22 +417,20 @@ HubServiceClient::AcceptHubSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceClient::AcceptHubSpoke(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AcceptHubSpoke(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->AcceptHubSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
 HubServiceClient::AcceptHubSpoke(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AcceptHubSpoke(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->AcceptHubSpoke(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -462,8 +446,7 @@ StatusOr<google::longrunning::Operation> HubServiceClient::DeleteSpoke(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkconnectivity::v1::DeleteSpokeRequest request;
   request.set_name(name);
-  return connection_->DeleteSpoke(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -475,20 +458,19 @@ HubServiceClient::DeleteSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceClient::DeleteSpoke(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSpoke(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSpoke(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-HubServiceClient::DeleteSpoke(google::cloud::ExperimentalTag,
+HubServiceClient::DeleteSpoke(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSpoke(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteSpoke(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::RouteTable>

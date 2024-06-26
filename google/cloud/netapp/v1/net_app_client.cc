@@ -69,8 +69,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateStoragePool(
   request.set_parent(parent);
   *request.mutable_storage_pool() = storage_pool;
   request.set_storage_pool_id(storage_pool_id);
-  return connection_->CreateStoragePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateStoragePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
@@ -82,21 +82,20 @@ NetAppClient::CreateStoragePool(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateStoragePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateStoragePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateStoragePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-NetAppClient::CreateStoragePool(google::cloud::ExperimentalTag,
+NetAppClient::CreateStoragePool(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateStoragePool(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateStoragePool(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::netapp::v1::StoragePool> NetAppClient::GetStoragePool(
@@ -133,8 +132,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateStoragePool(
   google::cloud::netapp::v1::UpdateStoragePoolRequest request;
   *request.mutable_storage_pool() = storage_pool;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateStoragePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateStoragePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
@@ -146,21 +145,20 @@ NetAppClient::UpdateStoragePool(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateStoragePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateStoragePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateStoragePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
-NetAppClient::UpdateStoragePool(google::cloud::ExperimentalTag,
+NetAppClient::UpdateStoragePool(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateStoragePool(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateStoragePool(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -176,8 +174,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteStoragePool(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteStoragePoolRequest request;
   request.set_name(name);
-  return connection_->DeleteStoragePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteStoragePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -189,21 +187,20 @@ NetAppClient::DeleteStoragePool(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteStoragePool(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteStoragePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteStoragePool(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteStoragePool(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppClient::DeleteStoragePool(google::cloud::ExperimentalTag,
+NetAppClient::DeleteStoragePool(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteStoragePool(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->DeleteStoragePool(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::netapp::v1::Volume> NetAppClient::ListVolumes(
@@ -254,8 +251,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateVolume(
   request.set_parent(parent);
   *request.mutable_volume() = volume;
   request.set_volume_id(volume_id);
-  return connection_->CreateVolume(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateVolume(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::CreateVolume(
@@ -266,19 +262,18 @@ future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::CreateVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateVolume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateVolumeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateVolume(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateVolume(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::CreateVolume(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateVolume(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateVolume(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::UpdateVolume(
@@ -299,8 +294,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateVolume(
   google::cloud::netapp::v1::UpdateVolumeRequest request;
   *request.mutable_volume() = volume;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateVolume(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateVolume(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::UpdateVolume(
@@ -311,19 +305,18 @@ future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::UpdateVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateVolume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateVolumeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateVolume(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateVolume(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::UpdateVolume(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateVolume(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateVolume(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -339,8 +332,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteVolume(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteVolumeRequest request;
   request.set_name(name);
-  return connection_->DeleteVolume(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteVolume(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -352,20 +344,19 @@ NetAppClient::DeleteVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteVolume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteVolumeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteVolume(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteVolume(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppClient::DeleteVolume(google::cloud::ExperimentalTag,
+NetAppClient::DeleteVolume(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteVolume(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteVolume(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::RevertVolume(
@@ -376,19 +367,18 @@ future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::RevertVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::RevertVolume(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::RevertVolumeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RevertVolume(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->RevertVolume(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>> NetAppClient::RevertVolume(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RevertVolume(google::cloud::ExperimentalTag{}, operation);
+  return connection_->RevertVolume(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::netapp::v1::Snapshot> NetAppClient::ListSnapshots(
@@ -442,8 +432,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateSnapshot(
   request.set_parent(parent);
   *request.mutable_snapshot() = snapshot;
   request.set_snapshot_id(snapshot_id);
-  return connection_->CreateSnapshot(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
@@ -455,21 +444,19 @@ NetAppClient::CreateSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateSnapshotRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSnapshot(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
-NetAppClient::CreateSnapshot(google::cloud::ExperimentalTag,
+NetAppClient::CreateSnapshot(ExperimentalTag,
                              google::longrunning::Operation const& operation,
                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSnapshot(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateSnapshot(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -485,8 +472,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteSnapshot(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteSnapshotRequest request;
   request.set_name(name);
-  return connection_->DeleteSnapshot(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -498,21 +484,19 @@ NetAppClient::DeleteSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteSnapshotRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSnapshot(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppClient::DeleteSnapshot(google::cloud::ExperimentalTag,
+NetAppClient::DeleteSnapshot(ExperimentalTag,
                              google::longrunning::Operation const& operation,
                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSnapshot(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteSnapshot(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
@@ -534,8 +518,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateSnapshot(
   google::cloud::netapp::v1::UpdateSnapshotRequest request;
   *request.mutable_snapshot() = snapshot;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateSnapshot(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
@@ -547,21 +530,19 @@ NetAppClient::UpdateSnapshot(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateSnapshot(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateSnapshotRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSnapshot(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
-NetAppClient::UpdateSnapshot(google::cloud::ExperimentalTag,
+NetAppClient::UpdateSnapshot(ExperimentalTag,
                              google::longrunning::Operation const& operation,
                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSnapshot(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateSnapshot(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::netapp::v1::ActiveDirectory>
@@ -618,8 +599,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateActiveDirectory(
   request.set_parent(parent);
   *request.mutable_active_directory() = active_directory;
   request.set_active_directory_id(active_directory_id);
-  return connection_->CreateActiveDirectory(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateActiveDirectory(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
@@ -631,21 +612,20 @@ NetAppClient::CreateActiveDirectory(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateActiveDirectory(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateActiveDirectory(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateActiveDirectory(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
 NetAppClient::CreateActiveDirectory(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateActiveDirectory(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->CreateActiveDirectory(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
@@ -667,8 +647,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateActiveDirectory(
   google::cloud::netapp::v1::UpdateActiveDirectoryRequest request;
   *request.mutable_active_directory() = active_directory;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateActiveDirectory(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateActiveDirectory(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
@@ -680,21 +660,20 @@ NetAppClient::UpdateActiveDirectory(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateActiveDirectory(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateActiveDirectory(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateActiveDirectory(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
 NetAppClient::UpdateActiveDirectory(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateActiveDirectory(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->UpdateActiveDirectory(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -710,8 +689,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteActiveDirectory(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteActiveDirectoryRequest request;
   request.set_name(name);
-  return connection_->DeleteActiveDirectory(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteActiveDirectory(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -723,21 +702,20 @@ NetAppClient::DeleteActiveDirectory(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteActiveDirectory(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteActiveDirectory(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteActiveDirectory(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppClient::DeleteActiveDirectory(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteActiveDirectory(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->DeleteActiveDirectory(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::netapp::v1::KmsConfig> NetAppClient::ListKmsConfigs(
@@ -776,8 +754,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateKmsConfig(
   request.set_parent(parent);
   *request.mutable_kms_config() = kms_config;
   request.set_kms_config_id(kms_config_id);
-  return connection_->CreateKmsConfig(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
@@ -789,21 +766,19 @@ NetAppClient::CreateKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateKmsConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateKmsConfigRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateKmsConfig(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-NetAppClient::CreateKmsConfig(google::cloud::ExperimentalTag,
+NetAppClient::CreateKmsConfig(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateKmsConfig(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->CreateKmsConfig(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig> NetAppClient::GetKmsConfig(
@@ -840,8 +815,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateKmsConfig(
   google::cloud::netapp::v1::UpdateKmsConfigRequest request;
   *request.mutable_kms_config() = kms_config;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateKmsConfig(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
@@ -853,21 +827,19 @@ NetAppClient::UpdateKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateKmsConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateKmsConfigRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateKmsConfig(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-NetAppClient::UpdateKmsConfig(google::cloud::ExperimentalTag,
+NetAppClient::UpdateKmsConfig(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateKmsConfig(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->UpdateKmsConfig(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
@@ -879,21 +851,19 @@ NetAppClient::EncryptVolumes(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::EncryptVolumes(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::EncryptVolumesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EncryptVolumes(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->EncryptVolumes(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
-NetAppClient::EncryptVolumes(google::cloud::ExperimentalTag,
+NetAppClient::EncryptVolumes(ExperimentalTag,
                              google::longrunning::Operation const& operation,
                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EncryptVolumes(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->EncryptVolumes(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
@@ -917,8 +887,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteKmsConfig(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteKmsConfigRequest request;
   request.set_name(name);
-  return connection_->DeleteKmsConfig(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -930,21 +899,19 @@ NetAppClient::DeleteKmsConfig(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteKmsConfig(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteKmsConfigRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteKmsConfig(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppClient::DeleteKmsConfig(google::cloud::ExperimentalTag,
+NetAppClient::DeleteKmsConfig(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteKmsConfig(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->DeleteKmsConfig(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::netapp::v1::Replication>
@@ -999,8 +966,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateReplication(
   request.set_parent(parent);
   *request.mutable_replication() = replication;
   request.set_replication_id(replication_id);
-  return connection_->CreateReplication(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateReplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -1012,21 +979,20 @@ NetAppClient::CreateReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateReplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateReplication(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateReplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
-NetAppClient::CreateReplication(google::cloud::ExperimentalTag,
+NetAppClient::CreateReplication(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateReplication(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateReplication(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1042,8 +1008,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteReplication(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteReplicationRequest request;
   request.set_name(name);
-  return connection_->DeleteReplication(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteReplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1055,21 +1021,20 @@ NetAppClient::DeleteReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteReplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteReplication(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteReplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppClient::DeleteReplication(google::cloud::ExperimentalTag,
+NetAppClient::DeleteReplication(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteReplication(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->DeleteReplication(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -1091,8 +1056,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateReplication(
   google::cloud::netapp::v1::UpdateReplicationRequest request;
   *request.mutable_replication() = replication;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateReplication(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateReplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -1104,21 +1069,20 @@ NetAppClient::UpdateReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateReplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateReplication(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateReplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
-NetAppClient::UpdateReplication(google::cloud::ExperimentalTag,
+NetAppClient::UpdateReplication(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateReplication(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateReplication(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -1130,21 +1094,19 @@ NetAppClient::StopReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::StopReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::StopReplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopReplication(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->StopReplication(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
-NetAppClient::StopReplication(google::cloud::ExperimentalTag,
+NetAppClient::StopReplication(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopReplication(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->StopReplication(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -1156,21 +1118,20 @@ NetAppClient::ResumeReplication(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::ResumeReplication(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::ResumeReplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResumeReplication(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->ResumeReplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
-NetAppClient::ResumeReplication(google::cloud::ExperimentalTag,
+NetAppClient::ResumeReplication(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResumeReplication(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->ResumeReplication(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -1184,22 +1145,21 @@ NetAppClient::ReverseReplicationDirection(
 
 StatusOr<google::longrunning::Operation>
 NetAppClient::ReverseReplicationDirection(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReverseReplicationDirection(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ReverseReplicationDirection(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppClient::ReverseReplicationDirection(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReverseReplicationDirection(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->ReverseReplicationDirection(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
@@ -1224,8 +1184,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateBackupVault(
   request.set_parent(parent);
   *request.mutable_backup_vault() = backup_vault;
   request.set_backup_vault_id(backup_vault_id);
-  return connection_->CreateBackupVault(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackupVault(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
@@ -1237,21 +1197,20 @@ NetAppClient::CreateBackupVault(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateBackupVault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupVaultRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackupVault(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackupVault(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
-NetAppClient::CreateBackupVault(google::cloud::ExperimentalTag,
+NetAppClient::CreateBackupVault(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackupVault(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateBackupVault(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::netapp::v1::BackupVault> NetAppClient::GetBackupVault(
@@ -1303,8 +1262,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateBackupVault(
   google::cloud::netapp::v1::UpdateBackupVaultRequest request;
   *request.mutable_backup_vault() = backup_vault;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateBackupVault(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackupVault(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
@@ -1316,21 +1275,20 @@ NetAppClient::UpdateBackupVault(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateBackupVault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupVaultRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackupVault(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackupVault(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
-NetAppClient::UpdateBackupVault(google::cloud::ExperimentalTag,
+NetAppClient::UpdateBackupVault(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackupVault(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateBackupVault(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1346,8 +1304,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteBackupVault(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteBackupVaultRequest request;
   request.set_name(name);
-  return connection_->DeleteBackupVault(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackupVault(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1359,21 +1317,20 @@ NetAppClient::DeleteBackupVault(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteBackupVault(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupVaultRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackupVault(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackupVault(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppClient::DeleteBackupVault(google::cloud::ExperimentalTag,
+NetAppClient::DeleteBackupVault(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackupVault(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->DeleteBackupVault(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::CreateBackup(
@@ -1396,8 +1353,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateBackup(
   request.set_parent(parent);
   *request.mutable_backup() = backup;
   request.set_backup_id(backup_id);
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::CreateBackup(
@@ -1408,19 +1364,18 @@ future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::CreateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateBackup(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> NetAppClient::GetBackup(
@@ -1464,8 +1419,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteBackup(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteBackupRequest request;
   request.set_name(name);
-  return connection_->DeleteBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1477,20 +1431,19 @@ NetAppClient::DeleteBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-NetAppClient::DeleteBackup(google::cloud::ExperimentalTag,
+NetAppClient::DeleteBackup(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::UpdateBackup(
@@ -1511,8 +1464,7 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateBackup(
   google::cloud::netapp::v1::UpdateBackupRequest request;
   *request.mutable_backup() = backup;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::UpdateBackup(
@@ -1523,19 +1475,18 @@ future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::UpdateBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateBackup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackup(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>> NetAppClient::UpdateBackup(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
@@ -1560,8 +1511,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::CreateBackupPolicy(
   request.set_parent(parent);
   *request.mutable_backup_policy() = backup_policy;
   request.set_backup_policy_id(backup_policy_id);
-  return connection_->CreateBackupPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackupPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
@@ -1573,21 +1524,20 @@ NetAppClient::CreateBackupPolicy(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::CreateBackupPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackupPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateBackupPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
 NetAppClient::CreateBackupPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackupPolicy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->CreateBackupPolicy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy> NetAppClient::GetBackupPolicy(
@@ -1640,8 +1590,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::UpdateBackupPolicy(
   google::cloud::netapp::v1::UpdateBackupPolicyRequest request;
   *request.mutable_backup_policy() = backup_policy;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateBackupPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackupPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
@@ -1653,21 +1603,20 @@ NetAppClient::UpdateBackupPolicy(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::UpdateBackupPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackupPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackupPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
 NetAppClient::UpdateBackupPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackupPolicy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->UpdateBackupPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1683,8 +1632,8 @@ StatusOr<google::longrunning::Operation> NetAppClient::DeleteBackupPolicy(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::netapp::v1::DeleteBackupPolicyRequest request;
   request.set_name(name);
-  return connection_->DeleteBackupPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackupPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1696,21 +1645,20 @@ NetAppClient::DeleteBackupPolicy(
 }
 
 StatusOr<google::longrunning::Operation> NetAppClient::DeleteBackupPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackupPolicy(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackupPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppClient::DeleteBackupPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackupPolicy(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->DeleteBackupPolicy(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -84,8 +84,8 @@ WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest request;
   request.set_name(name);
-  return connection_->InstantiateWorkflowTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InstantiateWorkflowTemplate(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
@@ -107,8 +107,8 @@ WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
   google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest request;
   request.set_name(name);
   *request.mutable_parameters() = {parameters.begin(), parameters.end()};
-  return connection_->InstantiateWorkflowTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InstantiateWorkflowTemplate(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
@@ -122,22 +122,21 @@ WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InstantiateWorkflowTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InstantiateWorkflowTemplate(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceClient::InstantiateWorkflowTemplate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InstantiateWorkflowTemplate(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->InstantiateWorkflowTemplate(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
@@ -161,8 +160,8 @@ WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
   google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest request;
   request.set_parent(parent);
   *request.mutable_template_() = template_;
-  return connection_->InstantiateInlineWorkflowTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InstantiateInlineWorkflowTemplate(ExperimentalTag{},
+                                                        NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
@@ -176,22 +175,22 @@ WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
 
 StatusOr<google::longrunning::Operation>
 WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::InstantiateInlineWorkflowTemplateRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InstantiateInlineWorkflowTemplate(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InstantiateInlineWorkflowTemplate(ExperimentalTag{},
+                                                        NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
 WorkflowTemplateServiceClient::InstantiateInlineWorkflowTemplate(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InstantiateInlineWorkflowTemplate(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->InstantiateInlineWorkflowTemplate(ExperimentalTag{},
+                                                        operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>

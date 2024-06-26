@@ -480,12 +480,12 @@ class TranslationServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchTranslateText(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::BatchTranslateTextRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-  BatchTranslateText(google::cloud::ExperimentalTag,
+  BatchTranslateText(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 
@@ -615,14 +615,14 @@ class TranslationServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> BatchTranslateDocument(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-  BatchTranslateDocument(google::cloud::ExperimentalTag,
+  BatchTranslateDocument(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -707,13 +707,13 @@ class TranslationServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateGlossary(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::CreateGlossaryRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -928,12 +928,12 @@ class TranslationServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteGlossary(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::DeleteGlossaryRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(google::cloud::ExperimentalTag,
+  DeleteGlossary(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 

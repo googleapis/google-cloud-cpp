@@ -250,14 +250,14 @@ class NodeTemplatesClient {
                      Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_templates::v1::
           DeleteNodeTemplateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -473,14 +473,14 @@ class NodeTemplatesClient {
                      Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_templates::v1::
           InsertNodeTemplateRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNodeTemplate(
-      google::cloud::ExperimentalTag,
+      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

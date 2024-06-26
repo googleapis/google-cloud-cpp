@@ -942,14 +942,14 @@ class AnalyticsHubServiceClient {
                         Options opts = {});
 
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           SubscribeDataExchangeRequest const& request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
-  SubscribeDataExchange(google::cloud::ExperimentalTag,
+  SubscribeDataExchange(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -1035,14 +1035,14 @@ class AnalyticsHubServiceClient {
                       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RefreshSubscription(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           RefreshSubscriptionRequest const& request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
-  RefreshSubscription(google::cloud::ExperimentalTag,
+  RefreshSubscription(ExperimentalTag,
                       google::longrunning::Operation const& operation,
                       Options opts = {});
 
@@ -1398,13 +1398,13 @@ class AnalyticsHubServiceClient {
                      Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteSubscription(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           DeleteSubscriptionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
-  DeleteSubscription(google::cloud::ExperimentalTag,
+  DeleteSubscription(ExperimentalTag,
                      google::longrunning::Operation const& operation,
                      Options opts = {});
 

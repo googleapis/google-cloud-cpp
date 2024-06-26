@@ -301,13 +301,13 @@ class ConnectorsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::CreateConnectionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -402,13 +402,13 @@ class ConnectorsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::UpdateConnectionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -486,12 +486,12 @@ class ConnectorsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::DeleteConnectionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
-  DeleteConnection(google::cloud::ExperimentalTag,
+  DeleteConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -1038,15 +1038,15 @@ class ConnectorsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::
           RefreshConnectionSchemaMetadataRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
   RefreshConnectionSchemaMetadata(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

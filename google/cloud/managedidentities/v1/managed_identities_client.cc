@@ -55,8 +55,8 @@ ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
   request.set_parent(parent);
   request.set_domain_name(domain_name);
   *request.mutable_domain() = domain;
-  return connection_->CreateMicrosoftAdDomain(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateMicrosoftAdDomain(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -70,22 +70,21 @@ ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMicrosoftAdDomain(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateMicrosoftAdDomain(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::CreateMicrosoftAdDomain(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMicrosoftAdDomain(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->CreateMicrosoftAdDomain(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
@@ -160,8 +159,7 @@ ManagedIdentitiesServiceClient::UpdateDomain(
   google::cloud::managedidentities::v1::UpdateDomainRequest request;
   *request.mutable_domain() = domain;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateDomain(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDomain(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -174,20 +172,19 @@ ManagedIdentitiesServiceClient::UpdateDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceClient::UpdateDomain(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDomain(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateDomain(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::UpdateDomain(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDomain(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateDomain(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
@@ -206,8 +203,7 @@ ManagedIdentitiesServiceClient::DeleteDomain(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedidentities::v1::DeleteDomainRequest request;
   request.set_name(name);
-  return connection_->DeleteDomain(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDomain(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
@@ -220,20 +216,19 @@ ManagedIdentitiesServiceClient::DeleteDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceClient::DeleteDomain(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDomain(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDomain(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceClient::DeleteDomain(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDomain(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteDomain(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -255,8 +250,7 @@ ManagedIdentitiesServiceClient::AttachTrust(
   google::cloud::managedidentities::v1::AttachTrustRequest request;
   request.set_name(name);
   *request.mutable_trust() = trust;
-  return connection_->AttachTrust(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->AttachTrust(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -269,20 +263,19 @@ ManagedIdentitiesServiceClient::AttachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceClient::AttachTrust(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::AttachTrustRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AttachTrust(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->AttachTrust(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::AttachTrust(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AttachTrust(google::cloud::ExperimentalTag{}, operation);
+  return connection_->AttachTrust(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -309,8 +302,8 @@ ManagedIdentitiesServiceClient::ReconfigureTrust(
   request.set_target_domain_name(target_domain_name);
   *request.mutable_target_dns_ip_addresses() = {target_dns_ip_addresses.begin(),
                                                 target_dns_ip_addresses.end()};
-  return connection_->ReconfigureTrust(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->ReconfigureTrust(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -324,22 +317,21 @@ ManagedIdentitiesServiceClient::ReconfigureTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceClient::ReconfigureTrust(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReconfigureTrust(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->ReconfigureTrust(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::ReconfigureTrust(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReconfigureTrust(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->ReconfigureTrust(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -361,8 +353,7 @@ ManagedIdentitiesServiceClient::DetachTrust(
   google::cloud::managedidentities::v1::DetachTrustRequest request;
   request.set_name(name);
   *request.mutable_trust() = trust;
-  return connection_->DetachTrust(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DetachTrust(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -375,20 +366,19 @@ ManagedIdentitiesServiceClient::DetachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceClient::DetachTrust(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::DetachTrustRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DetachTrust(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DetachTrust(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::DetachTrust(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DetachTrust(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DetachTrust(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -410,8 +400,7 @@ ManagedIdentitiesServiceClient::ValidateTrust(
   google::cloud::managedidentities::v1::ValidateTrustRequest request;
   request.set_name(name);
   *request.mutable_trust() = trust;
-  return connection_->ValidateTrust(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->ValidateTrust(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
@@ -424,21 +413,19 @@ ManagedIdentitiesServiceClient::ValidateTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceClient::ValidateTrust(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ValidateTrust(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->ValidateTrust(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceClient::ValidateTrust(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ValidateTrust(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->ValidateTrust(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -166,13 +166,12 @@ class PipelineServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RunPipeline(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
-  RunPipeline(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  RunPipeline(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
  private:

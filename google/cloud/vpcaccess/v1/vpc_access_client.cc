@@ -54,8 +54,7 @@ VpcAccessServiceClient::CreateConnector(
   request.set_parent(parent);
   request.set_connector_id(connector_id);
   *request.mutable_connector() = connector;
-  return connection_->CreateConnector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateConnector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
@@ -68,21 +67,19 @@ VpcAccessServiceClient::CreateConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceClient::CreateConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateConnector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateConnector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceClient::CreateConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateConnector(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->CreateConnector(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
@@ -131,8 +128,7 @@ VpcAccessServiceClient::DeleteConnector(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vpcaccess::v1::DeleteConnectorRequest request;
   request.set_name(name);
-  return connection_->DeleteConnector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteConnector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
@@ -145,21 +141,19 @@ VpcAccessServiceClient::DeleteConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceClient::DeleteConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteConnector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteConnector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceClient::DeleteConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteConnector(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->DeleteConnector(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

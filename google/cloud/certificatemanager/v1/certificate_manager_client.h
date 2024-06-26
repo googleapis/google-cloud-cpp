@@ -334,13 +334,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCertificate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateCertificateRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-  CreateCertificate(google::cloud::ExperimentalTag,
+  CreateCertificate(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -427,13 +427,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCertificate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
-  UpdateCertificate(google::cloud::ExperimentalTag,
+  UpdateCertificate(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -514,13 +514,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCertificate(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificate(google::cloud::ExperimentalTag,
+  DeleteCertificate(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -745,13 +745,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCertificateMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-  CreateCertificateMap(google::cloud::ExperimentalTag,
+  CreateCertificateMap(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -840,13 +840,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCertificateMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
-  UpdateCertificateMap(google::cloud::ExperimentalTag,
+  UpdateCertificateMap(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -931,13 +931,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCertificateMap(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificateMap(google::cloud::ExperimentalTag,
+  DeleteCertificateMap(ExperimentalTag,
                        google::longrunning::Operation const& operation,
                        Options opts = {});
 
@@ -1162,13 +1162,13 @@ class CertificateManagerClient {
                             Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCertificateMapEntry(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateCertificateMapEntryRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-  CreateCertificateMapEntry(google::cloud::ExperimentalTag,
+  CreateCertificateMapEntry(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -1256,13 +1256,13 @@ class CertificateManagerClient {
                             Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCertificateMapEntry(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           UpdateCertificateMapEntryRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
-  UpdateCertificateMapEntry(google::cloud::ExperimentalTag,
+  UpdateCertificateMapEntry(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -1342,13 +1342,13 @@ class CertificateManagerClient {
                             Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCertificateMapEntry(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteCertificateMapEntryRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteCertificateMapEntry(google::cloud::ExperimentalTag,
+  DeleteCertificateMapEntry(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -1573,13 +1573,13 @@ class CertificateManagerClient {
                          Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateDnsAuthorization(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateDnsAuthorizationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-  CreateDnsAuthorization(google::cloud::ExperimentalTag,
+  CreateDnsAuthorization(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -1667,13 +1667,13 @@ class CertificateManagerClient {
                          Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateDnsAuthorization(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           UpdateDnsAuthorizationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
-  UpdateDnsAuthorization(google::cloud::ExperimentalTag,
+  UpdateDnsAuthorization(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -1753,13 +1753,13 @@ class CertificateManagerClient {
                          Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDnsAuthorization(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteDnsAuthorizationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteDnsAuthorization(google::cloud::ExperimentalTag,
+  DeleteDnsAuthorization(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -1987,7 +1987,7 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCertificateIssuanceConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request,
       Options opts = {});
@@ -1995,8 +1995,8 @@ class CertificateManagerClient {
   future<StatusOr<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
   CreateCertificateIssuanceConfig(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2075,15 +2075,15 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCertificateIssuanceConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateIssuanceConfig(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2304,13 +2304,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateTrustConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-  CreateTrustConfig(google::cloud::ExperimentalTag,
+  CreateTrustConfig(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -2397,13 +2397,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateTrustConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
-  UpdateTrustConfig(google::cloud::ExperimentalTag,
+  UpdateTrustConfig(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -2484,13 +2484,13 @@ class CertificateManagerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTrustConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
-  DeleteTrustConfig(google::cloud::ExperimentalTag,
+  DeleteTrustConfig(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 

@@ -195,13 +195,13 @@ class ConversationModelsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateConversationModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(google::cloud::ExperimentalTag,
+  CreateConversationModel(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -436,14 +436,14 @@ class ConversationModelsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel(google::cloud::ExperimentalTag,
+  DeleteConversationModel(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -501,14 +501,14 @@ class ConversationModelsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeployConversationModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel(google::cloud::ExperimentalTag,
+  DeployConversationModel(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -566,14 +566,14 @@ class ConversationModelsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UndeployConversationModel(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::v2::
                       UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel(google::cloud::ExperimentalTag,
+  UndeployConversationModel(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts = {});
 
@@ -799,15 +799,15 @@ class ConversationModelsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::
           CreateConversationModelEvaluationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConversationModelsConnection> connection_;

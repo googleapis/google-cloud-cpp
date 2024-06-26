@@ -179,13 +179,13 @@ class RapidMigrationAssessmentClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  CreateCollector(google::cloud::ExperimentalTag,
+  CreateCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -270,13 +270,13 @@ class RapidMigrationAssessmentClient {
                    Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateAnnotation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           CreateAnnotationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
-  CreateAnnotation(google::cloud::ExperimentalTag,
+  CreateAnnotation(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -556,13 +556,13 @@ class RapidMigrationAssessmentClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  UpdateCollector(google::cloud::ExperimentalTag,
+  UpdateCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -644,13 +644,13 @@ class RapidMigrationAssessmentClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  DeleteCollector(google::cloud::ExperimentalTag,
+  DeleteCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -730,13 +730,13 @@ class RapidMigrationAssessmentClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ResumeCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  ResumeCollector(google::cloud::ExperimentalTag,
+  ResumeCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -815,13 +815,13 @@ class RapidMigrationAssessmentClient {
                     Options opts = {});
 
   StatusOr<google::longrunning::Operation> RegisterCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           RegisterCollectorRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  RegisterCollector(google::cloud::ExperimentalTag,
+  RegisterCollector(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -901,13 +901,13 @@ class RapidMigrationAssessmentClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> PauseCollector(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  PauseCollector(google::cloud::ExperimentalTag,
+  PauseCollector(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 

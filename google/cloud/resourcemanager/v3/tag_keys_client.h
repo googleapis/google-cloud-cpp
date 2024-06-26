@@ -372,13 +372,13 @@ class TagKeysClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateTagKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> CreateTagKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -463,13 +463,13 @@ class TagKeysClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateTagKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> UpdateTagKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -551,13 +551,13 @@ class TagKeysClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteTagKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> DeleteTagKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

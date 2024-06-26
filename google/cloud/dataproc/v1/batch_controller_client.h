@@ -172,13 +172,13 @@ class BatchControllerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateBatch(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateBatchRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

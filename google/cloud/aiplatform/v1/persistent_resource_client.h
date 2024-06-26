@@ -183,13 +183,13 @@ class PersistentResourceServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreatePersistentResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  CreatePersistentResource(google::cloud::ExperimentalTag,
+  CreatePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -407,13 +407,13 @@ class PersistentResourceServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeletePersistentResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeletePersistentResource(google::cloud::ExperimentalTag,
+  DeletePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -505,13 +505,13 @@ class PersistentResourceServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdatePersistentResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  UpdatePersistentResource(google::cloud::ExperimentalTag,
+  UpdatePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -593,13 +593,13 @@ class PersistentResourceServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RebootPersistentResource(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
-  RebootPersistentResource(google::cloud::ExperimentalTag,
+  RebootPersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 

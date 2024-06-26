@@ -54,8 +54,8 @@ MachineImagesClient::DeleteMachineImage(ExperimentalTag, NoAwaitTag,
       request;
   request.set_project(project);
   request.set_machine_image(machine_image);
-  return connection_->DeleteMachineImage(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteMachineImage(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -69,22 +69,21 @@ MachineImagesClient::DeleteMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesClient::DeleteMachineImage(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::machine_images::v1::
         DeleteMachineImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMachineImage(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteMachineImage(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesClient::DeleteMachineImage(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMachineImage(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->DeleteMachineImage(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
@@ -150,8 +149,8 @@ MachineImagesClient::InsertMachineImage(
       request;
   request.set_project(project);
   *request.mutable_machine_image_resource() = machine_image_resource;
-  return connection_->InsertMachineImage(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertMachineImage(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -165,22 +164,21 @@ MachineImagesClient::InsertMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesClient::InsertMachineImage(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::machine_images::v1::
         InsertMachineImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertMachineImage(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertMachineImage(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesClient::InsertMachineImage(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertMachineImage(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->InsertMachineImage(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineImage>

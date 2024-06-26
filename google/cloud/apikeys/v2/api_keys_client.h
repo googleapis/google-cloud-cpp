@@ -182,13 +182,13 @@ class ApiKeysClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::CreateKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -490,13 +490,13 @@ class ApiKeysClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::UpdateKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -582,13 +582,13 @@ class ApiKeysClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::DeleteKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -632,13 +632,13 @@ class ApiKeysClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UndeleteKey(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::UndeleteKeyRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

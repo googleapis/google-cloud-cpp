@@ -1510,12 +1510,12 @@ class ProductSearchClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportProductSets(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::ImportProductSetsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(google::cloud::ExperimentalTag,
+  ImportProductSets(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1644,12 +1644,12 @@ class ProductSearchClient {
                 Options opts = {});
 
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::PurgeProductsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-  PurgeProducts(google::cloud::ExperimentalTag,
+  PurgeProducts(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 

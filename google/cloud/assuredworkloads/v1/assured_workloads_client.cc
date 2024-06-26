@@ -53,8 +53,7 @@ AssuredWorkloadsServiceClient::CreateWorkload(
   google::cloud::assuredworkloads::v1::CreateWorkloadRequest request;
   request.set_parent(parent);
   *request.mutable_workload() = workload;
-  return connection_->CreateWorkload(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateWorkload(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
@@ -67,21 +66,19 @@ AssuredWorkloadsServiceClient::CreateWorkload(
 
 StatusOr<google::longrunning::Operation>
 AssuredWorkloadsServiceClient::CreateWorkload(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateWorkload(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateWorkload(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceClient::CreateWorkload(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateWorkload(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateWorkload(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>

@@ -324,12 +324,12 @@ class ImageAnnotatorClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(google::cloud::ExperimentalTag,
+  AsyncBatchAnnotateImages(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -424,12 +424,12 @@ class ImageAnnotatorClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(google::cloud::ExperimentalTag,
+  AsyncBatchAnnotateFiles(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 

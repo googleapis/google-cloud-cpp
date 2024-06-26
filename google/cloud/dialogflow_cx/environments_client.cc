@@ -84,8 +84,8 @@ StatusOr<google::longrunning::Operation> EnvironmentsClient::CreateEnvironment(
   google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest request;
   request.set_parent(parent);
   *request.mutable_environment() = environment;
-  return connection_->CreateEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -97,21 +97,20 @@ EnvironmentsClient::CreateEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::CreateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsClient::CreateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEnvironment(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateEnvironment(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -133,8 +132,8 @@ StatusOr<google::longrunning::Operation> EnvironmentsClient::UpdateEnvironment(
   google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest request;
   *request.mutable_environment() = environment;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -146,21 +145,20 @@ EnvironmentsClient::UpdateEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::UpdateEnvironment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEnvironment(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateEnvironment(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsClient::UpdateEnvironment(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEnvironment(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateEnvironment(ExperimentalTag{}, operation);
 }
 
 Status EnvironmentsClient::DeleteEnvironment(std::string const& name,
@@ -204,21 +202,20 @@ EnvironmentsClient::RunContinuousTest(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::RunContinuousTest(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunContinuousTest(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->RunContinuousTest(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
 EnvironmentsClient::RunContinuousTest(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunContinuousTest(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->RunContinuousTest(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
@@ -247,20 +244,19 @@ EnvironmentsClient::DeployFlow(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::DeployFlow(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployFlow(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->DeployFlow(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-EnvironmentsClient::DeployFlow(google::cloud::ExperimentalTag,
+EnvironmentsClient::DeployFlow(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployFlow(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeployFlow(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

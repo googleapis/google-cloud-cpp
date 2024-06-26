@@ -89,8 +89,8 @@ NetworkServicesClient::CreateEndpointPolicy(
   request.set_parent(parent);
   *request.mutable_endpoint_policy() = endpoint_policy;
   request.set_endpoint_policy_id(endpoint_policy_id);
-  return connection_->CreateEndpointPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEndpointPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
@@ -104,22 +104,21 @@ NetworkServicesClient::CreateEndpointPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesClient::CreateEndpointPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEndpointPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEndpointPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
 NetworkServicesClient::CreateEndpointPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEndpointPolicy(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->CreateEndpointPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
@@ -142,8 +141,8 @@ NetworkServicesClient::UpdateEndpointPolicy(
   google::cloud::networkservices::v1::UpdateEndpointPolicyRequest request;
   *request.mutable_endpoint_policy() = endpoint_policy;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateEndpointPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateEndpointPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
@@ -157,22 +156,21 @@ NetworkServicesClient::UpdateEndpointPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesClient::UpdateEndpointPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEndpointPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateEndpointPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
 NetworkServicesClient::UpdateEndpointPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEndpointPolicy(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->UpdateEndpointPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -191,8 +189,8 @@ NetworkServicesClient::DeleteEndpointPolicy(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteEndpointPolicyRequest request;
   request.set_name(name);
-  return connection_->DeleteEndpointPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteEndpointPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -206,22 +204,21 @@ NetworkServicesClient::DeleteEndpointPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesClient::DeleteEndpointPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEndpointPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteEndpointPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteEndpointPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEndpointPolicy(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->DeleteEndpointPolicy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networkservices::v1::Gateway>
@@ -278,8 +275,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateGateway(
   request.set_parent(parent);
   *request.mutable_gateway() = gateway;
   request.set_gateway_id(gateway_id);
-  return connection_->CreateGateway(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateGateway(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
@@ -291,21 +287,19 @@ NetworkServicesClient::CreateGateway(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGateway(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateGateway(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
 NetworkServicesClient::CreateGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGateway(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateGateway(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
@@ -327,8 +321,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateGateway(
   google::cloud::networkservices::v1::UpdateGatewayRequest request;
   *request.mutable_gateway() = gateway;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateGateway(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateGateway(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
@@ -340,21 +333,19 @@ NetworkServicesClient::UpdateGateway(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGateway(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateGateway(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
 NetworkServicesClient::UpdateGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGateway(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateGateway(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -370,8 +361,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteGateway(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteGatewayRequest request;
   request.set_name(name);
-  return connection_->DeleteGateway(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteGateway(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -383,21 +373,19 @@ NetworkServicesClient::DeleteGateway(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteGateway(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGateway(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteGateway(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteGateway(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGateway(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteGateway(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networkservices::v1::GrpcRoute>
@@ -454,8 +442,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateGrpcRoute(
   request.set_parent(parent);
   *request.mutable_grpc_route() = grpc_route;
   request.set_grpc_route_id(grpc_route_id);
-  return connection_->CreateGrpcRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateGrpcRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -467,21 +454,19 @@ NetworkServicesClient::CreateGrpcRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateGrpcRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGrpcRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateGrpcRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
 NetworkServicesClient::CreateGrpcRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGrpcRoute(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->CreateGrpcRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -503,8 +488,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateGrpcRoute(
   google::cloud::networkservices::v1::UpdateGrpcRouteRequest request;
   *request.mutable_grpc_route() = grpc_route;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateGrpcRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateGrpcRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -516,21 +500,19 @@ NetworkServicesClient::UpdateGrpcRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateGrpcRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGrpcRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateGrpcRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
 NetworkServicesClient::UpdateGrpcRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGrpcRoute(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->UpdateGrpcRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -546,8 +528,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteGrpcRoute(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteGrpcRouteRequest request;
   request.set_name(name);
-  return connection_->DeleteGrpcRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteGrpcRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -559,21 +540,19 @@ NetworkServicesClient::DeleteGrpcRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteGrpcRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGrpcRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteGrpcRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteGrpcRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGrpcRoute(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->DeleteGrpcRoute(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networkservices::v1::HttpRoute>
@@ -630,8 +609,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateHttpRoute(
   request.set_parent(parent);
   *request.mutable_http_route() = http_route;
   request.set_http_route_id(http_route_id);
-  return connection_->CreateHttpRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateHttpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -643,21 +621,19 @@ NetworkServicesClient::CreateHttpRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateHttpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateHttpRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateHttpRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateHttpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
 NetworkServicesClient::CreateHttpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateHttpRoute(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->CreateHttpRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -679,8 +655,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateHttpRoute(
   google::cloud::networkservices::v1::UpdateHttpRouteRequest request;
   *request.mutable_http_route() = http_route;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateHttpRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateHttpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -692,21 +667,19 @@ NetworkServicesClient::UpdateHttpRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateHttpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateHttpRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateHttpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
 NetworkServicesClient::UpdateHttpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateHttpRoute(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->UpdateHttpRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -722,8 +695,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteHttpRoute(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteHttpRouteRequest request;
   request.set_name(name);
-  return connection_->DeleteHttpRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteHttpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -735,21 +707,19 @@ NetworkServicesClient::DeleteHttpRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteHttpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteHttpRoute(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteHttpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteHttpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteHttpRoute(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->DeleteHttpRoute(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networkservices::v1::TcpRoute>
@@ -806,8 +776,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateTcpRoute(
   request.set_parent(parent);
   *request.mutable_tcp_route() = tcp_route;
   request.set_tcp_route_id(tcp_route_id);
-  return connection_->CreateTcpRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTcpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
@@ -819,21 +788,19 @@ NetworkServicesClient::CreateTcpRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateTcpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateTcpRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTcpRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTcpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
 NetworkServicesClient::CreateTcpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTcpRoute(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateTcpRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
@@ -855,8 +822,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateTcpRoute(
   google::cloud::networkservices::v1::UpdateTcpRouteRequest request;
   *request.mutable_tcp_route() = tcp_route;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateTcpRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTcpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
@@ -868,21 +834,19 @@ NetworkServicesClient::UpdateTcpRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateTcpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTcpRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTcpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
 NetworkServicesClient::UpdateTcpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTcpRoute(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateTcpRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -898,8 +862,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteTcpRoute(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteTcpRouteRequest request;
   request.set_name(name);
-  return connection_->DeleteTcpRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTcpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -911,21 +874,19 @@ NetworkServicesClient::DeleteTcpRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteTcpRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTcpRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTcpRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteTcpRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTcpRoute(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteTcpRoute(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networkservices::v1::TlsRoute>
@@ -982,8 +943,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateTlsRoute(
   request.set_parent(parent);
   *request.mutable_tls_route() = tls_route;
   request.set_tls_route_id(tls_route_id);
-  return connection_->CreateTlsRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTlsRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
@@ -995,21 +955,19 @@ NetworkServicesClient::CreateTlsRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateTlsRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateTlsRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTlsRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTlsRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
 NetworkServicesClient::CreateTlsRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTlsRoute(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateTlsRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
@@ -1031,8 +989,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateTlsRoute(
   google::cloud::networkservices::v1::UpdateTlsRouteRequest request;
   *request.mutable_tls_route() = tls_route;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateTlsRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTlsRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
@@ -1044,21 +1001,19 @@ NetworkServicesClient::UpdateTlsRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateTlsRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTlsRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTlsRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
 NetworkServicesClient::UpdateTlsRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTlsRoute(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->UpdateTlsRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1074,8 +1029,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteTlsRoute(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteTlsRouteRequest request;
   request.set_name(name);
-  return connection_->DeleteTlsRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTlsRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1087,21 +1041,19 @@ NetworkServicesClient::DeleteTlsRoute(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteTlsRoute(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTlsRoute(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTlsRoute(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteTlsRoute(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTlsRoute(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteTlsRoute(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networkservices::v1::ServiceBinding>
@@ -1161,8 +1113,8 @@ NetworkServicesClient::CreateServiceBinding(
   request.set_parent(parent);
   *request.mutable_service_binding() = service_binding;
   request.set_service_binding_id(service_binding_id);
-  return connection_->CreateServiceBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateServiceBinding(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
@@ -1176,22 +1128,21 @@ NetworkServicesClient::CreateServiceBinding(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesClient::CreateServiceBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateServiceBindingRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateServiceBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateServiceBinding(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
 NetworkServicesClient::CreateServiceBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateServiceBinding(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->CreateServiceBinding(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1210,8 +1161,8 @@ NetworkServicesClient::DeleteServiceBinding(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteServiceBindingRequest request;
   request.set_name(name);
-  return connection_->DeleteServiceBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteServiceBinding(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1225,22 +1176,21 @@ NetworkServicesClient::DeleteServiceBinding(
 
 StatusOr<google::longrunning::Operation>
 NetworkServicesClient::DeleteServiceBinding(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServiceBinding(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteServiceBinding(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteServiceBinding(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServiceBinding(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->DeleteServiceBinding(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networkservices::v1::Mesh>
@@ -1297,8 +1247,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateMesh(
   request.set_parent(parent);
   *request.mutable_mesh() = mesh;
   request.set_mesh_id(mesh_id);
-  return connection_->CreateMesh(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateMesh(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
@@ -1310,20 +1259,19 @@ NetworkServicesClient::CreateMesh(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::CreateMesh(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::CreateMeshRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMesh(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateMesh(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
 NetworkServicesClient::CreateMesh(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMesh(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateMesh(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
@@ -1345,8 +1293,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateMesh(
   google::cloud::networkservices::v1::UpdateMeshRequest request;
   *request.mutable_mesh() = mesh;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateMesh(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateMesh(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
@@ -1358,20 +1305,19 @@ NetworkServicesClient::UpdateMesh(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::UpdateMesh(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::UpdateMeshRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateMesh(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateMesh(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>
 NetworkServicesClient::UpdateMesh(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateMesh(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateMesh(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1387,8 +1333,7 @@ StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteMesh(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteMeshRequest request;
   request.set_name(name);
-  return connection_->DeleteMesh(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteMesh(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -1400,20 +1345,19 @@ NetworkServicesClient::DeleteMesh(
 }
 
 StatusOr<google::longrunning::Operation> NetworkServicesClient::DeleteMesh(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networkservices::v1::DeleteMeshRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMesh(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteMesh(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesClient::DeleteMesh(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMesh(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteMesh(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

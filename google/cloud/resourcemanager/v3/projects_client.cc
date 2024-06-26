@@ -95,8 +95,7 @@ StatusOr<google::longrunning::Operation> ProjectsClient::CreateProject(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::CreateProjectRequest request;
   *request.mutable_project() = project;
-  return connection_->CreateProject(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -108,21 +107,19 @@ ProjectsClient::CreateProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsClient::CreateProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateProject(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::CreateProject(google::cloud::ExperimentalTag,
+ProjectsClient::CreateProject(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateProject(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateProject(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -144,8 +141,7 @@ StatusOr<google::longrunning::Operation> ProjectsClient::UpdateProject(
   google::cloud::resourcemanager::v3::UpdateProjectRequest request;
   *request.mutable_project() = project;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateProject(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -157,21 +153,19 @@ ProjectsClient::UpdateProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsClient::UpdateProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateProject(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::UpdateProject(google::cloud::ExperimentalTag,
+ProjectsClient::UpdateProject(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateProject(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateProject(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -192,8 +186,7 @@ StatusOr<google::longrunning::Operation> ProjectsClient::MoveProject(
   google::cloud::resourcemanager::v3::MoveProjectRequest request;
   request.set_name(name);
   request.set_destination_parent(destination_parent);
-  return connection_->MoveProject(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->MoveProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -205,20 +198,19 @@ ProjectsClient::MoveProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsClient::MoveProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MoveProject(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->MoveProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::MoveProject(google::cloud::ExperimentalTag,
+ProjectsClient::MoveProject(ExperimentalTag,
                             google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->MoveProject(google::cloud::ExperimentalTag{}, operation);
+  return connection_->MoveProject(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -234,8 +226,7 @@ StatusOr<google::longrunning::Operation> ProjectsClient::DeleteProject(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::DeleteProjectRequest request;
   request.set_name(name);
-  return connection_->DeleteProject(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -247,21 +238,19 @@ ProjectsClient::DeleteProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsClient::DeleteProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteProject(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::DeleteProject(google::cloud::ExperimentalTag,
+ProjectsClient::DeleteProject(ExperimentalTag,
                               google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteProject(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteProject(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -277,8 +266,7 @@ StatusOr<google::longrunning::Operation> ProjectsClient::UndeleteProject(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcemanager::v3::UndeleteProjectRequest request;
   request.set_name(name);
-  return connection_->UndeleteProject(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UndeleteProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
@@ -290,21 +278,19 @@ ProjectsClient::UndeleteProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsClient::UndeleteProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeleteProject(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UndeleteProject(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsClient::UndeleteProject(google::cloud::ExperimentalTag,
+ProjectsClient::UndeleteProject(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeleteProject(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->UndeleteProject(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsClient::GetIamPolicy(

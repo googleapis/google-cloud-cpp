@@ -73,8 +73,7 @@ StatusOr<google::longrunning::Operation> RevisionsClient::DeleteRevision(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::DeleteRevisionRequest request;
   request.set_name(name);
-  return connection_->DeleteRevision(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteRevision(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>
@@ -86,21 +85,19 @@ RevisionsClient::DeleteRevision(
 }
 
 StatusOr<google::longrunning::Operation> RevisionsClient::DeleteRevision(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::run::v2::DeleteRevisionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRevision(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteRevision(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::run::v2::Revision>>
-RevisionsClient::DeleteRevision(google::cloud::ExperimentalTag,
+RevisionsClient::DeleteRevision(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteRevision(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->DeleteRevision(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

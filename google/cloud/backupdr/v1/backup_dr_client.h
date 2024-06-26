@@ -309,12 +309,12 @@ class BackupDRClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateManagementServer(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
-  CreateManagementServer(google::cloud::ExperimentalTag,
+  CreateManagementServer(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 
@@ -393,12 +393,12 @@ class BackupDRClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteManagementServer(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
-  DeleteManagementServer(google::cloud::ExperimentalTag,
+  DeleteManagementServer(ExperimentalTag,
                          google::longrunning::Operation const& operation,
                          Options opts = {});
 

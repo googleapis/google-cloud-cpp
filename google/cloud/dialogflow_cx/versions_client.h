@@ -328,13 +328,13 @@ class VersionsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -543,13 +543,13 @@ class VersionsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> LoadVersion(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::protobuf::Struct>> LoadVersion(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

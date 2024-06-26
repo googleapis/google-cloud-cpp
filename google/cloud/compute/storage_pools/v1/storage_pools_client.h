@@ -256,13 +256,13 @@ class StoragePoolsClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           DeleteStoragePoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteStoragePool(google::cloud::ExperimentalTag,
+  DeleteStoragePool(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -479,13 +479,13 @@ class StoragePoolsClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           InsertStoragePoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertStoragePool(google::cloud::ExperimentalTag,
+  InsertStoragePool(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
@@ -874,13 +874,13 @@ class StoragePoolsClient {
                     Options opts = {});
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           UpdateStoragePoolRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateStoragePool(google::cloud::ExperimentalTag,
+  UpdateStoragePool(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 

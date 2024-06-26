@@ -53,8 +53,7 @@ StatusOr<google::longrunning::Operation> ClusterControllerClient::CreateCluster(
   request.set_project_id(project_id);
   request.set_region(region);
   *request.mutable_cluster() = cluster;
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
@@ -66,21 +65,19 @@ ClusterControllerClient::CreateCluster(
 }
 
 StatusOr<google::longrunning::Operation> ClusterControllerClient::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::CreateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
@@ -111,8 +108,7 @@ StatusOr<google::longrunning::Operation> ClusterControllerClient::UpdateCluster(
   request.set_cluster_name(cluster_name);
   *request.mutable_cluster() = cluster;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
@@ -124,21 +120,19 @@ ClusterControllerClient::UpdateCluster(
 }
 
 StatusOr<google::longrunning::Operation> ClusterControllerClient::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::UpdateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
@@ -150,20 +144,19 @@ ClusterControllerClient::StopCluster(
 }
 
 StatusOr<google::longrunning::Operation> ClusterControllerClient::StopCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::StopClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopCluster(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->StopCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::StopCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopCluster(google::cloud::ExperimentalTag{}, operation);
+  return connection_->StopCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
@@ -175,20 +168,19 @@ ClusterControllerClient::StartCluster(
 }
 
 StatusOr<google::longrunning::Operation> ClusterControllerClient::StartCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::StartClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartCluster(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->StartCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::StartCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartCluster(google::cloud::ExperimentalTag{}, operation);
+  return connection_->StartCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
@@ -212,8 +204,7 @@ StatusOr<google::longrunning::Operation> ClusterControllerClient::DeleteCluster(
   request.set_project_id(project_id);
   request.set_region(region);
   request.set_cluster_name(cluster_name);
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
@@ -225,21 +216,19 @@ ClusterControllerClient::DeleteCluster(
 }
 
 StatusOr<google::longrunning::Operation> ClusterControllerClient::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::DeleteClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerClient::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteCluster(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
@@ -316,8 +305,7 @@ ClusterControllerClient::DiagnoseCluster(ExperimentalTag, NoAwaitTag,
   request.set_project_id(project_id);
   request.set_region(region);
   request.set_cluster_name(cluster_name);
-  return connection_->DiagnoseCluster(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DiagnoseCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
@@ -330,21 +318,19 @@ ClusterControllerClient::DiagnoseCluster(
 
 StatusOr<google::longrunning::Operation>
 ClusterControllerClient::DiagnoseCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DiagnoseCluster(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DiagnoseCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerClient::DiagnoseCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DiagnoseCluster(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->DiagnoseCluster(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

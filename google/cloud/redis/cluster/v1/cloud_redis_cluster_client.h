@@ -354,13 +354,13 @@ class CloudRedisClusterClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> UpdateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -440,13 +440,13 @@ class CloudRedisClusterClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::protobuf::Any>> DeleteCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -551,13 +551,13 @@ class CloudRedisClusterClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::cluster::v1::CreateClusterRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::cluster::v1::Cluster>> CreateCluster(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

@@ -425,13 +425,13 @@ class CloudRedisClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -528,13 +528,13 @@ class CloudRedisClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -617,13 +617,13 @@ class CloudRedisClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpgradeInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::UpgradeInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -720,13 +720,13 @@ class CloudRedisClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ImportInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::ImportInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -819,13 +819,13 @@ class CloudRedisClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ExportInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::ExportInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -913,13 +913,13 @@ class CloudRedisClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> FailoverInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::FailoverInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -999,13 +999,13 @@ class CloudRedisClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1096,13 +1096,13 @@ class CloudRedisClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<CloudRedisConnection> connection_;

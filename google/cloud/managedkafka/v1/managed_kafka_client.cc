@@ -86,8 +86,7 @@ StatusOr<google::longrunning::Operation> ManagedKafkaClient::CreateCluster(
   request.set_parent(parent);
   *request.mutable_cluster() = cluster;
   request.set_cluster_id(cluster_id);
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
@@ -99,21 +98,19 @@ ManagedKafkaClient::CreateCluster(
 }
 
 StatusOr<google::longrunning::Operation> ManagedKafkaClient::CreateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::CreateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaClient::CreateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->CreateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
@@ -135,8 +132,7 @@ StatusOr<google::longrunning::Operation> ManagedKafkaClient::UpdateCluster(
   google::cloud::managedkafka::v1::UpdateClusterRequest request;
   *request.mutable_cluster() = cluster;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
@@ -148,21 +144,19 @@ ManagedKafkaClient::UpdateCluster(
 }
 
 StatusOr<google::longrunning::Operation> ManagedKafkaClient::UpdateCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::UpdateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaClient::UpdateCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->UpdateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -178,8 +172,7 @@ StatusOr<google::longrunning::Operation> ManagedKafkaClient::DeleteCluster(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::managedkafka::v1::DeleteClusterRequest request;
   request.set_name(name);
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -191,21 +184,19 @@ ManagedKafkaClient::DeleteCluster(
 }
 
 StatusOr<google::longrunning::Operation> ManagedKafkaClient::DeleteCluster(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::managedkafka::v1::DeleteClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
 ManagedKafkaClient::DeleteCluster(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCluster(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->DeleteCluster(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::managedkafka::v1::Topic>

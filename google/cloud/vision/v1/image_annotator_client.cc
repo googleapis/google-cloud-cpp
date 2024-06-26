@@ -93,8 +93,8 @@ ImageAnnotatorClient::AsyncBatchAnnotateImages(
   google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest request;
   *request.mutable_requests() = {requests.begin(), requests.end()};
   *request.mutable_output_config() = output_config;
-  return connection_->AsyncBatchAnnotateImages(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->AsyncBatchAnnotateImages(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
@@ -107,21 +107,20 @@ ImageAnnotatorClient::AsyncBatchAnnotateImages(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorClient::AsyncBatchAnnotateImages(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncBatchAnnotateImages(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->AsyncBatchAnnotateImages(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorClient::AsyncBatchAnnotateImages(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncBatchAnnotateImages(google::cloud::ExperimentalTag{},
-                                               operation);
+  return connection_->AsyncBatchAnnotateImages(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
@@ -144,8 +143,8 @@ ImageAnnotatorClient::AsyncBatchAnnotateFiles(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest request;
   *request.mutable_requests() = {requests.begin(), requests.end()};
-  return connection_->AsyncBatchAnnotateFiles(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->AsyncBatchAnnotateFiles(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
@@ -158,21 +157,20 @@ ImageAnnotatorClient::AsyncBatchAnnotateFiles(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorClient::AsyncBatchAnnotateFiles(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncBatchAnnotateFiles(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->AsyncBatchAnnotateFiles(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorClient::AsyncBatchAnnotateFiles(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncBatchAnnotateFiles(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->AsyncBatchAnnotateFiles(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

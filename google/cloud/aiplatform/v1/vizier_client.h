@@ -440,12 +440,12 @@ class VizierServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> SuggestTrials(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
-  SuggestTrials(google::cloud::ExperimentalTag,
+  SuggestTrials(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 
@@ -800,14 +800,14 @@ class VizierServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
-  CheckTrialEarlyStoppingState(google::cloud::ExperimentalTag,
+  CheckTrialEarlyStoppingState(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts = {});
 

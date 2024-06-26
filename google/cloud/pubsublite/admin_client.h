@@ -881,12 +881,12 @@ class AdminServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> SeekSubscription(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(google::cloud::ExperimentalTag,
+  SeekSubscription(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 

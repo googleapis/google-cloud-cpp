@@ -113,21 +113,20 @@ CloudChannelServiceClient::ProvisionCloudIdentity(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::ProvisionCloudIdentity(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ProvisionCloudIdentity(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ProvisionCloudIdentity(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Customer>>
 CloudChannelServiceClient::ProvisionCloudIdentity(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ProvisionCloudIdentity(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->ProvisionCloudIdentity(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::channel::v1::Entitlement>
@@ -171,21 +170,20 @@ CloudChannelServiceClient::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::CreateEntitlement(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::CreateEntitlementRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEntitlement(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateEntitlement(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceClient::CreateEntitlement(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEntitlement(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateEntitlement(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -198,21 +196,20 @@ CloudChannelServiceClient::ChangeParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::ChangeParameters(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeParametersRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ChangeParameters(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->ChangeParameters(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceClient::ChangeParameters(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ChangeParameters(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->ChangeParameters(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -225,21 +222,20 @@ CloudChannelServiceClient::ChangeRenewalSettings(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::ChangeRenewalSettings(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ChangeRenewalSettings(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->ChangeRenewalSettings(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceClient::ChangeRenewalSettings(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ChangeRenewalSettings(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->ChangeRenewalSettings(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -251,20 +247,19 @@ CloudChannelServiceClient::ChangeOffer(
 }
 
 StatusOr<google::longrunning::Operation> CloudChannelServiceClient::ChangeOffer(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ChangeOfferRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ChangeOffer(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->ChangeOffer(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceClient::ChangeOffer(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ChangeOffer(google::cloud::ExperimentalTag{}, operation);
+  return connection_->ChangeOffer(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -277,21 +272,20 @@ CloudChannelServiceClient::StartPaidService(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::StartPaidService(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::StartPaidServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartPaidService(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->StartPaidService(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceClient::StartPaidService(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartPaidService(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->StartPaidService(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -304,21 +298,20 @@ CloudChannelServiceClient::SuspendEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::SuspendEntitlement(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::SuspendEntitlementRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SuspendEntitlement(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->SuspendEntitlement(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceClient::SuspendEntitlement(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SuspendEntitlement(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->SuspendEntitlement(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
@@ -331,21 +324,20 @@ CloudChannelServiceClient::CancelEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::CancelEntitlement(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::CancelEntitlementRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CancelEntitlement(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CancelEntitlement(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceClient::CancelEntitlement(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CancelEntitlement(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CancelEntitlement(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -358,21 +350,20 @@ CloudChannelServiceClient::ActivateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::ActivateEntitlement(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::ActivateEntitlementRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ActivateEntitlement(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->ActivateEntitlement(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceClient::ActivateEntitlement(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ActivateEntitlement(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->ActivateEntitlement(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
@@ -385,21 +376,20 @@ CloudChannelServiceClient::TransferEntitlements(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::TransferEntitlements(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::TransferEntitlementsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TransferEntitlements(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->TransferEntitlements(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
 CloudChannelServiceClient::TransferEntitlements(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TransferEntitlements(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->TransferEntitlements(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
@@ -413,22 +403,22 @@ CloudChannelServiceClient::TransferEntitlementsToGoogle(
 
 StatusOr<google::longrunning::Operation>
 CloudChannelServiceClient::TransferEntitlementsToGoogle(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TransferEntitlementsToGoogle(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->TransferEntitlementsToGoogle(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceClient::TransferEntitlementsToGoogle(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TransferEntitlementsToGoogle(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->TransferEntitlementsToGoogle(ExperimentalTag{},
+                                                   operation);
 }
 
 StreamRange<google::cloud::channel::v1::ChannelPartnerLink>

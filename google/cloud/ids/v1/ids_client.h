@@ -302,13 +302,13 @@ class IDSClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::ids::v1::CreateEndpointRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -384,13 +384,13 @@ class IDSClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::ids::v1::DeleteEndpointRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<IDSConnection> connection_;

@@ -184,13 +184,13 @@ class DeploymentResourcePoolServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
-  CreateDeploymentResourcePool(google::cloud::ExperimentalTag,
+  CreateDeploymentResourcePool(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts = {});
 
@@ -408,13 +408,13 @@ class DeploymentResourcePoolServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDeploymentResourcePool(google::cloud::ExperimentalTag,
+  DeleteDeploymentResourcePool(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts = {});
 

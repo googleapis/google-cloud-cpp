@@ -84,8 +84,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::CreateSource(
   request.set_parent(parent);
   *request.mutable_source() = source;
   request.set_source_id(source_id);
-  return connection_->CreateSource(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSource(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
@@ -97,20 +96,19 @@ VmMigrationClient::CreateSource(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::CreateSource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateSourceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSource(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateSource(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
-VmMigrationClient::CreateSource(google::cloud::ExperimentalTag,
+VmMigrationClient::CreateSource(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSource(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateSource(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
@@ -132,8 +130,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::UpdateSource(
   google::cloud::vmmigration::v1::UpdateSourceRequest request;
   *request.mutable_source() = source;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateSource(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateSource(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
@@ -145,20 +142,19 @@ VmMigrationClient::UpdateSource(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::UpdateSource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSource(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateSource(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
-VmMigrationClient::UpdateSource(google::cloud::ExperimentalTag,
+VmMigrationClient::UpdateSource(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateSource(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateSource(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -174,8 +170,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteSource(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::DeleteSourceRequest request;
   request.set_name(name);
-  return connection_->DeleteSource(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSource(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -187,20 +182,19 @@ VmMigrationClient::DeleteSource(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteSource(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSource(google::cloud::ExperimentalTag{},
-                                   google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSource(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-VmMigrationClient::DeleteSource(google::cloud::ExperimentalTag,
+VmMigrationClient::DeleteSource(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSource(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteSource(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
@@ -275,8 +269,8 @@ VmMigrationClient::CreateUtilizationReport(
   request.set_parent(parent);
   *request.mutable_utilization_report() = utilization_report;
   request.set_utilization_report_id(utilization_report_id);
-  return connection_->CreateUtilizationReport(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateUtilizationReport(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
@@ -290,22 +284,21 @@ VmMigrationClient::CreateUtilizationReport(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationClient::CreateUtilizationReport(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateUtilizationReport(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateUtilizationReport(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
 VmMigrationClient::CreateUtilizationReport(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateUtilizationReport(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->CreateUtilizationReport(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -324,8 +317,8 @@ VmMigrationClient::DeleteUtilizationReport(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::DeleteUtilizationReportRequest request;
   request.set_name(name);
-  return connection_->DeleteUtilizationReport(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteUtilizationReport(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -339,22 +332,21 @@ VmMigrationClient::DeleteUtilizationReport(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationClient::DeleteUtilizationReport(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteUtilizationReport(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteUtilizationReport(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationClient::DeleteUtilizationReport(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteUtilizationReport(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->DeleteUtilizationReport(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
@@ -417,8 +409,8 @@ VmMigrationClient::CreateDatacenterConnector(
   request.set_parent(parent);
   *request.mutable_datacenter_connector() = datacenter_connector;
   request.set_datacenter_connector_id(datacenter_connector_id);
-  return connection_->CreateDatacenterConnector(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDatacenterConnector(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
@@ -432,22 +424,21 @@ VmMigrationClient::CreateDatacenterConnector(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationClient::CreateDatacenterConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDatacenterConnector(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateDatacenterConnector(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
 VmMigrationClient::CreateDatacenterConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDatacenterConnector(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateDatacenterConnector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -466,8 +457,8 @@ VmMigrationClient::DeleteDatacenterConnector(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest request;
   request.set_name(name);
-  return connection_->DeleteDatacenterConnector(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDatacenterConnector(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -481,22 +472,21 @@ VmMigrationClient::DeleteDatacenterConnector(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationClient::DeleteDatacenterConnector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDatacenterConnector(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteDatacenterConnector(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationClient::DeleteDatacenterConnector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDatacenterConnector(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteDatacenterConnector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
@@ -508,21 +498,20 @@ VmMigrationClient::UpgradeAppliance(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::UpgradeAppliance(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpgradeAppliance(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->UpgradeAppliance(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
 VmMigrationClient::UpgradeAppliance(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpgradeAppliance(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->UpgradeAppliance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -547,8 +536,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::CreateMigratingVm(
   request.set_parent(parent);
   *request.mutable_migrating_vm() = migrating_vm;
   request.set_migrating_vm_id(migrating_vm_id);
-  return connection_->CreateMigratingVm(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateMigratingVm(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -560,21 +549,20 @@ VmMigrationClient::CreateMigratingVm(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::CreateMigratingVm(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMigratingVm(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateMigratingVm(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationClient::CreateMigratingVm(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMigratingVm(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->CreateMigratingVm(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::vmmigration::v1::MigratingVm>
@@ -628,8 +616,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::UpdateMigratingVm(
   google::cloud::vmmigration::v1::UpdateMigratingVmRequest request;
   *request.mutable_migrating_vm() = migrating_vm;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateMigratingVm(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateMigratingVm(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -641,21 +629,20 @@ VmMigrationClient::UpdateMigratingVm(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::UpdateMigratingVm(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateMigratingVm(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateMigratingVm(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
 VmMigrationClient::UpdateMigratingVm(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateMigratingVm(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->UpdateMigratingVm(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -671,8 +658,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteMigratingVm(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::DeleteMigratingVmRequest request;
   request.set_name(name);
-  return connection_->DeleteMigratingVm(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteMigratingVm(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -684,21 +671,20 @@ VmMigrationClient::DeleteMigratingVm(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteMigratingVm(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMigratingVm(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteMigratingVm(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationClient::DeleteMigratingVm(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMigratingVm(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->DeleteMigratingVm(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
@@ -716,8 +702,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::StartMigration(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::StartMigrationRequest request;
   request.set_migrating_vm(migrating_vm);
-  return connection_->StartMigration(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->StartMigration(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
@@ -729,21 +714,19 @@ VmMigrationClient::StartMigration(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::StartMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::StartMigrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartMigration(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->StartMigration(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
 VmMigrationClient::StartMigration(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartMigration(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->StartMigration(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
@@ -755,21 +738,19 @@ VmMigrationClient::ResumeMigration(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::ResumeMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResumeMigration(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->ResumeMigration(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
 VmMigrationClient::ResumeMigration(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResumeMigration(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->ResumeMigration(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
@@ -781,21 +762,19 @@ VmMigrationClient::PauseMigration(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::PauseMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::PauseMigrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PauseMigration(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->PauseMigration(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
 VmMigrationClient::PauseMigration(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PauseMigration(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->PauseMigration(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
@@ -813,8 +792,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::FinalizeMigration(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::FinalizeMigrationRequest request;
   request.set_migrating_vm(migrating_vm);
-  return connection_->FinalizeMigration(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->FinalizeMigration(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
@@ -826,21 +805,20 @@ VmMigrationClient::FinalizeMigration(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::FinalizeMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->FinalizeMigration(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->FinalizeMigration(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
 VmMigrationClient::FinalizeMigration(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->FinalizeMigration(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->FinalizeMigration(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
@@ -865,8 +843,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::CreateCloneJob(
   request.set_parent(parent);
   *request.mutable_clone_job() = clone_job;
   request.set_clone_job_id(clone_job_id);
-  return connection_->CreateCloneJob(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCloneJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
@@ -878,21 +855,19 @@ VmMigrationClient::CreateCloneJob(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::CreateCloneJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateCloneJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCloneJob(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCloneJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>
 VmMigrationClient::CreateCloneJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCloneJob(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CreateCloneJob(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
@@ -908,8 +883,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::CancelCloneJob(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::CancelCloneJobRequest request;
   request.set_name(name);
-  return connection_->CancelCloneJob(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CancelCloneJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
@@ -921,21 +895,19 @@ VmMigrationClient::CancelCloneJob(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::CancelCloneJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CancelCloneJob(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->CancelCloneJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
 VmMigrationClient::CancelCloneJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CancelCloneJob(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->CancelCloneJob(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::vmmigration::v1::CloneJob>
@@ -992,8 +964,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::CreateCutoverJob(
   request.set_parent(parent);
   *request.mutable_cutover_job() = cutover_job;
   request.set_cutover_job_id(cutover_job_id);
-  return connection_->CreateCutoverJob(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCutoverJob(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
@@ -1005,21 +977,20 @@ VmMigrationClient::CreateCutoverJob(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::CreateCutoverJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCutoverJob(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCutoverJob(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
 VmMigrationClient::CreateCutoverJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCutoverJob(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->CreateCutoverJob(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
@@ -1035,8 +1006,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::CancelCutoverJob(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::CancelCutoverJobRequest request;
   request.set_name(name);
-  return connection_->CancelCutoverJob(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CancelCutoverJob(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
@@ -1048,21 +1019,20 @@ VmMigrationClient::CancelCutoverJob(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::CancelCutoverJob(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CancelCutoverJob(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CancelCutoverJob(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
 VmMigrationClient::CancelCutoverJob(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CancelCutoverJob(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->CancelCutoverJob(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::vmmigration::v1::CutoverJob>
@@ -1149,8 +1119,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::CreateGroup(
   request.set_parent(parent);
   *request.mutable_group() = group;
   request.set_group_id(group_id);
-  return connection_->CreateGroup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
@@ -1162,20 +1131,19 @@ VmMigrationClient::CreateGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::CreateGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGroup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
-VmMigrationClient::CreateGroup(google::cloud::ExperimentalTag,
+VmMigrationClient::CreateGroup(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGroup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
@@ -1197,8 +1165,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::UpdateGroup(
   google::cloud::vmmigration::v1::UpdateGroupRequest request;
   *request.mutable_group() = group;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateGroup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
@@ -1210,20 +1177,19 @@ VmMigrationClient::UpdateGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::UpdateGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGroup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
-VmMigrationClient::UpdateGroup(google::cloud::ExperimentalTag,
+VmMigrationClient::UpdateGroup(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGroup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1239,8 +1205,7 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteGroup(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::DeleteGroupRequest request;
   request.set_name(name);
-  return connection_->DeleteGroup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1252,20 +1217,19 @@ VmMigrationClient::DeleteGroup(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteGroup(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGroup(google::cloud::ExperimentalTag{},
-                                  google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteGroup(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
-VmMigrationClient::DeleteGroup(google::cloud::ExperimentalTag,
+VmMigrationClient::DeleteGroup(ExperimentalTag,
                                google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGroup(google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
@@ -1281,8 +1245,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::AddGroupMigration(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::AddGroupMigrationRequest request;
   request.set_group(group);
-  return connection_->AddGroupMigration(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->AddGroupMigration(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
@@ -1294,21 +1258,20 @@ VmMigrationClient::AddGroupMigration(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::AddGroupMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AddGroupMigration(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->AddGroupMigration(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
 VmMigrationClient::AddGroupMigration(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AddGroupMigration(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->AddGroupMigration(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
@@ -1327,8 +1290,8 @@ VmMigrationClient::RemoveGroupMigration(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::RemoveGroupMigrationRequest request;
   request.set_group(group);
-  return connection_->RemoveGroupMigration(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RemoveGroupMigration(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
@@ -1341,21 +1304,20 @@ VmMigrationClient::RemoveGroupMigration(
 
 StatusOr<google::longrunning::Operation>
 VmMigrationClient::RemoveGroupMigration(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RemoveGroupMigration(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->RemoveGroupMigration(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
 VmMigrationClient::RemoveGroupMigration(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RemoveGroupMigration(google::cloud::ExperimentalTag{},
-                                           operation);
+  return connection_->RemoveGroupMigration(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::vmmigration::v1::TargetProject>
@@ -1412,8 +1374,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::CreateTargetProject(
   request.set_parent(parent);
   *request.mutable_target_project() = target_project;
   request.set_target_project_id(target_project_id);
-  return connection_->CreateTargetProject(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTargetProject(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -1425,21 +1387,20 @@ VmMigrationClient::CreateTargetProject(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::CreateTargetProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTargetProject(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateTargetProject(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationClient::CreateTargetProject(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTargetProject(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->CreateTargetProject(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -1461,8 +1422,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::UpdateTargetProject(
   google::cloud::vmmigration::v1::UpdateTargetProjectRequest request;
   *request.mutable_target_project() = target_project;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateTargetProject(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTargetProject(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -1474,21 +1435,20 @@ VmMigrationClient::UpdateTargetProject(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::UpdateTargetProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTargetProject(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateTargetProject(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
 VmMigrationClient::UpdateTargetProject(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTargetProject(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->UpdateTargetProject(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1504,8 +1464,8 @@ StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteTargetProject(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::vmmigration::v1::DeleteTargetProjectRequest request;
   request.set_name(name);
-  return connection_->DeleteTargetProject(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTargetProject(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
@@ -1517,21 +1477,20 @@ VmMigrationClient::DeleteTargetProject(
 }
 
 StatusOr<google::longrunning::Operation> VmMigrationClient::DeleteTargetProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetProject(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteTargetProject(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
 VmMigrationClient::DeleteTargetProject(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetProject(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->DeleteTargetProject(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>

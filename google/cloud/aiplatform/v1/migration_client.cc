@@ -74,8 +74,8 @@ MigrationServiceClient::BatchMigrateResources(
   request.set_parent(parent);
   *request.mutable_migrate_resource_requests() = {
       migrate_resource_requests.begin(), migrate_resource_requests.end()};
-  return connection_->BatchMigrateResources(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchMigrateResources(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
@@ -88,21 +88,20 @@ MigrationServiceClient::BatchMigrateResources(
 
 StatusOr<google::longrunning::Operation>
 MigrationServiceClient::BatchMigrateResources(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchMigrateResources(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->BatchMigrateResources(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
 MigrationServiceClient::BatchMigrateResources(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchMigrateResources(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->BatchMigrateResources(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

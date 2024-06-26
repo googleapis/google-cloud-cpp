@@ -191,12 +191,12 @@ class VideoIntelligenceServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AnnotateVideo(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
-  AnnotateVideo(google::cloud::ExperimentalTag,
+  AnnotateVideo(ExperimentalTag,
                 google::longrunning::Operation const& operation,
                 Options opts = {});
 

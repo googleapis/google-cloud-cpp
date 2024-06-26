@@ -77,8 +77,8 @@ NetworkAttachmentsClient::DeleteNetworkAttachment(
   request.set_project(project);
   request.set_region(region);
   request.set_network_attachment(network_attachment);
-  return connection_->DeleteNetworkAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteNetworkAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -92,22 +92,21 @@ NetworkAttachmentsClient::DeleteNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsClient::DeleteNetworkAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_attachments::v1::
         DeleteNetworkAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNetworkAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteNetworkAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsClient::DeleteNetworkAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNetworkAttachment(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->DeleteNetworkAttachment(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
@@ -183,8 +182,8 @@ NetworkAttachmentsClient::InsertNetworkAttachment(
   request.set_project(project);
   request.set_region(region);
   *request.mutable_network_attachment_resource() = network_attachment_resource;
-  return connection_->InsertNetworkAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertNetworkAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -198,22 +197,21 @@ NetworkAttachmentsClient::InsertNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsClient::InsertNetworkAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_attachments::v1::
         InsertNetworkAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertNetworkAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertNetworkAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsClient::InsertNetworkAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertNetworkAttachment(google::cloud::ExperimentalTag{},
-                                              operation);
+  return connection_->InsertNetworkAttachment(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>
@@ -268,8 +266,8 @@ NetworkAttachmentsClient::PatchNetworkAttachment(
   request.set_region(region);
   request.set_network_attachment(network_attachment);
   *request.mutable_network_attachment_resource() = network_attachment_resource;
-  return connection_->PatchNetworkAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->PatchNetworkAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -283,22 +281,21 @@ NetworkAttachmentsClient::PatchNetworkAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkAttachmentsClient::PatchNetworkAttachment(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::network_attachments::v1::
         PatchNetworkAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchNetworkAttachment(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->PatchNetworkAttachment(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkAttachmentsClient::PatchNetworkAttachment(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchNetworkAttachment(google::cloud::ExperimentalTag{},
-                                             operation);
+  return connection_->PatchNetworkAttachment(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

@@ -45,21 +45,20 @@ ConsumerProcurementServiceClient::PlaceOrder(
 
 StatusOr<google::longrunning::Operation>
 ConsumerProcurementServiceClient::PlaceOrder(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PlaceOrder(google::cloud::ExperimentalTag{},
-                                 google::cloud::NoAwaitTag{}, request);
+  return connection_->PlaceOrder(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
 ConsumerProcurementServiceClient::PlaceOrder(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PlaceOrder(google::cloud::ExperimentalTag{}, operation);
+  return connection_->PlaceOrder(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>

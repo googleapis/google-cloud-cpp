@@ -93,8 +93,8 @@ NetworkSecurityClient::CreateAuthorizationPolicy(
   request.set_parent(parent);
   *request.mutable_authorization_policy() = authorization_policy;
   request.set_authorization_policy_id(authorization_policy_id);
-  return connection_->CreateAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -108,22 +108,21 @@ NetworkSecurityClient::CreateAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::CreateAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
 NetworkSecurityClient::CreateAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->CreateAuthorizationPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -148,8 +147,8 @@ NetworkSecurityClient::UpdateAuthorizationPolicy(
   google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest request;
   *request.mutable_authorization_policy() = authorization_policy;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -163,22 +162,21 @@ NetworkSecurityClient::UpdateAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::UpdateAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
 NetworkSecurityClient::UpdateAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->UpdateAuthorizationPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -197,8 +195,8 @@ NetworkSecurityClient::DeleteAuthorizationPolicy(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest request;
   request.set_name(name);
-  return connection_->DeleteAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -212,22 +210,21 @@ NetworkSecurityClient::DeleteAuthorizationPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::DeleteAuthorizationPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteAuthorizationPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityClient::DeleteAuthorizationPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAuthorizationPolicy(
-      google::cloud::ExperimentalTag{}, operation);
+  return connection_->DeleteAuthorizationPolicy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
@@ -290,8 +287,8 @@ NetworkSecurityClient::CreateServerTlsPolicy(
   request.set_parent(parent);
   *request.mutable_server_tls_policy() = server_tls_policy;
   request.set_server_tls_policy_id(server_tls_policy_id);
-  return connection_->CreateServerTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -305,22 +302,21 @@ NetworkSecurityClient::CreateServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::CreateServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateServerTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
 NetworkSecurityClient::CreateServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateServerTlsPolicy(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->CreateServerTlsPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -345,8 +341,8 @@ NetworkSecurityClient::UpdateServerTlsPolicy(
   google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest request;
   *request.mutable_server_tls_policy() = server_tls_policy;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateServerTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -360,22 +356,21 @@ NetworkSecurityClient::UpdateServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::UpdateServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateServerTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
 NetworkSecurityClient::UpdateServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateServerTlsPolicy(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->UpdateServerTlsPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -394,8 +389,8 @@ NetworkSecurityClient::DeleteServerTlsPolicy(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest request;
   request.set_name(name);
-  return connection_->DeleteServerTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -409,22 +404,21 @@ NetworkSecurityClient::DeleteServerTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::DeleteServerTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServerTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteServerTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityClient::DeleteServerTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServerTlsPolicy(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->DeleteServerTlsPolicy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
@@ -487,8 +481,8 @@ NetworkSecurityClient::CreateClientTlsPolicy(
   request.set_parent(parent);
   *request.mutable_client_tls_policy() = client_tls_policy;
   request.set_client_tls_policy_id(client_tls_policy_id);
-  return connection_->CreateClientTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -502,22 +496,21 @@ NetworkSecurityClient::CreateClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::CreateClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateClientTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
 NetworkSecurityClient::CreateClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateClientTlsPolicy(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->CreateClientTlsPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -542,8 +535,8 @@ NetworkSecurityClient::UpdateClientTlsPolicy(
   google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest request;
   *request.mutable_client_tls_policy() = client_tls_policy;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateClientTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -557,22 +550,21 @@ NetworkSecurityClient::UpdateClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::UpdateClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateClientTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
 NetworkSecurityClient::UpdateClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateClientTlsPolicy(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->UpdateClientTlsPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -591,8 +583,8 @@ NetworkSecurityClient::DeleteClientTlsPolicy(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest request;
   request.set_name(name);
-  return connection_->DeleteClientTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -606,22 +598,21 @@ NetworkSecurityClient::DeleteClientTlsPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetworkSecurityClient::DeleteClientTlsPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteClientTlsPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteClientTlsPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
 NetworkSecurityClient::DeleteClientTlsPolicy(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteClientTlsPolicy(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->DeleteClientTlsPolicy(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

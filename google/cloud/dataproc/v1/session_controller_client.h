@@ -174,13 +174,13 @@ class SessionControllerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateSession(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateSessionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -386,13 +386,13 @@ class SessionControllerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> TerminateSession(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::TerminateSessionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -470,13 +470,13 @@ class SessionControllerClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteSession(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DeleteSessionRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<SessionControllerConnection> connection_;

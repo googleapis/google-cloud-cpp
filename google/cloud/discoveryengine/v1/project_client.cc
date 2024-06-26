@@ -45,8 +45,8 @@ StatusOr<google::longrunning::Operation> ProjectServiceClient::ProvisionProject(
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::ProvisionProjectRequest request;
   request.set_name(name);
-  return connection_->ProvisionProject(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->ProvisionProject(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
@@ -58,21 +58,20 @@ ProjectServiceClient::ProvisionProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectServiceClient::ProvisionProject(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::discoveryengine::v1::ProvisionProjectRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ProvisionProject(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->ProvisionProject(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
 ProjectServiceClient::ProvisionProject(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ProvisionProject(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->ProvisionProject(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

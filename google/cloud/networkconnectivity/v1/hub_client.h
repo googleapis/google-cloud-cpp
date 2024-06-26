@@ -299,13 +299,13 @@ class HubServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateHub(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -391,13 +391,13 @@ class HubServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateHub(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -476,13 +476,13 @@ class HubServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteHub(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(google::cloud::ExperimentalTag,
-            google::longrunning::Operation const& operation, Options opts = {});
+  DeleteHub(ExperimentalTag, google::longrunning::Operation const& operation,
+            Options opts = {});
 
   // clang-format off
   ///
@@ -774,13 +774,13 @@ class HubServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateSpoke(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -864,13 +864,13 @@ class HubServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateSpoke(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -959,14 +959,14 @@ class HubServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(google::cloud::ExperimentalTag,
+  RejectHubSpoke(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -1053,14 +1053,14 @@ class HubServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request,
       Options opts = {});
 
   future<
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(google::cloud::ExperimentalTag,
+  AcceptHubSpoke(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
@@ -1141,13 +1141,12 @@ class HubServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteSpoke(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(google::cloud::ExperimentalTag,
-              google::longrunning::Operation const& operation,
+  DeleteSpoke(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off

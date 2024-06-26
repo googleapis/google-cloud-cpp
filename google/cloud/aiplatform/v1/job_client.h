@@ -359,12 +359,12 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteCustomJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteCustomJob(google::cloud::ExperimentalTag,
+  DeleteCustomJob(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 
@@ -726,13 +726,13 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDataLabelingJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataLabelingJob(google::cloud::ExperimentalTag,
+  DeleteDataLabelingJob(ExperimentalTag,
                         google::longrunning::Operation const& operation,
                         Options opts = {});
 
@@ -1069,13 +1069,13 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteHyperparameterTuningJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteHyperparameterTuningJob(google::cloud::ExperimentalTag,
+  DeleteHyperparameterTuningJob(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
                                 Options opts = {});
 
@@ -1437,13 +1437,12 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteNasJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNasJob(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  DeleteNasJob(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -1946,13 +1945,13 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteBatchPredictionJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteBatchPredictionJob(google::cloud::ExperimentalTag,
+  DeleteBatchPredictionJob(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -2415,15 +2414,15 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateModelDeploymentMonitoringJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::
           UpdateModelDeploymentMonitoringJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
   UpdateModelDeploymentMonitoringJob(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2504,15 +2503,15 @@ class JobServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteModelDeploymentMonitoringJob(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::
           DeleteModelDeploymentMonitoringJobRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModelDeploymentMonitoringJob(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

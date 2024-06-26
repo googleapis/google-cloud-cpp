@@ -54,8 +54,7 @@ VideoIntelligenceServiceClient::AnnotateVideo(
   google::cloud::videointelligence::v1::AnnotateVideoRequest request;
   request.set_input_uri(input_uri);
   *request.mutable_features() = {features.begin(), features.end()};
-  return connection_->AnnotateVideo(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->AnnotateVideo(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
@@ -68,21 +67,19 @@ VideoIntelligenceServiceClient::AnnotateVideo(
 
 StatusOr<google::longrunning::Operation>
 VideoIntelligenceServiceClient::AnnotateVideo(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AnnotateVideo(google::cloud::ExperimentalTag{},
-                                    google::cloud::NoAwaitTag{}, request);
+  return connection_->AnnotateVideo(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceClient::AnnotateVideo(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AnnotateVideo(google::cloud::ExperimentalTag{},
-                                    operation);
+  return connection_->AnnotateVideo(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

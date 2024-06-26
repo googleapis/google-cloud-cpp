@@ -307,13 +307,13 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  CreateWorkstationCluster(google::cloud::ExperimentalTag,
+  CreateWorkstationCluster(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -401,13 +401,13 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  UpdateWorkstationCluster(google::cloud::ExperimentalTag,
+  UpdateWorkstationCluster(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -487,13 +487,13 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
-  DeleteWorkstationCluster(google::cloud::ExperimentalTag,
+  DeleteWorkstationCluster(ExperimentalTag,
                            google::longrunning::Operation const& operation,
                            Options opts = {});
 
@@ -793,13 +793,13 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  CreateWorkstationConfig(google::cloud::ExperimentalTag,
+  CreateWorkstationConfig(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -887,13 +887,13 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  UpdateWorkstationConfig(google::cloud::ExperimentalTag,
+  UpdateWorkstationConfig(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -973,13 +973,13 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
-  DeleteWorkstationConfig(google::cloud::ExperimentalTag,
+  DeleteWorkstationConfig(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -1272,12 +1272,12 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateWorkstation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  CreateWorkstation(google::cloud::ExperimentalTag,
+  CreateWorkstation(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1362,12 +1362,12 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateWorkstation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  UpdateWorkstation(google::cloud::ExperimentalTag,
+  UpdateWorkstation(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1446,12 +1446,12 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteWorkstation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  DeleteWorkstation(google::cloud::ExperimentalTag,
+  DeleteWorkstation(ExperimentalTag,
                     google::longrunning::Operation const& operation,
                     Options opts = {});
 
@@ -1530,12 +1530,12 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> StartWorkstation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::StartWorkstationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StartWorkstation(google::cloud::ExperimentalTag,
+  StartWorkstation(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -1614,12 +1614,12 @@ class WorkstationsClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> StopWorkstation(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::StopWorkstationRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StopWorkstation(google::cloud::ExperimentalTag,
+  StopWorkstation(ExperimentalTag,
                   google::longrunning::Operation const& operation,
                   Options opts = {});
 

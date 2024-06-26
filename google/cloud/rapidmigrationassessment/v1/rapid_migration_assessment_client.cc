@@ -57,8 +57,7 @@ RapidMigrationAssessmentClient::CreateCollector(
   request.set_parent(parent);
   *request.mutable_collector() = collector;
   request.set_collector_id(collector_id);
-  return connection_->CreateCollector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -72,22 +71,20 @@ RapidMigrationAssessmentClient::CreateCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentClient::CreateCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCollector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentClient::CreateCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateCollector(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->CreateCollector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
@@ -111,8 +108,8 @@ RapidMigrationAssessmentClient::CreateAnnotation(
   google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest request;
   request.set_parent(parent);
   *request.mutable_annotation() = annotation;
-  return connection_->CreateAnnotation(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAnnotation(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
@@ -126,22 +123,21 @@ RapidMigrationAssessmentClient::CreateAnnotation(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentClient::CreateAnnotation(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAnnotation(google::cloud::ExperimentalTag{},
-                                       google::cloud::NoAwaitTag{}, request);
+  return connection_->CreateAnnotation(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
 RapidMigrationAssessmentClient::CreateAnnotation(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAnnotation(google::cloud::ExperimentalTag{},
-                                       operation);
+  return connection_->CreateAnnotation(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
@@ -217,8 +213,7 @@ RapidMigrationAssessmentClient::UpdateCollector(
   google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest request;
   *request.mutable_collector() = collector;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateCollector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -232,22 +227,20 @@ RapidMigrationAssessmentClient::UpdateCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentClient::UpdateCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCollector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentClient::UpdateCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCollector(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->UpdateCollector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -266,8 +259,7 @@ RapidMigrationAssessmentClient::DeleteCollector(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest request;
   request.set_name(name);
-  return connection_->DeleteCollector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -281,22 +273,20 @@ RapidMigrationAssessmentClient::DeleteCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentClient::DeleteCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCollector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentClient::DeleteCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteCollector(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->DeleteCollector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -315,8 +305,7 @@ RapidMigrationAssessmentClient::ResumeCollector(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest request;
   request.set_name(name);
-  return connection_->ResumeCollector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->ResumeCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -330,22 +319,20 @@ RapidMigrationAssessmentClient::ResumeCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentClient::ResumeCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResumeCollector(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->ResumeCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentClient::ResumeCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ResumeCollector(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->ResumeCollector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -364,8 +351,8 @@ RapidMigrationAssessmentClient::RegisterCollector(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest request;
   request.set_name(name);
-  return connection_->RegisterCollector(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->RegisterCollector(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -379,22 +366,21 @@ RapidMigrationAssessmentClient::RegisterCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentClient::RegisterCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RegisterCollector(google::cloud::ExperimentalTag{},
-                                        google::cloud::NoAwaitTag{}, request);
+  return connection_->RegisterCollector(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentClient::RegisterCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RegisterCollector(google::cloud::ExperimentalTag{},
-                                        operation);
+  return connection_->RegisterCollector(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -413,8 +399,7 @@ RapidMigrationAssessmentClient::PauseCollector(ExperimentalTag, NoAwaitTag,
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest request;
   request.set_name(name);
-  return connection_->PauseCollector(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->PauseCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
@@ -428,22 +413,20 @@ RapidMigrationAssessmentClient::PauseCollector(
 
 StatusOr<google::longrunning::Operation>
 RapidMigrationAssessmentClient::PauseCollector(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PauseCollector(google::cloud::ExperimentalTag{},
-                                     google::cloud::NoAwaitTag{}, request);
+  return connection_->PauseCollector(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
 RapidMigrationAssessmentClient::PauseCollector(
-    google::cloud::ExperimentalTag,
-    google::longrunning::Operation const& operation, Options opts) {
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PauseCollector(google::cloud::ExperimentalTag{},
-                                     operation);
+  return connection_->PauseCollector(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

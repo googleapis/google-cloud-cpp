@@ -220,13 +220,13 @@ class ManagedIdentitiesServiceClient {
                           Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::
           CreateMicrosoftAdDomainRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  CreateMicrosoftAdDomain(google::cloud::ExperimentalTag,
+  CreateMicrosoftAdDomain(ExperimentalTag,
                           google::longrunning::Operation const& operation,
                           Options opts = {});
 
@@ -505,13 +505,13 @@ class ManagedIdentitiesServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> UpdateDomain(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -591,13 +591,12 @@ class ManagedIdentitiesServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteDomain(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
-  DeleteDomain(google::cloud::ExperimentalTag,
-               google::longrunning::Operation const& operation,
+  DeleteDomain(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -680,13 +679,13 @@ class ManagedIdentitiesServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> AttachTrust(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::AttachTrustRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -775,13 +774,13 @@ class ManagedIdentitiesServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ReconfigureTrust(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
           request,
       Options opts = {});
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
-  ReconfigureTrust(google::cloud::ExperimentalTag,
+  ReconfigureTrust(ExperimentalTag,
                    google::longrunning::Operation const& operation,
                    Options opts = {});
 
@@ -865,13 +864,13 @@ class ManagedIdentitiesServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DetachTrust(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::DetachTrustRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -955,13 +954,13 @@ class ManagedIdentitiesServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> ValidateTrust(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
-      google::cloud::ExperimentalTag,
-      google::longrunning::Operation const& operation, Options opts = {});
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<ManagedIdentitiesServiceConnection> connection_;

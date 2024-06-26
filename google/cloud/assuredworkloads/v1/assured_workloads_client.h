@@ -173,12 +173,12 @@ class AssuredWorkloadsServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
-  CreateWorkload(google::cloud::ExperimentalTag,
+  CreateWorkload(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 

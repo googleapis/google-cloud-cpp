@@ -60,8 +60,7 @@ BackendBucketsClient::AddSignedUrlKey(
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
   *request.mutable_signed_url_key_resource() = signed_url_key_resource;
-  return connection_->AddSignedUrlKey(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->AddSignedUrlKey(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -75,22 +74,20 @@ BackendBucketsClient::AddSignedUrlKey(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsClient::AddSignedUrlKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_buckets::v1::
         AddSignedUrlKeyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AddSignedUrlKey(google::cloud::ExperimentalTag{},
-                                      google::cloud::NoAwaitTag{}, request);
+  return connection_->AddSignedUrlKey(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsClient::AddSignedUrlKey(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AddSignedUrlKey(google::cloud::ExperimentalTag{},
-                                      operation);
+  return connection_->AddSignedUrlKey(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -115,8 +112,8 @@ BackendBucketsClient::DeleteBackendBucket(ExperimentalTag, NoAwaitTag,
       request;
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
-  return connection_->DeleteBackendBucket(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackendBucket(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -130,22 +127,21 @@ BackendBucketsClient::DeleteBackendBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsClient::DeleteBackendBucket(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_buckets::v1::
         DeleteBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackendBucket(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteBackendBucket(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsClient::DeleteBackendBucket(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteBackendBucket(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->DeleteBackendBucket(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -174,8 +170,8 @@ BackendBucketsClient::DeleteSignedUrlKey(ExperimentalTag, NoAwaitTag,
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
   request.set_key_name(key_name);
-  return connection_->DeleteSignedUrlKey(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSignedUrlKey(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -189,22 +185,21 @@ BackendBucketsClient::DeleteSignedUrlKey(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsClient::DeleteSignedUrlKey(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_buckets::v1::
         DeleteSignedUrlKeyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSignedUrlKey(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->DeleteSignedUrlKey(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsClient::DeleteSignedUrlKey(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSignedUrlKey(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->DeleteSignedUrlKey(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>
@@ -272,8 +267,8 @@ BackendBucketsClient::InsertBackendBucket(
       request;
   request.set_project(project);
   *request.mutable_backend_bucket_resource() = backend_bucket_resource;
-  return connection_->InsertBackendBucket(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertBackendBucket(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -287,22 +282,21 @@ BackendBucketsClient::InsertBackendBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsClient::InsertBackendBucket(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_buckets::v1::
         InsertBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertBackendBucket(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->InsertBackendBucket(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsClient::InsertBackendBucket(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertBackendBucket(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->InsertBackendBucket(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::BackendBucket>
@@ -352,8 +346,8 @@ BackendBucketsClient::PatchBackendBucket(
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
   *request.mutable_backend_bucket_resource() = backend_bucket_resource;
-  return connection_->PatchBackendBucket(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->PatchBackendBucket(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -367,22 +361,21 @@ BackendBucketsClient::PatchBackendBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsClient::PatchBackendBucket(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_buckets::v1::
         PatchBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchBackendBucket(google::cloud::ExperimentalTag{},
-                                         google::cloud::NoAwaitTag{}, request);
+  return connection_->PatchBackendBucket(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsClient::PatchBackendBucket(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchBackendBucket(google::cloud::ExperimentalTag{},
-                                         operation);
+  return connection_->PatchBackendBucket(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -415,8 +408,8 @@ BackendBucketsClient::SetEdgeSecurityPolicy(
   request.set_backend_bucket(backend_bucket);
   *request.mutable_security_policy_reference_resource() =
       security_policy_reference_resource;
-  return connection_->SetEdgeSecurityPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->SetEdgeSecurityPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -430,22 +423,21 @@ BackendBucketsClient::SetEdgeSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsClient::SetEdgeSecurityPolicy(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_buckets::v1::
         SetEdgeSecurityPolicyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetEdgeSecurityPolicy(
-      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+  return connection_->SetEdgeSecurityPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsClient::SetEdgeSecurityPolicy(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetEdgeSecurityPolicy(google::cloud::ExperimentalTag{},
-                                            operation);
+  return connection_->SetEdgeSecurityPolicy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -525,8 +517,8 @@ BackendBucketsClient::UpdateBackendBucket(
   request.set_project(project);
   request.set_backend_bucket(backend_bucket);
   *request.mutable_backend_bucket_resource() = backend_bucket_resource;
-  return connection_->UpdateBackendBucket(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackendBucket(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -540,22 +532,21 @@ BackendBucketsClient::UpdateBackendBucket(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendBucketsClient::UpdateBackendBucket(
-    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    ExperimentalTag, NoAwaitTag,
     google::cloud::cpp::compute::backend_buckets::v1::
         UpdateBackendBucketRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackendBucket(google::cloud::ExperimentalTag{},
-                                          google::cloud::NoAwaitTag{}, request);
+  return connection_->UpdateBackendBucket(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendBucketsClient::UpdateBackendBucket(
-    google::cloud::ExperimentalTag,
+    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateBackendBucket(google::cloud::ExperimentalTag{},
-                                          operation);
+  return connection_->UpdateBackendBucket(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

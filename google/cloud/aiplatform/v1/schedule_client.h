@@ -226,12 +226,12 @@ class ScheduleServiceClient {
       Options opts = {});
 
   StatusOr<google::longrunning::Operation> DeleteSchedule(
-      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
       Options opts = {});
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSchedule(google::cloud::ExperimentalTag,
+  DeleteSchedule(ExperimentalTag,
                  google::longrunning::Operation const& operation,
                  Options opts = {});
 
