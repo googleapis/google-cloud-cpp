@@ -311,6 +311,9 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
 
 /// @test Read the last chunk of an object by setting ReadLast option.
 TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -523,7 +526,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
-  if (!UsingEmulator()) GTEST_SKIP();
+  // The emulator does not support this type of fault injection for gRPC.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
 
@@ -555,7 +559,8 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
-  if (!UsingEmulator()) GTEST_SKIP();
+  // The emulator does not support this type of fault injection for gRPC.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
 
   Client client(
       Options{}

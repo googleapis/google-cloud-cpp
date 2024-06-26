@@ -31,7 +31,11 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
+using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Not;
+using ::testing::Pair;
 
 class ObjectHashIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -120,6 +124,9 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueSuccess) {
 
 /// @test Verify that incorrect MD5 hash values work in InsertObject().
 TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueFailure) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -192,8 +199,13 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectExplicitEnable) {
   EXPECT_THAT(os.computed_hash(), HasSubstr(ComputeMD5Hash(LoremIpsum())));
   EXPECT_THAT(os.received_hash(), HasSubstr(ComputeMD5Hash(LoremIpsum())));
   if (meta->has_metadata("x_emulator_upload")) {
-    ASSERT_TRUE(meta->has_metadata("x_emulator_no_crc32c"));
-    ASSERT_TRUE(meta->has_metadata("x_emulator_no_md5"));
+    ASSERT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
+    if (UsingGrpc()) {
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_md5", _)));
+    } else {
+      // REST cannot send the checksums computed at the end of the upload.
+      ASSERT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
+    }
   }
 }
 
@@ -212,13 +224,19 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectWithValueSuccess) {
   ScheduleForDelete(*meta);
 
   if (meta->has_metadata("x_emulator_upload")) {
-    ASSERT_TRUE(meta->has_metadata("x_emulator_no_crc32c"));
-    ASSERT_TRUE(meta->has_metadata("x_emulator_md5"));
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
+    // TODO(#14385) - the emulator does not support this feature for gRPC.
+    if (!(UsingEmulator() && UsingGrpc())) {
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_md5", _)));
+    }
   }
 }
 
 /// @test Verify that incorrect MD5 hash values work in WriteObject().
 TEST_F(ObjectHashIntegrationTest, WriteObjectWithValueFailure) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -235,8 +253,9 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectWithValueFailure) {
 /// receives bad data.
 TEST_F(ObjectHashIntegrationTest, WriteObjectReceiveBadChecksum) {
   // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+  // emulator to inject faults. The emulator does not support this type of fault
+  // injection for gRPC either.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -258,6 +277,9 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectReceiveBadChecksum) {
 
 /// @test Verify that MD5 hash mismatches are reported by default.
 TEST_F(ObjectHashIntegrationTest, WriteObjectUploadBadChecksum) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -275,6 +297,9 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectUploadBadChecksum) {
 
 /// @test Verify that MD5 hashes are disabled by default on downloads.
 TEST_P(ObjectHashIntegrationTest, ReadObjectDefault) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -295,8 +320,9 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectDefault) {
 /// downloads.
 TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerGetc) {
   // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+  // emulator to inject faults. The emulator does not support this type of fault
+  // injection for gRPC either.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -333,8 +359,9 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerGetc) {
 /// downloads.
 TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerRead) {
   // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+  // emulator to inject faults. The emulator does not support this type of fault
+  // injection for gRPC either.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();

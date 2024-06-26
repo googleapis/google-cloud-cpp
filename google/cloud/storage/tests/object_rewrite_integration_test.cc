@@ -29,7 +29,10 @@ namespace {
 
 using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::testing_util::IsOk;
+using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::Not;
+using ::testing::ResultOf;
 
 class ObjectRewriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -77,6 +80,8 @@ TEST_F(ObjectRewriteIntegrationTest, Copy) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -94,11 +99,17 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
-                                     ObjectAccessControl()
-                                         .set_entity("allAuthenticatedUsers")
-                                         .set_role("READER")))
-      << *meta;
+  EXPECT_THAT(
+      meta->acl(),
+      Contains(
+          AllOf(ResultOf(
+                    "entity is",
+                    [](ObjectAccessControl const& acl) { return acl.entity(); },
+                    "allAuthenticatedUsers"),
+                ResultOf(
+                    "role is",
+                    [](ObjectAccessControl const& acl) { return acl.role(); },
+                    "READER"))));
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
@@ -131,6 +142,8 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -153,10 +166,18 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
       DestinationPredefinedAcl::BucketOwnerRead(), Projection::Full());
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
-  EXPECT_LT(0, CountMatchingEntities(
-                   meta->acl(),
-                   ObjectAccessControl().set_entity(owner).set_role("READER")))
-      << *meta;
+
+  EXPECT_THAT(
+      meta->acl(),
+      Contains(
+          AllOf(ResultOf(
+                    "entity is",
+                    [](ObjectAccessControl const& acl) { return acl.entity(); },
+                    owner),
+                ResultOf(
+                    "role is",
+                    [](ObjectAccessControl const& acl) { return acl.role(); },
+                    "READER"))));
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
@@ -177,14 +198,23 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
   ASSERT_TRUE(meta->has_owner());
-  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
-                                     ObjectAccessControl()
-                                         .set_entity(meta->owner().entity)
-                                         .set_role("OWNER")))
-      << *meta;
+
+  EXPECT_THAT(
+      meta->acl(),
+      Contains(
+          AllOf(ResultOf(
+                    "entity is",
+                    [](ObjectAccessControl const& acl) { return acl.entity(); },
+                    meta->owner().entity),
+                ResultOf(
+                    "role is",
+                    [](ObjectAccessControl const& acl) { return acl.role(); },
+                    "OWNER"))));
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -202,14 +232,23 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
   ASSERT_TRUE(meta->has_owner());
-  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
-                                     ObjectAccessControl()
-                                         .set_entity(meta->owner().entity)
-                                         .set_role("OWNER")))
-      << *meta;
+
+  EXPECT_THAT(
+      meta->acl(),
+      Contains(
+          AllOf(ResultOf(
+                    "entity is",
+                    [](ObjectAccessControl const& acl) { return acl.entity(); },
+                    meta->owner().entity),
+                ResultOf(
+                    "role is",
+                    [](ObjectAccessControl const& acl) { return acl.role(); },
+                    "OWNER"))));
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -226,11 +265,18 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
       DestinationPredefinedAcl::PublicRead(), Projection::Full());
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
-  EXPECT_LT(
-      0, CountMatchingEntities(
-             meta->acl(),
-             ObjectAccessControl().set_entity("allUsers").set_role("READER")))
-      << *meta;
+
+  EXPECT_THAT(
+      meta->acl(),
+      Contains(
+          AllOf(ResultOf(
+                    "entity is",
+                    [](ObjectAccessControl const& acl) { return acl.entity(); },
+                    "allUsers"),
+                ResultOf(
+                    "role is",
+                    [](ObjectAccessControl const& acl) { return acl.role(); },
+                    "READER"))));
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
@@ -258,6 +304,8 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -313,6 +361,8 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
