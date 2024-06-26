@@ -73,7 +73,7 @@ TEST(GrpcMetricsExporter, EnabledResourceProject) {
   EXPECT_TRUE(
       config->exporter_options.has<otel_internal::MonitoredResourceOption>());
   EXPECT_TRUE(
-      config->exporter_options.has<otel_internal::MetricPrefixOption>());
+      config->exporter_options.has<otel_internal::MetricNameFormatterOption>());
   EXPECT_TRUE(
       config->exporter_options.get<otel_internal::ServiceTimeSeriesOption>());
   EXPECT_GT(config->reader_options.export_interval_millis,
@@ -91,7 +91,7 @@ TEST(GrpcMetricsExporter, EnabledOptionsProject) {
   EXPECT_TRUE(
       config->exporter_options.has<otel_internal::MonitoredResourceOption>());
   EXPECT_TRUE(
-      config->exporter_options.has<otel_internal::MetricPrefixOption>());
+      config->exporter_options.has<otel_internal::MetricNameFormatterOption>());
   EXPECT_TRUE(
       config->exporter_options.get<otel_internal::ServiceTimeSeriesOption>());
   EXPECT_GT(config->reader_options.export_interval_millis,
@@ -110,7 +110,7 @@ TEST(GrpcMetricsExporter, EnabledWithTimeout) {
   EXPECT_TRUE(
       config->exporter_options.has<otel_internal::MonitoredResourceOption>());
   EXPECT_TRUE(
-      config->exporter_options.has<otel_internal::MetricPrefixOption>());
+      config->exporter_options.has<otel_internal::MetricNameFormatterOption>());
   EXPECT_TRUE(
       config->exporter_options.get<otel_internal::ServiceTimeSeriesOption>());
   EXPECT_EQ(config->reader_options.export_interval_millis,

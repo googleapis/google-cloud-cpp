@@ -70,7 +70,8 @@ Options MetricsExporterOptions(
 
   return Options{}
       .set<otel_internal::ServiceTimeSeriesOption>(true)
-      .set<otel_internal::MetricPrefixOption>("storage.googleapis.com/")
+      .set<otel_internal::MetricNameFormatterOption>(
+          [](auto s) { return "storage.googleapis.com/" + s; })
       .set<otel_internal::MonitoredResourceOption>(
           std::move(monitored_resource));
 }

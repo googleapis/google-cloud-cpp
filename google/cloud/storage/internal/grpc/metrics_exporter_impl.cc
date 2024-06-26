@@ -118,7 +118,9 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
   labels.erase("instance_id");
   labels.erase("api");
   config.exporter_options.set<otel_internal::ServiceTimeSeriesOption>(false)
-      .set<otel_internal::MetricPrefixOption>("workload.googleapis.com/")
+      .set<otel_internal::MetricNameFormatterOption>([](std::string s) {
+        return "workload.googleapis.com/" + std::move(s);
+      })
       .set<otel_internal::MonitoredResourceOption>(
           std::move(monitored_resource));
   // END TODO(#13998) - end of code to erase.

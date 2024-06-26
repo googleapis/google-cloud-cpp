@@ -21,6 +21,8 @@
 #include <google/api/monitored_resource.pb.h>
 #include <google/monitoring/v3/metric_service.pb.h>
 #include <opentelemetry/sdk/metrics/metric_reader.h>
+#include <functional>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -35,7 +37,7 @@ auto constexpr kMaxTimeSeriesPerRequest = 200;
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
-    std::string const& prefix);
+    std::function<std::string(std::string)> const& metrics_name_formatter);
 
 google::monitoring::v3::TimeSeries ToTimeSeries(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
@@ -73,7 +75,7 @@ google::api::MonitoredResource ToMonitoredResource(
  */
 std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::string const& prefix);
+    std::function<std::string(std::string)> const& metrics_name_formatter);
 
 /**
  * Convert from OpenTelemetry metrics to Cloud Monitoring protos.
