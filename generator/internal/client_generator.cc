@@ -78,8 +78,9 @@ Status ClientGenerator::GenerateHeader() {
                                   : vars("connection_rest_header_path"),
        HasLongrunningMethod() ? "google/cloud/no_await_tag.h" : "",
        // TODO(#14344): Restore conditional experimental tag include.
-       "google/cloud/experimental_tag.h", "google/cloud/future.h",
-       "google/cloud/options.h", "google/cloud/polling_policy.h",
+       HasLongrunningMethod() ? "google/cloud/experimental_tag.h" : "",
+       "google/cloud/future.h", "google/cloud/options.h",
+       "google/cloud/polling_policy.h",
        HasIamPolicyExtension() ? "google/cloud/internal/make_status.h" : "",
        "google/cloud/status_or.h", "google/cloud/version.h"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
@@ -271,15 +272,15 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                   // clang-format off
     "  Status\n",
     "  StatusOr<$longrunning_operation_type$>\n"},
-   {"  $method_name$(google::cloud::ExperimentalTag, "
-    "google::cloud::NoAwaitTag, "
+   {"  $method_name$(ExperimentalTag, "
+    "NoAwaitTag, "
     "$request_type$ const& request, Options opts = {});\n\n"},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"  $method_name$(google::cloud::ExperimentalTag, $longrunning_operation_type$ const& operation, Options opts = {});\n"}
+   {"  $method_name$(ExperimentalTag, $longrunning_operation_type$ const& operation, Options opts = {});\n"}
                  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
@@ -476,7 +477,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
-                  {"  return connection_->$method_name$(google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);\n"
+                  {"  return connection_->$method_name$(ExperimentalTag{}, NoAwaitTag{}, request);\n"
                   "}\n"}
                    // clang-format on
                },
@@ -605,24 +606,24 @@ $client_class_name$::Async$method_name$(Options opts) {
                   // clang-format off
     "\nStatus\n",
     "\nStatusOr<$longrunning_operation_type$>\n"},
-   {"$client_class_name$::$method_name$(google::cloud::ExperimentalTag"
-    ", google::cloud::NoAwaitTag"
+   {"$client_class_name$::$method_name$(ExperimentalTag"
+    ", NoAwaitTag"
     ", $request_type$ const& request"
     ", Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
-    "  return connection_->$method_name$(google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);\n"
+    "  return connection_->$method_name$(ExperimentalTag{}, NoAwaitTag{}, request);\n"
     "}\n"},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
     "\nfuture<Status>\n",
     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"$client_class_name$::$method_name$(google::cloud::ExperimentalTag"
+   {"$client_class_name$::$method_name$(ExperimentalTag"
     ", $longrunning_operation_type$ const& operation, Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
-    "  return connection_->$method_name$(google::cloud::ExperimentalTag{}, operation);\n"},
+    "  return connection_->$method_name$(ExperimentalTag{}, operation);\n"},
    {"}\n"}
                  // clang-format on
              },
