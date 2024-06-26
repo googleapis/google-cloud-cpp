@@ -58,7 +58,7 @@ class TracingPullLeaseManagerImpl : public PullLeaseManagerImpl {
     auto span = internal::MakeSpan(
         subscription_.subscription_id() + " modack",
         {{sc::kMessagingSystem, "gcp_pubsub"},
-         {sc::kMessagingOperation, "modack"},
+         {/*sc::kMessagingOperationType=*/"messaging.operation.type", "modack"},
          {sc::kCodeFunction, "pubsub::PullLeaseManager::ExtendLease"},
          {"messaging.gcp_pubsub.message.ack_id", ack_id_},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",

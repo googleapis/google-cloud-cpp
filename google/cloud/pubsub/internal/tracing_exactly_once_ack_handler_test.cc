@@ -164,7 +164,9 @@ TEST(TracingAckHandlerTest, AckAttributes) {
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(sc::kMessagingOperation, "settle"),
+              OTelAttribute<std::string>(
+                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                  "settle"),
               OTelAttribute<std::string>(sc::kCodeFunction,
                                          "pubsub::AckHandler::ack"),
               OTelAttribute<std::int32_t>(
@@ -270,7 +272,9 @@ TEST(TracingAckHandlerTest, NackAttributes) {
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(sc::kMessagingOperation, "settle"),
+              OTelAttribute<std::string>(
+                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                  "settle"),
               OTelAttribute<std::string>(sc::kCodeFunction,
                                          "pubsub::AckHandler::nack"),
               OTelAttribute<std::int32_t>(

@@ -112,10 +112,12 @@ TEST(TracingAckHandlerTest, AckAttributes) {
               Contains(AllOf(SpanNamed("test-subscription ack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  "gcp.project_id", "test-project")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription ack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "ack")))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(
+                 SpanNamed("test-subscription ack"),
+                 SpanHasAttributes(OTelAttribute<std::string>(
+                     /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                     "ack")))));
   EXPECT_THAT(
       spans,
       Contains(AllOf(SpanNamed("test-subscription ack"),
@@ -182,10 +184,12 @@ TEST(TracingAckHandlerTest, NackAttributes) {
               Contains(AllOf(SpanNamed("test-subscription nack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription nack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "nack")))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(
+                 SpanNamed("test-subscription nack"),
+                 SpanHasAttributes(OTelAttribute<std::string>(
+                     /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                     "nack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription nack"),
                              SpanHasAttributes(OTelAttribute<std::string>(

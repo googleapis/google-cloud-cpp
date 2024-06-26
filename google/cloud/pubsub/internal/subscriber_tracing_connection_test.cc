@@ -152,10 +152,12 @@ TEST(SubscriberTracingConnectionTest, PullAttributes) {
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kCodeFunction,
                                  "pubsub::SubscriberConnection::Pull")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription receive"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "receive")))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(
+                 SpanNamed("test-subscription receive"),
+                 SpanHasAttributes(OTelAttribute<std::string>(
+                     /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                     "receive")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription receive"),
                              SpanHasAttributes(OTelAttribute<std::string>(

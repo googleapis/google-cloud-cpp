@@ -55,8 +55,9 @@ using ::testing::VariantWith;
 auto ExpectSent(std::int64_t id, std::uint64_t size) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   return SpanEventAttributesAre(
-      OTelAttribute<std::string>(sc::kMessageType, "SENT"),
-      OTelAttribute<std::int64_t>(sc::kMessageId, id),
+      OTelAttribute<std::string>(/*sc::kRpcMessageType=*/"rpc.message.type",
+                                 "SENT"),
+      OTelAttribute<std::int64_t>(/*sc::kRpcMessageId=*/"rpc.message.id", id),
       OTelAttribute<std::string>(sc::kThreadId, _),
       OTelAttribute<std::uint64_t>("gl-cpp.size", size));
 }
@@ -73,8 +74,10 @@ auto ExpectQuery(std::int64_t id) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   return AllOf(EventNamed("gl-cpp.query"),
                SpanEventAttributesAre(
-                   OTelAttribute<std::string>(sc::kMessageType, "RECEIVE"),
-                   OTelAttribute<std::int64_t>(sc::kMessageId, id),
+                   OTelAttribute<std::string>(
+                       /*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVE"),
+                   OTelAttribute<std::int64_t>(
+                       /*sc::kRpcMessageId=*/"rpc.message.id", id),
                    OTelAttribute<std::string>(sc::kThreadId, _)));
 }
 
