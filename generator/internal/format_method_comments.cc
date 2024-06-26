@@ -261,7 +261,7 @@ bool CheckMethodCommentSubstitutions() {
 std::string FormatStartMethodComments() {
   return R"""(  // clang-format off
   ///
-  /// @copydoc $method_name$
+  /// @copybrief $method_name$
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`$longrunning_operation_type$`] that corresponds to the Long Running
@@ -276,7 +276,7 @@ std::string FormatStartMethodComments() {
 std::string FormatAwaitMethodComments() {
   return R"""(  // clang-format off
   ///
-  /// @copydoc $method_name$
+  /// @copybrief $method_name$
   ///
   /// This method accepts a `$longrunning_operation_type$` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
