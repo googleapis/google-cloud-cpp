@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/connection.h"
+#include "google/cloud/storage/async/object_descriptor.h"
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/rewriter.h"
 #include "google/cloud/storage/async/token.h"
@@ -232,6 +233,41 @@ class AsyncClient {
       Options opts = {});
 
   /**
+   * Open an object descriptor to perform one or more ranged reads.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. The operation will
+   * retry until the descriptor is successfully created. The descriptor itself
+   * will resume any incomplete ranged reads if the connection(s) are
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<ObjectDescriptor>> Open(BucketName const& bucket_name,
+                                          std::string object_name,
+                                          Options opts = {});
+
+  /**
+   * Open an object descriptor to perform one or more ranged reads.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent. The operation will
+   * retry until the descriptor is successfully created. The descriptor itself
+   * will resume any incomplete ranged reads if the connection(s) are
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
+   *
+   * @param bucket_name the name of the bucket that contains the object.
+   * @param object_name the name of the object to be read.
+   * @param opts options controlling the behavior of this RPC, for example
+   *     the application may change the retry policy.
+   */
+  future<StatusOr<ObjectDescriptor>> Open(
+      google::storage::v2::BidiReadObjectSpec spec, Options opts = {});
+
+  /**
    * A streaming download for the contents of an object.
    *
    * When satisfied, the returned future has a reader to asynchronously download
@@ -243,7 +279,7 @@ class AsyncClient {
    * @par Idempotency
    * This is a read-only operation and is always idempotent. Once the download
    * starts, this operation will automatically resume the download if is
-   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this
+   * interrupted. Use `ResumePolicyOption` and `ResumePolicy` to control this.
    *
    * @param bucket_name the name of the bucket that contains the object.
    * @param object_name the name of the object to be read.

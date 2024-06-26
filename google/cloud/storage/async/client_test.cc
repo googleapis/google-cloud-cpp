@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
+#include "google/cloud/storage/mocks/mock_async_object_descriptor_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/mocks/mock_async_rewriter_connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
@@ -33,6 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage_mocks::MockAsyncConnection;
+using ::google::cloud::storage_mocks::MockAsyncObjectDescriptorConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
 using ::google::cloud::storage_mocks::MockAsyncRewriterConnection;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
@@ -162,6 +164,117 @@ TEST(AsyncClient, InsertObject3) {
                             .set<TestOption<2>>("O2-function"))
           .get();
   EXPECT_THAT(response, IsOkAndHolds(IsProtoEqual(TestProtoObject())));
+}
+
+TEST(AsyncClient, OpenObject1) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "projects/_/buckets/test-bucket"
+    object: "test-object"
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, Open).WillOnce([&](AsyncConnection::OpenParams const& p) {
+    EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+    EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+    EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+    auto expected = google::storage::v2::BidiReadObjectSpec{};
+    EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+    EXPECT_THAT(p.read_spec, IsProtoEqual(expected));
+    auto descriptor = std::make_shared<MockAsyncObjectDescriptorConnection>();
+    EXPECT_CALL(*descriptor, Read).WillOnce([] {
+      auto reader = std::make_unique<MockAsyncReaderConnection>();
+      EXPECT_CALL(*reader, Read).WillOnce([] {
+        return make_ready_future(AsyncReaderConnection::ReadResponse{Status{}});
+      });
+      return reader;
+    });
+    return make_ready_future(make_status_or(
+        std::shared_ptr<ObjectDescriptorConnection>(std::move(descriptor))));
+  });
+
+  auto client = AsyncClient(mock);
+  auto descriptor = client
+                        .Open(BucketName("test-bucket"), "test-object",
+                              Options{}
+                                  .set<TestOption<1>>("O1-function")
+                                  .set<TestOption<2>>("O2-function"))
+                        .get();
+  ASSERT_STATUS_OK(descriptor);
+
+  AsyncReader r;
+  AsyncToken t;
+  std::tie(r, t) = descriptor->Read(100, 200);
+  EXPECT_TRUE(t.valid());
+
+  auto pt = r.Read(std::move(t)).get();
+  AsyncReaderConnection::ReadResponse p;
+  AsyncToken t2;
+  ASSERT_STATUS_OK(pt);
+  std::tie(p, t2) = *std::move(pt);
+  EXPECT_FALSE(t2.valid());
+  EXPECT_THAT(
+      p, VariantWith<ReadPayload>(ResultOf(
+             "empty response", [](auto const& p) { return p.size(); }, 0)));
+}
+
+TEST(AsyncClient, OpenObject2) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+  )pb";
+  auto mock = std::make_shared<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options)
+      .WillRepeatedly(
+          Return(Options{}.set<TestOption<0>>("O0").set<TestOption<1>>("O1")));
+
+  EXPECT_CALL(*mock, Open).WillOnce([&](AsyncConnection::OpenParams const& p) {
+    EXPECT_THAT(p.options.get<TestOption<0>>(), "O0");
+    EXPECT_THAT(p.options.get<TestOption<1>>(), "O1-function");
+    EXPECT_THAT(p.options.get<TestOption<2>>(), "O2-function");
+    auto expected = google::storage::v2::BidiReadObjectSpec{};
+    EXPECT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &expected));
+    EXPECT_THAT(p.read_spec, IsProtoEqual(expected));
+    auto descriptor = std::make_shared<MockAsyncObjectDescriptorConnection>();
+    EXPECT_CALL(*descriptor, Read).WillOnce([] {
+      auto reader = std::make_unique<MockAsyncReaderConnection>();
+      EXPECT_CALL(*reader, Read).WillOnce([] {
+        return make_ready_future(AsyncReaderConnection::ReadResponse{Status{}});
+      });
+      return reader;
+    });
+    return make_ready_future(make_status_or(
+        std::shared_ptr<ObjectDescriptorConnection>(std::move(descriptor))));
+  });
+
+  auto client = AsyncClient(mock);
+  auto read_spec = google::storage::v2::BidiReadObjectSpec{};
+  read_spec.set_bucket("test-only-invalid");
+  read_spec.set_object("test-object");
+  auto descriptor =
+      client
+          .Open(std::move(read_spec), Options{}
+                                          .set<TestOption<1>>("O1-function")
+                                          .set<TestOption<2>>("O2-function"))
+          .get();
+  ASSERT_STATUS_OK(descriptor);
+
+  AsyncReader r;
+  AsyncToken t;
+  std::tie(r, t) = descriptor->Read(100, 200);
+  EXPECT_TRUE(t.valid());
+
+  auto pt = r.Read(std::move(t)).get();
+  AsyncReaderConnection::ReadResponse p;
+  AsyncToken t2;
+  ASSERT_STATUS_OK(pt);
+  std::tie(p, t2) = *std::move(pt);
+  EXPECT_FALSE(t2.valid());
+  EXPECT_THAT(
+      p, VariantWith<ReadPayload>(ResultOf(
+             "empty response", [](auto const& p) { return p.size(); }, 0)));
 }
 
 TEST(AsyncClient, ReadObject1) {

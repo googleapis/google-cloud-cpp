@@ -49,6 +49,26 @@ future<StatusOr<google::storage::v2::Object>> AsyncClient::InsertObject(
        internal::MergeOptions(std::move(opts), connection_->options())});
 }
 
+future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
+    BucketName const& bucket_name, std::string object_name, Options opts) {
+  auto spec = google::storage::v2::BidiReadObjectSpec{};
+  spec.set_bucket(bucket_name.FullName());
+  spec.set_object(std::move(object_name));
+  return Open(std::move(spec), std::move(opts));
+}
+
+future<StatusOr<ObjectDescriptor>> AsyncClient::Open(
+    google::storage::v2::BidiReadObjectSpec spec, Options opts) {
+  return connection_
+      ->Open({std::move(spec),
+              internal::MergeOptions(std::move(opts), connection_->options())})
+      .then([](auto f) -> StatusOr<ObjectDescriptor> {
+        auto connection = f.get();
+        if (!connection) return std::move(connection).status();
+        return ObjectDescriptor(*std::move(connection));
+      });
+}
+
 future<StatusOr<std::pair<AsyncReader, AsyncToken>>> AsyncClient::ReadObject(
     BucketName const& bucket_name, std::string object_name, Options opts) {
   auto request = google::storage::v2::ReadObjectRequest{};
