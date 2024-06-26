@@ -69,8 +69,8 @@ auto MakeParent(Links const& links, Spans const& message_spans,
                          {{sc::kMessagingBatchMessageCount,
                            static_cast<std::int64_t>(message_spans.size())},
                           {sc::kCodeFunction, "BatchSink::AsyncPublish"},
-                          {/*sc::kMessagingOperation=*/
-                           "messaging.operation", "publish"},
+                          {/*sc::kMessagingOperationType=*/
+                           "messaging.operation.type", "publish"},
                           {sc::kThreadId, internal::CurrentThreadId()},
                           {sc::kMessagingSystem, "gcp_pubsub"},
                           {/*sc::kServerAddress=*/"server.address", endpoint},

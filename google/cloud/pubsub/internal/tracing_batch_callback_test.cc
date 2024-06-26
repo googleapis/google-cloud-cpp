@@ -159,7 +159,9 @@ TEST(TracingBatchCallback, StartAndEndModackSpanForOneMessage) {
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(sc::kMessagingOperation, "extend"),
+              OTelAttribute<std::string>(
+                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                  "extend"),
               OTelAttribute<int64_t>(sc::kMessagingBatchMessageCount, 1),
               OTelAttribute<int64_t>(
                   "messaging.gcp_pubsub.message.ack_deadline_seconds", 10),
@@ -195,7 +197,9 @@ TEST(TracingBatchCallback, StartAndEndModackSpanForMultipleMessages) {
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(sc::kMessagingOperation, "extend"),
+              OTelAttribute<std::string>(
+                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                  "extend"),
               OTelAttribute<int64_t>(sc::kMessagingBatchMessageCount, 2),
               OTelAttribute<int64_t>(
                   "messaging.gcp_pubsub.message.ack_deadline_seconds", 10),
@@ -246,7 +250,9 @@ TEST(TracingBatchCallback, SubscribeAttributes) {
           SpanHasAttributes(
               OTelAttribute<std::string>(sc::kMessagingSystem, "gcp_pubsub"),
               OTelAttribute<std::string>("gcp.project_id", "test-project"),
-              OTelAttribute<std::string>(sc::kMessagingOperation, "subscribe"),
+              OTelAttribute<std::string>(
+                  /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                  "subscribe"),
               OTelAttribute<std::string>(sc::kMessagingMessageId, "id-0"),
               OTelAttribute<std::string>("messaging.gcp_pubsub.message.ack_id",
                                          "ack-id-0"),

@@ -42,7 +42,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartPullSpan() {
   auto span = internal::MakeSpan(
       subscription.subscription_id() + " receive",
       {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingOperation, "receive"},
+       {/*sc::kMessagingOperationType=*/"messaging.operation.type", "receive"},
        {sc::kCodeFunction, "pubsub::SubscriberConnection::Pull"},
        {"gcp.project_id", subscription.project_id()},
        {sc::kMessagingDestinationName, subscription.subscription_id()}},

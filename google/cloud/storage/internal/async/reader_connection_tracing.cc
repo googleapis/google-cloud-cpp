@@ -52,22 +52,24 @@ class AsyncReaderConnectionTracing
         .then([count = ++count_, span = span_](auto f) -> ReadResponse {
           auto r = f.get();
           if (absl::holds_alternative<Status>(r)) {
-            span->AddEvent("gl-cpp.read",
-                           {
-                               {sc::kMessageType, "RECEIVED"},
-                               {sc::kMessageId, count},
-                               {sc::kThreadId, internal::CurrentThreadId()},
-                           });
+            span->AddEvent(
+                "gl-cpp.read",
+                {
+                    {/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
+                    {/*sc::kRpcMessageId=*/"rpc.message.id", count},
+                    {sc::kThreadId, internal::CurrentThreadId()},
+                });
             return internal::EndSpan(*span, absl::get<Status>(std::move(r)));
           }
           auto const& payload = absl::get<storage_experimental::ReadPayload>(r);
-          span->AddEvent("gl-cpp.read",
-                         {
-                             {sc::kMessageType, "RECEIVED"},
-                             {sc::kMessageId, count},
-                             {sc::kThreadId, internal::CurrentThreadId()},
-                             {"message.starting_offset", payload.offset()},
-                         });
+          span->AddEvent(
+              "gl-cpp.read",
+              {
+                  {/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVED"},
+                  {/*sc::kRpcMessageId=*/"rpc.message.id", count},
+                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {"message.starting_offset", payload.offset()},
+              });
           return r;
         })
         .then([oc = opentelemetry::context::RuntimeContext::GetCurrent()](
