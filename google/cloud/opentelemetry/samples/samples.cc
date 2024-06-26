@@ -146,7 +146,9 @@ void CustomTracerProvider(std::vector<std::string> const& argv) {
         std::move(processor));
 
     // Set the global trace provider
-    opentelemetry::trace::Provider::SetTracerProvider(std::move(provider));
+    std::shared_ptr<opentelemetry::trace::TracerProvider> api_provider =
+        std::move(provider);
+    opentelemetry::trace::Provider::SetTracerProvider(std::move(api_provider));
 
     MyApplicationCode();
 
