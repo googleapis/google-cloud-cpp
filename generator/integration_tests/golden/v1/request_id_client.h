@@ -175,6 +175,17 @@ class RequestIdServiceClient {
   future<StatusOr<google::test::requestid::v1::Foo>>
   RenameFoo(std::string const& name, std::string const& destination_foo_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RenameFoo
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation>
   RenameFoo(ExperimentalTag, NoAwaitTag, std::string const& name, std::string const& destination_foo_id, Options opts = {});
 
@@ -215,9 +226,29 @@ class RequestIdServiceClient {
   future<StatusOr<google::test::requestid::v1::Foo>>
   RenameFoo(google::test::requestid::v1::RenameFooRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RenameFoo
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation>
   RenameFoo(ExperimentalTag, NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RenameFoo
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::test::requestid::v1::Foo>>
   RenameFoo(ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
 

@@ -50,6 +50,9 @@ class MockRequestIdServiceConnection : public golden_v1::RequestIdServiceConnect
   CreateFoo,
   (google::test::requestid::v1::CreateFooRequest const& request), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RenameFoo) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RenameFoo(_)) instead.
   MOCK_METHOD(future<StatusOr<google::test::requestid::v1::Foo>>,
   RenameFoo,
   (google::test::requestid::v1::RenameFooRequest const& request), (override));

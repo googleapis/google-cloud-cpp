@@ -50,6 +50,9 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   ListDatabases,
   (google::test::admin::database::v1::ListDatabasesRequest request), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateDatabase) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateDatabase(_)) instead.
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
   CreateDatabase,
   (google::test::admin::database::v1::CreateDatabaseRequest const& request), (override));
@@ -66,6 +69,9 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   GetDatabase,
   (google::test::admin::database::v1::GetDatabaseRequest const& request), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateDatabaseDdl) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateDatabaseDdl(_)) instead.
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>,
   UpdateDatabaseDdl,
   (google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request), (override));
@@ -98,6 +104,9 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   TestIamPermissions,
   (google::iam::v1::TestIamPermissionsRequest const& request), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateBackup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateBackup(_)) instead.
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Backup>>,
   CreateBackup,
   (google::test::admin::database::v1::CreateBackupRequest const& request), (override));
@@ -126,6 +135,9 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   ListBackups,
   (google::test::admin::database::v1::ListBackupsRequest request), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RestoreDatabase) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RestoreDatabase(_)) instead.
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
   RestoreDatabase,
   (google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
@@ -146,6 +158,9 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   ListBackupOperations,
   (google::test::admin::database::v1::ListBackupOperationsRequest request), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, LongRunningWithoutRouting) is now ambiguous. Use
+  // EXPECT_CALL(*mock, LongRunningWithoutRouting(_)) instead.
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
   LongRunningWithoutRouting,
   (google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
