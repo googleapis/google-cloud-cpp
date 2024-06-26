@@ -386,7 +386,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateProject
+  /// @copybrief CreateProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -444,7 +444,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateProject
+  /// @copybrief CreateProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -460,7 +460,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateProject
+  /// @copybrief CreateProject
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -512,7 +512,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateProject
+  /// @copybrief UpdateProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -571,7 +571,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateProject
+  /// @copybrief UpdateProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -587,7 +587,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateProject
+  /// @copybrief UpdateProject
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -649,7 +649,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc MoveProject
+  /// @copybrief MoveProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -717,7 +717,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc MoveProject
+  /// @copybrief MoveProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -733,7 +733,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc MoveProject
+  /// @copybrief MoveProject
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -813,7 +813,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProject
+  /// @copybrief DeleteProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -900,7 +900,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProject
+  /// @copybrief DeleteProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -916,7 +916,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProject
+  /// @copybrief DeleteProject
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -971,7 +971,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteProject
+  /// @copybrief UndeleteProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1031,7 +1031,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteProject
+  /// @copybrief UndeleteProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1047,7 +1047,7 @@ class ProjectsClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteProject
+  /// @copybrief UndeleteProject
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

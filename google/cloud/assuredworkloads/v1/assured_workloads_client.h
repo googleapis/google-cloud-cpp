@@ -130,7 +130,7 @@ class AssuredWorkloadsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkload
+  /// @copybrief CreateWorkload
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -185,7 +185,7 @@ class AssuredWorkloadsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkload
+  /// @copybrief CreateWorkload
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -201,7 +201,7 @@ class AssuredWorkloadsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkload
+  /// @copybrief CreateWorkload
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

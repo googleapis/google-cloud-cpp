@@ -279,7 +279,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -335,7 +335,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -352,7 +352,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -398,7 +398,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -452,7 +452,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -469,7 +469,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -667,7 +667,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -725,7 +725,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -742,7 +742,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -792,7 +792,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -848,7 +848,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -865,7 +865,7 @@ class SecureSourceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

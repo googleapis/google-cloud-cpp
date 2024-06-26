@@ -151,7 +151,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -214,7 +214,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -230,7 +230,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -424,7 +424,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PartialUpdateInstance
+  /// @copybrief PartialUpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -479,7 +479,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PartialUpdateInstance
+  /// @copybrief PartialUpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -495,7 +495,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PartialUpdateInstance
+  /// @copybrief PartialUpdateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -603,7 +603,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -663,7 +663,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -679,7 +679,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -849,7 +849,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -864,7 +864,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -923,7 +923,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PartialUpdateCluster
+  /// @copybrief PartialUpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -988,7 +988,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PartialUpdateCluster
+  /// @copybrief PartialUpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1004,7 +1004,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PartialUpdateCluster
+  /// @copybrief PartialUpdateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1301,7 +1301,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAppProfile
+  /// @copybrief UpdateAppProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1355,7 +1355,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAppProfile
+  /// @copybrief UpdateAppProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1371,7 +1371,7 @@ class BigtableInstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAppProfile
+  /// @copybrief UpdateAppProfile
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

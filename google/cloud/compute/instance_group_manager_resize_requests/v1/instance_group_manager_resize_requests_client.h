@@ -139,7 +139,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc Cancel
+  /// @copybrief Cancel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -197,7 +197,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc Cancel
+  /// @copybrief Cancel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -214,7 +214,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc Cancel
+  /// @copybrief Cancel
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -271,7 +271,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceGroupManagerResizeRequest
+  /// @copybrief DeleteInstanceGroupManagerResizeRequest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -330,7 +330,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceGroupManagerResizeRequest
+  /// @copybrief DeleteInstanceGroupManagerResizeRequest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -348,7 +348,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceGroupManagerResizeRequest
+  /// @copybrief DeleteInstanceGroupManagerResizeRequest
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -475,7 +475,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceGroupManagerResizeRequest
+  /// @copybrief InsertInstanceGroupManagerResizeRequest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -535,7 +535,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceGroupManagerResizeRequest
+  /// @copybrief InsertInstanceGroupManagerResizeRequest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -553,7 +553,7 @@ class InstanceGroupManagerResizeRequestsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceGroupManagerResizeRequest
+  /// @copybrief InsertInstanceGroupManagerResizeRequest
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

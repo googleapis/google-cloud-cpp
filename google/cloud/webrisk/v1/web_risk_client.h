@@ -429,7 +429,7 @@ class WebRiskServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SubmitUri
+  /// @copybrief SubmitUri
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -445,7 +445,7 @@ class WebRiskServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SubmitUri
+  /// @copybrief SubmitUri
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -128,7 +128,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddNodes
+  /// @copybrief AddNodes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -185,7 +185,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddNodes
+  /// @copybrief AddNodes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -202,7 +202,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddNodes
+  /// @copybrief AddNodes
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -334,7 +334,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodeGroup
+  /// @copybrief DeleteNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -389,7 +389,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodeGroup
+  /// @copybrief DeleteNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -406,7 +406,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodeGroup
+  /// @copybrief DeleteNodeGroup
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -459,7 +459,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodes
+  /// @copybrief DeleteNodes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -516,7 +516,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodes
+  /// @copybrief DeleteNodes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -533,7 +533,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodes
+  /// @copybrief DeleteNodes
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -716,7 +716,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNodeGroup
+  /// @copybrief InsertNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -773,7 +773,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNodeGroup
+  /// @copybrief InsertNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -790,7 +790,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNodeGroup
+  /// @copybrief InsertNodeGroup
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1001,7 +1001,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchNodeGroup
+  /// @copybrief PatchNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1057,7 +1057,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchNodeGroup
+  /// @copybrief PatchNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1074,7 +1074,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchNodeGroup
+  /// @copybrief PatchNodeGroup
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1128,7 +1128,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc PerformMaintenance
+  /// @copybrief PerformMaintenance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1186,7 +1186,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc PerformMaintenance
+  /// @copybrief PerformMaintenance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1203,7 +1203,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc PerformMaintenance
+  /// @copybrief PerformMaintenance
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1325,7 +1325,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNodeTemplate
+  /// @copybrief SetNodeTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1382,7 +1382,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNodeTemplate
+  /// @copybrief SetNodeTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1399,7 +1399,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNodeTemplate
+  /// @copybrief SetNodeTemplate
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1455,7 +1455,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SimulateMaintenanceEvent
+  /// @copybrief SimulateMaintenanceEvent
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1513,7 +1513,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SimulateMaintenanceEvent
+  /// @copybrief SimulateMaintenanceEvent
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1530,7 +1530,7 @@ class NodeGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SimulateMaintenanceEvent
+  /// @copybrief SimulateMaintenanceEvent
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

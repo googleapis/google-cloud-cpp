@@ -257,7 +257,7 @@ class RevisionsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRevision
+  /// @copybrief DeleteRevision
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -309,7 +309,7 @@ class RevisionsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRevision
+  /// @copybrief DeleteRevision
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -325,7 +325,7 @@ class RevisionsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRevision
+  /// @copybrief DeleteRevision
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -129,7 +129,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddSignedUrlKey
+  /// @copybrief AddSignedUrlKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -187,7 +187,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddSignedUrlKey
+  /// @copybrief AddSignedUrlKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -204,7 +204,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddSignedUrlKey
+  /// @copybrief AddSignedUrlKey
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -252,7 +252,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackendBucket
+  /// @copybrief DeleteBackendBucket
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -306,7 +306,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackendBucket
+  /// @copybrief DeleteBackendBucket
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -323,7 +323,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackendBucket
+  /// @copybrief DeleteBackendBucket
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -376,7 +376,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSignedUrlKey
+  /// @copybrief DeleteSignedUrlKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -432,7 +432,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSignedUrlKey
+  /// @copybrief DeleteSignedUrlKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -449,7 +449,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSignedUrlKey
+  /// @copybrief DeleteSignedUrlKey
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -625,7 +625,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertBackendBucket
+  /// @copybrief InsertBackendBucket
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -682,7 +682,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertBackendBucket
+  /// @copybrief InsertBackendBucket
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -699,7 +699,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertBackendBucket
+  /// @copybrief InsertBackendBucket
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -833,7 +833,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchBackendBucket
+  /// @copybrief PatchBackendBucket
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -892,7 +892,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchBackendBucket
+  /// @copybrief PatchBackendBucket
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -909,7 +909,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchBackendBucket
+  /// @copybrief PatchBackendBucket
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -963,7 +963,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetEdgeSecurityPolicy
+  /// @copybrief SetEdgeSecurityPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1020,7 +1020,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetEdgeSecurityPolicy
+  /// @copybrief SetEdgeSecurityPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1037,7 +1037,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetEdgeSecurityPolicy
+  /// @copybrief SetEdgeSecurityPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1222,7 +1222,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackendBucket
+  /// @copybrief UpdateBackendBucket
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1280,7 +1280,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackendBucket
+  /// @copybrief UpdateBackendBucket
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1297,7 +1297,7 @@ class BackendBucketsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackendBucket
+  /// @copybrief UpdateBackendBucket
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -147,7 +147,7 @@ class DataStoreServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataStore
+  /// @copybrief CreateDataStore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -208,7 +208,7 @@ class DataStoreServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataStore
+  /// @copybrief CreateDataStore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -224,7 +224,7 @@ class DataStoreServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataStore
+  /// @copybrief CreateDataStore
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -427,7 +427,7 @@ class DataStoreServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataStore
+  /// @copybrief DeleteDataStore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -481,7 +481,7 @@ class DataStoreServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataStore
+  /// @copybrief DeleteDataStore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -497,7 +497,7 @@ class DataStoreServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataStore
+  /// @copybrief DeleteDataStore
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

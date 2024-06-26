@@ -209,7 +209,7 @@ class SslCertificatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSslCertificate
+  /// @copybrief DeleteSslCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -263,7 +263,7 @@ class SslCertificatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSslCertificate
+  /// @copybrief DeleteSslCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -280,7 +280,7 @@ class SslCertificatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSslCertificate
+  /// @copybrief DeleteSslCertificate
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -393,7 +393,7 @@ class SslCertificatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSslCertificate
+  /// @copybrief InsertSslCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -450,7 +450,7 @@ class SslCertificatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSslCertificate
+  /// @copybrief InsertSslCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -467,7 +467,7 @@ class SslCertificatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSslCertificate
+  /// @copybrief InsertSslCertificate
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

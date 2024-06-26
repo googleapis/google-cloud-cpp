@@ -123,7 +123,7 @@ class LicensesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLicense
+  /// @copybrief DeleteLicense
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -178,7 +178,7 @@ class LicensesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLicense
+  /// @copybrief DeleteLicense
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -195,7 +195,7 @@ class LicensesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLicense
+  /// @copybrief DeleteLicense
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -376,7 +376,7 @@ class LicensesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertLicense
+  /// @copybrief InsertLicense
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -433,7 +433,7 @@ class LicensesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertLicense
+  /// @copybrief InsertLicense
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -450,7 +450,7 @@ class LicensesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertLicense
+  /// @copybrief InsertLicense
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

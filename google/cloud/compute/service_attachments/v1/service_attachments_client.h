@@ -216,7 +216,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceAttachment
+  /// @copybrief DeleteServiceAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -271,7 +271,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceAttachment
+  /// @copybrief DeleteServiceAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -288,7 +288,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceAttachment
+  /// @copybrief DeleteServiceAttachment
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -469,7 +469,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertServiceAttachment
+  /// @copybrief InsertServiceAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -527,7 +527,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertServiceAttachment
+  /// @copybrief InsertServiceAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -544,7 +544,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertServiceAttachment
+  /// @copybrief InsertServiceAttachment
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -681,7 +681,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchServiceAttachment
+  /// @copybrief PatchServiceAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -740,7 +740,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchServiceAttachment
+  /// @copybrief PatchServiceAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -757,7 +757,7 @@ class ServiceAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchServiceAttachment
+  /// @copybrief PatchServiceAttachment
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

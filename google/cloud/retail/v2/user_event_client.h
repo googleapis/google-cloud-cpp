@@ -200,7 +200,7 @@ class UserEventServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeUserEvents
+  /// @copybrief PurgeUserEvents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -216,7 +216,7 @@ class UserEventServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeUserEvents
+  /// @copybrief PurgeUserEvents
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -275,7 +275,7 @@ class UserEventServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportUserEvents
+  /// @copybrief ImportUserEvents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -291,7 +291,7 @@ class UserEventServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportUserEvents
+  /// @copybrief ImportUserEvents
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -351,7 +351,7 @@ class UserEventServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RejoinUserEvents
+  /// @copybrief RejoinUserEvents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -367,7 +367,7 @@ class UserEventServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RejoinUserEvents
+  /// @copybrief RejoinUserEvents
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

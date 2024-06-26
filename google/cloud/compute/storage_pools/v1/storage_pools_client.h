@@ -210,7 +210,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStoragePool
+  /// @copybrief DeleteStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -268,7 +268,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStoragePool
+  /// @copybrief DeleteStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -285,7 +285,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStoragePool
+  /// @copybrief DeleteStoragePool
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -465,7 +465,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertStoragePool
+  /// @copybrief InsertStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -522,7 +522,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertStoragePool
+  /// @copybrief InsertStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -539,7 +539,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertStoragePool
+  /// @copybrief InsertStoragePool
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -888,7 +888,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStoragePool
+  /// @copybrief UpdateStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -948,7 +948,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStoragePool
+  /// @copybrief UpdateStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -965,7 +965,7 @@ class StoragePoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStoragePool
+  /// @copybrief UpdateStoragePool
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

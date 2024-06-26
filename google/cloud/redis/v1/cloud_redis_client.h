@@ -372,7 +372,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -437,7 +437,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -453,7 +453,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -513,7 +513,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -571,7 +571,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -587,7 +587,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -637,7 +637,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeInstance
+  /// @copybrief UpgradeInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -691,7 +691,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeInstance
+  /// @copybrief UpgradeInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -707,7 +707,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeInstance
+  /// @copybrief UpgradeInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -764,7 +764,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportInstance
+  /// @copybrief ImportInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -825,7 +825,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportInstance
+  /// @copybrief ImportInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -841,7 +841,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportInstance
+  /// @copybrief ImportInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -896,7 +896,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportInstance
+  /// @copybrief ExportInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -955,7 +955,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportInstance
+  /// @copybrief ExportInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -971,7 +971,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportInstance
+  /// @copybrief ExportInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1024,7 +1024,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc FailoverInstance
+  /// @copybrief FailoverInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1080,7 +1080,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc FailoverInstance
+  /// @copybrief FailoverInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1096,7 +1096,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc FailoverInstance
+  /// @copybrief FailoverInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1144,7 +1144,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1197,7 +1197,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1213,7 +1213,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1269,7 +1269,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc RescheduleMaintenance
+  /// @copybrief RescheduleMaintenance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1325,7 +1325,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc RescheduleMaintenance
+  /// @copybrief RescheduleMaintenance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1341,7 +1341,7 @@ class CloudRedisClient {
 
   // clang-format off
   ///
-  /// @copydoc RescheduleMaintenance
+  /// @copybrief RescheduleMaintenance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

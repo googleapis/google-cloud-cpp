@@ -209,7 +209,7 @@ class TagBindingsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagBinding
+  /// @copybrief CreateTagBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -265,7 +265,7 @@ class TagBindingsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagBinding
+  /// @copybrief CreateTagBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -282,7 +282,7 @@ class TagBindingsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagBinding
+  /// @copybrief CreateTagBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -330,7 +330,7 @@ class TagBindingsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagBinding
+  /// @copybrief DeleteTagBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -384,7 +384,7 @@ class TagBindingsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagBinding
+  /// @copybrief DeleteTagBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -401,7 +401,7 @@ class TagBindingsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagBinding
+  /// @copybrief DeleteTagBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

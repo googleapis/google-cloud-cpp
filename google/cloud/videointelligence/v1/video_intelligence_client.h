@@ -144,7 +144,7 @@ class VideoIntelligenceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AnnotateVideo
+  /// @copybrief AnnotateVideo
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -203,7 +203,7 @@ class VideoIntelligenceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AnnotateVideo
+  /// @copybrief AnnotateVideo
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -219,7 +219,7 @@ class VideoIntelligenceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AnnotateVideo
+  /// @copybrief AnnotateVideo
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

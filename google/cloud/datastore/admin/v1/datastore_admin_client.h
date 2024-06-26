@@ -201,7 +201,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportEntities
+  /// @copybrief ExportEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -264,7 +264,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportEntities
+  /// @copybrief ExportEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -280,7 +280,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportEntities
+  /// @copybrief ExportEntities
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -355,7 +355,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportEntities
+  /// @copybrief ImportEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -416,7 +416,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportEntities
+  /// @copybrief ImportEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -432,7 +432,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportEntities
+  /// @copybrief ImportEntities
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -499,7 +499,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIndex
+  /// @copybrief CreateIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -515,7 +515,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIndex
+  /// @copybrief CreateIndex
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -579,7 +579,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIndex
+  /// @copybrief DeleteIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -595,7 +595,7 @@ class DatastoreAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIndex
+  /// @copybrief DeleteIndex
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

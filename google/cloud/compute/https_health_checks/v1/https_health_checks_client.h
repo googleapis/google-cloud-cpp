@@ -126,7 +126,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHttpsHealthCheck
+  /// @copybrief DeleteHttpsHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -180,7 +180,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHttpsHealthCheck
+  /// @copybrief DeleteHttpsHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -197,7 +197,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHttpsHealthCheck
+  /// @copybrief DeleteHttpsHealthCheck
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -311,7 +311,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertHttpsHealthCheck
+  /// @copybrief InsertHttpsHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -368,7 +368,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertHttpsHealthCheck
+  /// @copybrief InsertHttpsHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -385,7 +385,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertHttpsHealthCheck
+  /// @copybrief InsertHttpsHealthCheck
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -519,7 +519,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchHttpsHealthCheck
+  /// @copybrief PatchHttpsHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -578,7 +578,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchHttpsHealthCheck
+  /// @copybrief PatchHttpsHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -595,7 +595,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchHttpsHealthCheck
+  /// @copybrief PatchHttpsHealthCheck
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -649,7 +649,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHttpsHealthCheck
+  /// @copybrief UpdateHttpsHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -707,7 +707,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHttpsHealthCheck
+  /// @copybrief UpdateHttpsHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -724,7 +724,7 @@ class HttpsHealthChecksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHttpsHealthCheck
+  /// @copybrief UpdateHttpsHealthCheck
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

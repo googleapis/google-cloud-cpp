@@ -238,7 +238,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -303,7 +303,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -319,7 +319,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -375,7 +375,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -437,7 +437,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -453,7 +453,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -506,7 +506,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteService
+  /// @copybrief UndeleteService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -565,7 +565,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteService
+  /// @copybrief UndeleteService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -581,7 +581,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteService
+  /// @copybrief UndeleteService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -874,7 +874,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc SubmitConfigSource
+  /// @copybrief SubmitConfigSource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -945,7 +945,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc SubmitConfigSource
+  /// @copybrief SubmitConfigSource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -962,7 +962,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc SubmitConfigSource
+  /// @copybrief SubmitConfigSource
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1180,7 +1180,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceRollout
+  /// @copybrief CreateServiceRollout
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1249,7 +1249,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceRollout
+  /// @copybrief CreateServiceRollout
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1266,7 +1266,7 @@ class ServiceManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceRollout
+  /// @copybrief CreateServiceRollout
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

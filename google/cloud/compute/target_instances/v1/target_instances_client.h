@@ -210,7 +210,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetInstance
+  /// @copybrief DeleteTargetInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -265,7 +265,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetInstance
+  /// @copybrief DeleteTargetInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -282,7 +282,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetInstance
+  /// @copybrief DeleteTargetInstance
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -397,7 +397,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetInstance
+  /// @copybrief InsertTargetInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -455,7 +455,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetInstance
+  /// @copybrief InsertTargetInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -472,7 +472,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetInstance
+  /// @copybrief InsertTargetInstance
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -610,7 +610,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSecurityPolicy
+  /// @copybrief SetSecurityPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -668,7 +668,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSecurityPolicy
+  /// @copybrief SetSecurityPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -685,7 +685,7 @@ class TargetInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSecurityPolicy
+  /// @copybrief SetSecurityPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

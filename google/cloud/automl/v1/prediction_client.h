@@ -288,7 +288,7 @@ class PredictionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchPredict
+  /// @copybrief BatchPredict
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -360,7 +360,7 @@ class PredictionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchPredict
+  /// @copybrief BatchPredict
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -376,7 +376,7 @@ class PredictionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchPredict
+  /// @copybrief BatchPredict
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

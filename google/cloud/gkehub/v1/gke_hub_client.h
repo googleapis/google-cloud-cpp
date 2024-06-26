@@ -424,7 +424,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMembership
+  /// @copybrief CreateMembership
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -482,7 +482,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMembership
+  /// @copybrief CreateMembership
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -498,7 +498,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMembership
+  /// @copybrief CreateMembership
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -548,7 +548,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeature
+  /// @copybrief CreateFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -602,7 +602,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeature
+  /// @copybrief CreateFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -618,7 +618,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeature
+  /// @copybrief CreateFeature
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -668,7 +668,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMembership
+  /// @copybrief DeleteMembership
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -725,7 +725,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMembership
+  /// @copybrief DeleteMembership
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -741,7 +741,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMembership
+  /// @copybrief DeleteMembership
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -788,7 +788,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeature
+  /// @copybrief DeleteFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -840,7 +840,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeature
+  /// @copybrief DeleteFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -856,7 +856,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeature
+  /// @copybrief DeleteFeature
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -913,7 +913,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMembership
+  /// @copybrief UpdateMembership
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -967,7 +967,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMembership
+  /// @copybrief UpdateMembership
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -983,7 +983,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMembership
+  /// @copybrief UpdateMembership
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1040,7 +1040,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeature
+  /// @copybrief UpdateFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1094,7 +1094,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeature
+  /// @copybrief UpdateFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1110,7 +1110,7 @@ class GkeHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeature
+  /// @copybrief UpdateFeature
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

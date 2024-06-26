@@ -386,7 +386,7 @@ class StorageControlClient {
 
   // clang-format off
   ///
-  /// @copydoc RenameFolder
+  /// @copybrief RenameFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -442,7 +442,7 @@ class StorageControlClient {
 
   // clang-format off
   ///
-  /// @copydoc RenameFolder
+  /// @copybrief RenameFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -458,7 +458,7 @@ class StorageControlClient {
 
   // clang-format off
   ///
-  /// @copydoc RenameFolder
+  /// @copybrief RenameFolder
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

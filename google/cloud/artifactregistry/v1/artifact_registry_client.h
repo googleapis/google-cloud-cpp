@@ -682,7 +682,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportAptArtifacts
+  /// @copybrief ImportAptArtifacts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -699,7 +699,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportAptArtifacts
+  /// @copybrief ImportAptArtifacts
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -758,7 +758,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportYumArtifacts
+  /// @copybrief ImportYumArtifacts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -775,7 +775,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportYumArtifacts
+  /// @copybrief ImportYumArtifacts
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -962,7 +962,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1019,7 +1019,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1036,7 +1036,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1145,7 +1145,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1201,7 +1201,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1218,7 +1218,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1395,7 +1395,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePackage
+  /// @copybrief DeletePackage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1450,7 +1450,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePackage
+  /// @copybrief DeletePackage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1467,7 +1467,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePackage
+  /// @copybrief DeletePackage
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1644,7 +1644,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVersion
+  /// @copybrief DeleteVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1699,7 +1699,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVersion
+  /// @copybrief DeleteVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1716,7 +1716,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVersion
+  /// @copybrief DeleteVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1767,7 +1767,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteVersions
+  /// @copybrief BatchDeleteVersions
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1824,7 +1824,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteVersions
+  /// @copybrief BatchDeleteVersions
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1841,7 +1841,7 @@ class ArtifactRegistryClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteVersions
+  /// @copybrief BatchDeleteVersions
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -133,7 +133,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc AddResourcePolicies
+  /// @copybrief AddResourcePolicies
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -192,7 +192,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc AddResourcePolicies
+  /// @copybrief AddResourcePolicies
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -209,7 +209,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc AddResourcePolicies
+  /// @copybrief AddResourcePolicies
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -261,7 +261,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkInsert
+  /// @copybrief BulkInsert
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -318,7 +318,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkInsert
+  /// @copybrief BulkInsert
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -335,7 +335,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkInsert
+  /// @copybrief BulkInsert
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -390,7 +390,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -449,7 +449,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -466,7 +466,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -518,7 +518,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDisk
+  /// @copybrief DeleteDisk
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -575,7 +575,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDisk
+  /// @copybrief DeleteDisk
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -592,7 +592,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDisk
+  /// @copybrief DeleteDisk
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -769,7 +769,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertDisk
+  /// @copybrief InsertDisk
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -826,7 +826,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertDisk
+  /// @copybrief InsertDisk
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -843,7 +843,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertDisk
+  /// @copybrief InsertDisk
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -978,7 +978,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveResourcePolicies
+  /// @copybrief RemoveResourcePolicies
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1036,7 +1036,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveResourcePolicies
+  /// @copybrief RemoveResourcePolicies
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1053,7 +1053,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveResourcePolicies
+  /// @copybrief RemoveResourcePolicies
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1107,7 +1107,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc Resize
+  /// @copybrief Resize
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1164,7 +1164,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc Resize
+  /// @copybrief Resize
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1181,7 +1181,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc Resize
+  /// @copybrief Resize
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1302,7 +1302,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1359,7 +1359,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1376,7 +1376,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1431,7 +1431,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StartAsyncReplication
+  /// @copybrief StartAsyncReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1489,7 +1489,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StartAsyncReplication
+  /// @copybrief StartAsyncReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1506,7 +1506,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StartAsyncReplication
+  /// @copybrief StartAsyncReplication
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1557,7 +1557,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StopAsyncReplication
+  /// @copybrief StopAsyncReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1612,7 +1612,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StopAsyncReplication
+  /// @copybrief StopAsyncReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1629,7 +1629,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StopAsyncReplication
+  /// @copybrief StopAsyncReplication
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1685,7 +1685,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StopGroupAsyncReplication
+  /// @copybrief StopGroupAsyncReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1745,7 +1745,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StopGroupAsyncReplication
+  /// @copybrief StopGroupAsyncReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1762,7 +1762,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc StopGroupAsyncReplication
+  /// @copybrief StopGroupAsyncReplication
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1885,7 +1885,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDisk
+  /// @copybrief UpdateDisk
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1944,7 +1944,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDisk
+  /// @copybrief UpdateDisk
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1961,7 +1961,7 @@ class RegionDisksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDisk
+  /// @copybrief UpdateDisk
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

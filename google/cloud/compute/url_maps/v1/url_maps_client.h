@@ -207,7 +207,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteUrlMap
+  /// @copybrief DeleteUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -261,7 +261,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteUrlMap
+  /// @copybrief DeleteUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -278,7 +278,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteUrlMap
+  /// @copybrief DeleteUrlMap
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -389,7 +389,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertUrlMap
+  /// @copybrief InsertUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -445,7 +445,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertUrlMap
+  /// @copybrief InsertUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -462,7 +462,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertUrlMap
+  /// @copybrief InsertUrlMap
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -515,7 +515,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc InvalidateCache
+  /// @copybrief InvalidateCache
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -574,7 +574,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc InvalidateCache
+  /// @copybrief InvalidateCache
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -591,7 +591,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc InvalidateCache
+  /// @copybrief InvalidateCache
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -719,7 +719,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchUrlMap
+  /// @copybrief PatchUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -777,7 +777,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchUrlMap
+  /// @copybrief PatchUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -794,7 +794,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchUrlMap
+  /// @copybrief PatchUrlMap
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -845,7 +845,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateUrlMap
+  /// @copybrief UpdateUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -902,7 +902,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateUrlMap
+  /// @copybrief UpdateUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -919,7 +919,7 @@ class UrlMapsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateUrlMap
+  /// @copybrief UpdateUrlMap
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

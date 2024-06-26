@@ -261,7 +261,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectionProfile
+  /// @copybrief CreateConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -318,7 +318,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectionProfile
+  /// @copybrief CreateConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -335,7 +335,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectionProfile
+  /// @copybrief CreateConnectionProfile
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -389,7 +389,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectionProfile
+  /// @copybrief UpdateConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -446,7 +446,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectionProfile
+  /// @copybrief UpdateConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -463,7 +463,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectionProfile
+  /// @copybrief UpdateConnectionProfile
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -509,7 +509,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectionProfile
+  /// @copybrief DeleteConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -563,7 +563,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectionProfile
+  /// @copybrief DeleteConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -580,7 +580,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectionProfile
+  /// @copybrief DeleteConnectionProfile
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -796,7 +796,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateStream
+  /// @copybrief CreateStream
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -850,7 +850,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateStream
+  /// @copybrief CreateStream
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -866,7 +866,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateStream
+  /// @copybrief CreateStream
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -917,7 +917,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStream
+  /// @copybrief UpdateStream
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -971,7 +971,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStream
+  /// @copybrief UpdateStream
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -987,7 +987,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStream
+  /// @copybrief UpdateStream
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1032,7 +1032,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStream
+  /// @copybrief DeleteStream
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1087,7 +1087,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStream
+  /// @copybrief DeleteStream
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1103,7 +1103,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStream
+  /// @copybrief DeleteStream
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1502,7 +1502,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1559,7 +1559,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1576,7 +1576,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1757,7 +1757,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1811,7 +1811,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1828,7 +1828,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1879,7 +1879,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRoute
+  /// @copybrief CreateRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1934,7 +1934,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRoute
+  /// @copybrief CreateRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1950,7 +1950,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRoute
+  /// @copybrief CreateRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2127,7 +2127,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRoute
+  /// @copybrief DeleteRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2181,7 +2181,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRoute
+  /// @copybrief DeleteRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2197,7 +2197,7 @@ class DatastreamClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRoute
+  /// @copybrief DeleteRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

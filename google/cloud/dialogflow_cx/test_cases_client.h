@@ -449,7 +449,7 @@ class TestCasesClient {
 
   // clang-format off
   ///
-  /// @copydoc RunTestCase
+  /// @copybrief RunTestCase
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -465,7 +465,7 @@ class TestCasesClient {
 
   // clang-format off
   ///
-  /// @copydoc RunTestCase
+  /// @copybrief RunTestCase
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -528,7 +528,7 @@ class TestCasesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchRunTestCases
+  /// @copybrief BatchRunTestCases
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -545,7 +545,7 @@ class TestCasesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchRunTestCases
+  /// @copybrief BatchRunTestCases
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -643,7 +643,7 @@ class TestCasesClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportTestCases
+  /// @copybrief ImportTestCases
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -659,7 +659,7 @@ class TestCasesClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportTestCases
+  /// @copybrief ImportTestCases
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -723,7 +723,7 @@ class TestCasesClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportTestCases
+  /// @copybrief ExportTestCases
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -739,7 +739,7 @@ class TestCasesClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportTestCases
+  /// @copybrief ExportTestCases
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

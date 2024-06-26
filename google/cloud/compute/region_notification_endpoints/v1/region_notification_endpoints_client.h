@@ -133,7 +133,7 @@ class RegionNotificationEndpointsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNotificationEndpoint
+  /// @copybrief DeleteNotificationEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -191,7 +191,7 @@ class RegionNotificationEndpointsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNotificationEndpoint
+  /// @copybrief DeleteNotificationEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -209,7 +209,7 @@ class RegionNotificationEndpointsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNotificationEndpoint
+  /// @copybrief DeleteNotificationEndpoint
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -327,7 +327,7 @@ class RegionNotificationEndpointsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNotificationEndpoint
+  /// @copybrief InsertNotificationEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -387,7 +387,7 @@ class RegionNotificationEndpointsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNotificationEndpoint
+  /// @copybrief InsertNotificationEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -405,7 +405,7 @@ class RegionNotificationEndpointsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNotificationEndpoint
+  /// @copybrief InsertNotificationEndpoint
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

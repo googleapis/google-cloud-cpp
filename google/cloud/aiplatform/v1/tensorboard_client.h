@@ -130,7 +130,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTensorboard
+  /// @copybrief CreateTensorboard
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -185,7 +185,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTensorboard
+  /// @copybrief CreateTensorboard
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -201,7 +201,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTensorboard
+  /// @copybrief CreateTensorboard
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -315,7 +315,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTensorboard
+  /// @copybrief UpdateTensorboard
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -370,7 +370,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTensorboard
+  /// @copybrief UpdateTensorboard
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -386,7 +386,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTensorboard
+  /// @copybrief UpdateTensorboard
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -510,7 +510,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboard
+  /// @copybrief DeleteTensorboard
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -563,7 +563,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboard
+  /// @copybrief DeleteTensorboard
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -579,7 +579,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboard
+  /// @copybrief DeleteTensorboard
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1021,7 +1021,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardExperiment
+  /// @copybrief DeleteTensorboardExperiment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1075,7 +1075,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardExperiment
+  /// @copybrief DeleteTensorboardExperiment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1092,7 +1092,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardExperiment
+  /// @copybrief DeleteTensorboardExperiment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1475,7 +1475,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardRun
+  /// @copybrief DeleteTensorboardRun
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1528,7 +1528,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardRun
+  /// @copybrief DeleteTensorboardRun
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1544,7 +1544,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardRun
+  /// @copybrief DeleteTensorboardRun
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1937,7 +1937,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardTimeSeries
+  /// @copybrief DeleteTensorboardTimeSeries
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1991,7 +1991,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardTimeSeries
+  /// @copybrief DeleteTensorboardTimeSeries
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2008,7 +2008,7 @@ class TensorboardServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTensorboardTimeSeries
+  /// @copybrief DeleteTensorboardTimeSeries
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

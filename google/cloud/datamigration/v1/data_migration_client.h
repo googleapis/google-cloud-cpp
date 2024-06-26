@@ -262,7 +262,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMigrationJob
+  /// @copybrief CreateMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -317,7 +317,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMigrationJob
+  /// @copybrief CreateMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -333,7 +333,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMigrationJob
+  /// @copybrief CreateMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -383,7 +383,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMigrationJob
+  /// @copybrief UpdateMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -438,7 +438,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMigrationJob
+  /// @copybrief UpdateMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -454,7 +454,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMigrationJob
+  /// @copybrief UpdateMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -500,7 +500,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMigrationJob
+  /// @copybrief DeleteMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -553,7 +553,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMigrationJob
+  /// @copybrief DeleteMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -569,7 +569,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMigrationJob
+  /// @copybrief DeleteMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -621,7 +621,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartMigrationJob
+  /// @copybrief StartMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -637,7 +637,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartMigrationJob
+  /// @copybrief StartMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -688,7 +688,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StopMigrationJob
+  /// @copybrief StopMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -704,7 +704,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StopMigrationJob
+  /// @copybrief StopMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -757,7 +757,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ResumeMigrationJob
+  /// @copybrief ResumeMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -773,7 +773,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ResumeMigrationJob
+  /// @copybrief ResumeMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -827,7 +827,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PromoteMigrationJob
+  /// @copybrief PromoteMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -843,7 +843,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PromoteMigrationJob
+  /// @copybrief PromoteMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -897,7 +897,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc VerifyMigrationJob
+  /// @copybrief VerifyMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -913,7 +913,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc VerifyMigrationJob
+  /// @copybrief VerifyMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -968,7 +968,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RestartMigrationJob
+  /// @copybrief RestartMigrationJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -984,7 +984,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RestartMigrationJob
+  /// @copybrief RestartMigrationJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1232,7 +1232,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectionProfile
+  /// @copybrief CreateConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1288,7 +1288,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectionProfile
+  /// @copybrief CreateConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1305,7 +1305,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectionProfile
+  /// @copybrief CreateConnectionProfile
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1355,7 +1355,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectionProfile
+  /// @copybrief UpdateConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1411,7 +1411,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectionProfile
+  /// @copybrief UpdateConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1428,7 +1428,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectionProfile
+  /// @copybrief UpdateConnectionProfile
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1476,7 +1476,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectionProfile
+  /// @copybrief DeleteConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1532,7 +1532,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectionProfile
+  /// @copybrief DeleteConnectionProfile
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1549,7 +1549,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectionProfile
+  /// @copybrief DeleteConnectionProfile
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1600,7 +1600,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1656,7 +1656,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1673,7 +1673,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1850,7 +1850,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1904,7 +1904,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1921,7 +1921,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2105,7 +2105,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversionWorkspace
+  /// @copybrief CreateConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2162,7 +2162,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversionWorkspace
+  /// @copybrief CreateConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2179,7 +2179,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversionWorkspace
+  /// @copybrief CreateConversionWorkspace
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2230,7 +2230,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConversionWorkspace
+  /// @copybrief UpdateConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2287,7 +2287,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConversionWorkspace
+  /// @copybrief UpdateConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2304,7 +2304,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConversionWorkspace
+  /// @copybrief UpdateConversionWorkspace
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2350,7 +2350,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConversionWorkspace
+  /// @copybrief DeleteConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2404,7 +2404,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConversionWorkspace
+  /// @copybrief DeleteConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2421,7 +2421,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConversionWorkspace
+  /// @copybrief DeleteConversionWorkspace
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2725,7 +2725,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SeedConversionWorkspace
+  /// @copybrief SeedConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2742,7 +2742,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SeedConversionWorkspace
+  /// @copybrief SeedConversionWorkspace
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2796,7 +2796,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportMappingRules
+  /// @copybrief ImportMappingRules
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2812,7 +2812,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportMappingRules
+  /// @copybrief ImportMappingRules
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2866,7 +2866,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ConvertConversionWorkspace
+  /// @copybrief ConvertConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2883,7 +2883,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ConvertConversionWorkspace
+  /// @copybrief ConvertConversionWorkspace
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2937,7 +2937,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CommitConversionWorkspace
+  /// @copybrief CommitConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2954,7 +2954,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CommitConversionWorkspace
+  /// @copybrief CommitConversionWorkspace
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3008,7 +3008,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RollbackConversionWorkspace
+  /// @copybrief RollbackConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3025,7 +3025,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RollbackConversionWorkspace
+  /// @copybrief RollbackConversionWorkspace
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3079,7 +3079,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ApplyConversionWorkspace
+  /// @copybrief ApplyConversionWorkspace
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3096,7 +3096,7 @@ class DataMigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ApplyConversionWorkspace
+  /// @copybrief ApplyConversionWorkspace
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

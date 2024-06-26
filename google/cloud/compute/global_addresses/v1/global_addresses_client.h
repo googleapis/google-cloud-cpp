@@ -125,7 +125,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAddress
+  /// @copybrief DeleteAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -179,7 +179,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAddress
+  /// @copybrief DeleteAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -196,7 +196,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAddress
+  /// @copybrief DeleteAddress
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -307,7 +307,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertAddress
+  /// @copybrief InsertAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -363,7 +363,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertAddress
+  /// @copybrief InsertAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -380,7 +380,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertAddress
+  /// @copybrief InsertAddress
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -508,7 +508,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc Move
+  /// @copybrief Move
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -565,7 +565,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc Move
+  /// @copybrief Move
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -582,7 +582,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc Move
+  /// @copybrief Move
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -634,7 +634,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -692,7 +692,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -709,7 +709,7 @@ class GlobalAddressesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

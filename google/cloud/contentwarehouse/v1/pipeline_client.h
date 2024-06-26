@@ -123,7 +123,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RunPipeline
+  /// @copybrief RunPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -178,7 +178,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RunPipeline
+  /// @copybrief RunPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -194,7 +194,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RunPipeline
+  /// @copybrief RunPipeline
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

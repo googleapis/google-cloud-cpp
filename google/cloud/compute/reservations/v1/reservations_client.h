@@ -207,7 +207,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteReservation
+  /// @copybrief DeleteReservation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -262,7 +262,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteReservation
+  /// @copybrief DeleteReservation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -279,7 +279,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteReservation
+  /// @copybrief DeleteReservation
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -457,7 +457,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertReservation
+  /// @copybrief InsertReservation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -514,7 +514,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertReservation
+  /// @copybrief InsertReservation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -531,7 +531,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertReservation
+  /// @copybrief InsertReservation
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -665,7 +665,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc Resize
+  /// @copybrief Resize
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -723,7 +723,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc Resize
+  /// @copybrief Resize
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -740,7 +740,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc Resize
+  /// @copybrief Resize
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -929,7 +929,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateReservation
+  /// @copybrief UpdateReservation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -986,7 +986,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateReservation
+  /// @copybrief UpdateReservation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1003,7 +1003,7 @@ class ReservationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateReservation
+  /// @copybrief UpdateReservation
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

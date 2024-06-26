@@ -126,7 +126,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataset
+  /// @copybrief CreateDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -179,7 +179,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataset
+  /// @copybrief CreateDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -195,7 +195,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataset
+  /// @copybrief CreateDataset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -438,7 +438,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataset
+  /// @copybrief DeleteDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -491,7 +491,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataset
+  /// @copybrief DeleteDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -507,7 +507,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataset
+  /// @copybrief DeleteDataset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -560,7 +560,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportData
+  /// @copybrief ImportData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -615,7 +615,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportData
+  /// @copybrief ImportData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -631,7 +631,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportData
+  /// @copybrief ImportData
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -682,7 +682,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportData
+  /// @copybrief ExportData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -736,7 +736,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportData
+  /// @copybrief ExportData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -752,7 +752,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportData
+  /// @copybrief ExportData
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -805,7 +805,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDatasetVersion
+  /// @copybrief CreateDatasetVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -860,7 +860,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDatasetVersion
+  /// @copybrief CreateDatasetVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -876,7 +876,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDatasetVersion
+  /// @copybrief CreateDatasetVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -987,7 +987,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDatasetVersion
+  /// @copybrief DeleteDatasetVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1040,7 +1040,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDatasetVersion
+  /// @copybrief DeleteDatasetVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1056,7 +1056,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDatasetVersion
+  /// @copybrief DeleteDatasetVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1239,7 +1239,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreDatasetVersion
+  /// @copybrief RestoreDatasetVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1293,7 +1293,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreDatasetVersion
+  /// @copybrief RestoreDatasetVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1310,7 +1310,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreDatasetVersion
+  /// @copybrief RestoreDatasetVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1550,7 +1550,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSavedQuery
+  /// @copybrief DeleteSavedQuery
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1603,7 +1603,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSavedQuery
+  /// @copybrief DeleteSavedQuery
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1619,7 +1619,7 @@ class DatasetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSavedQuery
+  /// @copybrief DeleteSavedQuery
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

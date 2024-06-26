@@ -1454,7 +1454,7 @@ class ProductSearchClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportProductSets
+  /// @copybrief ImportProductSets
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1522,7 +1522,7 @@ class ProductSearchClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportProductSets
+  /// @copybrief ImportProductSets
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1538,7 +1538,7 @@ class ProductSearchClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportProductSets
+  /// @copybrief ImportProductSets
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1610,7 +1610,7 @@ class ProductSearchClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeProducts
+  /// @copybrief PurgeProducts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1687,7 +1687,7 @@ class ProductSearchClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeProducts
+  /// @copybrief PurgeProducts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1703,7 +1703,7 @@ class ProductSearchClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeProducts
+  /// @copybrief PurgeProducts
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

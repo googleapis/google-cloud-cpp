@@ -198,7 +198,7 @@ class CloudShellServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartEnvironment
+  /// @copybrief StartEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -214,7 +214,7 @@ class CloudShellServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartEnvironment
+  /// @copybrief StartEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -270,7 +270,7 @@ class CloudShellServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AuthorizeEnvironment
+  /// @copybrief AuthorizeEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -286,7 +286,7 @@ class CloudShellServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AuthorizeEnvironment
+  /// @copybrief AuthorizeEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -340,7 +340,7 @@ class CloudShellServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AddPublicKey
+  /// @copybrief AddPublicKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -356,7 +356,7 @@ class CloudShellServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AddPublicKey
+  /// @copybrief AddPublicKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -411,7 +411,7 @@ class CloudShellServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RemovePublicKey
+  /// @copybrief RemovePublicKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -427,7 +427,7 @@ class CloudShellServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RemovePublicKey
+  /// @copybrief RemovePublicKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

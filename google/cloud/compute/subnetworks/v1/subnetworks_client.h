@@ -207,7 +207,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSubnetwork
+  /// @copybrief DeleteSubnetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -262,7 +262,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSubnetwork
+  /// @copybrief DeleteSubnetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -279,7 +279,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSubnetwork
+  /// @copybrief DeleteSubnetwork
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -333,7 +333,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc ExpandIpCidrRange
+  /// @copybrief ExpandIpCidrRange
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -391,7 +391,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc ExpandIpCidrRange
+  /// @copybrief ExpandIpCidrRange
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -408,7 +408,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc ExpandIpCidrRange
+  /// @copybrief ExpandIpCidrRange
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -585,7 +585,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSubnetwork
+  /// @copybrief InsertSubnetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -642,7 +642,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSubnetwork
+  /// @copybrief InsertSubnetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -659,7 +659,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSubnetwork
+  /// @copybrief InsertSubnetwork
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -868,7 +868,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchSubnetwork
+  /// @copybrief PatchSubnetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -927,7 +927,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchSubnetwork
+  /// @copybrief PatchSubnetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -944,7 +944,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchSubnetwork
+  /// @copybrief PatchSubnetwork
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1068,7 +1068,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc SetPrivateIpGoogleAccess
+  /// @copybrief SetPrivateIpGoogleAccess
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1127,7 +1127,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc SetPrivateIpGoogleAccess
+  /// @copybrief SetPrivateIpGoogleAccess
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1144,7 +1144,7 @@ class SubnetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc SetPrivateIpGoogleAccess
+  /// @copybrief SetPrivateIpGoogleAccess
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

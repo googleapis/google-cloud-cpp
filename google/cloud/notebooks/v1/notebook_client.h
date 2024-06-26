@@ -260,7 +260,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -314,7 +314,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -330,7 +330,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -384,7 +384,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RegisterInstance
+  /// @copybrief RegisterInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -400,7 +400,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RegisterInstance
+  /// @copybrief RegisterInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -453,7 +453,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInstanceAccelerator
+  /// @copybrief SetInstanceAccelerator
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -470,7 +470,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInstanceAccelerator
+  /// @copybrief SetInstanceAccelerator
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -524,7 +524,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInstanceMachineType
+  /// @copybrief SetInstanceMachineType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -541,7 +541,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInstanceMachineType
+  /// @copybrief SetInstanceMachineType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -593,7 +593,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstanceConfig
+  /// @copybrief UpdateInstanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -609,7 +609,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstanceConfig
+  /// @copybrief UpdateInstanceConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -662,7 +662,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateShieldedInstanceConfig
+  /// @copybrief UpdateShieldedInstanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -679,7 +679,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateShieldedInstanceConfig
+  /// @copybrief UpdateShieldedInstanceConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -731,7 +731,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInstanceLabels
+  /// @copybrief SetInstanceLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -747,7 +747,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInstanceLabels
+  /// @copybrief SetInstanceLabels
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -826,7 +826,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -879,7 +879,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -895,7 +895,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -947,7 +947,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartInstance
+  /// @copybrief StartInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -963,7 +963,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartInstance
+  /// @copybrief StartInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1014,7 +1014,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StopInstance
+  /// @copybrief StopInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1030,7 +1030,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StopInstance
+  /// @copybrief StopInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1081,7 +1081,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetInstance
+  /// @copybrief ResetInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1097,7 +1097,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetInstance
+  /// @copybrief ResetInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1151,7 +1151,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ReportInstanceInfo
+  /// @copybrief ReportInstanceInfo
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1167,7 +1167,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ReportInstanceInfo
+  /// @copybrief ReportInstanceInfo
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1308,7 +1308,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeInstance
+  /// @copybrief UpgradeInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1324,7 +1324,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeInstance
+  /// @copybrief UpgradeInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1375,7 +1375,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RollbackInstance
+  /// @copybrief RollbackInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1391,7 +1391,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RollbackInstance
+  /// @copybrief RollbackInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1440,7 +1440,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DiagnoseInstance
+  /// @copybrief DiagnoseInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1494,7 +1494,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DiagnoseInstance
+  /// @copybrief DiagnoseInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1510,7 +1510,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DiagnoseInstance
+  /// @copybrief DiagnoseInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1564,7 +1564,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeInstanceInternal
+  /// @copybrief UpgradeInstanceInternal
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1581,7 +1581,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeInstanceInternal
+  /// @copybrief UpgradeInstanceInternal
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1765,7 +1765,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1819,7 +1819,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1835,7 +1835,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1881,7 +1881,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1934,7 +1934,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1950,7 +1950,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2129,7 +2129,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchedule
+  /// @copybrief DeleteSchedule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2182,7 +2182,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchedule
+  /// @copybrief DeleteSchedule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2198,7 +2198,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchedule
+  /// @copybrief DeleteSchedule
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2249,7 +2249,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSchedule
+  /// @copybrief CreateSchedule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2303,7 +2303,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSchedule
+  /// @copybrief CreateSchedule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2319,7 +2319,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSchedule
+  /// @copybrief CreateSchedule
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2370,7 +2370,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TriggerSchedule
+  /// @copybrief TriggerSchedule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2386,7 +2386,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TriggerSchedule
+  /// @copybrief TriggerSchedule
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2564,7 +2564,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExecution
+  /// @copybrief DeleteExecution
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2617,7 +2617,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExecution
+  /// @copybrief DeleteExecution
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2633,7 +2633,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExecution
+  /// @copybrief DeleteExecution
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2684,7 +2684,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExecution
+  /// @copybrief CreateExecution
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2738,7 +2738,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExecution
+  /// @copybrief CreateExecution
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2754,7 +2754,7 @@ class NotebookServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExecution
+  /// @copybrief CreateExecution
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

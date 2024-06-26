@@ -269,7 +269,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceProjectAttachment
+  /// @copybrief CreateServiceProjectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -326,7 +326,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceProjectAttachment
+  /// @copybrief CreateServiceProjectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -343,7 +343,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceProjectAttachment
+  /// @copybrief CreateServiceProjectAttachment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -451,7 +451,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceProjectAttachment
+  /// @copybrief DeleteServiceProjectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -505,7 +505,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceProjectAttachment
+  /// @copybrief DeleteServiceProjectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -522,7 +522,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceProjectAttachment
+  /// @copybrief DeleteServiceProjectAttachment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -917,7 +917,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -971,7 +971,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -987,7 +987,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1100,7 +1100,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateService
+  /// @copybrief UpdateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1154,7 +1154,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateService
+  /// @copybrief UpdateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1170,7 +1170,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateService
+  /// @copybrief UpdateService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1217,7 +1217,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1269,7 +1269,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1285,7 +1285,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1615,7 +1615,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkload
+  /// @copybrief CreateWorkload
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1669,7 +1669,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkload
+  /// @copybrief CreateWorkload
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1685,7 +1685,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkload
+  /// @copybrief CreateWorkload
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1798,7 +1798,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkload
+  /// @copybrief UpdateWorkload
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1852,7 +1852,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkload
+  /// @copybrief UpdateWorkload
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1868,7 +1868,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkload
+  /// @copybrief UpdateWorkload
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1915,7 +1915,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkload
+  /// @copybrief DeleteWorkload
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1967,7 +1967,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkload
+  /// @copybrief DeleteWorkload
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1983,7 +1983,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkload
+  /// @copybrief DeleteWorkload
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2111,7 +2111,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApplication
+  /// @copybrief CreateApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2165,7 +2165,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApplication
+  /// @copybrief CreateApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2181,7 +2181,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApplication
+  /// @copybrief CreateApplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2294,7 +2294,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApplication
+  /// @copybrief UpdateApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2348,7 +2348,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApplication
+  /// @copybrief UpdateApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2364,7 +2364,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApplication
+  /// @copybrief UpdateApplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2411,7 +2411,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApplication
+  /// @copybrief DeleteApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2464,7 +2464,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApplication
+  /// @copybrief DeleteApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2480,7 +2480,7 @@ class AppHubClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApplication
+  /// @copybrief DeleteApplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -199,7 +199,7 @@ class VersionsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVersion
+  /// @copybrief CreateVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -215,7 +215,7 @@ class VersionsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVersion
+  /// @copybrief CreateVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -301,7 +301,7 @@ class VersionsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVersion
+  /// @copybrief UpdateVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -317,7 +317,7 @@ class VersionsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVersion
+  /// @copybrief UpdateVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -368,7 +368,7 @@ class VersionsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVersion
+  /// @copybrief DeleteVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -384,7 +384,7 @@ class VersionsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVersion
+  /// @copybrief DeleteVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -481,7 +481,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchTranslateText
+  /// @copybrief BatchTranslateText
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -497,7 +497,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchTranslateText
+  /// @copybrief BatchTranslateText
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -578,7 +578,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchTranslateDocument
+  /// @copybrief BatchTranslateDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -647,7 +647,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchTranslateDocument
+  /// @copybrief BatchTranslateDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -664,7 +664,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchTranslateDocument
+  /// @copybrief BatchTranslateDocument
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -715,7 +715,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGlossary
+  /// @copybrief CreateGlossary
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -770,7 +770,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGlossary
+  /// @copybrief CreateGlossary
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -786,7 +786,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGlossary
+  /// @copybrief CreateGlossary
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -967,7 +967,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGlossary
+  /// @copybrief DeleteGlossary
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1022,7 +1022,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGlossary
+  /// @copybrief DeleteGlossary
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1038,7 +1038,7 @@ class TranslationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGlossary
+  /// @copybrief DeleteGlossary
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

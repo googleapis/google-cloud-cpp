@@ -268,7 +268,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLbTrafficExtension
+  /// @copybrief CreateLbTrafficExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -326,7 +326,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLbTrafficExtension
+  /// @copybrief CreateLbTrafficExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -343,7 +343,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLbTrafficExtension
+  /// @copybrief CreateLbTrafficExtension
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -397,7 +397,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLbTrafficExtension
+  /// @copybrief UpdateLbTrafficExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -454,7 +454,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLbTrafficExtension
+  /// @copybrief UpdateLbTrafficExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -471,7 +471,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLbTrafficExtension
+  /// @copybrief UpdateLbTrafficExtension
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -519,7 +519,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLbTrafficExtension
+  /// @copybrief DeleteLbTrafficExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -573,7 +573,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLbTrafficExtension
+  /// @copybrief DeleteLbTrafficExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -590,7 +590,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLbTrafficExtension
+  /// @copybrief DeleteLbTrafficExtension
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -781,7 +781,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLbRouteExtension
+  /// @copybrief CreateLbRouteExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -838,7 +838,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLbRouteExtension
+  /// @copybrief CreateLbRouteExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -855,7 +855,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLbRouteExtension
+  /// @copybrief CreateLbRouteExtension
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -909,7 +909,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLbRouteExtension
+  /// @copybrief UpdateLbRouteExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -966,7 +966,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLbRouteExtension
+  /// @copybrief UpdateLbRouteExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -983,7 +983,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLbRouteExtension
+  /// @copybrief UpdateLbRouteExtension
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1031,7 +1031,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLbRouteExtension
+  /// @copybrief DeleteLbRouteExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1085,7 +1085,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLbRouteExtension
+  /// @copybrief DeleteLbRouteExtension
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1102,7 +1102,7 @@ class DepServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLbRouteExtension
+  /// @copybrief DeleteLbRouteExtension
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

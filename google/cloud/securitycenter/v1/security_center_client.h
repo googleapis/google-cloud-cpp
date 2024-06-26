@@ -129,7 +129,7 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkMuteFindings
+  /// @copybrief BulkMuteFindings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -185,7 +185,7 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkMuteFindings
+  /// @copybrief BulkMuteFindings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -201,7 +201,7 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkMuteFindings
+  /// @copybrief BulkMuteFindings
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2022,7 +2022,7 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
-  /// @copydoc RunAssetDiscovery
+  /// @copybrief RunAssetDiscovery
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2082,7 +2082,7 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
-  /// @copydoc RunAssetDiscovery
+  /// @copybrief RunAssetDiscovery
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2099,7 +2099,7 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
-  /// @copydoc RunAssetDiscovery
+  /// @copybrief RunAssetDiscovery
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

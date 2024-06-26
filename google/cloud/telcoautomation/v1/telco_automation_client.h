@@ -269,7 +269,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateOrchestrationCluster
+  /// @copybrief CreateOrchestrationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -326,7 +326,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateOrchestrationCluster
+  /// @copybrief CreateOrchestrationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -343,7 +343,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateOrchestrationCluster
+  /// @copybrief CreateOrchestrationCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -389,7 +389,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteOrchestrationCluster
+  /// @copybrief DeleteOrchestrationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -443,7 +443,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteOrchestrationCluster
+  /// @copybrief DeleteOrchestrationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -460,7 +460,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteOrchestrationCluster
+  /// @copybrief DeleteOrchestrationCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -642,7 +642,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEdgeSlm
+  /// @copybrief CreateEdgeSlm
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -696,7 +696,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEdgeSlm
+  /// @copybrief CreateEdgeSlm
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -712,7 +712,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEdgeSlm
+  /// @copybrief CreateEdgeSlm
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -757,7 +757,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEdgeSlm
+  /// @copybrief DeleteEdgeSlm
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -810,7 +810,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEdgeSlm
+  /// @copybrief DeleteEdgeSlm
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -826,7 +826,7 @@ class TelcoAutomationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEdgeSlm
+  /// @copybrief DeleteEdgeSlm
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

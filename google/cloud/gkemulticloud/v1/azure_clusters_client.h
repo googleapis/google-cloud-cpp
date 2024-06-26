@@ -155,7 +155,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureClient
+  /// @copybrief CreateAzureClient
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -220,7 +220,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureClient
+  /// @copybrief CreateAzureClient
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -236,7 +236,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureClient
+  /// @copybrief CreateAzureClient
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -449,7 +449,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureClient
+  /// @copybrief DeleteAzureClient
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -512,7 +512,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureClient
+  /// @copybrief DeleteAzureClient
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -528,7 +528,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureClient
+  /// @copybrief DeleteAzureClient
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -601,7 +601,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureCluster
+  /// @copybrief CreateAzureCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -663,7 +663,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureCluster
+  /// @copybrief CreateAzureCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -680,7 +680,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureCluster
+  /// @copybrief CreateAzureCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -750,7 +750,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAzureCluster
+  /// @copybrief UpdateAzureCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -806,7 +806,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAzureCluster
+  /// @copybrief UpdateAzureCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -823,7 +823,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAzureCluster
+  /// @copybrief UpdateAzureCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1035,7 +1035,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureCluster
+  /// @copybrief DeleteAzureCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1100,7 +1100,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureCluster
+  /// @copybrief DeleteAzureCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1117,7 +1117,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureCluster
+  /// @copybrief DeleteAzureCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1261,7 +1261,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureNodePool
+  /// @copybrief CreateAzureNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1325,7 +1325,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureNodePool
+  /// @copybrief CreateAzureNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1342,7 +1342,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAzureNodePool
+  /// @copybrief CreateAzureNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1402,7 +1402,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAzureNodePool
+  /// @copybrief UpdateAzureNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1458,7 +1458,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAzureNodePool
+  /// @copybrief UpdateAzureNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1475,7 +1475,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAzureNodePool
+  /// @copybrief UpdateAzureNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1689,7 +1689,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureNodePool
+  /// @copybrief DeleteAzureNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1750,7 +1750,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureNodePool
+  /// @copybrief DeleteAzureNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1767,7 +1767,7 @@ class AzureClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAzureNodePool
+  /// @copybrief DeleteAzureNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

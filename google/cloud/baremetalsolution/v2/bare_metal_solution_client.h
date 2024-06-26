@@ -271,7 +271,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -327,7 +327,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -344,7 +344,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -453,7 +453,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetInstance
+  /// @copybrief ResetInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -507,7 +507,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetInstance
+  /// @copybrief ResetInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -523,7 +523,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetInstance
+  /// @copybrief ResetInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -569,7 +569,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc StartInstance
+  /// @copybrief StartInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -622,7 +622,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc StartInstance
+  /// @copybrief StartInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -638,7 +638,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc StartInstance
+  /// @copybrief StartInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -684,7 +684,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc StopInstance
+  /// @copybrief StopInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -739,7 +739,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc StopInstance
+  /// @copybrief StopInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -755,7 +755,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc StopInstance
+  /// @copybrief StopInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -801,7 +801,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableInteractiveSerialConsole
+  /// @copybrief EnableInteractiveSerialConsole
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -856,7 +856,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableInteractiveSerialConsole
+  /// @copybrief EnableInteractiveSerialConsole
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -873,7 +873,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableInteractiveSerialConsole
+  /// @copybrief EnableInteractiveSerialConsole
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -921,7 +921,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableInteractiveSerialConsole
+  /// @copybrief DisableInteractiveSerialConsole
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -976,7 +976,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableInteractiveSerialConsole
+  /// @copybrief DisableInteractiveSerialConsole
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -993,7 +993,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableInteractiveSerialConsole
+  /// @copybrief DisableInteractiveSerialConsole
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1041,7 +1041,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachLun
+  /// @copybrief DetachLun
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1094,7 +1094,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachLun
+  /// @copybrief DetachLun
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1110,7 +1110,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachLun
+  /// @copybrief DetachLun
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1485,7 +1485,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVolume
+  /// @copybrief UpdateVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1539,7 +1539,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVolume
+  /// @copybrief UpdateVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1555,7 +1555,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVolume
+  /// @copybrief UpdateVolume
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1662,7 +1662,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EvictVolume
+  /// @copybrief EvictVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1718,7 +1718,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EvictVolume
+  /// @copybrief EvictVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1734,7 +1734,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EvictVolume
+  /// @copybrief EvictVolume
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1780,7 +1780,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc ResizeVolume
+  /// @copybrief ResizeVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1833,7 +1833,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc ResizeVolume
+  /// @copybrief ResizeVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1849,7 +1849,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc ResizeVolume
+  /// @copybrief ResizeVolume
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2091,7 +2091,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetwork
+  /// @copybrief UpdateNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2145,7 +2145,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetwork
+  /// @copybrief UpdateNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2161,7 +2161,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetwork
+  /// @copybrief UpdateNetwork
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2273,7 +2273,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreVolumeSnapshot
+  /// @copybrief RestoreVolumeSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2329,7 +2329,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreVolumeSnapshot
+  /// @copybrief RestoreVolumeSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2346,7 +2346,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreVolumeSnapshot
+  /// @copybrief RestoreVolumeSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2714,7 +2714,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EvictLun
+  /// @copybrief EvictLun
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2768,7 +2768,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EvictLun
+  /// @copybrief EvictLun
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2784,7 +2784,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc EvictLun
+  /// @copybrief EvictLun
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2968,7 +2968,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNfsShare
+  /// @copybrief UpdateNfsShare
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3024,7 +3024,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNfsShare
+  /// @copybrief UpdateNfsShare
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3041,7 +3041,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNfsShare
+  /// @copybrief UpdateNfsShare
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3091,7 +3091,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNfsShare
+  /// @copybrief CreateNfsShare
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3147,7 +3147,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNfsShare
+  /// @copybrief CreateNfsShare
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3164,7 +3164,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNfsShare
+  /// @copybrief CreateNfsShare
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3272,7 +3272,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNfsShare
+  /// @copybrief DeleteNfsShare
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3326,7 +3326,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNfsShare
+  /// @copybrief DeleteNfsShare
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3343,7 +3343,7 @@ class BareMetalSolutionClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNfsShare
+  /// @copybrief DeleteNfsShare
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

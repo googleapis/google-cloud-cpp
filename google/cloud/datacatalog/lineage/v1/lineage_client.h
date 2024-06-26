@@ -454,7 +454,7 @@ class LineageClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcess
+  /// @copybrief DeleteProcess
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -508,7 +508,7 @@ class LineageClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcess
+  /// @copybrief DeleteProcess
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -525,7 +525,7 @@ class LineageClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcess
+  /// @copybrief DeleteProcess
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -826,7 +826,7 @@ class LineageClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRun
+  /// @copybrief DeleteRun
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -881,7 +881,7 @@ class LineageClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRun
+  /// @copybrief DeleteRun
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -897,7 +897,7 @@ class LineageClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRun
+  /// @copybrief DeleteRun
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

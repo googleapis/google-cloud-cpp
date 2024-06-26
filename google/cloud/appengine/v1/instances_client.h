@@ -210,7 +210,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -226,7 +226,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -284,7 +284,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc DebugInstance
+  /// @copybrief DebugInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -300,7 +300,7 @@ class InstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc DebugInstance
+  /// @copybrief DebugInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

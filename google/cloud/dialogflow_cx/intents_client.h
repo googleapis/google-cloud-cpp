@@ -466,7 +466,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportIntents
+  /// @copybrief ImportIntents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -482,7 +482,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportIntents
+  /// @copybrief ImportIntents
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -545,7 +545,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportIntents
+  /// @copybrief ExportIntents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -561,7 +561,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportIntents
+  /// @copybrief ExportIntents
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

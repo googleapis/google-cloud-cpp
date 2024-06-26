@@ -395,7 +395,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainAgent
+  /// @copybrief TrainAgent
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -462,7 +462,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainAgent
+  /// @copybrief TrainAgent
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -478,7 +478,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainAgent
+  /// @copybrief TrainAgent
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -533,7 +533,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportAgent
+  /// @copybrief ExportAgent
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -595,7 +595,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportAgent
+  /// @copybrief ExportAgent
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -611,7 +611,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportAgent
+  /// @copybrief ExportAgent
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -689,7 +689,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportAgent
+  /// @copybrief ImportAgent
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -705,7 +705,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportAgent
+  /// @copybrief ImportAgent
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -781,7 +781,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreAgent
+  /// @copybrief RestoreAgent
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -797,7 +797,7 @@ class AgentsClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreAgent
+  /// @copybrief RestoreAgent
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

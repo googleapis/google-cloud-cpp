@@ -250,7 +250,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAccessPolicy
+  /// @copybrief CreateAccessPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -266,7 +266,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAccessPolicy
+  /// @copybrief CreateAccessPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -320,7 +320,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAccessPolicy
+  /// @copybrief UpdateAccessPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -380,7 +380,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAccessPolicy
+  /// @copybrief UpdateAccessPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -397,7 +397,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAccessPolicy
+  /// @copybrief UpdateAccessPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -450,7 +450,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAccessPolicy
+  /// @copybrief DeleteAccessPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -508,7 +508,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAccessPolicy
+  /// @copybrief DeleteAccessPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -525,7 +525,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAccessPolicy
+  /// @copybrief DeleteAccessPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -740,7 +740,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAccessLevel
+  /// @copybrief CreateAccessLevel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -802,7 +802,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAccessLevel
+  /// @copybrief CreateAccessLevel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -819,7 +819,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAccessLevel
+  /// @copybrief CreateAccessLevel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -880,7 +880,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAccessLevel
+  /// @copybrief UpdateAccessLevel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -943,7 +943,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAccessLevel
+  /// @copybrief UpdateAccessLevel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -960,7 +960,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAccessLevel
+  /// @copybrief UpdateAccessLevel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1016,7 +1016,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAccessLevel
+  /// @copybrief DeleteAccessLevel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1075,7 +1075,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAccessLevel
+  /// @copybrief DeleteAccessLevel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1092,7 +1092,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAccessLevel
+  /// @copybrief DeleteAccessLevel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1163,7 +1163,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc ReplaceAccessLevels
+  /// @copybrief ReplaceAccessLevels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1180,7 +1180,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc ReplaceAccessLevels
+  /// @copybrief ReplaceAccessLevels
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1395,7 +1395,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServicePerimeter
+  /// @copybrief CreateServicePerimeter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1458,7 +1458,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServicePerimeter
+  /// @copybrief CreateServicePerimeter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1475,7 +1475,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServicePerimeter
+  /// @copybrief CreateServicePerimeter
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1533,7 +1533,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateServicePerimeter
+  /// @copybrief UpdateServicePerimeter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1596,7 +1596,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateServicePerimeter
+  /// @copybrief UpdateServicePerimeter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1613,7 +1613,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateServicePerimeter
+  /// @copybrief UpdateServicePerimeter
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1669,7 +1669,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServicePerimeter
+  /// @copybrief DeleteServicePerimeter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1728,7 +1728,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServicePerimeter
+  /// @copybrief DeleteServicePerimeter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1745,7 +1745,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServicePerimeter
+  /// @copybrief DeleteServicePerimeter
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1812,7 +1812,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc ReplaceServicePerimeters
+  /// @copybrief ReplaceServicePerimeters
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1829,7 +1829,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc ReplaceServicePerimeters
+  /// @copybrief ReplaceServicePerimeters
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1899,7 +1899,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CommitServicePerimeters
+  /// @copybrief CommitServicePerimeters
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1916,7 +1916,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CommitServicePerimeters
+  /// @copybrief CommitServicePerimeters
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2119,7 +2119,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGcpUserAccessBinding
+  /// @copybrief CreateGcpUserAccessBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2186,7 +2186,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGcpUserAccessBinding
+  /// @copybrief CreateGcpUserAccessBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2203,7 +2203,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGcpUserAccessBinding
+  /// @copybrief CreateGcpUserAccessBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2265,7 +2265,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGcpUserAccessBinding
+  /// @copybrief UpdateGcpUserAccessBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2327,7 +2327,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGcpUserAccessBinding
+  /// @copybrief UpdateGcpUserAccessBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2344,7 +2344,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGcpUserAccessBinding
+  /// @copybrief UpdateGcpUserAccessBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2396,7 +2396,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGcpUserAccessBinding
+  /// @copybrief DeleteGcpUserAccessBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2455,7 +2455,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGcpUserAccessBinding
+  /// @copybrief DeleteGcpUserAccessBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2472,7 +2472,7 @@ class AccessContextManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGcpUserAccessBinding
+  /// @copybrief DeleteGcpUserAccessBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

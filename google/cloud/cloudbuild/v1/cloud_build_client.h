@@ -134,7 +134,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBuild
+  /// @copybrief CreateBuild
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -191,7 +191,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBuild
+  /// @copybrief CreateBuild
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -207,7 +207,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBuild
+  /// @copybrief CreateBuild
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -481,7 +481,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc RetryBuild
+  /// @copybrief RetryBuild
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -560,7 +560,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc RetryBuild
+  /// @copybrief RetryBuild
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -576,7 +576,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc RetryBuild
+  /// @copybrief RetryBuild
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -630,7 +630,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc ApproveBuild
+  /// @copybrief ApproveBuild
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -689,7 +689,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc ApproveBuild
+  /// @copybrief ApproveBuild
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -705,7 +705,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc ApproveBuild
+  /// @copybrief ApproveBuild
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1086,7 +1086,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc RunBuildTrigger
+  /// @copybrief RunBuildTrigger
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1147,7 +1147,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc RunBuildTrigger
+  /// @copybrief RunBuildTrigger
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1163,7 +1163,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc RunBuildTrigger
+  /// @copybrief RunBuildTrigger
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1252,7 +1252,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkerPool
+  /// @copybrief CreateWorkerPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1307,7 +1307,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkerPool
+  /// @copybrief CreateWorkerPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1323,7 +1323,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkerPool
+  /// @copybrief CreateWorkerPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1429,7 +1429,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkerPool
+  /// @copybrief DeleteWorkerPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1483,7 +1483,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkerPool
+  /// @copybrief DeleteWorkerPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1499,7 +1499,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkerPool
+  /// @copybrief DeleteWorkerPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1552,7 +1552,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkerPool
+  /// @copybrief UpdateWorkerPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1607,7 +1607,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkerPool
+  /// @copybrief UpdateWorkerPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1623,7 +1623,7 @@ class CloudBuildClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkerPool
+  /// @copybrief UpdateWorkerPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

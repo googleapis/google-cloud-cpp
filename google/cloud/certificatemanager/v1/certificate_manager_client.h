@@ -290,7 +290,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificate
+  /// @copybrief CreateCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -346,7 +346,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificate
+  /// @copybrief CreateCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -363,7 +363,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificate
+  /// @copybrief CreateCertificate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -414,7 +414,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificate
+  /// @copybrief UpdateCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -470,7 +470,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificate
+  /// @copybrief UpdateCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -487,7 +487,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificate
+  /// @copybrief UpdateCertificate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -534,7 +534,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificate
+  /// @copybrief DeleteCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -588,7 +588,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificate
+  /// @copybrief DeleteCertificate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -605,7 +605,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificate
+  /// @copybrief DeleteCertificate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -793,7 +793,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateMap
+  /// @copybrief CreateCertificateMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -850,7 +850,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateMap
+  /// @copybrief CreateCertificateMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -867,7 +867,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateMap
+  /// @copybrief CreateCertificateMap
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -919,7 +919,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateMap
+  /// @copybrief UpdateCertificateMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -976,7 +976,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateMap
+  /// @copybrief UpdateCertificateMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -993,7 +993,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateMap
+  /// @copybrief UpdateCertificateMap
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1042,7 +1042,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateMap
+  /// @copybrief DeleteCertificateMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1098,7 +1098,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateMap
+  /// @copybrief DeleteCertificateMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1115,7 +1115,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateMap
+  /// @copybrief DeleteCertificateMap
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1304,7 +1304,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateMapEntry
+  /// @copybrief CreateCertificateMapEntry
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1360,7 +1360,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateMapEntry
+  /// @copybrief CreateCertificateMapEntry
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1377,7 +1377,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateMapEntry
+  /// @copybrief CreateCertificateMapEntry
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1429,7 +1429,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateMapEntry
+  /// @copybrief UpdateCertificateMapEntry
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1485,7 +1485,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateMapEntry
+  /// @copybrief UpdateCertificateMapEntry
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1502,7 +1502,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateMapEntry
+  /// @copybrief UpdateCertificateMapEntry
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1549,7 +1549,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateMapEntry
+  /// @copybrief DeleteCertificateMapEntry
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1602,7 +1602,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateMapEntry
+  /// @copybrief DeleteCertificateMapEntry
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1619,7 +1619,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateMapEntry
+  /// @copybrief DeleteCertificateMapEntry
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1808,7 +1808,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDnsAuthorization
+  /// @copybrief CreateDnsAuthorization
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1864,7 +1864,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDnsAuthorization
+  /// @copybrief CreateDnsAuthorization
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1881,7 +1881,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDnsAuthorization
+  /// @copybrief CreateDnsAuthorization
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1933,7 +1933,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDnsAuthorization
+  /// @copybrief UpdateDnsAuthorization
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1989,7 +1989,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDnsAuthorization
+  /// @copybrief UpdateDnsAuthorization
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2006,7 +2006,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDnsAuthorization
+  /// @copybrief UpdateDnsAuthorization
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2053,7 +2053,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDnsAuthorization
+  /// @copybrief DeleteDnsAuthorization
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2106,7 +2106,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDnsAuthorization
+  /// @copybrief DeleteDnsAuthorization
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2123,7 +2123,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDnsAuthorization
+  /// @copybrief DeleteDnsAuthorization
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2313,7 +2313,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateIssuanceConfig
+  /// @copybrief CreateCertificateIssuanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2371,7 +2371,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateIssuanceConfig
+  /// @copybrief CreateCertificateIssuanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2388,7 +2388,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateIssuanceConfig
+  /// @copybrief CreateCertificateIssuanceConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2436,7 +2436,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateIssuanceConfig
+  /// @copybrief DeleteCertificateIssuanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2490,7 +2490,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateIssuanceConfig
+  /// @copybrief DeleteCertificateIssuanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2507,7 +2507,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateIssuanceConfig
+  /// @copybrief DeleteCertificateIssuanceConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2694,7 +2694,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTrustConfig
+  /// @copybrief CreateTrustConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2750,7 +2750,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTrustConfig
+  /// @copybrief CreateTrustConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2767,7 +2767,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTrustConfig
+  /// @copybrief CreateTrustConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2818,7 +2818,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTrustConfig
+  /// @copybrief UpdateTrustConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2874,7 +2874,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTrustConfig
+  /// @copybrief UpdateTrustConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2891,7 +2891,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTrustConfig
+  /// @copybrief UpdateTrustConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2938,7 +2938,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrustConfig
+  /// @copybrief DeleteTrustConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2992,7 +2992,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrustConfig
+  /// @copybrief DeleteTrustConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3009,7 +3009,7 @@ class CertificateManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrustConfig
+  /// @copybrief DeleteTrustConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

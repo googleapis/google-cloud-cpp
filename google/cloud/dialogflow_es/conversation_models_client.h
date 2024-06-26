@@ -140,7 +140,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversationModel
+  /// @copybrief CreateConversationModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -207,7 +207,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversationModel
+  /// @copybrief CreateConversationModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -224,7 +224,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversationModel
+  /// @copybrief CreateConversationModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -415,7 +415,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConversationModel
+  /// @copybrief DeleteConversationModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -479,7 +479,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConversationModel
+  /// @copybrief DeleteConversationModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -496,7 +496,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConversationModel
+  /// @copybrief DeleteConversationModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -564,7 +564,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployConversationModel
+  /// @copybrief DeployConversationModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -581,7 +581,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployConversationModel
+  /// @copybrief DeployConversationModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -649,7 +649,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployConversationModel
+  /// @copybrief UndeployConversationModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -666,7 +666,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployConversationModel
+  /// @copybrief UndeployConversationModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -856,7 +856,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversationModelEvaluation
+  /// @copybrief CreateConversationModelEvaluation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -913,7 +913,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversationModelEvaluation
+  /// @copybrief CreateConversationModelEvaluation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -930,7 +930,7 @@ class ConversationModelsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConversationModelEvaluation
+  /// @copybrief CreateConversationModelEvaluation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

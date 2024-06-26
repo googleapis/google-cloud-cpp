@@ -326,7 +326,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrainingPipeline
+  /// @copybrief DeleteTrainingPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -380,7 +380,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrainingPipeline
+  /// @copybrief DeleteTrainingPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -397,7 +397,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrainingPipeline
+  /// @copybrief DeleteTrainingPipeline
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -730,7 +730,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePipelineJob
+  /// @copybrief DeletePipelineJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -783,7 +783,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePipelineJob
+  /// @copybrief DeletePipelineJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -799,7 +799,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePipelineJob
+  /// @copybrief DeletePipelineJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -855,7 +855,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeletePipelineJobs
+  /// @copybrief BatchDeletePipelineJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -913,7 +913,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeletePipelineJobs
+  /// @copybrief BatchDeletePipelineJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -930,7 +930,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeletePipelineJobs
+  /// @copybrief BatchDeletePipelineJobs
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1074,7 +1074,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCancelPipelineJobs
+  /// @copybrief BatchCancelPipelineJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1136,7 +1136,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCancelPipelineJobs
+  /// @copybrief BatchCancelPipelineJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1153,7 +1153,7 @@ class PipelineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCancelPipelineJobs
+  /// @copybrief BatchCancelPipelineJobs
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

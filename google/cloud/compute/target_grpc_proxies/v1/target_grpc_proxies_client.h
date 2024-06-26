@@ -126,7 +126,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetGrpcProxy
+  /// @copybrief DeleteTargetGrpcProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -180,7 +180,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetGrpcProxy
+  /// @copybrief DeleteTargetGrpcProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -197,7 +197,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetGrpcProxy
+  /// @copybrief DeleteTargetGrpcProxy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -310,7 +310,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetGrpcProxy
+  /// @copybrief InsertTargetGrpcProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -367,7 +367,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetGrpcProxy
+  /// @copybrief InsertTargetGrpcProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -384,7 +384,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetGrpcProxy
+  /// @copybrief InsertTargetGrpcProxy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -516,7 +516,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchTargetGrpcProxy
+  /// @copybrief PatchTargetGrpcProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -575,7 +575,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchTargetGrpcProxy
+  /// @copybrief PatchTargetGrpcProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -592,7 +592,7 @@ class TargetGrpcProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchTargetGrpcProxy
+  /// @copybrief PatchTargetGrpcProxy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

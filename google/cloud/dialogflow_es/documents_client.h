@@ -270,7 +270,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDocument
+  /// @copybrief CreateDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -333,7 +333,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDocument
+  /// @copybrief CreateDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -349,7 +349,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDocument
+  /// @copybrief CreateDocument
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -413,7 +413,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportDocuments
+  /// @copybrief ImportDocuments
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -429,7 +429,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportDocuments
+  /// @copybrief ImportDocuments
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -485,7 +485,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDocument
+  /// @copybrief DeleteDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -547,7 +547,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDocument
+  /// @copybrief DeleteDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -563,7 +563,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDocument
+  /// @copybrief DeleteDocument
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -622,7 +622,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDocument
+  /// @copybrief UpdateDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -685,7 +685,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDocument
+  /// @copybrief UpdateDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -701,7 +701,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDocument
+  /// @copybrief UpdateDocument
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -768,7 +768,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ReloadDocument
+  /// @copybrief ReloadDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -836,7 +836,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ReloadDocument
+  /// @copybrief ReloadDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -852,7 +852,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ReloadDocument
+  /// @copybrief ReloadDocument
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -913,7 +913,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportDocument
+  /// @copybrief ExportDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -929,7 +929,7 @@ class DocumentsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportDocument
+  /// @copybrief ExportDocument
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

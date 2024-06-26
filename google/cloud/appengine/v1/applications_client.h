@@ -190,7 +190,7 @@ class ApplicationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApplication
+  /// @copybrief CreateApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -206,7 +206,7 @@ class ApplicationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApplication
+  /// @copybrief CreateApplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -262,7 +262,7 @@ class ApplicationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApplication
+  /// @copybrief UpdateApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -278,7 +278,7 @@ class ApplicationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApplication
+  /// @copybrief UpdateApplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -338,7 +338,7 @@ class ApplicationsClient {
 
   // clang-format off
   ///
-  /// @copydoc RepairApplication
+  /// @copybrief RepairApplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -354,7 +354,7 @@ class ApplicationsClient {
 
   // clang-format off
   ///
-  /// @copydoc RepairApplication
+  /// @copybrief RepairApplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -134,7 +134,7 @@ class AnalyticsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportAnalyticsMetrics
+  /// @copybrief ExportAnalyticsMetrics
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -150,7 +150,7 @@ class AnalyticsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportAnalyticsMetrics
+  /// @copybrief ExportAnalyticsMetrics
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -136,7 +136,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataset
+  /// @copybrief CreateDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -189,7 +189,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataset
+  /// @copybrief CreateDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -205,7 +205,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataset
+  /// @copybrief CreateDataset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -444,7 +444,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataset
+  /// @copybrief DeleteDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -502,7 +502,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataset
+  /// @copybrief DeleteDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -518,7 +518,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataset
+  /// @copybrief DeleteDataset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -578,7 +578,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportData
+  /// @copybrief ImportData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -642,7 +642,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportData
+  /// @copybrief ImportData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -658,7 +658,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportData
+  /// @copybrief ImportData
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -709,7 +709,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportData
+  /// @copybrief ExportData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -766,7 +766,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportData
+  /// @copybrief ExportData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -782,7 +782,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportData
+  /// @copybrief ExportData
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -890,7 +890,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateModel
+  /// @copybrief CreateModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -948,7 +948,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateModel
+  /// @copybrief CreateModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -964,7 +964,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateModel
+  /// @copybrief CreateModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1144,7 +1144,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModel
+  /// @copybrief DeleteModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1204,7 +1204,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModel
+  /// @copybrief DeleteModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1220,7 +1220,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModel
+  /// @copybrief DeleteModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1334,7 +1334,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployModel
+  /// @copybrief DeployModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1399,7 +1399,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployModel
+  /// @copybrief DeployModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1415,7 +1415,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployModel
+  /// @copybrief DeployModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1467,7 +1467,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployModel
+  /// @copybrief UndeployModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1526,7 +1526,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployModel
+  /// @copybrief UndeployModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1542,7 +1542,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployModel
+  /// @copybrief UndeployModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1598,7 +1598,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportModel
+  /// @copybrief ExportModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1660,7 +1660,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportModel
+  /// @copybrief ExportModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1676,7 +1676,7 @@ class AutoMlClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportModel
+  /// @copybrief ExportModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

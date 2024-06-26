@@ -127,7 +127,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -185,7 +185,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -202,7 +202,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -378,7 +378,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSnapshot
+  /// @copybrief InsertSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -436,7 +436,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSnapshot
+  /// @copybrief InsertSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -453,7 +453,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSnapshot
+  /// @copybrief InsertSnapshot
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -649,7 +649,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -707,7 +707,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -724,7 +724,7 @@ class SnapshotsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

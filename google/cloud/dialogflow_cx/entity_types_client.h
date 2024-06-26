@@ -458,7 +458,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportEntityTypes
+  /// @copybrief ExportEntityTypes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -475,7 +475,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportEntityTypes
+  /// @copybrief ExportEntityTypes
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -529,7 +529,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportEntityTypes
+  /// @copybrief ImportEntityTypes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -546,7 +546,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportEntityTypes
+  /// @copybrief ImportEntityTypes
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -135,7 +135,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSpecialistPool
+  /// @copybrief CreateSpecialistPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -190,7 +190,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSpecialistPool
+  /// @copybrief CreateSpecialistPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -206,7 +206,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSpecialistPool
+  /// @copybrief CreateSpecialistPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -387,7 +387,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSpecialistPool
+  /// @copybrief DeleteSpecialistPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -440,7 +440,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSpecialistPool
+  /// @copybrief DeleteSpecialistPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -456,7 +456,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSpecialistPool
+  /// @copybrief DeleteSpecialistPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -505,7 +505,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSpecialistPool
+  /// @copybrief UpdateSpecialistPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -560,7 +560,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSpecialistPool
+  /// @copybrief UpdateSpecialistPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -576,7 +576,7 @@ class SpecialistPoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSpecialistPool
+  /// @copybrief UpdateSpecialistPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

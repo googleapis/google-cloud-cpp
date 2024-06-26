@@ -2241,7 +2241,7 @@ class DataCatalogClient {
 
   // clang-format off
   ///
-  /// @copydoc ReconcileTags
+  /// @copybrief ReconcileTags
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2257,7 +2257,7 @@ class DataCatalogClient {
 
   // clang-format off
   ///
-  /// @copydoc ReconcileTags
+  /// @copybrief ReconcileTags
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2706,7 +2706,7 @@ class DataCatalogClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportEntries
+  /// @copybrief ImportEntries
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2722,7 +2722,7 @@ class DataCatalogClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportEntries
+  /// @copybrief ImportEntries
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

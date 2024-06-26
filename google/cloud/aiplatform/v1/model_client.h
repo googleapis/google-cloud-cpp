@@ -127,7 +127,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UploadModel
+  /// @copybrief UploadModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -180,7 +180,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UploadModel
+  /// @copybrief UploadModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -196,7 +196,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UploadModel
+  /// @copybrief UploadModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -537,7 +537,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExplanationDataset
+  /// @copybrief UpdateExplanationDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -592,7 +592,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExplanationDataset
+  /// @copybrief UpdateExplanationDataset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -609,7 +609,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExplanationDataset
+  /// @copybrief UpdateExplanationDataset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -664,7 +664,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModel
+  /// @copybrief DeleteModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -725,7 +725,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModel
+  /// @copybrief DeleteModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -741,7 +741,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModel
+  /// @copybrief DeleteModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -796,7 +796,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModelVersion
+  /// @copybrief DeleteModelVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -856,7 +856,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModelVersion
+  /// @copybrief DeleteModelVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -872,7 +872,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteModelVersion
+  /// @copybrief DeleteModelVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1001,7 +1001,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportModel
+  /// @copybrief ExportModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1060,7 +1060,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportModel
+  /// @copybrief ExportModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1076,7 +1076,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportModel
+  /// @copybrief ExportModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1132,7 +1132,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CopyModel
+  /// @copybrief CopyModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1191,7 +1191,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CopyModel
+  /// @copybrief CopyModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1207,7 +1207,7 @@ class ModelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CopyModel
+  /// @copybrief CopyModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

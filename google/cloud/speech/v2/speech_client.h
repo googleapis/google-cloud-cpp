@@ -130,7 +130,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRecognizer
+  /// @copybrief CreateRecognizer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -184,7 +184,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRecognizer
+  /// @copybrief CreateRecognizer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -200,7 +200,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRecognizer
+  /// @copybrief CreateRecognizer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -389,7 +389,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRecognizer
+  /// @copybrief UpdateRecognizer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -443,7 +443,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRecognizer
+  /// @copybrief UpdateRecognizer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -459,7 +459,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRecognizer
+  /// @copybrief UpdateRecognizer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -505,7 +505,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRecognizer
+  /// @copybrief DeleteRecognizer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -557,7 +557,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRecognizer
+  /// @copybrief DeleteRecognizer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -573,7 +573,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRecognizer
+  /// @copybrief DeleteRecognizer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -619,7 +619,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteRecognizer
+  /// @copybrief UndeleteRecognizer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -671,7 +671,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteRecognizer
+  /// @copybrief UndeleteRecognizer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -687,7 +687,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteRecognizer
+  /// @copybrief UndeleteRecognizer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -889,7 +889,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchRecognize
+  /// @copybrief BatchRecognize
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -949,7 +949,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchRecognize
+  /// @copybrief BatchRecognize
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -965,7 +965,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchRecognize
+  /// @copybrief BatchRecognize
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1139,7 +1139,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCustomClass
+  /// @copybrief CreateCustomClass
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1193,7 +1193,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCustomClass
+  /// @copybrief CreateCustomClass
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1209,7 +1209,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCustomClass
+  /// @copybrief CreateCustomClass
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1395,7 +1395,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCustomClass
+  /// @copybrief UpdateCustomClass
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1449,7 +1449,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCustomClass
+  /// @copybrief UpdateCustomClass
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1465,7 +1465,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCustomClass
+  /// @copybrief UpdateCustomClass
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1512,7 +1512,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCustomClass
+  /// @copybrief DeleteCustomClass
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1564,7 +1564,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCustomClass
+  /// @copybrief DeleteCustomClass
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1580,7 +1580,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCustomClass
+  /// @copybrief DeleteCustomClass
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1627,7 +1627,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteCustomClass
+  /// @copybrief UndeleteCustomClass
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1679,7 +1679,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteCustomClass
+  /// @copybrief UndeleteCustomClass
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1695,7 +1695,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteCustomClass
+  /// @copybrief UndeleteCustomClass
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1749,7 +1749,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePhraseSet
+  /// @copybrief CreatePhraseSet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1803,7 +1803,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePhraseSet
+  /// @copybrief CreatePhraseSet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1819,7 +1819,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePhraseSet
+  /// @copybrief CreatePhraseSet
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2004,7 +2004,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePhraseSet
+  /// @copybrief UpdatePhraseSet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2058,7 +2058,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePhraseSet
+  /// @copybrief UpdatePhraseSet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2074,7 +2074,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePhraseSet
+  /// @copybrief UpdatePhraseSet
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2120,7 +2120,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePhraseSet
+  /// @copybrief DeletePhraseSet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2172,7 +2172,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePhraseSet
+  /// @copybrief DeletePhraseSet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2188,7 +2188,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePhraseSet
+  /// @copybrief DeletePhraseSet
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2234,7 +2234,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeletePhraseSet
+  /// @copybrief UndeletePhraseSet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2286,7 +2286,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeletePhraseSet
+  /// @copybrief UndeletePhraseSet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2302,7 +2302,7 @@ class SpeechClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeletePhraseSet
+  /// @copybrief UndeletePhraseSet
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

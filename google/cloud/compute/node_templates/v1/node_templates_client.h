@@ -207,7 +207,7 @@ class NodeTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodeTemplate
+  /// @copybrief DeleteNodeTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -262,7 +262,7 @@ class NodeTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodeTemplate
+  /// @copybrief DeleteNodeTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -279,7 +279,7 @@ class NodeTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodeTemplate
+  /// @copybrief DeleteNodeTemplate
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -458,7 +458,7 @@ class NodeTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNodeTemplate
+  /// @copybrief InsertNodeTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -516,7 +516,7 @@ class NodeTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNodeTemplate
+  /// @copybrief InsertNodeTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -533,7 +533,7 @@ class NodeTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNodeTemplate
+  /// @copybrief InsertNodeTemplate
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

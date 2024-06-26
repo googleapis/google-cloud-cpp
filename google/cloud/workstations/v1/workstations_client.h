@@ -262,7 +262,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstationCluster
+  /// @copybrief CreateWorkstationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -319,7 +319,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstationCluster
+  /// @copybrief CreateWorkstationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -336,7 +336,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstationCluster
+  /// @copybrief CreateWorkstationCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -387,7 +387,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstationCluster
+  /// @copybrief UpdateWorkstationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -444,7 +444,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstationCluster
+  /// @copybrief UpdateWorkstationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -461,7 +461,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstationCluster
+  /// @copybrief UpdateWorkstationCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -507,7 +507,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstationCluster
+  /// @copybrief DeleteWorkstationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -561,7 +561,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstationCluster
+  /// @copybrief DeleteWorkstationCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -578,7 +578,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstationCluster
+  /// @copybrief DeleteWorkstationCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -841,7 +841,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstationConfig
+  /// @copybrief CreateWorkstationConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -898,7 +898,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstationConfig
+  /// @copybrief CreateWorkstationConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -915,7 +915,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstationConfig
+  /// @copybrief CreateWorkstationConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -966,7 +966,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstationConfig
+  /// @copybrief UpdateWorkstationConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1023,7 +1023,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstationConfig
+  /// @copybrief UpdateWorkstationConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1040,7 +1040,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstationConfig
+  /// @copybrief UpdateWorkstationConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1086,7 +1086,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstationConfig
+  /// @copybrief DeleteWorkstationConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1140,7 +1140,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstationConfig
+  /// @copybrief DeleteWorkstationConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1157,7 +1157,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstationConfig
+  /// @copybrief DeleteWorkstationConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1415,7 +1415,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstation
+  /// @copybrief CreateWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1470,7 +1470,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstation
+  /// @copybrief CreateWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1486,7 +1486,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkstation
+  /// @copybrief CreateWorkstation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1536,7 +1536,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstation
+  /// @copybrief UpdateWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1591,7 +1591,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstation
+  /// @copybrief UpdateWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1607,7 +1607,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkstation
+  /// @copybrief UpdateWorkstation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1653,7 +1653,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstation
+  /// @copybrief DeleteWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1706,7 +1706,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstation
+  /// @copybrief DeleteWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1722,7 +1722,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkstation
+  /// @copybrief DeleteWorkstation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1768,7 +1768,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc StartWorkstation
+  /// @copybrief StartWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1821,7 +1821,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc StartWorkstation
+  /// @copybrief StartWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1837,7 +1837,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc StartWorkstation
+  /// @copybrief StartWorkstation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1883,7 +1883,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc StopWorkstation
+  /// @copybrief StopWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1936,7 +1936,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc StopWorkstation
+  /// @copybrief StopWorkstation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1952,7 +1952,7 @@ class WorkstationsClient {
 
   // clang-format off
   ///
-  /// @copydoc StopWorkstation
+  /// @copybrief StopWorkstation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

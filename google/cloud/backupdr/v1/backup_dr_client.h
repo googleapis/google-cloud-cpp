@@ -266,7 +266,7 @@ class BackupDRClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateManagementServer
+  /// @copybrief CreateManagementServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -321,7 +321,7 @@ class BackupDRClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateManagementServer
+  /// @copybrief CreateManagementServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -337,7 +337,7 @@ class BackupDRClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateManagementServer
+  /// @copybrief CreateManagementServer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -383,7 +383,7 @@ class BackupDRClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteManagementServer
+  /// @copybrief DeleteManagementServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -436,7 +436,7 @@ class BackupDRClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteManagementServer
+  /// @copybrief DeleteManagementServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -452,7 +452,7 @@ class BackupDRClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteManagementServer
+  /// @copybrief DeleteManagementServer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

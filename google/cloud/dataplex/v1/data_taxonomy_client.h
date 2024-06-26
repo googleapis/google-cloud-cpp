@@ -138,7 +138,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataTaxonomy
+  /// @copybrief CreateDataTaxonomy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -193,7 +193,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataTaxonomy
+  /// @copybrief CreateDataTaxonomy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -209,7 +209,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataTaxonomy
+  /// @copybrief CreateDataTaxonomy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -258,7 +258,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataTaxonomy
+  /// @copybrief UpdateDataTaxonomy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -313,7 +313,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataTaxonomy
+  /// @copybrief UpdateDataTaxonomy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -329,7 +329,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataTaxonomy
+  /// @copybrief UpdateDataTaxonomy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -377,7 +377,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataTaxonomy
+  /// @copybrief DeleteDataTaxonomy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -431,7 +431,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataTaxonomy
+  /// @copybrief DeleteDataTaxonomy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -447,7 +447,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataTaxonomy
+  /// @copybrief DeleteDataTaxonomy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -638,7 +638,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataAttributeBinding
+  /// @copybrief CreateDataAttributeBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -695,7 +695,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataAttributeBinding
+  /// @copybrief CreateDataAttributeBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -712,7 +712,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataAttributeBinding
+  /// @copybrief CreateDataAttributeBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -762,7 +762,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataAttributeBinding
+  /// @copybrief UpdateDataAttributeBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -819,7 +819,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataAttributeBinding
+  /// @copybrief UpdateDataAttributeBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -836,7 +836,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataAttributeBinding
+  /// @copybrief UpdateDataAttributeBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -885,7 +885,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataAttributeBinding
+  /// @copybrief DeleteDataAttributeBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -941,7 +941,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataAttributeBinding
+  /// @copybrief DeleteDataAttributeBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -958,7 +958,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataAttributeBinding
+  /// @copybrief DeleteDataAttributeBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1150,7 +1150,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataAttribute
+  /// @copybrief CreateDataAttribute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1205,7 +1205,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataAttribute
+  /// @copybrief CreateDataAttribute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1221,7 +1221,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataAttribute
+  /// @copybrief CreateDataAttribute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1270,7 +1270,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataAttribute
+  /// @copybrief UpdateDataAttribute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1325,7 +1325,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataAttribute
+  /// @copybrief UpdateDataAttribute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1341,7 +1341,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataAttribute
+  /// @copybrief UpdateDataAttribute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1388,7 +1388,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataAttribute
+  /// @copybrief DeleteDataAttribute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1441,7 +1441,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataAttribute
+  /// @copybrief DeleteDataAttribute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1457,7 +1457,7 @@ class DataTaxonomyServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataAttribute
+  /// @copybrief DeleteDataAttribute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -262,7 +262,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGateway
+  /// @copybrief CreateGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -316,7 +316,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGateway
+  /// @copybrief CreateGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -332,7 +332,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGateway
+  /// @copybrief CreateGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -383,7 +383,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGateway
+  /// @copybrief UpdateGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -437,7 +437,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGateway
+  /// @copybrief UpdateGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -453,7 +453,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGateway
+  /// @copybrief UpdateGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -499,7 +499,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGateway
+  /// @copybrief DeleteGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -552,7 +552,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGateway
+  /// @copybrief DeleteGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -568,7 +568,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGateway
+  /// @copybrief DeleteGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -751,7 +751,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApi
+  /// @copybrief CreateApi
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -805,7 +805,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApi
+  /// @copybrief CreateApi
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -821,7 +821,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApi
+  /// @copybrief CreateApi
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -872,7 +872,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApi
+  /// @copybrief UpdateApi
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -926,7 +926,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApi
+  /// @copybrief UpdateApi
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -942,7 +942,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApi
+  /// @copybrief UpdateApi
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -988,7 +988,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApi
+  /// @copybrief DeleteApi
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1042,7 +1042,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApi
+  /// @copybrief DeleteApi
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1058,7 +1058,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApi
+  /// @copybrief DeleteApi
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1241,7 +1241,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApiConfig
+  /// @copybrief CreateApiConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1295,7 +1295,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApiConfig
+  /// @copybrief CreateApiConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1311,7 +1311,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateApiConfig
+  /// @copybrief CreateApiConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1362,7 +1362,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApiConfig
+  /// @copybrief UpdateApiConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1416,7 +1416,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApiConfig
+  /// @copybrief UpdateApiConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1432,7 +1432,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateApiConfig
+  /// @copybrief UpdateApiConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1478,7 +1478,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApiConfig
+  /// @copybrief DeleteApiConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1531,7 +1531,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApiConfig
+  /// @copybrief DeleteApiConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1547,7 +1547,7 @@ class ApiGatewayServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteApiConfig
+  /// @copybrief DeleteApiConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

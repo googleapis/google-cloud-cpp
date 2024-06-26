@@ -125,7 +125,7 @@ class MachineImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMachineImage
+  /// @copybrief DeleteMachineImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -180,7 +180,7 @@ class MachineImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMachineImage
+  /// @copybrief DeleteMachineImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -197,7 +197,7 @@ class MachineImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMachineImage
+  /// @copybrief DeleteMachineImage
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -375,7 +375,7 @@ class MachineImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertMachineImage
+  /// @copybrief InsertMachineImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -434,7 +434,7 @@ class MachineImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertMachineImage
+  /// @copybrief InsertMachineImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -451,7 +451,7 @@ class MachineImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertMachineImage
+  /// @copybrief InsertMachineImage
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

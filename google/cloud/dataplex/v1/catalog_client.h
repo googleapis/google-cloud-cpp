@@ -133,7 +133,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEntryType
+  /// @copybrief CreateEntryType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -187,7 +187,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEntryType
+  /// @copybrief CreateEntryType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -203,7 +203,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEntryType
+  /// @copybrief CreateEntryType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -250,7 +250,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEntryType
+  /// @copybrief UpdateEntryType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -304,7 +304,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEntryType
+  /// @copybrief UpdateEntryType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -320,7 +320,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEntryType
+  /// @copybrief UpdateEntryType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -366,7 +366,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEntryType
+  /// @copybrief DeleteEntryType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -419,7 +419,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEntryType
+  /// @copybrief DeleteEntryType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -435,7 +435,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEntryType
+  /// @copybrief DeleteEntryType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -620,7 +620,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAspectType
+  /// @copybrief CreateAspectType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -674,7 +674,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAspectType
+  /// @copybrief CreateAspectType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -690,7 +690,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAspectType
+  /// @copybrief CreateAspectType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -737,7 +737,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAspectType
+  /// @copybrief UpdateAspectType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -791,7 +791,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAspectType
+  /// @copybrief UpdateAspectType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -807,7 +807,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAspectType
+  /// @copybrief UpdateAspectType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -853,7 +853,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAspectType
+  /// @copybrief DeleteAspectType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -906,7 +906,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAspectType
+  /// @copybrief DeleteAspectType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -922,7 +922,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAspectType
+  /// @copybrief DeleteAspectType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1107,7 +1107,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEntryGroup
+  /// @copybrief CreateEntryGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1161,7 +1161,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEntryGroup
+  /// @copybrief CreateEntryGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1177,7 +1177,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEntryGroup
+  /// @copybrief CreateEntryGroup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1224,7 +1224,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEntryGroup
+  /// @copybrief UpdateEntryGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1278,7 +1278,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEntryGroup
+  /// @copybrief UpdateEntryGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1294,7 +1294,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEntryGroup
+  /// @copybrief UpdateEntryGroup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1340,7 +1340,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEntryGroup
+  /// @copybrief DeleteEntryGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1393,7 +1393,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEntryGroup
+  /// @copybrief DeleteEntryGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1409,7 +1409,7 @@ class CatalogServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEntryGroup
+  /// @copybrief DeleteEntryGroup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

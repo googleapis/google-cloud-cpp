@@ -268,7 +268,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePolicyBasedRoute
+  /// @copybrief CreatePolicyBasedRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -324,7 +324,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePolicyBasedRoute
+  /// @copybrief CreatePolicyBasedRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -341,7 +341,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePolicyBasedRoute
+  /// @copybrief CreatePolicyBasedRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -387,7 +387,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePolicyBasedRoute
+  /// @copybrief DeletePolicyBasedRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -440,7 +440,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePolicyBasedRoute
+  /// @copybrief DeletePolicyBasedRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -457,7 +457,7 @@ class PolicyBasedRoutingServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePolicyBasedRoute
+  /// @copybrief DeletePolicyBasedRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

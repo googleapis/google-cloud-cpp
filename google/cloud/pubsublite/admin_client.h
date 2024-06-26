@@ -882,7 +882,7 @@ class AdminServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SeekSubscription
+  /// @copybrief SeekSubscription
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -898,7 +898,7 @@ class AdminServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SeekSubscription
+  /// @copybrief SeekSubscription
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

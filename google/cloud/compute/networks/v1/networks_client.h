@@ -125,7 +125,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc AddPeering
+  /// @copybrief AddPeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -182,7 +182,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc AddPeering
+  /// @copybrief AddPeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -199,7 +199,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc AddPeering
+  /// @copybrief AddPeering
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -247,7 +247,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetwork
+  /// @copybrief DeleteNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -301,7 +301,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetwork
+  /// @copybrief DeleteNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -318,7 +318,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetwork
+  /// @copybrief DeleteNetwork
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -492,7 +492,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNetwork
+  /// @copybrief InsertNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -548,7 +548,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNetwork
+  /// @copybrief InsertNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -565,7 +565,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNetwork
+  /// @copybrief InsertNetwork
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -772,7 +772,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchNetwork
+  /// @copybrief PatchNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -829,7 +829,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchNetwork
+  /// @copybrief PatchNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -846,7 +846,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchNetwork
+  /// @copybrief PatchNetwork
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -897,7 +897,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc RemovePeering
+  /// @copybrief RemovePeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -954,7 +954,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc RemovePeering
+  /// @copybrief RemovePeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -971,7 +971,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc RemovePeering
+  /// @copybrief RemovePeering
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1019,7 +1019,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc SwitchToCustomMode
+  /// @copybrief SwitchToCustomMode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1073,7 +1073,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc SwitchToCustomMode
+  /// @copybrief SwitchToCustomMode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1090,7 +1090,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc SwitchToCustomMode
+  /// @copybrief SwitchToCustomMode
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1144,7 +1144,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePeering
+  /// @copybrief UpdatePeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1203,7 +1203,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePeering
+  /// @copybrief UpdatePeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1220,7 +1220,7 @@ class NetworksClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePeering
+  /// @copybrief UpdatePeering
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

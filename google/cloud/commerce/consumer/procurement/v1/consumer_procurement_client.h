@@ -156,7 +156,7 @@ class ConsumerProcurementServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PlaceOrder
+  /// @copybrief PlaceOrder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -173,7 +173,7 @@ class ConsumerProcurementServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PlaceOrder
+  /// @copybrief PlaceOrder
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

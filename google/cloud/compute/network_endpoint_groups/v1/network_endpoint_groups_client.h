@@ -223,7 +223,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AttachNetworkEndpoints
+  /// @copybrief AttachNetworkEndpoints
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -281,7 +281,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AttachNetworkEndpoints
+  /// @copybrief AttachNetworkEndpoints
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -298,7 +298,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AttachNetworkEndpoints
+  /// @copybrief AttachNetworkEndpoints
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -355,7 +355,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkEndpointGroup
+  /// @copybrief DeleteNetworkEndpointGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -416,7 +416,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkEndpointGroup
+  /// @copybrief DeleteNetworkEndpointGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -434,7 +434,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkEndpointGroup
+  /// @copybrief DeleteNetworkEndpointGroup
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -493,7 +493,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachNetworkEndpoints
+  /// @copybrief DetachNetworkEndpoints
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -552,7 +552,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachNetworkEndpoints
+  /// @copybrief DetachNetworkEndpoints
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -569,7 +569,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachNetworkEndpoints
+  /// @copybrief DetachNetworkEndpoints
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -688,7 +688,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNetworkEndpointGroup
+  /// @copybrief InsertNetworkEndpointGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -748,7 +748,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNetworkEndpointGroup
+  /// @copybrief InsertNetworkEndpointGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -766,7 +766,7 @@ class NetworkEndpointGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertNetworkEndpointGroup
+  /// @copybrief InsertNetworkEndpointGroup
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

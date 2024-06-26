@@ -629,7 +629,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateIntents
+  /// @copybrief BatchUpdateIntents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -694,7 +694,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateIntents
+  /// @copybrief BatchUpdateIntents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -762,7 +762,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateIntents
+  /// @copybrief BatchUpdateIntents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -778,7 +778,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateIntents
+  /// @copybrief BatchUpdateIntents
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -842,7 +842,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteIntents
+  /// @copybrief BatchDeleteIntents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -909,7 +909,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteIntents
+  /// @copybrief BatchDeleteIntents
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -925,7 +925,7 @@ class IntentsClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteIntents
+  /// @copybrief BatchDeleteIntents
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -141,7 +141,7 @@ class AssetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportAssets
+  /// @copybrief ExportAssets
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -157,7 +157,7 @@ class AssetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportAssets
+  /// @copybrief ExportAssets
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -879,7 +879,7 @@ class AssetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AnalyzeIamPolicyLongrunning
+  /// @copybrief AnalyzeIamPolicyLongrunning
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -896,7 +896,7 @@ class AssetServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AnalyzeIamPolicyLongrunning
+  /// @copybrief AnalyzeIamPolicyLongrunning
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

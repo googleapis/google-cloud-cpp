@@ -177,7 +177,7 @@ class RequestIdServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RenameFoo
+  /// @copybrief RenameFoo
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -228,7 +228,7 @@ class RequestIdServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RenameFoo
+  /// @copybrief RenameFoo
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -242,7 +242,7 @@ class RequestIdServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RenameFoo
+  /// @copybrief RenameFoo
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

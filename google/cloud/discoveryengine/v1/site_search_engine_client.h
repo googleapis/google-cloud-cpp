@@ -199,7 +199,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTargetSite
+  /// @copybrief CreateTargetSite
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -255,7 +255,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTargetSite
+  /// @copybrief CreateTargetSite
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -272,7 +272,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTargetSite
+  /// @copybrief CreateTargetSite
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -329,7 +329,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateTargetSites
+  /// @copybrief BatchCreateTargetSites
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -346,7 +346,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateTargetSites
+  /// @copybrief BatchCreateTargetSites
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -466,7 +466,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTargetSite
+  /// @copybrief UpdateTargetSite
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -522,7 +522,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTargetSite
+  /// @copybrief UpdateTargetSite
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -539,7 +539,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTargetSite
+  /// @copybrief UpdateTargetSite
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -595,7 +595,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetSite
+  /// @copybrief DeleteTargetSite
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -650,7 +650,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetSite
+  /// @copybrief DeleteTargetSite
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -667,7 +667,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetSite
+  /// @copybrief DeleteTargetSite
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -802,7 +802,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableAdvancedSiteSearch
+  /// @copybrief EnableAdvancedSiteSearch
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -819,7 +819,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableAdvancedSiteSearch
+  /// @copybrief EnableAdvancedSiteSearch
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -874,7 +874,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableAdvancedSiteSearch
+  /// @copybrief DisableAdvancedSiteSearch
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -891,7 +891,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableAdvancedSiteSearch
+  /// @copybrief DisableAdvancedSiteSearch
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -945,7 +945,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RecrawlUris
+  /// @copybrief RecrawlUris
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -961,7 +961,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RecrawlUris
+  /// @copybrief RecrawlUris
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1017,7 +1017,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchVerifyTargetSites
+  /// @copybrief BatchVerifyTargetSites
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1034,7 +1034,7 @@ class SiteSearchEngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchVerifyTargetSites
+  /// @copybrief BatchVerifyTargetSites
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

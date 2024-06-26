@@ -276,7 +276,7 @@ class RegionCommitmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertCommitment
+  /// @copybrief InsertCommitment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -333,7 +333,7 @@ class RegionCommitmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertCommitment
+  /// @copybrief InsertCommitment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -350,7 +350,7 @@ class RegionCommitmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertCommitment
+  /// @copybrief InsertCommitment
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -484,7 +484,7 @@ class RegionCommitmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCommitment
+  /// @copybrief UpdateCommitment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -543,7 +543,7 @@ class RegionCommitmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCommitment
+  /// @copybrief UpdateCommitment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -560,7 +560,7 @@ class RegionCommitmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCommitment
+  /// @copybrief UpdateCommitment
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

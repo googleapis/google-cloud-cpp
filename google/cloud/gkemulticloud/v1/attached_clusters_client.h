@@ -154,7 +154,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAttachedCluster
+  /// @copybrief CreateAttachedCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -217,7 +217,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAttachedCluster
+  /// @copybrief CreateAttachedCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -234,7 +234,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAttachedCluster
+  /// @copybrief CreateAttachedCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -300,7 +300,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAttachedCluster
+  /// @copybrief UpdateAttachedCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -357,7 +357,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAttachedCluster
+  /// @copybrief UpdateAttachedCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -374,7 +374,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAttachedCluster
+  /// @copybrief UpdateAttachedCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -439,7 +439,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportAttachedCluster
+  /// @copybrief ImportAttachedCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -504,7 +504,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportAttachedCluster
+  /// @copybrief ImportAttachedCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -521,7 +521,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportAttachedCluster
+  /// @copybrief ImportAttachedCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -732,7 +732,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAttachedCluster
+  /// @copybrief DeleteAttachedCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -793,7 +793,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAttachedCluster
+  /// @copybrief DeleteAttachedCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -810,7 +810,7 @@ class AttachedClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAttachedCluster
+  /// @copybrief DeleteAttachedCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

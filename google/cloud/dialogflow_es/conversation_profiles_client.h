@@ -484,7 +484,7 @@ class ConversationProfilesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSuggestionFeatureConfig
+  /// @copybrief SetSuggestionFeatureConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -558,7 +558,7 @@ class ConversationProfilesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSuggestionFeatureConfig
+  /// @copybrief SetSuggestionFeatureConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -634,7 +634,7 @@ class ConversationProfilesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSuggestionFeatureConfig
+  /// @copybrief SetSuggestionFeatureConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -651,7 +651,7 @@ class ConversationProfilesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSuggestionFeatureConfig
+  /// @copybrief SetSuggestionFeatureConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -710,7 +710,7 @@ class ConversationProfilesClient {
 
   // clang-format off
   ///
-  /// @copydoc ClearSuggestionFeatureConfig
+  /// @copybrief ClearSuggestionFeatureConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -777,7 +777,7 @@ class ConversationProfilesClient {
 
   // clang-format off
   ///
-  /// @copydoc ClearSuggestionFeatureConfig
+  /// @copybrief ClearSuggestionFeatureConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -846,7 +846,7 @@ class ConversationProfilesClient {
 
   // clang-format off
   ///
-  /// @copydoc ClearSuggestionFeatureConfig
+  /// @copybrief ClearSuggestionFeatureConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -863,7 +863,7 @@ class ConversationProfilesClient {
 
   // clang-format off
   ///
-  /// @copydoc ClearSuggestionFeatureConfig
+  /// @copybrief ClearSuggestionFeatureConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

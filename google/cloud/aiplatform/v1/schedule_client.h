@@ -185,7 +185,7 @@ class ScheduleServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchedule
+  /// @copybrief DeleteSchedule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -238,7 +238,7 @@ class ScheduleServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchedule
+  /// @copybrief DeleteSchedule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -254,7 +254,7 @@ class ScheduleServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchedule
+  /// @copybrief DeleteSchedule
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

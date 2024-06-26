@@ -206,7 +206,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRouter
+  /// @copybrief DeleteRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -260,7 +260,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRouter
+  /// @copybrief DeleteRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -277,7 +277,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRouter
+  /// @copybrief DeleteRouter
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -579,7 +579,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertRouter
+  /// @copybrief InsertRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -636,7 +636,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertRouter
+  /// @copybrief InsertRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -653,7 +653,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertRouter
+  /// @copybrief InsertRouter
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -784,7 +784,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchRouter
+  /// @copybrief PatchRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -842,7 +842,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchRouter
+  /// @copybrief PatchRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -859,7 +859,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchRouter
+  /// @copybrief PatchRouter
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -980,7 +980,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRouter
+  /// @copybrief UpdateRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1039,7 +1039,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRouter
+  /// @copybrief UpdateRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1056,7 +1056,7 @@ class RoutersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRouter
+  /// @copybrief UpdateRouter
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

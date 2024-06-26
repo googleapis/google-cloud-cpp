@@ -176,7 +176,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMicrosoftAdDomain
+  /// @copybrief CreateMicrosoftAdDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -232,7 +232,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMicrosoftAdDomain
+  /// @copybrief CreateMicrosoftAdDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -249,7 +249,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMicrosoftAdDomain
+  /// @copybrief CreateMicrosoftAdDomain
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -494,7 +494,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDomain
+  /// @copybrief UpdateDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -548,7 +548,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDomain
+  /// @copybrief UpdateDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -564,7 +564,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDomain
+  /// @copybrief UpdateDomain
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -610,7 +610,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDomain
+  /// @copybrief DeleteDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -665,7 +665,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDomain
+  /// @copybrief DeleteDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -681,7 +681,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDomain
+  /// @copybrief DeleteDomain
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -730,7 +730,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AttachTrust
+  /// @copybrief AttachTrust
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -784,7 +784,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AttachTrust
+  /// @copybrief AttachTrust
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -800,7 +800,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AttachTrust
+  /// @copybrief AttachTrust
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -853,7 +853,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ReconfigureTrust
+  /// @copybrief ReconfigureTrust
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -910,7 +910,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ReconfigureTrust
+  /// @copybrief ReconfigureTrust
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -927,7 +927,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ReconfigureTrust
+  /// @copybrief ReconfigureTrust
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -977,7 +977,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachTrust
+  /// @copybrief DetachTrust
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1031,7 +1031,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachTrust
+  /// @copybrief DetachTrust
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1047,7 +1047,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DetachTrust
+  /// @copybrief DetachTrust
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1097,7 +1097,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ValidateTrust
+  /// @copybrief ValidateTrust
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1152,7 +1152,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ValidateTrust
+  /// @copybrief ValidateTrust
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1168,7 +1168,7 @@ class ManagedIdentitiesServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ValidateTrust
+  /// @copybrief ValidateTrust
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

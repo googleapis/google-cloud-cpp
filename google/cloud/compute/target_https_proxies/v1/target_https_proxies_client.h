@@ -216,7 +216,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetHttpsProxy
+  /// @copybrief DeleteTargetHttpsProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -270,7 +270,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetHttpsProxy
+  /// @copybrief DeleteTargetHttpsProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -287,7 +287,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetHttpsProxy
+  /// @copybrief DeleteTargetHttpsProxy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -401,7 +401,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetHttpsProxy
+  /// @copybrief InsertTargetHttpsProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -458,7 +458,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetHttpsProxy
+  /// @copybrief InsertTargetHttpsProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -475,7 +475,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetHttpsProxy
+  /// @copybrief InsertTargetHttpsProxy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -609,7 +609,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchTargetHttpsProxy
+  /// @copybrief PatchTargetHttpsProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -668,7 +668,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchTargetHttpsProxy
+  /// @copybrief PatchTargetHttpsProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -685,7 +685,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchTargetHttpsProxy
+  /// @copybrief PatchTargetHttpsProxy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -740,7 +740,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetCertificateMap
+  /// @copybrief SetCertificateMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -798,7 +798,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetCertificateMap
+  /// @copybrief SetCertificateMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -815,7 +815,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetCertificateMap
+  /// @copybrief SetCertificateMap
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -868,7 +868,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetQuicOverride
+  /// @copybrief SetQuicOverride
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -926,7 +926,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetQuicOverride
+  /// @copybrief SetQuicOverride
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -943,7 +943,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetQuicOverride
+  /// @copybrief SetQuicOverride
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -997,7 +997,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSslCertificates
+  /// @copybrief SetSslCertificates
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1055,7 +1055,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSslCertificates
+  /// @copybrief SetSslCertificates
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1072,7 +1072,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSslCertificates
+  /// @copybrief SetSslCertificates
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1128,7 +1128,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSslPolicy
+  /// @copybrief SetSslPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1188,7 +1188,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSslPolicy
+  /// @copybrief SetSslPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1205,7 +1205,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSslPolicy
+  /// @copybrief SetSslPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1256,7 +1256,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetUrlMap
+  /// @copybrief SetUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1313,7 +1313,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetUrlMap
+  /// @copybrief SetUrlMap
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1330,7 +1330,7 @@ class TargetHttpsProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetUrlMap
+  /// @copybrief SetUrlMap
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

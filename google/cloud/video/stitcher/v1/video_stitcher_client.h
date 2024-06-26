@@ -139,7 +139,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCdnKey
+  /// @copybrief CreateCdnKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -193,7 +193,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCdnKey
+  /// @copybrief CreateCdnKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -209,7 +209,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCdnKey
+  /// @copybrief CreateCdnKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -387,7 +387,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCdnKey
+  /// @copybrief DeleteCdnKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -442,7 +442,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCdnKey
+  /// @copybrief DeleteCdnKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -458,7 +458,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCdnKey
+  /// @copybrief DeleteCdnKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -508,7 +508,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCdnKey
+  /// @copybrief UpdateCdnKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -563,7 +563,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCdnKey
+  /// @copybrief UpdateCdnKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -579,7 +579,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCdnKey
+  /// @copybrief UpdateCdnKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1163,7 +1163,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSlate
+  /// @copybrief CreateSlate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1217,7 +1217,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSlate
+  /// @copybrief CreateSlate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1233,7 +1233,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSlate
+  /// @copybrief CreateSlate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1412,7 +1412,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSlate
+  /// @copybrief UpdateSlate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1466,7 +1466,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSlate
+  /// @copybrief UpdateSlate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1482,7 +1482,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSlate
+  /// @copybrief UpdateSlate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1528,7 +1528,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSlate
+  /// @copybrief DeleteSlate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1583,7 +1583,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSlate
+  /// @copybrief DeleteSlate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1599,7 +1599,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSlate
+  /// @copybrief DeleteSlate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1769,7 +1769,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLiveConfig
+  /// @copybrief CreateLiveConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1826,7 +1826,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLiveConfig
+  /// @copybrief CreateLiveConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1843,7 +1843,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLiveConfig
+  /// @copybrief CreateLiveConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2027,7 +2027,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLiveConfig
+  /// @copybrief DeleteLiveConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2081,7 +2081,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLiveConfig
+  /// @copybrief DeleteLiveConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2098,7 +2098,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLiveConfig
+  /// @copybrief DeleteLiveConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2151,7 +2151,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLiveConfig
+  /// @copybrief UpdateLiveConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2208,7 +2208,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLiveConfig
+  /// @copybrief UpdateLiveConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2225,7 +2225,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLiveConfig
+  /// @copybrief UpdateLiveConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2278,7 +2278,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVodConfig
+  /// @copybrief CreateVodConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2334,7 +2334,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVodConfig
+  /// @copybrief CreateVodConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2350,7 +2350,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVodConfig
+  /// @copybrief CreateVodConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2533,7 +2533,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVodConfig
+  /// @copybrief DeleteVodConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2586,7 +2586,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVodConfig
+  /// @copybrief DeleteVodConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2602,7 +2602,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVodConfig
+  /// @copybrief DeleteVodConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2655,7 +2655,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVodConfig
+  /// @copybrief UpdateVodConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2711,7 +2711,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVodConfig
+  /// @copybrief UpdateVodConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2727,7 +2727,7 @@ class VideoStitcherServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVodConfig
+  /// @copybrief UpdateVodConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

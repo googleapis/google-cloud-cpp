@@ -285,7 +285,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAppConnection
+  /// @copybrief CreateAppConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -341,7 +341,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAppConnection
+  /// @copybrief CreateAppConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -358,7 +358,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAppConnection
+  /// @copybrief CreateAppConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -415,7 +415,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAppConnection
+  /// @copybrief UpdateAppConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -471,7 +471,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAppConnection
+  /// @copybrief UpdateAppConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -488,7 +488,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAppConnection
+  /// @copybrief UpdateAppConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -536,7 +536,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAppConnection
+  /// @copybrief DeleteAppConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -590,7 +590,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAppConnection
+  /// @copybrief DeleteAppConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -607,7 +607,7 @@ class AppConnectionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAppConnection
+  /// @copybrief DeleteAppConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

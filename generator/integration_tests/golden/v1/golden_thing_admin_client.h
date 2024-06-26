@@ -217,7 +217,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDatabase
+  /// @copybrief CreateDatabase
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -279,7 +279,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDatabase
+  /// @copybrief CreateDatabase
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -293,7 +293,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDatabase
+  /// @copybrief CreateDatabase
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -403,7 +403,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDatabaseDdl
+  /// @copybrief UpdateDatabaseDdl
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -463,7 +463,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDatabaseDdl
+  /// @copybrief UpdateDatabaseDdl
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -477,7 +477,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDatabaseDdl
+  /// @copybrief UpdateDatabaseDdl
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -906,7 +906,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -972,7 +972,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -986,7 +986,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1317,7 +1317,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreDatabase
+  /// @copybrief RestoreDatabase
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1388,7 +1388,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreDatabase
+  /// @copybrief RestoreDatabase
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1402,7 +1402,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreDatabase
+  /// @copybrief RestoreDatabase
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1635,7 +1635,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc LongRunningWithoutRouting
+  /// @copybrief LongRunningWithoutRouting
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1649,7 +1649,7 @@ class GoldenThingAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc LongRunningWithoutRouting
+  /// @copybrief LongRunningWithoutRouting
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

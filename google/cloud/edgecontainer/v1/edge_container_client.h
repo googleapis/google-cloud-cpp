@@ -258,7 +258,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -312,7 +312,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -328,7 +328,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -379,7 +379,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -433,7 +433,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -449,7 +449,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -499,7 +499,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeCluster
+  /// @copybrief UpgradeCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -555,7 +555,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeCluster
+  /// @copybrief UpgradeCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -571,7 +571,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpgradeCluster
+  /// @copybrief UpgradeCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -616,7 +616,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -669,7 +669,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -685,7 +685,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -981,7 +981,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNodePool
+  /// @copybrief CreateNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1035,7 +1035,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNodePool
+  /// @copybrief CreateNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1051,7 +1051,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNodePool
+  /// @copybrief CreateNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1102,7 +1102,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNodePool
+  /// @copybrief UpdateNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1156,7 +1156,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNodePool
+  /// @copybrief UpdateNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1172,7 +1172,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNodePool
+  /// @copybrief UpdateNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1217,7 +1217,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodePool
+  /// @copybrief DeleteNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1270,7 +1270,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodePool
+  /// @copybrief DeleteNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1286,7 +1286,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNodePool
+  /// @copybrief DeleteNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1599,7 +1599,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVpnConnection
+  /// @copybrief CreateVpnConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1655,7 +1655,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVpnConnection
+  /// @copybrief CreateVpnConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1672,7 +1672,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVpnConnection
+  /// @copybrief CreateVpnConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1718,7 +1718,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVpnConnection
+  /// @copybrief DeleteVpnConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1772,7 +1772,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVpnConnection
+  /// @copybrief DeleteVpnConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1789,7 +1789,7 @@ class EdgeContainerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVpnConnection
+  /// @copybrief DeleteVpnConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

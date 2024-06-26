@@ -139,7 +139,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLake
+  /// @copybrief CreateLake
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -193,7 +193,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLake
+  /// @copybrief CreateLake
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -209,7 +209,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLake
+  /// @copybrief CreateLake
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -257,7 +257,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLake
+  /// @copybrief UpdateLake
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -311,7 +311,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLake
+  /// @copybrief UpdateLake
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -327,7 +327,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLake
+  /// @copybrief UpdateLake
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -374,7 +374,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLake
+  /// @copybrief DeleteLake
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -429,7 +429,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLake
+  /// @copybrief DeleteLake
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -445,7 +445,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLake
+  /// @copybrief DeleteLake
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -709,7 +709,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateZone
+  /// @copybrief CreateZone
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -763,7 +763,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateZone
+  /// @copybrief CreateZone
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -779,7 +779,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateZone
+  /// @copybrief CreateZone
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -827,7 +827,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateZone
+  /// @copybrief UpdateZone
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -881,7 +881,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateZone
+  /// @copybrief UpdateZone
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -897,7 +897,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateZone
+  /// @copybrief UpdateZone
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -944,7 +944,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteZone
+  /// @copybrief DeleteZone
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -999,7 +999,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteZone
+  /// @copybrief DeleteZone
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1015,7 +1015,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteZone
+  /// @copybrief DeleteZone
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1278,7 +1278,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAsset
+  /// @copybrief CreateAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1332,7 +1332,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAsset
+  /// @copybrief CreateAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1348,7 +1348,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAsset
+  /// @copybrief CreateAsset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1396,7 +1396,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAsset
+  /// @copybrief UpdateAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1450,7 +1450,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAsset
+  /// @copybrief UpdateAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1466,7 +1466,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAsset
+  /// @copybrief UpdateAsset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1513,7 +1513,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAsset
+  /// @copybrief DeleteAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1568,7 +1568,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAsset
+  /// @copybrief DeleteAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1584,7 +1584,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAsset
+  /// @copybrief DeleteAsset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1840,7 +1840,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTask
+  /// @copybrief CreateTask
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1894,7 +1894,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTask
+  /// @copybrief CreateTask
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1910,7 +1910,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTask
+  /// @copybrief CreateTask
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1958,7 +1958,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTask
+  /// @copybrief UpdateTask
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2012,7 +2012,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTask
+  /// @copybrief UpdateTask
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2028,7 +2028,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTask
+  /// @copybrief UpdateTask
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2074,7 +2074,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTask
+  /// @copybrief DeleteTask
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2128,7 +2128,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTask
+  /// @copybrief DeleteTask
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2144,7 +2144,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTask
+  /// @copybrief DeleteTask
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2567,7 +2567,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2621,7 +2621,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2637,7 +2637,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2685,7 +2685,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEnvironment
+  /// @copybrief UpdateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2739,7 +2739,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEnvironment
+  /// @copybrief UpdateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2755,7 +2755,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEnvironment
+  /// @copybrief UpdateEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2802,7 +2802,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2856,7 +2856,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2872,7 +2872,7 @@ class DataplexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

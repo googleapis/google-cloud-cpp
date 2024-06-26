@@ -129,7 +129,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalVpnGateway
+  /// @copybrief DeleteExternalVpnGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -184,7 +184,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalVpnGateway
+  /// @copybrief DeleteExternalVpnGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -201,7 +201,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalVpnGateway
+  /// @copybrief DeleteExternalVpnGateway
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -318,7 +318,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertExternalVpnGateway
+  /// @copybrief InsertExternalVpnGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -376,7 +376,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertExternalVpnGateway
+  /// @copybrief InsertExternalVpnGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -393,7 +393,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertExternalVpnGateway
+  /// @copybrief InsertExternalVpnGateway
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -525,7 +525,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -583,7 +583,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -600,7 +600,7 @@ class ExternalVpnGatewaysClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

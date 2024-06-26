@@ -130,7 +130,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIndexEndpoint
+  /// @copybrief CreateIndexEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -185,7 +185,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIndexEndpoint
+  /// @copybrief CreateIndexEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -201,7 +201,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIndexEndpoint
+  /// @copybrief CreateIndexEndpoint
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -442,7 +442,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIndexEndpoint
+  /// @copybrief DeleteIndexEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -495,7 +495,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIndexEndpoint
+  /// @copybrief DeleteIndexEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -511,7 +511,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIndexEndpoint
+  /// @copybrief DeleteIndexEndpoint
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -565,7 +565,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployIndex
+  /// @copybrief DeployIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -621,7 +621,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployIndex
+  /// @copybrief DeployIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -637,7 +637,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployIndex
+  /// @copybrief DeployIndex
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -688,7 +688,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployIndex
+  /// @copybrief UndeployIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -743,7 +743,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployIndex
+  /// @copybrief UndeployIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -759,7 +759,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployIndex
+  /// @copybrief UndeployIndex
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -813,7 +813,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc MutateDeployedIndex
+  /// @copybrief MutateDeployedIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -868,7 +868,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc MutateDeployedIndex
+  /// @copybrief MutateDeployedIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -884,7 +884,7 @@ class IndexEndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc MutateDeployedIndex
+  /// @copybrief MutateDeployedIndex
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

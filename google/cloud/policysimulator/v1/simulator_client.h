@@ -210,7 +210,7 @@ class SimulatorClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateReplay
+  /// @copybrief CreateReplay
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -266,7 +266,7 @@ class SimulatorClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateReplay
+  /// @copybrief CreateReplay
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -282,7 +282,7 @@ class SimulatorClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateReplay
+  /// @copybrief CreateReplay
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

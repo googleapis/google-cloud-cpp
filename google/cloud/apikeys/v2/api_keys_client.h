@@ -137,7 +137,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateKey
+  /// @copybrief CreateKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -194,7 +194,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateKey
+  /// @copybrief CreateKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -210,7 +210,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateKey
+  /// @copybrief CreateKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -476,7 +476,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateKey
+  /// @copybrief UpdateKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -533,7 +533,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateKey
+  /// @copybrief UpdateKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -549,7 +549,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateKey
+  /// @copybrief UpdateKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -598,7 +598,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteKey
+  /// @copybrief DeleteKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -656,7 +656,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteKey
+  /// @copybrief DeleteKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -672,7 +672,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteKey
+  /// @copybrief DeleteKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -726,7 +726,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteKey
+  /// @copybrief UndeleteKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -742,7 +742,7 @@ class ApiKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteKey
+  /// @copybrief UndeleteKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

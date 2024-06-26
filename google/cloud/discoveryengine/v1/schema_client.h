@@ -270,7 +270,7 @@ class SchemaServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSchema
+  /// @copybrief CreateSchema
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -324,7 +324,7 @@ class SchemaServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSchema
+  /// @copybrief CreateSchema
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -340,7 +340,7 @@ class SchemaServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSchema
+  /// @copybrief CreateSchema
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -391,7 +391,7 @@ class SchemaServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSchema
+  /// @copybrief UpdateSchema
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -407,7 +407,7 @@ class SchemaServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSchema
+  /// @copybrief UpdateSchema
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -454,7 +454,7 @@ class SchemaServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchema
+  /// @copybrief DeleteSchema
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -510,7 +510,7 @@ class SchemaServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchema
+  /// @copybrief DeleteSchema
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -526,7 +526,7 @@ class SchemaServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSchema
+  /// @copybrief DeleteSchema
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

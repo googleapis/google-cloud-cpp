@@ -242,7 +242,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc CreateBucketAsync
+  /// @copybrief CreateBucketAsync
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -258,7 +258,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc CreateBucketAsync
+  /// @copybrief CreateBucketAsync
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -314,7 +314,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBucketAsync
+  /// @copybrief UpdateBucketAsync
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -330,7 +330,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBucketAsync
+  /// @copybrief UpdateBucketAsync
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1125,7 +1125,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc CreateLink
+  /// @copybrief CreateLink
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1180,7 +1180,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc CreateLink
+  /// @copybrief CreateLink
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1195,7 +1195,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc CreateLink
+  /// @copybrief CreateLink
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1246,7 +1246,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLink
+  /// @copybrief DeleteLink
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1300,7 +1300,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLink
+  /// @copybrief DeleteLink
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1315,7 +1315,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLink
+  /// @copybrief DeleteLink
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2132,7 +2132,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc CopyLogEntries
+  /// @copybrief CopyLogEntries
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2148,7 +2148,7 @@ class ConfigServiceV2Client {
 
   // clang-format off
   ///
-  /// @copydoc CopyLogEntries
+  /// @copybrief CopyLogEntries
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

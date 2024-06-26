@@ -167,7 +167,7 @@ class CompletionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportSuggestionDenyListEntries
+  /// @copybrief ImportSuggestionDenyListEntries
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -184,7 +184,7 @@ class CompletionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportSuggestionDenyListEntries
+  /// @copybrief ImportSuggestionDenyListEntries
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -243,7 +243,7 @@ class CompletionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeSuggestionDenyListEntries
+  /// @copybrief PurgeSuggestionDenyListEntries
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -260,7 +260,7 @@ class CompletionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeSuggestionDenyListEntries
+  /// @copybrief PurgeSuggestionDenyListEntries
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

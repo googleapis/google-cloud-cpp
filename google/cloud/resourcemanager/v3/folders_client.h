@@ -399,7 +399,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFolder
+  /// @copybrief CreateFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -479,7 +479,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFolder
+  /// @copybrief CreateFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -495,7 +495,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFolder
+  /// @copybrief CreateFolder
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -561,7 +561,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFolder
+  /// @copybrief UpdateFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -632,7 +632,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFolder
+  /// @copybrief UpdateFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -648,7 +648,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFolder
+  /// @copybrief UpdateFolder
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -715,7 +715,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc MoveFolder
+  /// @copybrief MoveFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -785,7 +785,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc MoveFolder
+  /// @copybrief MoveFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -801,7 +801,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc MoveFolder
+  /// @copybrief MoveFolder
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -859,7 +859,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFolder
+  /// @copybrief DeleteFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -925,7 +925,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFolder
+  /// @copybrief DeleteFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -941,7 +941,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFolder
+  /// @copybrief DeleteFolder
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -999,7 +999,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteFolder
+  /// @copybrief UndeleteFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1063,7 +1063,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteFolder
+  /// @copybrief UndeleteFolder
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1079,7 +1079,7 @@ class FoldersClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteFolder
+  /// @copybrief UndeleteFolder
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

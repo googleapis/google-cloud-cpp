@@ -131,7 +131,7 @@ class RegionInstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceTemplate
+  /// @copybrief DeleteInstanceTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -188,7 +188,7 @@ class RegionInstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceTemplate
+  /// @copybrief DeleteInstanceTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -205,7 +205,7 @@ class RegionInstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceTemplate
+  /// @copybrief DeleteInstanceTemplate
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -321,7 +321,7 @@ class RegionInstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceTemplate
+  /// @copybrief InsertInstanceTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -380,7 +380,7 @@ class RegionInstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceTemplate
+  /// @copybrief InsertInstanceTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -397,7 +397,7 @@ class RegionInstanceTemplatesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceTemplate
+  /// @copybrief InsertInstanceTemplate
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

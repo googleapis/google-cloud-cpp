@@ -291,7 +291,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -345,7 +345,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -361,7 +361,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateService
+  /// @copybrief CreateService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -415,7 +415,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateService
+  /// @copybrief UpdateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -469,7 +469,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateService
+  /// @copybrief UpdateService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -485,7 +485,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateService
+  /// @copybrief UpdateService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -533,7 +533,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -586,7 +586,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -602,7 +602,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteService
+  /// @copybrief DeleteService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -799,7 +799,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMetadataImport
+  /// @copybrief CreateMetadataImport
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -854,7 +854,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMetadataImport
+  /// @copybrief CreateMetadataImport
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -870,7 +870,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMetadataImport
+  /// @copybrief CreateMetadataImport
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -927,7 +927,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMetadataImport
+  /// @copybrief UpdateMetadataImport
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -983,7 +983,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMetadataImport
+  /// @copybrief UpdateMetadataImport
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -999,7 +999,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMetadataImport
+  /// @copybrief UpdateMetadataImport
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1051,7 +1051,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportMetadata
+  /// @copybrief ExportMetadata
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1067,7 +1067,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportMetadata
+  /// @copybrief ExportMetadata
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1119,7 +1119,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreService
+  /// @copybrief RestoreService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1172,7 +1172,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreService
+  /// @copybrief RestoreService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1188,7 +1188,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreService
+  /// @copybrief RestoreService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1382,7 +1382,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1436,7 +1436,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1452,7 +1452,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1500,7 +1500,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1554,7 +1554,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1570,7 +1570,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1622,7 +1622,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc QueryMetadata
+  /// @copybrief QueryMetadata
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1638,7 +1638,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc QueryMetadata
+  /// @copybrief QueryMetadata
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1691,7 +1691,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc MoveTableToDatabase
+  /// @copybrief MoveTableToDatabase
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1707,7 +1707,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc MoveTableToDatabase
+  /// @copybrief MoveTableToDatabase
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1765,7 +1765,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc AlterMetadataResourceLocation
+  /// @copybrief AlterMetadataResourceLocation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1782,7 +1782,7 @@ class DataprocMetastoreClient {
 
   // clang-format off
   ///
-  /// @copydoc AlterMetadataResourceLocation
+  /// @copybrief AlterMetadataResourceLocation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

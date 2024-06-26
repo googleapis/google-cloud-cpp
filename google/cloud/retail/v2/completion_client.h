@@ -175,7 +175,7 @@ class CompletionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportCompletionData
+  /// @copybrief ImportCompletionData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -191,7 +191,7 @@ class CompletionServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportCompletionData
+  /// @copybrief ImportCompletionData
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

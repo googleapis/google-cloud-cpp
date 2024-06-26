@@ -137,7 +137,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMetadataStore
+  /// @copybrief CreateMetadataStore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -192,7 +192,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMetadataStore
+  /// @copybrief CreateMetadataStore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -208,7 +208,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMetadataStore
+  /// @copybrief CreateMetadataStore
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -392,7 +392,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMetadataStore
+  /// @copybrief DeleteMetadataStore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -447,7 +447,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMetadataStore
+  /// @copybrief DeleteMetadataStore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -463,7 +463,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMetadataStore
+  /// @copybrief DeleteMetadataStore
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -777,7 +777,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteArtifact
+  /// @copybrief DeleteArtifact
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -830,7 +830,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteArtifact
+  /// @copybrief DeleteArtifact
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -846,7 +846,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteArtifact
+  /// @copybrief DeleteArtifact
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -894,7 +894,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeArtifacts
+  /// @copybrief PurgeArtifacts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -948,7 +948,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeArtifacts
+  /// @copybrief PurgeArtifacts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -964,7 +964,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeArtifacts
+  /// @copybrief PurgeArtifacts
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1276,7 +1276,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteContext
+  /// @copybrief DeleteContext
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1329,7 +1329,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteContext
+  /// @copybrief DeleteContext
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1345,7 +1345,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteContext
+  /// @copybrief DeleteContext
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1393,7 +1393,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeContexts
+  /// @copybrief PurgeContexts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1447,7 +1447,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeContexts
+  /// @copybrief PurgeContexts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1463,7 +1463,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeContexts
+  /// @copybrief PurgeContexts
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2061,7 +2061,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExecution
+  /// @copybrief DeleteExecution
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2114,7 +2114,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExecution
+  /// @copybrief DeleteExecution
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2130,7 +2130,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExecution
+  /// @copybrief DeleteExecution
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2178,7 +2178,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeExecutions
+  /// @copybrief PurgeExecutions
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2232,7 +2232,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeExecutions
+  /// @copybrief PurgeExecutions
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2248,7 +2248,7 @@ class MetadataServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeExecutions
+  /// @copybrief PurgeExecutions
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

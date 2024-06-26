@@ -122,7 +122,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteImage
+  /// @copybrief DeleteImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -176,7 +176,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteImage
+  /// @copybrief DeleteImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -193,7 +193,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteImage
+  /// @copybrief DeleteImage
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -245,7 +245,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc Deprecate
+  /// @copybrief Deprecate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -302,7 +302,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc Deprecate
+  /// @copybrief Deprecate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -318,7 +318,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc Deprecate
+  /// @copybrief Deprecate
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -555,7 +555,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertImage
+  /// @copybrief InsertImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -611,7 +611,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertImage
+  /// @copybrief InsertImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -628,7 +628,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertImage
+  /// @copybrief InsertImage
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -765,7 +765,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchImage
+  /// @copybrief PatchImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -821,7 +821,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchImage
+  /// @copybrief PatchImage
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -837,7 +837,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchImage
+  /// @copybrief PatchImage
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -955,7 +955,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1012,7 +1012,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1028,7 +1028,7 @@ class ImagesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -126,7 +126,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIndex
+  /// @copybrief CreateIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -179,7 +179,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIndex
+  /// @copybrief CreateIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -195,7 +195,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIndex
+  /// @copybrief CreateIndex
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -378,7 +378,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateIndex
+  /// @copybrief UpdateIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -432,7 +432,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateIndex
+  /// @copybrief UpdateIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -448,7 +448,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateIndex
+  /// @copybrief UpdateIndex
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -499,7 +499,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIndex
+  /// @copybrief DeleteIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -557,7 +557,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIndex
+  /// @copybrief DeleteIndex
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -573,7 +573,7 @@ class IndexServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIndex
+  /// @copybrief DeleteIndex
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

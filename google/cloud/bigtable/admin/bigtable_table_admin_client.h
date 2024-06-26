@@ -344,7 +344,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTable
+  /// @copybrief UpdateTable
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -398,7 +398,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTable
+  /// @copybrief UpdateTable
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -414,7 +414,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTable
+  /// @copybrief UpdateTable
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -512,7 +512,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteTable
+  /// @copybrief UndeleteTable
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -564,7 +564,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteTable
+  /// @copybrief UndeleteTable
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -580,7 +580,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteTable
+  /// @copybrief UndeleteTable
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -635,7 +635,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAuthorizedView
+  /// @copybrief CreateAuthorizedView
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -690,7 +690,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAuthorizedView
+  /// @copybrief CreateAuthorizedView
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -706,7 +706,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAuthorizedView
+  /// @copybrief CreateAuthorizedView
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -898,7 +898,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAuthorizedView
+  /// @copybrief UpdateAuthorizedView
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -953,7 +953,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAuthorizedView
+  /// @copybrief UpdateAuthorizedView
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -969,7 +969,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAuthorizedView
+  /// @copybrief UpdateAuthorizedView
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1319,7 +1319,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1384,7 +1384,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1400,7 +1400,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1714,7 +1714,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreTable
+  /// @copybrief RestoreTable
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1730,7 +1730,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreTable
+  /// @copybrief RestoreTable
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1798,7 +1798,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CopyBackup
+  /// @copybrief CopyBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1853,7 +1853,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CopyBackup
+  /// @copybrief CopyBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1869,7 +1869,7 @@ class BigtableTableAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CopyBackup
+  /// @copybrief CopyBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

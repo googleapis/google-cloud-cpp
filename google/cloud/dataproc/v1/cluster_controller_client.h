@@ -132,7 +132,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -189,7 +189,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -205,7 +205,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -271,7 +271,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -333,7 +333,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -349,7 +349,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -400,7 +400,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc StopCluster
+  /// @copybrief StopCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -416,7 +416,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc StopCluster
+  /// @copybrief StopCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -467,7 +467,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc StartCluster
+  /// @copybrief StartCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -483,7 +483,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc StartCluster
+  /// @copybrief StartCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -535,7 +535,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -593,7 +593,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -609,7 +609,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -860,7 +860,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DiagnoseCluster
+  /// @copybrief DiagnoseCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -923,7 +923,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DiagnoseCluster
+  /// @copybrief DiagnoseCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -939,7 +939,7 @@ class ClusterControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DiagnoseCluster
+  /// @copybrief DiagnoseCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

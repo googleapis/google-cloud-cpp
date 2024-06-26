@@ -151,7 +151,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAwsCluster
+  /// @copybrief CreateAwsCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -212,7 +212,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAwsCluster
+  /// @copybrief CreateAwsCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -228,7 +228,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAwsCluster
+  /// @copybrief CreateAwsCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -281,7 +281,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAwsCluster
+  /// @copybrief UpdateAwsCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -336,7 +336,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAwsCluster
+  /// @copybrief UpdateAwsCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -352,7 +352,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAwsCluster
+  /// @copybrief UpdateAwsCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -564,7 +564,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAwsCluster
+  /// @copybrief DeleteAwsCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -628,7 +628,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAwsCluster
+  /// @copybrief DeleteAwsCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -644,7 +644,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAwsCluster
+  /// @copybrief DeleteAwsCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -787,7 +787,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAwsNodePool
+  /// @copybrief CreateAwsNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -849,7 +849,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAwsNodePool
+  /// @copybrief CreateAwsNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -865,7 +865,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAwsNodePool
+  /// @copybrief CreateAwsNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -918,7 +918,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAwsNodePool
+  /// @copybrief UpdateAwsNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -973,7 +973,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAwsNodePool
+  /// @copybrief UpdateAwsNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -989,7 +989,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAwsNodePool
+  /// @copybrief UpdateAwsNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1048,7 +1048,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc RollbackAwsNodePoolUpdate
+  /// @copybrief RollbackAwsNodePoolUpdate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1107,7 +1107,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc RollbackAwsNodePoolUpdate
+  /// @copybrief RollbackAwsNodePoolUpdate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1124,7 +1124,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc RollbackAwsNodePoolUpdate
+  /// @copybrief RollbackAwsNodePoolUpdate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1337,7 +1337,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAwsNodePool
+  /// @copybrief DeleteAwsNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1397,7 +1397,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAwsNodePool
+  /// @copybrief DeleteAwsNodePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1413,7 +1413,7 @@ class AwsClustersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAwsNodePool
+  /// @copybrief DeleteAwsNodePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

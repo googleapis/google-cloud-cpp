@@ -271,7 +271,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkflow
+  /// @copybrief CreateWorkflow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -327,7 +327,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkflow
+  /// @copybrief CreateWorkflow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -343,7 +343,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateWorkflow
+  /// @copybrief CreateWorkflow
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -391,7 +391,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkflow
+  /// @copybrief DeleteWorkflow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -446,7 +446,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkflow
+  /// @copybrief DeleteWorkflow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -462,7 +462,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteWorkflow
+  /// @copybrief DeleteWorkflow
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -515,7 +515,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkflow
+  /// @copybrief UpdateWorkflow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -573,7 +573,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkflow
+  /// @copybrief UpdateWorkflow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -589,7 +589,7 @@ class WorkflowsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateWorkflow
+  /// @copybrief UpdateWorkflow
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

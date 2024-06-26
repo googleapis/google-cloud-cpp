@@ -308,7 +308,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -366,7 +366,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -382,7 +382,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -430,7 +430,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -483,7 +483,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -499,7 +499,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -564,7 +564,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -625,7 +625,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -641,7 +641,7 @@ class CloudRedisClusterClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

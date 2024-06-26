@@ -529,7 +529,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeProducts
+  /// @copybrief PurgeProducts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -545,7 +545,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc PurgeProducts
+  /// @copybrief PurgeProducts
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -605,7 +605,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportProducts
+  /// @copybrief ImportProducts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -621,7 +621,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportProducts
+  /// @copybrief ImportProducts
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -738,7 +738,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInventory
+  /// @copybrief SetInventory
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -853,7 +853,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInventory
+  /// @copybrief SetInventory
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -869,7 +869,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetInventory
+  /// @copybrief SetInventory
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -958,7 +958,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AddFulfillmentPlaces
+  /// @copybrief AddFulfillmentPlaces
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1050,7 +1050,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AddFulfillmentPlaces
+  /// @copybrief AddFulfillmentPlaces
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1066,7 +1066,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AddFulfillmentPlaces
+  /// @copybrief AddFulfillmentPlaces
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1156,7 +1156,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveFulfillmentPlaces
+  /// @copybrief RemoveFulfillmentPlaces
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1248,7 +1248,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveFulfillmentPlaces
+  /// @copybrief RemoveFulfillmentPlaces
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1264,7 +1264,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveFulfillmentPlaces
+  /// @copybrief RemoveFulfillmentPlaces
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1351,7 +1351,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AddLocalInventories
+  /// @copybrief AddLocalInventories
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1440,7 +1440,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AddLocalInventories
+  /// @copybrief AddLocalInventories
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1456,7 +1456,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AddLocalInventories
+  /// @copybrief AddLocalInventories
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1541,7 +1541,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveLocalInventories
+  /// @copybrief RemoveLocalInventories
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1628,7 +1628,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveLocalInventories
+  /// @copybrief RemoveLocalInventories
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1644,7 +1644,7 @@ class ProductServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveLocalInventories
+  /// @copybrief RemoveLocalInventories
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

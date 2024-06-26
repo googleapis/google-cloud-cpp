@@ -140,7 +140,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeatureGroup
+  /// @copybrief CreateFeatureGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -195,7 +195,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeatureGroup
+  /// @copybrief CreateFeatureGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -211,7 +211,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeatureGroup
+  /// @copybrief CreateFeatureGroup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -404,7 +404,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeatureGroup
+  /// @copybrief UpdateFeatureGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -459,7 +459,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeatureGroup
+  /// @copybrief UpdateFeatureGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -475,7 +475,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeatureGroup
+  /// @copybrief UpdateFeatureGroup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -526,7 +526,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeatureGroup
+  /// @copybrief DeleteFeatureGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -580,7 +580,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeatureGroup
+  /// @copybrief DeleteFeatureGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -596,7 +596,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeatureGroup
+  /// @copybrief DeleteFeatureGroup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -656,7 +656,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeature
+  /// @copybrief CreateFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -710,7 +710,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeature
+  /// @copybrief CreateFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -726,7 +726,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFeature
+  /// @copybrief CreateFeature
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -927,7 +927,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeature
+  /// @copybrief UpdateFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -981,7 +981,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeature
+  /// @copybrief UpdateFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -997,7 +997,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFeature
+  /// @copybrief UpdateFeature
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1045,7 +1045,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeature
+  /// @copybrief DeleteFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1098,7 +1098,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeature
+  /// @copybrief DeleteFeature
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1114,7 +1114,7 @@ class FeatureRegistryServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFeature
+  /// @copybrief DeleteFeature
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

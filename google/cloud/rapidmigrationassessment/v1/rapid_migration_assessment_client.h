@@ -134,7 +134,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCollector
+  /// @copybrief CreateCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -191,7 +191,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCollector
+  /// @copybrief CreateCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -208,7 +208,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCollector
+  /// @copybrief CreateCollector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -258,7 +258,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAnnotation
+  /// @copybrief CreateAnnotation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -313,7 +313,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAnnotation
+  /// @copybrief CreateAnnotation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -330,7 +330,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAnnotation
+  /// @copybrief CreateAnnotation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -574,7 +574,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCollector
+  /// @copybrief UpdateCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -630,7 +630,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCollector
+  /// @copybrief UpdateCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -647,7 +647,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCollector
+  /// @copybrief UpdateCollector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -694,7 +694,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCollector
+  /// @copybrief DeleteCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -749,7 +749,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCollector
+  /// @copybrief DeleteCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -766,7 +766,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCollector
+  /// @copybrief DeleteCollector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -812,7 +812,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc ResumeCollector
+  /// @copybrief ResumeCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -866,7 +866,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc ResumeCollector
+  /// @copybrief ResumeCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -883,7 +883,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc ResumeCollector
+  /// @copybrief ResumeCollector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -929,7 +929,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc RegisterCollector
+  /// @copybrief RegisterCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -982,7 +982,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc RegisterCollector
+  /// @copybrief RegisterCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -999,7 +999,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc RegisterCollector
+  /// @copybrief RegisterCollector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1045,7 +1045,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc PauseCollector
+  /// @copybrief PauseCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1099,7 +1099,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc PauseCollector
+  /// @copybrief PauseCollector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1116,7 +1116,7 @@ class RapidMigrationAssessmentClient {
 
   // clang-format off
   ///
-  /// @copydoc PauseCollector
+  /// @copybrief PauseCollector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

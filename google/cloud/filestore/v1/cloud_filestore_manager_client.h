@@ -294,7 +294,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -351,7 +351,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -367,7 +367,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -420,7 +420,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -474,7 +474,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -490,7 +490,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -545,7 +545,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreInstance
+  /// @copybrief RestoreInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -561,7 +561,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreInstance
+  /// @copybrief RestoreInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -612,7 +612,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc RevertInstance
+  /// @copybrief RevertInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -628,7 +628,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc RevertInstance
+  /// @copybrief RevertInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -674,7 +674,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -726,7 +726,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -742,7 +742,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -931,7 +931,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -985,7 +985,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1001,7 +1001,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1047,7 +1047,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1099,7 +1099,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1115,7 +1115,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1163,7 +1163,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSnapshot
+  /// @copybrief UpdateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1217,7 +1217,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSnapshot
+  /// @copybrief UpdateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1233,7 +1233,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSnapshot
+  /// @copybrief UpdateSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1428,7 +1428,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1482,7 +1482,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1498,7 +1498,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1544,7 +1544,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1598,7 +1598,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1614,7 +1614,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1662,7 +1662,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1716,7 +1716,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1732,7 +1732,7 @@ class CloudFilestoreManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

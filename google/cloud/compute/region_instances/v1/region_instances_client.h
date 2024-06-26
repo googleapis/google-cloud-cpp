@@ -128,7 +128,7 @@ class RegionInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkInsert
+  /// @copybrief BulkInsert
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -186,7 +186,7 @@ class RegionInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkInsert
+  /// @copybrief BulkInsert
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -203,7 +203,7 @@ class RegionInstancesClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkInsert
+  /// @copybrief BulkInsert
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

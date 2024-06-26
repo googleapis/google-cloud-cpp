@@ -289,7 +289,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFederation
+  /// @copybrief CreateFederation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -343,7 +343,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFederation
+  /// @copybrief CreateFederation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -359,7 +359,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFederation
+  /// @copybrief CreateFederation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -413,7 +413,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFederation
+  /// @copybrief UpdateFederation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -467,7 +467,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFederation
+  /// @copybrief UpdateFederation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -483,7 +483,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFederation
+  /// @copybrief UpdateFederation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -531,7 +531,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFederation
+  /// @copybrief DeleteFederation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -584,7 +584,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFederation
+  /// @copybrief DeleteFederation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -600,7 +600,7 @@ class DataprocMetastoreFederationClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFederation
+  /// @copybrief DeleteFederation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

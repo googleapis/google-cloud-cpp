@@ -616,7 +616,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateEntityTypes
+  /// @copybrief BatchUpdateEntityTypes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -633,7 +633,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateEntityTypes
+  /// @copybrief BatchUpdateEntityTypes
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -697,7 +697,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteEntityTypes
+  /// @copybrief BatchDeleteEntityTypes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -764,7 +764,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteEntityTypes
+  /// @copybrief BatchDeleteEntityTypes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -781,7 +781,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteEntityTypes
+  /// @copybrief BatchDeleteEntityTypes
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -844,7 +844,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateEntities
+  /// @copybrief BatchCreateEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -916,7 +916,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateEntities
+  /// @copybrief BatchCreateEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -984,7 +984,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateEntities
+  /// @copybrief BatchCreateEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1000,7 +1000,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateEntities
+  /// @copybrief BatchCreateEntities
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1066,7 +1066,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateEntities
+  /// @copybrief BatchUpdateEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1141,7 +1141,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateEntities
+  /// @copybrief BatchUpdateEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1212,7 +1212,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateEntities
+  /// @copybrief BatchUpdateEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1228,7 +1228,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateEntities
+  /// @copybrief BatchUpdateEntities
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1291,7 +1291,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteEntities
+  /// @copybrief BatchDeleteEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1361,7 +1361,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteEntities
+  /// @copybrief BatchDeleteEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1428,7 +1428,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteEntities
+  /// @copybrief BatchDeleteEntities
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1444,7 +1444,7 @@ class EntityTypesClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteEntities
+  /// @copybrief BatchDeleteEntities
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

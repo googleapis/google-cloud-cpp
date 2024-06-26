@@ -327,7 +327,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagKey
+  /// @copybrief CreateTagKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -384,7 +384,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagKey
+  /// @copybrief CreateTagKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -400,7 +400,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagKey
+  /// @copybrief CreateTagKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -452,7 +452,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTagKey
+  /// @copybrief UpdateTagKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -506,7 +506,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTagKey
+  /// @copybrief UpdateTagKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -522,7 +522,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTagKey
+  /// @copybrief UpdateTagKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -570,7 +570,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagKey
+  /// @copybrief DeleteTagKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -625,7 +625,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagKey
+  /// @copybrief DeleteTagKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -641,7 +641,7 @@ class TagKeysClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagKey
+  /// @copybrief DeleteTagKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

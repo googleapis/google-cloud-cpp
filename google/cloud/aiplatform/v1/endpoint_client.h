@@ -127,7 +127,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpoint
+  /// @copybrief CreateEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -193,7 +193,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpoint
+  /// @copybrief CreateEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -247,7 +247,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpoint
+  /// @copybrief CreateEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -263,7 +263,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpoint
+  /// @copybrief CreateEndpoint
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -503,7 +503,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpoint
+  /// @copybrief DeleteEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -556,7 +556,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpoint
+  /// @copybrief DeleteEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -572,7 +572,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpoint
+  /// @copybrief DeleteEndpoint
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -644,7 +644,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployModel
+  /// @copybrief DeployModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -699,7 +699,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployModel
+  /// @copybrief DeployModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -715,7 +715,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployModel
+  /// @copybrief DeployModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -775,7 +775,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployModel
+  /// @copybrief UndeployModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -832,7 +832,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployModel
+  /// @copybrief UndeployModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -848,7 +848,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployModel
+  /// @copybrief UndeployModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -920,7 +920,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc MutateDeployedModel
+  /// @copybrief MutateDeployedModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -978,7 +978,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc MutateDeployedModel
+  /// @copybrief MutateDeployedModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -994,7 +994,7 @@ class EndpointServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc MutateDeployedModel
+  /// @copybrief MutateDeployedModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

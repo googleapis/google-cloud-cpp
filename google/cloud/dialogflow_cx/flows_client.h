@@ -454,7 +454,7 @@ class FlowsClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainFlow
+  /// @copybrief TrainFlow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -522,7 +522,7 @@ class FlowsClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainFlow
+  /// @copybrief TrainFlow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -538,7 +538,7 @@ class FlowsClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainFlow
+  /// @copybrief TrainFlow
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -698,7 +698,7 @@ class FlowsClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportFlow
+  /// @copybrief ImportFlow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -714,7 +714,7 @@ class FlowsClient {
 
   // clang-format off
   ///
-  /// @copydoc ImportFlow
+  /// @copybrief ImportFlow
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -778,7 +778,7 @@ class FlowsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportFlow
+  /// @copybrief ExportFlow
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -794,7 +794,7 @@ class FlowsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportFlow
+  /// @copybrief ExportFlow
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

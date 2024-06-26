@@ -135,7 +135,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc AddAssociation
+  /// @copybrief AddAssociation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -192,7 +192,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc AddAssociation
+  /// @copybrief AddAssociation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -209,7 +209,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc AddAssociation
+  /// @copybrief AddAssociation
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -262,7 +262,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc AddRule
+  /// @copybrief AddRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -319,7 +319,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc AddRule
+  /// @copybrief AddRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -336,7 +336,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc AddRule
+  /// @copybrief AddRule
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -385,7 +385,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc CloneRules
+  /// @copybrief CloneRules
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -440,7 +440,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc CloneRules
+  /// @copybrief CloneRules
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -457,7 +457,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc CloneRules
+  /// @copybrief CloneRules
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -506,7 +506,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFirewallPolicy
+  /// @copybrief DeleteFirewallPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -562,7 +562,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFirewallPolicy
+  /// @copybrief DeleteFirewallPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -579,7 +579,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFirewallPolicy
+  /// @copybrief DeleteFirewallPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -946,7 +946,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertFirewallPolicy
+  /// @copybrief InsertFirewallPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1004,7 +1004,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertFirewallPolicy
+  /// @copybrief InsertFirewallPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1021,7 +1021,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertFirewallPolicy
+  /// @copybrief InsertFirewallPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1158,7 +1158,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchFirewallPolicy
+  /// @copybrief PatchFirewallPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1216,7 +1216,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchFirewallPolicy
+  /// @copybrief PatchFirewallPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1233,7 +1233,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchFirewallPolicy
+  /// @copybrief PatchFirewallPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1287,7 +1287,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchRule
+  /// @copybrief PatchRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1344,7 +1344,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchRule
+  /// @copybrief PatchRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1361,7 +1361,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchRule
+  /// @copybrief PatchRule
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1410,7 +1410,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveAssociation
+  /// @copybrief RemoveAssociation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1466,7 +1466,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveAssociation
+  /// @copybrief RemoveAssociation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1483,7 +1483,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveAssociation
+  /// @copybrief RemoveAssociation
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1532,7 +1532,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveRule
+  /// @copybrief RemoveRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1587,7 +1587,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveRule
+  /// @copybrief RemoveRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1604,7 +1604,7 @@ class RegionNetworkFirewallPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveRule
+  /// @copybrief RemoveRule
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

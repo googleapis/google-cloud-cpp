@@ -263,7 +263,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeployment
+  /// @copybrief CreateDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -317,7 +317,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeployment
+  /// @copybrief CreateDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -333,7 +333,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeployment
+  /// @copybrief CreateDeployment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -389,7 +389,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDeployment
+  /// @copybrief UpdateDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -443,7 +443,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDeployment
+  /// @copybrief UpdateDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -459,7 +459,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDeployment
+  /// @copybrief UpdateDeployment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -505,7 +505,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeployment
+  /// @copybrief DeleteDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -557,7 +557,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeployment
+  /// @copybrief DeleteDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -573,7 +573,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeployment
+  /// @copybrief DeleteDeployment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1062,7 +1062,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc LockDeployment
+  /// @copybrief LockDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1114,7 +1114,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc LockDeployment
+  /// @copybrief LockDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1130,7 +1130,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc LockDeployment
+  /// @copybrief LockDeployment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1177,7 +1177,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc UnlockDeployment
+  /// @copybrief UnlockDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1230,7 +1230,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc UnlockDeployment
+  /// @copybrief UnlockDeployment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1246,7 +1246,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc UnlockDeployment
+  /// @copybrief UnlockDeployment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1351,7 +1351,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePreview
+  /// @copybrief CreatePreview
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1404,7 +1404,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePreview
+  /// @copybrief CreatePreview
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1420,7 +1420,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePreview
+  /// @copybrief CreatePreview
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1600,7 +1600,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePreview
+  /// @copybrief DeletePreview
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1652,7 +1652,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePreview
+  /// @copybrief DeletePreview
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1668,7 +1668,7 @@ class ConfigClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePreview
+  /// @copybrief DeletePreview
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -205,7 +205,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc UploadConversation
+  /// @copybrief UploadConversation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -222,7 +222,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc UploadConversation
+  /// @copybrief UploadConversation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -519,7 +519,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAnalysis
+  /// @copybrief CreateAnalysis
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -576,7 +576,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAnalysis
+  /// @copybrief CreateAnalysis
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -593,7 +593,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAnalysis
+  /// @copybrief CreateAnalysis
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -825,7 +825,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkAnalyzeConversations
+  /// @copybrief BulkAnalyzeConversations
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -880,7 +880,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkAnalyzeConversations
+  /// @copybrief BulkAnalyzeConversations
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -897,7 +897,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkAnalyzeConversations
+  /// @copybrief BulkAnalyzeConversations
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -949,7 +949,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkDeleteConversations
+  /// @copybrief BulkDeleteConversations
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1004,7 +1004,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkDeleteConversations
+  /// @copybrief BulkDeleteConversations
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1021,7 +1021,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc BulkDeleteConversations
+  /// @copybrief BulkDeleteConversations
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1070,7 +1070,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc IngestConversations
+  /// @copybrief IngestConversations
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1126,7 +1126,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc IngestConversations
+  /// @copybrief IngestConversations
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1143,7 +1143,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc IngestConversations
+  /// @copybrief IngestConversations
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1191,7 +1191,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportInsightsData
+  /// @copybrief ExportInsightsData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1247,7 +1247,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportInsightsData
+  /// @copybrief ExportInsightsData
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1264,7 +1264,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportInsightsData
+  /// @copybrief ExportInsightsData
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1315,7 +1315,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIssueModel
+  /// @copybrief CreateIssueModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1371,7 +1371,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIssueModel
+  /// @copybrief CreateIssueModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1388,7 +1388,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateIssueModel
+  /// @copybrief CreateIssueModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1611,7 +1611,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIssueModel
+  /// @copybrief DeleteIssueModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1666,7 +1666,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIssueModel
+  /// @copybrief DeleteIssueModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1683,7 +1683,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteIssueModel
+  /// @copybrief DeleteIssueModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1732,7 +1732,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployIssueModel
+  /// @copybrief DeployIssueModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1788,7 +1788,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployIssueModel
+  /// @copybrief DeployIssueModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1805,7 +1805,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployIssueModel
+  /// @copybrief DeployIssueModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1854,7 +1854,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployIssueModel
+  /// @copybrief UndeployIssueModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1910,7 +1910,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployIssueModel
+  /// @copybrief UndeployIssueModel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1927,7 +1927,7 @@ class ContactCenterInsightsClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployIssueModel
+  /// @copybrief UndeployIssueModel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

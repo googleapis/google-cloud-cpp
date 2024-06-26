@@ -130,7 +130,7 @@ class VpcAccessServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnector
+  /// @copybrief CreateConnector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -185,7 +185,7 @@ class VpcAccessServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnector
+  /// @copybrief CreateConnector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -201,7 +201,7 @@ class VpcAccessServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnector
+  /// @copybrief CreateConnector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -379,7 +379,7 @@ class VpcAccessServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnector
+  /// @copybrief DeleteConnector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -433,7 +433,7 @@ class VpcAccessServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnector
+  /// @copybrief DeleteConnector
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -449,7 +449,7 @@ class VpcAccessServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnector
+  /// @copybrief DeleteConnector
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

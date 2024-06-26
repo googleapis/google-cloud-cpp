@@ -138,7 +138,7 @@ class NodeGroupControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNodeGroup
+  /// @copybrief CreateNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -195,7 +195,7 @@ class NodeGroupControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNodeGroup
+  /// @copybrief CreateNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -211,7 +211,7 @@ class NodeGroupControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNodeGroup
+  /// @copybrief CreateNodeGroup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -264,7 +264,7 @@ class NodeGroupControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc ResizeNodeGroup
+  /// @copybrief ResizeNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -320,7 +320,7 @@ class NodeGroupControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc ResizeNodeGroup
+  /// @copybrief ResizeNodeGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -336,7 +336,7 @@ class NodeGroupControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc ResizeNodeGroup
+  /// @copybrief ResizeNodeGroup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

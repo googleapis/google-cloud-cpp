@@ -341,7 +341,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstanceConfig
+  /// @copybrief CreateInstanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -444,7 +444,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstanceConfig
+  /// @copybrief CreateInstanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -461,7 +461,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstanceConfig
+  /// @copybrief CreateInstanceConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -572,7 +572,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstanceConfig
+  /// @copybrief UpdateInstanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -679,7 +679,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstanceConfig
+  /// @copybrief UpdateInstanceConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -696,7 +696,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstanceConfig
+  /// @copybrief UpdateInstanceConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1162,7 +1162,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1256,7 +1256,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1273,7 +1273,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1375,7 +1375,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1476,7 +1476,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1493,7 +1493,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1955,7 +1955,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstancePartition
+  /// @copybrief CreateInstancePartition
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2051,7 +2051,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstancePartition
+  /// @copybrief CreateInstancePartition
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2068,7 +2068,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstancePartition
+  /// @copybrief CreateInstancePartition
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2242,7 +2242,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstancePartition
+  /// @copybrief UpdateInstancePartition
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2347,7 +2347,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstancePartition
+  /// @copybrief UpdateInstancePartition
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2364,7 +2364,7 @@ class InstanceAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstancePartition
+  /// @copybrief UpdateInstancePartition
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

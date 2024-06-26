@@ -130,7 +130,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddHealthCheck
+  /// @copybrief AddHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -187,7 +187,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddHealthCheck
+  /// @copybrief AddHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -204,7 +204,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddHealthCheck
+  /// @copybrief AddHealthCheck
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -257,7 +257,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddInstance
+  /// @copybrief AddInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -314,7 +314,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddInstance
+  /// @copybrief AddInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -331,7 +331,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddInstance
+  /// @copybrief AddInstance
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -461,7 +461,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetPool
+  /// @copybrief DeleteTargetPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -516,7 +516,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetPool
+  /// @copybrief DeleteTargetPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -533,7 +533,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetPool
+  /// @copybrief DeleteTargetPool
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -714,7 +714,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetPool
+  /// @copybrief InsertTargetPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -771,7 +771,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetPool
+  /// @copybrief InsertTargetPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -788,7 +788,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetPool
+  /// @copybrief InsertTargetPool
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -922,7 +922,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveHealthCheck
+  /// @copybrief RemoveHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -980,7 +980,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveHealthCheck
+  /// @copybrief RemoveHealthCheck
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -997,7 +997,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveHealthCheck
+  /// @copybrief RemoveHealthCheck
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1050,7 +1050,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveInstance
+  /// @copybrief RemoveInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1107,7 +1107,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveInstance
+  /// @copybrief RemoveInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1124,7 +1124,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveInstance
+  /// @copybrief RemoveInstance
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1177,7 +1177,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetBackup
+  /// @copybrief SetBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1234,7 +1234,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetBackup
+  /// @copybrief SetBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1251,7 +1251,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetBackup
+  /// @copybrief SetBackup
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1307,7 +1307,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSecurityPolicy
+  /// @copybrief SetSecurityPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1365,7 +1365,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSecurityPolicy
+  /// @copybrief SetSecurityPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1382,7 +1382,7 @@ class TargetPoolsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetSecurityPolicy
+  /// @copybrief SetSecurityPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

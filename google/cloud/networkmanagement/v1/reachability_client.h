@@ -293,7 +293,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectivityTest
+  /// @copybrief CreateConnectivityTest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -362,7 +362,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectivityTest
+  /// @copybrief CreateConnectivityTest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -379,7 +379,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnectivityTest
+  /// @copybrief CreateConnectivityTest
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -443,7 +443,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectivityTest
+  /// @copybrief UpdateConnectivityTest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -513,7 +513,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectivityTest
+  /// @copybrief UpdateConnectivityTest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -530,7 +530,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnectivityTest
+  /// @copybrief UpdateConnectivityTest
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -595,7 +595,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RerunConnectivityTest
+  /// @copybrief RerunConnectivityTest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -612,7 +612,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RerunConnectivityTest
+  /// @copybrief RerunConnectivityTest
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -659,7 +659,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectivityTest
+  /// @copybrief DeleteConnectivityTest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -713,7 +713,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectivityTest
+  /// @copybrief DeleteConnectivityTest
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -730,7 +730,7 @@ class ReachabilityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnectivityTest
+  /// @copybrief DeleteConnectivityTest
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

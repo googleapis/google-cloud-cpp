@@ -136,7 +136,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupPlan
+  /// @copybrief CreateBackupPlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -190,7 +190,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupPlan
+  /// @copybrief CreateBackupPlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -206,7 +206,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupPlan
+  /// @copybrief CreateBackupPlan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -394,7 +394,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupPlan
+  /// @copybrief UpdateBackupPlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -448,7 +448,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupPlan
+  /// @copybrief UpdateBackupPlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -464,7 +464,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupPlan
+  /// @copybrief UpdateBackupPlan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -510,7 +510,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupPlan
+  /// @copybrief DeleteBackupPlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -563,7 +563,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupPlan
+  /// @copybrief DeleteBackupPlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -579,7 +579,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupPlan
+  /// @copybrief DeleteBackupPlan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -637,7 +637,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -691,7 +691,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -707,7 +707,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -894,7 +894,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -948,7 +948,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -964,7 +964,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1010,7 +1010,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1064,7 +1064,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1080,7 +1080,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1269,7 +1269,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRestorePlan
+  /// @copybrief CreateRestorePlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1323,7 +1323,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRestorePlan
+  /// @copybrief CreateRestorePlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1339,7 +1339,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRestorePlan
+  /// @copybrief CreateRestorePlan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1526,7 +1526,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRestorePlan
+  /// @copybrief UpdateRestorePlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1580,7 +1580,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRestorePlan
+  /// @copybrief UpdateRestorePlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1596,7 +1596,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRestorePlan
+  /// @copybrief UpdateRestorePlan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1642,7 +1642,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRestorePlan
+  /// @copybrief DeleteRestorePlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1695,7 +1695,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRestorePlan
+  /// @copybrief DeleteRestorePlan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1711,7 +1711,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRestorePlan
+  /// @copybrief DeleteRestorePlan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1769,7 +1769,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRestore
+  /// @copybrief CreateRestore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1823,7 +1823,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRestore
+  /// @copybrief CreateRestore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1839,7 +1839,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRestore
+  /// @copybrief CreateRestore
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2026,7 +2026,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRestore
+  /// @copybrief UpdateRestore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2080,7 +2080,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRestore
+  /// @copybrief UpdateRestore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2096,7 +2096,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRestore
+  /// @copybrief UpdateRestore
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2142,7 +2142,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRestore
+  /// @copybrief DeleteRestore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2195,7 +2195,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRestore
+  /// @copybrief DeleteRestore
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2211,7 +2211,7 @@ class BackupForGKEClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRestore
+  /// @copybrief DeleteRestore
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

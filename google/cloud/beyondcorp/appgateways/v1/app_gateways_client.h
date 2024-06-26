@@ -283,7 +283,7 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAppGateway
+  /// @copybrief CreateAppGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -339,7 +339,7 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAppGateway
+  /// @copybrief CreateAppGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -356,7 +356,7 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAppGateway
+  /// @copybrief CreateAppGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -404,7 +404,7 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAppGateway
+  /// @copybrief DeleteAppGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -459,7 +459,7 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAppGateway
+  /// @copybrief DeleteAppGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -476,7 +476,7 @@ class AppGatewaysServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAppGateway
+  /// @copybrief DeleteAppGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

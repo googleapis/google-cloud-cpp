@@ -150,7 +150,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateOSPolicyAssignment
+  /// @copybrief CreateOSPolicyAssignment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -215,7 +215,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateOSPolicyAssignment
+  /// @copybrief CreateOSPolicyAssignment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -232,7 +232,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateOSPolicyAssignment
+  /// @copybrief CreateOSPolicyAssignment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -291,7 +291,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateOSPolicyAssignment
+  /// @copybrief UpdateOSPolicyAssignment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -356,7 +356,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateOSPolicyAssignment
+  /// @copybrief UpdateOSPolicyAssignment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -373,7 +373,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateOSPolicyAssignment
+  /// @copybrief UpdateOSPolicyAssignment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -654,7 +654,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteOSPolicyAssignment
+  /// @copybrief DeleteOSPolicyAssignment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -720,7 +720,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteOSPolicyAssignment
+  /// @copybrief DeleteOSPolicyAssignment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -737,7 +737,7 @@ class OsConfigZonalServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteOSPolicyAssignment
+  /// @copybrief DeleteOSPolicyAssignment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

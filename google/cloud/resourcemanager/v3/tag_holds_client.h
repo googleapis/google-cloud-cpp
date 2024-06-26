@@ -129,7 +129,7 @@ class TagHoldsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagHold
+  /// @copybrief CreateTagHold
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -184,7 +184,7 @@ class TagHoldsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagHold
+  /// @copybrief CreateTagHold
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -200,7 +200,7 @@ class TagHoldsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTagHold
+  /// @copybrief CreateTagHold
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -246,7 +246,7 @@ class TagHoldsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagHold
+  /// @copybrief DeleteTagHold
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -299,7 +299,7 @@ class TagHoldsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagHold
+  /// @copybrief DeleteTagHold
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -315,7 +315,7 @@ class TagHoldsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTagHold
+  /// @copybrief DeleteTagHold
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

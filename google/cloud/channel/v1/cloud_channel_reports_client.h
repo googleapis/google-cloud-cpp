@@ -171,7 +171,7 @@ class CloudChannelReportsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RunReportJob
+  /// @copybrief RunReportJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -187,7 +187,7 @@ class CloudChannelReportsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RunReportJob
+  /// @copybrief RunReportJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

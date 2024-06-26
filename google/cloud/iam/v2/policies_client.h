@@ -290,7 +290,7 @@ class PoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePolicy
+  /// @copybrief CreatePolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -343,7 +343,7 @@ class PoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePolicy
+  /// @copybrief CreatePolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -358,7 +358,7 @@ class PoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePolicy
+  /// @copybrief CreatePolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -419,7 +419,7 @@ class PoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePolicy
+  /// @copybrief UpdatePolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -434,7 +434,7 @@ class PoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePolicy
+  /// @copybrief UpdatePolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -487,7 +487,7 @@ class PoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePolicy
+  /// @copybrief DeletePolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -540,7 +540,7 @@ class PoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePolicy
+  /// @copybrief DeletePolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -555,7 +555,7 @@ class PoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePolicy
+  /// @copybrief DeletePolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

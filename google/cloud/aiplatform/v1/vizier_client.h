@@ -441,7 +441,7 @@ class VizierServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SuggestTrials
+  /// @copybrief SuggestTrials
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -457,7 +457,7 @@ class VizierServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SuggestTrials
+  /// @copybrief SuggestTrials
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -821,7 +821,7 @@ class VizierServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CheckTrialEarlyStoppingState
+  /// @copybrief CheckTrialEarlyStoppingState
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -838,7 +838,7 @@ class VizierServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CheckTrialEarlyStoppingState
+  /// @copybrief CheckTrialEarlyStoppingState
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

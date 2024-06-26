@@ -138,7 +138,7 @@ class EngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEngine
+  /// @copybrief CreateEngine
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -192,7 +192,7 @@ class EngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEngine
+  /// @copybrief CreateEngine
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -208,7 +208,7 @@ class EngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEngine
+  /// @copybrief CreateEngine
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -263,7 +263,7 @@ class EngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEngine
+  /// @copybrief DeleteEngine
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -319,7 +319,7 @@ class EngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEngine
+  /// @copybrief DeleteEngine
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -335,7 +335,7 @@ class EngineServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEngine
+  /// @copybrief DeleteEngine
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -127,7 +127,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateJob
+  /// @copybrief CreateJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -181,7 +181,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateJob
+  /// @copybrief CreateJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -197,7 +197,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateJob
+  /// @copybrief CreateJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -374,7 +374,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateJob
+  /// @copybrief UpdateJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -427,7 +427,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateJob
+  /// @copybrief UpdateJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -443,7 +443,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateJob
+  /// @copybrief UpdateJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -490,7 +490,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteJob
+  /// @copybrief DeleteJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -544,7 +544,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteJob
+  /// @copybrief DeleteJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -560,7 +560,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteJob
+  /// @copybrief DeleteJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -607,7 +607,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc RunJob
+  /// @copybrief RunJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -659,7 +659,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc RunJob
+  /// @copybrief RunJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -674,7 +674,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// @copydoc RunJob
+  /// @copybrief RunJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

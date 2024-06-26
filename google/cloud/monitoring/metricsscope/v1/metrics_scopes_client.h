@@ -230,7 +230,7 @@ class MetricsScopesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMonitoredProject
+  /// @copybrief CreateMonitoredProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -288,7 +288,7 @@ class MetricsScopesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMonitoredProject
+  /// @copybrief CreateMonitoredProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -305,7 +305,7 @@ class MetricsScopesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMonitoredProject
+  /// @copybrief CreateMonitoredProject
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -357,7 +357,7 @@ class MetricsScopesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMonitoredProject
+  /// @copybrief DeleteMonitoredProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -411,7 +411,7 @@ class MetricsScopesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMonitoredProject
+  /// @copybrief DeleteMonitoredProject
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -428,7 +428,7 @@ class MetricsScopesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMonitoredProject
+  /// @copybrief DeleteMonitoredProject
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

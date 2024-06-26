@@ -264,7 +264,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeliveryPipeline
+  /// @copybrief CreateDeliveryPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -319,7 +319,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeliveryPipeline
+  /// @copybrief CreateDeliveryPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -335,7 +335,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeliveryPipeline
+  /// @copybrief CreateDeliveryPipeline
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -388,7 +388,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDeliveryPipeline
+  /// @copybrief UpdateDeliveryPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -443,7 +443,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDeliveryPipeline
+  /// @copybrief UpdateDeliveryPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -459,7 +459,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDeliveryPipeline
+  /// @copybrief UpdateDeliveryPipeline
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -506,7 +506,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeliveryPipeline
+  /// @copybrief DeleteDeliveryPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -559,7 +559,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeliveryPipeline
+  /// @copybrief DeleteDeliveryPipeline
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -575,7 +575,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeliveryPipeline
+  /// @copybrief DeleteDeliveryPipeline
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -819,7 +819,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTarget
+  /// @copybrief CreateTarget
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -873,7 +873,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTarget
+  /// @copybrief CreateTarget
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -889,7 +889,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTarget
+  /// @copybrief CreateTarget
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -940,7 +940,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTarget
+  /// @copybrief UpdateTarget
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -994,7 +994,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTarget
+  /// @copybrief UpdateTarget
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1010,7 +1010,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTarget
+  /// @copybrief UpdateTarget
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1056,7 +1056,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTarget
+  /// @copybrief DeleteTarget
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1110,7 +1110,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTarget
+  /// @copybrief DeleteTarget
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1126,7 +1126,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTarget
+  /// @copybrief DeleteTarget
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1311,7 +1311,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCustomTargetType
+  /// @copybrief CreateCustomTargetType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1366,7 +1366,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCustomTargetType
+  /// @copybrief CreateCustomTargetType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1382,7 +1382,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCustomTargetType
+  /// @copybrief CreateCustomTargetType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1435,7 +1435,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCustomTargetType
+  /// @copybrief UpdateCustomTargetType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1490,7 +1490,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCustomTargetType
+  /// @copybrief UpdateCustomTargetType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1506,7 +1506,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCustomTargetType
+  /// @copybrief UpdateCustomTargetType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1553,7 +1553,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCustomTargetType
+  /// @copybrief DeleteCustomTargetType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1606,7 +1606,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCustomTargetType
+  /// @copybrief DeleteCustomTargetType
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1622,7 +1622,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCustomTargetType
+  /// @copybrief DeleteCustomTargetType
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1806,7 +1806,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRelease
+  /// @copybrief CreateRelease
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1860,7 +1860,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRelease
+  /// @copybrief CreateRelease
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1876,7 +1876,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRelease
+  /// @copybrief CreateRelease
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2287,7 +2287,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRollout
+  /// @copybrief CreateRollout
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2341,7 +2341,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRollout
+  /// @copybrief CreateRollout
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2357,7 +2357,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRollout
+  /// @copybrief CreateRollout
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2771,7 +2771,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAutomation
+  /// @copybrief CreateAutomation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2825,7 +2825,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAutomation
+  /// @copybrief CreateAutomation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2841,7 +2841,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAutomation
+  /// @copybrief CreateAutomation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2892,7 +2892,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAutomation
+  /// @copybrief UpdateAutomation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2946,7 +2946,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAutomation
+  /// @copybrief UpdateAutomation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2962,7 +2962,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAutomation
+  /// @copybrief UpdateAutomation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3008,7 +3008,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAutomation
+  /// @copybrief DeleteAutomation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3061,7 +3061,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAutomation
+  /// @copybrief DeleteAutomation
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3077,7 +3077,7 @@ class CloudDeployClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAutomation
+  /// @copybrief DeleteAutomation
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

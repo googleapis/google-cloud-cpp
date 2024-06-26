@@ -138,7 +138,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePersistentResource
+  /// @copybrief CreatePersistentResource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -195,7 +195,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePersistentResource
+  /// @copybrief CreatePersistentResource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -212,7 +212,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePersistentResource
+  /// @copybrief CreatePersistentResource
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -396,7 +396,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePersistentResource
+  /// @copybrief DeletePersistentResource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -450,7 +450,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePersistentResource
+  /// @copybrief DeletePersistentResource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -467,7 +467,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePersistentResource
+  /// @copybrief DeletePersistentResource
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -522,7 +522,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePersistentResource
+  /// @copybrief UpdatePersistentResource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -579,7 +579,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePersistentResource
+  /// @copybrief UpdatePersistentResource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -596,7 +596,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePersistentResource
+  /// @copybrief UpdatePersistentResource
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -644,7 +644,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RebootPersistentResource
+  /// @copybrief RebootPersistentResource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -698,7 +698,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RebootPersistentResource
+  /// @copybrief RebootPersistentResource
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -715,7 +715,7 @@ class PersistentResourceServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RebootPersistentResource
+  /// @copybrief RebootPersistentResource
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

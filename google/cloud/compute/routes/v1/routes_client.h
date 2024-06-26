@@ -121,7 +121,7 @@ class RoutesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRoute
+  /// @copybrief DeleteRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -175,7 +175,7 @@ class RoutesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRoute
+  /// @copybrief DeleteRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -192,7 +192,7 @@ class RoutesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRoute
+  /// @copybrief DeleteRoute
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -301,7 +301,7 @@ class RoutesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertRoute
+  /// @copybrief InsertRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -357,7 +357,7 @@ class RoutesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertRoute
+  /// @copybrief InsertRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -374,7 +374,7 @@ class RoutesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertRoute
+  /// @copybrief InsertRoute
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

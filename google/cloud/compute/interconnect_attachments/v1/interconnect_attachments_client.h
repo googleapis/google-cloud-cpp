@@ -217,7 +217,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInterconnectAttachment
+  /// @copybrief DeleteInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -275,7 +275,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInterconnectAttachment
+  /// @copybrief DeleteInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -293,7 +293,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInterconnectAttachment
+  /// @copybrief DeleteInterconnectAttachment
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -412,7 +412,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInterconnectAttachment
+  /// @copybrief InsertInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -472,7 +472,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInterconnectAttachment
+  /// @copybrief InsertInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -490,7 +490,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInterconnectAttachment
+  /// @copybrief InsertInterconnectAttachment
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -629,7 +629,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchInterconnectAttachment
+  /// @copybrief PatchInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -690,7 +690,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchInterconnectAttachment
+  /// @copybrief PatchInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -708,7 +708,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchInterconnectAttachment
+  /// @copybrief PatchInterconnectAttachment
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -763,7 +763,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -821,7 +821,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -838,7 +838,7 @@ class InterconnectAttachmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

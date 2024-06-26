@@ -216,7 +216,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc Announce
+  /// @copybrief Announce
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -271,7 +271,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc Announce
+  /// @copybrief Announce
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -288,7 +288,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc Announce
+  /// @copybrief Announce
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -339,7 +339,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePublicDelegatedPrefix
+  /// @copybrief DeletePublicDelegatedPrefix
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -397,7 +397,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePublicDelegatedPrefix
+  /// @copybrief DeletePublicDelegatedPrefix
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -415,7 +415,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePublicDelegatedPrefix
+  /// @copybrief DeletePublicDelegatedPrefix
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -534,7 +534,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertPublicDelegatedPrefix
+  /// @copybrief InsertPublicDelegatedPrefix
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -594,7 +594,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertPublicDelegatedPrefix
+  /// @copybrief InsertPublicDelegatedPrefix
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -612,7 +612,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertPublicDelegatedPrefix
+  /// @copybrief InsertPublicDelegatedPrefix
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -749,7 +749,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchPublicDelegatedPrefix
+  /// @copybrief PatchPublicDelegatedPrefix
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -810,7 +810,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchPublicDelegatedPrefix
+  /// @copybrief PatchPublicDelegatedPrefix
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -828,7 +828,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchPublicDelegatedPrefix
+  /// @copybrief PatchPublicDelegatedPrefix
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -879,7 +879,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc Withdraw
+  /// @copybrief Withdraw
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -934,7 +934,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc Withdraw
+  /// @copybrief Withdraw
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -951,7 +951,7 @@ class PublicDelegatedPrefixesClient {
 
   // clang-format off
   ///
-  /// @copydoc Withdraw
+  /// @copybrief Withdraw
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

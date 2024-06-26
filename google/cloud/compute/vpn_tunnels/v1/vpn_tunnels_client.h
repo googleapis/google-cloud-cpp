@@ -205,7 +205,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVpnTunnel
+  /// @copybrief DeleteVpnTunnel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -260,7 +260,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVpnTunnel
+  /// @copybrief DeleteVpnTunnel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -277,7 +277,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVpnTunnel
+  /// @copybrief DeleteVpnTunnel
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -390,7 +390,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertVpnTunnel
+  /// @copybrief InsertVpnTunnel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -447,7 +447,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertVpnTunnel
+  /// @copybrief InsertVpnTunnel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -464,7 +464,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertVpnTunnel
+  /// @copybrief InsertVpnTunnel
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -598,7 +598,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -656,7 +656,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -673,7 +673,7 @@ class VpnTunnelsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

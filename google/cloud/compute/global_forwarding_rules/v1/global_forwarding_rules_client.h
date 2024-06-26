@@ -129,7 +129,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteForwardingRule
+  /// @copybrief DeleteForwardingRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -183,7 +183,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteForwardingRule
+  /// @copybrief DeleteForwardingRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -200,7 +200,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteForwardingRule
+  /// @copybrief DeleteForwardingRule
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -315,7 +315,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertForwardingRule
+  /// @copybrief InsertForwardingRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -372,7 +372,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertForwardingRule
+  /// @copybrief InsertForwardingRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -389,7 +389,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertForwardingRule
+  /// @copybrief InsertForwardingRule
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -525,7 +525,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchForwardingRule
+  /// @copybrief PatchForwardingRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -585,7 +585,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchForwardingRule
+  /// @copybrief PatchForwardingRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -602,7 +602,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchForwardingRule
+  /// @copybrief PatchForwardingRule
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -655,7 +655,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -713,7 +713,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -730,7 +730,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetLabels
+  /// @copybrief SetLabels
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -782,7 +782,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetTarget
+  /// @copybrief SetTarget
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -840,7 +840,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetTarget
+  /// @copybrief SetTarget
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -857,7 +857,7 @@ class GlobalForwardingRulesClient {
 
   // clang-format off
   ///
-  /// @copydoc SetTarget
+  /// @copybrief SetTarget
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

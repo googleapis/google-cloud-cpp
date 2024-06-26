@@ -301,7 +301,7 @@ class WorkflowTemplateServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc InstantiateWorkflowTemplate
+  /// @copybrief InstantiateWorkflowTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -384,7 +384,7 @@ class WorkflowTemplateServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc InstantiateWorkflowTemplate
+  /// @copybrief InstantiateWorkflowTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -463,7 +463,7 @@ class WorkflowTemplateServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc InstantiateWorkflowTemplate
+  /// @copybrief InstantiateWorkflowTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -480,7 +480,7 @@ class WorkflowTemplateServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc InstantiateWorkflowTemplate
+  /// @copybrief InstantiateWorkflowTemplate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -571,7 +571,7 @@ class WorkflowTemplateServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc InstantiateInlineWorkflowTemplate
+  /// @copybrief InstantiateInlineWorkflowTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -659,7 +659,7 @@ class WorkflowTemplateServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc InstantiateInlineWorkflowTemplate
+  /// @copybrief InstantiateInlineWorkflowTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -676,7 +676,7 @@ class WorkflowTemplateServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc InstantiateInlineWorkflowTemplate
+  /// @copybrief InstantiateInlineWorkflowTemplate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

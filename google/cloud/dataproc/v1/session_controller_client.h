@@ -132,7 +132,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSession
+  /// @copybrief CreateSession
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -186,7 +186,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSession
+  /// @copybrief CreateSession
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -202,7 +202,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSession
+  /// @copybrief CreateSession
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -377,7 +377,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc TerminateSession
+  /// @copybrief TerminateSession
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -429,7 +429,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc TerminateSession
+  /// @copybrief TerminateSession
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -445,7 +445,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc TerminateSession
+  /// @copybrief TerminateSession
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -491,7 +491,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSession
+  /// @copybrief DeleteSession
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -544,7 +544,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSession
+  /// @copybrief DeleteSession
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -560,7 +560,7 @@ class SessionControllerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSession
+  /// @copybrief DeleteSession
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

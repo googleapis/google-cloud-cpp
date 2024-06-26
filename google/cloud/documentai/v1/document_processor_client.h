@@ -206,7 +206,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchProcessDocuments
+  /// @copybrief BatchProcessDocuments
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -260,7 +260,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchProcessDocuments
+  /// @copybrief BatchProcessDocuments
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -276,7 +276,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchProcessDocuments
+  /// @copybrief BatchProcessDocuments
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -657,7 +657,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainProcessorVersion
+  /// @copybrief TrainProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -716,7 +716,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainProcessorVersion
+  /// @copybrief TrainProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -733,7 +733,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TrainProcessorVersion
+  /// @copybrief TrainProcessorVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -914,7 +914,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcessorVersion
+  /// @copybrief DeleteProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -970,7 +970,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcessorVersion
+  /// @copybrief DeleteProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -987,7 +987,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcessorVersion
+  /// @copybrief DeleteProcessorVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1035,7 +1035,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployProcessorVersion
+  /// @copybrief DeployProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1090,7 +1090,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployProcessorVersion
+  /// @copybrief DeployProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1107,7 +1107,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeployProcessorVersion
+  /// @copybrief DeployProcessorVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1155,7 +1155,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployProcessorVersion
+  /// @copybrief UndeployProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1210,7 +1210,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployProcessorVersion
+  /// @copybrief UndeployProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1227,7 +1227,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeployProcessorVersion
+  /// @copybrief UndeployProcessorVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1357,7 +1357,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcessor
+  /// @copybrief DeleteProcessor
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1411,7 +1411,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcessor
+  /// @copybrief DeleteProcessor
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1427,7 +1427,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteProcessor
+  /// @copybrief DeleteProcessor
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1480,7 +1480,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableProcessor
+  /// @copybrief EnableProcessor
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1496,7 +1496,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableProcessor
+  /// @copybrief EnableProcessor
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1549,7 +1549,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableProcessor
+  /// @copybrief DisableProcessor
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1565,7 +1565,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableProcessor
+  /// @copybrief DisableProcessor
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1627,7 +1627,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetDefaultProcessorVersion
+  /// @copybrief SetDefaultProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1644,7 +1644,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SetDefaultProcessorVersion
+  /// @copybrief SetDefaultProcessorVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1694,7 +1694,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ReviewDocument
+  /// @copybrief ReviewDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1749,7 +1749,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ReviewDocument
+  /// @copybrief ReviewDocument
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1765,7 +1765,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ReviewDocument
+  /// @copybrief ReviewDocument
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1818,7 +1818,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EvaluateProcessorVersion
+  /// @copybrief EvaluateProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1875,7 +1875,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EvaluateProcessorVersion
+  /// @copybrief EvaluateProcessorVersion
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1892,7 +1892,7 @@ class DocumentProcessorServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EvaluateProcessorVersion
+  /// @copybrief EvaluateProcessorVersion
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

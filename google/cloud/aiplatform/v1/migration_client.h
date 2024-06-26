@@ -215,7 +215,7 @@ class MigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchMigrateResources
+  /// @copybrief BatchMigrateResources
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -273,7 +273,7 @@ class MigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchMigrateResources
+  /// @copybrief BatchMigrateResources
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -290,7 +290,7 @@ class MigrationServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchMigrateResources
+  /// @copybrief BatchMigrateResources
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -286,7 +286,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateCloud
+  /// @copybrief CreatePrivateCloud
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -347,7 +347,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateCloud
+  /// @copybrief CreatePrivateCloud
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -363,7 +363,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateCloud
+  /// @copybrief CreatePrivateCloud
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -423,7 +423,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePrivateCloud
+  /// @copybrief UpdatePrivateCloud
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -485,7 +485,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePrivateCloud
+  /// @copybrief UpdatePrivateCloud
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -501,7 +501,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePrivateCloud
+  /// @copybrief UpdatePrivateCloud
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -565,7 +565,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateCloud
+  /// @copybrief DeletePrivateCloud
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -632,7 +632,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateCloud
+  /// @copybrief DeletePrivateCloud
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -648,7 +648,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateCloud
+  /// @copybrief DeletePrivateCloud
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -701,7 +701,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeletePrivateCloud
+  /// @copybrief UndeletePrivateCloud
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -758,7 +758,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeletePrivateCloud
+  /// @copybrief UndeletePrivateCloud
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -775,7 +775,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeletePrivateCloud
+  /// @copybrief UndeletePrivateCloud
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -980,7 +980,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1037,7 +1037,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1053,7 +1053,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1110,7 +1110,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1170,7 +1170,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1186,7 +1186,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1238,7 +1238,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1294,7 +1294,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1310,7 +1310,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1739,7 +1739,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExternalAddress
+  /// @copybrief CreateExternalAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1797,7 +1797,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExternalAddress
+  /// @copybrief CreateExternalAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1814,7 +1814,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExternalAddress
+  /// @copybrief CreateExternalAddress
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1873,7 +1873,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExternalAddress
+  /// @copybrief UpdateExternalAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1935,7 +1935,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExternalAddress
+  /// @copybrief UpdateExternalAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1952,7 +1952,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExternalAddress
+  /// @copybrief UpdateExternalAddress
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2004,7 +2004,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalAddress
+  /// @copybrief DeleteExternalAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2060,7 +2060,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalAddress
+  /// @copybrief DeleteExternalAddress
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2077,7 +2077,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalAddress
+  /// @copybrief DeleteExternalAddress
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2273,7 +2273,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSubnet
+  /// @copybrief UpdateSubnet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2332,7 +2332,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSubnet
+  /// @copybrief UpdateSubnet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2348,7 +2348,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSubnet
+  /// @copybrief UpdateSubnet
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2555,7 +2555,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExternalAccessRule
+  /// @copybrief CreateExternalAccessRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2612,7 +2612,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExternalAccessRule
+  /// @copybrief CreateExternalAccessRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2629,7 +2629,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateExternalAccessRule
+  /// @copybrief CreateExternalAccessRule
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2684,7 +2684,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExternalAccessRule
+  /// @copybrief UpdateExternalAccessRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2742,7 +2742,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExternalAccessRule
+  /// @copybrief UpdateExternalAccessRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2759,7 +2759,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateExternalAccessRule
+  /// @copybrief UpdateExternalAccessRule
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2809,7 +2809,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalAccessRule
+  /// @copybrief DeleteExternalAccessRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2863,7 +2863,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalAccessRule
+  /// @copybrief DeleteExternalAccessRule
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2880,7 +2880,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteExternalAccessRule
+  /// @copybrief DeleteExternalAccessRule
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3088,7 +3088,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLoggingServer
+  /// @copybrief CreateLoggingServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3144,7 +3144,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLoggingServer
+  /// @copybrief CreateLoggingServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3161,7 +3161,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateLoggingServer
+  /// @copybrief CreateLoggingServer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3215,7 +3215,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLoggingServer
+  /// @copybrief UpdateLoggingServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3272,7 +3272,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLoggingServer
+  /// @copybrief UpdateLoggingServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3289,7 +3289,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateLoggingServer
+  /// @copybrief UpdateLoggingServer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3339,7 +3339,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLoggingServer
+  /// @copybrief DeleteLoggingServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3393,7 +3393,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLoggingServer
+  /// @copybrief DeleteLoggingServer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3410,7 +3410,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteLoggingServer
+  /// @copybrief DeleteLoggingServer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3722,7 +3722,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetNsxCredentials
+  /// @copybrief ResetNsxCredentials
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3777,7 +3777,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetNsxCredentials
+  /// @copybrief ResetNsxCredentials
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3794,7 +3794,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetNsxCredentials
+  /// @copybrief ResetNsxCredentials
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3845,7 +3845,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetVcenterCredentials
+  /// @copybrief ResetVcenterCredentials
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3900,7 +3900,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetVcenterCredentials
+  /// @copybrief ResetVcenterCredentials
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3917,7 +3917,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc ResetVcenterCredentials
+  /// @copybrief ResetVcenterCredentials
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4031,7 +4031,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDnsForwarding
+  /// @copybrief UpdateDnsForwarding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4088,7 +4088,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDnsForwarding
+  /// @copybrief UpdateDnsForwarding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4105,7 +4105,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDnsForwarding
+  /// @copybrief UpdateDnsForwarding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4318,7 +4318,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetworkPeering
+  /// @copybrief CreateNetworkPeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4376,7 +4376,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetworkPeering
+  /// @copybrief CreateNetworkPeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4393,7 +4393,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetworkPeering
+  /// @copybrief CreateNetworkPeering
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4446,7 +4446,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkPeering
+  /// @copybrief DeleteNetworkPeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4503,7 +4503,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkPeering
+  /// @copybrief DeleteNetworkPeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4520,7 +4520,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkPeering
+  /// @copybrief DeleteNetworkPeering
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4575,7 +4575,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetworkPeering
+  /// @copybrief UpdateNetworkPeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4633,7 +4633,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetworkPeering
+  /// @copybrief UpdateNetworkPeering
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4650,7 +4650,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetworkPeering
+  /// @copybrief UpdateNetworkPeering
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4796,7 +4796,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHcxActivationKey
+  /// @copybrief CreateHcxActivationKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4853,7 +4853,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHcxActivationKey
+  /// @copybrief CreateHcxActivationKey
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4870,7 +4870,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHcxActivationKey
+  /// @copybrief CreateHcxActivationKey
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -5219,7 +5219,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetworkPolicy
+  /// @copybrief CreateNetworkPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5277,7 +5277,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetworkPolicy
+  /// @copybrief CreateNetworkPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5294,7 +5294,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetworkPolicy
+  /// @copybrief CreateNetworkPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -5358,7 +5358,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetworkPolicy
+  /// @copybrief UpdateNetworkPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5425,7 +5425,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetworkPolicy
+  /// @copybrief UpdateNetworkPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5442,7 +5442,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateNetworkPolicy
+  /// @copybrief UpdateNetworkPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -5494,7 +5494,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkPolicy
+  /// @copybrief DeleteNetworkPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5550,7 +5550,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkPolicy
+  /// @copybrief DeleteNetworkPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5567,7 +5567,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetworkPolicy
+  /// @copybrief DeleteNetworkPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -5784,7 +5784,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateManagementDnsZoneBinding
+  /// @copybrief CreateManagementDnsZoneBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5847,7 +5847,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateManagementDnsZoneBinding
+  /// @copybrief CreateManagementDnsZoneBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5864,7 +5864,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateManagementDnsZoneBinding
+  /// @copybrief CreateManagementDnsZoneBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -5919,7 +5919,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateManagementDnsZoneBinding
+  /// @copybrief UpdateManagementDnsZoneBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5977,7 +5977,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateManagementDnsZoneBinding
+  /// @copybrief UpdateManagementDnsZoneBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -5994,7 +5994,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateManagementDnsZoneBinding
+  /// @copybrief UpdateManagementDnsZoneBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -6046,7 +6046,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteManagementDnsZoneBinding
+  /// @copybrief DeleteManagementDnsZoneBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6102,7 +6102,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteManagementDnsZoneBinding
+  /// @copybrief DeleteManagementDnsZoneBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6119,7 +6119,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteManagementDnsZoneBinding
+  /// @copybrief DeleteManagementDnsZoneBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -6170,7 +6170,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc RepairManagementDnsZoneBinding
+  /// @copybrief RepairManagementDnsZoneBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6225,7 +6225,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc RepairManagementDnsZoneBinding
+  /// @copybrief RepairManagementDnsZoneBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6242,7 +6242,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc RepairManagementDnsZoneBinding
+  /// @copybrief RepairManagementDnsZoneBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -6313,7 +6313,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVmwareEngineNetwork
+  /// @copybrief CreateVmwareEngineNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6370,7 +6370,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVmwareEngineNetwork
+  /// @copybrief CreateVmwareEngineNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6387,7 +6387,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVmwareEngineNetwork
+  /// @copybrief CreateVmwareEngineNetwork
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -6444,7 +6444,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVmwareEngineNetwork
+  /// @copybrief UpdateVmwareEngineNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6503,7 +6503,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVmwareEngineNetwork
+  /// @copybrief UpdateVmwareEngineNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6520,7 +6520,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVmwareEngineNetwork
+  /// @copybrief UpdateVmwareEngineNetwork
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -6573,7 +6573,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVmwareEngineNetwork
+  /// @copybrief DeleteVmwareEngineNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6630,7 +6630,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVmwareEngineNetwork
+  /// @copybrief DeleteVmwareEngineNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6647,7 +6647,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVmwareEngineNetwork
+  /// @copybrief DeleteVmwareEngineNetwork
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -6860,7 +6860,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6918,7 +6918,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -6935,7 +6935,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc CreatePrivateConnection
+  /// @copybrief CreatePrivateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -7135,7 +7135,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePrivateConnection
+  /// @copybrief UpdatePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -7194,7 +7194,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePrivateConnection
+  /// @copybrief UpdatePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -7211,7 +7211,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePrivateConnection
+  /// @copybrief UpdatePrivateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -7263,7 +7263,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -7319,7 +7319,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -7336,7 +7336,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc DeletePrivateConnection
+  /// @copybrief DeletePrivateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -7476,7 +7476,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc GrantDnsBindPermission
+  /// @copybrief GrantDnsBindPermission
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -7535,7 +7535,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc GrantDnsBindPermission
+  /// @copybrief GrantDnsBindPermission
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -7552,7 +7552,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc GrantDnsBindPermission
+  /// @copybrief GrantDnsBindPermission
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -7678,7 +7678,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc RevokeDnsBindPermission
+  /// @copybrief RevokeDnsBindPermission
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -7736,7 +7736,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc RevokeDnsBindPermission
+  /// @copybrief RevokeDnsBindPermission
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -7753,7 +7753,7 @@ class VmwareEngineClient {
 
   // clang-format off
   ///
-  /// @copydoc RevokeDnsBindPermission
+  /// @copybrief RevokeDnsBindPermission
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

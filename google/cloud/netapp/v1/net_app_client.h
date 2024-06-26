@@ -201,7 +201,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateStoragePool
+  /// @copybrief CreateStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -255,7 +255,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateStoragePool
+  /// @copybrief CreateStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -271,7 +271,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateStoragePool
+  /// @copybrief CreateStoragePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -378,7 +378,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStoragePool
+  /// @copybrief UpdateStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -432,7 +432,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStoragePool
+  /// @copybrief UpdateStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -448,7 +448,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateStoragePool
+  /// @copybrief UpdateStoragePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -493,7 +493,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStoragePool
+  /// @copybrief DeleteStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -546,7 +546,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStoragePool
+  /// @copybrief DeleteStoragePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -562,7 +562,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteStoragePool
+  /// @copybrief DeleteStoragePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -743,7 +743,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVolume
+  /// @copybrief CreateVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -797,7 +797,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVolume
+  /// @copybrief CreateVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -813,7 +813,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateVolume
+  /// @copybrief CreateVolume
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -864,7 +864,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVolume
+  /// @copybrief UpdateVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -918,7 +918,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVolume
+  /// @copybrief UpdateVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -934,7 +934,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateVolume
+  /// @copybrief UpdateVolume
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -979,7 +979,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVolume
+  /// @copybrief DeleteVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1033,7 +1033,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVolume
+  /// @copybrief DeleteVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1049,7 +1049,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteVolume
+  /// @copybrief DeleteVolume
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1102,7 +1102,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc RevertVolume
+  /// @copybrief RevertVolume
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1118,7 +1118,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc RevertVolume
+  /// @copybrief RevertVolume
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1303,7 +1303,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1357,7 +1357,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1373,7 +1373,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSnapshot
+  /// @copybrief CreateSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1419,7 +1419,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1471,7 +1471,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1487,7 +1487,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSnapshot
+  /// @copybrief DeleteSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1535,7 +1535,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSnapshot
+  /// @copybrief UpdateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1589,7 +1589,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSnapshot
+  /// @copybrief UpdateSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1605,7 +1605,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSnapshot
+  /// @copybrief UpdateSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1786,7 +1786,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateActiveDirectory
+  /// @copybrief CreateActiveDirectory
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1842,7 +1842,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateActiveDirectory
+  /// @copybrief CreateActiveDirectory
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1858,7 +1858,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateActiveDirectory
+  /// @copybrief CreateActiveDirectory
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1911,7 +1911,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateActiveDirectory
+  /// @copybrief UpdateActiveDirectory
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1966,7 +1966,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateActiveDirectory
+  /// @copybrief UpdateActiveDirectory
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1982,7 +1982,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateActiveDirectory
+  /// @copybrief UpdateActiveDirectory
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2028,7 +2028,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteActiveDirectory
+  /// @copybrief DeleteActiveDirectory
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2081,7 +2081,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteActiveDirectory
+  /// @copybrief DeleteActiveDirectory
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2097,7 +2097,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteActiveDirectory
+  /// @copybrief DeleteActiveDirectory
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2223,7 +2223,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateKmsConfig
+  /// @copybrief CreateKmsConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2277,7 +2277,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateKmsConfig
+  /// @copybrief CreateKmsConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2293,7 +2293,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateKmsConfig
+  /// @copybrief CreateKmsConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2400,7 +2400,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateKmsConfig
+  /// @copybrief UpdateKmsConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2454,7 +2454,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateKmsConfig
+  /// @copybrief UpdateKmsConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2470,7 +2470,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateKmsConfig
+  /// @copybrief UpdateKmsConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2522,7 +2522,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc EncryptVolumes
+  /// @copybrief EncryptVolumes
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2538,7 +2538,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc EncryptVolumes
+  /// @copybrief EncryptVolumes
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2614,7 +2614,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteKmsConfig
+  /// @copybrief DeleteKmsConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2667,7 +2667,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteKmsConfig
+  /// @copybrief DeleteKmsConfig
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2683,7 +2683,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteKmsConfig
+  /// @copybrief DeleteKmsConfig
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2869,7 +2869,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateReplication
+  /// @copybrief CreateReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2923,7 +2923,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateReplication
+  /// @copybrief CreateReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2939,7 +2939,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateReplication
+  /// @copybrief CreateReplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2985,7 +2985,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteReplication
+  /// @copybrief DeleteReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3038,7 +3038,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteReplication
+  /// @copybrief DeleteReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3054,7 +3054,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteReplication
+  /// @copybrief DeleteReplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3103,7 +3103,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateReplication
+  /// @copybrief UpdateReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3157,7 +3157,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateReplication
+  /// @copybrief UpdateReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3173,7 +3173,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateReplication
+  /// @copybrief UpdateReplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3224,7 +3224,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc StopReplication
+  /// @copybrief StopReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3240,7 +3240,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc StopReplication
+  /// @copybrief StopReplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3291,7 +3291,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc ResumeReplication
+  /// @copybrief ResumeReplication
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3307,7 +3307,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc ResumeReplication
+  /// @copybrief ResumeReplication
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3361,7 +3361,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc ReverseReplicationDirection
+  /// @copybrief ReverseReplicationDirection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3378,7 +3378,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc ReverseReplicationDirection
+  /// @copybrief ReverseReplicationDirection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3435,7 +3435,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupVault
+  /// @copybrief CreateBackupVault
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3489,7 +3489,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupVault
+  /// @copybrief CreateBackupVault
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3505,7 +3505,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupVault
+  /// @copybrief CreateBackupVault
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3689,7 +3689,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupVault
+  /// @copybrief UpdateBackupVault
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3743,7 +3743,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupVault
+  /// @copybrief UpdateBackupVault
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3759,7 +3759,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupVault
+  /// @copybrief UpdateBackupVault
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3805,7 +3805,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupVault
+  /// @copybrief DeleteBackupVault
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3858,7 +3858,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupVault
+  /// @copybrief DeleteBackupVault
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3874,7 +3874,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupVault
+  /// @copybrief DeleteBackupVault
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3933,7 +3933,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3990,7 +3990,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4006,7 +4006,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4190,7 +4190,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4244,7 +4244,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4260,7 +4260,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4311,7 +4311,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4365,7 +4365,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4381,7 +4381,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4434,7 +4434,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupPolicy
+  /// @copybrief CreateBackupPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4488,7 +4488,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupPolicy
+  /// @copybrief CreateBackupPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4504,7 +4504,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackupPolicy
+  /// @copybrief CreateBackupPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4686,7 +4686,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupPolicy
+  /// @copybrief UpdateBackupPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4740,7 +4740,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupPolicy
+  /// @copybrief UpdateBackupPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4756,7 +4756,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackupPolicy
+  /// @copybrief UpdateBackupPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -4802,7 +4802,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupPolicy
+  /// @copybrief DeleteBackupPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4855,7 +4855,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupPolicy
+  /// @copybrief DeleteBackupPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -4871,7 +4871,7 @@ class NetAppClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackupPolicy
+  /// @copybrief DeleteBackupPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

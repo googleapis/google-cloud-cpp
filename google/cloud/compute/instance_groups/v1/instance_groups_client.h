@@ -132,7 +132,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddInstances
+  /// @copybrief AddInstances
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -191,7 +191,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddInstances
+  /// @copybrief AddInstances
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -208,7 +208,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc AddInstances
+  /// @copybrief AddInstances
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -343,7 +343,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceGroup
+  /// @copybrief DeleteInstanceGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -400,7 +400,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceGroup
+  /// @copybrief DeleteInstanceGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -417,7 +417,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstanceGroup
+  /// @copybrief DeleteInstanceGroup
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -538,7 +538,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceGroup
+  /// @copybrief InsertInstanceGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -596,7 +596,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceGroup
+  /// @copybrief InsertInstanceGroup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -613,7 +613,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertInstanceGroup
+  /// @copybrief InsertInstanceGroup
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -846,7 +846,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveInstances
+  /// @copybrief RemoveInstances
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -907,7 +907,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveInstances
+  /// @copybrief RemoveInstances
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -924,7 +924,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc RemoveInstances
+  /// @copybrief RemoveInstances
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -977,7 +977,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNamedPorts
+  /// @copybrief SetNamedPorts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1034,7 +1034,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNamedPorts
+  /// @copybrief SetNamedPorts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -1051,7 +1051,7 @@ class InstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNamedPorts
+  /// @copybrief SetNamedPorts
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

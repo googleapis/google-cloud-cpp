@@ -260,7 +260,7 @@ class IDSClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpoint
+  /// @copybrief CreateEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -314,7 +314,7 @@ class IDSClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpoint
+  /// @copybrief CreateEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -330,7 +330,7 @@ class IDSClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpoint
+  /// @copybrief CreateEndpoint
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -375,7 +375,7 @@ class IDSClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpoint
+  /// @copybrief DeleteEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -427,7 +427,7 @@ class IDSClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpoint
+  /// @copybrief DeleteEndpoint
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -443,7 +443,7 @@ class IDSClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpoint
+  /// @copybrief DeleteEndpoint
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

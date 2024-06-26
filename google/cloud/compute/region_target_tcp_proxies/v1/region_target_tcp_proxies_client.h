@@ -129,7 +129,7 @@ class RegionTargetTcpProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetTcpProxy
+  /// @copybrief DeleteTargetTcpProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -184,7 +184,7 @@ class RegionTargetTcpProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetTcpProxy
+  /// @copybrief DeleteTargetTcpProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -201,7 +201,7 @@ class RegionTargetTcpProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTargetTcpProxy
+  /// @copybrief DeleteTargetTcpProxy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -316,7 +316,7 @@ class RegionTargetTcpProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetTcpProxy
+  /// @copybrief InsertTargetTcpProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -374,7 +374,7 @@ class RegionTargetTcpProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetTcpProxy
+  /// @copybrief InsertTargetTcpProxy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -391,7 +391,7 @@ class RegionTargetTcpProxiesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertTargetTcpProxy
+  /// @copybrief InsertTargetTcpProxy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

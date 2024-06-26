@@ -257,7 +257,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHub
+  /// @copybrief CreateHub
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -311,7 +311,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHub
+  /// @copybrief CreateHub
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -327,7 +327,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHub
+  /// @copybrief CreateHub
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -379,7 +379,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHub
+  /// @copybrief UpdateHub
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -434,7 +434,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHub
+  /// @copybrief UpdateHub
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -450,7 +450,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHub
+  /// @copybrief UpdateHub
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -495,7 +495,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHub
+  /// @copybrief DeleteHub
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -550,7 +550,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHub
+  /// @copybrief DeleteHub
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -566,7 +566,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHub
+  /// @copybrief DeleteHub
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -825,7 +825,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSpoke
+  /// @copybrief CreateSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -879,7 +879,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSpoke
+  /// @copybrief CreateSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -895,7 +895,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSpoke
+  /// @copybrief CreateSpoke
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -946,7 +946,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSpoke
+  /// @copybrief UpdateSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1000,7 +1000,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSpoke
+  /// @copybrief UpdateSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1016,7 +1016,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSpoke
+  /// @copybrief UpdateSpoke
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1067,7 +1067,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RejectHubSpoke
+  /// @copybrief RejectHubSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1126,7 +1126,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RejectHubSpoke
+  /// @copybrief RejectHubSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1143,7 +1143,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RejectHubSpoke
+  /// @copybrief RejectHubSpoke
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1194,7 +1194,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AcceptHubSpoke
+  /// @copybrief AcceptHubSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1251,7 +1251,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AcceptHubSpoke
+  /// @copybrief AcceptHubSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1268,7 +1268,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc AcceptHubSpoke
+  /// @copybrief AcceptHubSpoke
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1315,7 +1315,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSpoke
+  /// @copybrief DeleteSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1370,7 +1370,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSpoke
+  /// @copybrief DeleteSpoke
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1386,7 +1386,7 @@ class HubServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSpoke
+  /// @copybrief DeleteSpoke
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

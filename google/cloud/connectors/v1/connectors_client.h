@@ -259,7 +259,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnection
+  /// @copybrief CreateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -313,7 +313,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnection
+  /// @copybrief CreateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -329,7 +329,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnection
+  /// @copybrief CreateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -391,7 +391,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnection
+  /// @copybrief UpdateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -445,7 +445,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnection
+  /// @copybrief UpdateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -461,7 +461,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnection
+  /// @copybrief UpdateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -507,7 +507,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnection
+  /// @copybrief DeleteConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -560,7 +560,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnection
+  /// @copybrief DeleteConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -576,7 +576,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnection
+  /// @copybrief DeleteConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1089,7 +1089,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc RefreshConnectionSchemaMetadata
+  /// @copybrief RefreshConnectionSchemaMetadata
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1143,7 +1143,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc RefreshConnectionSchemaMetadata
+  /// @copybrief RefreshConnectionSchemaMetadata
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1160,7 +1160,7 @@ class ConnectorsClient {
 
   // clang-format off
   ///
-  /// @copydoc RefreshConnectionSchemaMetadata
+  /// @copybrief RefreshConnectionSchemaMetadata
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

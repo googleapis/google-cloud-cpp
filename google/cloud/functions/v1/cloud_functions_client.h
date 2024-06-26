@@ -228,7 +228,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFunction
+  /// @copybrief CreateFunction
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -284,7 +284,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFunction
+  /// @copybrief CreateFunction
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -300,7 +300,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateFunction
+  /// @copybrief CreateFunction
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -346,7 +346,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFunction
+  /// @copybrief UpdateFunction
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -400,7 +400,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFunction
+  /// @copybrief UpdateFunction
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -416,7 +416,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateFunction
+  /// @copybrief UpdateFunction
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -463,7 +463,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFunction
+  /// @copybrief DeleteFunction
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -518,7 +518,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFunction
+  /// @copybrief DeleteFunction
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -534,7 +534,7 @@ class CloudFunctionsServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteFunction
+  /// @copybrief DeleteFunction
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

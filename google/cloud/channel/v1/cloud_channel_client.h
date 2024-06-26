@@ -571,7 +571,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ProvisionCloudIdentity
+  /// @copybrief ProvisionCloudIdentity
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -587,7 +587,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ProvisionCloudIdentity
+  /// @copybrief ProvisionCloudIdentity
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -888,7 +888,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEntitlement
+  /// @copybrief CreateEntitlement
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -904,7 +904,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEntitlement
+  /// @copybrief CreateEntitlement
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -978,7 +978,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ChangeParameters
+  /// @copybrief ChangeParameters
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -994,7 +994,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ChangeParameters
+  /// @copybrief ChangeParameters
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1069,7 +1069,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ChangeRenewalSettings
+  /// @copybrief ChangeRenewalSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1085,7 +1085,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ChangeRenewalSettings
+  /// @copybrief ChangeRenewalSettings
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1158,7 +1158,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ChangeOffer
+  /// @copybrief ChangeOffer
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1174,7 +1174,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ChangeOffer
+  /// @copybrief ChangeOffer
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1249,7 +1249,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartPaidService
+  /// @copybrief StartPaidService
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1265,7 +1265,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartPaidService
+  /// @copybrief StartPaidService
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1337,7 +1337,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SuspendEntitlement
+  /// @copybrief SuspendEntitlement
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1353,7 +1353,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc SuspendEntitlement
+  /// @copybrief SuspendEntitlement
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1430,7 +1430,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CancelEntitlement
+  /// @copybrief CancelEntitlement
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1446,7 +1446,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CancelEntitlement
+  /// @copybrief CancelEntitlement
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1525,7 +1525,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ActivateEntitlement
+  /// @copybrief ActivateEntitlement
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1541,7 +1541,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ActivateEntitlement
+  /// @copybrief ActivateEntitlement
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1625,7 +1625,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TransferEntitlements
+  /// @copybrief TransferEntitlements
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1641,7 +1641,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TransferEntitlements
+  /// @copybrief TransferEntitlements
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1723,7 +1723,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TransferEntitlementsToGoogle
+  /// @copybrief TransferEntitlementsToGoogle
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1740,7 +1740,7 @@ class CloudChannelServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc TransferEntitlementsToGoogle
+  /// @copybrief TransferEntitlementsToGoogle
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

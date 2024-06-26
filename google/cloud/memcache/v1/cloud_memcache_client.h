@@ -288,7 +288,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -342,7 +342,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -358,7 +358,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -408,7 +408,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -462,7 +462,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -478,7 +478,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -531,7 +531,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateParameters
+  /// @copybrief UpdateParameters
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -589,7 +589,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateParameters
+  /// @copybrief UpdateParameters
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -605,7 +605,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateParameters
+  /// @copybrief UpdateParameters
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -652,7 +652,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -705,7 +705,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -721,7 +721,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -774,7 +774,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc ApplyParameters
+  /// @copybrief ApplyParameters
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -829,7 +829,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc ApplyParameters
+  /// @copybrief ApplyParameters
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -845,7 +845,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc ApplyParameters
+  /// @copybrief ApplyParameters
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -899,7 +899,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc RescheduleMaintenance
+  /// @copybrief RescheduleMaintenance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -954,7 +954,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc RescheduleMaintenance
+  /// @copybrief RescheduleMaintenance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -970,7 +970,7 @@ class CloudMemcacheClient {
 
   // clang-format off
   ///
-  /// @copydoc RescheduleMaintenance
+  /// @copybrief RescheduleMaintenance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

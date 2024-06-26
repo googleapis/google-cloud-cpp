@@ -256,7 +256,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTrigger
+  /// @copybrief CreateTrigger
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -310,7 +310,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTrigger
+  /// @copybrief CreateTrigger
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -326,7 +326,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTrigger
+  /// @copybrief CreateTrigger
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -378,7 +378,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTrigger
+  /// @copybrief UpdateTrigger
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -433,7 +433,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTrigger
+  /// @copybrief UpdateTrigger
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -449,7 +449,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTrigger
+  /// @copybrief UpdateTrigger
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -496,7 +496,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrigger
+  /// @copybrief DeleteTrigger
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -549,7 +549,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrigger
+  /// @copybrief DeleteTrigger
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -565,7 +565,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTrigger
+  /// @copybrief DeleteTrigger
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -744,7 +744,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannel
+  /// @copybrief CreateChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -798,7 +798,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannel
+  /// @copybrief CreateChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -814,7 +814,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannel
+  /// @copybrief CreateChannel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -863,7 +863,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateChannel
+  /// @copybrief UpdateChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -917,7 +917,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateChannel
+  /// @copybrief UpdateChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -933,7 +933,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateChannel
+  /// @copybrief UpdateChannel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -978,7 +978,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannel
+  /// @copybrief DeleteChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1030,7 +1030,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannel
+  /// @copybrief DeleteChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1046,7 +1046,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannel
+  /// @copybrief DeleteChannel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1357,7 +1357,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannelConnection
+  /// @copybrief CreateChannelConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1413,7 +1413,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannelConnection
+  /// @copybrief CreateChannelConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1430,7 +1430,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannelConnection
+  /// @copybrief CreateChannelConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1476,7 +1476,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannelConnection
+  /// @copybrief DeleteChannelConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1530,7 +1530,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannelConnection
+  /// @copybrief DeleteChannelConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1547,7 +1547,7 @@ class EventarcClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannelConnection
+  /// @copybrief DeleteChannelConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

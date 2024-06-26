@@ -130,7 +130,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -187,7 +187,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -204,7 +204,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEnvironment
+  /// @copybrief CreateEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -402,7 +402,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEnvironment
+  /// @copybrief UpdateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -459,7 +459,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEnvironment
+  /// @copybrief UpdateEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -476,7 +476,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEnvironment
+  /// @copybrief UpdateEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -525,7 +525,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -579,7 +579,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -596,7 +596,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEnvironment
+  /// @copybrief DeleteEnvironment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1538,7 +1538,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc SaveSnapshot
+  /// @copybrief SaveSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1555,7 +1555,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc SaveSnapshot
+  /// @copybrief SaveSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1612,7 +1612,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc LoadSnapshot
+  /// @copybrief LoadSnapshot
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1629,7 +1629,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc LoadSnapshot
+  /// @copybrief LoadSnapshot
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1683,7 +1683,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DatabaseFailover
+  /// @copybrief DatabaseFailover
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1700,7 +1700,7 @@ class EnvironmentsClient {
 
   // clang-format off
   ///
-  /// @copydoc DatabaseFailover
+  /// @copybrief DatabaseFailover
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

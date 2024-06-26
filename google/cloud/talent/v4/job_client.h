@@ -196,7 +196,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateJobs
+  /// @copybrief BatchCreateJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -251,7 +251,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateJobs
+  /// @copybrief BatchCreateJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -267,7 +267,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateJobs
+  /// @copybrief BatchCreateJobs
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -456,7 +456,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateJobs
+  /// @copybrief BatchUpdateJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -511,7 +511,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateJobs
+  /// @copybrief BatchUpdateJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -527,7 +527,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchUpdateJobs
+  /// @copybrief BatchUpdateJobs
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -643,7 +643,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteJobs
+  /// @copybrief BatchDeleteJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -697,7 +697,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteJobs
+  /// @copybrief BatchDeleteJobs
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -713,7 +713,7 @@ class JobServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchDeleteJobs
+  /// @copybrief BatchDeleteJobs
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

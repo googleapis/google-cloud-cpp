@@ -199,7 +199,7 @@ class FleetRoutingClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchOptimizeTours
+  /// @copybrief BatchOptimizeTours
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -215,7 +215,7 @@ class FleetRoutingClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchOptimizeTours
+  /// @copybrief BatchOptimizeTours
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

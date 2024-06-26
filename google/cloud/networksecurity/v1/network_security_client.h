@@ -272,7 +272,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAuthorizationPolicy
+  /// @copybrief CreateAuthorizationPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -328,7 +328,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAuthorizationPolicy
+  /// @copybrief CreateAuthorizationPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -345,7 +345,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAuthorizationPolicy
+  /// @copybrief CreateAuthorizationPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -399,7 +399,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAuthorizationPolicy
+  /// @copybrief UpdateAuthorizationPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -455,7 +455,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAuthorizationPolicy
+  /// @copybrief UpdateAuthorizationPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -472,7 +472,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAuthorizationPolicy
+  /// @copybrief UpdateAuthorizationPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -519,7 +519,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAuthorizationPolicy
+  /// @copybrief DeleteAuthorizationPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -572,7 +572,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAuthorizationPolicy
+  /// @copybrief DeleteAuthorizationPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -589,7 +589,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAuthorizationPolicy
+  /// @copybrief DeleteAuthorizationPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -779,7 +779,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServerTlsPolicy
+  /// @copybrief CreateServerTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -836,7 +836,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServerTlsPolicy
+  /// @copybrief CreateServerTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -853,7 +853,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServerTlsPolicy
+  /// @copybrief CreateServerTlsPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -908,7 +908,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateServerTlsPolicy
+  /// @copybrief UpdateServerTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -965,7 +965,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateServerTlsPolicy
+  /// @copybrief UpdateServerTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -982,7 +982,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateServerTlsPolicy
+  /// @copybrief UpdateServerTlsPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1029,7 +1029,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServerTlsPolicy
+  /// @copybrief DeleteServerTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1083,7 +1083,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServerTlsPolicy
+  /// @copybrief DeleteServerTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1100,7 +1100,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServerTlsPolicy
+  /// @copybrief DeleteServerTlsPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1290,7 +1290,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateClientTlsPolicy
+  /// @copybrief CreateClientTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1347,7 +1347,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateClientTlsPolicy
+  /// @copybrief CreateClientTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1364,7 +1364,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateClientTlsPolicy
+  /// @copybrief CreateClientTlsPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1419,7 +1419,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateClientTlsPolicy
+  /// @copybrief UpdateClientTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1476,7 +1476,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateClientTlsPolicy
+  /// @copybrief UpdateClientTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1493,7 +1493,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateClientTlsPolicy
+  /// @copybrief UpdateClientTlsPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1540,7 +1540,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteClientTlsPolicy
+  /// @copybrief DeleteClientTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1594,7 +1594,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteClientTlsPolicy
+  /// @copybrief DeleteClientTlsPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1611,7 +1611,7 @@ class NetworkSecurityClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteClientTlsPolicy
+  /// @copybrief DeleteClientTlsPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

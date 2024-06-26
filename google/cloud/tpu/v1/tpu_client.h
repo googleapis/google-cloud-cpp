@@ -254,7 +254,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNode
+  /// @copybrief CreateNode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -308,7 +308,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNode
+  /// @copybrief CreateNode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -324,7 +324,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNode
+  /// @copybrief CreateNode
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -369,7 +369,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNode
+  /// @copybrief DeleteNode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -423,7 +423,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNode
+  /// @copybrief DeleteNode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -439,7 +439,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNode
+  /// @copybrief DeleteNode
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -490,7 +490,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc ReimageNode
+  /// @copybrief ReimageNode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -506,7 +506,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc ReimageNode
+  /// @copybrief ReimageNode
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -557,7 +557,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc StopNode
+  /// @copybrief StopNode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -573,7 +573,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc StopNode
+  /// @copybrief StopNode
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -624,7 +624,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc StartNode
+  /// @copybrief StartNode
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -640,7 +640,7 @@ class TpuClient {
 
   // clang-format off
   ///
-  /// @copydoc StartNode
+  /// @copybrief StartNode
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

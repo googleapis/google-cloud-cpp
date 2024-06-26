@@ -133,7 +133,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnection
+  /// @copybrief CreateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -188,7 +188,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnection
+  /// @copybrief CreateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -204,7 +204,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateConnection
+  /// @copybrief CreateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -385,7 +385,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnection
+  /// @copybrief UpdateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -440,7 +440,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnection
+  /// @copybrief UpdateConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -456,7 +456,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateConnection
+  /// @copybrief UpdateConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -503,7 +503,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnection
+  /// @copybrief DeleteConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -556,7 +556,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnection
+  /// @copybrief DeleteConnection
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -572,7 +572,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteConnection
+  /// @copybrief DeleteConnection
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -628,7 +628,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -683,7 +683,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -699,7 +699,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRepository
+  /// @copybrief CreateRepository
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -755,7 +755,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateRepositories
+  /// @copybrief BatchCreateRepositories
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -814,7 +814,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateRepositories
+  /// @copybrief BatchCreateRepositories
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -831,7 +831,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateRepositories
+  /// @copybrief BatchCreateRepositories
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1011,7 +1011,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1064,7 +1064,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1080,7 +1080,7 @@ class RepositoryManagerClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRepository
+  /// @copybrief DeleteRepository
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

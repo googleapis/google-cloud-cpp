@@ -262,7 +262,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -316,7 +316,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -332,7 +332,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCluster
+  /// @copybrief CreateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -383,7 +383,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -437,7 +437,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -453,7 +453,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCluster
+  /// @copybrief UpdateCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -499,7 +499,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -551,7 +551,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -567,7 +567,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCluster
+  /// @copybrief DeleteCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -616,7 +616,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PromoteCluster
+  /// @copybrief PromoteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -671,7 +671,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PromoteCluster
+  /// @copybrief PromoteCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -687,7 +687,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc PromoteCluster
+  /// @copybrief PromoteCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -740,7 +740,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreCluster
+  /// @copybrief RestoreCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -756,7 +756,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestoreCluster
+  /// @copybrief RestoreCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -807,7 +807,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSecondaryCluster
+  /// @copybrief CreateSecondaryCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -862,7 +862,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSecondaryCluster
+  /// @copybrief CreateSecondaryCluster
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -878,7 +878,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSecondaryCluster
+  /// @copybrief CreateSecondaryCluster
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1064,7 +1064,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1118,7 +1118,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1134,7 +1134,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInstance
+  /// @copybrief CreateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1184,7 +1184,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSecondaryInstance
+  /// @copybrief CreateSecondaryInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1239,7 +1239,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSecondaryInstance
+  /// @copybrief CreateSecondaryInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1255,7 +1255,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSecondaryInstance
+  /// @copybrief CreateSecondaryInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1317,7 +1317,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateInstances
+  /// @copybrief BatchCreateInstances
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1333,7 +1333,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc BatchCreateInstances
+  /// @copybrief BatchCreateInstances
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1385,7 +1385,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1439,7 +1439,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1455,7 +1455,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInstance
+  /// @copybrief UpdateInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1501,7 +1501,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1554,7 +1554,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1570,7 +1570,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInstance
+  /// @copybrief DeleteInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1619,7 +1619,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc FailoverInstance
+  /// @copybrief FailoverInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1673,7 +1673,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc FailoverInstance
+  /// @copybrief FailoverInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1689,7 +1689,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc FailoverInstance
+  /// @copybrief FailoverInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1738,7 +1738,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc InjectFault
+  /// @copybrief InjectFault
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1793,7 +1793,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc InjectFault
+  /// @copybrief InjectFault
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1809,7 +1809,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc InjectFault
+  /// @copybrief InjectFault
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1856,7 +1856,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestartInstance
+  /// @copybrief RestartInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1909,7 +1909,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestartInstance
+  /// @copybrief RestartInstance
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1925,7 +1925,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc RestartInstance
+  /// @copybrief RestartInstance
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2104,7 +2104,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2158,7 +2158,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2174,7 +2174,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateBackup
+  /// @copybrief CreateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2225,7 +2225,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2279,7 +2279,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2295,7 +2295,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateBackup
+  /// @copybrief UpdateBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2341,7 +2341,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2395,7 +2395,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2411,7 +2411,7 @@ class AlloyDBAdminClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteBackup
+  /// @copybrief DeleteBackup
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

@@ -207,7 +207,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAutoscaler
+  /// @copybrief DeleteAutoscaler
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -262,7 +262,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAutoscaler
+  /// @copybrief DeleteAutoscaler
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -279,7 +279,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAutoscaler
+  /// @copybrief DeleteAutoscaler
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -392,7 +392,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertAutoscaler
+  /// @copybrief InsertAutoscaler
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -449,7 +449,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertAutoscaler
+  /// @copybrief InsertAutoscaler
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -466,7 +466,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertAutoscaler
+  /// @copybrief InsertAutoscaler
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -596,7 +596,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchAutoscaler
+  /// @copybrief PatchAutoscaler
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -654,7 +654,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchAutoscaler
+  /// @copybrief PatchAutoscaler
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -671,7 +671,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchAutoscaler
+  /// @copybrief PatchAutoscaler
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -722,7 +722,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAutoscaler
+  /// @copybrief UpdateAutoscaler
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -779,7 +779,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAutoscaler
+  /// @copybrief UpdateAutoscaler
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -796,7 +796,7 @@ class AutoscalersClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateAutoscaler
+  /// @copybrief UpdateAutoscaler
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

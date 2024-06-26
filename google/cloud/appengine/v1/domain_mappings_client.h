@@ -201,7 +201,7 @@ class DomainMappingsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDomainMapping
+  /// @copybrief CreateDomainMapping
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -217,7 +217,7 @@ class DomainMappingsClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDomainMapping
+  /// @copybrief CreateDomainMapping
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -271,7 +271,7 @@ class DomainMappingsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDomainMapping
+  /// @copybrief UpdateDomainMapping
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -287,7 +287,7 @@ class DomainMappingsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDomainMapping
+  /// @copybrief UpdateDomainMapping
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -341,7 +341,7 @@ class DomainMappingsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDomainMapping
+  /// @copybrief DeleteDomainMapping
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -357,7 +357,7 @@ class DomainMappingsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDomainMapping
+  /// @copybrief DeleteDomainMapping
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

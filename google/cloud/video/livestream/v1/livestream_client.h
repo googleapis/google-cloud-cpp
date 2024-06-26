@@ -136,7 +136,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannel
+  /// @copybrief CreateChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -191,7 +191,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannel
+  /// @copybrief CreateChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -207,7 +207,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateChannel
+  /// @copybrief CreateChannel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -385,7 +385,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannel
+  /// @copybrief DeleteChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -438,7 +438,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannel
+  /// @copybrief DeleteChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -454,7 +454,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteChannel
+  /// @copybrief DeleteChannel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -521,7 +521,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateChannel
+  /// @copybrief UpdateChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -575,7 +575,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateChannel
+  /// @copybrief UpdateChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -591,7 +591,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateChannel
+  /// @copybrief UpdateChannel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -639,7 +639,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartChannel
+  /// @copybrief StartChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -696,7 +696,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartChannel
+  /// @copybrief StartChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -712,7 +712,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StartChannel
+  /// @copybrief StartChannel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -761,7 +761,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StopChannel
+  /// @copybrief StopChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -818,7 +818,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StopChannel
+  /// @copybrief StopChannel
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -834,7 +834,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc StopChannel
+  /// @copybrief StopChannel
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -887,7 +887,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInput
+  /// @copybrief CreateInput
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -941,7 +941,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInput
+  /// @copybrief CreateInput
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -957,7 +957,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInput
+  /// @copybrief CreateInput
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1135,7 +1135,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInput
+  /// @copybrief DeleteInput
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1190,7 +1190,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInput
+  /// @copybrief DeleteInput
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1206,7 +1206,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInput
+  /// @copybrief DeleteInput
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1264,7 +1264,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInput
+  /// @copybrief UpdateInput
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1318,7 +1318,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInput
+  /// @copybrief UpdateInput
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1334,7 +1334,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateInput
+  /// @copybrief UpdateInput
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1632,7 +1632,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAsset
+  /// @copybrief CreateAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1687,7 +1687,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAsset
+  /// @copybrief CreateAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1703,7 +1703,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateAsset
+  /// @copybrief CreateAsset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1749,7 +1749,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAsset
+  /// @copybrief DeleteAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1804,7 +1804,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAsset
+  /// @copybrief DeleteAsset
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1820,7 +1820,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteAsset
+  /// @copybrief DeleteAsset
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2062,7 +2062,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePool
+  /// @copybrief UpdatePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2116,7 +2116,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePool
+  /// @copybrief UpdatePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2132,7 +2132,7 @@ class LivestreamServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdatePool
+  /// @copybrief UpdatePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

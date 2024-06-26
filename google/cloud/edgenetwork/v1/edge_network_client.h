@@ -510,7 +510,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetwork
+  /// @copybrief CreateNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -564,7 +564,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetwork
+  /// @copybrief CreateNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -580,7 +580,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateNetwork
+  /// @copybrief CreateNetwork
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -625,7 +625,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetwork
+  /// @copybrief DeleteNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -678,7 +678,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetwork
+  /// @copybrief DeleteNetwork
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -694,7 +694,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteNetwork
+  /// @copybrief DeleteNetwork
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -876,7 +876,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSubnet
+  /// @copybrief CreateSubnet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -930,7 +930,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSubnet
+  /// @copybrief CreateSubnet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -946,7 +946,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateSubnet
+  /// @copybrief CreateSubnet
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -997,7 +997,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSubnet
+  /// @copybrief UpdateSubnet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1051,7 +1051,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSubnet
+  /// @copybrief UpdateSubnet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1067,7 +1067,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateSubnet
+  /// @copybrief UpdateSubnet
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1112,7 +1112,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSubnet
+  /// @copybrief DeleteSubnet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1167,7 +1167,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSubnet
+  /// @copybrief DeleteSubnet
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1183,7 +1183,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSubnet
+  /// @copybrief DeleteSubnet
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1558,7 +1558,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInterconnectAttachment
+  /// @copybrief CreateInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1615,7 +1615,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInterconnectAttachment
+  /// @copybrief CreateInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1632,7 +1632,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateInterconnectAttachment
+  /// @copybrief CreateInterconnectAttachment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1678,7 +1678,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInterconnectAttachment
+  /// @copybrief DeleteInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1732,7 +1732,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInterconnectAttachment
+  /// @copybrief DeleteInterconnectAttachment
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1749,7 +1749,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteInterconnectAttachment
+  /// @copybrief DeleteInterconnectAttachment
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1988,7 +1988,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRouter
+  /// @copybrief CreateRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2042,7 +2042,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRouter
+  /// @copybrief CreateRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2058,7 +2058,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateRouter
+  /// @copybrief CreateRouter
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2109,7 +2109,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRouter
+  /// @copybrief UpdateRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2163,7 +2163,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRouter
+  /// @copybrief UpdateRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2179,7 +2179,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRouter
+  /// @copybrief UpdateRouter
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2224,7 +2224,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRouter
+  /// @copybrief DeleteRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2279,7 +2279,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRouter
+  /// @copybrief DeleteRouter
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2295,7 +2295,7 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRouter
+  /// @copybrief DeleteRouter
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

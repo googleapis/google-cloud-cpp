@@ -267,7 +267,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc RegisterDomain
+  /// @copybrief RegisterDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -333,7 +333,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc RegisterDomain
+  /// @copybrief RegisterDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -349,7 +349,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc RegisterDomain
+  /// @copybrief RegisterDomain
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -501,7 +501,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc TransferDomain
+  /// @copybrief TransferDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -577,7 +577,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc TransferDomain
+  /// @copybrief TransferDomain
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -593,7 +593,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc TransferDomain
+  /// @copybrief TransferDomain
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -779,7 +779,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRegistration
+  /// @copybrief UpdateRegistration
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -838,7 +838,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRegistration
+  /// @copybrief UpdateRegistration
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -854,7 +854,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateRegistration
+  /// @copybrief UpdateRegistration
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -907,7 +907,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureManagementSettings
+  /// @copybrief ConfigureManagementSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -963,7 +963,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureManagementSettings
+  /// @copybrief ConfigureManagementSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -980,7 +980,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureManagementSettings
+  /// @copybrief ConfigureManagementSettings
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1040,7 +1040,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureDnsSettings
+  /// @copybrief ConfigureDnsSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1095,7 +1095,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureDnsSettings
+  /// @copybrief ConfigureDnsSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1111,7 +1111,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureDnsSettings
+  /// @copybrief ConfigureDnsSettings
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1166,7 +1166,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureContactSettings
+  /// @copybrief ConfigureContactSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1223,7 +1223,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureContactSettings
+  /// @copybrief ConfigureContactSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1240,7 +1240,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ConfigureContactSettings
+  /// @copybrief ConfigureContactSettings
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1295,7 +1295,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportRegistration
+  /// @copybrief ExportRegistration
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1355,7 +1355,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportRegistration
+  /// @copybrief ExportRegistration
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1371,7 +1371,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc ExportRegistration
+  /// @copybrief ExportRegistration
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1435,7 +1435,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRegistration
+  /// @copybrief DeleteRegistration
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1506,7 +1506,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRegistration
+  /// @copybrief DeleteRegistration
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1522,7 +1522,7 @@ class DomainsClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteRegistration
+  /// @copybrief DeleteRegistration
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

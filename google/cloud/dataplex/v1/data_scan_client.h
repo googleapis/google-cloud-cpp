@@ -138,7 +138,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataScan
+  /// @copybrief CreateDataScan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -192,7 +192,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataScan
+  /// @copybrief CreateDataScan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -208,7 +208,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDataScan
+  /// @copybrief CreateDataScan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -257,7 +257,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataScan
+  /// @copybrief UpdateDataScan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -311,7 +311,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataScan
+  /// @copybrief UpdateDataScan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -327,7 +327,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateDataScan
+  /// @copybrief UpdateDataScan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -375,7 +375,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataScan
+  /// @copybrief DeleteDataScan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -428,7 +428,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataScan
+  /// @copybrief DeleteDataScan
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -444,7 +444,7 @@ class DataScanServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDataScan
+  /// @copybrief DeleteDataScan
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

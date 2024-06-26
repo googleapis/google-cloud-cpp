@@ -265,7 +265,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpointPolicy
+  /// @copybrief CreateEndpointPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -321,7 +321,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpointPolicy
+  /// @copybrief CreateEndpointPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -338,7 +338,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateEndpointPolicy
+  /// @copybrief CreateEndpointPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -391,7 +391,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEndpointPolicy
+  /// @copybrief UpdateEndpointPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -447,7 +447,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEndpointPolicy
+  /// @copybrief UpdateEndpointPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -464,7 +464,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateEndpointPolicy
+  /// @copybrief UpdateEndpointPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -511,7 +511,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpointPolicy
+  /// @copybrief DeleteEndpointPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -565,7 +565,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpointPolicy
+  /// @copybrief DeleteEndpointPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -582,7 +582,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteEndpointPolicy
+  /// @copybrief DeleteEndpointPolicy
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -765,7 +765,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGateway
+  /// @copybrief CreateGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -819,7 +819,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGateway
+  /// @copybrief CreateGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -835,7 +835,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGateway
+  /// @copybrief CreateGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -886,7 +886,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGateway
+  /// @copybrief UpdateGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -940,7 +940,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGateway
+  /// @copybrief UpdateGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -956,7 +956,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGateway
+  /// @copybrief UpdateGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1002,7 +1002,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGateway
+  /// @copybrief DeleteGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1055,7 +1055,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGateway
+  /// @copybrief DeleteGateway
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1071,7 +1071,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGateway
+  /// @copybrief DeleteGateway
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1255,7 +1255,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGrpcRoute
+  /// @copybrief CreateGrpcRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1310,7 +1310,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGrpcRoute
+  /// @copybrief CreateGrpcRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1326,7 +1326,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateGrpcRoute
+  /// @copybrief CreateGrpcRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1379,7 +1379,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGrpcRoute
+  /// @copybrief UpdateGrpcRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1434,7 +1434,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGrpcRoute
+  /// @copybrief UpdateGrpcRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1450,7 +1450,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateGrpcRoute
+  /// @copybrief UpdateGrpcRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1497,7 +1497,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGrpcRoute
+  /// @copybrief DeleteGrpcRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1550,7 +1550,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGrpcRoute
+  /// @copybrief DeleteGrpcRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1566,7 +1566,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteGrpcRoute
+  /// @copybrief DeleteGrpcRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1750,7 +1750,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHttpRoute
+  /// @copybrief CreateHttpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1805,7 +1805,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHttpRoute
+  /// @copybrief CreateHttpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1821,7 +1821,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateHttpRoute
+  /// @copybrief CreateHttpRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1874,7 +1874,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHttpRoute
+  /// @copybrief UpdateHttpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1929,7 +1929,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHttpRoute
+  /// @copybrief UpdateHttpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1945,7 +1945,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateHttpRoute
+  /// @copybrief UpdateHttpRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1992,7 +1992,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHttpRoute
+  /// @copybrief DeleteHttpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2045,7 +2045,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHttpRoute
+  /// @copybrief DeleteHttpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2061,7 +2061,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteHttpRoute
+  /// @copybrief DeleteHttpRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2244,7 +2244,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTcpRoute
+  /// @copybrief CreateTcpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2298,7 +2298,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTcpRoute
+  /// @copybrief CreateTcpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2314,7 +2314,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTcpRoute
+  /// @copybrief CreateTcpRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2365,7 +2365,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTcpRoute
+  /// @copybrief UpdateTcpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2419,7 +2419,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTcpRoute
+  /// @copybrief UpdateTcpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2435,7 +2435,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTcpRoute
+  /// @copybrief UpdateTcpRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2481,7 +2481,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTcpRoute
+  /// @copybrief DeleteTcpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2534,7 +2534,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTcpRoute
+  /// @copybrief DeleteTcpRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2550,7 +2550,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTcpRoute
+  /// @copybrief DeleteTcpRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2733,7 +2733,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTlsRoute
+  /// @copybrief CreateTlsRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2787,7 +2787,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTlsRoute
+  /// @copybrief CreateTlsRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2803,7 +2803,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateTlsRoute
+  /// @copybrief CreateTlsRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2854,7 +2854,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTlsRoute
+  /// @copybrief UpdateTlsRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2908,7 +2908,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTlsRoute
+  /// @copybrief UpdateTlsRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2924,7 +2924,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateTlsRoute
+  /// @copybrief UpdateTlsRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2970,7 +2970,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTlsRoute
+  /// @copybrief DeleteTlsRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3023,7 +3023,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTlsRoute
+  /// @copybrief DeleteTlsRoute
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3039,7 +3039,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteTlsRoute
+  /// @copybrief DeleteTlsRoute
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3226,7 +3226,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceBinding
+  /// @copybrief CreateServiceBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3282,7 +3282,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceBinding
+  /// @copybrief CreateServiceBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3299,7 +3299,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateServiceBinding
+  /// @copybrief CreateServiceBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3346,7 +3346,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceBinding
+  /// @copybrief DeleteServiceBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3400,7 +3400,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceBinding
+  /// @copybrief DeleteServiceBinding
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3417,7 +3417,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteServiceBinding
+  /// @copybrief DeleteServiceBinding
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3600,7 +3600,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMesh
+  /// @copybrief CreateMesh
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3654,7 +3654,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMesh
+  /// @copybrief CreateMesh
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3670,7 +3670,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateMesh
+  /// @copybrief CreateMesh
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3721,7 +3721,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMesh
+  /// @copybrief UpdateMesh
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3775,7 +3775,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMesh
+  /// @copybrief UpdateMesh
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3791,7 +3791,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateMesh
+  /// @copybrief UpdateMesh
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -3837,7 +3837,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMesh
+  /// @copybrief DeleteMesh
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3892,7 +3892,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMesh
+  /// @copybrief DeleteMesh
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -3908,7 +3908,7 @@ class NetworkServicesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteMesh
+  /// @copybrief DeleteMesh
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

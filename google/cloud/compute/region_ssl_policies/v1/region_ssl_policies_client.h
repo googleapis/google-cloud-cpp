@@ -129,7 +129,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSslPolicy
+  /// @copybrief DeleteSslPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -186,7 +186,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSslPolicy
+  /// @copybrief DeleteSslPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -203,7 +203,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteSslPolicy
+  /// @copybrief DeleteSslPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -317,7 +317,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSslPolicy
+  /// @copybrief InsertSslPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -374,7 +374,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSslPolicy
+  /// @copybrief InsertSslPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -391,7 +391,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc InsertSslPolicy
+  /// @copybrief InsertSslPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -589,7 +589,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchSslPolicy
+  /// @copybrief PatchSslPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -645,7 +645,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchSslPolicy
+  /// @copybrief PatchSslPolicy
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -662,7 +662,7 @@ class RegionSslPoliciesClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchSslPolicy
+  /// @copybrief PatchSslPolicy
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

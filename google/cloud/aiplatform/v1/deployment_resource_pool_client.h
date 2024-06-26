@@ -139,7 +139,7 @@ class DeploymentResourcePoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeploymentResourcePool
+  /// @copybrief CreateDeploymentResourcePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -196,7 +196,7 @@ class DeploymentResourcePoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeploymentResourcePool
+  /// @copybrief CreateDeploymentResourcePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -213,7 +213,7 @@ class DeploymentResourcePoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateDeploymentResourcePool
+  /// @copybrief CreateDeploymentResourcePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -397,7 +397,7 @@ class DeploymentResourcePoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeploymentResourcePool
+  /// @copybrief DeleteDeploymentResourcePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -451,7 +451,7 @@ class DeploymentResourcePoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeploymentResourcePool
+  /// @copybrief DeleteDeploymentResourcePool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -468,7 +468,7 @@ class DeploymentResourcePoolServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteDeploymentResourcePool
+  /// @copybrief DeleteDeploymentResourcePool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

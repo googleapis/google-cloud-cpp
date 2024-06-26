@@ -368,7 +368,7 @@ class RegionInstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNamedPorts
+  /// @copybrief SetNamedPorts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -426,7 +426,7 @@ class RegionInstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNamedPorts
+  /// @copybrief SetNamedPorts
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -443,7 +443,7 @@ class RegionInstanceGroupsClient {
 
   // clang-format off
   ///
-  /// @copydoc SetNamedPorts
+  /// @copybrief SetNamedPorts
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

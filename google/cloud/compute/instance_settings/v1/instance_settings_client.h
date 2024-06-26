@@ -191,7 +191,7 @@ class InstanceSettingsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchInstanceSettings
+  /// @copybrief PatchInstanceSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -248,7 +248,7 @@ class InstanceSettingsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchInstanceSettings
+  /// @copybrief PatchInstanceSettings
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
@@ -265,7 +265,7 @@ class InstanceSettingsClient {
 
   // clang-format off
   ///
-  /// @copydoc PatchInstanceSettings
+  /// @copybrief PatchInstanceSettings
   ///
   /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

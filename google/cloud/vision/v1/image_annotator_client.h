@@ -271,7 +271,7 @@ class ImageAnnotatorClient {
 
   // clang-format off
   ///
-  /// @copydoc AsyncBatchAnnotateImages
+  /// @copybrief AsyncBatchAnnotateImages
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -336,7 +336,7 @@ class ImageAnnotatorClient {
 
   // clang-format off
   ///
-  /// @copydoc AsyncBatchAnnotateImages
+  /// @copybrief AsyncBatchAnnotateImages
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -352,7 +352,7 @@ class ImageAnnotatorClient {
 
   // clang-format off
   ///
-  /// @copydoc AsyncBatchAnnotateImages
+  /// @copybrief AsyncBatchAnnotateImages
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -406,7 +406,7 @@ class ImageAnnotatorClient {
 
   // clang-format off
   ///
-  /// @copydoc AsyncBatchAnnotateFiles
+  /// @copybrief AsyncBatchAnnotateFiles
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -467,7 +467,7 @@ class ImageAnnotatorClient {
 
   // clang-format off
   ///
-  /// @copydoc AsyncBatchAnnotateFiles
+  /// @copybrief AsyncBatchAnnotateFiles
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -483,7 +483,7 @@ class ImageAnnotatorClient {
 
   // clang-format off
   ///
-  /// @copydoc AsyncBatchAnnotateFiles
+  /// @copybrief AsyncBatchAnnotateFiles
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

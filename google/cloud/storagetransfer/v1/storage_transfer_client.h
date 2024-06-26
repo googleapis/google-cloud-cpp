@@ -378,7 +378,7 @@ class StorageTransferServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RunTransferJob
+  /// @copybrief RunTransferJob
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -394,7 +394,7 @@ class StorageTransferServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc RunTransferJob
+  /// @copybrief RunTransferJob
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status

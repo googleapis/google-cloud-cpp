@@ -490,7 +490,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ActivateCertificateAuthority
+  /// @copybrief ActivateCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -556,7 +556,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ActivateCertificateAuthority
+  /// @copybrief ActivateCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -573,7 +573,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc ActivateCertificateAuthority
+  /// @copybrief ActivateCertificateAuthority
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -634,7 +634,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateAuthority
+  /// @copybrief CreateCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -693,7 +693,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateAuthority
+  /// @copybrief CreateCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -710,7 +710,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateAuthority
+  /// @copybrief CreateCertificateAuthority
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -759,7 +759,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableCertificateAuthority
+  /// @copybrief DisableCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -814,7 +814,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableCertificateAuthority
+  /// @copybrief DisableCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -831,7 +831,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DisableCertificateAuthority
+  /// @copybrief DisableCertificateAuthority
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -880,7 +880,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableCertificateAuthority
+  /// @copybrief EnableCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -935,7 +935,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableCertificateAuthority
+  /// @copybrief EnableCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -952,7 +952,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc EnableCertificateAuthority
+  /// @copybrief EnableCertificateAuthority
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1237,7 +1237,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteCertificateAuthority
+  /// @copybrief UndeleteCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1293,7 +1293,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteCertificateAuthority
+  /// @copybrief UndeleteCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1310,7 +1310,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UndeleteCertificateAuthority
+  /// @copybrief UndeleteCertificateAuthority
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1359,7 +1359,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateAuthority
+  /// @copybrief DeleteCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1414,7 +1414,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateAuthority
+  /// @copybrief DeleteCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1431,7 +1431,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateAuthority
+  /// @copybrief DeleteCertificateAuthority
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1484,7 +1484,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateAuthority
+  /// @copybrief UpdateCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1542,7 +1542,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateAuthority
+  /// @copybrief UpdateCertificateAuthority
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1559,7 +1559,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateAuthority
+  /// @copybrief UpdateCertificateAuthority
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1613,7 +1613,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCaPool
+  /// @copybrief CreateCaPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1668,7 +1668,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCaPool
+  /// @copybrief CreateCaPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1685,7 +1685,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCaPool
+  /// @copybrief CreateCaPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1733,7 +1733,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCaPool
+  /// @copybrief UpdateCaPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1788,7 +1788,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCaPool
+  /// @copybrief UpdateCaPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -1805,7 +1805,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCaPool
+  /// @copybrief UpdateCaPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -1987,7 +1987,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCaPool
+  /// @copybrief DeleteCaPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2044,7 +2044,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCaPool
+  /// @copybrief DeleteCaPool
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2061,7 +2061,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCaPool
+  /// @copybrief DeleteCaPool
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2327,7 +2327,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateRevocationList
+  /// @copybrief UpdateCertificateRevocationList
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2386,7 +2386,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateRevocationList
+  /// @copybrief UpdateCertificateRevocationList
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2403,7 +2403,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateRevocationList
+  /// @copybrief UpdateCertificateRevocationList
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2463,7 +2463,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateTemplate
+  /// @copybrief CreateCertificateTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2521,7 +2521,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateTemplate
+  /// @copybrief CreateCertificateTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2538,7 +2538,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc CreateCertificateTemplate
+  /// @copybrief CreateCertificateTemplate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2588,7 +2588,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateTemplate
+  /// @copybrief DeleteCertificateTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2643,7 +2643,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateTemplate
+  /// @copybrief DeleteCertificateTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2660,7 +2660,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc DeleteCertificateTemplate
+  /// @copybrief DeleteCertificateTemplate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
@@ -2856,7 +2856,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateTemplate
+  /// @copybrief UpdateCertificateTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2913,7 +2913,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateTemplate
+  /// @copybrief UpdateCertificateTemplate
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`google::longrunning::Operation`] that corresponds to the Long Running
@@ -2930,7 +2930,7 @@ class CertificateAuthorityServiceClient {
 
   // clang-format off
   ///
-  /// @copydoc UpdateCertificateTemplate
+  /// @copybrief UpdateCertificateTemplate
   ///
   /// This method accepts a `google::longrunning::Operation` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
