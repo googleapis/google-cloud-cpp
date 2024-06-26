@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_FLOWS_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/flows_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -450,6 +452,11 @@ class FlowsClient {
   future<StatusOr<google::protobuf::Struct>> TrainFlow(std::string const& name,
                                                        Options opts = {});
 
+  StatusOr<google::longrunning::Operation> TrainFlow(ExperimentalTag,
+                                                     NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
+
   // clang-format off
   ///
   /// Trains the specified flow. Note that only the flow in 'draft' environment
@@ -500,6 +507,15 @@ class FlowsClient {
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> TrainFlow(
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> TrainFlow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> TrainFlow(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -649,6 +665,15 @@ class FlowsClient {
       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportFlow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
+  ImportFlow(ExperimentalTag, google::longrunning::Operation const& operation,
+             Options opts = {});
+
   // clang-format off
   ///
   /// Exports the specified flow to a binary file.
@@ -699,6 +724,15 @@ class FlowsClient {
   ExportFlow(
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportFlow(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
+  ExportFlow(ExperimentalTag, google::longrunning::Operation const& operation,
+             Options opts = {});
 
  private:
   std::shared_ptr<FlowsConnection> connection_;

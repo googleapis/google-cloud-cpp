@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_INSTANCE_GROUPS_V1_REGION_INSTANCE_GROUPS_CLIENT_H
 
 #include "google/cloud/compute/region_instance_groups/v1/region_instance_groups_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -364,6 +366,14 @@ class RegionInstanceGroupsClient {
               region_instance_groups_set_named_ports_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& instance_group,
+      google::cloud::cpp::compute::v1::
+          RegionInstanceGroupsSetNamedPortsRequest const&
+              region_instance_groups_set_named_ports_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the named ports for the specified regional instance group.
@@ -401,6 +411,17 @@ class RegionInstanceGroupsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_instance_groups::v1::
+          SetNamedPortsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

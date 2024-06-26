@@ -67,6 +67,22 @@ ResourcePoliciesClient::DeleteResourcePolicy(std::string const& project,
   return connection_->DeleteResourcePolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesClient::DeleteResourcePolicy(ExperimentalTag, NoAwaitTag,
+                                             std::string const& project,
+                                             std::string const& region,
+                                             std::string const& resource_policy,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::resource_policies::v1::
+      DeleteResourcePolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource_policy(resource_policy);
+  return connection_->DeleteResourcePolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesClient::DeleteResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
@@ -74,6 +90,25 @@ ResourcePoliciesClient::DeleteResourcePolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteResourcePolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesClient::DeleteResourcePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::resource_policies::v1::
+        DeleteResourcePolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteResourcePolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesClient::DeleteResourcePolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteResourcePolicy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
@@ -137,6 +172,23 @@ ResourcePoliciesClient::InsertResourcePolicy(
   return connection_->InsertResourcePolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesClient::InsertResourcePolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::ResourcePolicy const&
+        resource_policy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::resource_policies::v1::
+      InsertResourcePolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_resource_policy_resource() = resource_policy_resource;
+  return connection_->InsertResourcePolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesClient::InsertResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
@@ -144,6 +196,25 @@ ResourcePoliciesClient::InsertResourcePolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertResourcePolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesClient::InsertResourcePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::resource_policies::v1::
+        InsertResourcePolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertResourcePolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesClient::InsertResourcePolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertResourcePolicy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>
@@ -185,6 +256,26 @@ ResourcePoliciesClient::PatchResourcePolicy(
   return connection_->PatchResourcePolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesClient::PatchResourcePolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& resource_policy,
+    std::string const& update_mask,
+    google::cloud::cpp::compute::v1::ResourcePolicy const&
+        resource_policy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::resource_policies::v1::PatchResourcePolicyRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource_policy(resource_policy);
+  request.set_update_mask(update_mask);
+  *request.mutable_resource_policy_resource() = resource_policy_resource;
+  return connection_->PatchResourcePolicy(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ResourcePoliciesClient::PatchResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
@@ -192,6 +283,25 @@ ResourcePoliciesClient::PatchResourcePolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchResourcePolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+ResourcePoliciesClient::PatchResourcePolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::resource_policies::v1::
+        PatchResourcePolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchResourcePolicy(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+ResourcePoliciesClient::PatchResourcePolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchResourcePolicy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

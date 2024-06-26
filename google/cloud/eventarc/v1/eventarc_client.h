@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_V1_EVENTARC_CLIENT_H
 
 #include "google/cloud/eventarc/v1/eventarc_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -252,6 +254,11 @@ class EventarcClient {
       google::cloud::eventarc::v1::Trigger const& trigger,
       std::string const& trigger_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTrigger(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::Trigger const& trigger,
+      std::string const& trigger_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create a new trigger in a particular project and location.
@@ -290,6 +297,15 @@ class EventarcClient {
       google::cloud::eventarc::v1::CreateTriggerRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTrigger(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::eventarc::v1::CreateTriggerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Update a single trigger.
@@ -325,6 +341,12 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
+      google::cloud::eventarc::v1::Trigger const& trigger,
+      google::protobuf::FieldMask const& update_mask, bool allow_missing,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateTrigger(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::Trigger const& trigger,
       google::protobuf::FieldMask const& update_mask, bool allow_missing,
       Options opts = {});
@@ -367,6 +389,15 @@ class EventarcClient {
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateTrigger(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Delete a single trigger.
@@ -400,6 +431,10 @@ class EventarcClient {
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       std::string const& name, bool allow_missing, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTrigger(
+      ExperimentalTag, NoAwaitTag, std::string const& name, bool allow_missing,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -437,6 +472,15 @@ class EventarcClient {
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTrigger(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -605,6 +649,11 @@ class EventarcClient {
       google::cloud::eventarc::v1::Channel const& channel,
       std::string const& channel_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::Channel const& channel,
+      std::string const& channel_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create a new channel in a particular project and location.
@@ -643,6 +692,15 @@ class EventarcClient {
       google::cloud::eventarc::v1::CreateChannelRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::eventarc::v1::CreateChannelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Update a single channel.
@@ -676,6 +734,11 @@ class EventarcClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::eventarc::v1::Channel const& channel,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::Channel const& channel,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -717,6 +780,15 @@ class EventarcClient {
       google::cloud::eventarc::v1::UpdateChannelRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Delete a single channel.
@@ -748,6 +820,9 @@ class EventarcClient {
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -785,6 +860,15 @@ class EventarcClient {
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
       google::cloud::eventarc::v1::DeleteChannelRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteChannel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1085,6 +1169,11 @@ class EventarcClient {
       google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
       std::string const& channel_connection_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateChannelConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
+      std::string const& channel_connection_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create a new ChannelConnection in a particular project and location.
@@ -1125,6 +1214,17 @@ class EventarcClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateChannelConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  CreateChannelConnection(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
+
   // clang-format off
   ///
   /// Delete a single ChannelConnection.
@@ -1156,6 +1256,9 @@ class EventarcClient {
   // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   DeleteChannelConnection(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteChannelConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1196,6 +1299,17 @@ class EventarcClient {
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteChannelConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  DeleteChannelConnection(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///

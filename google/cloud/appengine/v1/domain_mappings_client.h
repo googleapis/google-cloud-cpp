@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_DOMAIN_MAPPINGS_CLIENT_H
 
 #include "google/cloud/appengine/v1/domain_mappings_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -197,6 +199,15 @@ class DomainMappingsClient {
       google::appengine::v1::CreateDomainMappingRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDomainMapping(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::CreateDomainMappingRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified domain mapping. To map an SSL certificate to a
@@ -236,6 +247,15 @@ class DomainMappingsClient {
   // clang-format on
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
       google::appengine::v1::UpdateDomainMappingRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDomainMapping(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::UpdateDomainMappingRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -278,6 +298,16 @@ class DomainMappingsClient {
   DeleteDomainMapping(
       google::appengine::v1::DeleteDomainMappingRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDomainMapping(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::DeleteDomainMappingRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+  DeleteDomainMapping(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
  private:
   std::shared_ptr<DomainMappingsConnection> connection_;

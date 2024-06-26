@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PROJECTS_V1_PROJECTS_CLIENT_H
 
 #include "google/cloud/compute/projects/v1/projects_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -116,6 +118,10 @@ class ProjectsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
       std::string const& project, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Disable this project as a shared VPC host project.
@@ -155,6 +161,17 @@ class ProjectsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnHost(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DisableXpnHost(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Disable a service resource (also known as service project) associated with
@@ -189,6 +206,12 @@ class ProjectsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DisableXpnResource(
       std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const&
+          projects_disable_xpn_resource_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::ProjectsDisableXpnResourceRequest const&
           projects_disable_xpn_resource_request_resource,
       Options opts = {});
@@ -233,6 +256,18 @@ class ProjectsClient {
                          DisableXpnResourceRequest const& request,
                      Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DisableXpnResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::
+          DisableXpnResourceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DisableXpnResource(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Enable this project as a shared VPC host project.
@@ -264,6 +299,10 @@ class ProjectsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
       std::string const& project, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -304,6 +343,17 @@ class ProjectsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnHost(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> EnableXpnHost(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Enable service resource (a.k.a service project) for a host project, so that
@@ -339,6 +389,12 @@ class ProjectsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   EnableXpnResource(
       std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const&
+          projects_enable_xpn_resource_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::ProjectsEnableXpnResourceRequest const&
           projects_enable_xpn_resource_request_resource,
       Options opts = {});
@@ -384,6 +440,17 @@ class ProjectsClient {
       google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> EnableXpnResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::EnableXpnResourceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  EnableXpnResource(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -695,6 +762,12 @@ class ProjectsClient {
           disk_move_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::DiskMoveRequest const&
+          disk_move_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Moves a persistent disk from one zone to another.
@@ -731,6 +804,16 @@ class ProjectsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
       google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveDisk(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::MoveDiskRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveDisk(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -770,6 +853,12 @@ class ProjectsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
       std::string const& project,
+      google::cloud::cpp::compute::v1::InstanceMoveRequest const&
+          instance_move_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::InstanceMoveRequest const&
           instance_move_request_resource,
       Options opts = {});
@@ -818,6 +907,17 @@ class ProjectsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> MoveInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> MoveInstance(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the
@@ -853,6 +953,12 @@ class ProjectsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCloudArmorTier(
       std::string const& project,
+      google::cloud::cpp::compute::v1::ProjectsSetCloudArmorTierRequest const&
+          projects_set_cloud_armor_tier_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::ProjectsSetCloudArmorTierRequest const&
           projects_set_cloud_armor_tier_request_resource,
       Options opts = {});
@@ -899,6 +1005,17 @@ class ProjectsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCloudArmorTier(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::SetCloudArmorTierRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetCloudArmorTier(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Sets metadata common to all instances within the specified project using
@@ -933,6 +1050,12 @@ class ProjectsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCommonInstanceMetadata(
       std::string const& project,
+      google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCommonInstanceMetadata(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
       Options opts = {});
 
@@ -976,6 +1099,18 @@ class ProjectsClient {
                                 SetCommonInstanceMetadataRequest const& request,
                             Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetCommonInstanceMetadata(ExperimentalTag, NoAwaitTag,
+                            google::cloud::cpp::compute::projects::v1::
+                                SetCommonInstanceMetadataRequest const& request,
+                            Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetCommonInstanceMetadata(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the default network tier of the project. The default network tier is
@@ -1011,6 +1146,13 @@ class ProjectsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDefaultNetworkTier(
       std::string const& project,
+      google::cloud::cpp::compute::v1::
+          ProjectsSetDefaultNetworkTierRequest const&
+              projects_set_default_network_tier_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::
           ProjectsSetDefaultNetworkTierRequest const&
               projects_set_default_network_tier_request_resource,
@@ -1057,6 +1199,18 @@ class ProjectsClient {
                             SetDefaultNetworkTierRequest const& request,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDefaultNetworkTier(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::
+          SetDefaultNetworkTierRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetDefaultNetworkTier(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Enables the usage export feature and sets the usage export bucket where
@@ -1092,6 +1246,12 @@ class ProjectsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetUsageExportBucket(
       std::string const& project,
+      google::cloud::cpp::compute::v1::UsageExportLocation const&
+          usage_export_location_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::UsageExportLocation const&
           usage_export_location_resource,
       Options opts = {});
@@ -1136,6 +1296,18 @@ class ProjectsClient {
   SetUsageExportBucket(google::cloud::cpp::compute::projects::v1::
                            SetUsageExportBucketRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUsageExportBucket(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::projects::v1::
+          SetUsageExportBucketRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetUsageExportBucket(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<ProjectsConnection> connection_;

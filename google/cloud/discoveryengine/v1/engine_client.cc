@@ -45,12 +45,40 @@ EngineServiceClient::CreateEngine(
   return connection_->CreateEngine(request);
 }
 
+StatusOr<google::longrunning::Operation> EngineServiceClient::CreateEngine(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::discoveryengine::v1::Engine const& engine,
+    std::string const& engine_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::CreateEngineRequest request;
+  request.set_parent(parent);
+  *request.mutable_engine() = engine;
+  request.set_engine_id(engine_id);
+  return connection_->CreateEngine(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
 EngineServiceClient::CreateEngine(
     google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateEngine(request);
+}
+
+StatusOr<google::longrunning::Operation> EngineServiceClient::CreateEngine(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEngine(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
+EngineServiceClient::CreateEngine(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEngine(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
@@ -61,12 +89,36 @@ EngineServiceClient::DeleteEngine(std::string const& name, Options opts) {
   return connection_->DeleteEngine(request);
 }
 
+StatusOr<google::longrunning::Operation> EngineServiceClient::DeleteEngine(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::DeleteEngineRequest request;
+  request.set_name(name);
+  return connection_->DeleteEngine(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
 EngineServiceClient::DeleteEngine(
     google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteEngine(request);
+}
+
+StatusOr<google::longrunning::Operation> EngineServiceClient::DeleteEngine(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEngine(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
+EngineServiceClient::DeleteEngine(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEngine(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Engine>

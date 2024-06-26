@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKSTATIONS_V1_WORKSTATIONS_CLIENT_H
 
 #include "google/cloud/workstations/v1/workstations_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -258,6 +260,12 @@ class WorkstationsClient {
           workstation_cluster,
       std::string const& workstation_cluster_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::workstations::v1::WorkstationCluster const&
+          workstation_cluster,
+      std::string const& workstation_cluster_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new workstation cluster.
@@ -298,6 +306,17 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+  CreateWorkstationCluster(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Updates an existing workstation cluster.
@@ -331,6 +350,12 @@ class WorkstationsClient {
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   UpdateWorkstationCluster(
+      google::cloud::workstations::v1::WorkstationCluster const&
+          workstation_cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::WorkstationCluster const&
           workstation_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -375,6 +400,17 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+  UpdateWorkstationCluster(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified workstation cluster.
@@ -406,6 +442,9 @@ class WorkstationsClient {
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   DeleteWorkstationCluster(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -446,6 +485,17 @@ class WorkstationsClient {
       google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
+  DeleteWorkstationCluster(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -696,6 +746,12 @@ class WorkstationsClient {
           workstation_config,
       std::string const& workstation_config_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::workstations::v1::WorkstationConfig const&
+          workstation_config,
+      std::string const& workstation_config_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new workstation configuration.
@@ -736,6 +792,17 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+  CreateWorkstationConfig(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
+
   // clang-format off
   ///
   /// Updates an existing workstation configuration.
@@ -769,6 +836,12 @@ class WorkstationsClient {
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(
+      google::cloud::workstations::v1::WorkstationConfig const&
+          workstation_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::WorkstationConfig const&
           workstation_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -813,6 +886,17 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+  UpdateWorkstationConfig(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified workstation configuration.
@@ -844,6 +928,9 @@ class WorkstationsClient {
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -884,6 +971,17 @@ class WorkstationsClient {
       google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
+  DeleteWorkstationConfig(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1129,6 +1227,11 @@ class WorkstationsClient {
       google::cloud::workstations::v1::Workstation const& workstation,
       std::string const& workstation_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateWorkstation(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::workstations::v1::Workstation const& workstation,
+      std::string const& workstation_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new workstation.
@@ -1168,6 +1271,16 @@ class WorkstationsClient {
       google::cloud::workstations::v1::CreateWorkstationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::CreateWorkstationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  CreateWorkstation(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Updates an existing workstation.
@@ -1201,6 +1314,11 @@ class WorkstationsClient {
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(
+      google::cloud::workstations::v1::Workstation const& workstation,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateWorkstation(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::Workstation const& workstation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1243,6 +1361,16 @@ class WorkstationsClient {
       google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  UpdateWorkstation(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified workstation.
@@ -1274,6 +1402,9 @@ class WorkstationsClient {
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteWorkstation(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1314,6 +1445,16 @@ class WorkstationsClient {
       google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  DeleteWorkstation(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Starts running a workstation so that users can connect to it.
@@ -1345,6 +1486,9 @@ class WorkstationsClient {
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StartWorkstation(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1385,6 +1529,16 @@ class WorkstationsClient {
       google::cloud::workstations::v1::StartWorkstationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StartWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::StartWorkstationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  StartWorkstation(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Stops running a workstation, reducing costs.
@@ -1416,6 +1570,9 @@ class WorkstationsClient {
   // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StopWorkstation(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1455,6 +1612,16 @@ class WorkstationsClient {
   StopWorkstation(
       google::cloud::workstations::v1::StopWorkstationRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StopWorkstation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::workstations::v1::StopWorkstationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::workstations::v1::Workstation>>
+  StopWorkstation(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///

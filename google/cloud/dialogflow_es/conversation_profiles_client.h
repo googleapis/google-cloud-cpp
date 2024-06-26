@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_PROFILES_CLIENT_H
 
 #include "google/cloud/dialogflow_es/conversation_profiles_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -480,6 +482,10 @@ class ConversationProfilesClient {
   SetSuggestionFeatureConfig(std::string const& conversation_profile,
                              Options opts = {});
 
+  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Adds or updates a suggestion feature in a conversation profile.
@@ -534,6 +540,13 @@ class ConversationProfilesClient {
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   SetSuggestionFeatureConfig(
       std::string const& conversation_profile,
+      google::cloud::dialogflow::v2::Participant::Role participant_role,
+      google::cloud::dialogflow::v2::HumanAgentAssistantConfig::
+          SuggestionFeatureConfig const& suggestion_feature_config,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
       google::cloud::dialogflow::v2::Participant::Role participant_role,
       google::cloud::dialogflow::v2::HumanAgentAssistantConfig::
           SuggestionFeatureConfig const& suggestion_feature_config,
@@ -597,6 +610,17 @@ class ConversationProfilesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
+  SetSuggestionFeatureConfig(ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts = {});
+
   // clang-format off
   ///
   /// Clears a suggestion feature from a conversation profile for the given
@@ -641,6 +665,10 @@ class ConversationProfilesClient {
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   ClearSuggestionFeatureConfig(std::string const& conversation_profile,
                                Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -689,6 +717,13 @@ class ConversationProfilesClient {
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   ClearSuggestionFeatureConfig(
       std::string const& conversation_profile,
+      google::cloud::dialogflow::v2::Participant::Role participant_role,
+      google::cloud::dialogflow::v2::SuggestionFeature::Type
+          suggestion_feature_type,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
       google::cloud::dialogflow::v2::Participant::Role participant_role,
       google::cloud::dialogflow::v2::SuggestionFeature::Type
           suggestion_feature_type,
@@ -744,6 +779,17 @@ class ConversationProfilesClient {
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
+  ClearSuggestionFeatureConfig(ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts = {});
 
  private:
   std::shared_ptr<ConversationProfilesConnection> connection_;

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_DEPLOYMENT_RESOURCE_POOL_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/deployment_resource_pool_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -135,6 +137,12 @@ class DeploymentResourcePoolServiceClient {
           deployment_resource_pool,
       std::string const& deployment_resource_pool_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::DeploymentResourcePool const&
+          deployment_resource_pool,
+      std::string const& deployment_resource_pool_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create a DeploymentResourcePool.
@@ -174,6 +182,17 @@ class DeploymentResourcePoolServiceClient {
       google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  CreateDeploymentResourcePool(ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -345,6 +364,9 @@ class DeploymentResourcePoolServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDeploymentResourcePool(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Delete a DeploymentResourcePool.
@@ -384,6 +406,17 @@ class DeploymentResourcePoolServiceClient {
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDeploymentResourcePool(ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts = {});
 
  private:
   std::shared_ptr<DeploymentResourcePoolServiceConnection> connection_;

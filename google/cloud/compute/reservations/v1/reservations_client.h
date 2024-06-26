@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_RESERVATIONS_V1_RESERVATIONS_CLIENT_H
 
 #include "google/cloud/compute/reservations/v1/reservations_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -203,6 +205,11 @@ class ReservationsClient {
   DeleteReservation(std::string const& project, std::string const& zone,
                     std::string const& reservation, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservation(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& reservation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified reservation.
@@ -240,6 +247,17 @@ class ReservationsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteReservation(google::cloud::cpp::compute::reservations::v1::
                         DeleteReservationRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::
+          DeleteReservationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteReservation(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -406,6 +424,12 @@ class ReservationsClient {
       google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservation(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
+      google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new reservation. For more information, read Reserving zonal
@@ -444,6 +468,17 @@ class ReservationsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertReservation(google::cloud::cpp::compute::reservations::v1::
                         InsertReservationRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::
+          InsertReservationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertReservation(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -566,6 +601,13 @@ class ReservationsClient {
           reservations_resize_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& reservation,
+      google::cloud::cpp::compute::v1::ReservationsResizeRequest const&
+          reservations_resize_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Resizes the reservation (applicable to standalone reservations only). For
@@ -604,6 +646,17 @@ class ReservationsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -781,6 +834,13 @@ class ReservationsClient {
       google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservation(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& reservation,
+      std::string const& update_mask,
+      google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Update share settings of the reservation.
@@ -818,6 +878,17 @@ class ReservationsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateReservation(google::cloud::cpp::compute::reservations::v1::
                         UpdateReservationRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::reservations::v1::
+          UpdateReservationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateReservation(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
  private:

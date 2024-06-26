@@ -82,12 +82,45 @@ ImageAnnotatorClient::AsyncBatchAnnotateImages(
   return connection_->AsyncBatchAnnotateImages(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorClient::AsyncBatchAnnotateImages(
+    ExperimentalTag, NoAwaitTag,
+    std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
+        requests,
+    google::cloud::vision::v1::OutputConfig const& output_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest request;
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  *request.mutable_output_config() = output_config;
+  return connection_->AsyncBatchAnnotateImages(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
+}
+
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorClient::AsyncBatchAnnotateImages(
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncBatchAnnotateImages(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorClient::AsyncBatchAnnotateImages(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncBatchAnnotateImages(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
+}
+
+future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
+ImageAnnotatorClient::AsyncBatchAnnotateImages(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncBatchAnnotateImages(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
@@ -101,12 +134,43 @@ ImageAnnotatorClient::AsyncBatchAnnotateFiles(
   return connection_->AsyncBatchAnnotateFiles(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorClient::AsyncBatchAnnotateFiles(
+    ExperimentalTag, NoAwaitTag,
+    std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
+        requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest request;
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->AsyncBatchAnnotateFiles(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
+}
+
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorClient::AsyncBatchAnnotateFiles(
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AsyncBatchAnnotateFiles(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ImageAnnotatorClient::AsyncBatchAnnotateFiles(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncBatchAnnotateFiles(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
+}
+
+future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
+ImageAnnotatorClient::AsyncBatchAnnotateFiles(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncBatchAnnotateFiles(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

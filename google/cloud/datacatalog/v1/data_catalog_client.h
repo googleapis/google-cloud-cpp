@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_DATA_CATALOG_CLIENT_H
 
 #include "google/cloud/datacatalog/v1/data_catalog_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -2237,6 +2239,16 @@ class DataCatalogClient {
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ReconcileTags(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
+  ReconcileTags(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
+
   // clang-format off
   ///
   /// Marks an [Entry][google.cloud.datacatalog.v1.Entry] as starred by
@@ -2671,6 +2683,16 @@ class DataCatalogClient {
   ImportEntries(
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ImportEntries(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
+  ImportEntries(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
  private:
   std::shared_ptr<DataCatalogConnection> connection_;

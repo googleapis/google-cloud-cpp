@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPCONNECTORS_V1_APP_CONNECTORS_CLIENT_H
 
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -280,6 +282,12 @@ class AppConnectorsServiceClient {
           app_connector,
       std::string const& app_connector_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAppConnector(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+          app_connector,
+      std::string const& app_connector_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new AppConnector in a given project and location.
@@ -317,6 +325,17 @@ class AppConnectorsServiceClient {
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   CreateAppConnector(google::cloud::beyondcorp::appconnectors::v1::
                          CreateAppConnectorRequest const& request,
+                     Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateAppConnector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          CreateAppConnectorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  CreateAppConnector(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -360,6 +379,12 @@ class AppConnectorsServiceClient {
           app_connector,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAppConnector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
+          app_connector,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single AppConnector.
@@ -399,6 +424,17 @@ class AppConnectorsServiceClient {
                          UpdateAppConnectorRequest const& request,
                      Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAppConnector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          UpdateAppConnectorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  UpdateAppConnector(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single AppConnector.
@@ -432,6 +468,9 @@ class AppConnectorsServiceClient {
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                       AppConnectorOperationMetadata>>
   DeleteAppConnector(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAppConnector(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -473,6 +512,18 @@ class AppConnectorsServiceClient {
                          DeleteAppConnectorRequest const& request,
                      Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteAppConnector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::
+          DeleteAppConnectorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
+                      AppConnectorOperationMetadata>>
+  DeleteAppConnector(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Report status for a given connector.
@@ -509,6 +560,12 @@ class AppConnectorsServiceClient {
                google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
                    resource_info,
                Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ReportStatus(
+      ExperimentalTag, NoAwaitTag, std::string const& app_connector,
+      google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
+          resource_info,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -549,6 +606,16 @@ class AppConnectorsServiceClient {
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ReportStatus(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
+  ReportStatus(ExperimentalTag, google::longrunning::Operation const& operation,
+               Options opts = {});
 
  private:
   std::shared_ptr<AppConnectorsServiceConnection> connection_;

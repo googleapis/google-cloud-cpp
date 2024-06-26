@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_CLOUD_DEPLOY_CLIENT_H
 
 #include "google/cloud/deploy/v1/cloud_deploy_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -260,6 +262,11 @@ class CloudDeployClient {
       google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
       std::string const& delivery_pipeline_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
+      std::string const& delivery_pipeline_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new DeliveryPipeline in a given project and location.
@@ -299,6 +306,16 @@ class CloudDeployClient {
       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
+  CreateDeliveryPipeline(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single DeliveryPipeline.
@@ -335,6 +352,11 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   UpdateDeliveryPipeline(
+      google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -377,6 +399,16 @@ class CloudDeployClient {
       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
+  UpdateDeliveryPipeline(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single DeliveryPipeline.
@@ -409,6 +441,9 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteDeliveryPipeline(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -448,6 +483,16 @@ class CloudDeployClient {
   DeleteDeliveryPipeline(
       google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteDeliveryPipeline(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -679,6 +724,11 @@ class CloudDeployClient {
       google::cloud::deploy::v1::Target const& target,
       std::string const& target_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTarget(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::deploy::v1::Target const& target,
+      std::string const& target_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Target in a given project and location.
@@ -717,6 +767,15 @@ class CloudDeployClient {
       google::cloud::deploy::v1::CreateTargetRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTarget(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::CreateTargetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Target.
@@ -752,6 +811,11 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
+      google::cloud::deploy::v1::Target const& target,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateTarget(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::deploy::v1::Target const& target,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -793,6 +857,15 @@ class CloudDeployClient {
       google::cloud::deploy::v1::UpdateTargetRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateTarget(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::UpdateTargetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Target.
@@ -825,6 +898,11 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTarget(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -862,6 +940,15 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
       google::cloud::deploy::v1::DeleteTargetRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTarget(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::DeleteTargetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1036,6 +1123,11 @@ class CloudDeployClient {
       google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
       std::string const& custom_target_type_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCustomTargetType(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
+      std::string const& custom_target_type_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new CustomTargetType in a given project and location.
@@ -1075,6 +1167,16 @@ class CloudDeployClient {
       google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCustomTargetType(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+  CreateCustomTargetType(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Updates a single CustomTargetType.
@@ -1111,6 +1213,11 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
   UpdateCustomTargetType(
+      google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1153,6 +1260,16 @@ class CloudDeployClient {
       google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
+  UpdateCustomTargetType(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single CustomTargetType.
@@ -1185,6 +1302,9 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteCustomTargetType(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1224,6 +1344,16 @@ class CloudDeployClient {
   DeleteCustomTargetType(
       google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteCustomTargetType(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1395,6 +1525,11 @@ class CloudDeployClient {
       google::cloud::deploy::v1::Release const& release,
       std::string const& release_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateRelease(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::deploy::v1::Release const& release,
+      std::string const& release_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Release in a given project and location.
@@ -1431,6 +1566,15 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
       google::cloud::deploy::v1::CreateReleaseRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateRelease(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::CreateReleaseRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1831,6 +1975,11 @@ class CloudDeployClient {
       google::cloud::deploy::v1::Rollout const& rollout,
       std::string const& rollout_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateRollout(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::deploy::v1::Rollout const& rollout,
+      std::string const& rollout_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Rollout in a given project and location.
@@ -1867,6 +2016,15 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
       google::cloud::deploy::v1::CreateRolloutRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateRollout(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::CreateRolloutRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -2270,6 +2428,11 @@ class CloudDeployClient {
       google::cloud::deploy::v1::Automation const& automation,
       std::string const& automation_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAutomation(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::deploy::v1::Automation const& automation,
+      std::string const& automation_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Automation in a given project and location.
@@ -2308,6 +2471,15 @@ class CloudDeployClient {
       google::cloud::deploy::v1::CreateAutomationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAutomation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::CreateAutomationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Automation resource.
@@ -2343,6 +2515,11 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
+      google::cloud::deploy::v1::Automation const& automation,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAutomation(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::deploy::v1::Automation const& automation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -2384,6 +2561,15 @@ class CloudDeployClient {
       google::cloud::deploy::v1::UpdateAutomationRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAutomation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::UpdateAutomationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Automation resource.
@@ -2416,6 +2602,9 @@ class CloudDeployClient {
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteAutomation(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAutomation(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2455,6 +2644,16 @@ class CloudDeployClient {
   DeleteAutomation(
       google::cloud::deploy::v1::DeleteAutomationRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAutomation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::deploy::v1::DeleteAutomationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteAutomation(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///

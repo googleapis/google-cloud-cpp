@@ -55,6 +55,24 @@ DomainMappingsClient::CreateDomainMapping(
   return connection_->CreateDomainMapping(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsClient::CreateDomainMapping(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::CreateDomainMappingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDomainMapping(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::appengine::v1::DomainMapping>>
+DomainMappingsClient::CreateDomainMapping(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDomainMapping(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsClient::UpdateDomainMapping(
     google::appengine::v1::UpdateDomainMappingRequest const& request,
@@ -63,12 +81,48 @@ DomainMappingsClient::UpdateDomainMapping(
   return connection_->UpdateDomainMapping(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DomainMappingsClient::UpdateDomainMapping(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::UpdateDomainMappingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDomainMapping(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::appengine::v1::DomainMapping>>
+DomainMappingsClient::UpdateDomainMapping(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDomainMapping(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsClient::DeleteDomainMapping(
     google::appengine::v1::DeleteDomainMappingRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDomainMapping(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DomainMappingsClient::DeleteDomainMapping(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::DeleteDomainMappingRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDomainMapping(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+DomainMappingsClient::DeleteDomainMapping(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDomainMapping(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

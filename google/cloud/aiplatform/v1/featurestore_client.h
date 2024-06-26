@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_FEATURESTORE_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/featurestore_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -127,6 +129,11 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::Featurestore const& featurestore,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFeaturestore(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Featurestore const& featurestore,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Featurestore in a given project and location.
@@ -172,6 +179,11 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::Featurestore const& featurestore,
       std::string const& featurestore_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFeaturestore(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Featurestore const& featurestore,
+      std::string const& featurestore_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Featurestore in a given project and location.
@@ -210,6 +222,16 @@ class FeaturestoreServiceClient {
   CreateFeaturestore(
       google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateFeaturestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
+  CreateFeaturestore(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -393,6 +415,11 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::Featurestore const& featurestore,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFeaturestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::Featurestore const& featurestore,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Featurestore.
@@ -432,6 +459,16 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFeaturestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
+  UpdateFeaturestore(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Featurestore. The Featurestore must not contain any
@@ -466,6 +503,9 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeaturestore(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeaturestore(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -504,6 +544,10 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeaturestore(std::string const& name, bool force, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeaturestore(
+      ExperimentalTag, NoAwaitTag, std::string const& name, bool force,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -545,6 +589,16 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteFeaturestore(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeaturestore(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new EntityType in a given Featurestore.
@@ -579,6 +633,11 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::EntityType>> CreateEntityType(
       std::string const& parent,
+      google::cloud::aiplatform::v1::EntityType const& entity_type,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateEntityType(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::EntityType const& entity_type,
       Options opts = {});
 
@@ -626,6 +685,11 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::EntityType const& entity_type,
       std::string const& entity_type_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateEntityType(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::EntityType const& entity_type,
+      std::string const& entity_type_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new EntityType in a given Featurestore.
@@ -662,6 +726,15 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::EntityType>> CreateEntityType(
       google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateEntityType(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::EntityType>> CreateEntityType(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -912,6 +985,9 @@ class FeaturestoreServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteEntityType(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteEntityType(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single EntityType. The EntityType must not have any Features
@@ -948,6 +1024,10 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteEntityType(std::string const& name, bool force, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteEntityType(
+      ExperimentalTag, NoAwaitTag, std::string const& name, bool force,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -989,6 +1069,16 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteEntityType(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteEntityType(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Feature in a given EntityType.
@@ -1025,6 +1115,10 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
       std::string const& parent,
+      google::cloud::aiplatform::v1::Feature const& feature, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Feature const& feature, Options opts = {});
 
   // clang-format off
@@ -1073,6 +1167,11 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::Feature const& feature,
       std::string const& feature_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Feature const& feature,
+      std::string const& feature_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Feature in a given EntityType.
@@ -1109,6 +1208,15 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1154,6 +1262,12 @@ class FeaturestoreServiceClient {
           requests,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const&
+          requests,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a batch of Features in a given EntityType.
@@ -1192,6 +1306,16 @@ class FeaturestoreServiceClient {
   BatchCreateFeatures(
       google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchCreateFeatures(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1440,6 +1564,9 @@ class FeaturestoreServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeature(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Feature.
@@ -1478,6 +1605,16 @@ class FeaturestoreServiceClient {
   DeleteFeature(
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteFeature(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1531,6 +1668,10 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
   ImportFeatureValues(std::string const& entity_type, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ImportFeatureValues(
+      ExperimentalTag, NoAwaitTag, std::string const& entity_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1590,6 +1731,16 @@ class FeaturestoreServiceClient {
       google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportFeatureValues(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
+  ImportFeatureValues(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
+
   // clang-format off
   ///
   /// Batch reads Feature values from a Featurestore.
@@ -1629,6 +1780,10 @@ class FeaturestoreServiceClient {
   future<
       StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
   BatchReadFeatureValues(std::string const& featurestore, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchReadFeatureValues(
+      ExperimentalTag, NoAwaitTag, std::string const& featurestore,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1676,6 +1831,18 @@ class FeaturestoreServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchReadFeatureValues(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
+  BatchReadFeatureValues(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Exports Feature values from all the entities of a target EntityType.
@@ -1709,6 +1876,10 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
   ExportFeatureValues(std::string const& entity_type, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportFeatureValues(
+      ExperimentalTag, NoAwaitTag, std::string const& entity_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1748,6 +1919,16 @@ class FeaturestoreServiceClient {
   ExportFeatureValues(
       google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportFeatureValues(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
+  ExportFeatureValues(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1791,6 +1972,10 @@ class FeaturestoreServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
   DeleteFeatureValues(std::string const& entity_type, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeatureValues(
+      ExperimentalTag, NoAwaitTag, std::string const& entity_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1839,6 +2024,16 @@ class FeaturestoreServiceClient {
   DeleteFeatureValues(
       google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeatureValues(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
+  DeleteFeatureValues(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///

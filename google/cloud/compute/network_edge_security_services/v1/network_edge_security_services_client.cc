@@ -70,6 +70,21 @@ NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityService(
   return connection_->DeleteNetworkEdgeSecurityService(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityService(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& network_edge_security_service,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_edge_security_services::v1::
+      DeleteNetworkEdgeSecurityServiceRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_network_edge_security_service(network_edge_security_service);
+  return connection_->DeleteNetworkEdgeSecurityService(ExperimentalTag{},
+                                                       NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -77,6 +92,26 @@ NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityService(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkEdgeSecurityService(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        DeleteNetworkEdgeSecurityServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetworkEdgeSecurityService(ExperimentalTag{},
+                                                       NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEdgeSecurityServicesClient::DeleteNetworkEdgeSecurityService(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetworkEdgeSecurityService(ExperimentalTag{},
+                                                       operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
@@ -117,6 +152,24 @@ NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityService(
   return connection_->InsertNetworkEdgeSecurityService(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityService(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
+        network_edge_security_service_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_edge_security_services::v1::
+      InsertNetworkEdgeSecurityServiceRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_network_edge_security_service_resource() =
+      network_edge_security_service_resource;
+  return connection_->InsertNetworkEdgeSecurityService(ExperimentalTag{},
+                                                       NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -124,6 +177,26 @@ NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityService(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNetworkEdgeSecurityService(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        InsertNetworkEdgeSecurityServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertNetworkEdgeSecurityService(ExperimentalTag{},
+                                                       NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEdgeSecurityServicesClient::InsertNetworkEdgeSecurityService(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertNetworkEdgeSecurityService(ExperimentalTag{},
+                                                       operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -146,6 +219,27 @@ NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
   return connection_->PatchNetworkEdgeSecurityService(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& network_edge_security_service,
+    std::string const& update_mask,
+    google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
+        network_edge_security_service_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_edge_security_services::v1::
+      PatchNetworkEdgeSecurityServiceRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_network_edge_security_service(network_edge_security_service);
+  request.set_update_mask(update_mask);
+  *request.mutable_network_edge_security_service_resource() =
+      network_edge_security_service_resource;
+  return connection_->PatchNetworkEdgeSecurityService(ExperimentalTag{},
+                                                      NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -153,6 +247,26 @@ NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchNetworkEdgeSecurityService(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::network_edge_security_services::v1::
+        PatchNetworkEdgeSecurityServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchNetworkEdgeSecurityService(ExperimentalTag{},
+                                                      NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEdgeSecurityServicesClient::PatchNetworkEdgeSecurityService(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchNetworkEdgeSecurityService(ExperimentalTag{},
+                                                      operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

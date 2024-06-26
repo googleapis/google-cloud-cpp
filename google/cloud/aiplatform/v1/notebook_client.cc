@@ -46,6 +46,21 @@ NotebookServiceClient::CreateNotebookRuntimeTemplate(
   return connection_->CreateNotebookRuntimeTemplate(request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::CreateNotebookRuntimeTemplate(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::NotebookRuntimeTemplate const&
+        notebook_runtime_template,
+    std::string const& notebook_runtime_template_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest request;
+  request.set_parent(parent);
+  *request.mutable_notebook_runtime_template() = notebook_runtime_template;
+  request.set_notebook_runtime_template_id(notebook_runtime_template_id);
+  return connection_->CreateNotebookRuntimeTemplate(ExperimentalTag{},
+                                                    NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
 NotebookServiceClient::CreateNotebookRuntimeTemplate(
     google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
@@ -53,6 +68,26 @@ NotebookServiceClient::CreateNotebookRuntimeTemplate(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateNotebookRuntimeTemplate(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::CreateNotebookRuntimeTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNotebookRuntimeTemplate(ExperimentalTag{},
+                                                    NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
+NotebookServiceClient::CreateNotebookRuntimeTemplate(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateNotebookRuntimeTemplate(ExperimentalTag{},
+                                                    operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -99,6 +134,18 @@ NotebookServiceClient::DeleteNotebookRuntimeTemplate(std::string const& name,
   return connection_->DeleteNotebookRuntimeTemplate(request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::DeleteNotebookRuntimeTemplate(ExperimentalTag,
+                                                     NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest request;
+  request.set_name(name);
+  return connection_->DeleteNotebookRuntimeTemplate(ExperimentalTag{},
+                                                    NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 NotebookServiceClient::DeleteNotebookRuntimeTemplate(
     google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
@@ -106,6 +153,26 @@ NotebookServiceClient::DeleteNotebookRuntimeTemplate(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNotebookRuntimeTemplate(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::DeleteNotebookRuntimeTemplate(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotebookRuntimeTemplate(ExperimentalTag{},
+                                                    NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+NotebookServiceClient::DeleteNotebookRuntimeTemplate(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotebookRuntimeTemplate(ExperimentalTag{},
+                                                    operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>
@@ -143,12 +210,46 @@ NotebookServiceClient::AssignNotebookRuntime(
   return connection_->AssignNotebookRuntime(request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::AssignNotebookRuntime(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::string const& notebook_runtime_template,
+    google::cloud::aiplatform::v1::NotebookRuntime const& notebook_runtime,
+    std::string const& notebook_runtime_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest request;
+  request.set_parent(parent);
+  request.set_notebook_runtime_template(notebook_runtime_template);
+  *request.mutable_notebook_runtime() = notebook_runtime;
+  request.set_notebook_runtime_id(notebook_runtime_id);
+  return connection_->AssignNotebookRuntime(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
 NotebookServiceClient::AssignNotebookRuntime(
     google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AssignNotebookRuntime(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::AssignNotebookRuntime(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AssignNotebookRuntime(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
+NotebookServiceClient::AssignNotebookRuntime(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AssignNotebookRuntime(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>
@@ -194,12 +295,41 @@ NotebookServiceClient::DeleteNotebookRuntime(std::string const& name,
   return connection_->DeleteNotebookRuntime(request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::DeleteNotebookRuntime(ExperimentalTag, NoAwaitTag,
+                                             std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest request;
+  request.set_name(name);
+  return connection_->DeleteNotebookRuntime(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 NotebookServiceClient::DeleteNotebookRuntime(
     google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNotebookRuntime(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::DeleteNotebookRuntime(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotebookRuntime(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+NotebookServiceClient::DeleteNotebookRuntime(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNotebookRuntime(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
@@ -211,12 +341,41 @@ NotebookServiceClient::UpgradeNotebookRuntime(std::string const& name,
   return connection_->UpgradeNotebookRuntime(request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::UpgradeNotebookRuntime(ExperimentalTag, NoAwaitTag,
+                                              std::string const& name,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest request;
+  request.set_name(name);
+  return connection_->UpgradeNotebookRuntime(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
 NotebookServiceClient::UpgradeNotebookRuntime(
     google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpgradeNotebookRuntime(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::UpgradeNotebookRuntime(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpgradeNotebookRuntime(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
+NotebookServiceClient::UpgradeNotebookRuntime(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpgradeNotebookRuntime(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
@@ -228,12 +387,41 @@ NotebookServiceClient::StartNotebookRuntime(std::string const& name,
   return connection_->StartNotebookRuntime(request);
 }
 
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::StartNotebookRuntime(ExperimentalTag, NoAwaitTag,
+                                            std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::StartNotebookRuntimeRequest request;
+  request.set_name(name);
+  return connection_->StartNotebookRuntime(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
 NotebookServiceClient::StartNotebookRuntime(
     google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartNotebookRuntime(request);
+}
+
+StatusOr<google::longrunning::Operation>
+NotebookServiceClient::StartNotebookRuntime(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartNotebookRuntime(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
+NotebookServiceClient::StartNotebookRuntime(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartNotebookRuntime(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

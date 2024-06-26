@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SHELL_V1_CLOUD_SHELL_CLIENT_H
 
 #include "google/cloud/shell/v1/cloud_shell_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -194,6 +196,16 @@ class CloudShellServiceClient {
       google::cloud::shell::v1::StartEnvironmentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StartEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::shell::v1::StartEnvironmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
+  StartEnvironment(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Sends OAuth credentials to a running environment on behalf of a user. When
@@ -236,6 +248,16 @@ class CloudShellServiceClient {
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
+  AuthorizeEnvironment(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
+
   // clang-format off
   ///
   /// Adds a public SSH key to an environment, allowing clients with the
@@ -274,6 +296,15 @@ class CloudShellServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       google::cloud::shell::v1::AddPublicKeyRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> AddPublicKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::shell::v1::AddPublicKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -317,6 +348,16 @@ class CloudShellServiceClient {
   RemovePublicKey(
       google::cloud::shell::v1::RemovePublicKeyRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RemovePublicKey(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::shell::v1::RemovePublicKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
+  RemovePublicKey(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
  private:
   std::shared_ptr<CloudShellServiceConnection> connection_;

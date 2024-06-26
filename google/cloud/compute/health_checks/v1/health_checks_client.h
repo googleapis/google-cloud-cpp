@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_HEALTH_CHECKS_V1_HEALTH_CHECKS_CLIENT_H
 
 #include "google/cloud/compute/health_checks/v1/health_checks_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -204,6 +206,10 @@ class HealthChecksClient {
   DeleteHealthCheck(std::string const& project, std::string const& health_check,
                     Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheck(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& health_check, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified HealthCheck resource.
@@ -241,6 +247,17 @@ class HealthChecksClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHealthCheck(google::cloud::cpp::compute::health_checks::v1::
                         DeleteHealthCheckRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheck(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::health_checks::v1::
+          DeleteHealthCheckRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteHealthCheck(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -341,6 +358,11 @@ class HealthChecksClient {
       google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheck(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a HealthCheck resource in the specified project using the data
@@ -379,6 +401,17 @@ class HealthChecksClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHealthCheck(google::cloud::cpp::compute::health_checks::v1::
                         InsertHealthCheckRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheck(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::health_checks::v1::
+          InsertHealthCheckRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertHealthCheck(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -498,6 +531,12 @@ class HealthChecksClient {
       google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheck(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& health_check,
+      google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates a HealthCheck resource in the specified project using the data
@@ -539,6 +578,17 @@ class HealthChecksClient {
           PatchHealthCheckRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheck(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::health_checks::v1::
+          PatchHealthCheckRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchHealthCheck(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates a HealthCheck resource in the specified project using the data
@@ -574,6 +624,12 @@ class HealthChecksClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHealthCheck(
       std::string const& project, std::string const& health_check,
+      google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHealthCheck(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& health_check,
       google::cloud::cpp::compute::v1::HealthCheck const& health_check_resource,
       Options opts = {});
 
@@ -615,6 +671,17 @@ class HealthChecksClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHealthCheck(google::cloud::cpp::compute::health_checks::v1::
                         UpdateHealthCheckRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHealthCheck(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::health_checks::v1::
+          UpdateHealthCheckRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateHealthCheck(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
  private:

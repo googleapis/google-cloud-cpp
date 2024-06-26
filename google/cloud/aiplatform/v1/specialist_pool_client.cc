@@ -44,12 +44,43 @@ SpecialistPoolServiceClient::CreateSpecialistPool(
   return connection_->CreateSpecialistPool(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceClient::CreateSpecialistPool(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateSpecialistPoolRequest request;
+  request.set_parent(parent);
+  *request.mutable_specialist_pool() = specialist_pool;
+  return connection_->CreateSpecialistPool(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceClient::CreateSpecialistPool(
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSpecialistPool(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceClient::CreateSpecialistPool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSpecialistPool(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
+SpecialistPoolServiceClient::CreateSpecialistPool(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSpecialistPool(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
@@ -95,12 +126,41 @@ SpecialistPoolServiceClient::DeleteSpecialistPool(std::string const& name,
   return connection_->DeleteSpecialistPool(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceClient::DeleteSpecialistPool(ExperimentalTag, NoAwaitTag,
+                                                  std::string const& name,
+                                                  Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest request;
+  request.set_name(name);
+  return connection_->DeleteSpecialistPool(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 SpecialistPoolServiceClient::DeleteSpecialistPool(
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSpecialistPool(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceClient::DeleteSpecialistPool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSpecialistPool(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+SpecialistPoolServiceClient::DeleteSpecialistPool(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSpecialistPool(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
@@ -114,12 +174,43 @@ SpecialistPoolServiceClient::UpdateSpecialistPool(
   return connection_->UpdateSpecialistPool(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceClient::UpdateSpecialistPool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest request;
+  *request.mutable_specialist_pool() = specialist_pool;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSpecialistPool(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceClient::UpdateSpecialistPool(
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSpecialistPool(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SpecialistPoolServiceClient::UpdateSpecialistPool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSpecialistPool(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
+SpecialistPoolServiceClient::UpdateSpecialistPool(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSpecialistPool(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

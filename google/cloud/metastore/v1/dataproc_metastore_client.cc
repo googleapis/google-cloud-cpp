@@ -76,12 +76,40 @@ DataprocMetastoreClient::CreateService(
   return connection_->CreateService(request);
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::CreateService(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::metastore::v1::Service const& service,
+    std::string const& service_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::CreateServiceRequest request;
+  request.set_parent(parent);
+  *request.mutable_service() = service;
+  request.set_service_id(service_id);
+  return connection_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreClient::CreateService(
     google::cloud::metastore::v1::CreateServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateService(request);
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::CreateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::CreateServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Service>>
+DataprocMetastoreClient::CreateService(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateService(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::metastore::v1::Service>>
@@ -95,12 +123,39 @@ DataprocMetastoreClient::UpdateService(
   return connection_->UpdateService(request);
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::UpdateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::Service const& service,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::UpdateServiceRequest request;
+  *request.mutable_service() = service;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreClient::UpdateService(
     google::cloud::metastore::v1::UpdateServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateService(request);
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::UpdateService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::UpdateServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Service>>
+DataprocMetastoreClient::UpdateService(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateService(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -111,12 +166,36 @@ DataprocMetastoreClient::DeleteService(std::string const& name, Options opts) {
   return connection_->DeleteService(request);
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::DeleteService(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::DeleteServiceRequest request;
+  request.set_name(name);
+  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreClient::DeleteService(
     google::cloud::metastore::v1::DeleteServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(request);
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::DeleteService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::DeleteServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+DataprocMetastoreClient::DeleteService(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteService(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::metastore::v1::MetadataImport>
@@ -166,12 +245,44 @@ DataprocMetastoreClient::CreateMetadataImport(
   return connection_->CreateMetadataImport(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::CreateMetadataImport(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::metastore::v1::MetadataImport const& metadata_import,
+    std::string const& metadata_import_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::CreateMetadataImportRequest request;
+  request.set_parent(parent);
+  *request.mutable_metadata_import() = metadata_import;
+  request.set_metadata_import_id(metadata_import_id);
+  return connection_->CreateMetadataImport(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreClient::CreateMetadataImport(
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateMetadataImport(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::CreateMetadataImport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::CreateMetadataImportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMetadataImport(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+DataprocMetastoreClient::CreateMetadataImport(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateMetadataImport(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -185,6 +296,19 @@ DataprocMetastoreClient::UpdateMetadataImport(
   return connection_->UpdateMetadataImport(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::UpdateMetadataImport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::MetadataImport const& metadata_import,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::UpdateMetadataImportRequest request;
+  *request.mutable_metadata_import() = metadata_import;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateMetadataImport(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreClient::UpdateMetadataImport(
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request,
@@ -193,12 +317,47 @@ DataprocMetastoreClient::UpdateMetadataImport(
   return connection_->UpdateMetadataImport(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::UpdateMetadataImport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::UpdateMetadataImportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMetadataImport(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
+DataprocMetastoreClient::UpdateMetadataImport(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateMetadataImport(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
 DataprocMetastoreClient::ExportMetadata(
     google::cloud::metastore::v1::ExportMetadataRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportMetadata(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::ExportMetadata(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::ExportMetadataRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportMetadata(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
+DataprocMetastoreClient::ExportMetadata(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportMetadata(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::metastore::v1::Restore>>
@@ -212,12 +371,41 @@ DataprocMetastoreClient::RestoreService(std::string const& service,
   return connection_->RestoreService(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::RestoreService(ExperimentalTag, NoAwaitTag,
+                                        std::string const& service,
+                                        std::string const& backup,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::RestoreServiceRequest request;
+  request.set_service(service);
+  request.set_backup(backup);
+  return connection_->RestoreService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Restore>>
 DataprocMetastoreClient::RestoreService(
     google::cloud::metastore::v1::RestoreServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreService(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::RestoreService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::RestoreServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Restore>>
+DataprocMetastoreClient::RestoreService(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreService(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::metastore::v1::Backup>
@@ -264,12 +452,40 @@ DataprocMetastoreClient::CreateBackup(
   return connection_->CreateBackup(request);
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::CreateBackup(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::metastore::v1::Backup const& backup,
+    std::string const& backup_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::CreateBackupRequest request;
+  request.set_parent(parent);
+  *request.mutable_backup() = backup;
+  request.set_backup_id(backup_id);
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::Backup>>
 DataprocMetastoreClient::CreateBackup(
     google::cloud::metastore::v1::CreateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(request);
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::CreateBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::CreateBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::Backup>>
+DataprocMetastoreClient::CreateBackup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
@@ -280,12 +496,36 @@ DataprocMetastoreClient::DeleteBackup(std::string const& name, Options opts) {
   return connection_->DeleteBackup(request);
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::DeleteBackup(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::metastore::v1::DeleteBackupRequest request;
+  request.set_name(name);
+  return connection_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreClient::DeleteBackup(
     google::cloud::metastore::v1::DeleteBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackup(request);
+}
+
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::DeleteBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::DeleteBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
+DataprocMetastoreClient::DeleteBackup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
@@ -296,12 +536,46 @@ DataprocMetastoreClient::QueryMetadata(
   return connection_->QueryMetadata(request);
 }
 
+StatusOr<google::longrunning::Operation> DataprocMetastoreClient::QueryMetadata(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::QueryMetadataRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryMetadata(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
+DataprocMetastoreClient::QueryMetadata(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->QueryMetadata(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
 DataprocMetastoreClient::MoveTableToDatabase(
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->MoveTableToDatabase(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::MoveTableToDatabase(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveTableToDatabase(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
+DataprocMetastoreClient::MoveTableToDatabase(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->MoveTableToDatabase(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -312,6 +586,27 @@ DataprocMetastoreClient::AlterMetadataResourceLocation(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AlterMetadataResourceLocation(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DataprocMetastoreClient::AlterMetadataResourceLocation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AlterMetadataResourceLocation(ExperimentalTag{},
+                                                    NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
+DataprocMetastoreClient::AlterMetadataResourceLocation(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AlterMetadataResourceLocation(ExperimentalTag{},
+                                                    operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

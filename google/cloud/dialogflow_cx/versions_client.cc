@@ -74,12 +74,38 @@ VersionsClient::CreateVersion(
   return connection_->CreateVersion(request);
 }
 
+StatusOr<google::longrunning::Operation> VersionsClient::CreateVersion(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::dialogflow::cx::v3::Version const& version, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::cx::v3::CreateVersionRequest request;
+  request.set_parent(parent);
+  *request.mutable_version() = version;
+  return connection_->CreateVersion(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
 VersionsClient::CreateVersion(
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateVersion(request);
+}
+
+StatusOr<google::longrunning::Operation> VersionsClient::CreateVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateVersion(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
+VersionsClient::CreateVersion(ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateVersion(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
@@ -123,11 +149,34 @@ future<StatusOr<google::protobuf::Struct>> VersionsClient::LoadVersion(
   return connection_->LoadVersion(request);
 }
 
+StatusOr<google::longrunning::Operation> VersionsClient::LoadVersion(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::cx::v3::LoadVersionRequest request;
+  request.set_name(name);
+  return connection_->LoadVersion(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::protobuf::Struct>> VersionsClient::LoadVersion(
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LoadVersion(request);
+}
+
+StatusOr<google::longrunning::Operation> VersionsClient::LoadVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LoadVersion(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::protobuf::Struct>> VersionsClient::LoadVersion(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LoadVersion(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>

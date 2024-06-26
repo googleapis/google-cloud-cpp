@@ -75,12 +75,40 @@ WorkflowsClient::CreateWorkflow(
   return connection_->CreateWorkflow(request);
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsClient::CreateWorkflow(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::workflows::v1::Workflow const& workflow,
+    std::string const& workflow_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workflows::v1::CreateWorkflowRequest request;
+  request.set_parent(parent);
+  *request.mutable_workflow() = workflow;
+  request.set_workflow_id(workflow_id);
+  return connection_->CreateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsClient::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateWorkflow(request);
+}
+
+StatusOr<google::longrunning::Operation> WorkflowsClient::CreateWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::CreateWorkflowRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workflows::v1::Workflow>>
+WorkflowsClient::CreateWorkflow(ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateWorkflow(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
@@ -91,12 +119,36 @@ WorkflowsClient::DeleteWorkflow(std::string const& name, Options opts) {
   return connection_->DeleteWorkflow(request);
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsClient::DeleteWorkflow(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workflows::v1::DeleteWorkflowRequest request;
+  request.set_name(name);
+  return connection_->DeleteWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsClient::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteWorkflow(request);
+}
+
+StatusOr<google::longrunning::Operation> WorkflowsClient::DeleteWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
+WorkflowsClient::DeleteWorkflow(ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteWorkflow(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
@@ -110,12 +162,39 @@ WorkflowsClient::UpdateWorkflow(
   return connection_->UpdateWorkflow(request);
 }
 
+StatusOr<google::longrunning::Operation> WorkflowsClient::UpdateWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::Workflow const& workflow,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::workflows::v1::UpdateWorkflowRequest request;
+  *request.mutable_workflow() = workflow;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsClient::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkflow(request);
+}
+
+StatusOr<google::longrunning::Operation> WorkflowsClient::UpdateWorkflow(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWorkflow(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::workflows::v1::Workflow>>
+WorkflowsClient::UpdateWorkflow(ExperimentalTag,
+                                google::longrunning::Operation const& operation,
+                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateWorkflow(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -50,10 +50,38 @@ future<StatusOr<google::appengine::v1::Version>> VersionsClient::CreateVersion(
   return connection_->CreateVersion(request);
 }
 
+StatusOr<google::longrunning::Operation> VersionsClient::CreateVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::CreateVersionRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateVersion(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::Version>> VersionsClient::CreateVersion(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateVersion(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::appengine::v1::Version>> VersionsClient::UpdateVersion(
     google::appengine::v1::UpdateVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateVersion(request);
+}
+
+StatusOr<google::longrunning::Operation> VersionsClient::UpdateVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::UpdateVersionRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateVersion(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::Version>> VersionsClient::UpdateVersion(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateVersion(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
@@ -61,6 +89,21 @@ VersionsClient::DeleteVersion(
     google::appengine::v1::DeleteVersionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVersion(request);
+}
+
+StatusOr<google::longrunning::Operation> VersionsClient::DeleteVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::DeleteVersionRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteVersion(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+VersionsClient::DeleteVersion(ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteVersion(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,12 +40,36 @@ PipelineServiceClient::RunPipeline(std::string const& name, Options opts) {
   return connection_->RunPipeline(request);
 }
 
+StatusOr<google::longrunning::Operation> PipelineServiceClient::RunPipeline(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contentwarehouse::v1::RunPipelineRequest request;
+  request.set_name(name);
+  return connection_->RunPipeline(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
 PipelineServiceClient::RunPipeline(
     google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunPipeline(request);
+}
+
+StatusOr<google::longrunning::Operation> PipelineServiceClient::RunPipeline(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunPipeline(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
+PipelineServiceClient::RunPipeline(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunPipeline(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_JOB_CLIENT_H
 
 #include "google/cloud/talent/v4/job_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -192,6 +194,11 @@ class JobServiceClient {
                   std::vector<google::cloud::talent::v4::Job> const& jobs,
                   Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchCreateJobs(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::vector<google::cloud::talent::v4::Job> const& jobs,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Begins executing a batch create jobs operation.
@@ -230,6 +237,16 @@ class JobServiceClient {
   BatchCreateJobs(
       google::cloud::talent::v4::BatchCreateJobsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchCreateJobs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::talent::v4::BatchCreateJobsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
+  BatchCreateJobs(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -406,6 +423,11 @@ class JobServiceClient {
                   std::vector<google::cloud::talent::v4::Job> const& jobs,
                   Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchUpdateJobs(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::vector<google::cloud::talent::v4::Job> const& jobs,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Begins executing a batch update jobs operation.
@@ -444,6 +466,16 @@ class JobServiceClient {
   BatchUpdateJobs(
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchUpdateJobs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
+  BatchUpdateJobs(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -547,6 +579,10 @@ class JobServiceClient {
   BatchDeleteJobs(std::string const& parent,
                   std::vector<std::string> const& names, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchDeleteJobs(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::vector<std::string> const& names, Options opts = {});
+
   // clang-format off
   ///
   /// Begins executing a batch delete jobs operation.
@@ -585,6 +621,16 @@ class JobServiceClient {
   BatchDeleteJobs(
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeleteJobs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
+  BatchDeleteJobs(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///

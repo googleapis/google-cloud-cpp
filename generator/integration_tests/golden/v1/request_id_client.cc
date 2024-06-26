@@ -56,10 +56,31 @@ RequestIdServiceClient::RenameFoo(std::string const& name, std::string const& de
   return connection_->RenameFoo(request);
 }
 
+StatusOr<google::longrunning::Operation>
+RequestIdServiceClient::RenameFoo(ExperimentalTag, NoAwaitTag, std::string const& name, std::string const& destination_foo_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::test::requestid::v1::RenameFooRequest request;
+  request.set_name(name);
+  request.set_destination_foo_id(destination_foo_id);
+  return connection_->RenameFoo(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::test::requestid::v1::Foo>>
 RequestIdServiceClient::RenameFoo(google::test::requestid::v1::RenameFooRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RenameFoo(request);
+}
+
+StatusOr<google::longrunning::Operation>
+RequestIdServiceClient::RenameFoo(ExperimentalTag, NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RenameFoo(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::test::requestid::v1::Foo>>
+RequestIdServiceClient::RenameFoo(ExperimentalTag, google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RenameFoo(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::test::requestid::v1::Foo>

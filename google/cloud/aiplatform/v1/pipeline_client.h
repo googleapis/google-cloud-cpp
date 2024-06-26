@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_PIPELINE_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/pipeline_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -322,6 +324,9 @@ class PipelineServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTrainingPipeline(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a TrainingPipeline.
@@ -361,6 +366,17 @@ class PipelineServiceClient {
       google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteTrainingPipeline(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -681,6 +697,9 @@ class PipelineServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeletePipelineJob(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeletePipelineJob(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a PipelineJob.
@@ -719,6 +738,16 @@ class PipelineServiceClient {
   DeletePipelineJob(
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeletePipelineJob(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePipelineJob(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -762,6 +791,10 @@ class PipelineServiceClient {
                           std::vector<std::string> const& names,
                           Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::vector<std::string> const& names, Options opts = {});
+
   // clang-format off
   ///
   /// Batch deletes PipelineJobs
@@ -804,6 +837,18 @@ class PipelineServiceClient {
       google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
+  BatchDeletePipelineJobs(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -934,6 +979,10 @@ class PipelineServiceClient {
                           std::vector<std::string> const& names,
                           Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::vector<std::string> const& names, Options opts = {});
+
   // clang-format off
   ///
   /// Batch cancel PipelineJobs.
@@ -980,6 +1029,18 @@ class PipelineServiceClient {
       google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
+  BatchCancelPipelineJobs(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
  private:
   std::shared_ptr<PipelineServiceConnection> connection_;

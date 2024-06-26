@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_V1_PREDICTION_CLIENT_H
 
 #include "google/cloud/automl/v1/prediction_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -284,6 +286,12 @@ class PredictionServiceClient {
       google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
       std::map<std::string, std::string> const& params, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchPredict(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
+      google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
+      std::map<std::string, std::string> const& params, Options opts = {});
+
   // clang-format off
   ///
   /// Perform a batch prediction. Unlike the online [Predict][google.cloud.automl.v1.PredictionService.Predict], batch
@@ -337,6 +345,15 @@ class PredictionServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       google::cloud::automl::v1::BatchPredictRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchPredict(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::automl::v1::BatchPredictRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
  private:

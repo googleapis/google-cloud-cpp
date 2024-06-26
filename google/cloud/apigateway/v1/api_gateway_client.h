@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGATEWAY_V1_API_GATEWAY_CLIENT_H
 
 #include "google/cloud/apigateway/v1/api_gateway_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -258,6 +260,11 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::Gateway const& gateway,
       std::string const& gateway_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateGateway(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::apigateway::v1::Gateway const& gateway,
+      std::string const& gateway_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Gateway in a given project and location.
@@ -296,6 +303,15 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::CreateGatewayRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::CreateGatewayRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Gateway.
@@ -331,6 +347,11 @@ class ApiGatewayServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
+      google::cloud::apigateway::v1::Gateway const& gateway,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateGateway(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::Gateway const& gateway,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -372,6 +393,15 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Gateway.
@@ -404,6 +434,9 @@ class ApiGatewayServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteGateway(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteGateway(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -443,6 +476,16 @@ class ApiGatewayServiceClient {
   DeleteGateway(
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+  DeleteGateway(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -613,6 +656,11 @@ class ApiGatewayServiceClient {
       std::string const& parent, google::cloud::apigateway::v1::Api const& api,
       std::string const& api_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateApi(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::apigateway::v1::Api const& api, std::string const& api_id,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Api in a given project and location.
@@ -651,6 +699,15 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::CreateApiRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateApi(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::CreateApiRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Api.
@@ -686,6 +743,11 @@ class ApiGatewayServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
+      google::cloud::apigateway::v1::Api const& api,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateApi(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::Api const& api,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -727,6 +789,15 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::UpdateApiRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateApi(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::UpdateApiRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Api.
@@ -759,6 +830,11 @@ class ApiGatewayServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteApi(ExperimentalTag,
+                                                     NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -796,6 +872,15 @@ class ApiGatewayServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
       google::cloud::apigateway::v1::DeleteApiRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteApi(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::DeleteApiRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -968,6 +1053,11 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::ApiConfig const& api_config,
       std::string const& api_config_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateApiConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::apigateway::v1::ApiConfig const& api_config,
+      std::string const& api_config_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new ApiConfig in a given project and location.
@@ -1006,6 +1096,15 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateApiConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single ApiConfig.
@@ -1041,6 +1140,11 @@ class ApiGatewayServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
+      google::cloud::apigateway::v1::ApiConfig const& api_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateApiConfig(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::ApiConfig const& api_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1082,6 +1186,15 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateApiConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single ApiConfig.
@@ -1114,6 +1227,9 @@ class ApiGatewayServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApiConfig(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteApiConfig(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1153,6 +1269,16 @@ class ApiGatewayServiceClient {
   DeleteApiConfig(
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteApiConfig(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
+  DeleteApiConfig(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
  private:
   std::shared_ptr<ApiGatewayServiceConnection> connection_;

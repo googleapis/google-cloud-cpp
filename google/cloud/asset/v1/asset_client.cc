@@ -40,6 +40,22 @@ AssetServiceClient::ExportAssets(
   return connection_->ExportAssets(request);
 }
 
+StatusOr<google::longrunning::Operation> AssetServiceClient::ExportAssets(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::asset::v1::ExportAssetsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportAssets(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
+AssetServiceClient::ExportAssets(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportAssets(ExperimentalTag{}, operation);
+}
+
 StreamRange<google::cloud::asset::v1::Asset> AssetServiceClient::ListAssets(
     std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -184,6 +200,24 @@ AssetServiceClient::AnalyzeIamPolicyLongrunning(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AnalyzeIamPolicyLongrunning(request);
+}
+
+StatusOr<google::longrunning::Operation>
+AssetServiceClient::AnalyzeIamPolicyLongrunning(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AnalyzeIamPolicyLongrunning(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
+AssetServiceClient::AnalyzeIamPolicyLongrunning(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AnalyzeIamPolicyLongrunning(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>

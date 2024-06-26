@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_FORWARDING_RULES_V1_GLOBAL_FORWARDING_RULES_CLIENT_H
 
 #include "google/cloud/compute/global_forwarding_rules/v1/global_forwarding_rules_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -125,6 +127,10 @@ class GlobalForwardingRulesClient {
   DeleteForwardingRule(std::string const& project,
                        std::string const& forwarding_rule, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRule(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& forwarding_rule, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified GlobalForwardingRule resource.
@@ -163,6 +169,18 @@ class GlobalForwardingRulesClient {
   DeleteForwardingRule(google::cloud::cpp::compute::global_forwarding_rules::
                            v1::DeleteForwardingRuleRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRule(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::global_forwarding_rules::v1::
+          DeleteForwardingRuleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteForwardingRule(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -264,6 +282,12 @@ class GlobalForwardingRulesClient {
                            forwarding_rule_resource,
                        Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRule(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::ForwardingRule const&
+          forwarding_rule_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a GlobalForwardingRule resource in the specified project using the
@@ -303,6 +327,18 @@ class GlobalForwardingRulesClient {
   InsertForwardingRule(google::cloud::cpp::compute::global_forwarding_rules::
                            v1::InsertForwardingRuleRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRule(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::global_forwarding_rules::v1::
+          InsertForwardingRuleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertForwardingRule(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -425,6 +461,13 @@ class GlobalForwardingRulesClient {
                           forwarding_rule_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRule(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& forwarding_rule,
+      google::cloud::cpp::compute::v1::ForwardingRule const&
+          forwarding_rule_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified forwarding rule with the data included in the
@@ -467,6 +510,18 @@ class GlobalForwardingRulesClient {
                           PatchForwardingRuleRequest const& request,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRule(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::global_forwarding_rules::v1::
+          PatchForwardingRuleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchForwardingRule(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on the specified resource. To learn more about labels, read
@@ -501,6 +556,13 @@ class GlobalForwardingRulesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& resource,
       google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
           global_set_labels_request_resource,
       Options opts = {});
@@ -545,6 +607,17 @@ class GlobalForwardingRulesClient {
           SetLabelsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::global_forwarding_rules::v1::
+          SetLabelsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Changes target URL for the GlobalForwardingRule resource. The new target
@@ -579,6 +652,13 @@ class GlobalForwardingRulesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
       std::string const& project, std::string const& forwarding_rule,
+      google::cloud::cpp::compute::v1::TargetReference const&
+          target_reference_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& forwarding_rule,
       google::cloud::cpp::compute::v1::TargetReference const&
           target_reference_resource,
       Options opts = {});
@@ -621,6 +701,17 @@ class GlobalForwardingRulesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
       google::cloud::cpp::compute::global_forwarding_rules::v1::
           SetTargetRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::global_forwarding_rules::v1::
+          SetTargetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

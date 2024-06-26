@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTREAM_V1_DATASTREAM_CLIENT_H
 
 #include "google/cloud/datastream/v1/datastream_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -257,6 +259,12 @@ class DatastreamClient {
           connection_profile,
       std::string const& connection_profile_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::datastream::v1::ConnectionProfile const&
+          connection_profile,
+      std::string const& connection_profile_id, Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to create a connection profile in a project and location.
@@ -297,6 +305,17 @@ class DatastreamClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+  CreateConnectionProfile(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to update the parameters of a connection profile.
@@ -333,6 +352,12 @@ class DatastreamClient {
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
   UpdateConnectionProfile(
+      google::cloud::datastream::v1::ConnectionProfile const&
+          connection_profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::ConnectionProfile const&
           connection_profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -377,6 +402,17 @@ class DatastreamClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+  UpdateConnectionProfile(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to delete a connection profile.
@@ -408,6 +444,9 @@ class DatastreamClient {
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteConnectionProfile(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -448,6 +487,17 @@ class DatastreamClient {
       google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeleteConnectionProfile(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -651,6 +701,11 @@ class DatastreamClient {
       google::cloud::datastream::v1::Stream const& stream,
       std::string const& stream_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateStream(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::datastream::v1::Stream const& stream,
+      std::string const& stream_id, Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to create a stream.
@@ -689,6 +744,15 @@ class DatastreamClient {
       google::cloud::datastream::v1::CreateStreamRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateStream(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::CreateStreamRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to update the configuration of a stream.
@@ -724,6 +788,11 @@ class DatastreamClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
+      google::cloud::datastream::v1::Stream const& stream,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateStream(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::Stream const& stream,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -765,6 +834,15 @@ class DatastreamClient {
       google::cloud::datastream::v1::UpdateStreamRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateStream(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::UpdateStreamRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to delete a stream.
@@ -796,6 +874,11 @@ class DatastreamClient {
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteStream(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -835,6 +918,15 @@ class DatastreamClient {
   DeleteStream(
       google::cloud::datastream::v1::DeleteStreamRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteStream(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::DeleteStreamRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeleteStream(ExperimentalTag, google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -1222,6 +1314,12 @@ class DatastreamClient {
           private_connection,
       std::string const& private_connection_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::datastream::v1::PrivateConnection const&
+          private_connection,
+      std::string const& private_connection_id, Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to create a private connectivity configuration.
@@ -1261,6 +1359,17 @@ class DatastreamClient {
       google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreatePrivateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
+  CreatePrivateConnection(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1429,6 +1538,9 @@ class DatastreamClient {
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeletePrivateConnection(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to delete a private connectivity configuration.
@@ -1469,6 +1581,17 @@ class DatastreamClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeletePrivateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeletePrivateConnection(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to create a route for a private connectivity configuration
@@ -1503,6 +1626,11 @@ class DatastreamClient {
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
       std::string const& parent,
+      google::cloud::datastream::v1::Route const& route,
+      std::string const& route_id, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateRoute(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::datastream::v1::Route const& route,
       std::string const& route_id, Options opts = {});
 
@@ -1543,6 +1671,15 @@ class DatastreamClient {
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
       google::cloud::datastream::v1::CreateRouteRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::CreateRouteRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1709,6 +1846,11 @@ class DatastreamClient {
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteRoute(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteRoute(ExperimentalTag,
+                                                       NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
+
   // clang-format off
   ///
   /// Use this method to delete a route.
@@ -1745,6 +1887,15 @@ class DatastreamClient {
   // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request,
+              Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::datastream::v1::DeleteRouteRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+  DeleteRoute(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
  private:

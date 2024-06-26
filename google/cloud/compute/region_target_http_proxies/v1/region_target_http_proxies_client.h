@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_TARGET_HTTP_PROXIES_V1_REGION_TARGET_HTTP_PROXIES_CLIENT_H
 
 #include "google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -126,6 +128,11 @@ class RegionTargetHttpProxiesClient {
                         std::string const& target_http_proxy,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxy(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& target_http_proxy,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified TargetHttpProxy resource.
@@ -164,6 +171,18 @@ class RegionTargetHttpProxiesClient {
   DeleteTargetHttpProxy(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           DeleteTargetHttpProxyRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_target_http_proxies::v1::
+          DeleteTargetHttpProxyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetHttpProxy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -266,6 +285,13 @@ class RegionTargetHttpProxiesClient {
                             target_http_proxy_resource,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxy(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::TargetHttpProxy const&
+          target_http_proxy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a TargetHttpProxy resource in the specified project and region
@@ -305,6 +331,18 @@ class RegionTargetHttpProxiesClient {
   InsertTargetHttpProxy(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           InsertTargetHttpProxyRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_target_http_proxies::v1::
+          InsertTargetHttpProxyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetHttpProxy(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -428,6 +466,13 @@ class RegionTargetHttpProxiesClient {
           url_map_reference_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& target_http_proxy,
+      google::cloud::cpp::compute::v1::UrlMapReference const&
+          url_map_reference_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Changes the URL map for TargetHttpProxy.
@@ -465,6 +510,17 @@ class RegionTargetHttpProxiesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
       google::cloud::cpp::compute::region_target_http_proxies::v1::
           SetUrlMapRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_target_http_proxies::v1::
+          SetUrlMapRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

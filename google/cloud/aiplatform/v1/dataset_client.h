@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_DATASET_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/dataset_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -122,6 +124,10 @@ class DatasetServiceClient {
       std::string const& parent,
       google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Dataset.
@@ -158,6 +164,15 @@ class DatasetServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
       google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -390,6 +405,9 @@ class DatasetServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDataset(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Dataset.
@@ -428,6 +446,16 @@ class DatasetServiceClient {
   DeleteDataset(
       google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDataset(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -468,6 +496,12 @@ class DatasetServiceClient {
                  import_configs,
              Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportData(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const&
+          import_configs,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Imports data into a Dataset.
@@ -504,6 +538,15 @@ class DatasetServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
   ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request,
+             Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ImportData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::ImportDataRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
+  ImportData(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});
 
   // clang-format off
@@ -544,6 +587,11 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ExportData(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Exports data from a Dataset.
@@ -580,6 +628,15 @@ class DatasetServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
   ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request,
+             Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::ExportDataRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
+  ExportData(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});
 
   // clang-format off
@@ -622,6 +679,11 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDatasetVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Create a version from a Dataset.
@@ -660,6 +722,16 @@ class DatasetServiceClient {
   CreateDatasetVersion(
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateDatasetVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  CreateDatasetVersion(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -758,6 +830,9 @@ class DatasetServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDatasetVersion(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Dataset version.
@@ -796,6 +871,16 @@ class DatasetServiceClient {
   DeleteDatasetVersion(
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteDatasetVersion(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -966,6 +1051,9 @@ class DatasetServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
   RestoreDatasetVersion(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Restores a dataset version.
@@ -1005,6 +1093,17 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+  RestoreDatasetVersion(ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -1232,6 +1331,9 @@ class DatasetServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSavedQuery(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteSavedQuery(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a SavedQuery.
@@ -1270,6 +1372,16 @@ class DatasetServiceClient {
   DeleteSavedQuery(
       google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteSavedQuery(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSavedQuery(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///

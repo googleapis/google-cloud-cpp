@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_PUBLIC_DELEGATED_PREFIXES_V1_GLOBAL_PUBLIC_DELEGATED_PREFIXES_CLIENT_H
 
 #include "google/cloud/compute/global_public_delegated_prefixes/v1/global_public_delegated_prefixes_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -127,6 +129,12 @@ class GlobalPublicDelegatedPrefixesClient {
                               std::string const& public_delegated_prefix,
                               Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePublicDelegatedPrefix(ExperimentalTag, NoAwaitTag,
+                              std::string const& project,
+                              std::string const& public_delegated_prefix,
+                              Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified global PublicDelegatedPrefix.
@@ -165,6 +173,19 @@ class GlobalPublicDelegatedPrefixesClient {
   DeletePublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           DeletePublicDelegatedPrefixRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeletePublicDelegatedPrefix(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          DeletePublicDelegatedPrefixRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeletePublicDelegatedPrefix(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -268,6 +289,13 @@ class GlobalPublicDelegatedPrefixesClient {
           public_delegated_prefix_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPublicDelegatedPrefix(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
+          public_delegated_prefix_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a global PublicDelegatedPrefix in the specified project using the
@@ -307,6 +335,19 @@ class GlobalPublicDelegatedPrefixesClient {
   InsertPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           InsertPublicDelegatedPrefixRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertPublicDelegatedPrefix(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          InsertPublicDelegatedPrefixRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertPublicDelegatedPrefix(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -428,6 +469,14 @@ class GlobalPublicDelegatedPrefixesClient {
           public_delegated_prefix_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPublicDelegatedPrefix(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& public_delegated_prefix,
+      google::cloud::cpp::compute::v1::PublicDelegatedPrefix const&
+          public_delegated_prefix_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patches the specified global PublicDelegatedPrefix resource with the data
@@ -468,6 +517,19 @@ class GlobalPublicDelegatedPrefixesClient {
   PatchPublicDelegatedPrefix(
       google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchPublicDelegatedPrefix(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
+          PatchPublicDelegatedPrefixRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchPublicDelegatedPrefix(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

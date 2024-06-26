@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_VERSIONS_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/versions_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -271,6 +273,11 @@ class VersionsClient {
       google::cloud::dialogflow::cx::v3::Version const& version,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::dialogflow::cx::v3::Version const& version,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a [Version][google.cloud.dialogflow.cx.v3.Version] in the specified
@@ -318,6 +325,15 @@ class VersionsClient {
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -474,6 +490,11 @@ class VersionsClient {
   future<StatusOr<google::protobuf::Struct>> LoadVersion(
       std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> LoadVersion(ExperimentalTag,
+                                                       NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
+
   // clang-format off
   ///
   /// Loads resources in the specified version to the draft flow.
@@ -519,6 +540,15 @@ class VersionsClient {
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> LoadVersion(
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> LoadVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> LoadVersion(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off

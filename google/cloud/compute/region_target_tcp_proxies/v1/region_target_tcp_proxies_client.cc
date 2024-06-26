@@ -46,6 +46,21 @@ RegionTargetTcpProxiesClient::DeleteTargetTcpProxy(
   return connection_->DeleteTargetTcpProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetTcpProxiesClient::DeleteTargetTcpProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_tcp_proxy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+      DeleteTargetTcpProxyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_tcp_proxy(target_tcp_proxy);
+  return connection_->DeleteTargetTcpProxy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetTcpProxiesClient::DeleteTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
@@ -53,6 +68,25 @@ RegionTargetTcpProxiesClient::DeleteTargetTcpProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetTcpProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetTcpProxiesClient::DeleteTargetTcpProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+        DeleteTargetTcpProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetTcpProxy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionTargetTcpProxiesClient::DeleteTargetTcpProxy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetTcpProxy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetTcpProxy>
@@ -92,6 +126,23 @@ RegionTargetTcpProxiesClient::InsertTargetTcpProxy(
   return connection_->InsertTargetTcpProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetTcpProxiesClient::InsertTargetTcpProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::TargetTcpProxy const&
+        target_tcp_proxy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+      InsertTargetTcpProxyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_target_tcp_proxy_resource() = target_tcp_proxy_resource;
+  return connection_->InsertTargetTcpProxy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetTcpProxiesClient::InsertTargetTcpProxy(
     google::cloud::cpp::compute::region_target_tcp_proxies::v1::
@@ -99,6 +150,25 @@ RegionTargetTcpProxiesClient::InsertTargetTcpProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetTcpProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetTcpProxiesClient::InsertTargetTcpProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+        InsertTargetTcpProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetTcpProxy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionTargetTcpProxiesClient::InsertTargetTcpProxy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetTcpProxy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetTcpProxy>

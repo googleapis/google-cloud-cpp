@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_SPECIALIST_POOL_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/specialist_pool_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -131,6 +133,11 @@ class SpecialistPoolServiceClient {
       google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateSpecialistPool(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a SpecialistPool.
@@ -169,6 +176,16 @@ class SpecialistPoolServiceClient {
   CreateSpecialistPool(
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateSpecialistPool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
+  CreateSpecialistPool(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -337,6 +354,9 @@ class SpecialistPoolServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSpecialistPool(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a SpecialistPool as well as all Specialists in the pool.
@@ -376,6 +396,16 @@ class SpecialistPoolServiceClient {
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSpecialistPool(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
+
   // clang-format off
   ///
   /// Updates a SpecialistPool.
@@ -408,6 +438,11 @@ class SpecialistPoolServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
   UpdateSpecialistPool(
+      google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -449,6 +484,16 @@ class SpecialistPoolServiceClient {
   UpdateSpecialistPool(
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
+  UpdateSpecialistPool(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
  private:
   std::shared_ptr<SpecialistPoolServiceConnection> connection_;

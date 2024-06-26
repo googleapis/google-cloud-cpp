@@ -59,11 +59,45 @@ ConfigServiceV2Client::CreateBucketAsync(
   return connection_->CreateBucketAsync(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Client::CreateBucketAsync(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CreateBucketRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBucketAsync(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::logging::v2::LogBucket>>
+ConfigServiceV2Client::CreateBucketAsync(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBucketAsync(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2Client::UpdateBucketAsync(
     google::logging::v2::UpdateBucketRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBucketAsync(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ConfigServiceV2Client::UpdateBucketAsync(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::UpdateBucketRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBucketAsync(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::logging::v2::LogBucket>>
+ConfigServiceV2Client::UpdateBucketAsync(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBucketAsync(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Client::CreateBucket(
@@ -224,10 +258,36 @@ future<StatusOr<google::logging::v2::Link>> ConfigServiceV2Client::CreateLink(
   return connection_->CreateLink(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigServiceV2Client::CreateLink(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::logging::v2::Link const& link, std::string const& link_id,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::logging::v2::CreateLinkRequest request;
+  request.set_parent(parent);
+  *request.mutable_link() = link;
+  request.set_link_id(link_id);
+  return connection_->CreateLink(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::logging::v2::Link>> ConfigServiceV2Client::CreateLink(
     google::logging::v2::CreateLinkRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateLink(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Client::CreateLink(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CreateLinkRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLink(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::logging::v2::Link>> ConfigServiceV2Client::CreateLink(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateLink(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::logging::v2::LinkMetadata>>
@@ -238,11 +298,34 @@ ConfigServiceV2Client::DeleteLink(std::string const& name, Options opts) {
   return connection_->DeleteLink(request);
 }
 
+StatusOr<google::longrunning::Operation> ConfigServiceV2Client::DeleteLink(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::logging::v2::DeleteLinkRequest request;
+  request.set_name(name);
+  return connection_->DeleteLink(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::logging::v2::LinkMetadata>>
 ConfigServiceV2Client::DeleteLink(
     google::logging::v2::DeleteLinkRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteLink(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Client::DeleteLink(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::DeleteLinkRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteLink(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::logging::v2::LinkMetadata>>
+ConfigServiceV2Client::DeleteLink(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteLink(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::logging::v2::Link> ConfigServiceV2Client::ListLinks(
@@ -403,6 +486,21 @@ ConfigServiceV2Client::CopyLogEntries(
     google::logging::v2::CopyLogEntriesRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CopyLogEntries(request);
+}
+
+StatusOr<google::longrunning::Operation> ConfigServiceV2Client::CopyLogEntries(
+    ExperimentalTag, NoAwaitTag,
+    google::logging::v2::CopyLogEntriesRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CopyLogEntries(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
+ConfigServiceV2Client::CopyLogEntries(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CopyLogEntries(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

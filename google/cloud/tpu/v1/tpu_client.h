@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V1_TPU_CLIENT_H
 
 #include "google/cloud/tpu/v1/tpu_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -250,6 +252,11 @@ class TpuClient {
       std::string const& parent, google::cloud::tpu::v1::Node const& node,
       std::string const& node_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNode(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::tpu::v1::Node const& node, std::string const& node_id,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a node.
@@ -288,6 +295,15 @@ class TpuClient {
       google::cloud::tpu::v1::CreateNodeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::CreateNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v1::Node>> CreateNode(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a node.
@@ -319,6 +335,11 @@ class TpuClient {
   // clang-format on
   future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteNode(ExperimentalTag,
+                                                      NoAwaitTag,
+                                                      std::string const& name,
+                                                      Options opts = {});
 
   // clang-format off
   ///
@@ -356,6 +377,15 @@ class TpuClient {
   // clang-format on
   future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
       google::cloud::tpu::v1::DeleteNodeRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::DeleteNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v1::Node>> DeleteNode(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -396,6 +426,15 @@ class TpuClient {
       google::cloud::tpu::v1::ReimageNodeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ReimageNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::ReimageNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v1::Node>> ReimageNode(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Stops a node, this operation is only available with single TPU nodes.
@@ -434,6 +473,15 @@ class TpuClient {
       google::cloud::tpu::v1::StopNodeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StopNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::StopNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v1::Node>> StopNode(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Starts a node.
@@ -470,6 +518,15 @@ class TpuClient {
   // clang-format on
   future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
       google::cloud::tpu::v1::StartNodeRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StartNode(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::tpu::v1::StartNodeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::tpu::v1::Node>> StartNode(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off

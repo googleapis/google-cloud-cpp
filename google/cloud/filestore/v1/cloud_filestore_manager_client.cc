@@ -78,12 +78,42 @@ CloudFilestoreManagerClient::CreateInstance(
   return connection_->CreateInstance(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::CreateInstance(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::filestore::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::CreateInstanceRequest request;
+  request.set_parent(parent);
+  *request.mutable_instance() = instance;
+  request.set_instance_id(instance_id);
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerClient::CreateInstance(
     google::cloud::filestore::v1::CreateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::CreateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::CreateInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerClient::CreateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
@@ -97,12 +127,41 @@ CloudFilestoreManagerClient::UpdateInstance(
   return connection_->UpdateInstance(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::Instance const& instance,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::UpdateInstanceRequest request;
+  *request.mutable_instance() = instance;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerClient::UpdateInstance(
     google::cloud::filestore::v1::UpdateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::UpdateInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerClient::UpdateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
@@ -113,12 +172,46 @@ CloudFilestoreManagerClient::RestoreInstance(
   return connection_->RestoreInstance(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::RestoreInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::RestoreInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerClient::RestoreInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreInstance(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerClient::RevertInstance(
     google::cloud::filestore::v1::RevertInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RevertInstance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::RevertInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::RevertInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RevertInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Instance>>
+CloudFilestoreManagerClient::RevertInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RevertInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
@@ -130,12 +223,39 @@ CloudFilestoreManagerClient::DeleteInstance(std::string const& name,
   return connection_->DeleteInstance(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::DeleteInstance(ExperimentalTag, NoAwaitTag,
+                                            std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::DeleteInstanceRequest request;
+  request.set_name(name);
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerClient::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::DeleteInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::DeleteInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::common::OperationMetadata>>
+CloudFilestoreManagerClient::DeleteInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteInstance(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::filestore::v1::Snapshot>
@@ -184,12 +304,42 @@ CloudFilestoreManagerClient::CreateSnapshot(
   return connection_->CreateSnapshot(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::CreateSnapshot(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::filestore::v1::Snapshot const& snapshot,
+    std::string const& snapshot_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::CreateSnapshotRequest request;
+  request.set_parent(parent);
+  *request.mutable_snapshot() = snapshot;
+  request.set_snapshot_id(snapshot_id);
+  return connection_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
 CloudFilestoreManagerClient::CreateSnapshot(
     google::cloud::filestore::v1::CreateSnapshotRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSnapshot(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::CreateSnapshot(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::CreateSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerClient::CreateSnapshot(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSnapshot(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
@@ -201,12 +351,39 @@ CloudFilestoreManagerClient::DeleteSnapshot(std::string const& name,
   return connection_->DeleteSnapshot(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::DeleteSnapshot(ExperimentalTag, NoAwaitTag,
+                                            std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::DeleteSnapshotRequest request;
+  request.set_name(name);
+  return connection_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerClient::DeleteSnapshot(
     google::cloud::filestore::v1::DeleteSnapshotRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSnapshot(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::DeleteSnapshot(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::DeleteSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::common::OperationMetadata>>
+CloudFilestoreManagerClient::DeleteSnapshot(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSnapshot(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
@@ -220,12 +397,41 @@ CloudFilestoreManagerClient::UpdateSnapshot(
   return connection_->UpdateSnapshot(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::UpdateSnapshot(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::Snapshot const& snapshot,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::UpdateSnapshotRequest request;
+  *request.mutable_snapshot() = snapshot;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
 CloudFilestoreManagerClient::UpdateSnapshot(
     google::cloud::filestore::v1::UpdateSnapshotRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSnapshot(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::UpdateSnapshot(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::UpdateSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Snapshot>>
+CloudFilestoreManagerClient::UpdateSnapshot(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSnapshot(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::filestore::v1::Backup>
@@ -273,12 +479,42 @@ CloudFilestoreManagerClient::CreateBackup(
   return connection_->CreateBackup(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::CreateBackup(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::filestore::v1::Backup const& backup,
+    std::string const& backup_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::CreateBackupRequest request;
+  request.set_parent(parent);
+  *request.mutable_backup() = backup;
+  request.set_backup_id(backup_id);
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerClient::CreateBackup(
     google::cloud::filestore::v1::CreateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateBackup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::CreateBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::CreateBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Backup>>
+CloudFilestoreManagerClient::CreateBackup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
@@ -290,12 +526,39 @@ CloudFilestoreManagerClient::DeleteBackup(std::string const& name,
   return connection_->DeleteBackup(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::DeleteBackup(ExperimentalTag, NoAwaitTag,
+                                          std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::DeleteBackupRequest request;
+  request.set_name(name);
+  return connection_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerClient::DeleteBackup(
     google::cloud::filestore::v1::DeleteBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteBackup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::DeleteBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::DeleteBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::common::OperationMetadata>>
+CloudFilestoreManagerClient::DeleteBackup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
@@ -309,12 +572,41 @@ CloudFilestoreManagerClient::UpdateBackup(
   return connection_->UpdateBackup(request);
 }
 
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::UpdateBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::Backup const& backup,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::filestore::v1::UpdateBackupRequest request;
+  *request.mutable_backup() = backup;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerClient::UpdateBackup(
     google::cloud::filestore::v1::UpdateBackupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateBackup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CloudFilestoreManagerClient::UpdateBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::filestore::v1::UpdateBackupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::filestore::v1::Backup>>
+CloudFilestoreManagerClient::UpdateBackup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackup(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

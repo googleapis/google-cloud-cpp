@@ -58,12 +58,38 @@ SimulatorClient::CreateReplay(
   return connection_->CreateReplay(request);
 }
 
+StatusOr<google::longrunning::Operation> SimulatorClient::CreateReplay(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::policysimulator::v1::Replay const& replay, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::policysimulator::v1::CreateReplayRequest request;
+  request.set_parent(parent);
+  *request.mutable_replay() = replay;
+  return connection_->CreateReplay(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::policysimulator::v1::Replay>>
 SimulatorClient::CreateReplay(
     google::cloud::policysimulator::v1::CreateReplayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReplay(request);
+}
+
+StatusOr<google::longrunning::Operation> SimulatorClient::CreateReplay(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::policysimulator::v1::CreateReplayRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateReplay(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::policysimulator::v1::Replay>>
+SimulatorClient::CreateReplay(ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateReplay(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::policysimulator::v1::ReplayResult>

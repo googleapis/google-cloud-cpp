@@ -43,12 +43,38 @@ SecurityCenterClient::BulkMuteFindings(std::string const& parent,
   return connection_->BulkMuteFindings(request);
 }
 
+StatusOr<google::longrunning::Operation> SecurityCenterClient::BulkMuteFindings(
+    ExperimentalTag, NoAwaitTag, std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::BulkMuteFindingsRequest request;
+  request.set_parent(parent);
+  return connection_->BulkMuteFindings(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
 future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterClient::BulkMuteFindings(
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BulkMuteFindings(request);
+}
+
+StatusOr<google::longrunning::Operation> SecurityCenterClient::BulkMuteFindings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkMuteFindings(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
+SecurityCenterClient::BulkMuteFindings(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkMuteFindings(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
@@ -540,12 +566,41 @@ SecurityCenterClient::RunAssetDiscovery(std::string const& parent,
   return connection_->RunAssetDiscovery(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecurityCenterClient::RunAssetDiscovery(ExperimentalTag, NoAwaitTag,
+                                        std::string const& parent,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::RunAssetDiscoveryRequest request;
+  request.set_parent(parent);
+  return connection_->RunAssetDiscovery(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
 future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
 SecurityCenterClient::RunAssetDiscovery(
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunAssetDiscovery(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecurityCenterClient::RunAssetDiscovery(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunAssetDiscovery(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
+SecurityCenterClient::RunAssetDiscovery(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunAssetDiscovery(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>

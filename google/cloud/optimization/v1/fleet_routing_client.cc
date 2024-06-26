@@ -48,6 +48,23 @@ FleetRoutingClient::BatchOptimizeTours(
   return connection_->BatchOptimizeTours(request);
 }
 
+StatusOr<google::longrunning::Operation> FleetRoutingClient::BatchOptimizeTours(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::optimization::v1::BatchOptimizeToursRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchOptimizeTours(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
+future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
+FleetRoutingClient::BatchOptimizeTours(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchOptimizeTours(ExperimentalTag{}, operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_v1
 }  // namespace cloud

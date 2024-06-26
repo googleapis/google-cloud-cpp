@@ -166,12 +166,40 @@ MigrationCenterClient::CreateImportJob(
   return connection_->CreateImportJob(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::CreateImportJob(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::migrationcenter::v1::ImportJob const& import_job,
+    std::string const& import_job_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::CreateImportJobRequest request;
+  request.set_parent(parent);
+  *request.mutable_import_job() = import_job;
+  request.set_import_job_id(import_job_id);
+  return connection_->CreateImportJob(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
 MigrationCenterClient::CreateImportJob(
     google::cloud::migrationcenter::v1::CreateImportJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateImportJob(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::CreateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateImportJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateImportJob(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
+MigrationCenterClient::CreateImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateImportJob(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::migrationcenter::v1::ImportJob>
@@ -214,12 +242,36 @@ MigrationCenterClient::DeleteImportJob(std::string const& name, Options opts) {
   return connection_->DeleteImportJob(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::DeleteImportJob(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::DeleteImportJobRequest request;
+  request.set_name(name);
+  return connection_->DeleteImportJob(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::DeleteImportJob(
     google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteImportJob(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::DeleteImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteImportJob(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::DeleteImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteImportJob(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
@@ -233,12 +285,39 @@ MigrationCenterClient::UpdateImportJob(
   return connection_->UpdateImportJob(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::UpdateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::ImportJob const& import_job,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::UpdateImportJobRequest request;
+  *request.mutable_import_job() = import_job;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateImportJob(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
 MigrationCenterClient::UpdateImportJob(
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateImportJob(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::UpdateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateImportJob(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
+MigrationCenterClient::UpdateImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateImportJob(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -250,12 +329,41 @@ MigrationCenterClient::ValidateImportJob(std::string const& name,
   return connection_->ValidateImportJob(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::ValidateImportJob(ExperimentalTag, NoAwaitTag,
+                                         std::string const& name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::ValidateImportJobRequest request;
+  request.set_name(name);
+  return connection_->ValidateImportJob(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::ValidateImportJob(
     google::cloud::migrationcenter::v1::ValidateImportJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ValidateImportJob(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::ValidateImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::ValidateImportJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateImportJob(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::ValidateImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateImportJob(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -266,12 +374,36 @@ MigrationCenterClient::RunImportJob(std::string const& name, Options opts) {
   return connection_->RunImportJob(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::RunImportJob(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::RunImportJobRequest request;
+  request.set_name(name);
+  return connection_->RunImportJob(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::RunImportJob(
     google::cloud::migrationcenter::v1::RunImportJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunImportJob(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::RunImportJob(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::RunImportJobRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunImportJob(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::RunImportJob(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RunImportJob(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
@@ -321,6 +453,20 @@ MigrationCenterClient::CreateImportDataFile(
   return connection_->CreateImportDataFile(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::CreateImportDataFile(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::migrationcenter::v1::ImportDataFile const& import_data_file,
+    std::string const& import_data_file_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::CreateImportDataFileRequest request;
+  request.set_parent(parent);
+  *request.mutable_import_data_file() = import_data_file;
+  request.set_import_data_file_id(import_data_file_id);
+  return connection_->CreateImportDataFile(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>
 MigrationCenterClient::CreateImportDataFile(
     google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
@@ -328,6 +474,25 @@ MigrationCenterClient::CreateImportDataFile(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateImportDataFile(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::CreateImportDataFile(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateImportDataFile(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>
+MigrationCenterClient::CreateImportDataFile(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateImportDataFile(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -339,6 +504,17 @@ MigrationCenterClient::DeleteImportDataFile(std::string const& name,
   return connection_->DeleteImportDataFile(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::DeleteImportDataFile(ExperimentalTag, NoAwaitTag,
+                                            std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::DeleteImportDataFileRequest request;
+  request.set_name(name);
+  return connection_->DeleteImportDataFile(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::DeleteImportDataFile(
     google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
@@ -346,6 +522,25 @@ MigrationCenterClient::DeleteImportDataFile(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteImportDataFile(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::DeleteImportDataFile(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteImportDataFile(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::DeleteImportDataFile(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteImportDataFile(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::migrationcenter::v1::Group>
@@ -393,12 +588,40 @@ MigrationCenterClient::CreateGroup(
   return connection_->CreateGroup(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::CreateGroup(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::migrationcenter::v1::Group const& group,
+    std::string const& group_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::CreateGroupRequest request;
+  request.set_parent(parent);
+  *request.mutable_group() = group;
+  request.set_group_id(group_id);
+  return connection_->CreateGroup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterClient::CreateGroup(
     google::cloud::migrationcenter::v1::CreateGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::CreateGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGroup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterClient::CreateGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
@@ -412,12 +635,39 @@ MigrationCenterClient::UpdateGroup(
   return connection_->UpdateGroup(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::UpdateGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::Group const& group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::UpdateGroupRequest request;
+  *request.mutable_group() = group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateGroup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterClient::UpdateGroup(
     google::cloud::migrationcenter::v1::UpdateGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::UpdateGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateGroup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterClient::UpdateGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -428,12 +678,36 @@ MigrationCenterClient::DeleteGroup(std::string const& name, Options opts) {
   return connection_->DeleteGroup(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::DeleteGroup(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::DeleteGroupRequest request;
+  request.set_name(name);
+  return connection_->DeleteGroup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::DeleteGroup(
     google::cloud::migrationcenter::v1::DeleteGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGroup(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::DeleteGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGroup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::DeleteGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
@@ -445,12 +719,41 @@ MigrationCenterClient::AddAssetsToGroup(std::string const& group,
   return connection_->AddAssetsToGroup(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::AddAssetsToGroup(ExperimentalTag, NoAwaitTag,
+                                        std::string const& group,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::AddAssetsToGroupRequest request;
+  request.set_group(group);
+  return connection_->AddAssetsToGroup(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterClient::AddAssetsToGroup(
     google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddAssetsToGroup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::AddAssetsToGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddAssetsToGroup(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterClient::AddAssetsToGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddAssetsToGroup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
@@ -462,6 +765,17 @@ MigrationCenterClient::RemoveAssetsFromGroup(std::string const& group,
   return connection_->RemoveAssetsFromGroup(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::RemoveAssetsFromGroup(ExperimentalTag, NoAwaitTag,
+                                             std::string const& group,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest request;
+  request.set_group(group);
+  return connection_->RemoveAssetsFromGroup(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Group>>
 MigrationCenterClient::RemoveAssetsFromGroup(
     google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
@@ -469,6 +783,25 @@ MigrationCenterClient::RemoveAssetsFromGroup(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveAssetsFromGroup(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::RemoveAssetsFromGroup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveAssetsFromGroup(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Group>>
+MigrationCenterClient::RemoveAssetsFromGroup(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveAssetsFromGroup(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::migrationcenter::v1::ErrorFrame>
@@ -549,12 +882,40 @@ MigrationCenterClient::CreateSource(
   return connection_->CreateSource(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::CreateSource(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::migrationcenter::v1::Source const& source,
+    std::string const& source_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::CreateSourceRequest request;
+  request.set_parent(parent);
+  *request.mutable_source() = source;
+  request.set_source_id(source_id);
+  return connection_->CreateSource(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Source>>
 MigrationCenterClient::CreateSource(
     google::cloud::migrationcenter::v1::CreateSourceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateSource(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::CreateSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateSourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSource(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Source>>
+MigrationCenterClient::CreateSource(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSource(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::Source>>
@@ -568,12 +929,39 @@ MigrationCenterClient::UpdateSource(
   return connection_->UpdateSource(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::UpdateSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::Source const& source,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::UpdateSourceRequest request;
+  *request.mutable_source() = source;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSource(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Source>>
 MigrationCenterClient::UpdateSource(
     google::cloud::migrationcenter::v1::UpdateSourceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSource(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::UpdateSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateSourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSource(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Source>>
+MigrationCenterClient::UpdateSource(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSource(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -584,12 +972,36 @@ MigrationCenterClient::DeleteSource(std::string const& name, Options opts) {
   return connection_->DeleteSource(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::DeleteSource(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::DeleteSourceRequest request;
+  request.set_name(name);
+  return connection_->DeleteSource(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::DeleteSource(
     google::cloud::migrationcenter::v1::DeleteSourceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSource(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::DeleteSource(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteSourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSource(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::DeleteSource(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSource(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::migrationcenter::v1::PreferenceSet>
@@ -638,6 +1050,20 @@ MigrationCenterClient::CreatePreferenceSet(
   return connection_->CreatePreferenceSet(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::CreatePreferenceSet(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::migrationcenter::v1::PreferenceSet const& preference_set,
+    std::string const& preference_set_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::CreatePreferenceSetRequest request;
+  request.set_parent(parent);
+  *request.mutable_preference_set() = preference_set;
+  request.set_preference_set_id(preference_set_id);
+  return connection_->CreatePreferenceSet(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
 MigrationCenterClient::CreatePreferenceSet(
     google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
@@ -645,6 +1071,25 @@ MigrationCenterClient::CreatePreferenceSet(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePreferenceSet(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::CreatePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePreferenceSet(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
+MigrationCenterClient::CreatePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePreferenceSet(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
@@ -658,6 +1103,19 @@ MigrationCenterClient::UpdatePreferenceSet(
   return connection_->UpdatePreferenceSet(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::UpdatePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::PreferenceSet const& preference_set,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest request;
+  *request.mutable_preference_set() = preference_set;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePreferenceSet(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
 MigrationCenterClient::UpdatePreferenceSet(
     google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
@@ -665,6 +1123,25 @@ MigrationCenterClient::UpdatePreferenceSet(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdatePreferenceSet(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::UpdatePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePreferenceSet(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
+MigrationCenterClient::UpdatePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePreferenceSet(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
@@ -676,6 +1153,17 @@ MigrationCenterClient::DeletePreferenceSet(std::string const& name,
   return connection_->DeletePreferenceSet(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::DeletePreferenceSet(ExperimentalTag, NoAwaitTag,
+                                           std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::DeletePreferenceSetRequest request;
+  request.set_name(name);
+  return connection_->DeletePreferenceSet(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::DeletePreferenceSet(
     google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
@@ -683,6 +1171,25 @@ MigrationCenterClient::DeletePreferenceSet(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePreferenceSet(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::DeletePreferenceSet(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePreferenceSet(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::DeletePreferenceSet(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePreferenceSet(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
@@ -712,12 +1219,39 @@ MigrationCenterClient::UpdateSettings(
   return connection_->UpdateSettings(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::UpdateSettings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::Settings const& settings,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::UpdateSettingsRequest request;
+  *request.mutable_settings() = settings;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateSettings(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Settings>>
 MigrationCenterClient::UpdateSettings(
     google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSettings(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::UpdateSettings(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSettings(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Settings>>
+MigrationCenterClient::UpdateSettings(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateSettings(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
@@ -733,6 +1267,20 @@ MigrationCenterClient::CreateReportConfig(
   return connection_->CreateReportConfig(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::CreateReportConfig(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::migrationcenter::v1::ReportConfig const& report_config,
+    std::string const& report_config_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::CreateReportConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_report_config() = report_config;
+  request.set_report_config_id(report_config_id);
+  return connection_->CreateReportConfig(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
 MigrationCenterClient::CreateReportConfig(
     google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
@@ -740,6 +1288,25 @@ MigrationCenterClient::CreateReportConfig(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReportConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::CreateReportConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateReportConfig(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
+MigrationCenterClient::CreateReportConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateReportConfig(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
@@ -784,6 +1351,17 @@ MigrationCenterClient::DeleteReportConfig(std::string const& name,
   return connection_->DeleteReportConfig(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::DeleteReportConfig(ExperimentalTag, NoAwaitTag,
+                                          std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::DeleteReportConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteReportConfig(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::DeleteReportConfig(
     google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
@@ -791,6 +1369,25 @@ MigrationCenterClient::DeleteReportConfig(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReportConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationCenterClient::DeleteReportConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteReportConfig(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::DeleteReportConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteReportConfig(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::migrationcenter::v1::Report>>
@@ -806,12 +1403,40 @@ MigrationCenterClient::CreateReport(
   return connection_->CreateReport(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::CreateReport(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::migrationcenter::v1::Report const& report,
+    std::string const& report_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::CreateReportRequest request;
+  request.set_parent(parent);
+  *request.mutable_report() = report;
+  request.set_report_id(report_id);
+  return connection_->CreateReport(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::Report>>
 MigrationCenterClient::CreateReport(
     google::cloud::migrationcenter::v1::CreateReportRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReport(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::CreateReport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::CreateReportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateReport(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::Report>>
+MigrationCenterClient::CreateReport(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateReport(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
@@ -854,12 +1479,36 @@ MigrationCenterClient::DeleteReport(std::string const& name, Options opts) {
   return connection_->DeleteReport(request);
 }
 
+StatusOr<google::longrunning::Operation> MigrationCenterClient::DeleteReport(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::migrationcenter::v1::DeleteReportRequest request;
+  request.set_name(name);
+  return connection_->DeleteReport(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
 MigrationCenterClient::DeleteReport(
     google::cloud::migrationcenter::v1::DeleteReportRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReport(request);
+}
+
+StatusOr<google::longrunning::Operation> MigrationCenterClient::DeleteReport(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::migrationcenter::v1::DeleteReportRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteReport(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
+MigrationCenterClient::DeleteReport(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteReport(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

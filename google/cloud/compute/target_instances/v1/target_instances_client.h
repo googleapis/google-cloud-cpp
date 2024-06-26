@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_TARGET_INSTANCES_CLIENT_H
 
 #include "google/cloud/compute/target_instances/v1/target_instances_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -206,6 +208,11 @@ class TargetInstancesClient {
   DeleteTargetInstance(std::string const& project, std::string const& zone,
                        std::string const& target_instance, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& target_instance,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified TargetInstance resource.
@@ -244,6 +251,18 @@ class TargetInstancesClient {
   DeleteTargetInstance(google::cloud::cpp::compute::target_instances::v1::
                            DeleteTargetInstanceRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          DeleteTargetInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetInstance(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -345,6 +364,13 @@ class TargetInstancesClient {
                            target_instance_resource,
                        Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
+      google::cloud::cpp::compute::v1::TargetInstance const&
+          target_instance_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a TargetInstance resource in the specified project and zone using
@@ -384,6 +410,18 @@ class TargetInstancesClient {
   InsertTargetInstance(google::cloud::cpp::compute::target_instances::v1::
                            InsertTargetInstanceRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          InsertTargetInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetInstance(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -508,6 +546,13 @@ class TargetInstancesClient {
           security_policy_reference_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& target_instance,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the Google Cloud Armor security policy for the specified target
@@ -546,6 +591,17 @@ class TargetInstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(google::cloud::cpp::compute::target_instances::v1::
                         SetSecurityPolicyRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::target_instances::v1::
+          SetSecurityPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
  private:

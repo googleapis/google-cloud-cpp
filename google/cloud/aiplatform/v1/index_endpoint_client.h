@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INDEX_ENDPOINT_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/index_endpoint_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -126,6 +128,11 @@ class IndexEndpointServiceClient {
       google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an IndexEndpoint.
@@ -164,6 +171,16 @@ class IndexEndpointServiceClient {
   CreateIndexEndpoint(
       google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
+  CreateIndexEndpoint(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -392,6 +409,9 @@ class IndexEndpointServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteIndexEndpoint(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an IndexEndpoint.
@@ -431,6 +451,16 @@ class IndexEndpointServiceClient {
       google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteIndexEndpoint(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
+
   // clang-format off
   ///
   /// Deploys an Index into this IndexEndpoint, creating a DeployedIndex within
@@ -468,6 +498,11 @@ class IndexEndpointServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
   DeployIndex(
       std::string const& index_endpoint,
+      google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeployIndex(
+      ExperimentalTag, NoAwaitTag, std::string const& index_endpoint,
       google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
       Options opts = {});
 
@@ -511,6 +546,15 @@ class IndexEndpointServiceClient {
   DeployIndex(google::cloud::aiplatform::v1::DeployIndexRequest const& request,
               Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeployIndex(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeployIndexRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
+  DeployIndex(ExperimentalTag, google::longrunning::Operation const& operation,
+              Options opts = {});
+
   // clang-format off
   ///
   /// Undeploys an Index from an IndexEndpoint, removing a DeployedIndex from it,
@@ -548,6 +592,10 @@ class IndexEndpointServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
   UndeployIndex(std::string const& index_endpoint,
                 std::string const& deployed_index_id, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UndeployIndex(
+      ExperimentalTag, NoAwaitTag, std::string const& index_endpoint,
+      std::string const& deployed_index_id, Options opts = {});
 
   // clang-format off
   ///
@@ -589,6 +637,16 @@ class IndexEndpointServiceClient {
       google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UndeployIndex(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
+  UndeployIndex(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
+
   // clang-format off
   ///
   /// Update an existing DeployedIndex under an IndexEndpoint.
@@ -626,6 +684,11 @@ class IndexEndpointServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
   MutateDeployedIndex(
       std::string const& index_endpoint,
+      google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> MutateDeployedIndex(
+      ExperimentalTag, NoAwaitTag, std::string const& index_endpoint,
       google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
       Options opts = {});
 
@@ -667,6 +730,16 @@ class IndexEndpointServiceClient {
   MutateDeployedIndex(
       google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> MutateDeployedIndex(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
+  MutateDeployedIndex(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
  private:
   std::shared_ptr<IndexEndpointServiceConnection> connection_;

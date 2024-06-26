@@ -63,12 +63,45 @@ MigrationServiceClient::BatchMigrateResources(
   return connection_->BatchMigrateResources(request);
 }
 
+StatusOr<google::longrunning::Operation>
+MigrationServiceClient::BatchMigrateResources(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const&
+        migrate_resource_requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::BatchMigrateResourcesRequest request;
+  request.set_parent(parent);
+  *request.mutable_migrate_resource_requests() = {
+      migrate_resource_requests.begin(), migrate_resource_requests.end()};
+  return connection_->BatchMigrateResources(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
 MigrationServiceClient::BatchMigrateResources(
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchMigrateResources(request);
+}
+
+StatusOr<google::longrunning::Operation>
+MigrationServiceClient::BatchMigrateResources(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchMigrateResources(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
+MigrationServiceClient::BatchMigrateResources(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchMigrateResources(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

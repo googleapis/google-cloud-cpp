@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIKEYS_V2_API_KEYS_CLIENT_H
 
 #include "google/cloud/apikeys/v2/api_keys_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -133,6 +135,11 @@ class ApiKeysClient {
       std::string const& parent, google::api::apikeys::v2::Key const& key,
       std::string const& key_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateKey(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::api::apikeys::v2::Key const& key, std::string const& key_id,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new API key.
@@ -172,6 +179,15 @@ class ApiKeysClient {
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
       google::api::apikeys::v2::CreateKeyRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateKey(
+      ExperimentalTag, NoAwaitTag,
+      google::api::apikeys::v2::CreateKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -427,6 +443,10 @@ class ApiKeysClient {
       google::api::apikeys::v2::Key const& key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateKey(
+      ExperimentalTag, NoAwaitTag, google::api::apikeys::v2::Key const& key,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Patches the modifiable fields of an API key.
@@ -469,6 +489,15 @@ class ApiKeysClient {
       google::api::apikeys::v2::UpdateKeyRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateKey(
+      ExperimentalTag, NoAwaitTag,
+      google::api::apikeys::v2::UpdateKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an API key. Deleted key can be retrieved within 30 days of
@@ -504,6 +533,11 @@ class ApiKeysClient {
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteKey(ExperimentalTag,
+                                                     NoAwaitTag,
+                                                     std::string const& name,
+                                                     Options opts = {});
 
   // clang-format off
   ///
@@ -547,6 +581,15 @@ class ApiKeysClient {
       google::api::apikeys::v2::DeleteKeyRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteKey(
+      ExperimentalTag, NoAwaitTag,
+      google::api::apikeys::v2::DeleteKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Undeletes an API key which was deleted within 30 days.
@@ -586,6 +629,15 @@ class ApiKeysClient {
   // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
       google::api::apikeys::v2::UndeleteKeyRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UndeleteKey(
+      ExperimentalTag, NoAwaitTag,
+      google::api::apikeys::v2::UndeleteKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off

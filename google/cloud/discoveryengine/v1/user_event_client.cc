@@ -55,6 +55,24 @@ UserEventServiceClient::ImportUserEvents(
   return connection_->ImportUserEvents(request);
 }
 
+StatusOr<google::longrunning::Operation>
+UserEventServiceClient::ImportUserEvents(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::ImportUserEventsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportUserEvents(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
+UserEventServiceClient::ImportUserEvents(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportUserEvents(ExperimentalTag{}, operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1
 }  // namespace cloud

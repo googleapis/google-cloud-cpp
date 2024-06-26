@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONTENTWAREHOUSE_V1_PIPELINE_CLIENT_H
 
 #include "google/cloud/contentwarehouse/v1/pipeline_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -119,6 +121,11 @@ class PipelineServiceClient {
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
   RunPipeline(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RunPipeline(ExperimentalTag,
+                                                       NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
+
   // clang-format off
   ///
   /// Run a predefined pipeline.
@@ -157,6 +164,15 @@ class PipelineServiceClient {
   RunPipeline(
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RunPipeline(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
+  RunPipeline(ExperimentalTag, google::longrunning::Operation const& operation,
+              Options opts = {});
 
  private:
   std::shared_ptr<PipelineServiceConnection> connection_;

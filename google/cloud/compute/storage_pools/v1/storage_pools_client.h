@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_CLIENT_H
 
 #include "google/cloud/compute/storage_pools/v1/storage_pools_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -206,6 +208,11 @@ class StoragePoolsClient {
   DeleteStoragePool(std::string const& project, std::string const& zone,
                     std::string const& storage_pool, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& storage_pool,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified storage pool. Deleting a storagePool removes its data
@@ -246,6 +253,17 @@ class StoragePoolsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         DeleteStoragePoolRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::storage_pools::v1::
+          DeleteStoragePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteStoragePool(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -414,6 +432,12 @@ class StoragePoolsClient {
       google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
+      google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a storage pool in the specified project using the data in the
@@ -452,6 +476,17 @@ class StoragePoolsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         InsertStoragePoolRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::storage_pools::v1::
+          InsertStoragePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertStoragePool(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -789,6 +824,13 @@ class StoragePoolsClient {
       google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& storage_pool,
+      std::string const& update_mask,
+      google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified storagePool with the data included in the request.
@@ -829,6 +871,17 @@ class StoragePoolsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateStoragePool(google::cloud::cpp::compute::storage_pools::v1::
                         UpdateStoragePoolRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::storage_pools::v1::
+          UpdateStoragePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateStoragePool(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
  private:

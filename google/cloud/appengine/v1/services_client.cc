@@ -50,11 +50,40 @@ future<StatusOr<google::appengine::v1::Service>> ServicesClient::UpdateService(
   return connection_->UpdateService(request);
 }
 
+StatusOr<google::longrunning::Operation> ServicesClient::UpdateService(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::UpdateServiceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::Service>> ServicesClient::UpdateService(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateService(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesClient::DeleteService(
     google::appengine::v1::DeleteServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(request);
+}
+
+StatusOr<google::longrunning::Operation> ServicesClient::DeleteService(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::DeleteServiceRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::appengine::v1::OperationMetadataV1>>
+ServicesClient::DeleteService(ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteService(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

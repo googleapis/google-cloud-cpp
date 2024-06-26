@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RAPIDMIGRATIONASSESSMENT_V1_RAPID_MIGRATION_ASSESSMENT_CLIENT_H
 
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -130,6 +132,11 @@ class RapidMigrationAssessmentClient {
       google::cloud::rapidmigrationassessment::v1::Collector const& collector,
       std::string const& collector_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCollector(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::rapidmigrationassessment::v1::Collector const& collector,
+      std::string const& collector_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create a Collector to manage the on-prem appliance which collects
@@ -171,6 +178,17 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCollector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+  CreateCollector(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Creates an Annotation
@@ -204,6 +222,11 @@ class RapidMigrationAssessmentClient {
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
   CreateAnnotation(
       std::string const& parent,
+      google::cloud::rapidmigrationassessment::v1::Annotation const& annotation,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateAnnotation(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::rapidmigrationassessment::v1::Annotation const& annotation,
       Options opts = {});
 
@@ -244,6 +267,17 @@ class RapidMigrationAssessmentClient {
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
   CreateAnnotation(google::cloud::rapidmigrationassessment::v1::
                        CreateAnnotationRequest const& request,
+                   Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateAnnotation(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::rapidmigrationassessment::v1::
+          CreateAnnotationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
+  CreateAnnotation(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -476,6 +510,11 @@ class RapidMigrationAssessmentClient {
       google::cloud::rapidmigrationassessment::v1::Collector const& collector,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateCollector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::rapidmigrationassessment::v1::Collector const& collector,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Collector.
@@ -516,6 +555,17 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateCollector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+  UpdateCollector(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Collector - changes state of collector to "Deleting".
@@ -548,6 +598,9 @@ class RapidMigrationAssessmentClient {
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   DeleteCollector(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteCollector(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -590,6 +643,17 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteCollector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+  DeleteCollector(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Resumes the given collector.
@@ -621,6 +685,9 @@ class RapidMigrationAssessmentClient {
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   ResumeCollector(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ResumeCollector(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -662,6 +729,17 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ResumeCollector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+  ResumeCollector(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Registers the given collector.
@@ -693,6 +771,9 @@ class RapidMigrationAssessmentClient {
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   RegisterCollector(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RegisterCollector(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -733,6 +814,17 @@ class RapidMigrationAssessmentClient {
                         RegisterCollectorRequest const& request,
                     Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RegisterCollector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::rapidmigrationassessment::v1::
+          RegisterCollectorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+  RegisterCollector(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Pauses the given collector.
@@ -764,6 +856,9 @@ class RapidMigrationAssessmentClient {
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   PauseCollector(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PauseCollector(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -804,6 +899,17 @@ class RapidMigrationAssessmentClient {
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PauseCollector(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
+  PauseCollector(ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
  private:
   std::shared_ptr<RapidMigrationAssessmentConnection> connection_;

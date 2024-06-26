@@ -77,12 +77,42 @@ BackupDRClient::CreateManagementServer(
   return connection_->CreateManagementServer(request);
 }
 
+StatusOr<google::longrunning::Operation> BackupDRClient::CreateManagementServer(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::backupdr::v1::ManagementServer const& management_server,
+    std::string const& management_server_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::CreateManagementServerRequest request;
+  request.set_parent(parent);
+  *request.mutable_management_server() = management_server;
+  request.set_management_server_id(management_server_id);
+  return connection_->CreateManagementServer(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
 future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
 BackupDRClient::CreateManagementServer(
     google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateManagementServer(request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRClient::CreateManagementServer(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateManagementServer(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
+BackupDRClient::CreateManagementServer(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateManagementServer(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -93,12 +123,38 @@ BackupDRClient::DeleteManagementServer(std::string const& name, Options opts) {
   return connection_->DeleteManagementServer(request);
 }
 
+StatusOr<google::longrunning::Operation> BackupDRClient::DeleteManagementServer(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::backupdr::v1::DeleteManagementServerRequest request;
+  request.set_name(name);
+  return connection_->DeleteManagementServer(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
 BackupDRClient::DeleteManagementServer(
     google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteManagementServer(request);
+}
+
+StatusOr<google::longrunning::Operation> BackupDRClient::DeleteManagementServer(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteManagementServer(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
+BackupDRClient::DeleteManagementServer(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteManagementServer(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_BACKEND_SERVICES_V1_REGION_BACKEND_SERVICES_CLIENT_H
 
 #include "google/cloud/compute/region_backend_services/v1/region_backend_services_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -126,6 +128,11 @@ class RegionBackendServicesClient {
   DeleteBackendService(std::string const& project, std::string const& region,
                        std::string const& backend_service, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& backend_service,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified regional BackendService resource.
@@ -164,6 +171,18 @@ class RegionBackendServicesClient {
   DeleteBackendService(google::cloud::cpp::compute::region_backend_services::
                            v1::DeleteBackendServiceRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          DeleteBackendServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -396,6 +415,13 @@ class RegionBackendServicesClient {
                            backend_service_resource,
                        Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::BackendService const&
+          backend_service_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a regional BackendService resource in the specified project using
@@ -436,6 +462,18 @@ class RegionBackendServicesClient {
   InsertBackendService(google::cloud::cpp::compute::region_backend_services::
                            v1::InsertBackendServiceRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          InsertBackendServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -642,6 +680,13 @@ class RegionBackendServicesClient {
                           backend_service_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& backend_service,
+      google::cloud::cpp::compute::v1::BackendService const&
+          backend_service_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified regional BackendService resource with the data
@@ -683,6 +728,18 @@ class RegionBackendServicesClient {
   PatchBackendService(google::cloud::cpp::compute::region_backend_services::v1::
                           PatchBackendServiceRequest const& request,
                       Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          PatchBackendServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -794,6 +851,13 @@ class RegionBackendServicesClient {
           security_policy_reference_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& backend_service,
+      google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+          security_policy_reference_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the Google Cloud Armor security policy for the specified backend
@@ -832,6 +896,17 @@ class RegionBackendServicesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(google::cloud::cpp::compute::region_backend_services::v1::
                         SetSecurityPolicyRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          SetSecurityPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -942,6 +1017,13 @@ class RegionBackendServicesClient {
                            backend_service_resource,
                        Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& backend_service,
+      google::cloud::cpp::compute::v1::BackendService const&
+          backend_service_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified regional BackendService resource with the data
@@ -982,6 +1064,18 @@ class RegionBackendServicesClient {
   UpdateBackendService(google::cloud::cpp::compute::region_backend_services::
                            v1::UpdateBackendServiceRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::region_backend_services::v1::
+          UpdateBackendServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateBackendService(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<RegionBackendServicesConnection> connection_;

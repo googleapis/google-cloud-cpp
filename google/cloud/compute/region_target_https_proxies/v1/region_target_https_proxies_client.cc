@@ -47,6 +47,21 @@ RegionTargetHttpsProxiesClient::DeleteTargetHttpsProxy(
   return connection_->DeleteTargetHttpsProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::DeleteTargetHttpsProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_https_proxy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_target_https_proxies::v1::
+      DeleteTargetHttpsProxyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_https_proxy(target_https_proxy);
+  return connection_->DeleteTargetHttpsProxy(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesClient::DeleteTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
@@ -54,6 +69,25 @@ RegionTargetHttpsProxiesClient::DeleteTargetHttpsProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetHttpsProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::DeleteTargetHttpsProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        DeleteTargetHttpsProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetHttpsProxy(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionTargetHttpsProxiesClient::DeleteTargetHttpsProxy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetHttpsProxy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -93,6 +127,23 @@ RegionTargetHttpsProxiesClient::InsertTargetHttpsProxy(
   return connection_->InsertTargetHttpsProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::InsertTargetHttpsProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::TargetHttpsProxy const&
+        target_https_proxy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_target_https_proxies::v1::
+      InsertTargetHttpsProxyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_target_https_proxy_resource() = target_https_proxy_resource;
+  return connection_->InsertTargetHttpsProxy(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesClient::InsertTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
@@ -100,6 +151,25 @@ RegionTargetHttpsProxiesClient::InsertTargetHttpsProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetHttpsProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::InsertTargetHttpsProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        InsertTargetHttpsProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetHttpsProxy(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionTargetHttpsProxiesClient::InsertTargetHttpsProxy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetHttpsProxy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -139,6 +209,24 @@ RegionTargetHttpsProxiesClient::PatchTargetHttpsProxy(
   return connection_->PatchTargetHttpsProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::PatchTargetHttpsProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_https_proxy,
+    google::cloud::cpp::compute::v1::TargetHttpsProxy const&
+        target_https_proxy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_target_https_proxies::v1::
+      PatchTargetHttpsProxyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_https_proxy(target_https_proxy);
+  *request.mutable_target_https_proxy_resource() = target_https_proxy_resource;
+  return connection_->PatchTargetHttpsProxy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesClient::PatchTargetHttpsProxy(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
@@ -146,6 +234,25 @@ RegionTargetHttpsProxiesClient::PatchTargetHttpsProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchTargetHttpsProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::PatchTargetHttpsProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        PatchTargetHttpsProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchTargetHttpsProxy(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionTargetHttpsProxiesClient::PatchTargetHttpsProxy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchTargetHttpsProxy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -168,6 +275,27 @@ RegionTargetHttpsProxiesClient::SetSslCertificates(
   return connection_->SetSslCertificates(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::SetSslCertificates(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_https_proxy,
+    google::cloud::cpp::compute::v1::
+        RegionTargetHttpsProxiesSetSslCertificatesRequest const&
+            region_target_https_proxies_set_ssl_certificates_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_target_https_proxies::v1::
+      SetSslCertificatesRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_https_proxy(target_https_proxy);
+  *request
+       .mutable_region_target_https_proxies_set_ssl_certificates_request_resource() =
+      region_target_https_proxies_set_ssl_certificates_request_resource;
+  return connection_->SetSslCertificates(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesClient::SetSslCertificates(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
@@ -175,6 +303,25 @@ RegionTargetHttpsProxiesClient::SetSslCertificates(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSslCertificates(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::SetSslCertificates(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        SetSslCertificatesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSslCertificates(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionTargetHttpsProxiesClient::SetSslCertificates(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSslCertificates(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -194,6 +341,23 @@ RegionTargetHttpsProxiesClient::SetUrlMap(
   return connection_->SetUrlMap(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::SetUrlMap(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_https_proxy,
+    google::cloud::cpp::compute::v1::UrlMapReference const&
+        url_map_reference_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_target_https_proxies::v1::SetUrlMapRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_https_proxy(target_https_proxy);
+  *request.mutable_url_map_reference_resource() = url_map_reference_resource;
+  return connection_->SetUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesClient::SetUrlMap(
     google::cloud::cpp::compute::region_target_https_proxies::v1::
@@ -201,6 +365,24 @@ RegionTargetHttpsProxiesClient::SetUrlMap(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetUrlMap(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionTargetHttpsProxiesClient::SetUrlMap(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_target_https_proxies::v1::
+        SetUrlMapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionTargetHttpsProxiesClient::SetUrlMap(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetUrlMap(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

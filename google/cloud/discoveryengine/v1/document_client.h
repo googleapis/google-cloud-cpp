@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_DOCUMENT_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/document_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -492,6 +494,16 @@ class DocumentServiceClient {
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportDocuments(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
+  ImportDocuments(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Permanently deletes all selected
@@ -549,6 +561,16 @@ class DocumentServiceClient {
   PurgeDocuments(
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PurgeDocuments(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
+  PurgeDocuments(ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
  private:
   std::shared_ptr<DocumentServiceConnection> connection_;

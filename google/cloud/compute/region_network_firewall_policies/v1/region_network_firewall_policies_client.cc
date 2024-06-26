@@ -53,6 +53,24 @@ RegionNetworkFirewallPoliciesClient::AddAssociation(
   return connection_->AddAssociation(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::AddAssociation(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyAssociation const&
+        firewall_policy_association_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      AddAssociationRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_association_resource() =
+      firewall_policy_association_resource;
+  return connection_->AddAssociation(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::AddAssociation(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -60,6 +78,24 @@ RegionNetworkFirewallPoliciesClient::AddAssociation(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddAssociation(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::AddAssociation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        AddAssociationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddAssociation(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::AddAssociation(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddAssociation(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -80,6 +116,24 @@ RegionNetworkFirewallPoliciesClient::AddRule(
   return connection_->AddRule(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::AddRule(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyRule const&
+        firewall_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      AddRuleRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_rule_resource() =
+      firewall_policy_rule_resource;
+  return connection_->AddRule(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::AddRule(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -87,6 +141,24 @@ RegionNetworkFirewallPoliciesClient::AddRule(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::AddRule(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        AddRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddRule(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::AddRule(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddRule(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -102,6 +174,20 @@ RegionNetworkFirewallPoliciesClient::CloneRules(
   return connection_->CloneRules(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::CloneRules(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& firewall_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      CloneRulesRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  return connection_->CloneRules(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::CloneRules(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -109,6 +195,24 @@ RegionNetworkFirewallPoliciesClient::CloneRules(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CloneRules(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::CloneRules(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        CloneRulesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CloneRules(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::CloneRules(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CloneRules(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -124,6 +228,21 @@ RegionNetworkFirewallPoliciesClient::DeleteFirewallPolicy(
   return connection_->DeleteFirewallPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::DeleteFirewallPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& firewall_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      DeleteFirewallPolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  return connection_->DeleteFirewallPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::DeleteFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -131,6 +250,25 @@ RegionNetworkFirewallPoliciesClient::DeleteFirewallPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteFirewallPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::DeleteFirewallPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        DeleteFirewallPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFirewallPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::DeleteFirewallPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFirewallPolicy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -262,6 +400,23 @@ RegionNetworkFirewallPoliciesClient::InsertFirewallPolicy(
   return connection_->InsertFirewallPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::InsertFirewallPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::FirewallPolicy const&
+        firewall_policy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      InsertFirewallPolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_firewall_policy_resource() = firewall_policy_resource;
+  return connection_->InsertFirewallPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::InsertFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -269,6 +424,25 @@ RegionNetworkFirewallPoliciesClient::InsertFirewallPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertFirewallPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::InsertFirewallPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        InsertFirewallPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertFirewallPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::InsertFirewallPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertFirewallPolicy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -308,6 +482,24 @@ RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
   return connection_->PatchFirewallPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicy const&
+        firewall_policy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      PatchFirewallPolicyRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_resource() = firewall_policy_resource;
+  return connection_->PatchFirewallPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -315,6 +507,25 @@ RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchFirewallPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchFirewallPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchFirewallPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                          request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::PatchFirewallPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchFirewallPolicy(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -335,6 +546,24 @@ RegionNetworkFirewallPoliciesClient::PatchRule(
   return connection_->PatchRule(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::PatchRule(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& firewall_policy,
+    google::cloud::cpp::compute::v1::FirewallPolicyRule const&
+        firewall_policy_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      PatchRuleRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  *request.mutable_firewall_policy_rule_resource() =
+      firewall_policy_rule_resource;
+  return connection_->PatchRule(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::PatchRule(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -342,6 +571,24 @@ RegionNetworkFirewallPoliciesClient::PatchRule(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::PatchRule(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        PatchRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchRule(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::PatchRule(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchRule(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -357,6 +604,21 @@ RegionNetworkFirewallPoliciesClient::RemoveAssociation(
   return connection_->RemoveAssociation(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::RemoveAssociation(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& firewall_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      RemoveAssociationRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  return connection_->RemoveAssociation(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::RemoveAssociation(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -364,6 +626,25 @@ RegionNetworkFirewallPoliciesClient::RemoveAssociation(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveAssociation(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::RemoveAssociation(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        RemoveAssociationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveAssociation(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::RemoveAssociation(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveAssociation(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -379,6 +660,20 @@ RegionNetworkFirewallPoliciesClient::RemoveRule(
   return connection_->RemoveRule(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::RemoveRule(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& firewall_policy,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_network_firewall_policies::v1::
+      RemoveRuleRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_firewall_policy(firewall_policy);
+  return connection_->RemoveRule(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNetworkFirewallPoliciesClient::RemoveRule(
     google::cloud::cpp::compute::region_network_firewall_policies::v1::
@@ -386,6 +681,24 @@ RegionNetworkFirewallPoliciesClient::RemoveRule(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveRule(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionNetworkFirewallPoliciesClient::RemoveRule(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_network_firewall_policies::v1::
+        RemoveRuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveRule(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionNetworkFirewallPoliciesClient::RemoveRule(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveRule(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

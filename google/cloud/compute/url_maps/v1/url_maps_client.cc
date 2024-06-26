@@ -62,6 +62,17 @@ UrlMapsClient::DeleteUrlMap(std::string const& project,
   return connection_->DeleteUrlMap(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsClient::DeleteUrlMap(ExperimentalTag, NoAwaitTag,
+                            std::string const& project,
+                            std::string const& url_map, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest request;
+  request.set_project(project);
+  request.set_url_map(url_map);
+  return connection_->DeleteUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsClient::DeleteUrlMap(
     google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
@@ -69,6 +80,24 @@ UrlMapsClient::DeleteUrlMap(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteUrlMap(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsClient::DeleteUrlMap(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+UrlMapsClient::DeleteUrlMap(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteUrlMap(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMap> UrlMapsClient::GetUrlMap(
@@ -99,6 +128,18 @@ UrlMapsClient::InsertUrlMap(
   return connection_->InsertUrlMap(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsClient::InsertUrlMap(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest request;
+  request.set_project(project);
+  *request.mutable_url_map_resource() = url_map_resource;
+  return connection_->InsertUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsClient::InsertUrlMap(
     google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
@@ -106,6 +147,24 @@ UrlMapsClient::InsertUrlMap(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertUrlMap(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsClient::InsertUrlMap(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+UrlMapsClient::InsertUrlMap(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertUrlMap(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -123,6 +182,22 @@ UrlMapsClient::InvalidateCache(
   return connection_->InvalidateCache(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsClient::InvalidateCache(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& url_map,
+    google::cloud::cpp::compute::v1::CacheInvalidationRule const&
+        cache_invalidation_rule_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest request;
+  request.set_project(project);
+  request.set_url_map(url_map);
+  *request.mutable_cache_invalidation_rule_resource() =
+      cache_invalidation_rule_resource;
+  return connection_->InvalidateCache(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsClient::InvalidateCache(
     google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
@@ -130,6 +205,24 @@ UrlMapsClient::InvalidateCache(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InvalidateCache(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsClient::InvalidateCache(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InvalidateCache(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+UrlMapsClient::InvalidateCache(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InvalidateCache(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::UrlMap> UrlMapsClient::ListUrlMaps(
@@ -160,6 +253,19 @@ UrlMapsClient::PatchUrlMap(
   return connection_->PatchUrlMap(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation> UrlMapsClient::PatchUrlMap(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& url_map,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest request;
+  request.set_project(project);
+  request.set_url_map(url_map);
+  *request.mutable_url_map_resource() = url_map_resource;
+  return connection_->PatchUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsClient::PatchUrlMap(
     google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
@@ -167,6 +273,23 @@ UrlMapsClient::PatchUrlMap(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchUrlMap(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation> UrlMapsClient::PatchUrlMap(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+UrlMapsClient::PatchUrlMap(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchUrlMap(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -182,6 +305,20 @@ UrlMapsClient::UpdateUrlMap(
   return connection_->UpdateUrlMap(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsClient::UpdateUrlMap(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& url_map,
+    google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest request;
+  request.set_project(project);
+  request.set_url_map(url_map);
+  *request.mutable_url_map_resource() = url_map_resource;
+  return connection_->UpdateUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 UrlMapsClient::UpdateUrlMap(
     google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
@@ -189,6 +326,24 @@ UrlMapsClient::UpdateUrlMap(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateUrlMap(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+UrlMapsClient::UpdateUrlMap(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+UrlMapsClient::UpdateUrlMap(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateUrlMap(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>

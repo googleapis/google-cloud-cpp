@@ -81,6 +81,20 @@ InstanceAdminClient::CreateInstanceConfig(
   return connection_->CreateInstanceConfig(request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminClient::CreateInstanceConfig(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::spanner::admin::instance::v1::InstanceConfig const& instance_config,
+    std::string const& instance_config_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::CreateInstanceConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_instance_config() = instance_config;
+  request.set_instance_config_id(instance_config_id);
+  return connection_->CreateInstanceConfig(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminClient::CreateInstanceConfig(
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
@@ -88,6 +102,25 @@ InstanceAdminClient::CreateInstanceConfig(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstanceConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminClient::CreateInstanceConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstanceConfig(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminClient::CreateInstanceConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstanceConfig(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -101,6 +134,19 @@ InstanceAdminClient::UpdateInstanceConfig(
   return connection_->UpdateInstanceConfig(request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminClient::UpdateInstanceConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::InstanceConfig const& instance_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::UpdateInstanceConfigRequest request;
+  *request.mutable_instance_config() = instance_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateInstanceConfig(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminClient::UpdateInstanceConfig(
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
@@ -108,6 +154,25 @@ InstanceAdminClient::UpdateInstanceConfig(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstanceConfig(request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminClient::UpdateInstanceConfig(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstanceConfig(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminClient::UpdateInstanceConfig(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstanceConfig(ExperimentalTag{}, operation);
 }
 
 Status InstanceAdminClient::DeleteInstanceConfig(std::string const& name,
@@ -207,12 +272,41 @@ InstanceAdminClient::CreateInstance(
   return connection_->CreateInstance(request);
 }
 
+StatusOr<google::longrunning::Operation> InstanceAdminClient::CreateInstance(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    std::string const& instance_id,
+    google::spanner::admin::instance::v1::Instance const& instance,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::CreateInstanceRequest request;
+  request.set_parent(parent);
+  request.set_instance_id(instance_id);
+  *request.mutable_instance() = instance;
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminClient::CreateInstance(
     google::spanner::admin::instance::v1::CreateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminClient::CreateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminClient::CreateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -226,12 +320,39 @@ InstanceAdminClient::UpdateInstance(
   return connection_->UpdateInstance(request);
 }
 
+StatusOr<google::longrunning::Operation> InstanceAdminClient::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::Instance const& instance,
+    google::protobuf::FieldMask const& field_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::UpdateInstanceRequest request;
+  *request.mutable_instance() = instance;
+  *request.mutable_field_mask() = field_mask;
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminClient::UpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstance(request);
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminClient::UpdateInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminClient::UpdateInstance(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstance(ExperimentalTag{}, operation);
 }
 
 Status InstanceAdminClient::DeleteInstance(std::string const& name,
@@ -364,6 +485,21 @@ InstanceAdminClient::CreateInstancePartition(
   return connection_->CreateInstancePartition(request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminClient::CreateInstancePartition(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::spanner::admin::instance::v1::InstancePartition const&
+        instance_partition,
+    std::string const& instance_partition_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::CreateInstancePartitionRequest request;
+  request.set_parent(parent);
+  *request.mutable_instance_partition() = instance_partition;
+  request.set_instance_partition_id(instance_partition_id);
+  return connection_->CreateInstancePartition(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminClient::CreateInstancePartition(
     google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
@@ -371,6 +507,25 @@ InstanceAdminClient::CreateInstancePartition(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstancePartition(request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminClient::CreateInstancePartition(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstancePartition(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminClient::CreateInstancePartition(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstancePartition(ExperimentalTag{}, operation);
 }
 
 Status InstanceAdminClient::DeleteInstancePartition(std::string const& name,
@@ -401,6 +556,20 @@ InstanceAdminClient::UpdateInstancePartition(
   return connection_->UpdateInstancePartition(request);
 }
 
+StatusOr<google::longrunning::Operation>
+InstanceAdminClient::UpdateInstancePartition(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::InstancePartition const&
+        instance_partition,
+    google::protobuf::FieldMask const& field_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::UpdateInstancePartitionRequest request;
+  *request.mutable_instance_partition() = instance_partition;
+  *request.mutable_field_mask() = field_mask;
+  return connection_->UpdateInstancePartition(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
+}
+
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminClient::UpdateInstancePartition(
     google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
@@ -408,6 +577,25 @@ InstanceAdminClient::UpdateInstancePartition(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateInstancePartition(request);
+}
+
+StatusOr<google::longrunning::Operation>
+InstanceAdminClient::UpdateInstancePartition(
+    ExperimentalTag, NoAwaitTag,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstancePartition(ExperimentalTag{}, NoAwaitTag{},
+                                              request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminClient::UpdateInstancePartition(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstancePartition(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::longrunning::Operation>

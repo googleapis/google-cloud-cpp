@@ -62,12 +62,43 @@ SiteSearchEngineServiceClient::CreateTargetSite(
   return connection_->CreateTargetSite(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::CreateTargetSite(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::discoveryengine::v1::TargetSite const& target_site,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::CreateTargetSiteRequest request;
+  request.set_parent(parent);
+  *request.mutable_target_site() = target_site;
+  return connection_->CreateTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceClient::CreateTargetSite(
     google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateTargetSite(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::CreateTargetSite(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+SiteSearchEngineServiceClient::CreateTargetSite(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTargetSite(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -78,6 +109,26 @@ SiteSearchEngineServiceClient::BatchCreateTargetSites(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchCreateTargetSites(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::BatchCreateTargetSites(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateTargetSites(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+SiteSearchEngineServiceClient::BatchCreateTargetSites(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateTargetSites(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::TargetSite>
@@ -107,12 +158,42 @@ SiteSearchEngineServiceClient::UpdateTargetSite(
   return connection_->UpdateTargetSite(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::UpdateTargetSite(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::TargetSite const& target_site,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::UpdateTargetSiteRequest request;
+  *request.mutable_target_site() = target_site;
+  return connection_->UpdateTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
 SiteSearchEngineServiceClient::UpdateTargetSite(
     google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTargetSite(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::UpdateTargetSite(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+SiteSearchEngineServiceClient::UpdateTargetSite(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTargetSite(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
@@ -124,12 +205,41 @@ SiteSearchEngineServiceClient::DeleteTargetSite(std::string const& name,
   return connection_->DeleteTargetSite(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::DeleteTargetSite(ExperimentalTag, NoAwaitTag,
+                                                std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::discoveryengine::v1::DeleteTargetSiteRequest request;
+  request.set_name(name);
+  return connection_->DeleteTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
 SiteSearchEngineServiceClient::DeleteTargetSite(
     google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetSite(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::DeleteTargetSite(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetSite(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
+SiteSearchEngineServiceClient::DeleteTargetSite(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetSite(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::TargetSite>
@@ -159,6 +269,26 @@ SiteSearchEngineServiceClient::EnableAdvancedSiteSearch(
   return connection_->EnableAdvancedSiteSearch(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::EnableAdvancedSiteSearch(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EnableAdvancedSiteSearch(ExperimentalTag{}, NoAwaitTag{},
+                                               request);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+SiteSearchEngineServiceClient::EnableAdvancedSiteSearch(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EnableAdvancedSiteSearch(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<
     google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
 SiteSearchEngineServiceClient::DisableAdvancedSiteSearch(
@@ -169,12 +299,49 @@ SiteSearchEngineServiceClient::DisableAdvancedSiteSearch(
   return connection_->DisableAdvancedSiteSearch(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::DisableAdvancedSiteSearch(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableAdvancedSiteSearch(ExperimentalTag{}, NoAwaitTag{},
+                                                request);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+SiteSearchEngineServiceClient::DisableAdvancedSiteSearch(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableAdvancedSiteSearch(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
 SiteSearchEngineServiceClient::RecrawlUris(
     google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RecrawlUris(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::RecrawlUris(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RecrawlUris(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
+SiteSearchEngineServiceClient::RecrawlUris(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RecrawlUris(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<
@@ -185,6 +352,26 @@ SiteSearchEngineServiceClient::BatchVerifyTargetSites(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->BatchVerifyTargetSites(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SiteSearchEngineServiceClient::BatchVerifyTargetSites(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchVerifyTargetSites(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+SiteSearchEngineServiceClient::BatchVerifyTargetSites(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchVerifyTargetSites(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::TargetSite>

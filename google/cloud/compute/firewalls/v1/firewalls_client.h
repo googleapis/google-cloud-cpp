@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALLS_V1_FIREWALLS_CLIENT_H
 
 #include "google/cloud/compute/firewalls/v1/firewalls_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -118,6 +120,10 @@ class FirewallsClient {
       std::string const& project, std::string const& firewall,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewall(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& firewall, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified firewall.
@@ -155,6 +161,17 @@ class FirewallsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewall(
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewall(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewall(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -254,6 +271,11 @@ class FirewallsClient {
       google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewall(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a firewall rule in the specified project using the data included in
@@ -292,6 +314,17 @@ class FirewallsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewall(
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewall(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewall(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -408,6 +441,12 @@ class FirewallsClient {
       google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewall(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& firewall,
+      google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified firewall rule with the data included in the request.
@@ -449,6 +488,17 @@ class FirewallsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewall(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewall(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified firewall rule with the data included in the request.
@@ -484,6 +534,12 @@ class FirewallsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewall(
       std::string const& project, std::string const& firewall,
+      google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewall(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& firewall,
       google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
       Options opts = {});
 
@@ -526,6 +582,17 @@ class FirewallsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewall(
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewall(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewall(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

@@ -65,6 +65,19 @@ VpnTunnelsClient::DeleteVpnTunnel(std::string const& project,
   return connection_->DeleteVpnTunnel(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsClient::DeleteVpnTunnel(ExperimentalTag, NoAwaitTag,
+                                  std::string const& project,
+                                  std::string const& region,
+                                  std::string const& vpn_tunnel, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_vpn_tunnel(vpn_tunnel);
+  return connection_->DeleteVpnTunnel(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsClient::DeleteVpnTunnel(
     google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
@@ -72,6 +85,24 @@ VpnTunnelsClient::DeleteVpnTunnel(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteVpnTunnel(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsClient::DeleteVpnTunnel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::vpn_tunnels::v1::DeleteVpnTunnelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteVpnTunnel(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+VpnTunnelsClient::DeleteVpnTunnel(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteVpnTunnel(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>
@@ -108,6 +139,20 @@ VpnTunnelsClient::InsertVpnTunnel(
   return connection_->InsertVpnTunnel(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsClient::InsertVpnTunnel(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::VpnTunnel const& vpn_tunnel_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_vpn_tunnel_resource() = vpn_tunnel_resource;
+  return connection_->InsertVpnTunnel(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsClient::InsertVpnTunnel(
     google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
@@ -115,6 +160,24 @@ VpnTunnelsClient::InsertVpnTunnel(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertVpnTunnel(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsClient::InsertVpnTunnel(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::vpn_tunnels::v1::InsertVpnTunnelRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertVpnTunnel(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+VpnTunnelsClient::InsertVpnTunnel(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertVpnTunnel(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::VpnTunnel>
@@ -152,6 +215,23 @@ VpnTunnelsClient::SetLabels(
   return connection_->SetLabels(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsClient::SetLabels(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& resource,
+    google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+        region_set_labels_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_resource(resource);
+  *request.mutable_region_set_labels_request_resource() =
+      region_set_labels_request_resource;
+  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnTunnelsClient::SetLabels(
     google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
@@ -159,6 +239,24 @@ VpnTunnelsClient::SetLabels(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetLabels(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+VpnTunnelsClient::SetLabels(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+VpnTunnelsClient::SetLabels(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetLabels(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

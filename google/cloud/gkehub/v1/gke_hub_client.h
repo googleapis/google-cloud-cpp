@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_CLIENT_H
 
 #include "google/cloud/gkehub/v1/gke_hub_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -420,6 +422,11 @@ class GkeHubClient {
       google::cloud::gkehub::v1::Membership const& resource,
       std::string const& membership_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateMembership(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::gkehub::v1::Membership const& resource,
+      std::string const& membership_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Membership.
@@ -462,6 +469,15 @@ class GkeHubClient {
       google::cloud::gkehub::v1::CreateMembershipRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateMembership(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::CreateMembershipRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Adds a new Feature.
@@ -496,6 +512,11 @@ class GkeHubClient {
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
       std::string const& parent,
+      google::cloud::gkehub::v1::Feature const& resource,
+      std::string const& feature_id, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkehub::v1::Feature const& resource,
       std::string const& feature_id, Options opts = {});
 
@@ -537,6 +558,15 @@ class GkeHubClient {
       google::cloud::gkehub::v1::CreateFeatureRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::CreateFeatureRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Removes a Membership.
@@ -573,6 +603,9 @@ class GkeHubClient {
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteMembership(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteMembership(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -617,6 +650,16 @@ class GkeHubClient {
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteMembership(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
+  DeleteMembership(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Removes a Feature.
@@ -649,6 +692,9 @@ class GkeHubClient {
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
       std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -686,6 +732,15 @@ class GkeHubClient {
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -732,6 +787,11 @@ class GkeHubClient {
       google::cloud::gkehub::v1::Membership const& resource,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateMembership(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      google::cloud::gkehub::v1::Membership const& resource,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an existing Membership.
@@ -768,6 +828,15 @@ class GkeHubClient {
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateMembership(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -814,6 +883,11 @@ class GkeHubClient {
       google::cloud::gkehub::v1::Feature const& resource,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateFeature(
+      ExperimentalTag, NoAwaitTag, std::string const& name,
+      google::cloud::gkehub::v1::Feature const& resource,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an existing Feature.
@@ -850,6 +924,15 @@ class GkeHubClient {
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateFeature(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off

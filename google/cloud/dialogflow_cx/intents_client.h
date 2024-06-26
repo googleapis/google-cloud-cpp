@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/intents_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -462,6 +464,16 @@ class IntentsClient {
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportIntents(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>
+  ImportIntents(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
+
   // clang-format off
   ///
   /// Exports the selected intents.
@@ -510,6 +522,16 @@ class IntentsClient {
   ExportIntents(
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportIntents(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>
+  ExportIntents(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
  private:
   std::shared_ptr<IntentsConnection> connection_;

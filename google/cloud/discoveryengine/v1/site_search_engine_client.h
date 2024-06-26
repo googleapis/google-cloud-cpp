@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_SITE_SEARCH_ENGINE_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,6 +197,11 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::TargetSite const& target_site,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTargetSite(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::discoveryengine::v1::TargetSite const& target_site,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a [TargetSite][google.cloud.discoveryengine.v1.TargetSite].
@@ -234,6 +241,17 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateTargetSite(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+  CreateTargetSite(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -277,6 +295,18 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+  BatchCreateTargetSites(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -383,6 +413,11 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::TargetSite const& target_site,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateTargetSite(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::TargetSite const& target_site,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates a [TargetSite][google.cloud.discoveryengine.v1.TargetSite].
@@ -422,6 +457,17 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateTargetSite(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
+  UpdateTargetSite(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -465,6 +511,9 @@ class SiteSearchEngineServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
   DeleteTargetSite(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteTargetSite(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a [TargetSite][google.cloud.discoveryengine.v1.TargetSite].
@@ -505,6 +554,17 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTargetSite(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
+  DeleteTargetSite(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -627,6 +687,18 @@ class SiteSearchEngineServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+  EnableAdvancedSiteSearch(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Downgrade from advanced site search to basic site search.
@@ -667,6 +739,18 @@ class SiteSearchEngineServiceClient {
                                 DisableAdvancedSiteSearchRequest const& request,
                             Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          DisableAdvancedSiteSearchRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+  DisableAdvancedSiteSearch(ExperimentalTag,
+                            google::longrunning::Operation const& operation,
+                            Options opts = {});
+
   // clang-format off
   ///
   /// Request on-demand recrawl for a list of URIs.
@@ -705,6 +789,15 @@ class SiteSearchEngineServiceClient {
   RecrawlUris(
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RecrawlUris(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
+  RecrawlUris(ExperimentalTag, google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -748,6 +841,18 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+  BatchVerifyTargetSites(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
   // clang-format off
   ///

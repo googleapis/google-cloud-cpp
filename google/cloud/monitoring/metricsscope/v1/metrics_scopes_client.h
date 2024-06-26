@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_METRICS_SCOPES_CLIENT_H
 
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -226,6 +228,12 @@ class MetricsScopesClient {
           monitored_project,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateMonitoredProject(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::monitoring::metricsscope::v1::MonitoredProject const&
+          monitored_project,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Adds a `MonitoredProject` with the given project ID
@@ -267,6 +275,17 @@ class MetricsScopesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateMonitoredProject(
+      ExperimentalTag, NoAwaitTag,
+      google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
+  CreateMonitoredProject(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a `MonitoredProject` from the specified `Metrics Scope`.
@@ -304,6 +323,9 @@ class MetricsScopesClient {
   // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
   DeleteMonitoredProject(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -344,6 +366,17 @@ class MetricsScopesClient {
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
+      ExperimentalTag, NoAwaitTag,
+      google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
+  DeleteMonitoredProject(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
  private:
   std::shared_ptr<MetricsScopesConnection> connection_;

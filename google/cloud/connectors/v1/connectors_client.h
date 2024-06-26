@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CONNECTORS_V1_CONNECTORS_CLIENT_H
 
 #include "google/cloud/connectors/v1/connectors_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -255,6 +257,11 @@ class ConnectorsClient {
       google::cloud::connectors::v1::Connection const& connection,
       std::string const& connection_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::connectors::v1::Connection const& connection,
+      std::string const& connection_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Connection in a given project and location.
@@ -291,6 +298,15 @@ class ConnectorsClient {
   // clang-format on
   future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
       google::cloud::connectors::v1::CreateConnectionRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::CreateConnectionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -342,6 +358,11 @@ class ConnectorsClient {
       google::cloud::connectors::v1::Connection const& connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::Connection const& connection,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Connection.
@@ -380,6 +401,15 @@ class ConnectorsClient {
       google::cloud::connectors::v1::UpdateConnectionRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::UpdateConnectionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Connection.
@@ -412,6 +442,9 @@ class ConnectorsClient {
   // clang-format on
   future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
   DeleteConnection(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -451,6 +484,16 @@ class ConnectorsClient {
   DeleteConnection(
       google::cloud::connectors::v1::DeleteConnectionRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteConnection(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::DeleteConnectionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
+  DeleteConnection(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -951,6 +994,9 @@ class ConnectorsClient {
   future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
   RefreshConnectionSchemaMetadata(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Refresh runtime schema of a connection.
@@ -989,6 +1035,17 @@ class ConnectorsClient {
   RefreshConnectionSchemaMetadata(
       google::cloud::connectors::v1::
           RefreshConnectionSchemaMetadataRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::connectors::v1::
+          RefreshConnectionSchemaMetadataRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
+  RefreshConnectionSchemaMetadata(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off

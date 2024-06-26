@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEOINTELLIGENCE_V1_VIDEO_INTELLIGENCE_CLIENT_H
 
 #include "google/cloud/videointelligence/v1/video_intelligence_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -140,6 +142,12 @@ class VideoIntelligenceServiceClient {
           features,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> AnnotateVideo(
+      ExperimentalTag, NoAwaitTag, std::string const& input_uri,
+      std::vector<google::cloud::videointelligence::v1::Feature> const&
+          features,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Performs asynchronous video annotation. Progress and results can be
@@ -181,6 +189,16 @@ class VideoIntelligenceServiceClient {
   AnnotateVideo(
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> AnnotateVideo(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
+  AnnotateVideo(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
  private:
   std::shared_ptr<VideoIntelligenceServiceConnection> connection_;

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TEST_CASES_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/test_cases_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -445,6 +447,15 @@ class TestCasesClient {
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RunTestCase(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
+  RunTestCase(ExperimentalTag, google::longrunning::Operation const& operation,
+              Options opts = {});
+
   // clang-format off
   ///
   /// Kicks off a batch run of test cases.
@@ -494,6 +505,17 @@ class TestCasesClient {
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchRunTestCases(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
+  BatchRunTestCases(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -579,6 +601,16 @@ class TestCasesClient {
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportTestCases(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
+  ImportTestCases(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Exports the test cases under the agent to a Cloud Storage bucket or a local
@@ -628,6 +660,16 @@ class TestCasesClient {
   ExportTestCases(
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportTestCases(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
+  ExportTestCases(ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///

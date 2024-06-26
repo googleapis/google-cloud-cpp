@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_BINDINGS_CLIENT_H
 
 #include "google/cloud/resourcemanager/v3/tag_bindings_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -205,6 +207,11 @@ class TagBindingsClient {
       google::cloud::resourcemanager::v3::TagBinding const& tag_binding,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTagBinding(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::TagBinding const& tag_binding,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a TagBinding between a TagValue and a Google Cloud resource.
@@ -245,6 +252,17 @@ class TagBindingsClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTagBinding(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
+  CreateTagBinding(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a TagBinding.
@@ -278,6 +296,9 @@ class TagBindingsClient {
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
   DeleteTagBinding(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTagBinding(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -318,6 +339,17 @@ class TagBindingsClient {
       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTagBinding(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
+  DeleteTagBinding(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///

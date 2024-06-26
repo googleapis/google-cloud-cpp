@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_REACHABILITY_CLIENT_H
 
 #include "google/cloud/networkmanagement/v1/reachability_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -289,6 +291,12 @@ class ReachabilityServiceClient {
       google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateConnectivityTest(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& test_id,
+      google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Connectivity Test.
@@ -341,6 +349,17 @@ class ReachabilityServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateConnectivityTest(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  CreateConnectivityTest(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Updates the configuration of an existing `ConnectivityTest`.
@@ -387,6 +406,12 @@ class ReachabilityServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   UpdateConnectivityTest(
+      google::protobuf::FieldMask const& update_mask,
+      google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
+      ExperimentalTag, NoAwaitTag,
       google::protobuf::FieldMask const& update_mask,
       google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
       Options opts = {});
@@ -444,6 +469,17 @@ class ReachabilityServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  UpdateConnectivityTest(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Rerun an existing `ConnectivityTest`.
@@ -495,6 +531,17 @@ class ReachabilityServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RerunConnectivityTest(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
+  RerunConnectivityTest(ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a specific `ConnectivityTest`.
@@ -527,6 +574,9 @@ class ReachabilityServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
   DeleteConnectivityTest(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -567,6 +617,17 @@ class ReachabilityServiceClient {
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
+  DeleteConnectivityTest(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
  private:
   std::shared_ptr<ReachabilityServiceConnection> connection_;

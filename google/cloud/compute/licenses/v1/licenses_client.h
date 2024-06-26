@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_LICENSES_V1_LICENSES_CLIENT_H
 
 #include "google/cloud/compute/licenses/v1/licenses_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -119,6 +121,10 @@ class LicensesClient {
       std::string const& project, std::string const& license,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& license, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified license. *Caution* This resource is intended for use
@@ -157,6 +163,17 @@ class LicensesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
       google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteLicense(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::DeleteLicenseRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteLicense(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -326,6 +343,11 @@ class LicensesClient {
       google::cloud::cpp::compute::v1::License const& license_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::License const& license_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Create a License resource in the specified project. *Caution* This resource
@@ -365,6 +387,17 @@ class LicensesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
       google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertLicense(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::licenses::v1::InsertLicenseRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertLicense(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off

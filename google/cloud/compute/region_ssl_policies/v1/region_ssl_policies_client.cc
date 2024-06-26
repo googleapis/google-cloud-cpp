@@ -46,6 +46,21 @@ RegionSslPoliciesClient::DeleteSslPolicy(std::string const& project,
   return connection_->DeleteSslPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesClient::DeleteSslPolicy(ExperimentalTag, NoAwaitTag,
+                                         std::string const& project,
+                                         std::string const& region,
+                                         std::string const& ssl_policy,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_ssl_policies::v1::DeleteSslPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_ssl_policy(ssl_policy);
+  return connection_->DeleteSslPolicy(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesClient::DeleteSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -53,6 +68,24 @@ RegionSslPoliciesClient::DeleteSslPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSslPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesClient::DeleteSslPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        DeleteSslPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSslPolicy(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSslPoliciesClient::DeleteSslPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSslPolicy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
@@ -92,6 +125,21 @@ RegionSslPoliciesClient::InsertSslPolicy(
   return connection_->InsertSslPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesClient::InsertSslPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_ssl_policies::v1::InsertSslPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_ssl_policy_resource() = ssl_policy_resource;
+  return connection_->InsertSslPolicy(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesClient::InsertSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -99,6 +147,24 @@ RegionSslPoliciesClient::InsertSslPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertSslPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesClient::InsertSslPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        InsertSslPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertSslPolicy(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSslPoliciesClient::InsertSslPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertSslPolicy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::SslPolicy>
@@ -161,6 +227,22 @@ RegionSslPoliciesClient::PatchSslPolicy(
   return connection_->PatchSslPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesClient::PatchSslPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& ssl_policy,
+    google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::region_ssl_policies::v1::PatchSslPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_ssl_policy(ssl_policy);
+  *request.mutable_ssl_policy_resource() = ssl_policy_resource;
+  return connection_->PatchSslPolicy(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesClient::PatchSslPolicy(
     google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -168,6 +250,24 @@ RegionSslPoliciesClient::PatchSslPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchSslPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+RegionSslPoliciesClient::PatchSslPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::region_ssl_policies::v1::
+        PatchSslPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchSslPolicy(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+RegionSslPoliciesClient::PatchSslPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PatchSslPolicy(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

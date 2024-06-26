@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_PROJECT_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/project_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -129,6 +131,9 @@ class ProjectServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
   ProvisionProject(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ProvisionProject(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Provisions the project resource. During the
@@ -173,6 +178,17 @@ class ProjectServiceClient {
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ProvisionProject(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::Project>>
+  ProvisionProject(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
  private:
   std::shared_ptr<ProjectServiceConnection> connection_;

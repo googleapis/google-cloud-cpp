@@ -44,6 +44,19 @@ TargetSslProxiesClient::DeleteTargetSslProxy(
   return connection_->DeleteTargetSslProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::DeleteTargetSslProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_ssl_proxy, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_ssl_proxies::v1::
+      DeleteTargetSslProxyRequest request;
+  request.set_project(project);
+  request.set_target_ssl_proxy(target_ssl_proxy);
+  return connection_->DeleteTargetSslProxy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesClient::DeleteTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -51,6 +64,25 @@ TargetSslProxiesClient::DeleteTargetSslProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetSslProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::DeleteTargetSslProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        DeleteTargetSslProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetSslProxy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetSslProxiesClient::DeleteTargetSslProxy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetSslProxy(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>
@@ -88,6 +120,21 @@ TargetSslProxiesClient::InsertTargetSslProxy(
   return connection_->InsertTargetSslProxy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::InsertTargetSslProxy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    google::cloud::cpp::compute::v1::TargetSslProxy const&
+        target_ssl_proxy_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_ssl_proxies::v1::
+      InsertTargetSslProxyRequest request;
+  request.set_project(project);
+  *request.mutable_target_ssl_proxy_resource() = target_ssl_proxy_resource;
+  return connection_->InsertTargetSslProxy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesClient::InsertTargetSslProxy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -95,6 +142,25 @@ TargetSslProxiesClient::InsertTargetSslProxy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetSslProxy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::InsertTargetSslProxy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        InsertTargetSslProxyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetSslProxy(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetSslProxiesClient::InsertTargetSslProxy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetSslProxy(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>
@@ -133,6 +199,25 @@ TargetSslProxiesClient::SetBackendService(
   return connection_->SetBackendService(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetBackendService(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_ssl_proxy,
+    google::cloud::cpp::compute::v1::
+        TargetSslProxiesSetBackendServiceRequest const&
+            target_ssl_proxies_set_backend_service_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_ssl_proxies::v1::SetBackendServiceRequest
+      request;
+  request.set_project(project);
+  request.set_target_ssl_proxy(target_ssl_proxy);
+  *request.mutable_target_ssl_proxies_set_backend_service_request_resource() =
+      target_ssl_proxies_set_backend_service_request_resource;
+  return connection_->SetBackendService(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesClient::SetBackendService(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -140,6 +225,25 @@ TargetSslProxiesClient::SetBackendService(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetBackendService(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetBackendService(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetBackendServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetBackendService(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetSslProxiesClient::SetBackendService(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetBackendService(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -159,6 +263,25 @@ TargetSslProxiesClient::SetCertificateMap(
   return connection_->SetCertificateMap(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetCertificateMap(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_ssl_proxy,
+    google::cloud::cpp::compute::v1::
+        TargetSslProxiesSetCertificateMapRequest const&
+            target_ssl_proxies_set_certificate_map_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_ssl_proxies::v1::SetCertificateMapRequest
+      request;
+  request.set_project(project);
+  request.set_target_ssl_proxy(target_ssl_proxy);
+  *request.mutable_target_ssl_proxies_set_certificate_map_request_resource() =
+      target_ssl_proxies_set_certificate_map_request_resource;
+  return connection_->SetCertificateMap(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesClient::SetCertificateMap(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -166,6 +289,25 @@ TargetSslProxiesClient::SetCertificateMap(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetCertificateMap(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetCertificateMap(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetCertificateMapRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetCertificateMap(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetSslProxiesClient::SetCertificateMap(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetCertificateMap(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -185,6 +327,24 @@ TargetSslProxiesClient::SetProxyHeader(
   return connection_->SetProxyHeader(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetProxyHeader(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_ssl_proxy,
+    google::cloud::cpp::compute::v1::
+        TargetSslProxiesSetProxyHeaderRequest const&
+            target_ssl_proxies_set_proxy_header_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_ssl_proxies::v1::SetProxyHeaderRequest
+      request;
+  request.set_project(project);
+  request.set_target_ssl_proxy(target_ssl_proxy);
+  *request.mutable_target_ssl_proxies_set_proxy_header_request_resource() =
+      target_ssl_proxies_set_proxy_header_request_resource;
+  return connection_->SetProxyHeader(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesClient::SetProxyHeader(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -192,6 +352,24 @@ TargetSslProxiesClient::SetProxyHeader(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetProxyHeader(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetProxyHeader(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetProxyHeaderRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetProxyHeader(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetSslProxiesClient::SetProxyHeader(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetProxyHeader(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -211,6 +389,25 @@ TargetSslProxiesClient::SetSslCertificates(
   return connection_->SetSslCertificates(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetSslCertificates(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_ssl_proxy,
+    google::cloud::cpp::compute::v1::
+        TargetSslProxiesSetSslCertificatesRequest const&
+            target_ssl_proxies_set_ssl_certificates_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslCertificatesRequest
+      request;
+  request.set_project(project);
+  request.set_target_ssl_proxy(target_ssl_proxy);
+  *request.mutable_target_ssl_proxies_set_ssl_certificates_request_resource() =
+      target_ssl_proxies_set_ssl_certificates_request_resource;
+  return connection_->SetSslCertificates(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesClient::SetSslCertificates(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -218,6 +415,25 @@ TargetSslProxiesClient::SetSslCertificates(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSslCertificates(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetSslCertificates(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetSslCertificatesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSslCertificates(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetSslProxiesClient::SetSslCertificates(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSslCertificates(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -236,6 +452,23 @@ TargetSslProxiesClient::SetSslPolicy(
   return connection_->SetSslPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetSslPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& target_ssl_proxy,
+    google::cloud::cpp::compute::v1::SslPolicyReference const&
+        ssl_policy_reference_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_ssl_proxies::v1::SetSslPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_target_ssl_proxy(target_ssl_proxy);
+  *request.mutable_ssl_policy_reference_resource() =
+      ssl_policy_reference_resource;
+  return connection_->SetSslPolicy(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetSslProxiesClient::SetSslPolicy(
     google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -243,6 +476,24 @@ TargetSslProxiesClient::SetSslPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSslPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetSslProxiesClient::SetSslPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_ssl_proxies::v1::
+        SetSslPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSslPolicy(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetSslProxiesClient::SetSslPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSslPolicy(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

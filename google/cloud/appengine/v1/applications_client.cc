@@ -54,6 +54,23 @@ ApplicationsClient::CreateApplication(
   return connection_->CreateApplication(request);
 }
 
+StatusOr<google::longrunning::Operation> ApplicationsClient::CreateApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::CreateApplicationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateApplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::appengine::v1::Application>>
+ApplicationsClient::CreateApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateApplication(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsClient::UpdateApplication(
     google::appengine::v1::UpdateApplicationRequest const& request,
@@ -62,12 +79,46 @@ ApplicationsClient::UpdateApplication(
   return connection_->UpdateApplication(request);
 }
 
+StatusOr<google::longrunning::Operation> ApplicationsClient::UpdateApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::UpdateApplicationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateApplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::appengine::v1::Application>>
+ApplicationsClient::UpdateApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateApplication(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsClient::RepairApplication(
     google::appengine::v1::RepairApplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RepairApplication(request);
+}
+
+StatusOr<google::longrunning::Operation> ApplicationsClient::RepairApplication(
+    ExperimentalTag, NoAwaitTag,
+    google::appengine::v1::RepairApplicationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RepairApplication(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::appengine::v1::Application>>
+ApplicationsClient::RepairApplication(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RepairApplication(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_ENDPOINT_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/endpoint_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -123,6 +125,11 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::Endpoint const& endpoint,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an Endpoint.
@@ -173,6 +180,11 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::Endpoint const& endpoint,
       std::string const& endpoint_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Endpoint const& endpoint,
+      std::string const& endpoint_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates an Endpoint.
@@ -209,6 +221,15 @@ class EndpointServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
       google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -438,6 +459,9 @@ class EndpointServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteEndpoint(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an Endpoint.
@@ -476,6 +500,16 @@ class EndpointServiceClient {
   DeleteEndpoint(
       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteEndpoint(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteEndpoint(ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -535,6 +569,12 @@ class EndpointServiceClient {
       std::map<std::string, std::int32_t> const& traffic_split,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeployModel(
+      ExperimentalTag, NoAwaitTag, std::string const& endpoint,
+      google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
+      std::map<std::string, std::int32_t> const& traffic_split,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deploys a Model into this Endpoint, creating a DeployedModel within it.
@@ -571,6 +611,15 @@ class EndpointServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
   DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request,
+              Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeployModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeployModelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
+  DeployModel(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -620,6 +669,12 @@ class EndpointServiceClient {
                 std::map<std::string, std::int32_t> const& traffic_split,
                 Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      ExperimentalTag, NoAwaitTag, std::string const& endpoint,
+      std::string const& deployed_model_id,
+      std::map<std::string, std::int32_t> const& traffic_split,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Undeploys a Model from an Endpoint, removing a DeployedModel from it, and
@@ -659,6 +714,16 @@ class EndpointServiceClient {
   UndeployModel(
       google::cloud::aiplatform::v1::UndeployModelRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UndeployModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UndeployModelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
+  UndeployModel(ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -718,6 +783,11 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> MutateDeployedModel(
+      ExperimentalTag, NoAwaitTag, std::string const& endpoint,
+      google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an existing deployed model. Updatable fields include
@@ -759,6 +829,16 @@ class EndpointServiceClient {
   MutateDeployedModel(
       google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> MutateDeployedModel(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
+  MutateDeployedModel(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
  private:
   std::shared_ptr<EndpointServiceConnection> connection_;

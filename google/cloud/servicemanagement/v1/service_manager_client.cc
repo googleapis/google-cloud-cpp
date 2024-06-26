@@ -67,12 +67,38 @@ ServiceManagerClient::CreateService(
   return connection_->CreateService(request);
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerClient::CreateService(
+    ExperimentalTag, NoAwaitTag,
+    google::api::servicemanagement::v1::ManagedService const& service,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::api::servicemanagement::v1::CreateServiceRequest request;
+  *request.mutable_service() = service;
+  return connection_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
 ServiceManagerClient::CreateService(
     google::api::servicemanagement::v1::CreateServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateService(request);
+}
+
+StatusOr<google::longrunning::Operation> ServiceManagerClient::CreateService(
+    ExperimentalTag, NoAwaitTag,
+    google::api::servicemanagement::v1::CreateServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
+ServiceManagerClient::CreateService(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateService(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
@@ -84,12 +110,37 @@ ServiceManagerClient::DeleteService(std::string const& service_name,
   return connection_->DeleteService(request);
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerClient::DeleteService(
+    ExperimentalTag, NoAwaitTag, std::string const& service_name,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::api::servicemanagement::v1::DeleteServiceRequest request;
+  request.set_service_name(service_name);
+  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
 ServiceManagerClient::DeleteService(
     google::api::servicemanagement::v1::DeleteServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteService(request);
+}
+
+StatusOr<google::longrunning::Operation> ServiceManagerClient::DeleteService(
+    ExperimentalTag, NoAwaitTag,
+    google::api::servicemanagement::v1::DeleteServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
+ServiceManagerClient::DeleteService(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteService(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
@@ -101,12 +152,37 @@ ServiceManagerClient::UndeleteService(std::string const& service_name,
   return connection_->UndeleteService(request);
 }
 
+StatusOr<google::longrunning::Operation> ServiceManagerClient::UndeleteService(
+    ExperimentalTag, NoAwaitTag, std::string const& service_name,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::api::servicemanagement::v1::UndeleteServiceRequest request;
+  request.set_service_name(service_name);
+  return connection_->UndeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerClient::UndeleteService(
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UndeleteService(request);
+}
+
+StatusOr<google::longrunning::Operation> ServiceManagerClient::UndeleteService(
+    ExperimentalTag, NoAwaitTag,
+    google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+ServiceManagerClient::UndeleteService(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeleteService(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::api::Service> ServiceManagerClient::ListServiceConfigs(
@@ -175,6 +251,20 @@ ServiceManagerClient::SubmitConfigSource(
   return connection_->SubmitConfigSource(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ServiceManagerClient::SubmitConfigSource(
+    ExperimentalTag, NoAwaitTag, std::string const& service_name,
+    google::api::servicemanagement::v1::ConfigSource const& config_source,
+    bool validate_only, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::api::servicemanagement::v1::SubmitConfigSourceRequest request;
+  request.set_service_name(service_name);
+  *request.mutable_config_source() = config_source;
+  request.set_validate_only(validate_only);
+  return connection_->SubmitConfigSource(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
 future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerClient::SubmitConfigSource(
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
@@ -182,6 +272,25 @@ ServiceManagerClient::SubmitConfigSource(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SubmitConfigSource(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceManagerClient::SubmitConfigSource(
+    ExperimentalTag, NoAwaitTag,
+    google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SubmitConfigSource(ExperimentalTag{}, NoAwaitTag{},
+                                         request);
+}
+
+future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
+ServiceManagerClient::SubmitConfigSource(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SubmitConfigSource(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::api::servicemanagement::v1::Rollout>
@@ -233,6 +342,18 @@ ServiceManagerClient::CreateServiceRollout(
   return connection_->CreateServiceRollout(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ServiceManagerClient::CreateServiceRollout(
+    ExperimentalTag, NoAwaitTag, std::string const& service_name,
+    google::api::servicemanagement::v1::Rollout const& rollout, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::api::servicemanagement::v1::CreateServiceRolloutRequest request;
+  request.set_service_name(service_name);
+  *request.mutable_rollout() = rollout;
+  return connection_->CreateServiceRollout(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerClient::CreateServiceRollout(
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
@@ -240,6 +361,25 @@ ServiceManagerClient::CreateServiceRollout(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateServiceRollout(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ServiceManagerClient::CreateServiceRollout(
+    ExperimentalTag, NoAwaitTag,
+    google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateServiceRollout(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::api::servicemanagement::v1::Rollout>>
+ServiceManagerClient::CreateServiceRollout(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateServiceRollout(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>

@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_EXTERNAL_VPN_GATEWAYS_V1_EXTERNAL_VPN_GATEWAYS_CLIENT_H
 
 #include "google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -125,6 +127,10 @@ class ExternalVpnGatewaysClient {
                            std::string const& external_vpn_gateway,
                            Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteExternalVpnGateway(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& external_vpn_gateway, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified externalVpnGateway.
@@ -163,6 +169,18 @@ class ExternalVpnGatewaysClient {
   DeleteExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           DeleteExternalVpnGatewayRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteExternalVpnGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          DeleteExternalVpnGatewayRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteExternalVpnGateway(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -267,6 +285,12 @@ class ExternalVpnGatewaysClient {
           external_vpn_gateway_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertExternalVpnGateway(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::ExternalVpnGateway const&
+          external_vpn_gateway_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a ExternalVpnGateway in the specified project using the data
@@ -306,6 +330,18 @@ class ExternalVpnGatewaysClient {
   InsertExternalVpnGateway(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           InsertExternalVpnGatewayRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertExternalVpnGateway(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          InsertExternalVpnGatewayRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertExternalVpnGateway(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -425,6 +461,13 @@ class ExternalVpnGatewaysClient {
           global_set_labels_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on an ExternalVpnGateway. To learn more about labels, read
@@ -463,6 +506,17 @@ class ExternalVpnGatewaysClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::external_vpn_gateways::v1::
           SetLabelsRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::external_vpn_gateways::v1::
+          SetLabelsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off

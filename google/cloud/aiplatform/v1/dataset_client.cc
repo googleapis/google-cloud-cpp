@@ -43,12 +43,38 @@ DatasetServiceClient::CreateDataset(
   return connection_->CreateDataset(request);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceClient::CreateDataset(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::Dataset const& dataset, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateDatasetRequest request;
+  request.set_parent(parent);
+  *request.mutable_dataset() = dataset;
+  return connection_->CreateDataset(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
 DatasetServiceClient::CreateDataset(
     google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDataset(request);
+}
+
+StatusOr<google::longrunning::Operation> DatasetServiceClient::CreateDataset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDataset(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
+DatasetServiceClient::CreateDataset(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDataset(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
@@ -109,12 +135,36 @@ DatasetServiceClient::DeleteDataset(std::string const& name, Options opts) {
   return connection_->DeleteDataset(request);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceClient::DeleteDataset(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteDatasetRequest request;
+  request.set_name(name);
+  return connection_->DeleteDataset(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceClient::DeleteDataset(
     google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDataset(request);
+}
+
+StatusOr<google::longrunning::Operation> DatasetServiceClient::DeleteDataset(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDataset(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceClient::DeleteDataset(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDataset(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
@@ -131,12 +181,41 @@ DatasetServiceClient::ImportData(
   return connection_->ImportData(request);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceClient::ImportData(
+    ExperimentalTag, NoAwaitTag, std::string const& name,
+    std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const&
+        import_configs,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::ImportDataRequest request;
+  request.set_name(name);
+  *request.mutable_import_configs() = {import_configs.begin(),
+                                       import_configs.end()};
+  return connection_->ImportData(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
 DatasetServiceClient::ImportData(
     google::cloud::aiplatform::v1::ImportDataRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ImportData(request);
+}
+
+StatusOr<google::longrunning::Operation> DatasetServiceClient::ImportData(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::ImportDataRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportData(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
+DatasetServiceClient::ImportData(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportData(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
@@ -151,12 +230,39 @@ DatasetServiceClient::ExportData(
   return connection_->ExportData(request);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceClient::ExportData(
+    ExperimentalTag, NoAwaitTag, std::string const& name,
+    google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::ExportDataRequest request;
+  request.set_name(name);
+  *request.mutable_export_config() = export_config;
+  return connection_->ExportData(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
 DatasetServiceClient::ExportData(
     google::cloud::aiplatform::v1::ExportDataRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ExportData(request);
+}
+
+StatusOr<google::longrunning::Operation> DatasetServiceClient::ExportData(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::ExportDataRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportData(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
+DatasetServiceClient::ExportData(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ExportData(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
@@ -171,12 +277,43 @@ DatasetServiceClient::CreateDatasetVersion(
   return connection_->CreateDatasetVersion(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatasetServiceClient::CreateDatasetVersion(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::CreateDatasetVersionRequest request;
+  request.set_parent(parent);
+  *request.mutable_dataset_version() = dataset_version;
+  return connection_->CreateDatasetVersion(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
 DatasetServiceClient::CreateDatasetVersion(
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateDatasetVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceClient::CreateDatasetVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDatasetVersion(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceClient::CreateDatasetVersion(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateDatasetVersion(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
@@ -207,12 +344,41 @@ DatasetServiceClient::DeleteDatasetVersion(std::string const& name,
   return connection_->DeleteDatasetVersion(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatasetServiceClient::DeleteDatasetVersion(ExperimentalTag, NoAwaitTag,
+                                           std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteDatasetVersionRequest request;
+  request.set_name(name);
+  return connection_->DeleteDatasetVersion(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceClient::DeleteDatasetVersion(
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteDatasetVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceClient::DeleteDatasetVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDatasetVersion(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceClient::DeleteDatasetVersion(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteDatasetVersion(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
@@ -257,12 +423,41 @@ DatasetServiceClient::RestoreDatasetVersion(std::string const& name,
   return connection_->RestoreDatasetVersion(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatasetServiceClient::RestoreDatasetVersion(ExperimentalTag, NoAwaitTag,
+                                            std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::RestoreDatasetVersionRequest request;
+  request.set_name(name);
+  return connection_->RestoreDatasetVersion(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
 DatasetServiceClient::RestoreDatasetVersion(
     google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RestoreDatasetVersion(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatasetServiceClient::RestoreDatasetVersion(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreDatasetVersion(ExperimentalTag{}, NoAwaitTag{},
+                                            request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
+DatasetServiceClient::RestoreDatasetVersion(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestoreDatasetVersion(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::aiplatform::v1::DataItem>
@@ -313,12 +508,38 @@ DatasetServiceClient::DeleteSavedQuery(std::string const& name, Options opts) {
   return connection_->DeleteSavedQuery(request);
 }
 
+StatusOr<google::longrunning::Operation> DatasetServiceClient::DeleteSavedQuery(
+    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::DeleteSavedQueryRequest request;
+  request.set_name(name);
+  return connection_->DeleteSavedQuery(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceClient::DeleteSavedQuery(
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteSavedQuery(request);
+}
+
+StatusOr<google::longrunning::Operation> DatasetServiceClient::DeleteSavedQuery(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSavedQuery(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+DatasetServiceClient::DeleteSavedQuery(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteSavedQuery(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>

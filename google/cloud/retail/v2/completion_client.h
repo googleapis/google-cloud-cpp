@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_COMPLETION_CLIENT_H
 
 #include "google/cloud/retail/v2/completion_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -170,6 +172,16 @@ class CompletionServiceClient {
   ImportCompletionData(
       google::cloud::retail::v2::ImportCompletionDataRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ImportCompletionData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::retail::v2::ImportCompletionDataRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
+  ImportCompletionData(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
  private:
   std::shared_ptr<CompletionServiceConnection> connection_;

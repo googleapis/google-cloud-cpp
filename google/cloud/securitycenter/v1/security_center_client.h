@@ -20,9 +20,11 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V1_SECURITY_CENTER_CLIENT_H
 
 #include "google/cloud/securitycenter/v1/security_center_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -125,6 +127,10 @@ class SecurityCenterClient {
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(std::string const& parent, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Kicks off an LRO to bulk mute findings for a parent based on a filter. The
@@ -165,6 +171,16 @@ class SecurityCenterClient {
   BulkMuteFindings(
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BulkMuteFindings(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
+  BulkMuteFindings(ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -1973,6 +1989,10 @@ class SecurityCenterClient {
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
   RunAssetDiscovery(std::string const& parent, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RunAssetDiscovery(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Runs asset discovery. The discovery is tracked with a long-running
@@ -2017,6 +2037,17 @@ class SecurityCenterClient {
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RunAssetDiscovery(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
+  RunAssetDiscovery(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///

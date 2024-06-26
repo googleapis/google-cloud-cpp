@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SNAPSHOTS_V1_SNAPSHOTS_CLIENT_H
 
 #include "google/cloud/compute/snapshots/v1/snapshots_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -123,6 +125,10 @@ class SnapshotsClient {
       std::string const& project, std::string const& snapshot,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& snapshot, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified Snapshot resource. Keep in mind that deleting a
@@ -164,6 +170,17 @@ class SnapshotsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
       google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -328,6 +345,11 @@ class SnapshotsClient {
       google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a snapshot in the specified project using the data included in the
@@ -368,6 +390,17 @@ class SnapshotsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
       google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -552,6 +585,13 @@ class SnapshotsClient {
           global_set_labels_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on a snapshot. To learn more about labels, read the
@@ -590,6 +630,17 @@ class SnapshotsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off

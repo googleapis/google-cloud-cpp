@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_ATTACHMENTS_V1_NETWORK_ATTACHMENTS_CLIENT_H
 
 #include "google/cloud/compute/network_attachments/v1/network_attachments_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -212,6 +214,11 @@ class NetworkAttachmentsClient {
                           std::string const& network_attachment,
                           Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& network_attachment,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified NetworkAttachment in the given scope
@@ -250,6 +257,18 @@ class NetworkAttachmentsClient {
   DeleteNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
                               DeleteNetworkAttachmentRequest const& request,
                           Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::
+          DeleteNetworkAttachmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteNetworkAttachment(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -417,6 +436,13 @@ class NetworkAttachmentsClient {
           network_attachment_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region,
+      google::cloud::cpp::compute::v1::NetworkAttachment const&
+          network_attachment_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a NetworkAttachment in the specified project in the given scope
@@ -456,6 +482,18 @@ class NetworkAttachmentsClient {
   InsertNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
                               InsertNetworkAttachmentRequest const& request,
                           Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::
+          InsertNetworkAttachmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertNetworkAttachment(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -578,6 +616,13 @@ class NetworkAttachmentsClient {
           network_attachment_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& region, std::string const& network_attachment,
+      google::cloud::cpp::compute::v1::NetworkAttachment const&
+          network_attachment_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patches the specified NetworkAttachment resource with the data included in
@@ -618,6 +663,18 @@ class NetworkAttachmentsClient {
   PatchNetworkAttachment(google::cloud::cpp::compute::network_attachments::v1::
                              PatchNetworkAttachmentRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::network_attachments::v1::
+          PatchNetworkAttachmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchNetworkAttachment(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///

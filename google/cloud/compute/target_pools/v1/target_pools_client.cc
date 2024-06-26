@@ -49,6 +49,23 @@ TargetPoolsClient::AddHealthCheck(
   return connection_->AddHealthCheck(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::AddHealthCheck(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_pool,
+    google::cloud::cpp::compute::v1::TargetPoolsAddHealthCheckRequest const&
+        target_pools_add_health_check_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_pool(target_pool);
+  *request.mutable_target_pools_add_health_check_request_resource() =
+      target_pools_add_health_check_request_resource;
+  return connection_->AddHealthCheck(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsClient::AddHealthCheck(
     google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
@@ -56,6 +73,24 @@ TargetPoolsClient::AddHealthCheck(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddHealthCheck(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::AddHealthCheck(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddHealthCheck(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::AddHealthCheck(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddHealthCheck(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -75,6 +110,23 @@ TargetPoolsClient::AddInstance(
   return connection_->AddInstance(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::AddInstance(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_pool,
+    google::cloud::cpp::compute::v1::TargetPoolsAddInstanceRequest const&
+        target_pools_add_instance_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_pool(target_pool);
+  *request.mutable_target_pools_add_instance_request_resource() =
+      target_pools_add_instance_request_resource;
+  return connection_->AddInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsClient::AddInstance(
     google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
@@ -82,6 +134,24 @@ TargetPoolsClient::AddInstance(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AddInstance(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::AddInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::AddInstance(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddInstance(ExperimentalTag{}, operation);
 }
 
 StreamRange<std::pair<std::string,
@@ -119,6 +189,22 @@ TargetPoolsClient::DeleteTargetPool(std::string const& project,
   return connection_->DeleteTargetPool(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::DeleteTargetPool(ExperimentalTag, NoAwaitTag,
+                                    std::string const& project,
+                                    std::string const& region,
+                                    std::string const& target_pool,
+                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::DeleteTargetPoolRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_pool(target_pool);
+  return connection_->DeleteTargetPool(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsClient::DeleteTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
@@ -126,6 +212,25 @@ TargetPoolsClient::DeleteTargetPool(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTargetPool(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::DeleteTargetPool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::
+        DeleteTargetPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetPool(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::DeleteTargetPool(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTargetPool(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetPool>
@@ -188,6 +293,22 @@ TargetPoolsClient::InsertTargetPool(
   return connection_->InsertTargetPool(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::InsertTargetPool(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region,
+    google::cloud::cpp::compute::v1::TargetPool const& target_pool_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::InsertTargetPoolRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  *request.mutable_target_pool_resource() = target_pool_resource;
+  return connection_->InsertTargetPool(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsClient::InsertTargetPool(
     google::cloud::cpp::compute::target_pools::v1::
@@ -195,6 +316,25 @@ TargetPoolsClient::InsertTargetPool(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTargetPool(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::InsertTargetPool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::
+        InsertTargetPoolRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetPool(ExperimentalTag{}, NoAwaitTag{},
+                                       request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::InsertTargetPool(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertTargetPool(ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetPool>
@@ -234,6 +374,25 @@ TargetPoolsClient::RemoveHealthCheck(
   return connection_->RemoveHealthCheck(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::RemoveHealthCheck(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_pool,
+    google::cloud::cpp::compute::v1::TargetPoolsRemoveHealthCheckRequest const&
+        target_pools_remove_health_check_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::RemoveHealthCheckRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_pool(target_pool);
+  *request.mutable_target_pools_remove_health_check_request_resource() =
+      target_pools_remove_health_check_request_resource;
+  return connection_->RemoveHealthCheck(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsClient::RemoveHealthCheck(
     google::cloud::cpp::compute::target_pools::v1::
@@ -241,6 +400,25 @@ TargetPoolsClient::RemoveHealthCheck(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveHealthCheck(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::RemoveHealthCheck(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::
+        RemoveHealthCheckRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveHealthCheck(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::RemoveHealthCheck(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveHealthCheck(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -260,6 +438,23 @@ TargetPoolsClient::RemoveInstance(
   return connection_->RemoveInstance(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::RemoveInstance(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_pool,
+    google::cloud::cpp::compute::v1::TargetPoolsRemoveInstanceRequest const&
+        target_pools_remove_instance_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_pool(target_pool);
+  *request.mutable_target_pools_remove_instance_request_resource() =
+      target_pools_remove_instance_request_resource;
+  return connection_->RemoveInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsClient::RemoveInstance(
     google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
@@ -267,6 +462,24 @@ TargetPoolsClient::RemoveInstance(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveInstance(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::RemoveInstance(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::RemoveInstance(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveInstance(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -285,6 +498,22 @@ TargetPoolsClient::SetBackup(
   return connection_->SetBackup(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::SetBackup(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_pool,
+    google::cloud::cpp::compute::v1::TargetReference const&
+        target_reference_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::SetBackupRequest request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_pool(target_pool);
+  *request.mutable_target_reference_resource() = target_reference_resource;
+  return connection_->SetBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsClient::SetBackup(
     google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
@@ -292,6 +521,24 @@ TargetPoolsClient::SetBackup(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetBackup(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::SetBackup(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::SetBackup(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetBackup(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -312,6 +559,25 @@ TargetPoolsClient::SetSecurityPolicy(
   return connection_->SetSecurityPolicy(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::SetSecurityPolicy(
+    ExperimentalTag, NoAwaitTag, std::string const& project,
+    std::string const& region, std::string const& target_pool,
+    google::cloud::cpp::compute::v1::SecurityPolicyReference const&
+        security_policy_reference_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::target_pools::v1::SetSecurityPolicyRequest
+      request;
+  request.set_project(project);
+  request.set_region(region);
+  request.set_target_pool(target_pool);
+  *request.mutable_security_policy_reference_resource() =
+      security_policy_reference_resource;
+  return connection_->SetSecurityPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsClient::SetSecurityPolicy(
     google::cloud::cpp::compute::target_pools::v1::
@@ -319,6 +585,25 @@ TargetPoolsClient::SetSecurityPolicy(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetSecurityPolicy(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+TargetPoolsClient::SetSecurityPolicy(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::cpp::compute::target_pools::v1::
+        SetSecurityPolicyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSecurityPolicy(ExperimentalTag{}, NoAwaitTag{},
+                                        request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+TargetPoolsClient::SetSecurityPolicy(
+    ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SetSecurityPolicy(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

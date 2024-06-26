@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_CLIENT_H
 
 #include "google/cloud/channel/v1/cloud_channel_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -567,6 +569,15 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ProvisionCloudIdentity(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Lists [Entitlement][google.cloud.channel.v1.Entitlement]s belonging to a
@@ -855,6 +866,15 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::CreateEntitlementRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateEntitlement(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::CreateEntitlementRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Change parameters of the entitlement.
@@ -914,6 +934,15 @@ class CloudChannelServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
       google::cloud::channel::v1::ChangeParametersRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ChangeParameters(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::ChangeParametersRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -978,6 +1007,16 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ChangeRenewalSettings(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>>
+  ChangeRenewalSettings(ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
+
   // clang-format off
   ///
   /// Updates the Offer for an existing customer entitlement.
@@ -1035,6 +1074,15 @@ class CloudChannelServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
       google::cloud::channel::v1::ChangeOfferRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ChangeOffer(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::ChangeOfferRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1099,6 +1147,15 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::StartPaidServiceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StartPaidService(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::StartPaidServiceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Suspends a previously fulfilled entitlement.
@@ -1156,6 +1213,15 @@ class CloudChannelServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
       google::cloud::channel::v1::SuspendEntitlementRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> SuspendEntitlement(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::SuspendEntitlementRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1222,6 +1288,16 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::CancelEntitlementRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CancelEntitlement(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::CancelEntitlementRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
+  CancelEntitlement(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Activates a previously suspended entitlement. Entitlements suspended for
@@ -1285,6 +1361,15 @@ class CloudChannelServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
       google::cloud::channel::v1::ActivateEntitlementRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ActivateEntitlement(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::ActivateEntitlementRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1358,6 +1443,16 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::TransferEntitlementsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> TransferEntitlements(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::TransferEntitlementsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
+  TransferEntitlements(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
+
   // clang-format off
   ///
   /// Transfers customer entitlements from their current reseller to Google.
@@ -1425,6 +1520,17 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> TransferEntitlementsToGoogle(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
+  TransferEntitlementsToGoogle(ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///

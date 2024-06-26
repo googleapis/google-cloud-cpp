@@ -83,6 +83,21 @@ PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
   return connection_->CreatePolicyBasedRoute(request);
 }
 
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
+    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    google::cloud::networkconnectivity::v1::PolicyBasedRoute const&
+        policy_based_route,
+    std::string const& policy_based_route_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest request;
+  request.set_parent(parent);
+  *request.mutable_policy_based_route() = policy_based_route;
+  request.set_policy_based_route_id(policy_based_route_id);
+  return connection_->CreatePolicyBasedRoute(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
 PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
     google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
@@ -90,6 +105,25 @@ PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePolicyBasedRoute(request);
+}
+
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePolicyBasedRoute(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
+PolicyBasedRoutingServiceClient::CreatePolicyBasedRoute(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePolicyBasedRoute(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -101,6 +135,18 @@ PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(std::string const& name,
   return connection_->DeletePolicyBasedRoute(request);
 }
 
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(ExperimentalTag,
+                                                        NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest request;
+  request.set_name(name);
+  return connection_->DeletePolicyBasedRoute(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(
     google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
@@ -108,6 +154,25 @@ PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePolicyBasedRoute(request);
+}
+
+StatusOr<google::longrunning::Operation>
+PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePolicyBasedRoute(ExperimentalTag{}, NoAwaitTag{},
+                                             request);
+}
+
+future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
+PolicyBasedRoutingServiceClient::DeletePolicyBasedRoute(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePolicyBasedRoute(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_VERSIONS_CLIENT_H
 
 #include "google/cloud/appengine/v1/versions_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -195,6 +197,15 @@ class VersionsClient {
       google::appengine::v1::CreateVersionRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::CreateVersionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::Version>> CreateVersion(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified Version resource.
@@ -268,6 +279,15 @@ class VersionsClient {
       google::appengine::v1::UpdateVersionRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::UpdateVersionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
+      ExperimentalTag, google::longrunning::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an existing Version resource.
@@ -304,6 +324,15 @@ class VersionsClient {
   // clang-format on
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
       google::appengine::v1::DeleteVersionRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteVersion(
+      ExperimentalTag, NoAwaitTag,
+      google::appengine::v1::DeleteVersionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
+      ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 
  private:

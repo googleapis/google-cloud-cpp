@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_PERSISTENT_RESOURCE_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/persistent_resource_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -134,6 +136,12 @@ class PersistentResourceServiceClient {
           persistent_resource,
       std::string const& persistent_resource_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreatePersistentResource(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::PersistentResource const&
+          persistent_resource,
+      std::string const& persistent_resource_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a PersistentResource.
@@ -173,6 +181,17 @@ class PersistentResourceServiceClient {
       google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreatePersistentResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+  CreatePersistentResource(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -344,6 +363,9 @@ class PersistentResourceServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeletePersistentResource(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeletePersistentResource(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a PersistentResource.
@@ -384,6 +406,17 @@ class PersistentResourceServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeletePersistentResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeletePersistentResource(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Updates a PersistentResource.
@@ -421,6 +454,12 @@ class PersistentResourceServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
   UpdatePersistentResource(
+      google::cloud::aiplatform::v1::PersistentResource const&
+          persistent_resource,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdatePersistentResource(
+      ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::PersistentResource const&
           persistent_resource,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -465,6 +504,17 @@ class PersistentResourceServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdatePersistentResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+  UpdatePersistentResource(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Reboots a PersistentResource.
@@ -498,6 +548,9 @@ class PersistentResourceServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
   RebootPersistentResource(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RebootPersistentResource(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -538,6 +591,17 @@ class PersistentResourceServiceClient {
       google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RebootPersistentResource(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
+  RebootPersistentResource(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
 
  private:
   std::shared_ptr<PersistentResourceServiceConnection> connection_;

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_DATASETS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/conversation_datasets_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -139,6 +141,12 @@ class ConversationDatasetsClient {
           conversation_dataset,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateConversationDataset(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::dialogflow::v2::ConversationDataset const&
+          conversation_dataset,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new conversation dataset.
@@ -188,6 +196,17 @@ class ConversationDatasetsClient {
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateConversationDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
+  CreateConversationDataset(ExperimentalTag,
+                            google::longrunning::Operation const& operation,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -369,6 +388,9 @@ class ConversationDatasetsClient {
                       DeleteConversationDatasetOperationMetadata>>
   DeleteConversationDataset(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteConversationDataset(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified conversation dataset.
@@ -418,6 +440,18 @@ class ConversationDatasetsClient {
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteConversationDataset(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::
+                      DeleteConversationDatasetOperationMetadata>>
+  DeleteConversationDataset(ExperimentalTag,
+                            google::longrunning::Operation const& operation,
+                            Options opts = {});
 
   // clang-format off
   ///
@@ -471,6 +505,18 @@ class ConversationDatasetsClient {
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ImportConversationData(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
+  ImportConversationData(ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
 
  private:
   std::shared_ptr<ConversationDatasetsConnection> connection_;

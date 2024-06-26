@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CLIENT_H
 
 #include "google/cloud/vision/v1/image_annotator_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -267,6 +269,13 @@ class ImageAnnotatorClient {
       google::cloud::vision::v1::OutputConfig const& output_config,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
+      ExperimentalTag, NoAwaitTag,
+      std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
+          requests,
+      google::cloud::vision::v1::OutputConfig const& output_config,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Run asynchronous image detection and annotation for a list of images.
@@ -314,6 +323,16 @@ class ImageAnnotatorClient {
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
+  AsyncBatchAnnotateImages(ExperimentalTag,
+                           google::longrunning::Operation const& operation,
+                           Options opts = {});
+
   // clang-format off
   ///
   /// Run asynchronous image detection and annotation for a list of generic
@@ -350,6 +369,12 @@ class ImageAnnotatorClient {
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(
+      std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
+          requests,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
+      ExperimentalTag, NoAwaitTag,
       std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
           requests,
       Options opts = {});
@@ -397,6 +422,16 @@ class ImageAnnotatorClient {
   AsyncBatchAnnotateFiles(
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
+  AsyncBatchAnnotateFiles(ExperimentalTag,
+                          google::longrunning::Operation const& operation,
+                          Options opts = {});
 
  private:
   std::shared_ptr<ImageAnnotatorConnection> connection_;

@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_ATTACHED_CLUSTERS_CLIENT_H
 
 #include "google/cloud/gkemulticloud/v1/attached_clusters_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -150,6 +152,11 @@ class AttachedClustersClient {
       google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
       std::string const& attached_cluster_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAttachedCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
+      std::string const& attached_cluster_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new
@@ -196,6 +203,17 @@ class AttachedClustersClient {
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateAttachedCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+  CreateAttachedCluster(ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -249,6 +267,11 @@ class AttachedClustersClient {
       google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an
@@ -289,6 +312,17 @@ class AttachedClustersClient {
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+  UpdateAttachedCluster(ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -341,6 +375,10 @@ class AttachedClustersClient {
   ImportAttachedCluster(std::string const& parent,
                         std::string const& fleet_membership, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportAttachedCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      std::string const& fleet_membership, Options opts = {});
+
   // clang-format off
   ///
   /// Imports creates a new
@@ -390,6 +428,17 @@ class AttachedClustersClient {
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ImportAttachedCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
+  ImportAttachedCluster(ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -588,6 +637,9 @@ class AttachedClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAttachedCluster(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a specific
@@ -634,6 +686,17 @@ class AttachedClustersClient {
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAttachedCluster(ExperimentalTag,
+                        google::longrunning::Operation const& operation,
+                        Options opts = {});
 
   // clang-format off
   ///

@@ -59,12 +59,41 @@ SpeechClient::LongRunningRecognize(
   return connection_->LongRunningRecognize(request);
 }
 
+StatusOr<google::longrunning::Operation> SpeechClient::LongRunningRecognize(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::speech::v1::RecognitionConfig const& config,
+    google::cloud::speech::v1::RecognitionAudio const& audio, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::speech::v1::LongRunningRecognizeRequest request;
+  *request.mutable_config() = config;
+  *request.mutable_audio() = audio;
+  return connection_->LongRunningRecognize(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
 SpeechClient::LongRunningRecognize(
     google::cloud::speech::v1::LongRunningRecognizeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->LongRunningRecognize(request);
+}
+
+StatusOr<google::longrunning::Operation> SpeechClient::LongRunningRecognize(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::speech::v1::LongRunningRecognizeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LongRunningRecognize(ExperimentalTag{}, NoAwaitTag{},
+                                           request);
+}
+
+future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
+SpeechClient::LongRunningRecognize(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LongRunningRecognize(ExperimentalTag{}, operation);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

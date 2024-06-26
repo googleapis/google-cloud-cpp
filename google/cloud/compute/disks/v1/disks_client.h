@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_DISKS_V1_DISKS_CLIENT_H
 
 #include "google/cloud/compute/disks/v1/disks_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -126,6 +128,13 @@ class DisksClient {
           disks_add_resource_policies_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& disk,
+      google::cloud::cpp::compute::v1::DisksAddResourcePoliciesRequest const&
+          disks_add_resource_policies_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Adds existing resource policies to a disk. You can only add one policy
@@ -165,6 +174,18 @@ class DisksClient {
   AddResourcePolicies(
       google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddResourcePolicies(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -288,6 +309,13 @@ class DisksClient {
           bulk_insert_disk_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
+      google::cloud::cpp::compute::v1::BulkInsertDiskResource const&
+          bulk_insert_disk_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Bulk create a set of disks.
@@ -324,6 +352,16 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
       google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -364,6 +402,12 @@ class DisksClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
       std::string const& project, std::string const& zone,
       std::string const& disk,
+      google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& disk,
       google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
       Options opts = {});
 
@@ -409,6 +453,17 @@ class DisksClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified persistent disk. Deleting a disk removes its data
@@ -446,6 +501,10 @@ class DisksClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
       std::string const& project, std::string const& zone,
       std::string const& disk, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& disk, Options opts = {});
 
   // clang-format off
   ///
@@ -486,6 +545,16 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
       google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -653,6 +722,12 @@ class DisksClient {
       google::cloud::cpp::compute::v1::Disk const& disk_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone,
+      google::cloud::cpp::compute::v1::Disk const& disk_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a persistent disk in the specified project using the data in the
@@ -693,6 +768,16 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
       google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -812,6 +897,13 @@ class DisksClient {
           disks_remove_resource_policies_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& disk,
+      google::cloud::cpp::compute::v1::DisksRemoveResourcePoliciesRequest const&
+          disks_remove_resource_policies_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Removes resource policies from a disk.
@@ -850,6 +942,18 @@ class DisksClient {
   RemoveResourcePolicies(google::cloud::cpp::compute::disks::v1::
                              RemoveResourcePoliciesRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::
+          RemoveResourcePoliciesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveResourcePolicies(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -891,6 +995,13 @@ class DisksClient {
           disks_resize_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& disk,
+      google::cloud::cpp::compute::v1::DisksResizeRequest const&
+          disks_resize_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Resizes the specified persistent disk. You can only increase the size of
@@ -928,6 +1039,16 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       google::cloud::cpp::compute::disks::v1::ResizeRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::ResizeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1038,6 +1159,13 @@ class DisksClient {
           zone_set_labels_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& resource,
+      google::cloud::cpp::compute::v1::ZoneSetLabelsRequest const&
+          zone_set_labels_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on a disk. To learn more about labels, read the Labeling
@@ -1077,6 +1205,16 @@ class DisksClient {
       google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Starts asynchronous replication. Must be invoked on the primary disk.
@@ -1113,6 +1251,13 @@ class DisksClient {
   StartAsyncReplication(
       std::string const& project, std::string const& zone,
       std::string const& disk,
+      google::cloud::cpp::compute::v1::DisksStartAsyncReplicationRequest const&
+          disks_start_async_replication_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartAsyncReplication(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& disk,
       google::cloud::cpp::compute::v1::DisksStartAsyncReplicationRequest const&
           disks_start_async_replication_request_resource,
       Options opts = {});
@@ -1156,6 +1301,18 @@ class DisksClient {
                             StartAsyncReplicationRequest const& request,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartAsyncReplication(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::
+          StartAsyncReplicationRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StartAsyncReplication(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Stops asynchronous replication. Can be invoked either on the primary or on
@@ -1191,6 +1348,10 @@ class DisksClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopAsyncReplication(std::string const& project, std::string const& zone,
                        std::string const& disk, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StopAsyncReplication(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& disk, Options opts = {});
 
   // clang-format off
   ///
@@ -1233,6 +1394,18 @@ class DisksClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StopAsyncReplication(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopAsyncReplication(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Stops asynchronous replication for a consistency group of disks. Can be
@@ -1268,6 +1441,14 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopGroupAsyncReplication(std::string const& project, std::string const& zone,
+                            google::cloud::cpp::compute::v1::
+                                DisksStopGroupAsyncReplicationResource const&
+                                    disks_stop_group_async_replication_resource,
+                            Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  StopGroupAsyncReplication(ExperimentalTag, NoAwaitTag,
+                            std::string const& project, std::string const& zone,
                             google::cloud::cpp::compute::v1::
                                 DisksStopGroupAsyncReplicationResource const&
                                     disks_stop_group_async_replication_resource,
@@ -1312,6 +1493,18 @@ class DisksClient {
   StopGroupAsyncReplication(google::cloud::cpp::compute::disks::v1::
                                 StopGroupAsyncReplicationRequest const& request,
                             Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  StopGroupAsyncReplication(ExperimentalTag, NoAwaitTag,
+                            google::cloud::cpp::compute::disks::v1::
+                                StopGroupAsyncReplicationRequest const& request,
+                            Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StopGroupAsyncReplication(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1422,6 +1615,13 @@ class DisksClient {
       google::cloud::cpp::compute::v1::Disk const& disk_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& zone, std::string const& disk,
+      std::string const& update_mask,
+      google::cloud::cpp::compute::v1::Disk const& disk_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified disk with the data included in the request. The
@@ -1460,6 +1660,16 @@ class DisksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
       google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

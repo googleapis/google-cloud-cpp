@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_V1_SPEECH_CLIENT_H
 
 #include "google/cloud/speech/v1/speech_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -188,6 +190,12 @@ class SpeechClient {
       google::cloud::speech::v1::RecognitionAudio const& audio,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> LongRunningRecognize(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::speech::v1::RecognitionConfig const& config,
+      google::cloud::speech::v1::RecognitionAudio const& audio,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Performs asynchronous speech recognition: receive results via the
@@ -231,6 +239,16 @@ class SpeechClient {
   LongRunningRecognize(
       google::cloud::speech::v1::LongRunningRecognizeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> LongRunningRecognize(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>
+  LongRunningRecognize(ExperimentalTag,
+                       google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///

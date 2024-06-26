@@ -44,12 +44,40 @@ ClusterControllerClient::CreateCluster(
   return connection_->CreateCluster(request);
 }
 
+StatusOr<google::longrunning::Operation> ClusterControllerClient::CreateCluster(
+    ExperimentalTag, NoAwaitTag, std::string const& project_id,
+    std::string const& region,
+    google::cloud::dataproc::v1::Cluster const& cluster, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataproc::v1::CreateClusterRequest request;
+  request.set_project_id(project_id);
+  request.set_region(region);
+  *request.mutable_cluster() = cluster;
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::CreateCluster(
     google::cloud::dataproc::v1::CreateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> ClusterControllerClient::CreateCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::CreateClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerClient::CreateCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
@@ -68,12 +96,43 @@ ClusterControllerClient::UpdateCluster(
   return connection_->UpdateCluster(request);
 }
 
+StatusOr<google::longrunning::Operation> ClusterControllerClient::UpdateCluster(
+    ExperimentalTag, NoAwaitTag, std::string const& project_id,
+    std::string const& region, std::string const& cluster_name,
+    google::cloud::dataproc::v1::Cluster const& cluster,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataproc::v1::UpdateClusterRequest request;
+  request.set_project_id(project_id);
+  request.set_region(region);
+  request.set_cluster_name(cluster_name);
+  *request.mutable_cluster() = cluster;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> ClusterControllerClient::UpdateCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::UpdateClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerClient::UpdateCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
@@ -84,12 +143,44 @@ ClusterControllerClient::StopCluster(
   return connection_->StopCluster(request);
 }
 
+StatusOr<google::longrunning::Operation> ClusterControllerClient::StopCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::StopClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerClient::StopCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StopCluster(ExperimentalTag{}, operation);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerClient::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->StartCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> ClusterControllerClient::StartCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::StartClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+ClusterControllerClient::StartCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StartCluster(ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
@@ -105,12 +196,39 @@ ClusterControllerClient::DeleteCluster(std::string const& project_id,
   return connection_->DeleteCluster(request);
 }
 
+StatusOr<google::longrunning::Operation> ClusterControllerClient::DeleteCluster(
+    ExperimentalTag, NoAwaitTag, std::string const& project_id,
+    std::string const& region, std::string const& cluster_name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataproc::v1::DeleteClusterRequest request;
+  request.set_project_id(project_id);
+  request.set_region(region);
+  request.set_cluster_name(cluster_name);
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerClient::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteCluster(request);
+}
+
+StatusOr<google::longrunning::Operation> ClusterControllerClient::DeleteCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::DeleteClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
+ClusterControllerClient::DeleteCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCluster(ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
@@ -176,12 +294,43 @@ ClusterControllerClient::DiagnoseCluster(std::string const& project_id,
   return connection_->DiagnoseCluster(request);
 }
 
+StatusOr<google::longrunning::Operation>
+ClusterControllerClient::DiagnoseCluster(ExperimentalTag, NoAwaitTag,
+                                         std::string const& project_id,
+                                         std::string const& region,
+                                         std::string const& cluster_name,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dataproc::v1::DiagnoseClusterRequest request;
+  request.set_project_id(project_id);
+  request.set_region(region);
+  request.set_cluster_name(cluster_name);
+  return connection_->DiagnoseCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerClient::DiagnoseCluster(
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DiagnoseCluster(request);
+}
+
+StatusOr<google::longrunning::Operation>
+ClusterControllerClient::DiagnoseCluster(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DiagnoseCluster(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
+ClusterControllerClient::DiagnoseCluster(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DiagnoseCluster(ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

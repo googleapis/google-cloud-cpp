@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_ROUTES_V1_ROUTES_CLIENT_H
 
 #include "google/cloud/compute/routes/v1/routes_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -117,6 +119,10 @@ class RoutesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
       std::string const& project, std::string const& route, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      std::string const& route, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified Route resource.
@@ -154,6 +160,17 @@ class RoutesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
       google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRoute(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -251,6 +268,11 @@ class RoutesClient {
       google::cloud::cpp::compute::v1::Route const& route_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
+      ExperimentalTag, NoAwaitTag, std::string const& project,
+      google::cloud::cpp::compute::v1::Route const& route_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Route resource in the specified project using the data included
@@ -289,6 +311,17 @@ class RoutesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
       google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRoute(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRoute(
+      ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off

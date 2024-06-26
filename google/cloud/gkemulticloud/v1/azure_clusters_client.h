@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AZURE_CLUSTERS_CLIENT_H
 
 #include "google/cloud/gkemulticloud/v1/azure_clusters_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -151,6 +153,11 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureClient const& azure_client,
       std::string const& azure_client_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAzureClient(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::gkemulticloud::v1::AzureClient const& azure_client,
+      std::string const& azure_client_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
@@ -199,6 +206,16 @@ class AzureClustersClient {
   CreateAzureClient(
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateAzureClient(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
+  CreateAzureClient(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -399,6 +416,9 @@ class AzureClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteAzureClient(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a specific [AzureClient][google.cloud.gkemulticloud.v1.AzureClient]
@@ -447,6 +467,16 @@ class AzureClustersClient {
   DeleteAzureClient(
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAzureClient(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAzureClient(ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -507,6 +537,11 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       std::string const& azure_cluster_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAzureCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
+      std::string const& azure_cluster_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster]
@@ -552,6 +587,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateAzureCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
+  CreateAzureCluster(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -609,6 +655,11 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAzureCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an [AzureCluster][google.cloud.gkemulticloud.v1.AzureCluster].
@@ -648,6 +699,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAzureCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
+  UpdateAzureCluster(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -847,6 +909,9 @@ class AzureClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteAzureCluster(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a specific
@@ -897,6 +962,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAzureCluster(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAzureCluster(ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1028,6 +1104,11 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       std::string const& azure_node_pool_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAzureNodePool(
+      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
+      std::string const& azure_node_pool_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool],
@@ -1076,6 +1157,17 @@ class AzureClustersClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAzureNodePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
+  CreateAzureNodePool(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
+
   // clang-format off
   ///
   /// Updates an [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool].
@@ -1122,6 +1214,11 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an [AzureNodePool][google.cloud.gkemulticloud.v1.AzureNodePool].
@@ -1161,6 +1258,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
+  UpdateAzureNodePool(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1362,6 +1470,9 @@ class AzureClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
+      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a specific
@@ -1408,6 +1519,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
+  DeleteAzureNodePool(ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///

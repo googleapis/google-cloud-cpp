@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_REQUEST_ID_CLIENT_H
 
 #include "generator/integration_tests/golden/v1/request_id_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -173,6 +175,9 @@ class RequestIdServiceClient {
   future<StatusOr<google::test::requestid::v1::Foo>>
   RenameFoo(std::string const& name, std::string const& destination_foo_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation>
+  RenameFoo(ExperimentalTag, NoAwaitTag, std::string const& name, std::string const& destination_foo_id, Options opts = {});
+
   // clang-format off
   ///
   /// Renames a `Foo`.
@@ -209,6 +214,12 @@ class RequestIdServiceClient {
   // clang-format on
   future<StatusOr<google::test::requestid::v1::Foo>>
   RenameFoo(google::test::requestid::v1::RenameFooRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation>
+  RenameFoo(ExperimentalTag, NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request, Options opts = {});
+
+  future<StatusOr<google::test::requestid::v1::Foo>>
+  RenameFoo(ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
