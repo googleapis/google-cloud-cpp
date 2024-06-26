@@ -176,6 +176,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                 // clang-format on
                 {method_string},
                 {"\n"},
+                {FormatStartMethodComments()},
                 {IsResponseTypeEmpty,
                  // clang-format off
                     "  Status\n",
@@ -267,6 +268,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"  $method_name$($request_type$ const& request, Options opts = {});\n"},
    {"\n"},
+                {FormatStartMethodComments()},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
@@ -276,6 +278,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     "NoAwaitTag, "
     "$request_type$ const& request, Options opts = {});\n\n"},
                  // clang-format on
+                 {FormatAwaitMethodComments()},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
