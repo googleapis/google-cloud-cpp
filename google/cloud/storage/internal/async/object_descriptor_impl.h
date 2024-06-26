@@ -84,7 +84,7 @@ class ObjectDescriptorImpl
   void CleanupDoneRanges(std::unique_lock<std::mutex> const&);
   void DoFinish(std::unique_lock<std::mutex>);
   void OnFinish(Status const& status);
-  void Resume();
+  void Resume(Status const& status);
   void OnResume(StatusOr<std::shared_ptr<OpenStream>> stream);
 
   std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;

@@ -756,7 +756,6 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   )pb";
   // The resume request should include all the remaining ranges, starting from
   // the remaining offset (10 bytes after the start).
-  // TODO(#27) - include the routing header when available.
   auto constexpr kResumeRequest = R"pb(
     read_object_spec {
       bucket: "test-only-invalid"
@@ -877,6 +876,153 @@ TEST(ObjectDescriptorImpl, ResumeRangesOnRecoverableError) {
   // All the ranges fail with the same error.
   EXPECT_THAT(s1r2.get(), VariantWith<Status>(PermanentError()));
   EXPECT_THAT(s2r2.get(), VariantWith<Status>(PermanentError()));
+}
+
+Status RedirectError(absl::string_view handle, absl::string_view token) {
+  auto details = [&] {
+    auto redirected = google::storage::v2::BidiReadObjectRedirectedError{};
+    redirected.mutable_read_handle()->set_handle(std::string(handle));
+    redirected.set_routing_token(std::string(token));
+    auto details_proto = google::rpc::Status{};
+    details_proto.set_code(grpc::UNAVAILABLE);
+    details_proto.set_message("redirect");
+    details_proto.add_details()->PackFrom(redirected);
+
+    std::string details;
+    details_proto.SerializeToString(&details);
+    return details;
+  };
+
+  return google::cloud::MakeStatusFromRpcError(
+      grpc::Status(grpc::UNAVAILABLE, "redirect", details()));
+}
+
+/// @test Verify that resuming a stream uses a handle and routing token.
+TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
+  AsyncSequencer<bool> sequencer;
+
+  auto initial_stream = [&sequencer]() {
+    auto constexpr kRequest1 = R"pb(
+      read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    )pb";
+
+    auto constexpr kResponse0 = R"pb(
+      metadata {
+        bucket: "projects/_/buckets/test-bucket"
+        name: "test-object"
+        generation: 42
+      }
+      read_handle { handle: "handle-12345" }
+    )pb";
+    auto stream = std::make_unique<MockStream>();
+    EXPECT_CALL(*stream, Write)
+        .WillOnce([&](Request const& request, grpc::WriteOptions) {
+          auto expected = Request{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
+          EXPECT_THAT(request, IsProtoEqual(expected));
+          return sequencer.PushBack("Write[1]").then([](auto f) {
+            return f.get();
+          });
+        });
+
+    EXPECT_CALL(*stream, Read)
+        .WillOnce([&]() {
+          return sequencer.PushBack("Read[0]").then([&](auto) {
+            auto response = Response{};
+            EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
+            return absl::make_optional(response);
+          });
+        })
+        .WillOnce([&]() {
+          return sequencer.PushBack("Read[1]").then(
+              [](auto) { return absl::optional<Response>{}; });
+        });
+
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Finish").then([](auto) {
+        return RedirectError("handle-redirect-3456", "token-redirect-3456");
+      });
+    });
+
+    return stream;
+  };
+
+  auto constexpr kLimit = 100;
+  auto constexpr kOffset = 20000;
+  auto constexpr kReadSpecText = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    generation: 24
+    if_generation_match: 42
+  )pb";
+  // The resume request should include all the remaining ranges, starting from
+  // the remaining offset (10 bytes after the start).
+  auto constexpr kResumeRequest = R"pb(
+    read_object_spec {
+      bucket: "test-only-invalid"
+      object: "test-object"
+      generation: 24
+      if_generation_match: 42
+      read_handle { handle: "handle-redirect-3456" }
+      routing_token: "token-redirect-3456"
+    }
+    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+  )pb";
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([&sequencer](Request const& request) {
+    auto expected = Request{};
+    EXPECT_TRUE(TextFormat::ParseFromString(kResumeRequest, &expected));
+    EXPECT_THAT(request, IsProtoEqualModuloRepeatedFieldOrdering(expected));
+    return sequencer.PushBack("Factory").then([&](auto) {
+      return make_status_or(
+          std::make_shared<OpenStream>(ResumeStream(sequencer)));
+    });
+  });
+
+  auto spec = google::storage::v2::BidiReadObjectSpec{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      storage_experimental::LimitedErrorCountResumePolicy(1)(),
+      factory.AsStdFunction(), spec,
+      std::make_shared<OpenStream>(initial_stream()));
+  tested->Start();
+  EXPECT_FALSE(tested->metadata().has_value());
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read[0]");
+  next.first.set_value(true);
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+
+  auto s1 = tested->Read({kOffset, kLimit});
+  ASSERT_THAT(s1, NotNull());
+
+  // Asking for data should result in an immediate `Write()` message with the
+  // first range.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write[1]");
+
+  // Simulate the recoverable failure.
+  read1.first.set_value(false);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Factory");
+  next.first.set_value(true);
+
+  // Now simulate an unrecoverable failure, this is just to simplify the body
+  // of this test (it is too large already).
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "ResumeRead[0]");
+  next.first.set_value(false);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "ResumeFinish");
+  next.first.set_value(false);
+
+  // The ranges fails with the same error.
+  EXPECT_THAT(s1->Read().get(), VariantWith<Status>(PermanentError()));
 }
 
 }  // namespace
