@@ -214,6 +214,17 @@ class InstanceTemplatesClient {
                          std::string const& instance_template,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& instance_template, Options opts = {});
@@ -259,12 +270,32 @@ class InstanceTemplatesClient {
                              DeleteInstanceTemplateRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_templates::v1::
           DeleteInstanceTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceTemplate
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceTemplate(
       ExperimentalTag,
@@ -435,6 +466,17 @@ class InstanceTemplatesClient {
           instance_template_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::InstanceTemplate const&
@@ -483,12 +525,32 @@ class InstanceTemplatesClient {
                              InsertInstanceTemplateRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_templates::v1::
           InsertInstanceTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceTemplate
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceTemplate(
       ExperimentalTag,

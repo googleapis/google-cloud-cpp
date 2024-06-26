@@ -204,6 +204,17 @@ class DocumentProcessorServiceClient {
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
   BatchProcessDocuments(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchProcessDocuments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchProcessDocuments(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -247,11 +258,31 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::BatchProcessRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchProcessDocuments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchProcessDocuments(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::BatchProcessRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchProcessDocuments
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
   BatchProcessDocuments(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -624,6 +655,17 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::ProcessorVersion const& processor_version,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TrainProcessorVersion(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::documentai::v1::ProcessorVersion const& processor_version,
@@ -672,12 +714,32 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TrainProcessorVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::TrainProcessorVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainProcessorVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
   TrainProcessorVersion(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -850,6 +912,17 @@ class DocumentProcessorServiceClient {
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
   DeleteProcessorVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -895,12 +968,32 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProcessorVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcessorVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
   DeleteProcessorVersion(ExperimentalTag,
@@ -940,6 +1033,17 @@ class DocumentProcessorServiceClient {
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
   DeployProcessorVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeployProcessorVersion(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -984,12 +1088,32 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeployProcessorVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::DeployProcessorVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployProcessorVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
   DeployProcessorVersion(ExperimentalTag,
@@ -1029,6 +1153,17 @@ class DocumentProcessorServiceClient {
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
   UndeployProcessorVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeployProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1073,12 +1208,32 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeployProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeployProcessorVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeployProcessorVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
   UndeployProcessorVersion(ExperimentalTag,
@@ -1200,6 +1355,17 @@ class DocumentProcessorServiceClient {
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcessor
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProcessor(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1243,11 +1409,31 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::DeleteProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcessor
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProcessor(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::DeleteProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcessor
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -1292,11 +1478,31 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::EnableProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EnableProcessor
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EnableProcessor(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::EnableProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EnableProcessor
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
   EnableProcessor(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -1341,11 +1547,31 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::DisableProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DisableProcessor
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DisableProcessor(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::DisableProcessorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DisableProcessor
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
   DisableProcessor(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1399,12 +1625,32 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetDefaultProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SetDefaultProcessorVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetDefaultProcessorVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
   SetDefaultProcessorVersion(ExperimentalTag,
@@ -1446,6 +1692,17 @@ class DocumentProcessorServiceClient {
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(std::string const& human_review_config, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReviewDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReviewDocument(
       ExperimentalTag, NoAwaitTag, std::string const& human_review_config,
       Options opts = {});
@@ -1490,11 +1747,31 @@ class DocumentProcessorServiceClient {
       google::cloud::documentai::v1::ReviewDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReviewDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReviewDocument(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::ReviewDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReviewDocument
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -1539,6 +1816,17 @@ class DocumentProcessorServiceClient {
   EvaluateProcessorVersion(std::string const& processor_version,
                            Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EvaluateProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
       ExperimentalTag, NoAwaitTag, std::string const& processor_version,
       Options opts = {});
@@ -1585,12 +1873,32 @@ class DocumentProcessorServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EvaluateProcessorVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EvaluateProcessorVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EvaluateProcessorVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
   EvaluateProcessorVersion(ExperimentalTag,

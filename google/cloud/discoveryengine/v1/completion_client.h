@@ -165,12 +165,32 @@ class CompletionServiceClient {
           ImportSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportSuggestionDenyListEntries
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportSuggestionDenyListEntries(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           ImportSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportSuggestionDenyListEntries
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::
                       ImportSuggestionDenyListEntriesResponse>>
   ImportSuggestionDenyListEntries(
@@ -221,12 +241,32 @@ class CompletionServiceClient {
           PurgeSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PurgeSuggestionDenyListEntries
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeSuggestionDenyListEntries(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PurgeSuggestionDenyListEntries
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::
                       PurgeSuggestionDenyListEntriesResponse>>
   PurgeSuggestionDenyListEntries(

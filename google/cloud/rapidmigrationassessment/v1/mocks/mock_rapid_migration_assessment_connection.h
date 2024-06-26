@@ -48,6 +48,9 @@ class MockRapidMigrationAssessmentConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateCollector) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateCollector(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       CreateCollector,
@@ -67,6 +70,9 @@ class MockRapidMigrationAssessmentConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateAnnotation) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateAnnotation(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>,
       CreateAnnotation,
@@ -107,6 +113,9 @@ class MockRapidMigrationAssessmentConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateCollector) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateCollector(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       UpdateCollector,
@@ -126,6 +135,9 @@ class MockRapidMigrationAssessmentConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteCollector) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteCollector(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       DeleteCollector,
@@ -145,6 +157,9 @@ class MockRapidMigrationAssessmentConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ResumeCollector) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ResumeCollector(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       ResumeCollector,
@@ -164,6 +179,9 @@ class MockRapidMigrationAssessmentConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RegisterCollector) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RegisterCollector(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       RegisterCollector,
@@ -183,6 +201,9 @@ class MockRapidMigrationAssessmentConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PauseCollector) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PauseCollector(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       PauseCollector,

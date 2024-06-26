@@ -130,6 +130,17 @@ class SessionControllerClient {
       google::cloud::dataproc::v1::Session const& session,
       std::string const& session_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSession(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataproc::v1::Session const& session,
@@ -173,11 +184,31 @@ class SessionControllerClient {
       google::cloud::dataproc::v1::CreateSessionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSession(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateSessionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSession
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -344,6 +375,17 @@ class SessionControllerClient {
   future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TerminateSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TerminateSession(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -385,11 +427,31 @@ class SessionControllerClient {
       google::cloud::dataproc::v1::TerminateSessionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TerminateSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TerminateSession(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::TerminateSessionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TerminateSession
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -427,6 +489,17 @@ class SessionControllerClient {
   future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSession(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -469,11 +542,31 @@ class SessionControllerClient {
       google::cloud::dataproc::v1::DeleteSessionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSession
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSession(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DeleteSessionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSession
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

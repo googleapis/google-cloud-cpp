@@ -53,6 +53,9 @@ class MockFleetRoutingConnection
       (google::cloud::optimization::v1::OptimizeToursRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchOptimizeTours) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchOptimizeTours(_)) instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
               BatchOptimizeTours,

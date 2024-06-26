@@ -452,6 +452,17 @@ class LineageClient {
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteProcess(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcess
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProcess(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -495,12 +506,32 @@ class LineageClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcess
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProcess(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteProcess
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteProcess(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -793,6 +824,17 @@ class LineageClient {
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteRun(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRun
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRun(ExperimentalTag,
                                                      NoAwaitTag,
                                                      std::string const& name,
@@ -837,11 +879,31 @@ class LineageClient {
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRun
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRun(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRun
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteRun(ExperimentalTag, google::longrunning::Operation const& operation,
             Options opts = {});

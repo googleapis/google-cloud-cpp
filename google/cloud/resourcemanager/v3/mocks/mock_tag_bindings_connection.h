@@ -53,6 +53,9 @@ class MockTagBindingsConnection
       (google::cloud::resourcemanager::v3::ListTagBindingsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateTagBinding) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateTagBinding(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>,
       CreateTagBinding,
@@ -73,6 +76,9 @@ class MockTagBindingsConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTagBinding) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTagBinding(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,

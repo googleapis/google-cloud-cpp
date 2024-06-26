@@ -53,6 +53,9 @@ class MockDatabaseAdminConnection
       (google::spanner::admin::database::v1::ListDatabasesRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateDatabase) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateDatabase(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Database>>,
       CreateDatabase,
@@ -78,6 +81,9 @@ class MockDatabaseAdminConnection
       (google::spanner::admin::database::v1::GetDatabaseRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateDatabase) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateDatabase(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Database>>,
       UpdateDatabase,
@@ -98,6 +104,9 @@ class MockDatabaseAdminConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateDatabaseDdl) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateDatabaseDdl(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
@@ -145,6 +154,9 @@ class MockDatabaseAdminConnection
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateBackup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateBackup(_)) instead.
   MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
               CreateBackup,
               (google::spanner::admin::database::v1::CreateBackupRequest const&
@@ -163,6 +175,9 @@ class MockDatabaseAdminConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CopyBackup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CopyBackup(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Backup>>,
       CopyBackup,
@@ -202,6 +217,9 @@ class MockDatabaseAdminConnection
       (google::spanner::admin::database::v1::ListBackupsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RestoreDatabase) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RestoreDatabase(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Database>>,
       RestoreDatabase,

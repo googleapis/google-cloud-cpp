@@ -153,6 +153,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureClient const& azure_client,
       std::string const& azure_client_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureClient
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAzureClient(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureClient const& azure_client,
@@ -207,11 +218,31 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureClient
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAzureClient(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureClient
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>
   CreateAzureClient(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -416,6 +447,17 @@ class AzureClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureClient
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAzureClient(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -468,11 +510,31 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureClient
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAzureClient(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureClient
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureClient(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -537,6 +599,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       std::string const& azure_cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAzureCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
@@ -588,12 +661,32 @@ class AzureClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAzureCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   CreateAzureCluster(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -655,6 +748,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAzureCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAzureCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::AzureCluster const& azure_cluster,
@@ -700,12 +804,32 @@ class AzureClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAzureCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAzureCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAzureCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>
   UpdateAzureCluster(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -909,6 +1033,17 @@ class AzureClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAzureCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -963,12 +1098,32 @@ class AzureClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAzureCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureCluster(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -1104,6 +1259,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       std::string const& azure_node_pool_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAzureNodePool(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
@@ -1157,12 +1323,32 @@ class AzureClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAzureNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAzureNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   CreateAzureNodePool(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -1214,6 +1400,17 @@ class AzureClustersClient {
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAzureNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::AzureNodePool const& azure_node_pool,
@@ -1259,12 +1456,32 @@ class AzureClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAzureNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAzureNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAzureNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
   UpdateAzureNodePool(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -1470,6 +1687,17 @@ class AzureClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1520,12 +1748,32 @@ class AzureClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAzureNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAzureNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAzureNodePool(ExperimentalTag,
                       google::longrunning::Operation const& operation,

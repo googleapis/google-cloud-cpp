@@ -134,6 +134,17 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
       std::string const& backup_plan_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupPlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupPlan(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
@@ -177,11 +188,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupPlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupPlan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupPlan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -361,6 +392,17 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupPlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupPlan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
@@ -404,11 +446,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupPlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupPlan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupPlan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -446,6 +508,17 @@ class BackupForGKEClient {
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackupPlan(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupPlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupPlan(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -488,11 +561,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupPlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupPlan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupPlan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackupPlan(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -542,6 +635,17 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkebackup::v1::Backup const& backup,
@@ -585,11 +689,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -768,6 +892,17 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::Backup const& backup,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::Backup const& backup,
@@ -811,11 +946,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -853,6 +1008,17 @@ class BackupForGKEClient {
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackup(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -896,11 +1062,31 @@ class BackupForGKEClient {
   DeleteBackup(google::cloud::gkebackup::v1::DeleteBackupRequest const& request,
                Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteBackup(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
@@ -1081,6 +1267,17 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
       std::string const& restore_plan_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRestorePlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRestorePlan(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
@@ -1124,11 +1321,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRestorePlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRestorePlan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRestorePlan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> CreateRestorePlan(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1307,6 +1524,17 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRestorePlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateRestorePlan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
@@ -1350,11 +1578,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRestorePlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateRestorePlan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRestorePlan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1392,6 +1640,17 @@ class BackupForGKEClient {
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestorePlan(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRestorePlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRestorePlan(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1434,11 +1693,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRestorePlan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRestorePlan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRestorePlan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestorePlan(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -1488,6 +1767,17 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::Restore const& restore,
       std::string const& restore_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRestore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRestore(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkebackup::v1::Restore const& restore,
@@ -1531,11 +1821,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRestore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRestore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRestore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1714,6 +2024,17 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::Restore const& restore,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRestore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateRestore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::Restore const& restore,
@@ -1757,11 +2078,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::UpdateRestoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRestore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateRestore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::UpdateRestoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRestore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1799,6 +2140,17 @@ class BackupForGKEClient {
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestore(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRestore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRestore(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1841,11 +2193,31 @@ class BackupForGKEClient {
       google::cloud::gkebackup::v1::DeleteRestoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRestore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRestore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkebackup::v1::DeleteRestoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRestore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
   DeleteRestore(ExperimentalTag,
                 google::longrunning::Operation const& operation,

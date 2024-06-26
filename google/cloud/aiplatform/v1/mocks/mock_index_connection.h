@@ -47,6 +47,9 @@ class MockIndexServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateIndex) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateIndex(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Index>>, CreateIndex,
       (google::cloud::aiplatform::v1::CreateIndexRequest const& request),
@@ -72,6 +75,9 @@ class MockIndexServiceConnection
               (google::cloud::aiplatform::v1::ListIndexesRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateIndex) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateIndex(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Index>>, UpdateIndex,
       (google::cloud::aiplatform::v1::UpdateIndexRequest const& request),
@@ -89,6 +95,9 @@ class MockIndexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteIndex) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteIndex(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteIndex,

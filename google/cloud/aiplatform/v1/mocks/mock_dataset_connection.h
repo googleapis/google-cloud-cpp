@@ -47,6 +47,9 @@ class MockDatasetServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateDataset) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateDataset(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Dataset>>, CreateDataset,
       (google::cloud::aiplatform::v1::CreateDatasetRequest const& request),
@@ -78,6 +81,9 @@ class MockDatasetServiceConnection
               (google::cloud::aiplatform::v1::ListDatasetsRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteDataset) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteDataset(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDataset,
@@ -96,6 +102,9 @@ class MockDatasetServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportData) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportData(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>,
       ImportData,
@@ -113,6 +122,9 @@ class MockDatasetServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ExportData) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ExportData(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>,
       ExportData,
@@ -130,6 +142,9 @@ class MockDatasetServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateDatasetVersion) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateDatasetVersion(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
               CreateDatasetVersion,
               (google::cloud::aiplatform::v1::CreateDatasetVersionRequest const&
@@ -154,6 +169,9 @@ class MockDatasetServiceConnection
                    request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteDatasetVersion) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteDatasetVersion(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDatasetVersion,
@@ -185,6 +203,9 @@ class MockDatasetServiceConnection
       (google::cloud::aiplatform::v1::ListDatasetVersionsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RestoreDatasetVersion) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RestoreDatasetVersion(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>,
       RestoreDatasetVersion,
@@ -220,6 +241,9 @@ class MockDatasetServiceConnection
               (google::cloud::aiplatform::v1::ListSavedQueriesRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteSavedQuery) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteSavedQuery(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteSavedQuery,

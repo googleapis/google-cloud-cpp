@@ -197,11 +197,31 @@ class VersionsClient {
       google::appengine::v1::CreateVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVersion(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Version>> CreateVersion(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -279,11 +299,31 @@ class VersionsClient {
       google::appengine::v1::UpdateVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVersion(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -326,11 +366,31 @@ class VersionsClient {
       google::appengine::v1::DeleteVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVersion(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

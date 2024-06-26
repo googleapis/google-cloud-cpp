@@ -144,6 +144,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_abandon_instances_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AbandonInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AbandonInstances(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -202,12 +213,32 @@ class InstanceGroupManagersClient {
           AbandonInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AbandonInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AbandonInstances(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           AbandonInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AbandonInstances
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AbandonInstances(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -341,6 +372,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_apply_updates_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ApplyUpdatesToInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> ApplyUpdatesToInstances(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -389,12 +431,32 @@ class InstanceGroupManagersClient {
                               v1::ApplyUpdatesToInstancesRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ApplyUpdatesToInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> ApplyUpdatesToInstances(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ApplyUpdatesToInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ApplyUpdatesToInstances
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   ApplyUpdatesToInstances(
       ExperimentalTag,
@@ -447,6 +509,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_create_instances_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateInstances(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -499,12 +572,32 @@ class InstanceGroupManagersClient {
           CreateInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateInstances(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           CreateInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstances
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateInstances(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -549,6 +642,17 @@ class InstanceGroupManagersClient {
                              std::string const& instance_group_manager,
                              Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceGroupManager
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManager(ExperimentalTag, NoAwaitTag,
                              std::string const& project,
@@ -598,6 +702,17 @@ class InstanceGroupManagersClient {
           DeleteInstanceGroupManagerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceGroupManager
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManager(
       ExperimentalTag, NoAwaitTag,
@@ -605,6 +720,15 @@ class InstanceGroupManagersClient {
           DeleteInstanceGroupManagerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceGroupManager
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroupManager(
       ExperimentalTag,
@@ -661,6 +785,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_delete_instances_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -718,12 +853,32 @@ class InstanceGroupManagersClient {
           DeleteInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstances(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeleteInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstances
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstances(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -772,6 +927,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_delete_per_instance_configs_req_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePerInstanceConfigs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePerInstanceConfigs(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -821,12 +987,32 @@ class InstanceGroupManagersClient {
           DeletePerInstanceConfigsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePerInstanceConfigs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePerInstanceConfigs(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           DeletePerInstanceConfigsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePerInstanceConfigs
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePerInstanceConfigs(
       ExperimentalTag,
@@ -941,6 +1127,17 @@ class InstanceGroupManagersClient {
           instance_group_manager_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceGroupManager
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManager(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -996,6 +1193,17 @@ class InstanceGroupManagersClient {
           InsertInstanceGroupManagerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceGroupManager
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManager(
       ExperimentalTag, NoAwaitTag,
@@ -1003,6 +1211,15 @@ class InstanceGroupManagersClient {
           InsertInstanceGroupManagerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceGroupManager
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroupManager(
       ExperimentalTag,
@@ -1388,6 +1605,17 @@ class InstanceGroupManagersClient {
           instance_group_manager_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchInstanceGroupManager
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInstanceGroupManager(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -1445,6 +1673,17 @@ class InstanceGroupManagersClient {
           PatchInstanceGroupManagerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchInstanceGroupManager
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInstanceGroupManager(
       ExperimentalTag, NoAwaitTag,
@@ -1452,6 +1691,15 @@ class InstanceGroupManagersClient {
           PatchInstanceGroupManagerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchInstanceGroupManager
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInstanceGroupManager(
       ExperimentalTag,
@@ -1502,6 +1750,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_patch_per_instance_configs_req_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchPerInstanceConfigs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPerInstanceConfigs(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -1551,12 +1810,32 @@ class InstanceGroupManagersClient {
                               v1::PatchPerInstanceConfigsRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchPerInstanceConfigs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPerInstanceConfigs(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           PatchPerInstanceConfigsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchPerInstanceConfigs
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPerInstanceConfigs(
       ExperimentalTag,
@@ -1613,6 +1892,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_recreate_instances_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RecreateInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RecreateInstances(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -1669,12 +1959,32 @@ class InstanceGroupManagersClient {
                         RecreateInstancesRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RecreateInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RecreateInstances(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           RecreateInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RecreateInstances
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RecreateInstances(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1733,6 +2043,17 @@ class InstanceGroupManagersClient {
       std::string const& instance_group_manager, std::int32_t size,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resize
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -1791,12 +2112,32 @@ class InstanceGroupManagersClient {
           ResizeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resize
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           ResizeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resize
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1846,6 +2187,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_set_instance_template_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetInstanceTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetInstanceTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -1896,12 +2248,32 @@ class InstanceGroupManagersClient {
                           SetInstanceTemplateRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetInstanceTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetInstanceTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           SetInstanceTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetInstanceTemplate
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetInstanceTemplate(
       ExperimentalTag,
@@ -1953,6 +2325,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_set_target_pools_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetTargetPools
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTargetPools(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -2005,12 +2388,32 @@ class InstanceGroupManagersClient {
           SetTargetPoolsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetTargetPools
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTargetPools(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           SetTargetPoolsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetTargetPools
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTargetPools(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2060,6 +2463,17 @@ class InstanceGroupManagersClient {
               instance_group_managers_update_per_instance_configs_req_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePerInstanceConfigs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePerInstanceConfigs(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -2110,12 +2524,32 @@ class InstanceGroupManagersClient {
           UpdatePerInstanceConfigsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePerInstanceConfigs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePerInstanceConfigs(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_managers::v1::
           UpdatePerInstanceConfigsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePerInstanceConfigs
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdatePerInstanceConfigs(
       ExperimentalTag,

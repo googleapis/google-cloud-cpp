@@ -264,6 +264,17 @@ class ManagedKafkaClient {
       google::cloud::managedkafka::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::managedkafka::v1::Cluster const& cluster,
@@ -307,11 +318,31 @@ class ManagedKafkaClient {
       google::cloud::managedkafka::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedkafka::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -354,6 +385,17 @@ class ManagedKafkaClient {
       google::cloud::managedkafka::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedkafka::v1::Cluster const& cluster,
@@ -397,11 +439,31 @@ class ManagedKafkaClient {
       google::cloud::managedkafka::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedkafka::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -438,6 +500,17 @@ class ManagedKafkaClient {
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
   DeleteCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -480,11 +553,31 @@ class ManagedKafkaClient {
       google::cloud::managedkafka::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedkafka::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
   DeleteCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation,

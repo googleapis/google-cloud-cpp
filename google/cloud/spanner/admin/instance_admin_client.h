@@ -339,6 +339,17 @@ class InstanceAdminClient {
           instance_config,
       std::string const& instance_config_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstanceConfig(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::spanner::admin::instance::v1::InstanceConfig const&
@@ -431,12 +442,32 @@ class InstanceAdminClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstanceConfig(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstanceConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   CreateInstanceConfig(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -539,6 +570,17 @@ class InstanceAdminClient {
           instance_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::InstanceConfig const&
@@ -635,12 +677,32 @@ class InstanceAdminClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstanceConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
   UpdateInstanceConfig(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -1098,6 +1160,17 @@ class InstanceAdminClient {
                  google::spanner::admin::instance::v1::Instance const& instance,
                  Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& instance_id,
@@ -1181,12 +1254,32 @@ class InstanceAdminClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   CreateInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -1280,6 +1373,17 @@ class InstanceAdminClient {
                  google::protobuf::FieldMask const& field_mask,
                  Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::Instance const& instance,
@@ -1370,12 +1474,32 @@ class InstanceAdminClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   UpdateInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -1829,6 +1953,17 @@ class InstanceAdminClient {
           instance_partition,
       std::string const& instance_partition_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstancePartition
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstancePartition(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::spanner::admin::instance::v1::InstancePartition const&
@@ -1914,12 +2049,32 @@ class InstanceAdminClient {
                               CreateInstancePartitionRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstancePartition
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstancePartition(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::
           CreateInstancePartitionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstancePartition
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
   CreateInstancePartition(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -2085,6 +2240,17 @@ class InstanceAdminClient {
           instance_partition,
       google::protobuf::FieldMask const& field_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstancePartition
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstancePartition(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::InstancePartition const&
@@ -2179,12 +2345,32 @@ class InstanceAdminClient {
                               UpdateInstancePartitionRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstancePartition
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstancePartition(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::instance::v1::
           UpdateInstancePartitionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstancePartition
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
   UpdateInstancePartition(ExperimentalTag,
                           google::longrunning::Operation const& operation,

@@ -121,6 +121,17 @@ class PipelineServiceClient {
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
   RunPipeline(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunPipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunPipeline(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -165,11 +176,31 @@ class PipelineServiceClient {
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunPipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunPipeline(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contentwarehouse::v1::RunPipelineRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunPipeline
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
   RunPipeline(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});

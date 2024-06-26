@@ -272,6 +272,17 @@ class FunctionServiceClient {
       google::cloud::functions::v2::Function const& function,
       std::string const& function_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFunction
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFunction(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::functions::v2::Function const& function,
@@ -317,11 +328,31 @@ class FunctionServiceClient {
       google::cloud::functions::v2::CreateFunctionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFunction
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFunction(
       ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v2::CreateFunctionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFunction
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::functions::v2::Function>> CreateFunction(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -362,6 +393,17 @@ class FunctionServiceClient {
       google::cloud::functions::v2::Function const& function,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFunction
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFunction(
       ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v2::Function const& function,
@@ -405,11 +447,31 @@ class FunctionServiceClient {
       google::cloud::functions::v2::UpdateFunctionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFunction
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFunction(
       ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v2::UpdateFunctionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFunction
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::functions::v2::Function>> UpdateFunction(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -448,6 +510,17 @@ class FunctionServiceClient {
   future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
   DeleteFunction(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFunction
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFunction(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -492,11 +565,31 @@ class FunctionServiceClient {
       google::cloud::functions::v2::DeleteFunctionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFunction
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFunction(
       ExperimentalTag, NoAwaitTag,
       google::cloud::functions::v2::DeleteFunctionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFunction
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::functions::v2::OperationMetadata>>
   DeleteFunction(ExperimentalTag,
                  google::longrunning::Operation const& operation,

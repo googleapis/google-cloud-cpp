@@ -453,11 +453,31 @@ class AgentsClient {
       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportAgent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportAgent(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportAgent
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
   ExportAgent(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -516,11 +536,31 @@ class AgentsClient {
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestoreAgent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreAgent(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestoreAgent
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

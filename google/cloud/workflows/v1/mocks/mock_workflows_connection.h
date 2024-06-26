@@ -55,6 +55,9 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
               (google::cloud::workflows::v1::GetWorkflowRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateWorkflow) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateWorkflow(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::Workflow>>, CreateWorkflow,
       (google::cloud::workflows::v1::CreateWorkflowRequest const& request),
@@ -72,6 +75,9 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteWorkflow) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteWorkflow(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
       DeleteWorkflow,
@@ -90,6 +96,9 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateWorkflow) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateWorkflow(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::Workflow>>, UpdateWorkflow,
       (google::cloud::workflows::v1::UpdateWorkflowRequest const& request),

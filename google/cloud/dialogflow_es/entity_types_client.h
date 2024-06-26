@@ -614,12 +614,32 @@ class EntityTypesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateEntityTypes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateEntityTypes
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
   BatchUpdateEntityTypes(ExperimentalTag,
@@ -675,6 +695,17 @@ class EntityTypesClient {
       std::string const& parent,
       std::vector<std::string> const& entity_type_names, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteEntityTypes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& entity_type_names, Options opts = {});
@@ -731,12 +762,32 @@ class EntityTypesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteEntityTypes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteEntityTypes
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -791,6 +842,17 @@ class EntityTypesClient {
           entities,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateEntities(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
@@ -852,6 +914,17 @@ class EntityTypesClient {
           entities,
       std::string const& language_code, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateEntities(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
@@ -909,11 +982,31 @@ class EntityTypesClient {
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateEntities(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateEntities
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -971,6 +1064,17 @@ class EntityTypesClient {
           entities,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateEntities(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
@@ -1035,6 +1139,17 @@ class EntityTypesClient {
           entities,
       std::string const& language_code, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateEntities(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
@@ -1095,11 +1210,31 @@ class EntityTypesClient {
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateEntities(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateEntities
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1154,6 +1289,17 @@ class EntityTypesClient {
       std::string const& parent, std::vector<std::string> const& entity_values,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntities(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& entity_values, Options opts = {});
@@ -1213,6 +1359,17 @@ class EntityTypesClient {
       std::string const& parent, std::vector<std::string> const& entity_values,
       std::string const& language_code, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntities(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& entity_values,
@@ -1269,11 +1426,31 @@ class EntityTypesClient {
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntities(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteEntities
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

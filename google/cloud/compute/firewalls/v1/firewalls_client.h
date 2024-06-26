@@ -120,6 +120,17 @@ class FirewallsClient {
       std::string const& project, std::string const& firewall,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFirewall
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewall(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& firewall, Options opts = {});
@@ -163,12 +174,32 @@ class FirewallsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFirewall
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewall(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFirewall
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteFirewall(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -271,6 +302,17 @@ class FirewallsClient {
       google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertFirewall
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewall(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
@@ -316,12 +358,32 @@ class FirewallsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertFirewall
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewall(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertFirewall
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertFirewall(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -441,6 +503,17 @@ class FirewallsClient {
       google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchFirewall
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewall(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& firewall,
@@ -488,12 +561,32 @@ class FirewallsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchFirewall
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewall(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchFirewall
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchFirewall(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -537,6 +630,17 @@ class FirewallsClient {
       google::cloud::cpp::compute::v1::Firewall const& firewall_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFirewall
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewall(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& firewall,
@@ -584,12 +688,32 @@ class FirewallsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFirewall
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateFirewall(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFirewall
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateFirewall(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

@@ -56,6 +56,9 @@ class MockTargetHttpsProxiesConnection
            AggregatedListTargetHttpsProxiesRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTargetHttpsProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTargetHttpsProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetHttpsProxy,
               (google::cloud::cpp::compute::target_https_proxies::v1::
@@ -81,6 +84,9 @@ class MockTargetHttpsProxiesConnection
                    GetTargetHttpsProxyRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertTargetHttpsProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertTargetHttpsProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetHttpsProxy,
               (google::cloud::cpp::compute::target_https_proxies::v1::
@@ -106,6 +112,9 @@ class MockTargetHttpsProxiesConnection
                    ListTargetHttpsProxiesRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PatchTargetHttpsProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PatchTargetHttpsProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchTargetHttpsProxy,
               (google::cloud::cpp::compute::target_https_proxies::v1::
@@ -125,6 +134,9 @@ class MockTargetHttpsProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetCertificateMap) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetCertificateMap(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCertificateMap,
               (google::cloud::cpp::compute::target_https_proxies::v1::
@@ -144,6 +156,9 @@ class MockTargetHttpsProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetQuicOverride) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetQuicOverride(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetQuicOverride,
               (google::cloud::cpp::compute::target_https_proxies::v1::
@@ -163,6 +178,9 @@ class MockTargetHttpsProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetSslCertificates) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetSslCertificates(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSslCertificates,
               (google::cloud::cpp::compute::target_https_proxies::v1::
@@ -182,6 +200,9 @@ class MockTargetHttpsProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetSslPolicy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetSslPolicy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSslPolicy,
               (google::cloud::cpp::compute::target_https_proxies::v1::
@@ -201,6 +222,9 @@ class MockTargetHttpsProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetUrlMap) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetUrlMap(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUrlMap,
               (google::cloud::cpp::compute::target_https_proxies::v1::

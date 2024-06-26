@@ -482,6 +482,17 @@ class ConversationProfilesClient {
   SetSuggestionFeatureConfig(std::string const& conversation_profile,
                              Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSuggestionFeatureConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
       ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
       Options opts = {});
@@ -545,6 +556,17 @@ class ConversationProfilesClient {
           SuggestionFeatureConfig const& suggestion_feature_config,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSuggestionFeatureConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
       ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
       google::cloud::dialogflow::v2::Participant::Role participant_role,
@@ -610,12 +632,32 @@ class ConversationProfilesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSuggestionFeatureConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSuggestionFeatureConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   SetSuggestionFeatureConfig(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -666,6 +708,17 @@ class ConversationProfilesClient {
   ClearSuggestionFeatureConfig(std::string const& conversation_profile,
                                Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ClearSuggestionFeatureConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
       ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
       Options opts = {});
@@ -722,6 +775,17 @@ class ConversationProfilesClient {
           suggestion_feature_type,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ClearSuggestionFeatureConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
       ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
       google::cloud::dialogflow::v2::Participant::Role participant_role,
@@ -780,12 +844,32 @@ class ConversationProfilesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ClearSuggestionFeatureConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ClearSuggestionFeatureConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   ClearSuggestionFeatureConfig(ExperimentalTag,
                                google::longrunning::Operation const& operation,

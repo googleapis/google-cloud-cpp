@@ -80,6 +80,9 @@ class MockConversationProfilesConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetSuggestionFeatureConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetSuggestionFeatureConfig(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
       SetSuggestionFeatureConfig,
@@ -100,6 +103,9 @@ class MockConversationProfilesConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ClearSuggestionFeatureConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ClearSuggestionFeatureConfig(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
       ClearSuggestionFeatureConfig,

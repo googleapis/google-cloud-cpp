@@ -47,6 +47,9 @@ class MockFirewallsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteFirewall) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteFirewall(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteFirewall,
@@ -73,6 +76,9 @@ class MockFirewallsConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertFirewall) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertFirewall(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InsertFirewall,
@@ -99,6 +105,9 @@ class MockFirewallsConnection
                    request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PatchFirewall) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PatchFirewall(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       PatchFirewall,
@@ -119,6 +128,9 @@ class MockFirewallsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateFirewall) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateFirewall(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdateFirewall,

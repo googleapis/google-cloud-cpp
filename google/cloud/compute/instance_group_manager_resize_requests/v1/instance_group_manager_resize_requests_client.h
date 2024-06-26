@@ -137,6 +137,17 @@ class InstanceGroupManagerResizeRequestsClient {
       std::string const& instance_group_manager,
       std::string const& resize_request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Cancel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Cancel(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance_group_manager,
@@ -184,12 +195,32 @@ class InstanceGroupManagerResizeRequestsClient {
           CancelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Cancel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Cancel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           CancelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Cancel
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -238,6 +269,17 @@ class InstanceGroupManagerResizeRequestsClient {
       std::string const& instance_group_manager,
       std::string const& resize_request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceGroupManagerResizeRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManagerResizeRequest(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -286,6 +328,17 @@ class InstanceGroupManagerResizeRequestsClient {
           DeleteInstanceGroupManagerResizeRequestRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceGroupManagerResizeRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManagerResizeRequest(
       ExperimentalTag, NoAwaitTag,
@@ -293,6 +346,15 @@ class InstanceGroupManagerResizeRequestsClient {
           DeleteInstanceGroupManagerResizeRequestRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstanceGroupManagerResizeRequest
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroupManagerResizeRequest(
       ExperimentalTag,
@@ -411,6 +473,17 @@ class InstanceGroupManagerResizeRequestsClient {
           instance_group_manager_resize_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceGroupManagerResizeRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManagerResizeRequest(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -460,6 +533,17 @@ class InstanceGroupManagerResizeRequestsClient {
           InsertInstanceGroupManagerResizeRequestRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceGroupManagerResizeRequest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManagerResizeRequest(
       ExperimentalTag, NoAwaitTag,
@@ -467,6 +551,15 @@ class InstanceGroupManagerResizeRequestsClient {
           InsertInstanceGroupManagerResizeRequestRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstanceGroupManagerResizeRequest
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroupManagerResizeRequest(
       ExperimentalTag,

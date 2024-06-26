@@ -452,6 +452,17 @@ class FlowsClient {
   future<StatusOr<google::protobuf::Struct>> TrainFlow(std::string const& name,
                                                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainFlow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TrainFlow(ExperimentalTag,
                                                      NoAwaitTag,
                                                      std::string const& name,
@@ -509,11 +520,31 @@ class FlowsClient {
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainFlow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TrainFlow(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainFlow
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> TrainFlow(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -665,11 +696,31 @@ class FlowsClient {
       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportFlow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportFlow(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportFlow
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
   ImportFlow(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});
@@ -725,11 +776,31 @@ class FlowsClient {
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportFlow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportFlow(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportFlow
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
   ExportFlow(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});

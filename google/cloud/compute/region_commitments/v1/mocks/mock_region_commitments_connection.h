@@ -62,6 +62,9 @@ class MockRegionCommitmentsConnection
                    GetCommitmentRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertCommitment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertCommitment(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::
@@ -87,6 +90,9 @@ class MockRegionCommitmentsConnection
                    ListRegionCommitmentsRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateCommitment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateCommitment(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateCommitment,
               (google::cloud::cpp::compute::region_commitments::v1::

@@ -61,6 +61,9 @@ class MockInstanceAdminConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateInstanceConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateInstanceConfig(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       CreateInstanceConfig,
@@ -81,6 +84,9 @@ class MockInstanceAdminConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateInstanceConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateInstanceConfig(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       UpdateInstanceConfig,
@@ -132,6 +138,9 @@ class MockInstanceAdminConnection
       (google::spanner::admin::instance::v1::GetInstanceRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
       CreateInstance,
@@ -152,6 +161,9 @@ class MockInstanceAdminConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
       UpdateInstance,
@@ -198,6 +210,9 @@ class MockInstanceAdminConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateInstancePartition) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateInstancePartition(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
       CreateInstancePartition,
@@ -222,6 +237,9 @@ class MockInstanceAdminConnection
                    DeleteInstancePartitionRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateInstancePartition) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateInstancePartition(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
       UpdateInstancePartition,

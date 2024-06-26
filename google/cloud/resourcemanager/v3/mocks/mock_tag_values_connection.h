@@ -64,6 +64,9 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateTagValue) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateTagValue(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
               CreateTagValue,
               (google::cloud::resourcemanager::v3::CreateTagValueRequest const&
@@ -82,6 +85,9 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateTagValue) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateTagValue(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
               UpdateTagValue,
               (google::cloud::resourcemanager::v3::UpdateTagValueRequest const&
@@ -100,6 +106,9 @@ class MockTagValuesConnection : public resourcemanager_v3::TagValuesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTagValue) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTagValue(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>,
               DeleteTagValue,
               (google::cloud::resourcemanager::v3::DeleteTagValueRequest const&

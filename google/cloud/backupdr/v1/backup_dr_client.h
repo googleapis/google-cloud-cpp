@@ -264,6 +264,17 @@ class BackupDRClient {
       google::cloud::backupdr::v1::ManagementServer const& management_server,
       std::string const& management_server_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateManagementServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateManagementServer(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::backupdr::v1::ManagementServer const& management_server,
@@ -308,11 +319,31 @@ class BackupDRClient {
       google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateManagementServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateManagementServer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::backupdr::v1::CreateManagementServerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateManagementServer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
   CreateManagementServer(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -350,6 +381,17 @@ class BackupDRClient {
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteManagementServer(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteManagementServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteManagementServer(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -392,11 +434,31 @@ class BackupDRClient {
       google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteManagementServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteManagementServer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::backupdr::v1::DeleteManagementServerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteManagementServer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteManagementServer(ExperimentalTag,
                          google::longrunning::Operation const& operation,

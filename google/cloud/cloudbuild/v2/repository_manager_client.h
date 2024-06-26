@@ -131,6 +131,17 @@ class RepositoryManagerClient {
       google::devtools::cloudbuild::v2::Connection const& connection,
       std::string const& connection_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnection(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::devtools::cloudbuild::v2::Connection const& connection,
@@ -175,11 +186,31 @@ class RepositoryManagerClient {
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnection(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
   CreateConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -352,6 +383,17 @@ class RepositoryManagerClient {
       google::devtools::cloudbuild::v2::Connection const& connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnection(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::Connection const& connection,
@@ -396,11 +438,31 @@ class RepositoryManagerClient {
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnection(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
   UpdateConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -439,6 +501,17 @@ class RepositoryManagerClient {
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteConnection(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnection(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -481,11 +554,31 @@ class RepositoryManagerClient {
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnection(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -533,6 +626,17 @@ class RepositoryManagerClient {
       google::devtools::cloudbuild::v2::Repository const& repository,
       std::string const& repository_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRepository(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::devtools::cloudbuild::v2::Repository const& repository,
@@ -577,11 +681,31 @@ class RepositoryManagerClient {
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRepository(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRepository
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
   CreateRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -629,6 +753,17 @@ class RepositoryManagerClient {
           requests,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateRepositories
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateRepositories(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<
@@ -677,12 +812,32 @@ class RepositoryManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateRepositories
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateRepositories(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateRepositories
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
   BatchCreateRepositories(ExperimentalTag,
@@ -854,6 +1009,17 @@ class RepositoryManagerClient {
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteRepository(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRepository(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -896,11 +1062,31 @@ class RepositoryManagerClient {
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRepository(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRepository
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
   DeleteRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation,

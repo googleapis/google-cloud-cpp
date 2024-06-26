@@ -282,6 +282,17 @@ class AppConnectorsServiceClient {
           app_connector,
       std::string const& app_connector_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAppConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppConnector(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
@@ -327,12 +338,32 @@ class AppConnectorsServiceClient {
                          CreateAppConnectorRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAppConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppConnector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           CreateAppConnectorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAppConnector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   CreateAppConnector(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -379,6 +410,17 @@ class AppConnectorsServiceClient {
           app_connector,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAppConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppConnector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
@@ -424,12 +466,32 @@ class AppConnectorsServiceClient {
                          UpdateAppConnectorRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAppConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppConnector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           UpdateAppConnectorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAppConnector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   UpdateAppConnector(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -469,6 +531,17 @@ class AppConnectorsServiceClient {
                       AppConnectorOperationMetadata>>
   DeleteAppConnector(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAppConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppConnector(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -512,12 +585,32 @@ class AppConnectorsServiceClient {
                          DeleteAppConnectorRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAppConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppConnector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAppConnector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                       AppConnectorOperationMetadata>>
   DeleteAppConnector(ExperimentalTag,
@@ -561,6 +654,17 @@ class AppConnectorsServiceClient {
                    resource_info,
                Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReportStatus
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReportStatus(
       ExperimentalTag, NoAwaitTag, std::string const& app_connector,
       google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
@@ -607,12 +711,32 @@ class AppConnectorsServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReportStatus
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReportStatus(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReportStatus
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
   ReportStatus(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});

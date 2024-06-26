@@ -53,6 +53,9 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
               (google::appengine::v1::GetVersionRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateVersion) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateVersion(_)) instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, CreateVersion,
               (google::appengine::v1::CreateVersionRequest const& request),
               (override));
@@ -67,6 +70,9 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateVersion) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateVersion(_)) instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, UpdateVersion,
               (google::appengine::v1::UpdateVersionRequest const& request),
               (override));
@@ -81,6 +87,9 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteVersion) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteVersion(_)) instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
               DeleteVersion,
               (google::appengine::v1::DeleteVersionRequest const& request),

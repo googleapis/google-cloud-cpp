@@ -299,6 +299,17 @@ class WorkflowTemplateServiceClient {
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InstantiateWorkflowTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -371,6 +382,17 @@ class WorkflowTemplateServiceClient {
       std::string const& name,
       std::map<std::string, std::string> const& parameters, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InstantiateWorkflowTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::map<std::string, std::string> const& parameters, Options opts = {});
@@ -439,12 +461,32 @@ class WorkflowTemplateServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InstantiateWorkflowTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InstantiateWorkflowTemplate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(ExperimentalTag,
                               google::longrunning::Operation const& operation,
@@ -527,6 +569,17 @@ class WorkflowTemplateServiceClient {
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InstantiateInlineWorkflowTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
@@ -604,12 +657,32 @@ class WorkflowTemplateServiceClient {
           InstantiateInlineWorkflowTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InstantiateInlineWorkflowTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InstantiateInlineWorkflowTemplate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
       ExperimentalTag, google::longrunning::Operation const& operation,

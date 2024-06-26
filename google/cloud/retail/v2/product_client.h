@@ -527,11 +527,31 @@ class ProductServiceClient {
   PurgeProducts(google::cloud::retail::v2::PurgeProductsRequest const& request,
                 Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PurgeProducts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeProducts(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::PurgeProductsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PurgeProducts
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
   PurgeProducts(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -583,11 +603,31 @@ class ProductServiceClient {
       google::cloud::retail::v2::ImportProductsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportProducts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportProducts(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::ImportProductsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportProducts
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
   ImportProducts(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -696,6 +736,17 @@ class ProductServiceClient {
   SetInventory(google::cloud::retail::v2::Product const& inventory,
                google::protobuf::FieldMask const& set_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetInventory
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SetInventory(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::Product const& inventory,
@@ -800,11 +851,31 @@ class ProductServiceClient {
   SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request,
                Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetInventory
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SetInventory(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::SetInventoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetInventory
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
@@ -885,6 +956,17 @@ class ProductServiceClient {
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(std::string const& product, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddFulfillmentPlaces
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
       ExperimentalTag, NoAwaitTag, std::string const& product,
       Options opts = {});
@@ -966,11 +1048,31 @@ class ProductServiceClient {
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddFulfillmentPlaces
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddFulfillmentPlaces
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -1052,6 +1154,17 @@ class ProductServiceClient {
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(std::string const& product, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveFulfillmentPlaces
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
       ExperimentalTag, NoAwaitTag, std::string const& product,
       Options opts = {});
@@ -1133,11 +1246,31 @@ class ProductServiceClient {
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveFulfillmentPlaces
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveFulfillmentPlaces
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1216,6 +1349,17 @@ class ProductServiceClient {
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
   AddLocalInventories(std::string const& product, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddLocalInventories
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AddLocalInventories(
       ExperimentalTag, NoAwaitTag, std::string const& product,
       Options opts = {});
@@ -1294,11 +1438,31 @@ class ProductServiceClient {
       google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddLocalInventories
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AddLocalInventories(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddLocalInventories
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
   AddLocalInventories(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -1375,6 +1539,17 @@ class ProductServiceClient {
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
   RemoveLocalInventories(std::string const& product, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveLocalInventories
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RemoveLocalInventories(
       ExperimentalTag, NoAwaitTag, std::string const& product,
       Options opts = {});
@@ -1451,11 +1626,31 @@ class ProductServiceClient {
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveLocalInventories
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RemoveLocalInventories(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveLocalInventories
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
   RemoveLocalInventories(ExperimentalTag,
                          google::longrunning::Operation const& operation,

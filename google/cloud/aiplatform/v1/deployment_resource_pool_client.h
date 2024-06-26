@@ -137,6 +137,17 @@ class DeploymentResourcePoolServiceClient {
           deployment_resource_pool,
       std::string const& deployment_resource_pool_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDeploymentResourcePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::DeploymentResourcePool const&
@@ -183,12 +194,32 @@ class DeploymentResourcePoolServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDeploymentResourcePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDeploymentResourcePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDeploymentResourcePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
   CreateDeploymentResourcePool(ExperimentalTag,
                                google::longrunning::Operation const& operation,
@@ -364,6 +395,17 @@ class DeploymentResourcePoolServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDeploymentResourcePool(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDeploymentResourcePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -407,12 +449,32 @@ class DeploymentResourcePoolServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDeploymentResourcePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDeploymentResourcePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDeploymentResourcePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDeploymentResourcePool(ExperimentalTag,
                                google::longrunning::Operation const& operation,

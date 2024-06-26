@@ -46,6 +46,9 @@ class MockJobsConnection : public run_v2::JobsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateJob(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, CreateJob,
               (google::cloud::run::v2::CreateJobRequest const& request),
               (override));
@@ -67,6 +70,9 @@ class MockJobsConnection : public run_v2::JobsConnection {
   MOCK_METHOD((StreamRange<google::cloud::run::v2::Job>), ListJobs,
               (google::cloud::run::v2::ListJobsRequest request), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateJob(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, UpdateJob,
               (google::cloud::run::v2::UpdateJobRequest const& request),
               (override));
@@ -81,6 +87,9 @@ class MockJobsConnection : public run_v2::JobsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteJob(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, DeleteJob,
               (google::cloud::run::v2::DeleteJobRequest const& request),
               (override));
@@ -95,6 +104,9 @@ class MockJobsConnection : public run_v2::JobsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RunJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RunJob(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
               (google::cloud::run::v2::RunJobRequest const& request),
               (override));

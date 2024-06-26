@@ -47,6 +47,9 @@ class MockOsConfigZonalServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateOSPolicyAssignment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateOSPolicyAssignment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
       CreateOSPolicyAssignment,
@@ -67,6 +70,9 @@ class MockOsConfigZonalServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateOSPolicyAssignment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateOSPolicyAssignment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>,
       UpdateOSPolicyAssignment,
@@ -106,6 +112,9 @@ class MockOsConfigZonalServiceConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteOSPolicyAssignment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteOSPolicyAssignment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>,

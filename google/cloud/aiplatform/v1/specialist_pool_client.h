@@ -133,6 +133,17 @@ class SpecialistPoolServiceClient {
       google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSpecialistPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSpecialistPool(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
@@ -177,11 +188,31 @@ class SpecialistPoolServiceClient {
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSpecialistPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSpecialistPool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSpecialistPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
   CreateSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -354,6 +385,17 @@ class SpecialistPoolServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSpecialistPool(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSpecialistPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -396,11 +438,31 @@ class SpecialistPoolServiceClient {
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSpecialistPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSpecialistPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -441,6 +503,17 @@ class SpecialistPoolServiceClient {
       google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSpecialistPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
@@ -485,11 +558,31 @@ class SpecialistPoolServiceClient {
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSpecialistPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSpecialistPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
   UpdateSpecialistPool(ExperimentalTag,
                        google::longrunning::Operation const& operation,

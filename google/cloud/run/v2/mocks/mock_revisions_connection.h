@@ -54,6 +54,9 @@ class MockRevisionsConnection : public run_v2::RevisionsConnection {
               (google::cloud::run::v2::ListRevisionsRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteRevision) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteRevision(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Revision>>,
               DeleteRevision,
               (google::cloud::run::v2::DeleteRevisionRequest const& request),

@@ -131,6 +131,17 @@ class RegionHealthCheckServicesClient {
                            std::string const& health_check_service,
                            Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteHealthCheckService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheckService(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& health_check_service,
@@ -176,12 +187,32 @@ class RegionHealthCheckServicesClient {
           DeleteHealthCheckServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteHealthCheckService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHealthCheckService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_check_services::v1::
           DeleteHealthCheckServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteHealthCheckService
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHealthCheckService(
       ExperimentalTag,
@@ -292,6 +323,17 @@ class RegionHealthCheckServicesClient {
           health_check_service_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertHealthCheckService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheckService(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -340,12 +382,32 @@ class RegionHealthCheckServicesClient {
           InsertHealthCheckServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertHealthCheckService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHealthCheckService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_check_services::v1::
           InsertHealthCheckServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertHealthCheckService
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHealthCheckService(
       ExperimentalTag,
@@ -477,6 +539,17 @@ class RegionHealthCheckServicesClient {
           health_check_service_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchHealthCheckService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheckService(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& health_check_service,
@@ -526,12 +599,32 @@ class RegionHealthCheckServicesClient {
           PatchHealthCheckServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchHealthCheckService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHealthCheckService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_health_check_services::v1::
           PatchHealthCheckServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchHealthCheckService
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchHealthCheckService(
       ExperimentalTag,

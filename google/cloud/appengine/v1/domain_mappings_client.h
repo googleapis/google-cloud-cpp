@@ -199,11 +199,31 @@ class DomainMappingsClient {
       google::appengine::v1::CreateDomainMappingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDomainMapping
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDomainMapping(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateDomainMappingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDomainMapping
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::DomainMapping>> CreateDomainMapping(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -249,11 +269,31 @@ class DomainMappingsClient {
       google::appengine::v1::UpdateDomainMappingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDomainMapping
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDomainMapping(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateDomainMappingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDomainMapping
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::DomainMapping>> UpdateDomainMapping(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -299,11 +339,31 @@ class DomainMappingsClient {
       google::appengine::v1::DeleteDomainMappingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDomainMapping
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDomainMapping(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteDomainMappingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDomainMapping
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteDomainMapping(ExperimentalTag,
                       google::longrunning::Operation const& operation,

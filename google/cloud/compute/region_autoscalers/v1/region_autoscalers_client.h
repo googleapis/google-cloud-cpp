@@ -125,6 +125,17 @@ class RegionAutoscalersClient {
       std::string const& project, std::string const& region,
       std::string const& autoscaler, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAutoscaler
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& autoscaler,
@@ -169,12 +180,32 @@ class RegionAutoscalersClient {
           DeleteAutoscalerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAutoscaler
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_autoscalers::v1::
           DeleteAutoscalerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAutoscaler
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -279,6 +310,17 @@ class RegionAutoscalersClient {
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertAutoscaler
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -325,12 +367,32 @@ class RegionAutoscalersClient {
           InsertAutoscalerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertAutoscaler
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_autoscalers::v1::
           InsertAutoscalerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertAutoscaler
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -453,6 +515,17 @@ class RegionAutoscalersClient {
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchAutoscaler
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -500,12 +573,32 @@ class RegionAutoscalersClient {
           PatchAutoscalerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchAutoscaler
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_autoscalers::v1::
           PatchAutoscalerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchAutoscaler
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -548,6 +641,17 @@ class RegionAutoscalersClient {
       google::cloud::cpp::compute::v1::Autoscaler const& autoscaler_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAutoscaler
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -594,12 +698,32 @@ class RegionAutoscalersClient {
           UpdateAutoscalerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAutoscaler
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_autoscalers::v1::
           UpdateAutoscalerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAutoscaler
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

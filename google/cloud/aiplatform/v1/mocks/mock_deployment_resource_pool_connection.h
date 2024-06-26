@@ -47,6 +47,9 @@ class MockDeploymentResourcePoolServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateDeploymentResourcePool) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateDeploymentResourcePool(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
       CreateDeploymentResourcePool,
@@ -81,6 +84,9 @@ class MockDeploymentResourcePoolServiceConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteDeploymentResourcePool) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteDeploymentResourcePool(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDeploymentResourcePool,

@@ -384,6 +384,17 @@ class StorageControlClient {
       std::string const& name, std::string const& destination_folder_id,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RenameFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RenameFolder(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::string const& destination_folder_id, Options opts = {});
@@ -429,11 +440,31 @@ class StorageControlClient {
       google::storage::control::v2::RenameFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RenameFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RenameFolder(
       ExperimentalTag, NoAwaitTag,
       google::storage::control::v2::RenameFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RenameFolder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

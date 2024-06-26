@@ -138,6 +138,17 @@ class ConversationModelsClient {
           conversation_model,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationModel(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::ConversationModel const&
@@ -194,12 +205,32 @@ class ConversationModelsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
   CreateConversationModel(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -382,6 +413,17 @@ class ConversationModelsClient {
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
   DeleteConversationModel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversationModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversationModel(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -435,12 +477,32 @@ class ConversationModelsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversationModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversationModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversationModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
   DeleteConversationModel(ExperimentalTag,
@@ -500,12 +562,32 @@ class ConversationModelsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployConversationModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeployConversationModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployConversationModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
   DeployConversationModel(ExperimentalTag,
@@ -565,12 +647,32 @@ class ConversationModelsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeployConversationModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeployConversationModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeployConversationModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::
                       UndeployConversationModelOperationMetadata>>
   UndeployConversationModel(ExperimentalTag,
@@ -752,6 +854,17 @@ class ConversationModelsClient {
           conversation_model_evaluation,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationModelEvaluation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::ConversationModelEvaluation const&
@@ -798,12 +911,32 @@ class ConversationModelsClient {
           CreateConversationModelEvaluationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationModelEvaluation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::
           CreateConversationModelEvaluationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationModelEvaluation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
       ExperimentalTag, google::longrunning::Operation const& operation,

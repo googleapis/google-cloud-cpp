@@ -47,6 +47,9 @@ class MockTargetGrpcProxiesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTargetGrpcProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTargetGrpcProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetGrpcProxy,
               (google::cloud::cpp::compute::target_grpc_proxies::v1::
@@ -72,6 +75,9 @@ class MockTargetGrpcProxiesConnection
                    GetTargetGrpcProxyRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertTargetGrpcProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertTargetGrpcProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetGrpcProxy,
               (google::cloud::cpp::compute::target_grpc_proxies::v1::
@@ -97,6 +103,9 @@ class MockTargetGrpcProxiesConnection
                    ListTargetGrpcProxiesRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PatchTargetGrpcProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PatchTargetGrpcProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchTargetGrpcProxy,
               (google::cloud::cpp::compute::target_grpc_proxies::v1::

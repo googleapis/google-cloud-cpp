@@ -47,6 +47,9 @@ class MockBatchControllerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateBatch) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateBatch(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Batch>>, CreateBatch,
               (google::cloud::dataproc::v1::CreateBatchRequest const& request),
               (override));

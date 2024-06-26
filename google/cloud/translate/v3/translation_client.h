@@ -479,11 +479,31 @@ class TranslationServiceClient {
       google::cloud::translation::v3::BatchTranslateTextRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchTranslateText
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchTranslateText(
       ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::BatchTranslateTextRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchTranslateText
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
   BatchTranslateText(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -556,6 +576,17 @@ class TranslationServiceClient {
           output_config,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchTranslateDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchTranslateDocument(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& source_language_code,
@@ -614,12 +645,32 @@ class TranslationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchTranslateDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchTranslateDocument(
       ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchTranslateDocument
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
   BatchTranslateDocument(ExperimentalTag,
@@ -662,6 +713,17 @@ class TranslationServiceClient {
       google::cloud::translation::v3::Glossary const& glossary,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGlossary
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateGlossary(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::translation::v3::Glossary const& glossary,
@@ -706,11 +768,31 @@ class TranslationServiceClient {
       google::cloud::translation::v3::CreateGlossaryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGlossary
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateGlossary(
       ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::CreateGlossaryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGlossary
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -883,6 +965,17 @@ class TranslationServiceClient {
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGlossary
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGlossary(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -927,11 +1020,31 @@ class TranslationServiceClient {
       google::cloud::translation::v3::DeleteGlossaryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGlossary
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGlossary(
       ExperimentalTag, NoAwaitTag,
       google::cloud::translation::v3::DeleteGlossaryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGlossary
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
   DeleteGlossary(ExperimentalTag,
                  google::longrunning::Operation const& operation,

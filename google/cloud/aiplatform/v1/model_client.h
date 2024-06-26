@@ -125,6 +125,17 @@ class ModelServiceClient {
               google::cloud::aiplatform::v1::Model const& model,
               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UploadModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UploadModel(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Model const& model, Options opts = {});
@@ -167,11 +178,31 @@ class ModelServiceClient {
   UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request,
               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UploadModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UploadModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UploadModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UploadModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
   UploadModel(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -504,6 +535,17 @@ class ModelServiceClient {
       StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
   UpdateExplanationDataset(std::string const& model, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExplanationDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
       ExperimentalTag, NoAwaitTag, std::string const& model, Options opts = {});
 
@@ -548,12 +590,32 @@ class ModelServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExplanationDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExplanationDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
   UpdateExplanationDataset(ExperimentalTag,
@@ -600,6 +662,17 @@ class ModelServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteModel(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -650,11 +723,31 @@ class ModelServiceClient {
   DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request,
               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModel(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -701,6 +794,17 @@ class ModelServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModelVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteModelVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteModelVersion(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -750,11 +854,31 @@ class ModelServiceClient {
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteModelVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteModelVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteModelVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModelVersion(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -875,6 +999,17 @@ class ModelServiceClient {
           output_config,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportModel(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const&
@@ -923,11 +1058,31 @@ class ModelServiceClient {
   ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request,
               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ExportModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
   ExportModel(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -975,6 +1130,17 @@ class ModelServiceClient {
       std::string const& parent, std::string const& source_model,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CopyModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CopyModel(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& source_model, Options opts = {});
@@ -1023,11 +1189,31 @@ class ModelServiceClient {
       google::cloud::aiplatform::v1::CopyModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CopyModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CopyModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CopyModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CopyModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

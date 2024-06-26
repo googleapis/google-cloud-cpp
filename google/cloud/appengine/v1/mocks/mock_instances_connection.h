@@ -54,6 +54,9 @@ class MockInstancesConnection : public appengine_v1::InstancesConnection {
               (google::appengine::v1::GetInstanceRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteInstance(_)) instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
               DeleteInstance,
               (google::appengine::v1::DeleteInstanceRequest const& request),
@@ -70,6 +73,9 @@ class MockInstancesConnection : public appengine_v1::InstancesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DebugInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DebugInstance(_)) instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Instance>>, DebugInstance,
               (google::appengine::v1::DebugInstanceRequest const& request),
               (override));

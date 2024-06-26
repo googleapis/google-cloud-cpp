@@ -58,6 +58,9 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
       (google::cloud::backupdr::v1::GetManagementServerRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateManagementServer) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateManagementServer(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>,
               CreateManagementServer,
               (google::cloud::backupdr::v1::CreateManagementServerRequest const&
@@ -76,6 +79,9 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteManagementServer) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteManagementServer(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
               DeleteManagementServer,
               (google::cloud::backupdr::v1::DeleteManagementServerRequest const&

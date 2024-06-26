@@ -267,6 +267,17 @@ class TelcoAutomationClient {
           orchestration_cluster,
       std::string const& orchestration_cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateOrchestrationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::telcoautomation::v1::OrchestrationCluster const&
@@ -313,12 +324,32 @@ class TelcoAutomationClient {
           CreateOrchestrationClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateOrchestrationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateOrchestrationCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateOrchestrationCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
   CreateOrchestrationCluster(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -356,6 +387,17 @@ class TelcoAutomationClient {
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
   DeleteOrchestrationCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteOrchestrationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -399,12 +441,32 @@ class TelcoAutomationClient {
           DeleteOrchestrationClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteOrchestrationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteOrchestrationCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteOrchestrationCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
   DeleteOrchestrationCluster(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -578,6 +640,17 @@ class TelcoAutomationClient {
       google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm,
       std::string const& edge_slm_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEdgeSlm
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEdgeSlm(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::telcoautomation::v1::EdgeSlm const& edge_slm,
@@ -621,11 +694,31 @@ class TelcoAutomationClient {
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEdgeSlm
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEdgeSlm(
       ExperimentalTag, NoAwaitTag,
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEdgeSlm
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>> CreateEdgeSlm(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -662,6 +755,17 @@ class TelcoAutomationClient {
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
   DeleteEdgeSlm(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEdgeSlm
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -704,11 +808,31 @@ class TelcoAutomationClient {
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEdgeSlm
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEdgeSlm(
       ExperimentalTag, NoAwaitTag,
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEdgeSlm
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
   DeleteEdgeSlm(ExperimentalTag,
                 google::longrunning::Operation const& operation,

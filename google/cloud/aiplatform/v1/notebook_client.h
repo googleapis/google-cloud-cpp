@@ -128,6 +128,17 @@ class NotebookServiceClient {
           notebook_runtime_template,
       std::string const& notebook_runtime_template_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNotebookRuntimeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::NotebookRuntimeTemplate const&
@@ -174,12 +185,32 @@ class NotebookServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNotebookRuntimeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNotebookRuntimeTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateNotebookRuntimeTemplateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNotebookRuntimeTemplate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>
   CreateNotebookRuntimeTemplate(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
@@ -357,6 +388,17 @@ class NotebookServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteNotebookRuntimeTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNotebookRuntimeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -400,12 +442,32 @@ class NotebookServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNotebookRuntimeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntimeTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeTemplateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNotebookRuntimeTemplate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteNotebookRuntimeTemplate(ExperimentalTag,
                                 google::longrunning::Operation const& operation,
@@ -521,6 +583,17 @@ class NotebookServiceClient {
       google::cloud::aiplatform::v1::NotebookRuntime const& notebook_runtime,
       std::string const& notebook_runtime_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AssignNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& notebook_runtime_template,
@@ -568,12 +641,32 @@ class NotebookServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AssignNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AssignNotebookRuntime(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AssignNotebookRuntime
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>
   AssignNotebookRuntime(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -750,6 +843,17 @@ class NotebookServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteNotebookRuntime(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -793,12 +897,32 @@ class NotebookServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNotebookRuntime(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNotebookRuntime
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteNotebookRuntime(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -840,6 +964,17 @@ class NotebookServiceClient {
       StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
   UpgradeNotebookRuntime(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpgradeNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -884,12 +1019,32 @@ class NotebookServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpgradeNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpgradeNotebookRuntime(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpgradeNotebookRuntime
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>
   UpgradeNotebookRuntime(ExperimentalTag,
@@ -931,6 +1086,17 @@ class NotebookServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
   StartNotebookRuntime(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartNotebookRuntime(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -973,11 +1139,31 @@ class NotebookServiceClient {
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartNotebookRuntime
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartNotebookRuntime(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartNotebookRuntime
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>
   StartNotebookRuntime(ExperimentalTag,
                        google::longrunning::Operation const& operation,

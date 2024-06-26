@@ -67,6 +67,9 @@ class MockProductServiceConnection
               (google::cloud::retail::v2::DeleteProductRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PurgeProducts) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PurgeProducts(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>,
       PurgeProducts,
@@ -84,6 +87,9 @@ class MockProductServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportProducts) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportProducts(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
       ImportProducts,
@@ -101,6 +107,9 @@ class MockProductServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetInventory) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetInventory(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>,
               SetInventory,
               (google::cloud::retail::v2::SetInventoryRequest const& request),
@@ -117,6 +126,9 @@ class MockProductServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AddFulfillmentPlaces) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AddFulfillmentPlaces(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>,
       AddFulfillmentPlaces,
@@ -135,6 +147,9 @@ class MockProductServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RemoveFulfillmentPlaces) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RemoveFulfillmentPlaces(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>,
@@ -156,6 +171,9 @@ class MockProductServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AddLocalInventories) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AddLocalInventories(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>,
       AddLocalInventories,
@@ -174,6 +192,9 @@ class MockProductServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RemoveLocalInventories) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RemoveLocalInventories(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>,

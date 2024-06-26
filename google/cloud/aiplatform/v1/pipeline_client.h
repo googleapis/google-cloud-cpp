@@ -324,6 +324,17 @@ class PipelineServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTrainingPipeline(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTrainingPipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -367,12 +378,32 @@ class PipelineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTrainingPipeline
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTrainingPipeline(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTrainingPipeline
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTrainingPipeline(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -697,6 +728,17 @@ class PipelineServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeletePipelineJob(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePipelineJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePipelineJob(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -739,11 +781,31 @@ class PipelineServiceClient {
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePipelineJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePipelineJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePipelineJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeletePipelineJob(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -791,6 +853,17 @@ class PipelineServiceClient {
                           std::vector<std::string> const& names,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeletePipelineJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& names, Options opts = {});
@@ -838,12 +911,32 @@ class PipelineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeletePipelineJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeletePipelineJobs(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeletePipelineJobs
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
   BatchDeletePipelineJobs(ExperimentalTag,
@@ -979,6 +1072,17 @@ class PipelineServiceClient {
                           std::vector<std::string> const& names,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCancelPipelineJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& names, Options opts = {});
@@ -1030,12 +1134,32 @@ class PipelineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCancelPipelineJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCancelPipelineJobs(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCancelPipelineJobs
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
   BatchCancelPipelineJobs(ExperimentalTag,

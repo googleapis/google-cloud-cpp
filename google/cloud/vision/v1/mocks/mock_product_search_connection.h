@@ -127,6 +127,9 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (google::cloud::vision::v1::ListProductsInProductSetRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportProductSets) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportProductSets(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
       ImportProductSets,
@@ -145,6 +148,9 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PurgeProducts) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PurgeProducts(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
       PurgeProducts,

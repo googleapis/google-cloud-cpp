@@ -47,6 +47,9 @@ class MockTensorboardServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateTensorboard) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateTensorboard(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>,
       CreateTensorboard,
@@ -70,6 +73,9 @@ class MockTensorboardServiceConnection
       (google::cloud::aiplatform::v1::GetTensorboardRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateTensorboard) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateTensorboard(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>,
       UpdateTensorboard,
@@ -93,6 +99,9 @@ class MockTensorboardServiceConnection
               (google::cloud::aiplatform::v1::ListTensorboardsRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTensorboard) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTensorboard(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboard,
@@ -153,6 +162,9 @@ class MockTensorboardServiceConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTensorboardExperiment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTensorboardExperiment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboardExperiment,
@@ -205,6 +217,9 @@ class MockTensorboardServiceConnection
       (google::cloud::aiplatform::v1::ListTensorboardRunsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTensorboardRun) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTensorboardRun(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboardRun,
@@ -258,6 +273,9 @@ class MockTensorboardServiceConnection
       (google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTensorboardTimeSeries) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTensorboardTimeSeries(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTensorboardTimeSeries,

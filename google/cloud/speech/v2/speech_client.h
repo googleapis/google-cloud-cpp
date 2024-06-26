@@ -128,6 +128,17 @@ class SpeechClient {
       google::cloud::speech::v2::Recognizer const& recognizer,
       std::string const& recognizer_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRecognizer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRecognizer(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::speech::v2::Recognizer const& recognizer,
@@ -171,11 +182,31 @@ class SpeechClient {
       google::cloud::speech::v2::CreateRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRecognizer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRecognizer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::CreateRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRecognizer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -356,6 +387,17 @@ class SpeechClient {
       google::cloud::speech::v2::Recognizer const& recognizer,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRecognizer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateRecognizer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::Recognizer const& recognizer,
@@ -399,11 +441,31 @@ class SpeechClient {
       google::cloud::speech::v2::UpdateRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRecognizer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateRecognizer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::UpdateRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRecognizer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -441,6 +503,17 @@ class SpeechClient {
   future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRecognizer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRecognizer(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -482,11 +555,31 @@ class SpeechClient {
       google::cloud::speech::v2::DeleteRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRecognizer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRecognizer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::DeleteRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRecognizer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -524,6 +617,17 @@ class SpeechClient {
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteRecognizer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteRecognizer(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -565,11 +669,31 @@ class SpeechClient {
       google::cloud::speech::v2::UndeleteRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteRecognizer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteRecognizer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::UndeleteRecognizerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteRecognizer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -763,6 +887,17 @@ class SpeechClient {
           files,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchRecognize
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchRecognize(
       ExperimentalTag, NoAwaitTag, std::string const& recognizer,
       google::cloud::speech::v2::RecognitionConfig const& config,
@@ -812,11 +947,31 @@ class SpeechClient {
       google::cloud::speech::v2::BatchRecognizeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchRecognize
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchRecognize(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::BatchRecognizeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchRecognize
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
   BatchRecognize(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -982,6 +1137,17 @@ class SpeechClient {
       google::cloud::speech::v2::CustomClass const& custom_class,
       std::string const& custom_class_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCustomClass
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCustomClass(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::speech::v2::CustomClass const& custom_class,
@@ -1025,11 +1191,31 @@ class SpeechClient {
       google::cloud::speech::v2::CreateCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCustomClass
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCustomClass(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::CreateCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCustomClass
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1207,6 +1393,17 @@ class SpeechClient {
       google::cloud::speech::v2::CustomClass const& custom_class,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCustomClass
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCustomClass(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::CustomClass const& custom_class,
@@ -1250,11 +1447,31 @@ class SpeechClient {
       google::cloud::speech::v2::UpdateCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCustomClass
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCustomClass(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::UpdateCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCustomClass
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1293,6 +1510,17 @@ class SpeechClient {
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCustomClass
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCustomClass(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1334,11 +1562,31 @@ class SpeechClient {
       google::cloud::speech::v2::DeleteCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCustomClass
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCustomClass(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::DeleteCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCustomClass
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1377,6 +1625,17 @@ class SpeechClient {
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteCustomClass
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteCustomClass(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1418,11 +1677,31 @@ class SpeechClient {
       google::cloud::speech::v2::UndeleteCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteCustomClass
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteCustomClass(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::UndeleteCustomClassRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteCustomClass
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1468,6 +1747,17 @@ class SpeechClient {
       google::cloud::speech::v2::PhraseSet const& phrase_set,
       std::string const& phrase_set_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePhraseSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePhraseSet(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::speech::v2::PhraseSet const& phrase_set,
@@ -1511,11 +1801,31 @@ class SpeechClient {
       google::cloud::speech::v2::CreatePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePhraseSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePhraseSet(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::CreatePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePhraseSet
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1692,6 +2002,17 @@ class SpeechClient {
       google::cloud::speech::v2::PhraseSet const& phrase_set,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePhraseSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePhraseSet(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::PhraseSet const& phrase_set,
@@ -1735,11 +2056,31 @@ class SpeechClient {
       google::cloud::speech::v2::UpdatePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePhraseSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePhraseSet(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::UpdatePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePhraseSet
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1777,6 +2118,17 @@ class SpeechClient {
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePhraseSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePhraseSet(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1818,11 +2170,31 @@ class SpeechClient {
       google::cloud::speech::v2::DeletePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePhraseSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePhraseSet(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::DeletePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePhraseSet
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1860,6 +2232,17 @@ class SpeechClient {
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeletePhraseSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeletePhraseSet(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1901,11 +2284,31 @@ class SpeechClient {
       google::cloud::speech::v2::UndeletePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeletePhraseSet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeletePhraseSet(
       ExperimentalTag, NoAwaitTag,
       google::cloud::speech::v2::UndeletePhraseSetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeletePhraseSet
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

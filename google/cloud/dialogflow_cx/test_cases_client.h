@@ -447,11 +447,31 @@ class TestCasesClient {
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunTestCase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunTestCase(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunTestCase
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
   RunTestCase(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -506,12 +526,32 @@ class TestCasesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchRunTestCases
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchRunTestCases(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchRunTestCases
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
   BatchRunTestCases(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -601,11 +641,31 @@ class TestCasesClient {
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportTestCases
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportTestCases(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportTestCases
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
   ImportTestCases(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -661,11 +721,31 @@ class TestCasesClient {
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportTestCases
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportTestCases(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportTestCases
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
   ExportTestCases(ExperimentalTag,
                   google::longrunning::Operation const& operation,

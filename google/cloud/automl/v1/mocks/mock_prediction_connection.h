@@ -51,6 +51,9 @@ class MockPredictionServiceConnection
               (google::cloud::automl::v1::PredictRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchPredict) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchPredict(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>,
               BatchPredict,
               (google::cloud::automl::v1::BatchPredictRequest const& request),

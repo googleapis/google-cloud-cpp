@@ -47,6 +47,9 @@ class MockEngineServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateEngine) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateEngine(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::Engine>>,
       CreateEngine,
@@ -65,6 +68,9 @@ class MockEngineServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteEngine) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteEngine(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>,

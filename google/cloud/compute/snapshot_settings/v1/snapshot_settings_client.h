@@ -186,6 +186,17 @@ class SnapshotSettingsClient {
                             snapshot_settings_resource,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchSnapshotSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& update_mask,
@@ -232,12 +243,32 @@ class SnapshotSettingsClient {
                             PatchSnapshotSettingsRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchSnapshotSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSnapshotSettings(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::snapshot_settings::v1::
           PatchSnapshotSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchSnapshotSettings
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSnapshotSettings(
       ExperimentalTag,

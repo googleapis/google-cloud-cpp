@@ -47,6 +47,9 @@ class MockConversationDatasetsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateConversationDataset) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateConversationDataset(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>,
       CreateConversationDataset,
@@ -80,6 +83,9 @@ class MockConversationDatasetsConnection
       (google::cloud::dialogflow::v2::ListConversationDatasetsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteConversationDataset) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteConversationDataset(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           DeleteConversationDatasetOperationMetadata>>,
@@ -102,6 +108,9 @@ class MockConversationDatasetsConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportConversationData) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportConversationData(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           ImportConversationDataOperationResponse>>,

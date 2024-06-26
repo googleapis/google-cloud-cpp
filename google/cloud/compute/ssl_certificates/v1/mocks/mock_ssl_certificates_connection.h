@@ -55,6 +55,9 @@ class MockSslCertificatesConnection
            AggregatedListSslCertificatesRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteSslCertificate) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteSslCertificate(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSslCertificate,
               (google::cloud::cpp::compute::ssl_certificates::v1::
@@ -80,6 +83,9 @@ class MockSslCertificatesConnection
                    GetSslCertificateRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertSslCertificate) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertSslCertificate(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSslCertificate,
               (google::cloud::cpp::compute::ssl_certificates::v1::

@@ -50,6 +50,9 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
               (google::cloud::talent::v4::CreateJobRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchCreateJobs) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchCreateJobs(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
       BatchCreateJobs,
@@ -76,6 +79,9 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
               (google::cloud::talent::v4::UpdateJobRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchUpdateJobs) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchUpdateJobs(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
       BatchUpdateJobs,
@@ -98,6 +104,9 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
               (google::cloud::talent::v4::DeleteJobRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchDeleteJobs) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchDeleteJobs(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
       BatchDeleteJobs,

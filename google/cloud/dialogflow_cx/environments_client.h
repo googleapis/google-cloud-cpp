@@ -276,6 +276,17 @@ class EnvironmentsClient {
       google::cloud::dialogflow::cx::v3::Environment const& environment,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::cx::v3::Environment const& environment,
@@ -330,12 +341,32 @@ class EnvironmentsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   CreateEnvironment(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -385,6 +416,17 @@ class EnvironmentsClient {
       google::cloud::dialogflow::cx::v3::Environment const& environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::Environment const& environment,
@@ -439,12 +481,32 @@ class EnvironmentsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   UpdateEnvironment(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -637,12 +699,32 @@ class EnvironmentsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunContinuousTest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunContinuousTest(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunContinuousTest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
   RunContinuousTest(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -776,11 +858,31 @@ class EnvironmentsClient {
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployFlow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeployFlow(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployFlow
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
   DeployFlow(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});

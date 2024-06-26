@@ -57,6 +57,9 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::GetMigrationJobRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       CreateMigrationJob,
@@ -75,6 +78,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       UpdateMigrationJob,
@@ -93,6 +99,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeleteMigrationJob,
@@ -111,6 +120,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, StartMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, StartMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       StartMigrationJob,
@@ -129,6 +141,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, StopMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, StopMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       StopMigrationJob,
@@ -147,6 +162,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ResumeMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ResumeMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       ResumeMigrationJob,
@@ -165,6 +183,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PromoteMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PromoteMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       PromoteMigrationJob,
@@ -183,6 +204,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, VerifyMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, VerifyMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       VerifyMigrationJob,
@@ -201,6 +225,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RestartMigrationJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RestartMigrationJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       RestartMigrationJob,
@@ -242,6 +269,9 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::GetConnectionProfileRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateConnectionProfile) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateConnectionProfile(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
       CreateConnectionProfile,
@@ -262,6 +292,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateConnectionProfile) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateConnectionProfile(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
       UpdateConnectionProfile,
@@ -282,6 +315,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteConnectionProfile) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteConnectionProfile(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeleteConnectionProfile,
@@ -302,6 +338,9 @@ class MockDataMigrationServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreatePrivateConnection) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreatePrivateConnection(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>,
       CreatePrivateConnection,
@@ -334,6 +373,9 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::ListPrivateConnectionsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeletePrivateConnection) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeletePrivateConnection(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeletePrivateConnection,
@@ -366,6 +408,9 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::ListConversionWorkspacesRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateConversionWorkspace) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateConversionWorkspace(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CreateConversionWorkspace,
@@ -386,6 +431,9 @@ class MockDataMigrationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateConversionWorkspace) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateConversionWorkspace(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       UpdateConversionWorkspace,
@@ -406,6 +454,9 @@ class MockDataMigrationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteConversionWorkspace) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteConversionWorkspace(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeleteConversionWorkspace,
@@ -446,6 +497,9 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::GetMappingRuleRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SeedConversionWorkspace) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SeedConversionWorkspace(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       SeedConversionWorkspace,
@@ -466,6 +520,9 @@ class MockDataMigrationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportMappingRules) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportMappingRules(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ImportMappingRules,
@@ -484,6 +541,9 @@ class MockDataMigrationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ConvertConversionWorkspace) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ConvertConversionWorkspace(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ConvertConversionWorkspace,
@@ -504,6 +564,9 @@ class MockDataMigrationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CommitConversionWorkspace) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CommitConversionWorkspace(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CommitConversionWorkspace,
@@ -524,6 +587,9 @@ class MockDataMigrationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RollbackConversionWorkspace) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RollbackConversionWorkspace(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       RollbackConversionWorkspace,
@@ -544,6 +610,9 @@ class MockDataMigrationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ApplyConversionWorkspace) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ApplyConversionWorkspace(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ApplyConversionWorkspace,

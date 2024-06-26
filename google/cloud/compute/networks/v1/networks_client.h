@@ -123,6 +123,17 @@ class NetworksClient {
           networks_add_peering_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& network,
@@ -169,12 +180,32 @@ class NetworksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddPeering
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -214,6 +245,17 @@ class NetworksClient {
       std::string const& project, std::string const& network,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetwork(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& network, Options opts = {});
@@ -257,12 +299,32 @@ class NetworksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetwork
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -428,6 +490,17 @@ class NetworksClient {
       google::cloud::cpp::compute::v1::Network const& network_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetwork(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::Network const& network_resource,
@@ -473,12 +546,32 @@ class NetworksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNetwork
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -677,6 +770,17 @@ class NetworksClient {
       google::cloud::cpp::compute::v1::Network const& network_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetwork(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& network,
@@ -723,12 +827,32 @@ class NetworksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchNetwork
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -771,6 +895,17 @@ class NetworksClient {
           networks_remove_peering_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemovePeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& network,
@@ -817,12 +952,32 @@ class NetworksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemovePeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemovePeering
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -862,6 +1017,17 @@ class NetworksClient {
   SwitchToCustomMode(std::string const& project, std::string const& network,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SwitchToCustomMode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& network, Options opts = {});
@@ -905,12 +1071,32 @@ class NetworksClient {
                          SwitchToCustomModeRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SwitchToCustomMode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::
           SwitchToCustomModeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SwitchToCustomMode
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SwitchToCustomMode(
       ExperimentalTag,
@@ -956,6 +1142,17 @@ class NetworksClient {
           networks_update_peering_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& network,
@@ -1004,12 +1201,32 @@ class NetworksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePeering
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

@@ -194,6 +194,17 @@ class JobServiceClient {
                   std::vector<google::cloud::talent::v4::Job> const& jobs,
                   Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateJobs(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::talent::v4::Job> const& jobs,
@@ -238,11 +249,31 @@ class JobServiceClient {
       google::cloud::talent::v4::BatchCreateJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateJobs(
       ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchCreateJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateJobs
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
   BatchCreateJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -423,6 +454,17 @@ class JobServiceClient {
                   std::vector<google::cloud::talent::v4::Job> const& jobs,
                   Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateJobs(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::talent::v4::Job> const& jobs,
@@ -467,11 +509,31 @@ class JobServiceClient {
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateJobs(
       ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchUpdateJobs
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
   BatchUpdateJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -579,6 +641,17 @@ class JobServiceClient {
   BatchDeleteJobs(std::string const& parent,
                   std::vector<std::string> const& names, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteJobs(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& names, Options opts = {});
@@ -622,11 +695,31 @@ class JobServiceClient {
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteJobs
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteJobs(
       ExperimentalTag, NoAwaitTag,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteJobs
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
   BatchDeleteJobs(ExperimentalTag,
                   google::longrunning::Operation const& operation,

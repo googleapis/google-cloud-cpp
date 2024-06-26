@@ -61,6 +61,9 @@ class MockAppGatewaysServiceConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateAppGateway) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateAppGateway(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
       CreateAppGateway,
@@ -80,6 +83,9 @@ class MockAppGatewaysServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteAppGateway) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteAppGateway(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
                                   AppGatewayOperationMetadata>>,
               DeleteAppGateway,

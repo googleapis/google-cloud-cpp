@@ -47,6 +47,9 @@ class MockDataplexServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateLake) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateLake(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>, CreateLake,
               (google::cloud::dataplex::v1::CreateLakeRequest const& request),
               (override));
@@ -61,6 +64,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateLake) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateLake(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Lake>>, UpdateLake,
               (google::cloud::dataplex::v1::UpdateLakeRequest const& request),
               (override));
@@ -75,6 +81,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteLake) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteLake(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteLake,
               (google::cloud::dataplex::v1::DeleteLakeRequest const& request),
@@ -104,6 +113,9 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::ListLakeActionsRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateZone) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateZone(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>, CreateZone,
               (google::cloud::dataplex::v1::CreateZoneRequest const& request),
               (override));
@@ -118,6 +130,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateZone) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateZone(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Zone>>, UpdateZone,
               (google::cloud::dataplex::v1::UpdateZoneRequest const& request),
               (override));
@@ -132,6 +147,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteZone) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteZone(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteZone,
               (google::cloud::dataplex::v1::DeleteZoneRequest const& request),
@@ -161,6 +179,9 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::ListZoneActionsRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateAsset) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateAsset(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>, CreateAsset,
               (google::cloud::dataplex::v1::CreateAssetRequest const& request),
               (override));
@@ -175,6 +196,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateAsset) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateAsset(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Asset>>, UpdateAsset,
               (google::cloud::dataplex::v1::UpdateAssetRequest const& request),
               (override));
@@ -189,6 +213,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteAsset) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteAsset(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteAsset,
               (google::cloud::dataplex::v1::DeleteAssetRequest const& request),
@@ -218,6 +245,9 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::ListAssetActionsRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateTask) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateTask(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>, CreateTask,
               (google::cloud::dataplex::v1::CreateTaskRequest const& request),
               (override));
@@ -232,6 +262,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateTask) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateTask(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Task>>, UpdateTask,
               (google::cloud::dataplex::v1::UpdateTaskRequest const& request),
               (override));
@@ -246,6 +279,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTask) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTask(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteTask,
               (google::cloud::dataplex::v1::DeleteTaskRequest const& request),
@@ -286,6 +322,9 @@ class MockDataplexServiceConnection
               (google::cloud::dataplex::v1::CancelJobRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::Environment>>,
       CreateEnvironment,
@@ -304,6 +343,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::Environment>>,
       UpdateEnvironment,
@@ -322,6 +364,9 @@ class MockDataplexServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteEnvironment,

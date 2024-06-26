@@ -132,6 +132,17 @@ class RapidMigrationAssessmentClient {
       google::cloud::rapidmigrationassessment::v1::Collector const& collector,
       std::string const& collector_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCollector(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::rapidmigrationassessment::v1::Collector const& collector,
@@ -178,12 +189,32 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCollector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCollector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   CreateCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -225,6 +256,17 @@ class RapidMigrationAssessmentClient {
       google::cloud::rapidmigrationassessment::v1::Annotation const& annotation,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAnnotation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAnnotation(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::rapidmigrationassessment::v1::Annotation const& annotation,
@@ -269,12 +311,32 @@ class RapidMigrationAssessmentClient {
                        CreateAnnotationRequest const& request,
                    Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAnnotation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAnnotation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           CreateAnnotationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAnnotation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
   CreateAnnotation(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -510,6 +572,17 @@ class RapidMigrationAssessmentClient {
       google::cloud::rapidmigrationassessment::v1::Collector const& collector,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCollector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::Collector const& collector,
@@ -555,12 +628,32 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCollector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCollector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   UpdateCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -599,6 +692,17 @@ class RapidMigrationAssessmentClient {
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   DeleteCollector(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCollector(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -643,12 +747,32 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCollector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCollector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   DeleteCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -686,6 +810,17 @@ class RapidMigrationAssessmentClient {
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   ResumeCollector(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResumeCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResumeCollector(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -729,12 +864,32 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResumeCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResumeCollector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResumeCollector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   ResumeCollector(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -772,6 +927,17 @@ class RapidMigrationAssessmentClient {
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   RegisterCollector(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RegisterCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RegisterCollector(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -814,12 +980,32 @@ class RapidMigrationAssessmentClient {
                         RegisterCollectorRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RegisterCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RegisterCollector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           RegisterCollectorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RegisterCollector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   RegisterCollector(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -857,6 +1043,17 @@ class RapidMigrationAssessmentClient {
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   PauseCollector(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PauseCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PauseCollector(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -900,12 +1097,32 @@ class RapidMigrationAssessmentClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PauseCollector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PauseCollector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PauseCollector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   PauseCollector(ExperimentalTag,
                  google::longrunning::Operation const& operation,

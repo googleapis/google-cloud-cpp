@@ -327,6 +327,17 @@ class TagValuesClient {
       google::cloud::resourcemanager::v3::TagValue const& tag_value,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTagValue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagValue(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::TagValue const& tag_value,
@@ -373,11 +384,31 @@ class TagValuesClient {
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTagValue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagValue(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTagValue
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -419,6 +450,17 @@ class TagValuesClient {
       google::cloud::resourcemanager::v3::TagValue const& tag_value,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTagValue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTagValue(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::TagValue const& tag_value,
@@ -462,11 +504,31 @@ class TagValuesClient {
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTagValue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTagValue(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTagValue
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -505,6 +567,17 @@ class TagValuesClient {
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTagValue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagValue(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -547,11 +620,31 @@ class TagValuesClient {
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTagValue
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagValue(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTagValue
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

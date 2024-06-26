@@ -199,6 +199,17 @@ class NetAppClient {
       google::cloud::netapp::v1::StoragePool const& storage_pool,
       std::string const& storage_pool_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateStoragePool(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::StoragePool const& storage_pool,
@@ -242,11 +253,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateStoragePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateStoragePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::StoragePool>> CreateStoragePool(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -345,6 +376,17 @@ class NetAppClient {
       google::cloud::netapp::v1::StoragePool const& storage_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateStoragePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::StoragePool const& storage_pool,
@@ -388,11 +430,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateStoragePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateStoragePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::StoragePool>> UpdateStoragePool(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -429,6 +491,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -471,11 +544,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteStoragePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteStoragePool(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -648,6 +741,17 @@ class NetAppClient {
       google::cloud::netapp::v1::Volume const& volume,
       std::string const& volume_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVolume(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::Volume const& volume,
@@ -691,11 +795,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateVolume
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -738,6 +862,17 @@ class NetAppClient {
       google::cloud::netapp::v1::Volume const& volume,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::Volume const& volume,
@@ -781,11 +916,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateVolume
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -822,6 +977,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVolume(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -865,11 +1031,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVolume
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -914,11 +1100,31 @@ class NetAppClient {
       google::cloud::netapp::v1::RevertVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RevertVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RevertVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::RevertVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RevertVolume
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1095,6 +1301,17 @@ class NetAppClient {
       google::cloud::netapp::v1::Snapshot const& snapshot,
       std::string const& snapshot_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSnapshot(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::Snapshot const& snapshot,
@@ -1138,11 +1355,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Snapshot>> CreateSnapshot(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1180,6 +1417,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1221,11 +1469,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1265,6 +1533,17 @@ class NetAppClient {
       google::cloud::netapp::v1::Snapshot const& snapshot,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::Snapshot const& snapshot,
@@ -1308,11 +1587,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Snapshot>> UpdateSnapshot(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1485,6 +1784,17 @@ class NetAppClient {
       google::cloud::netapp::v1::ActiveDirectory const& active_directory,
       std::string const& active_directory_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateActiveDirectory
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateActiveDirectory(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::ActiveDirectory const& active_directory,
@@ -1530,11 +1840,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateActiveDirectory
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateActiveDirectory(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateActiveDirectory
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
   CreateActiveDirectory(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1579,6 +1909,17 @@ class NetAppClient {
       google::cloud::netapp::v1::ActiveDirectory const& active_directory,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateActiveDirectory
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateActiveDirectory(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::ActiveDirectory const& active_directory,
@@ -1623,11 +1964,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateActiveDirectory
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateActiveDirectory(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateActiveDirectory
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
   UpdateActiveDirectory(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1665,6 +2026,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteActiveDirectory(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteActiveDirectory
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteActiveDirectory(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1707,11 +2079,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteActiveDirectory
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteActiveDirectory(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteActiveDirectory
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteActiveDirectory(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1829,6 +2221,17 @@ class NetAppClient {
       google::cloud::netapp::v1::KmsConfig const& kms_config,
       std::string const& kms_config_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateKmsConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateKmsConfig(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::KmsConfig const& kms_config,
@@ -1872,11 +2275,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateKmsConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateKmsConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateKmsConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateKmsConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateKmsConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::KmsConfig>> CreateKmsConfig(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1975,6 +2398,17 @@ class NetAppClient {
       google::cloud::netapp::v1::KmsConfig const& kms_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateKmsConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateKmsConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::KmsConfig const& kms_config,
@@ -2018,11 +2452,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateKmsConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateKmsConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateKmsConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateKmsConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateKmsConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::KmsConfig>> UpdateKmsConfig(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2066,11 +2520,31 @@ class NetAppClient {
       google::cloud::netapp::v1::EncryptVolumesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EncryptVolumes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EncryptVolumes(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::EncryptVolumesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EncryptVolumes
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::KmsConfig>> EncryptVolumes(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2138,6 +2612,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteKmsConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteKmsConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteKmsConfig(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2180,11 +2665,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteKmsConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteKmsConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteKmsConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteKmsConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteKmsConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteKmsConfig(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -2362,6 +2867,17 @@ class NetAppClient {
       google::cloud::netapp::v1::Replication const& replication,
       std::string const& replication_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateReplication(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::Replication const& replication,
@@ -2405,11 +2921,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateReplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateReplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> CreateReplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2447,6 +2983,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteReplication(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteReplication(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2489,11 +3036,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteReplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteReplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteReplication(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -2534,6 +3101,17 @@ class NetAppClient {
       google::cloud::netapp::v1::Replication const& replication,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateReplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::Replication const& replication,
@@ -2577,11 +3155,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateReplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateReplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2624,11 +3222,31 @@ class NetAppClient {
       google::cloud::netapp::v1::StopReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopReplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::StopReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopReplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> StopReplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2671,11 +3289,31 @@ class NetAppClient {
       google::cloud::netapp::v1::ResumeReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResumeReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResumeReplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::ResumeReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResumeReplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> ResumeReplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2721,12 +3359,32 @@ class NetAppClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReverseReplicationDirection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReverseReplicationDirection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReverseReplicationDirection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>>
   ReverseReplicationDirection(ExperimentalTag,
                               google::longrunning::Operation const& operation,
@@ -2775,6 +3433,17 @@ class NetAppClient {
       google::cloud::netapp::v1::BackupVault const& backup_vault,
       std::string const& backup_vault_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupVault(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::BackupVault const& backup_vault,
@@ -2818,11 +3487,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupVault(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupVault
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2998,6 +3687,17 @@ class NetAppClient {
       google::cloud::netapp::v1::BackupVault const& backup_vault,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupVault(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::BackupVault const& backup_vault,
@@ -3041,11 +3741,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateBackupVaultRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupVault(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateBackupVaultRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupVault
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -3083,6 +3803,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupVault(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupVault(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -3125,11 +3856,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteBackupVaultRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupVault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupVault(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteBackupVaultRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupVault
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupVault(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -3180,6 +3931,17 @@ class NetAppClient {
       google::cloud::netapp::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::Backup const& backup,
@@ -3226,11 +3988,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -3406,6 +4188,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -3449,11 +4242,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -3496,6 +4309,17 @@ class NetAppClient {
       google::cloud::netapp::v1::Backup const& backup,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::Backup const& backup,
@@ -3539,11 +4363,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -3588,6 +4432,17 @@ class NetAppClient {
       google::cloud::netapp::v1::BackupPolicy const& backup_policy,
       std::string const& backup_policy_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::BackupPolicy const& backup_policy,
@@ -3631,11 +4486,31 @@ class NetAppClient {
       google::cloud::netapp::v1::CreateBackupPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::CreateBackupPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackupPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> CreateBackupPolicy(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -3809,6 +4684,17 @@ class NetAppClient {
       google::cloud::netapp::v1::BackupPolicy const& backup_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::BackupPolicy const& backup_policy,
@@ -3852,11 +4738,31 @@ class NetAppClient {
       google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackupPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> UpdateBackupPolicy(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -3894,6 +4800,17 @@ class NetAppClient {
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupPolicy(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -3936,11 +4853,31 @@ class NetAppClient {
       google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackupPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
   DeleteBackupPolicy(ExperimentalTag,
                      google::longrunning::Operation const& operation,

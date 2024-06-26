@@ -197,6 +197,17 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::TargetSite const& target_site,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTargetSite
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTargetSite(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::discoveryengine::v1::TargetSite const& target_site,
@@ -242,12 +253,32 @@ class SiteSearchEngineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTargetSite
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTargetSite(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTargetSite
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
   CreateTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -296,12 +327,32 @@ class SiteSearchEngineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateTargetSites
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchCreateTargetSites
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
   BatchCreateTargetSites(ExperimentalTag,
@@ -413,6 +464,17 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::TargetSite const& target_site,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTargetSite
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTargetSite(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::TargetSite const& target_site,
@@ -458,12 +520,32 @@ class SiteSearchEngineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTargetSite
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTargetSite(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTargetSite
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
   UpdateTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -511,6 +593,17 @@ class SiteSearchEngineServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
   DeleteTargetSite(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTargetSite
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTargetSite(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -555,12 +648,32 @@ class SiteSearchEngineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTargetSite
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTargetSite(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTargetSite
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
   DeleteTargetSite(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -687,12 +800,32 @@ class SiteSearchEngineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EnableAdvancedSiteSearch
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EnableAdvancedSiteSearch
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
   EnableAdvancedSiteSearch(ExperimentalTag,
@@ -739,12 +872,32 @@ class SiteSearchEngineServiceClient {
                                 DisableAdvancedSiteSearchRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DisableAdvancedSiteSearch
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::
           DisableAdvancedSiteSearchRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DisableAdvancedSiteSearch
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
   DisableAdvancedSiteSearch(ExperimentalTag,
@@ -790,11 +943,31 @@ class SiteSearchEngineServiceClient {
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RecrawlUris
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RecrawlUris(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RecrawlUris
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
   RecrawlUris(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -842,12 +1015,32 @@ class SiteSearchEngineServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchVerifyTargetSites
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchVerifyTargetSites
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
   BatchVerifyTargetSites(ExperimentalTag,

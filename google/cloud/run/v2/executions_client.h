@@ -257,6 +257,17 @@ class ExecutionsClient {
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExecution
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExecution(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -298,11 +309,31 @@ class ExecutionsClient {
       google::cloud::run::v2::DeleteExecutionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExecution
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExecution(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::DeleteExecutionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExecution
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -342,6 +373,17 @@ class ExecutionsClient {
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CancelExecution
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CancelExecution(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -383,11 +425,31 @@ class ExecutionsClient {
       google::cloud::run::v2::CancelExecutionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CancelExecution
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CancelExecution(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::CancelExecutionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CancelExecution
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

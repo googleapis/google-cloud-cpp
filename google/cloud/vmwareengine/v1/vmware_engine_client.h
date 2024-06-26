@@ -284,6 +284,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
       std::string const& private_cloud_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateCloud
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateCloud(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
@@ -334,11 +345,31 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateCloud
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateCloud(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateCloud
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   CreatePrivateCloud(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -390,6 +421,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePrivateCloud
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePrivateCloud(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::PrivateCloud const& private_cloud,
@@ -441,11 +483,31 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePrivateCloud
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePrivateCloud(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePrivateCloud
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UpdatePrivateCloud(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -501,6 +563,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   DeletePrivateCloud(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateCloud
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateCloud(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -557,11 +630,31 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateCloud
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateCloud(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateCloud
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   DeletePrivateCloud(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -606,6 +699,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UndeletePrivateCloud(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeletePrivateCloud
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeletePrivateCloud(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -652,12 +756,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeletePrivateCloud
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeletePrivateCloud(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeletePrivateCloud
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UndeletePrivateCloud(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -854,6 +978,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::Cluster const& cluster,
@@ -900,11 +1035,31 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -953,6 +1108,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::Cluster const& cluster,
@@ -1002,11 +1168,31 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1050,6 +1236,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1095,11 +1292,31 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -1520,6 +1737,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
       std::string const& external_address_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateExternalAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateExternalAddress(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
@@ -1567,12 +1795,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateExternalAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateExternalAddress(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateExternalAddress
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
   CreateExternalAddress(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1623,6 +1871,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExternalAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateExternalAddress(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::ExternalAddress const& external_address,
@@ -1674,12 +1933,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExternalAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateExternalAddress(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExternalAddress
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
   UpdateExternalAddress(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1723,6 +2002,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteExternalAddress(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExternalAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExternalAddress(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1768,12 +2058,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExternalAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExternalAddress(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExternalAddress
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteExternalAddress(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1961,6 +2271,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::Subnet const& subnet,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSubnet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSubnet(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::Subnet const& subnet,
@@ -2009,11 +2330,31 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSubnet
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSubnet(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSubnet
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::Subnet>> UpdateSubnet(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2212,6 +2553,17 @@ class VmwareEngineClient {
           external_access_rule,
       std::string const& external_access_rule_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateExternalAccessRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateExternalAccessRule(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::ExternalAccessRule const&
@@ -2258,12 +2610,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateExternalAccessRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateExternalAccessRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateExternalAccessRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
   CreateExternalAccessRule(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -2310,6 +2682,17 @@ class VmwareEngineClient {
           external_access_rule,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExternalAccessRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateExternalAccessRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::ExternalAccessRule const&
@@ -2357,12 +2740,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExternalAccessRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateExternalAccessRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateExternalAccessRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
   UpdateExternalAccessRule(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -2404,6 +2807,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteExternalAccessRule(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExternalAccessRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExternalAccessRule(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2447,12 +2861,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExternalAccessRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExternalAccessRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteExternalAccessRule
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteExternalAccessRule(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -2652,6 +3086,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
       std::string const& logging_server_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLoggingServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateLoggingServer(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
@@ -2697,12 +3142,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLoggingServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateLoggingServer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLoggingServer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
   CreateLoggingServer(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -2748,6 +3213,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateLoggingServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLoggingServer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::LoggingServer const& logging_server,
@@ -2794,12 +3270,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateLoggingServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLoggingServer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateLoggingServer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
   UpdateLoggingServer(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -2841,6 +3337,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteLoggingServer(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLoggingServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLoggingServer(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2884,12 +3391,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLoggingServer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLoggingServer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLoggingServer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteLoggingServer(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -3193,6 +3720,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetNsxCredentials(std::string const& private_cloud, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResetNsxCredentials
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResetNsxCredentials(
       ExperimentalTag, NoAwaitTag, std::string const& private_cloud,
       Options opts = {});
@@ -3237,12 +3775,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResetNsxCredentials
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResetNsxCredentials(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResetNsxCredentials
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetNsxCredentials(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -3285,6 +3843,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(std::string const& private_cloud, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResetVcenterCredentials
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResetVcenterCredentials(
       ExperimentalTag, NoAwaitTag, std::string const& private_cloud,
       Options opts = {});
@@ -3329,12 +3898,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResetVcenterCredentials
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResetVcenterCredentials(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResetVcenterCredentials
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -3440,6 +4029,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDnsForwarding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDnsForwarding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DnsForwarding const& dns_forwarding,
@@ -3486,12 +4086,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDnsForwarding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDnsForwarding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDnsForwarding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
   UpdateDnsForwarding(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -3696,6 +4316,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
       std::string const& network_peering_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNetworkPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNetworkPeering(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
@@ -3743,12 +4374,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNetworkPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNetworkPeering(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNetworkPeering
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
   CreateNetworkPeering(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -3793,6 +4444,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPeering(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNetworkPeering(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -3839,12 +4501,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNetworkPeering(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkPeering
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPeering(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -3891,6 +4573,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNetworkPeering(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::NetworkPeering const& network_peering,
@@ -3938,12 +4631,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkPeering
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNetworkPeering(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkPeering
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
   UpdateNetworkPeering(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -4081,6 +4794,17 @@ class VmwareEngineClient {
           hcx_activation_key,
       std::string const& hcx_activation_key_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateHcxActivationKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateHcxActivationKey(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::HcxActivationKey const&
@@ -4127,12 +4851,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateHcxActivationKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateHcxActivationKey(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateHcxActivationKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
   CreateHcxActivationKey(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -4473,6 +5217,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
       std::string const& network_policy_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNetworkPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNetworkPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
@@ -4520,12 +5275,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNetworkPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNetworkPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNetworkPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   CreateNetworkPolicy(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -4581,6 +5356,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNetworkPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::NetworkPolicy const& network_policy,
@@ -4637,12 +5423,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNetworkPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   UpdateNetworkPolicy(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -4686,6 +5492,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPolicy(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNetworkPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -4731,12 +5548,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNetworkPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPolicy(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -4945,6 +5782,17 @@ class VmwareEngineClient {
           management_dns_zone_binding,
       std::string const& management_dns_zone_binding_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateManagementDnsZoneBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateManagementDnsZoneBinding(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
@@ -4997,12 +5845,32 @@ class VmwareEngineClient {
           CreateManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateManagementDnsZoneBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateManagementDnsZoneBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::
           CreateManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateManagementDnsZoneBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   CreateManagementDnsZoneBinding(
       ExperimentalTag, google::longrunning::Operation const& operation,
@@ -5049,6 +5917,17 @@ class VmwareEngineClient {
           management_dns_zone_binding,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateManagementDnsZoneBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateManagementDnsZoneBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::ManagementDnsZoneBinding const&
@@ -5096,12 +5975,32 @@ class VmwareEngineClient {
           UpdateManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateManagementDnsZoneBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateManagementDnsZoneBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::
           UpdateManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateManagementDnsZoneBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   UpdateManagementDnsZoneBinding(
       ExperimentalTag, google::longrunning::Operation const& operation,
@@ -5145,6 +6044,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteManagementDnsZoneBinding(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteManagementDnsZoneBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteManagementDnsZoneBinding(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -5190,12 +6100,32 @@ class VmwareEngineClient {
           DeleteManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteManagementDnsZoneBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteManagementDnsZoneBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::
           DeleteManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteManagementDnsZoneBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteManagementDnsZoneBinding(
       ExperimentalTag, google::longrunning::Operation const& operation,
@@ -5238,6 +6168,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   RepairManagementDnsZoneBinding(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RepairManagementDnsZoneBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RepairManagementDnsZoneBinding(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -5282,12 +6223,32 @@ class VmwareEngineClient {
           RepairManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RepairManagementDnsZoneBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RepairManagementDnsZoneBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::
           RepairManagementDnsZoneBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RepairManagementDnsZoneBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
   RepairManagementDnsZoneBinding(
       ExperimentalTag, google::longrunning::Operation const& operation,
@@ -5350,6 +6311,17 @@ class VmwareEngineClient {
           vmware_engine_network,
       std::string const& vmware_engine_network_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateVmwareEngineNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVmwareEngineNetwork(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
@@ -5396,12 +6368,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateVmwareEngineNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVmwareEngineNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateVmwareEngineNetwork
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   CreateVmwareEngineNetwork(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -5450,6 +6442,17 @@ class VmwareEngineClient {
           vmware_engine_network,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateVmwareEngineNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVmwareEngineNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::VmwareEngineNetwork const&
@@ -5498,12 +6501,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateVmwareEngineNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVmwareEngineNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateVmwareEngineNetwork
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   UpdateVmwareEngineNetwork(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -5548,6 +6571,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteVmwareEngineNetwork(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVmwareEngineNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVmwareEngineNetwork(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -5594,12 +6628,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVmwareEngineNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVmwareEngineNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVmwareEngineNetwork
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteVmwareEngineNetwork(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -5804,6 +6858,17 @@ class VmwareEngineClient {
           private_connection,
       std::string const& private_connection_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vmwareengine::v1::PrivateConnection const&
@@ -5851,12 +6916,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
   CreatePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -6048,6 +7133,17 @@ class VmwareEngineClient {
           private_connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePrivateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::PrivateConnection const&
@@ -6096,12 +7192,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePrivateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePrivateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
   UpdatePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -6145,6 +7261,17 @@ class VmwareEngineClient {
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeletePrivateConnection(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -6190,12 +7317,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeletePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -6327,6 +7474,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::Principal const& principal,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc GrantDnsBindPermission
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> GrantDnsBindPermission(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::vmwareengine::v1::Principal const& principal,
@@ -6375,12 +7533,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc GrantDnsBindPermission
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> GrantDnsBindPermission(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc GrantDnsBindPermission
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
   GrantDnsBindPermission(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -6498,6 +7676,17 @@ class VmwareEngineClient {
       google::cloud::vmwareengine::v1::Principal const& principal,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RevokeDnsBindPermission
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RevokeDnsBindPermission(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::vmwareengine::v1::Principal const& principal,
@@ -6545,12 +7734,32 @@ class VmwareEngineClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RevokeDnsBindPermission
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RevokeDnsBindPermission(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RevokeDnsBindPermission
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
   RevokeDnsBindPermission(ExperimentalTag,
                           google::longrunning::Operation const& operation,

@@ -128,6 +128,17 @@ class BatchControllerClient {
       google::cloud::dataproc::v1::Batch const& batch,
       std::string const& batch_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBatch
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBatch(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataproc::v1::Batch const& batch,
@@ -171,11 +182,31 @@ class BatchControllerClient {
       google::cloud::dataproc::v1::CreateBatchRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBatch
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBatch(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateBatchRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBatch
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

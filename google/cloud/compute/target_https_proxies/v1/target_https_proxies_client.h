@@ -214,6 +214,17 @@ class TargetHttpsProxiesClient {
                          std::string const& target_https_proxy,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTargetHttpsProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpsProxy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_https_proxy, Options opts = {});
@@ -257,12 +268,32 @@ class TargetHttpsProxiesClient {
                              DeleteTargetHttpsProxyRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTargetHttpsProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpsProxy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           DeleteTargetHttpsProxyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTargetHttpsProxy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpsProxy(
       ExperimentalTag,
@@ -368,6 +399,17 @@ class TargetHttpsProxiesClient {
           target_https_proxy_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertTargetHttpsProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpsProxy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::TargetHttpsProxy const&
@@ -414,12 +456,32 @@ class TargetHttpsProxiesClient {
                              InsertTargetHttpsProxyRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertTargetHttpsProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpsProxy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           InsertTargetHttpsProxyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertTargetHttpsProxy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetHttpsProxy(
       ExperimentalTag,
@@ -545,6 +607,17 @@ class TargetHttpsProxiesClient {
                             target_https_proxy_resource,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchTargetHttpsProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpsProxy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_https_proxy,
@@ -593,12 +666,32 @@ class TargetHttpsProxiesClient {
                             PatchTargetHttpsProxyRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchTargetHttpsProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpsProxy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           PatchTargetHttpsProxyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchTargetHttpsProxy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetHttpsProxy(
       ExperimentalTag,
@@ -645,6 +738,17 @@ class TargetHttpsProxiesClient {
               target_https_proxies_set_certificate_map_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetCertificateMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_https_proxy,
@@ -692,12 +796,32 @@ class TargetHttpsProxiesClient {
                         SetCertificateMapRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetCertificateMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetCertificateMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetCertificateMap
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCertificateMap(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -742,6 +866,17 @@ class TargetHttpsProxiesClient {
               target_https_proxies_set_quic_override_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetQuicOverride
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetQuicOverride(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_https_proxy,
@@ -789,12 +924,32 @@ class TargetHttpsProxiesClient {
           SetQuicOverrideRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetQuicOverride
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetQuicOverride(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetQuicOverrideRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetQuicOverride
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetQuicOverride(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -840,6 +995,17 @@ class TargetHttpsProxiesClient {
               target_https_proxies_set_ssl_certificates_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSslCertificates
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_https_proxy,
@@ -887,12 +1053,32 @@ class TargetHttpsProxiesClient {
                          SetSslCertificatesRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSslCertificates
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetSslCertificatesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSslCertificates
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(
       ExperimentalTag,
@@ -940,6 +1126,17 @@ class TargetHttpsProxiesClient {
           ssl_policy_reference_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSslPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_https_proxy,
@@ -989,12 +1186,32 @@ class TargetHttpsProxiesClient {
           SetSslPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSslPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetSslPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSslPolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1037,6 +1254,17 @@ class TargetHttpsProxiesClient {
           url_map_reference_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_https_proxy,
@@ -1083,12 +1311,32 @@ class TargetHttpsProxiesClient {
           SetUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetUrlMap
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

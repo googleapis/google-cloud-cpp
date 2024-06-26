@@ -204,6 +204,17 @@ class SecurityCenterClient {
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
   BulkMuteFindings(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkMuteFindings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -250,11 +261,31 @@ class SecurityCenterClient {
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkMuteFindings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
       ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkMuteFindings
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
   BulkMuteFindings(ExperimentalTag,
                    google::longrunning::Operation const& operation,

@@ -47,6 +47,9 @@ class MockNodeGroupsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AddNodes) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AddNodes(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AddNodes,
       (google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
@@ -75,6 +78,9 @@ class MockNodeGroupsConnection
            AggregatedListNodeGroupsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteNodeGroup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteNodeGroup(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNodeGroup,
               (google::cloud::cpp::compute::node_groups::v1::
@@ -94,6 +100,9 @@ class MockNodeGroupsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteNodes) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteNodes(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DeleteNodes,
       (google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
@@ -125,6 +134,9 @@ class MockNodeGroupsConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertNodeGroup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertNodeGroup(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNodeGroup,
               (google::cloud::cpp::compute::node_groups::v1::
@@ -155,6 +167,9 @@ class MockNodeGroupsConnection
       (google::cloud::cpp::compute::node_groups::v1::ListNodesRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PatchNodeGroup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PatchNodeGroup(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchNodeGroup,
               (google::cloud::cpp::compute::node_groups::v1::
@@ -174,6 +189,9 @@ class MockNodeGroupsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PerformMaintenance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PerformMaintenance(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PerformMaintenance,
               (google::cloud::cpp::compute::node_groups::v1::
@@ -199,6 +217,9 @@ class MockNodeGroupsConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetNodeTemplate) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetNodeTemplate(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetNodeTemplate,
               (google::cloud::cpp::compute::node_groups::v1::
@@ -218,6 +239,9 @@ class MockNodeGroupsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SimulateMaintenanceEvent) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SimulateMaintenanceEvent(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SimulateMaintenanceEvent,
               (google::cloud::cpp::compute::node_groups::v1::

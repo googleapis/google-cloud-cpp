@@ -203,12 +203,32 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UploadConversation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UploadConversation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UploadConversation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
   UploadConversation(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -497,6 +517,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::Analysis const& analysis,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAnalysis
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAnalysis(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::contactcenterinsights::v1::Analysis const& analysis,
@@ -543,12 +574,32 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAnalysis
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAnalysis(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAnalysis
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
   CreateAnalysis(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -772,6 +823,17 @@ class ContactCenterInsightsClient {
   BulkAnalyzeConversations(std::string const& parent, std::string const& filter,
                            float analysis_percentage, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkAnalyzeConversations
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& filter, float analysis_percentage, Options opts = {});
@@ -816,12 +878,32 @@ class ContactCenterInsightsClient {
                                BulkAnalyzeConversationsRequest const& request,
                            Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkAnalyzeConversations
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BulkAnalyzeConversations(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::
           BulkAnalyzeConversationsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkAnalyzeConversations
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
                       BulkAnalyzeConversationsResponse>>
   BulkAnalyzeConversations(ExperimentalTag,
@@ -865,6 +947,17 @@ class ContactCenterInsightsClient {
   BulkDeleteConversations(std::string const& parent, std::string const& filter,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkDeleteConversations
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BulkDeleteConversations(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& filter, Options opts = {});
@@ -909,12 +1002,32 @@ class ContactCenterInsightsClient {
                               BulkDeleteConversationsRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkDeleteConversations
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BulkDeleteConversations(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::
           BulkDeleteConversationsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkDeleteConversations
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::
                       BulkDeleteConversationsResponse>>
   BulkDeleteConversations(ExperimentalTag,
@@ -955,6 +1068,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
   IngestConversations(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc IngestConversations
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> IngestConversations(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -1000,12 +1124,32 @@ class ContactCenterInsightsClient {
                           IngestConversationsRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc IngestConversations
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> IngestConversations(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::
           IngestConversationsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc IngestConversations
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
   IngestConversations(ExperimentalTag,
@@ -1045,6 +1189,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
   ExportInsightsData(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportInsightsData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportInsightsData(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -1090,12 +1245,32 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportInsightsData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportInsightsData(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportInsightsData
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
   ExportInsightsData(ExperimentalTag,
@@ -1138,6 +1313,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateIssueModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateIssueModel(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
@@ -1183,12 +1369,32 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateIssueModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateIssueModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateIssueModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
   CreateIssueModel(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1403,6 +1609,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
   DeleteIssueModel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteIssueModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteIssueModel(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1447,12 +1664,32 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteIssueModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteIssueModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteIssueModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
   DeleteIssueModel(ExperimentalTag,
@@ -1493,6 +1730,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
   DeployIssueModel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployIssueModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeployIssueModel(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1538,12 +1786,32 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployIssueModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeployIssueModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeployIssueModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
   DeployIssueModel(ExperimentalTag,
@@ -1584,6 +1852,17 @@ class ContactCenterInsightsClient {
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeployIssueModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeployIssueModel(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1629,12 +1908,32 @@ class ContactCenterInsightsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeployIssueModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeployIssueModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeployIssueModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
   UndeployIssueModel(ExperimentalTag,

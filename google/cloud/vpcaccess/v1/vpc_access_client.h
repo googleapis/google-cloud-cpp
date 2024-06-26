@@ -128,6 +128,17 @@ class VpcAccessServiceClient {
       google::cloud::vpcaccess::v1::Connector const& connector,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnector(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& connector_id,
@@ -172,11 +183,31 @@ class VpcAccessServiceClient {
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -346,6 +377,17 @@ class VpcAccessServiceClient {
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnector(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -389,11 +431,31 @@ class VpcAccessServiceClient {
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnector
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnector(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnector
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(ExperimentalTag,
                   google::longrunning::Operation const& operation,

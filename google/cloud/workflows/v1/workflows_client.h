@@ -269,6 +269,17 @@ class WorkflowsClient {
       google::cloud::workflows::v1::Workflow const& workflow,
       std::string const& workflow_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateWorkflow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkflow(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::workflows::v1::Workflow const& workflow,
@@ -314,11 +325,31 @@ class WorkflowsClient {
       google::cloud::workflows::v1::CreateWorkflowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateWorkflow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkflow(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::CreateWorkflowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateWorkflow
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -358,6 +389,17 @@ class WorkflowsClient {
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
   DeleteWorkflow(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteWorkflow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkflow(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -402,11 +444,31 @@ class WorkflowsClient {
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteWorkflow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkflow(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteWorkflow
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
   DeleteWorkflow(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -451,6 +513,17 @@ class WorkflowsClient {
       google::cloud::workflows::v1::Workflow const& workflow,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateWorkflow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkflow(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::Workflow const& workflow,
@@ -498,11 +571,31 @@ class WorkflowsClient {
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateWorkflow
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkflow(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateWorkflow
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

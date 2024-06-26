@@ -127,6 +127,17 @@ class InstancesClient {
           access_config_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddAccessConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -174,12 +185,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddAccessConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddAccessConfig
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -227,6 +258,17 @@ class InstancesClient {
                               instances_add_resource_policies_request_resource,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddResourcePolicies
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -276,12 +318,32 @@ class InstancesClient {
                           AddResourcePoliciesRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddResourcePolicies
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           AddResourcePoliciesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddResourcePolicies
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(
       ExperimentalTag,
@@ -418,6 +480,17 @@ class InstancesClient {
           attached_disk_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AttachDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -467,12 +540,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AttachDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AttachDisk
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -516,6 +609,17 @@ class InstancesClient {
           bulk_insert_instance_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone,
@@ -563,12 +667,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -610,6 +734,17 @@ class InstancesClient {
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, Options opts = {});
@@ -654,12 +789,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -704,6 +859,17 @@ class InstancesClient {
                      std::string const& access_config,
                      std::string const& network_interface, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -749,12 +915,32 @@ class InstancesClient {
                          DeleteAccessConfigRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           DeleteAccessConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessConfig
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteAccessConfig(
       ExperimentalTag,
@@ -799,6 +985,17 @@ class InstancesClient {
       std::string const& instance, std::string const& device_name,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DetachDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -843,12 +1040,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DetachDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DetachDisk
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1334,6 +1551,17 @@ class InstancesClient {
       google::cloud::cpp::compute::v1::Instance const& instance_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstance(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone,
@@ -1380,12 +1608,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertInstance
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1589,6 +1837,17 @@ class InstancesClient {
   PerformMaintenance(std::string const& project, std::string const& zone,
                      std::string const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PerformMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, Options opts = {});
@@ -1632,12 +1891,32 @@ class InstancesClient {
                          PerformMaintenanceRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PerformMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           PerformMaintenanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PerformMaintenance
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
       ExperimentalTag,
@@ -1685,6 +1964,17 @@ class InstancesClient {
               instances_remove_resource_policies_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveResourcePolicies
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -1732,12 +2022,32 @@ class InstancesClient {
                              RemoveResourcePoliciesRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveResourcePolicies
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           RemoveResourcePoliciesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveResourcePolicies
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
       ExperimentalTag,
@@ -1780,6 +2090,17 @@ class InstancesClient {
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Reset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, Options opts = {});
@@ -1823,11 +2144,31 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Reset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Reset
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1869,6 +2210,17 @@ class InstancesClient {
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, Options opts = {});
@@ -1912,11 +2264,31 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::ResumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::ResumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resume
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2014,6 +2386,17 @@ class InstancesClient {
   SetDeletionProtection(std::string const& project, std::string const& zone,
                         std::string const& resource, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetDeletionProtection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& resource, Options opts = {});
@@ -2057,12 +2440,32 @@ class InstancesClient {
                             SetDeletionProtectionRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetDeletionProtection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SetDeletionProtectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetDeletionProtection
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDeletionProtection(
       ExperimentalTag,
@@ -2108,6 +2511,17 @@ class InstancesClient {
                     std::string const& instance, bool auto_delete,
                     std::string const& device_name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetDiskAutoDelete
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, bool auto_delete,
@@ -2152,12 +2566,32 @@ class InstancesClient {
                         SetDiskAutoDeleteRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetDiskAutoDelete
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SetDiskAutoDeleteRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetDiskAutoDelete
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDiskAutoDelete(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2271,6 +2705,17 @@ class InstancesClient {
           instances_set_labels_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -2318,12 +2763,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2370,6 +2835,17 @@ class InstancesClient {
                               instances_set_machine_resources_request_resource,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMachineResources
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -2418,12 +2894,32 @@ class InstancesClient {
                           SetMachineResourcesRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMachineResources
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SetMachineResourcesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMachineResources
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetMachineResources(
       ExperimentalTag,
@@ -2470,6 +2966,17 @@ class InstancesClient {
           instances_set_machine_type_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMachineType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -2517,12 +3024,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMachineType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMachineType
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2567,6 +3094,17 @@ class InstancesClient {
       google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMetadata
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -2613,12 +3151,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMetadata
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMetadata
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2666,6 +3224,17 @@ class InstancesClient {
           instances_set_min_cpu_platform_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMinCpuPlatform
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -2714,12 +3283,32 @@ class InstancesClient {
                         SetMinCpuPlatformRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMinCpuPlatform
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SetMinCpuPlatformRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetMinCpuPlatform
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetMinCpuPlatform(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2764,6 +3353,17 @@ class InstancesClient {
           instances_set_name_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetName
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -2809,11 +3409,31 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::SetNameRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetName
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetNameRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetName
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2861,6 +3481,17 @@ class InstancesClient {
       google::cloud::cpp::compute::v1::Scheduling const& scheduling_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetScheduling
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -2910,12 +3541,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetScheduling
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetScheduling
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -2963,6 +3614,17 @@ class InstancesClient {
           instances_set_security_policy_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -3010,12 +3672,32 @@ class InstancesClient {
                         SetSecurityPolicyRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SetSecurityPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetSecurityPolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -3062,6 +3744,17 @@ class InstancesClient {
           instances_set_service_account_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetServiceAccount
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -3109,12 +3802,32 @@ class InstancesClient {
                         SetServiceAccountRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetServiceAccount
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SetServiceAccountRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetServiceAccount
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetServiceAccount(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -3162,6 +3875,17 @@ class InstancesClient {
           shielded_instance_integrity_policy_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetShieldedInstanceIntegrityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   SetShieldedInstanceIntegrityPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -3212,6 +3936,17 @@ class InstancesClient {
           SetShieldedInstanceIntegrityPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetShieldedInstanceIntegrityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   SetShieldedInstanceIntegrityPolicy(
       ExperimentalTag, NoAwaitTag,
@@ -3219,6 +3954,15 @@ class InstancesClient {
           SetShieldedInstanceIntegrityPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetShieldedInstanceIntegrityPolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetShieldedInstanceIntegrityPolicy(
       ExperimentalTag,
@@ -3264,6 +4008,17 @@ class InstancesClient {
       google::cloud::cpp::compute::v1::Tags const& tags_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetTags
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -3309,11 +4064,31 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetTags
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetTags
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -3355,6 +4130,17 @@ class InstancesClient {
   SimulateMaintenanceEvent(std::string const& project, std::string const& zone,
                            std::string const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SimulateMaintenanceEvent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, Options opts = {});
@@ -3399,12 +4185,32 @@ class InstancesClient {
                                SimulateMaintenanceEventRequest const& request,
                            Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SimulateMaintenanceEvent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SimulateMaintenanceEventRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SimulateMaintenanceEvent
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SimulateMaintenanceEvent(
       ExperimentalTag,
@@ -3447,6 +4253,17 @@ class InstancesClient {
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Start
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, Options opts = {});
@@ -3490,11 +4307,31 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::StartRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Start
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::StartRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Start
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -3542,6 +4379,17 @@ class InstancesClient {
               instances_start_with_encryption_key_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartWithEncryptionKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -3590,12 +4438,32 @@ class InstancesClient {
                              StartWithEncryptionKeyRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartWithEncryptionKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           StartWithEncryptionKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartWithEncryptionKey
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartWithEncryptionKey(
       ExperimentalTag,
@@ -3642,6 +4510,17 @@ class InstancesClient {
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Stop
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, Options opts = {});
@@ -3689,11 +4568,31 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::StopRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Stop
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::StopRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Stop
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -3740,6 +4639,17 @@ class InstancesClient {
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Suspend
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance, Options opts = {});
@@ -3788,11 +4698,31 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::SuspendRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Suspend
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SuspendRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Suspend
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -3905,6 +4835,17 @@ class InstancesClient {
       google::cloud::cpp::compute::v1::Instance const& instance_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -3952,12 +4893,32 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -4006,6 +4967,17 @@ class InstancesClient {
                          access_config_resource,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -4055,12 +5027,32 @@ class InstancesClient {
                          UpdateAccessConfigRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           UpdateAccessConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessConfig
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateAccessConfig(
       ExperimentalTag,
@@ -4108,6 +5100,17 @@ class InstancesClient {
                           display_device_resource,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDisplayDevice
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -4156,12 +5159,32 @@ class InstancesClient {
                           UpdateDisplayDeviceRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDisplayDevice
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           UpdateDisplayDeviceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDisplayDevice
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateDisplayDevice(
       ExperimentalTag,
@@ -4213,6 +5236,17 @@ class InstancesClient {
           network_interface_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkInterface
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& instance,
@@ -4264,12 +5298,32 @@ class InstancesClient {
                              UpdateNetworkInterfaceRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkInterface
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           UpdateNetworkInterfaceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNetworkInterface
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateNetworkInterface(
       ExperimentalTag,
@@ -4318,6 +5372,17 @@ class InstancesClient {
           shielded_instance_config_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateShieldedInstanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   UpdateShieldedInstanceConfig(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -4368,6 +5433,17 @@ class InstancesClient {
           UpdateShieldedInstanceConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateShieldedInstanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   UpdateShieldedInstanceConfig(
       ExperimentalTag, NoAwaitTag,
@@ -4375,6 +5451,15 @@ class InstancesClient {
           UpdateShieldedInstanceConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateShieldedInstanceConfig
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateShieldedInstanceConfig(
       ExperimentalTag,

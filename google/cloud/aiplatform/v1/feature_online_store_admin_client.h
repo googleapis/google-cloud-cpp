@@ -141,6 +141,17 @@ class FeatureOnlineStoreAdminServiceClient {
           feature_online_store,
       std::string const& feature_online_store_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFeatureOnlineStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::FeatureOnlineStore const&
@@ -187,12 +198,32 @@ class FeatureOnlineStoreAdminServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFeatureOnlineStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFeatureOnlineStore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
   CreateFeatureOnlineStore(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -384,6 +415,17 @@ class FeatureOnlineStoreAdminServiceClient {
           feature_online_store,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFeatureOnlineStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::FeatureOnlineStore const&
@@ -430,12 +472,32 @@ class FeatureOnlineStoreAdminServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFeatureOnlineStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFeatureOnlineStore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
   UpdateFeatureOnlineStore(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -480,6 +542,17 @@ class FeatureOnlineStoreAdminServiceClient {
   DeleteFeatureOnlineStore(std::string const& name, bool force,
                            Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFeatureOnlineStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
       ExperimentalTag, NoAwaitTag, std::string const& name, bool force,
       Options opts = {});
@@ -525,12 +598,32 @@ class FeatureOnlineStoreAdminServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFeatureOnlineStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFeatureOnlineStore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureOnlineStore(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -581,6 +674,17 @@ class FeatureOnlineStoreAdminServiceClient {
       google::cloud::aiplatform::v1::FeatureView const& feature_view,
       std::string const& feature_view_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFeatureView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeatureView(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::FeatureView const& feature_view,
@@ -625,11 +729,31 @@ class FeatureOnlineStoreAdminServiceClient {
       google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFeatureView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeatureView(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFeatureView
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
   CreateFeatureView(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -817,6 +941,17 @@ class FeatureOnlineStoreAdminServiceClient {
       google::cloud::aiplatform::v1::FeatureView const& feature_view,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFeatureView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeatureView(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::FeatureView const& feature_view,
@@ -861,11 +996,31 @@ class FeatureOnlineStoreAdminServiceClient {
       google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFeatureView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeatureView(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFeatureView
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
   UpdateFeatureView(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -905,6 +1060,17 @@ class FeatureOnlineStoreAdminServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureView(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFeatureView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeatureView(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -947,11 +1113,31 @@ class FeatureOnlineStoreAdminServiceClient {
       google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFeatureView
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeatureView(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFeatureView
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteFeatureView(ExperimentalTag,
                     google::longrunning::Operation const& operation,

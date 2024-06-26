@@ -70,6 +70,9 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
       (google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, TrainFlow) is now ambiguous. Use
+  // EXPECT_CALL(*mock, TrainFlow(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, TrainFlow,
       (google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request),
@@ -99,6 +102,9 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportFlow) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportFlow(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>,
       ImportFlow,
@@ -117,6 +123,9 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ExportFlow) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ExportFlow(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>,
       ExportFlow,

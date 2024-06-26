@@ -124,6 +124,17 @@ class IndexServiceClient {
       std::string const& parent,
       google::cloud::aiplatform::v1::Index const& index, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateIndex
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateIndex(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Index const& index, Options opts = {});
@@ -166,11 +177,31 @@ class IndexServiceClient {
       google::cloud::aiplatform::v1::CreateIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateIndex
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateIndex(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateIndex
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -345,6 +376,17 @@ class IndexServiceClient {
       google::cloud::aiplatform::v1::Index const& index,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateIndex
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateIndex(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::Index const& index,
@@ -388,11 +430,31 @@ class IndexServiceClient {
       google::cloud::aiplatform::v1::UpdateIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateIndex
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateIndex(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateIndex
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -435,6 +497,17 @@ class IndexServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteIndex(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteIndex
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteIndex(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -482,11 +555,31 @@ class IndexServiceClient {
   DeleteIndex(google::cloud::aiplatform::v1::DeleteIndexRequest const& request,
               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteIndex
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteIndex(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteIndex
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteIndex(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});

@@ -49,6 +49,9 @@ class MockRegionTargetTcpProxiesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTargetTcpProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTargetTcpProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetTcpProxy,
               (google::cloud::cpp::compute::region_target_tcp_proxies::v1::
@@ -74,6 +77,9 @@ class MockRegionTargetTcpProxiesConnection
                    GetTargetTcpProxyRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertTargetTcpProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertTargetTcpProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetTcpProxy,
               (google::cloud::cpp::compute::region_target_tcp_proxies::v1::

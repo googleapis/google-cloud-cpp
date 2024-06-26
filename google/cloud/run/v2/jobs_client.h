@@ -125,6 +125,17 @@ class JobsClient {
       std::string const& parent, google::cloud::run::v2::Job const& job,
       std::string const& job_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateJob(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::run::v2::Job const& job, std::string const& job_id,
@@ -168,11 +179,31 @@ class JobsClient {
       google::cloud::run::v2::CreateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::CreateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -341,6 +372,17 @@ class JobsClient {
   future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       google::cloud::run::v2::Job const& job, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateJob(
       ExperimentalTag, NoAwaitTag, google::cloud::run::v2::Job const& job,
       Options opts = {});
@@ -383,11 +425,31 @@ class JobsClient {
       google::cloud::run::v2::UpdateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::UpdateJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -426,6 +488,17 @@ class JobsClient {
   future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteJob(ExperimentalTag,
                                                      NoAwaitTag,
                                                      std::string const& name,
@@ -469,11 +542,31 @@ class JobsClient {
       google::cloud::run::v2::DeleteJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::DeleteJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -512,6 +605,17 @@ class JobsClient {
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunJob(ExperimentalTag, NoAwaitTag,
                                                   std::string const& name,
                                                   Options opts = {});
@@ -553,10 +657,30 @@ class JobsClient {
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RunJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

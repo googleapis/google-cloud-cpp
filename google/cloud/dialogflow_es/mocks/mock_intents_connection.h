@@ -69,6 +69,9 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
       (google::cloud::dialogflow::v2::DeleteIntentRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchUpdateIntents) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchUpdateIntents(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
@@ -89,6 +92,9 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchDeleteIntents) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchDeleteIntents(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, BatchDeleteIntents,
       (google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request),

@@ -205,6 +205,17 @@ class NodeTemplatesClient {
   DeleteNodeTemplate(std::string const& project, std::string const& region,
                      std::string const& node_template, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNodeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& node_template,
@@ -249,12 +260,32 @@ class NodeTemplatesClient {
                          DeleteNodeTemplateRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNodeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_templates::v1::
           DeleteNodeTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNodeTemplate
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeTemplate(
       ExperimentalTag,
@@ -425,6 +456,17 @@ class NodeTemplatesClient {
                          node_template_resource,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNodeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -472,12 +514,32 @@ class NodeTemplatesClient {
                          InsertNodeTemplateRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNodeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_templates::v1::
           InsertNodeTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNodeTemplate
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNodeTemplate(
       ExperimentalTag,

@@ -56,6 +56,9 @@ class MockCloudMemcacheConnection
               (google::cloud::memcache::v1::GetInstanceRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::Instance>>, CreateInstance,
       (google::cloud::memcache::v1::CreateInstanceRequest const& request),
@@ -73,6 +76,9 @@ class MockCloudMemcacheConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateInstance,
       (google::cloud::memcache::v1::UpdateInstanceRequest const& request),
@@ -90,6 +96,9 @@ class MockCloudMemcacheConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateParameters) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateParameters(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::Instance>>, UpdateParameters,
       (google::cloud::memcache::v1::UpdateParametersRequest const& request),
@@ -107,6 +116,9 @@ class MockCloudMemcacheConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
       DeleteInstance,
@@ -125,6 +137,9 @@ class MockCloudMemcacheConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ApplyParameters) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ApplyParameters(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::memcache::v1::Instance>>, ApplyParameters,
       (google::cloud::memcache::v1::ApplyParametersRequest const& request),
@@ -142,6 +157,9 @@ class MockCloudMemcacheConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RescheduleMaintenance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RescheduleMaintenance(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
               RescheduleMaintenance,
               (google::cloud::memcache::v1::RescheduleMaintenanceRequest const&

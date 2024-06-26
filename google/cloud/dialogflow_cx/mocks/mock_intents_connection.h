@@ -71,6 +71,9 @@ class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
       (google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportIntents) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportIntents(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>,
@@ -91,6 +94,9 @@ class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ExportIntents) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ExportIntents(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>,

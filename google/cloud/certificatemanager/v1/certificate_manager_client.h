@@ -288,6 +288,17 @@ class CertificateManagerClient {
       google::cloud::certificatemanager::v1::Certificate const& certificate,
       std::string const& certificate_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificate(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::Certificate const& certificate,
@@ -333,12 +344,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateCertificateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   CreateCertificate(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -381,6 +412,17 @@ class CertificateManagerClient {
       google::cloud::certificatemanager::v1::Certificate const& certificate,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::Certificate const& certificate,
@@ -426,12 +468,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
   UpdateCertificate(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -470,6 +532,17 @@ class CertificateManagerClient {
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificate(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificate(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -513,12 +586,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificate(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -698,6 +791,17 @@ class CertificateManagerClient {
           certificate_map,
       std::string const& certificate_map_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateMap(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::CertificateMap const&
@@ -744,12 +848,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateMap
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   CreateCertificateMap(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -793,6 +917,17 @@ class CertificateManagerClient {
           certificate_map,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificateMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CertificateMap const&
@@ -839,12 +974,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificateMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificateMap
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
   UpdateCertificateMap(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -885,6 +1040,17 @@ class CertificateManagerClient {
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateMap(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateMap(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -930,12 +1096,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateMap
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateMap(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -1116,6 +1302,17 @@ class CertificateManagerClient {
           certificate_map_entry,
       std::string const& certificate_map_entry_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateMapEntry
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateMapEntry(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::CertificateMapEntry const&
@@ -1161,12 +1358,32 @@ class CertificateManagerClient {
                                 CreateCertificateMapEntryRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateMapEntry
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateMapEntry(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateCertificateMapEntryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateMapEntry
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   CreateCertificateMapEntry(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -1210,6 +1427,17 @@ class CertificateManagerClient {
           certificate_map_entry,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificateMapEntry
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateMapEntry(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CertificateMapEntry const&
@@ -1255,12 +1483,32 @@ class CertificateManagerClient {
                                 UpdateCertificateMapEntryRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificateMapEntry
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateMapEntry(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           UpdateCertificateMapEntryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCertificateMapEntry
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
   UpdateCertificateMapEntry(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -1299,6 +1547,17 @@ class CertificateManagerClient {
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateMapEntry(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateMapEntry
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateMapEntry(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1341,12 +1600,32 @@ class CertificateManagerClient {
                                 DeleteCertificateMapEntryRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateMapEntry
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateMapEntry(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteCertificateMapEntryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateMapEntry
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateMapEntry(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -1527,6 +1806,17 @@ class CertificateManagerClient {
           dns_authorization,
       std::string const& dns_authorization_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDnsAuthorization
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDnsAuthorization(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::DnsAuthorization const&
@@ -1572,12 +1862,32 @@ class CertificateManagerClient {
                              CreateDnsAuthorizationRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDnsAuthorization
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDnsAuthorization(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateDnsAuthorizationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDnsAuthorization
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   CreateDnsAuthorization(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -1621,6 +1931,17 @@ class CertificateManagerClient {
           dns_authorization,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDnsAuthorization
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDnsAuthorization(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DnsAuthorization const&
@@ -1666,12 +1987,32 @@ class CertificateManagerClient {
                              UpdateDnsAuthorizationRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDnsAuthorization
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDnsAuthorization(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           UpdateDnsAuthorizationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDnsAuthorization
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
   UpdateDnsAuthorization(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -1710,6 +2051,17 @@ class CertificateManagerClient {
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteDnsAuthorization(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDnsAuthorization
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDnsAuthorization(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1752,12 +2104,32 @@ class CertificateManagerClient {
                              DeleteDnsAuthorizationRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDnsAuthorization
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDnsAuthorization(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteDnsAuthorizationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDnsAuthorization
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteDnsAuthorization(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -1939,6 +2311,17 @@ class CertificateManagerClient {
           certificate_issuance_config,
       std::string const& certificate_issuance_config_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateIssuanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateIssuanceConfig(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig const&
@@ -1986,12 +2369,32 @@ class CertificateManagerClient {
           CreateCertificateIssuanceConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateIssuanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateIssuanceConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           CreateCertificateIssuanceConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCertificateIssuanceConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>
   CreateCertificateIssuanceConfig(
@@ -2031,6 +2434,17 @@ class CertificateManagerClient {
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateIssuanceConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateIssuanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateIssuanceConfig(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2074,12 +2488,32 @@ class CertificateManagerClient {
           DeleteCertificateIssuanceConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateIssuanceConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateIssuanceConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::
           DeleteCertificateIssuanceConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteCertificateIssuanceConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteCertificateIssuanceConfig(
       ExperimentalTag, google::longrunning::Operation const& operation,
@@ -2258,6 +2692,17 @@ class CertificateManagerClient {
       google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
       std::string const& trust_config_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTrustConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTrustConfig(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
@@ -2303,12 +2748,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTrustConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTrustConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTrustConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
   CreateTrustConfig(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -2351,6 +2816,17 @@ class CertificateManagerClient {
       google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTrustConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTrustConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::TrustConfig const& trust_config,
@@ -2396,12 +2872,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTrustConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTrustConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTrustConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>
   UpdateTrustConfig(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -2440,6 +2936,17 @@ class CertificateManagerClient {
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteTrustConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTrustConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTrustConfig(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2483,12 +2990,32 @@ class CertificateManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTrustConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTrustConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTrustConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>
   DeleteTrustConfig(ExperimentalTag,
                     google::longrunning::Operation const& operation,

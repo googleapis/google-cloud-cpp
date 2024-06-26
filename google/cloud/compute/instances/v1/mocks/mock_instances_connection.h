@@ -47,6 +47,9 @@ class MockInstancesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AddAccessConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AddAccessConfig(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       AddAccessConfig,
@@ -67,6 +70,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AddResourcePolicies) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AddResourcePolicies(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddResourcePolicies,
               (google::cloud::cpp::compute::instances::v1::
@@ -94,6 +100,9 @@ class MockInstancesConnection
            AggregatedListInstancesRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AttachDisk) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AttachDisk(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AttachDisk,
       (google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
@@ -113,6 +122,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BulkInsert) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BulkInsert(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, BulkInsert,
       (google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
@@ -132,6 +144,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteInstance,
@@ -152,6 +167,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteAccessConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteAccessConfig(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteAccessConfig,
               (google::cloud::cpp::compute::instances::v1::
@@ -171,6 +189,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DetachDisk) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DetachDisk(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DetachDisk,
       (google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
@@ -234,6 +255,9 @@ class MockInstancesConnection
            GetShieldedInstanceIdentityRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InsertInstance,
@@ -266,6 +290,9 @@ class MockInstancesConnection
                    request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PerformMaintenance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PerformMaintenance(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PerformMaintenance,
               (google::cloud::cpp::compute::instances::v1::
@@ -285,6 +312,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RemoveResourcePolicies) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RemoveResourcePolicies(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveResourcePolicies,
               (google::cloud::cpp::compute::instances::v1::
@@ -304,6 +334,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, Reset) is now ambiguous. Use
+  // EXPECT_CALL(*mock, Reset(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Reset,
       (google::cloud::cpp::compute::instances::v1::ResetRequest const& request),
@@ -321,6 +354,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, Resume) is now ambiguous. Use
+  // EXPECT_CALL(*mock, Resume(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resume,
               (google::cloud::cpp::compute::instances::v1::ResumeRequest const&
@@ -344,6 +380,9 @@ class MockInstancesConnection
                    SendDiagnosticInterruptRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetDeletionProtection) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetDeletionProtection(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetDeletionProtection,
               (google::cloud::cpp::compute::instances::v1::
@@ -363,6 +402,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetDiskAutoDelete) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetDiskAutoDelete(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetDiskAutoDelete,
               (google::cloud::cpp::compute::instances::v1::
@@ -388,6 +430,9 @@ class MockInstancesConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetLabels) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetLabels(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
@@ -407,6 +452,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetMachineResources) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetMachineResources(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetMachineResources,
               (google::cloud::cpp::compute::instances::v1::
@@ -426,6 +474,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetMachineType) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetMachineType(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       SetMachineType,
@@ -446,6 +497,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetMetadata) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetMetadata(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetMetadata,
       (google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
@@ -465,6 +519,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetMinCpuPlatform) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetMinCpuPlatform(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetMinCpuPlatform,
               (google::cloud::cpp::compute::instances::v1::
@@ -484,6 +541,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetName) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetName(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetName,
               (google::cloud::cpp::compute::instances::v1::SetNameRequest const&
@@ -502,6 +562,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetScheduling) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetScheduling(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       SetScheduling,
@@ -522,6 +585,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetSecurityPolicy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetSecurityPolicy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSecurityPolicy,
               (google::cloud::cpp::compute::instances::v1::
@@ -541,6 +607,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetServiceAccount) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetServiceAccount(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetServiceAccount,
               (google::cloud::cpp::compute::instances::v1::
@@ -560,6 +629,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetShieldedInstanceIntegrityPolicy) is now ambiguous.
+  // Use EXPECT_CALL(*mock, SetShieldedInstanceIntegrityPolicy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetShieldedInstanceIntegrityPolicy,
               (google::cloud::cpp::compute::instances::v1::
@@ -579,6 +651,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetTags) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetTags(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetTags,
               (google::cloud::cpp::compute::instances::v1::SetTagsRequest const&
@@ -597,6 +672,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SimulateMaintenanceEvent) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SimulateMaintenanceEvent(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SimulateMaintenanceEvent,
               (google::cloud::cpp::compute::instances::v1::
@@ -616,6 +694,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, Start) is now ambiguous. Use
+  // EXPECT_CALL(*mock, Start(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Start,
       (google::cloud::cpp::compute::instances::v1::StartRequest const& request),
@@ -633,6 +714,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, StartWithEncryptionKey) is now ambiguous. Use
+  // EXPECT_CALL(*mock, StartWithEncryptionKey(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StartWithEncryptionKey,
               (google::cloud::cpp::compute::instances::v1::
@@ -652,6 +736,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, Stop) is now ambiguous. Use
+  // EXPECT_CALL(*mock, Stop(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Stop,
       (google::cloud::cpp::compute::instances::v1::StopRequest const& request),
@@ -669,6 +756,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, Suspend) is now ambiguous. Use
+  // EXPECT_CALL(*mock, Suspend(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Suspend,
               (google::cloud::cpp::compute::instances::v1::SuspendRequest const&
@@ -694,6 +784,9 @@ class MockInstancesConnection
            TestIamPermissionsRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdateInstance,
@@ -714,6 +807,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateAccessConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateAccessConfig(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateAccessConfig,
               (google::cloud::cpp::compute::instances::v1::
@@ -733,6 +829,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateDisplayDevice) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateDisplayDevice(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateDisplayDevice,
               (google::cloud::cpp::compute::instances::v1::
@@ -752,6 +851,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateNetworkInterface) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateNetworkInterface(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateNetworkInterface,
               (google::cloud::cpp::compute::instances::v1::
@@ -771,6 +873,9 @@ class MockInstancesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateShieldedInstanceConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateShieldedInstanceConfig(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateShieldedInstanceConfig,
               (google::cloud::cpp::compute::instances::v1::

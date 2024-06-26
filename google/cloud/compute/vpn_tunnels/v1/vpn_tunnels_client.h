@@ -203,6 +203,17 @@ class VpnTunnelsClient {
       std::string const& project, std::string const& region,
       std::string const& vpn_tunnel, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVpnTunnel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& vpn_tunnel,
@@ -247,12 +258,32 @@ class VpnTunnelsClient {
           DeleteVpnTunnelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVpnTunnel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::vpn_tunnels::v1::
           DeleteVpnTunnelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVpnTunnel
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -357,6 +388,17 @@ class VpnTunnelsClient {
       google::cloud::cpp::compute::v1::VpnTunnel const& vpn_tunnel_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertVpnTunnel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -403,12 +445,32 @@ class VpnTunnelsClient {
           InsertVpnTunnelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertVpnTunnel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::vpn_tunnels::v1::
           InsertVpnTunnelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertVpnTunnel
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -534,6 +596,17 @@ class VpnTunnelsClient {
           region_set_labels_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& resource,
@@ -581,12 +654,32 @@ class VpnTunnelsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

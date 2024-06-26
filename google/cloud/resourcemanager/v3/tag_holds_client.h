@@ -127,6 +127,17 @@ class TagHoldsClient {
       google::cloud::resourcemanager::v3::TagHold const& tag_hold,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTagHold
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagHold(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::resourcemanager::v3::TagHold const& tag_hold,
@@ -171,11 +182,31 @@ class TagHoldsClient {
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTagHold
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagHold(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTagHold
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -213,6 +244,17 @@ class TagHoldsClient {
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
   DeleteTagHold(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTagHold
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagHold(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -255,11 +297,31 @@ class TagHoldsClient {
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTagHold
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagHold(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTagHold
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
   DeleteTagHold(ExperimentalTag,
                 google::longrunning::Operation const& operation,

@@ -141,6 +141,17 @@ class ConversationDatasetsClient {
           conversation_dataset,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationDataset(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::ConversationDataset const&
@@ -197,12 +208,32 @@ class ConversationDatasetsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationDataset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversationDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -388,6 +419,17 @@ class ConversationDatasetsClient {
                       DeleteConversationDatasetOperationMetadata>>
   DeleteConversationDataset(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversationDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversationDataset(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -441,12 +483,32 @@ class ConversationDatasetsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversationDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversationDataset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversationDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
   DeleteConversationDataset(ExperimentalTag,
@@ -506,12 +568,32 @@ class ConversationDatasetsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportConversationData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportConversationData(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ImportConversationDataRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportConversationData
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
   ImportConversationData(ExperimentalTag,

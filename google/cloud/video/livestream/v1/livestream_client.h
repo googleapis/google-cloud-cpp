@@ -134,6 +134,17 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Channel const& channel,
       std::string const& channel_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateChannel(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::video::livestream::v1::Channel const& channel,
@@ -178,11 +189,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::CreateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::CreateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -352,6 +383,17 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteChannel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteChannel(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -394,11 +436,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteChannel(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -457,6 +519,17 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Channel const& channel,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::Channel const& channel,
@@ -500,11 +573,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -544,6 +637,17 @@ class LivestreamServiceClient {
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StartChannel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartChannel(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -590,11 +694,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::StartChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::StartChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StartChannel(ExperimentalTag, google::longrunning::Operation const& operation,
@@ -635,6 +759,17 @@ class LivestreamServiceClient {
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopChannel(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -681,11 +816,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::StopChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::StopChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(ExperimentalTag, google::longrunning::Operation const& operation,
@@ -730,6 +885,17 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Input const& input,
       std::string const& input_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInput
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInput(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::video::livestream::v1::Input const& input,
@@ -773,11 +939,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::CreateInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInput
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInput(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::CreateInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInput
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -947,6 +1133,17 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteInput(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInput
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInput(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -991,11 +1188,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::DeleteInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInput
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInput(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::DeleteInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInput
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteInput(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -1045,6 +1262,17 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Input const& input,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInput
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInput(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::Input const& input,
@@ -1088,11 +1316,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::UpdateInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInput
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInput(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::UpdateInputRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInput
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1382,6 +1630,17 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Asset const& asset,
       std::string const& asset_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAsset(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::video::livestream::v1::Asset const& asset,
@@ -1426,11 +1685,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::CreateAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAsset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::CreateAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAsset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1468,6 +1747,17 @@ class LivestreamServiceClient {
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteAsset(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAsset(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -1512,11 +1802,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAsset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAsset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
   DeleteAsset(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -1750,6 +2060,17 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::Pool const& pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::Pool const& pool,
@@ -1793,11 +2114,31 @@ class LivestreamServiceClient {
       google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdatePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

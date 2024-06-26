@@ -680,12 +680,32 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportAptArtifacts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportAptArtifacts(
       ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportAptArtifacts
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
   ImportAptArtifacts(ExperimentalTag,
@@ -736,12 +756,32 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportYumArtifacts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportYumArtifacts(
       ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportYumArtifacts
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
   ImportYumArtifacts(ExperimentalTag,
@@ -920,6 +960,17 @@ class ArtifactRegistryClient {
       google::devtools::artifactregistry::v1::Repository const& repository,
       std::string const& repository_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRepository(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::devtools::artifactregistry::v1::Repository const& repository,
@@ -966,12 +1017,32 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRepository(
       ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateRepository
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
   CreateRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1072,6 +1143,17 @@ class ArtifactRegistryClient {
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteRepository(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRepository(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1117,12 +1199,32 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRepository
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRepository(
       ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRepository
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteRepository(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1291,6 +1393,17 @@ class ArtifactRegistryClient {
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeletePackage(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePackage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePackage(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1335,12 +1448,32 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePackage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePackage(
       ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::DeletePackageRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePackage
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeletePackage(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -1509,6 +1642,17 @@ class ArtifactRegistryClient {
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVersion(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1553,12 +1697,32 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVersion(
       ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
   DeleteVersion(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -1601,6 +1765,17 @@ class ArtifactRegistryClient {
   BatchDeleteVersions(std::string const& parent,
                       std::vector<std::string> const& names, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteVersions
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteVersions(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& names, Options opts = {});
@@ -1647,12 +1822,32 @@ class ArtifactRegistryClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteVersions
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteVersions(
       ExperimentalTag, NoAwaitTag,
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchDeleteVersions
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
   BatchDeleteVersions(ExperimentalTag,

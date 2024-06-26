@@ -274,6 +274,17 @@ class RegionCommitmentsClient {
       google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertCommitment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -320,12 +331,32 @@ class RegionCommitmentsClient {
           InsertCommitmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertCommitment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_commitments::v1::
           InsertCommitmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertCommitment
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertCommitment(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -451,6 +482,17 @@ class RegionCommitmentsClient {
       google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCommitment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& commitment,
@@ -499,12 +541,32 @@ class RegionCommitmentsClient {
           UpdateCommitmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCommitment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_commitments::v1::
           UpdateCommitmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCommitment
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateCommitment(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

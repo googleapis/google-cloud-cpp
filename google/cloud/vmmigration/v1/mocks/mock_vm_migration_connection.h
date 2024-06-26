@@ -55,6 +55,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (google::cloud::vmmigration::v1::GetSourceRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateSource) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateSource(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::Source>>, CreateSource,
       (google::cloud::vmmigration::v1::CreateSourceRequest const& request),
@@ -72,6 +75,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateSource) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateSource(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::Source>>, UpdateSource,
       (google::cloud::vmmigration::v1::UpdateSourceRequest const& request),
@@ -89,6 +95,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteSource) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteSource(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteSource,
@@ -126,6 +135,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateUtilizationReport) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateUtilizationReport(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>,
       CreateUtilizationReport,
@@ -146,6 +158,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteUtilizationReport) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteUtilizationReport(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteUtilizationReport,
@@ -179,6 +194,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateDatacenterConnector) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateDatacenterConnector(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>,
       CreateDatacenterConnector,
@@ -199,6 +217,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteDatacenterConnector) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteDatacenterConnector(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteDatacenterConnector,
@@ -219,6 +240,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpgradeAppliance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpgradeAppliance(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>,
@@ -239,6 +263,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateMigratingVm) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateMigratingVm(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
       CreateMigratingVm,
@@ -267,6 +294,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::GetMigratingVmRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateMigratingVm) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateMigratingVm(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>,
       UpdateMigratingVm,
@@ -285,6 +315,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteMigratingVm) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteMigratingVm(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteMigratingVm,
@@ -303,6 +336,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, StartMigration) is now ambiguous. Use
+  // EXPECT_CALL(*mock, StartMigration(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>,
       StartMigration,
@@ -321,6 +357,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ResumeMigration) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ResumeMigration(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>,
       ResumeMigration,
@@ -339,6 +378,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PauseMigration) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PauseMigration(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>,
       PauseMigration,
@@ -357,6 +399,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, FinalizeMigration) is now ambiguous. Use
+  // EXPECT_CALL(*mock, FinalizeMigration(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>,
@@ -377,6 +422,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateCloneJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateCloneJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::CloneJob>>,
       CreateCloneJob,
@@ -395,6 +443,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CancelCloneJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CancelCloneJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>,
       CancelCloneJob,
@@ -423,6 +474,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::GetCloneJobRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateCutoverJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateCutoverJob(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>,
       CreateCutoverJob,
@@ -441,6 +495,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CancelCutoverJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CancelCutoverJob(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>,
@@ -479,6 +536,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
               (google::cloud::vmmigration::v1::GetGroupRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateGroup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateGroup(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::Group>>, CreateGroup,
       (google::cloud::vmmigration::v1::CreateGroupRequest const& request),
@@ -496,6 +556,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateGroup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateGroup(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::Group>>, UpdateGroup,
       (google::cloud::vmmigration::v1::UpdateGroupRequest const& request),
@@ -513,6 +576,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteGroup) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteGroup(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteGroup,
@@ -531,6 +597,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AddGroupMigration) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AddGroupMigration(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>,
@@ -551,6 +620,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RemoveGroupMigration) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RemoveGroupMigration(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>,
@@ -584,6 +656,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
       (google::cloud::vmmigration::v1::GetTargetProjectRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateTargetProject) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateTargetProject(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>,
               CreateTargetProject,
               (google::cloud::vmmigration::v1::CreateTargetProjectRequest const&
@@ -602,6 +677,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateTargetProject) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateTargetProject(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>,
               UpdateTargetProject,
               (google::cloud::vmmigration::v1::UpdateTargetProjectRequest const&
@@ -620,6 +698,9 @@ class MockVmMigrationConnection : public vmmigration_v1::VmMigrationConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTargetProject) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTargetProject(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>,
       DeleteTargetProject,

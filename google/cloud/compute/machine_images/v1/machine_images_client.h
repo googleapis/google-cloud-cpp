@@ -123,6 +123,17 @@ class MachineImagesClient {
   DeleteMachineImage(std::string const& project,
                      std::string const& machine_image, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteMachineImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImage(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& machine_image, Options opts = {});
@@ -167,12 +178,32 @@ class MachineImagesClient {
                          DeleteMachineImageRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteMachineImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteMachineImage(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::machine_images::v1::
           DeleteMachineImageRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteMachineImage
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteMachineImage(
       ExperimentalTag,
@@ -342,6 +373,17 @@ class MachineImagesClient {
                          machine_image_resource,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertMachineImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImage(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::MachineImage const&
@@ -390,12 +432,32 @@ class MachineImagesClient {
                          InsertMachineImageRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertMachineImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertMachineImage(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::machine_images::v1::
           InsertMachineImageRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertMachineImage
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertMachineImage(
       ExperimentalTag,

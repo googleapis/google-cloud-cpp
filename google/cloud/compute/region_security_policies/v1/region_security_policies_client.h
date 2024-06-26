@@ -132,6 +132,17 @@ class RegionSecurityPoliciesClient {
           security_policy_rule_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& security_policy,
@@ -178,12 +189,32 @@ class RegionSecurityPoliciesClient {
           AddRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           AddRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddRule
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -224,6 +255,17 @@ class RegionSecurityPoliciesClient {
   DeleteSecurityPolicy(std::string const& project, std::string const& region,
                        std::string const& security_policy, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& security_policy,
@@ -268,12 +310,32 @@ class RegionSecurityPoliciesClient {
                            v1::DeleteSecurityPolicyRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           DeleteSecurityPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSecurityPolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSecurityPolicy(
       ExperimentalTag,
@@ -442,6 +504,17 @@ class RegionSecurityPoliciesClient {
                            security_policy_resource,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertSecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -489,12 +562,32 @@ class RegionSecurityPoliciesClient {
                            v1::InsertSecurityPolicyRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertSecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           InsertSecurityPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertSecurityPolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSecurityPolicy(
       ExperimentalTag,
@@ -628,6 +721,17 @@ class RegionSecurityPoliciesClient {
                           security_policy_resource,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchSecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& security_policy,
@@ -679,12 +783,32 @@ class RegionSecurityPoliciesClient {
                           v1::PatchSecurityPolicyRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchSecurityPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchSecurityPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchSecurityPolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSecurityPolicy(
       ExperimentalTag,
@@ -731,6 +855,17 @@ class RegionSecurityPoliciesClient {
           security_policy_rule_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& security_policy,
@@ -778,12 +913,32 @@ class RegionSecurityPoliciesClient {
           PatchRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           PatchRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchRule
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -824,6 +979,17 @@ class RegionSecurityPoliciesClient {
       std::string const& project, std::string const& region,
       std::string const& security_policy, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& security_policy,
@@ -868,12 +1034,32 @@ class RegionSecurityPoliciesClient {
           RemoveRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_security_policies::v1::
           RemoveRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveRule
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

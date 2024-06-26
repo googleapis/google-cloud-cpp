@@ -47,6 +47,9 @@ class MockMetadataServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateMetadataStore) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateMetadataStore(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>,
               CreateMetadataStore,
               (google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
@@ -76,6 +79,9 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::ListMetadataStoresRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteMetadataStore) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteMetadataStore(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>,
@@ -117,6 +123,9 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::UpdateArtifactRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteArtifact) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteArtifact(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteArtifact,
@@ -135,6 +144,9 @@ class MockMetadataServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PurgeArtifacts) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PurgeArtifacts(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
       PurgeArtifacts,
@@ -172,6 +184,9 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::UpdateContextRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteContext) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteContext(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteContext,
@@ -190,6 +205,9 @@ class MockMetadataServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PurgeContexts) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PurgeContexts(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>,
       PurgeContexts,
@@ -255,6 +273,9 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::UpdateExecutionRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteExecution) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteExecution(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteExecution,
@@ -273,6 +294,9 @@ class MockMetadataServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PurgeExecutions) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PurgeExecutions(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
       PurgeExecutions,

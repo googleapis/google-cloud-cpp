@@ -49,6 +49,9 @@ class MockGlobalForwardingRulesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteForwardingRule) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteForwardingRule(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteForwardingRule,
               (google::cloud::cpp::compute::global_forwarding_rules::v1::
@@ -74,6 +77,9 @@ class MockGlobalForwardingRulesConnection
                    GetForwardingRuleRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertForwardingRule) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertForwardingRule(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertForwardingRule,
               (google::cloud::cpp::compute::global_forwarding_rules::v1::
@@ -99,6 +105,9 @@ class MockGlobalForwardingRulesConnection
                    ListGlobalForwardingRulesRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PatchForwardingRule) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PatchForwardingRule(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchForwardingRule,
               (google::cloud::cpp::compute::global_forwarding_rules::v1::
@@ -118,6 +127,9 @@ class MockGlobalForwardingRulesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetLabels) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetLabels(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::global_forwarding_rules::v1::
@@ -136,6 +148,9 @@ class MockGlobalForwardingRulesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetTarget) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetTarget(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetTarget,
               (google::cloud::cpp::compute::global_forwarding_rules::v1::

@@ -59,6 +59,9 @@ class MockWorkflowTemplateServiceConnection
       (google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InstantiateWorkflowTemplate) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InstantiateWorkflowTemplate(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
       InstantiateWorkflowTemplate,
@@ -79,6 +82,9 @@ class MockWorkflowTemplateServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
               InstantiateInlineWorkflowTemplate,
               (google::cloud::dataproc::v1::

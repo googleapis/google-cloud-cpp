@@ -53,6 +53,9 @@ class MockSnapshotSettingsConnection
                    GetSnapshotSettingsRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PatchSnapshotSettings) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PatchSnapshotSettings(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSnapshotSettings,
               (google::cloud::cpp::compute::snapshot_settings::v1::

@@ -49,6 +49,9 @@ class MockConsumerProcurementServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, PlaceOrder) is now ambiguous. Use
+  // EXPECT_CALL(*mock, PlaceOrder(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,

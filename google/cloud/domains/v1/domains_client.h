@@ -265,6 +265,17 @@ class DomainsClient {
       google::cloud::domains::v1::Registration const& registration,
       google::type::Money const& yearly_price, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RegisterDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RegisterDomain(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::domains::v1::Registration const& registration,
@@ -320,11 +331,31 @@ class DomainsClient {
       google::cloud::domains::v1::RegisterDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RegisterDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RegisterDomain(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::RegisterDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RegisterDomain
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::domains::v1::Registration>> RegisterDomain(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -468,6 +499,17 @@ class DomainsClient {
       google::cloud::domains::v1::AuthorizationCode const& authorization_code,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TransferDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TransferDomain(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::domains::v1::Registration const& registration,
@@ -533,11 +575,31 @@ class DomainsClient {
       google::cloud::domains::v1::TransferDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TransferDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TransferDomain(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::TransferDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TransferDomain
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::domains::v1::Registration>> TransferDomain(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -715,6 +777,17 @@ class DomainsClient {
       google::cloud::domains::v1::Registration const& registration,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRegistration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateRegistration(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::Registration const& registration,
@@ -763,11 +836,31 @@ class DomainsClient {
       google::cloud::domains::v1::UpdateRegistrationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRegistration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateRegistration(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::UpdateRegistrationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateRegistration
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::domains::v1::Registration>> UpdateRegistration(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -812,6 +905,17 @@ class DomainsClient {
       google::cloud::domains::v1::ManagementSettings const& management_settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureManagementSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
       ExperimentalTag, NoAwaitTag, std::string const& registration,
       google::cloud::domains::v1::ManagementSettings const& management_settings,
@@ -857,12 +961,32 @@ class DomainsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureManagementSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ConfigureManagementSettings(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureManagementSettings
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureManagementSettings(ExperimentalTag,
                               google::longrunning::Operation const& operation,
@@ -914,6 +1038,17 @@ class DomainsClient {
       google::cloud::domains::v1::DnsSettings const& dns_settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureDnsSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
       ExperimentalTag, NoAwaitTag, std::string const& registration,
       google::cloud::domains::v1::DnsSettings const& dns_settings,
@@ -958,11 +1093,31 @@ class DomainsClient {
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureDnsSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ConfigureDnsSettings(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureDnsSettings
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureDnsSettings(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -1009,6 +1164,17 @@ class DomainsClient {
       google::cloud::domains::v1::ContactSettings const& contact_settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureContactSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ConfigureContactSettings(
       ExperimentalTag, NoAwaitTag, std::string const& registration,
       google::cloud::domains::v1::ContactSettings const& contact_settings,
@@ -1055,12 +1221,32 @@ class DomainsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureContactSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ConfigureContactSettings(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConfigureContactSettings
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::domains::v1::Registration>>
   ConfigureContactSettings(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -1107,6 +1293,17 @@ class DomainsClient {
   future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportRegistration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportRegistration(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1156,11 +1353,31 @@ class DomainsClient {
       google::cloud::domains::v1::ExportRegistrationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportRegistration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportRegistration(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::ExportRegistrationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportRegistration
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::domains::v1::Registration>> ExportRegistration(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1216,6 +1433,17 @@ class DomainsClient {
   future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
   DeleteRegistration(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRegistration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRegistration(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1276,11 +1504,31 @@ class DomainsClient {
       google::cloud::domains::v1::DeleteRegistrationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRegistration
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRegistration(
       ExperimentalTag, NoAwaitTag,
       google::cloud::domains::v1::DeleteRegistrationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteRegistration
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
   DeleteRegistration(ExperimentalTag,
                      google::longrunning::Operation const& operation,

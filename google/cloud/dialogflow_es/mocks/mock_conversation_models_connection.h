@@ -47,6 +47,9 @@ class MockConversationModelsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateConversationModel) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateConversationModel(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>,
       CreateConversationModel,
@@ -79,6 +82,9 @@ class MockConversationModelsConnection
       (google::cloud::dialogflow::v2::ListConversationModelsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteConversationModel) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteConversationModel(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           DeleteConversationModelOperationMetadata>>,
@@ -101,6 +107,9 @@ class MockConversationModelsConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeployConversationModel) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeployConversationModel(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           DeployConversationModelOperationMetadata>>,
@@ -123,6 +132,9 @@ class MockConversationModelsConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UndeployConversationModel) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UndeployConversationModel(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           UndeployConversationModelOperationMetadata>>,
@@ -159,6 +171,9 @@ class MockConversationModelsConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateConversationModelEvaluation) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateConversationModelEvaluation(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>,

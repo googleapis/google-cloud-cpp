@@ -208,6 +208,17 @@ class StoragePoolsClient {
   DeleteStoragePool(std::string const& project, std::string const& zone,
                     std::string const& storage_pool, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& storage_pool,
@@ -255,12 +266,32 @@ class StoragePoolsClient {
                         DeleteStoragePoolRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           DeleteStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteStoragePool
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteStoragePool(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -432,6 +463,17 @@ class StoragePoolsClient {
       google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone,
@@ -478,12 +520,32 @@ class StoragePoolsClient {
                         InsertStoragePoolRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           InsertStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertStoragePool
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertStoragePool(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -824,6 +886,17 @@ class StoragePoolsClient {
       google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& storage_pool,
@@ -873,12 +946,32 @@ class StoragePoolsClient {
                         UpdateStoragePoolRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateStoragePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           UpdateStoragePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateStoragePool
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateStoragePool(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,

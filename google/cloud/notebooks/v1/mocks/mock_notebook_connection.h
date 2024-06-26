@@ -56,6 +56,9 @@ class MockNotebookServiceConnection
               (google::cloud::notebooks::v1::GetInstanceRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>, CreateInstance,
       (google::cloud::notebooks::v1::CreateInstanceRequest const& request),
@@ -73,6 +76,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RegisterInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RegisterInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       RegisterInstance,
@@ -91,6 +97,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetInstanceAccelerator) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetInstanceAccelerator(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       SetInstanceAccelerator,
@@ -111,6 +120,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetInstanceMachineType) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetInstanceMachineType(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       SetInstanceMachineType,
@@ -131,6 +143,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateInstanceConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateInstanceConfig(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v1::Instance>>,
               UpdateInstanceConfig,
               (google::cloud::notebooks::v1::UpdateInstanceConfigRequest const&
@@ -149,6 +164,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateShieldedInstanceConfig) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateShieldedInstanceConfig(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       UpdateShieldedInstanceConfig,
@@ -169,6 +187,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetInstanceLabels) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetInstanceLabels(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       SetInstanceLabels,
@@ -195,6 +216,9 @@ class MockNotebookServiceConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
       DeleteInstance,
@@ -213,6 +237,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, StartInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, StartInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>, StartInstance,
       (google::cloud::notebooks::v1::StartInstanceRequest const& request),
@@ -230,6 +257,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, StopInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, StopInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>, StopInstance,
       (google::cloud::notebooks::v1::StopInstanceRequest const& request),
@@ -247,6 +277,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ResetInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ResetInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>, ResetInstance,
       (google::cloud::notebooks::v1::ResetInstanceRequest const& request),
@@ -264,6 +297,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ReportInstanceInfo) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ReportInstanceInfo(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       ReportInstanceInfo,
@@ -295,6 +331,9 @@ class MockNotebookServiceConnection
       (google::cloud::notebooks::v1::GetInstanceHealthRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpgradeInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpgradeInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>, UpgradeInstance,
       (google::cloud::notebooks::v1::UpgradeInstanceRequest const& request),
@@ -312,6 +351,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RollbackInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RollbackInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       RollbackInstance,
@@ -330,6 +372,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DiagnoseInstance) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DiagnoseInstance(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       DiagnoseInstance,
@@ -348,6 +393,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpgradeInstanceInternal) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpgradeInstanceInternal(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       UpgradeInstanceInternal,
@@ -378,6 +426,9 @@ class MockNotebookServiceConnection
       (google::cloud::notebooks::v1::GetEnvironmentRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Environment>>,
       CreateEnvironment,
@@ -396,6 +447,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
       DeleteEnvironment,
@@ -423,6 +477,9 @@ class MockNotebookServiceConnection
               (google::cloud::notebooks::v1::GetScheduleRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteSchedule) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteSchedule(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
       DeleteSchedule,
@@ -441,6 +498,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateSchedule) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateSchedule(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Schedule>>, CreateSchedule,
       (google::cloud::notebooks::v1::CreateScheduleRequest const& request),
@@ -458,6 +518,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, TriggerSchedule) is now ambiguous. Use
+  // EXPECT_CALL(*mock, TriggerSchedule(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Schedule>>, TriggerSchedule,
       (google::cloud::notebooks::v1::TriggerScheduleRequest const& request),
@@ -485,6 +548,9 @@ class MockNotebookServiceConnection
       (google::cloud::notebooks::v1::GetExecutionRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteExecution) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteExecution(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
       DeleteExecution,
@@ -503,6 +569,9 @@ class MockNotebookServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateExecution) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateExecution(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Execution>>,
       CreateExecution,

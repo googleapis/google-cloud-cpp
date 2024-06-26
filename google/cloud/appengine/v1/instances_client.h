@@ -208,11 +208,31 @@ class InstancesClient {
       google::appengine::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -262,11 +282,31 @@ class InstancesClient {
       google::appengine::v1::DebugInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DebugInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DebugInstance(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::DebugInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DebugInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

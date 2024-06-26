@@ -61,6 +61,9 @@ class MockMetricsScopesConnection
                    ListMetricsScopesByMonitoredProjectRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateMonitoredProject) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateMonitoredProject(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
       CreateMonitoredProject,
@@ -80,6 +83,9 @@ class MockMetricsScopesConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteMonitoredProject) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteMonitoredProject(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
       DeleteMonitoredProject,

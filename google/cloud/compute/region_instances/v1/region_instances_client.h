@@ -126,6 +126,17 @@ class RegionInstancesClient {
           bulk_insert_instance_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -173,12 +184,32 @@ class RegionInstancesClient {
           BulkInsertRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_instances::v1::
           BulkInsertRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

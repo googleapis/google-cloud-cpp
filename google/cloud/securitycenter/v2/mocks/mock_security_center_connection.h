@@ -54,6 +54,9 @@ class MockSecurityCenterConnection
                    BatchCreateResourceValueConfigsRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BulkMuteFindings) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BulkMuteFindings(_)) instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>,
               BulkMuteFindings,

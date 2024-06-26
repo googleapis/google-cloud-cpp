@@ -204,6 +204,17 @@ class AddressesClient {
       std::string const& project, std::string const& region,
       std::string const& address, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& address, Options opts = {});
@@ -247,12 +258,32 @@ class AddressesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAddress
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -357,6 +388,17 @@ class AddressesClient {
       google::cloud::cpp::compute::v1::Address const& address_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -403,12 +445,32 @@ class AddressesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertAddress
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::addresses::v1::InsertAddressRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertAddress
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -530,6 +592,17 @@ class AddressesClient {
           region_addresses_move_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Move
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& address,
@@ -575,11 +648,31 @@ class AddressesClient {
       google::cloud::cpp::compute::addresses::v1::MoveRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Move
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::addresses::v1::MoveRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Move
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -625,6 +718,17 @@ class AddressesClient {
           region_set_labels_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& resource,
@@ -672,12 +776,32 @@ class AddressesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

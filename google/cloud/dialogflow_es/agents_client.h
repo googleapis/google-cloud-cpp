@@ -393,6 +393,17 @@ class AgentsClient {
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
       std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainAgent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TrainAgent(ExperimentalTag,
                                                       NoAwaitTag,
                                                       std::string const& parent,
@@ -449,11 +460,31 @@ class AgentsClient {
       google::cloud::dialogflow::v2::TrainAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainAgent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TrainAgent(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::TrainAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TrainAgent
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> TrainAgent(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -500,6 +531,17 @@ class AgentsClient {
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportAgent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportAgent(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -551,11 +593,31 @@ class AgentsClient {
   ExportAgent(google::cloud::dialogflow::v2::ExportAgentRequest const& request,
               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportAgent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportAgent(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ExportAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ExportAgent
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>
   ExportAgent(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -625,11 +687,31 @@ class AgentsClient {
       google::cloud::dialogflow::v2::ImportAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportAgent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportAgent(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ImportAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportAgent
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> ImportAgent(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -697,11 +779,31 @@ class AgentsClient {
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestoreAgent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreAgent(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::RestoreAgentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestoreAgent
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

@@ -188,11 +188,31 @@ class ApplicationsClient {
       google::appengine::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateApplication(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateApplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Application>> CreateApplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -240,11 +260,31 @@ class ApplicationsClient {
       google::appengine::v1::UpdateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApplication(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::UpdateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateApplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Application>> UpdateApplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -296,11 +336,31 @@ class ApplicationsClient {
       google::appengine::v1::RepairApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RepairApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RepairApplication(
       ExperimentalTag, NoAwaitTag,
       google::appengine::v1::RepairApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RepairApplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::appengine::v1::Application>> RepairApplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

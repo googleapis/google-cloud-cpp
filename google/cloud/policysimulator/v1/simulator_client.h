@@ -208,6 +208,17 @@ class SimulatorClient {
       google::cloud::policysimulator::v1::Replay const& replay,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateReplay
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateReplay(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::policysimulator::v1::Replay const& replay,
@@ -253,11 +264,31 @@ class SimulatorClient {
       google::cloud::policysimulator::v1::CreateReplayRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateReplay
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateReplay(
       ExperimentalTag, NoAwaitTag,
       google::cloud::policysimulator::v1::CreateReplayRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateReplay
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

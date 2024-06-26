@@ -57,6 +57,9 @@ class MockEdgeContainerConnection
       (google::cloud::edgecontainer::v1::GetClusterRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateCluster) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateCluster(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
       CreateCluster,
@@ -75,6 +78,9 @@ class MockEdgeContainerConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateCluster) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateCluster(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
       UpdateCluster,
@@ -93,6 +99,9 @@ class MockEdgeContainerConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpgradeCluster) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpgradeCluster(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>,
       UpgradeCluster,
@@ -111,6 +120,9 @@ class MockEdgeContainerConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteCluster) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteCluster(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteCluster,
@@ -154,6 +166,9 @@ class MockEdgeContainerConnection
       (google::cloud::edgecontainer::v1::GetNodePoolRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateNodePool) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateNodePool(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
       CreateNodePool,
@@ -172,6 +187,9 @@ class MockEdgeContainerConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateNodePool) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateNodePool(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>,
       UpdateNodePool,
@@ -190,6 +208,9 @@ class MockEdgeContainerConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteNodePool) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteNodePool(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteNodePool,
@@ -230,6 +251,9 @@ class MockEdgeContainerConnection
                    request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateVpnConnection) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateVpnConnection(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>,
       CreateVpnConnection,
@@ -250,6 +274,9 @@ class MockEdgeContainerConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteVpnConnection) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteVpnConnection(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>,
       DeleteVpnConnection,

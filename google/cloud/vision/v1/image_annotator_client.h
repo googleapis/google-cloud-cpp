@@ -269,6 +269,17 @@ class ImageAnnotatorClient {
       google::cloud::vision::v1::OutputConfig const& output_config,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AsyncBatchAnnotateImages
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
       ExperimentalTag, NoAwaitTag,
       std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
@@ -323,11 +334,31 @@ class ImageAnnotatorClient {
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AsyncBatchAnnotateImages
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AsyncBatchAnnotateImages
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
   AsyncBatchAnnotateImages(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -373,6 +404,17 @@ class ImageAnnotatorClient {
           requests,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AsyncBatchAnnotateFiles
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
       ExperimentalTag, NoAwaitTag,
       std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
@@ -423,11 +465,31 @@ class ImageAnnotatorClient {
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AsyncBatchAnnotateFiles
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AsyncBatchAnnotateFiles
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(ExperimentalTag,
                           google::longrunning::Operation const& operation,

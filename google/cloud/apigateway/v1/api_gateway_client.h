@@ -260,6 +260,17 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::Gateway const& gateway,
       std::string const& gateway_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateGateway(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::apigateway::v1::Gateway const& gateway,
@@ -303,11 +314,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::CreateGatewayRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateGateway(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateGatewayRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGateway
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> CreateGateway(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -350,6 +381,17 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::Gateway const& gateway,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGateway(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::Gateway const& gateway,
@@ -393,11 +435,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGateway(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateGateway
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Gateway>> UpdateGateway(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -435,6 +497,17 @@ class ApiGatewayServiceClient {
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteGateway(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGateway(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -477,11 +550,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGateway(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGateway
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteGateway(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -656,6 +749,17 @@ class ApiGatewayServiceClient {
       std::string const& parent, google::cloud::apigateway::v1::Api const& api,
       std::string const& api_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateApi
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateApi(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::apigateway::v1::Api const& api, std::string const& api_id,
@@ -699,11 +803,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::CreateApiRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateApi
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateApi(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateApiRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateApi
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Api>> CreateApi(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -746,6 +870,17 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::Api const& api,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateApi
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApi(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::Api const& api,
@@ -789,11 +924,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::UpdateApiRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateApi
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApi(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateApiRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateApi
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::Api>> UpdateApi(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -831,6 +986,17 @@ class ApiGatewayServiceClient {
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteApi
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteApi(ExperimentalTag,
                                                      NoAwaitTag,
                                                      std::string const& name,
@@ -874,11 +1040,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::DeleteApiRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteApi
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteApi(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteApiRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteApi
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>> DeleteApi(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1053,6 +1239,17 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::ApiConfig const& api_config,
       std::string const& api_config_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateApiConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateApiConfig(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::apigateway::v1::ApiConfig const& api_config,
@@ -1096,11 +1293,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateApiConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateApiConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateApiConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> CreateApiConfig(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1143,6 +1360,17 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::ApiConfig const& api_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateApiConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApiConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::ApiConfig const& api_config,
@@ -1186,11 +1414,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateApiConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApiConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateApiConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::ApiConfig>> UpdateApiConfig(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1228,6 +1476,17 @@ class ApiGatewayServiceClient {
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApiConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteApiConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteApiConfig(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1270,11 +1529,31 @@ class ApiGatewayServiceClient {
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteApiConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteApiConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteApiConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
   DeleteApiConfig(ExperimentalTag,
                   google::longrunning::Operation const& operation,

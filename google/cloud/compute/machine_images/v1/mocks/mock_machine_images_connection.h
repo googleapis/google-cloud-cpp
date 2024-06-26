@@ -47,6 +47,9 @@ class MockMachineImagesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteMachineImage) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteMachineImage(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteMachineImage,
               (google::cloud::cpp::compute::machine_images::v1::
@@ -77,6 +80,9 @@ class MockMachineImagesConnection
                    GetIamPolicyRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertMachineImage) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertMachineImage(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertMachineImage,
               (google::cloud::cpp::compute::machine_images::v1::

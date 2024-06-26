@@ -274,6 +274,17 @@ class DataFusionClient {
       google::cloud::datafusion::v1::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::datafusion::v1::Instance const& instance,
@@ -317,11 +328,31 @@ class DataFusionClient {
       google::cloud::datafusion::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::Instance>> CreateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -359,6 +390,17 @@ class DataFusionClient {
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
   DeleteInstance(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -401,11 +443,31 @@ class DataFusionClient {
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
   DeleteInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -452,6 +514,17 @@ class DataFusionClient {
       google::cloud::datafusion::v1::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::Instance const& instance,
@@ -495,11 +568,31 @@ class DataFusionClient {
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::Instance>> UpdateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -543,11 +636,31 @@ class DataFusionClient {
       google::cloud::datafusion::v1::RestartInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestartInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestartInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datafusion::v1::RestartInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestartInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datafusion::v1::Instance>> RestartInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

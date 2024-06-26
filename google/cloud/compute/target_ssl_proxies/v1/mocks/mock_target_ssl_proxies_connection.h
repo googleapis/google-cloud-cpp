@@ -47,6 +47,9 @@ class MockTargetSslProxiesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteTargetSslProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteTargetSslProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetSslProxy,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -72,6 +75,9 @@ class MockTargetSslProxiesConnection
                    GetTargetSslProxyRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertTargetSslProxy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertTargetSslProxy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetSslProxy,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -97,6 +103,9 @@ class MockTargetSslProxiesConnection
                    ListTargetSslProxiesRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetBackendService) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetBackendService(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetBackendService,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -116,6 +125,9 @@ class MockTargetSslProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetCertificateMap) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetCertificateMap(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCertificateMap,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -135,6 +147,9 @@ class MockTargetSslProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetProxyHeader) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetProxyHeader(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetProxyHeader,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -154,6 +169,9 @@ class MockTargetSslProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetSslCertificates) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetSslCertificates(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSslCertificates,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::
@@ -173,6 +191,9 @@ class MockTargetSslProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetSslPolicy) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetSslPolicy(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSslPolicy,
               (google::cloud::cpp::compute::target_ssl_proxies::v1::

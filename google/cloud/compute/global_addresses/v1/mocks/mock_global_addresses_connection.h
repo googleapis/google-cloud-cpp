@@ -47,6 +47,9 @@ class MockGlobalAddressesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteAddress) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteAddress(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
@@ -71,6 +74,9 @@ class MockGlobalAddressesConnection
                    GetAddressRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, InsertAddress) is now ambiguous. Use
+  // EXPECT_CALL(*mock, InsertAddress(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertAddress,
               (google::cloud::cpp::compute::global_addresses::v1::
@@ -96,6 +102,9 @@ class MockGlobalAddressesConnection
                    ListGlobalAddressesRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, Move) is now ambiguous. Use
+  // EXPECT_CALL(*mock, Move(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Move,
       (google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
@@ -115,6 +124,9 @@ class MockGlobalAddressesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SetLabels) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SetLabels(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::global_addresses::v1::

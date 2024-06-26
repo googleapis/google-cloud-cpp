@@ -252,6 +252,17 @@ class TpuClient {
       std::string const& parent, google::cloud::tpu::v2::Node const& node,
       std::string const& node_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNode(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::tpu::v2::Node const& node, std::string const& node_id,
@@ -295,11 +306,31 @@ class TpuClient {
       google::cloud::tpu::v2::CreateNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNode(
       ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::CreateNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateNode
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -336,6 +367,17 @@ class TpuClient {
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNode(ExperimentalTag,
                                                       NoAwaitTag,
                                                       std::string const& name,
@@ -379,11 +421,31 @@ class TpuClient {
       google::cloud::tpu::v2::DeleteNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNode(
       ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::DeleteNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNode
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -426,11 +488,31 @@ class TpuClient {
       google::cloud::tpu::v2::StopNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopNode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopNode(
       ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::StopNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopNode
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -473,11 +555,31 @@ class TpuClient {
       google::cloud::tpu::v2::StartNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartNode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartNode(
       ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::StartNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartNode
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -518,6 +620,17 @@ class TpuClient {
       google::cloud::tpu::v2::Node const& node,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNode(
       ExperimentalTag, NoAwaitTag, google::cloud::tpu::v2::Node const& node,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -560,11 +673,31 @@ class TpuClient {
       google::cloud::tpu::v2::UpdateNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNode
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNode(
       ExperimentalTag, NoAwaitTag,
       google::cloud::tpu::v2::UpdateNodeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateNode
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

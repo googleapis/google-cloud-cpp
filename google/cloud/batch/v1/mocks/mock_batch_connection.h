@@ -54,6 +54,9 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
               (google::cloud::batch::v1::GetJobRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteJob) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteJob(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::OperationMetadata>>,
               DeleteJob,
               (google::cloud::batch::v1::DeleteJobRequest const& request),

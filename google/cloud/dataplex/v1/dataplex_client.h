@@ -137,6 +137,17 @@ class DataplexServiceClient {
       std::string const& parent, google::cloud::dataplex::v1::Lake const& lake,
       std::string const& lake_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLake
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateLake(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Lake const& lake, std::string const& lake_id,
@@ -180,11 +191,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLake
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateLake(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLake
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -224,6 +255,17 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Lake const& lake,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateLake
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLake(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::Lake const& lake,
@@ -267,11 +309,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateLake
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLake(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateLake
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -310,6 +372,17 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLake
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLake(ExperimentalTag,
                                                       NoAwaitTag,
                                                       std::string const& name,
@@ -354,11 +427,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::DeleteLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLake
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLake(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteLakeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLake
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -614,6 +707,17 @@ class DataplexServiceClient {
       std::string const& parent, google::cloud::dataplex::v1::Zone const& zone,
       std::string const& zone_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateZone(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Zone const& zone, std::string const& zone_id,
@@ -657,11 +761,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateZone(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateZone
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -701,6 +825,17 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Zone const& zone,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateZone(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::Zone const& zone,
@@ -744,11 +879,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateZone(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateZone
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -787,6 +942,17 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteZone(ExperimentalTag,
                                                       NoAwaitTag,
                                                       std::string const& name,
@@ -831,11 +997,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::DeleteZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteZone
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteZone(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteZoneRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteZone
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1090,6 +1276,17 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Asset const& asset,
       std::string const& asset_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAsset(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Asset const& asset,
@@ -1133,11 +1330,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAsset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAsset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1177,6 +1394,17 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Asset const& asset,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAsset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::Asset const& asset,
@@ -1220,11 +1448,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAsset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAsset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1263,6 +1511,17 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAsset(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -1307,11 +1566,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::DeleteAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAsset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAsset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteAssetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAsset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1559,6 +1838,17 @@ class DataplexServiceClient {
       std::string const& parent, google::cloud::dataplex::v1::Task const& task,
       std::string const& task_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTask
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTask(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Task const& task, std::string const& task_id,
@@ -1602,11 +1892,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTask
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTask(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateTask
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1646,6 +1956,17 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Task const& task,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTask
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTask(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::Task const& task,
@@ -1689,11 +2010,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTask
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTask(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateTask
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1731,6 +2072,17 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTask
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTask(ExperimentalTag,
                                                       NoAwaitTag,
                                                       std::string const& name,
@@ -1774,11 +2126,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::DeleteTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTask
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTask(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteTaskRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteTask
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2193,6 +2565,17 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Environment const& environment,
       std::string const& environment_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Environment const& environment,
@@ -2236,11 +2619,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2280,6 +2683,17 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Environment const& environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::Environment const& environment,
@@ -2323,11 +2737,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2366,6 +2800,17 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEnvironment(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2409,11 +2854,31 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEnvironment(ExperimentalTag,
                     google::longrunning::Operation const& operation,

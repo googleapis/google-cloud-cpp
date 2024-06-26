@@ -366,6 +366,17 @@ class RegionInstanceGroupsClient {
               region_instance_groups_set_named_ports_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetNamedPorts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& instance_group,
@@ -413,12 +424,32 @@ class RegionInstanceGroupsClient {
           SetNamedPortsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetNamedPorts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNamedPorts(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_instance_groups::v1::
           SetNamedPortsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetNamedPorts
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNamedPorts(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

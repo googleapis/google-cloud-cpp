@@ -131,6 +131,17 @@ class RegionDisksClient {
               region_disks_add_resource_policies_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddResourcePolicies
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& disk,
@@ -179,12 +190,32 @@ class RegionDisksClient {
                           AddResourcePoliciesRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddResourcePolicies
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::
           AddResourcePoliciesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AddResourcePolicies
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(
       ExperimentalTag,
@@ -228,6 +259,17 @@ class RegionDisksClient {
           bulk_insert_disk_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -274,12 +316,32 @@ class RegionDisksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BulkInsert
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -326,6 +388,17 @@ class RegionDisksClient {
       google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& disk,
@@ -374,12 +447,32 @@ class RegionDisksClient {
           CreateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::
           CreateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CreateSnapshot(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -423,6 +516,17 @@ class RegionDisksClient {
       std::string const& project, std::string const& region,
       std::string const& disk, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& disk, Options opts = {});
@@ -469,12 +573,32 @@ class RegionDisksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDisk
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteDisk(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -643,6 +767,17 @@ class RegionDisksClient {
       google::cloud::cpp::compute::v1::Disk const& disk_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -689,12 +824,32 @@ class RegionDisksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertDisk
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertDisk(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -821,6 +976,17 @@ class RegionDisksClient {
               region_disks_remove_resource_policies_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveResourcePolicies
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& disk,
@@ -868,12 +1034,32 @@ class RegionDisksClient {
                              RemoveResourcePoliciesRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveResourcePolicies
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::
           RemoveResourcePoliciesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RemoveResourcePolicies
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
       ExperimentalTag,
@@ -919,6 +1105,17 @@ class RegionDisksClient {
           region_disks_resize_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resize
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& disk,
@@ -965,12 +1162,32 @@ class RegionDisksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resize
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc Resize
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1083,6 +1300,17 @@ class RegionDisksClient {
           region_set_labels_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& resource,
@@ -1129,12 +1357,32 @@ class RegionDisksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SetLabels
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1181,6 +1429,17 @@ class RegionDisksClient {
               region_disks_start_async_replication_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartAsyncReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartAsyncReplication(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& disk,
@@ -1228,12 +1487,32 @@ class RegionDisksClient {
                             StartAsyncReplicationRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartAsyncReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartAsyncReplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::
           StartAsyncReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartAsyncReplication
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartAsyncReplication(
       ExperimentalTag,
@@ -1276,6 +1555,17 @@ class RegionDisksClient {
   StopAsyncReplication(std::string const& project, std::string const& region,
                        std::string const& disk, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopAsyncReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StopAsyncReplication(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& disk, Options opts = {});
@@ -1320,12 +1610,32 @@ class RegionDisksClient {
                            StopAsyncReplicationRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopAsyncReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> StopAsyncReplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::
           StopAsyncReplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopAsyncReplication
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopAsyncReplication(
       ExperimentalTag,
@@ -1373,6 +1683,17 @@ class RegionDisksClient {
                                     disks_stop_group_async_replication_resource,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopGroupAsyncReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   StopGroupAsyncReplication(ExperimentalTag, NoAwaitTag,
                             std::string const& project,
@@ -1422,12 +1743,32 @@ class RegionDisksClient {
                                 StopGroupAsyncReplicationRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopGroupAsyncReplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   StopGroupAsyncReplication(ExperimentalTag, NoAwaitTag,
                             google::cloud::cpp::compute::region_disks::v1::
                                 StopGroupAsyncReplicationRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopGroupAsyncReplication
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopGroupAsyncReplication(
       ExperimentalTag,
@@ -1542,6 +1883,17 @@ class RegionDisksClient {
       google::cloud::cpp::compute::v1::Disk const& disk_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& disk,
@@ -1590,12 +1942,32 @@ class RegionDisksClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDisk
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDisk
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateDisk(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

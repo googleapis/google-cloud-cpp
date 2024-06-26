@@ -132,11 +132,31 @@ class ServiceUsageClient {
       google::api::serviceusage::v1::EnableServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EnableService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EnableService(
       ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::EnableServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc EnableService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
   EnableService(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -187,11 +207,31 @@ class ServiceUsageClient {
       google::api::serviceusage::v1::DisableServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DisableService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DisableService(
       ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::DisableServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DisableService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
   DisableService(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -321,11 +361,31 @@ class ServiceUsageClient {
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchEnableServices
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchEnableServices(
       ExperimentalTag, NoAwaitTag,
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchEnableServices
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
   BatchEnableServices(ExperimentalTag,
                       google::longrunning::Operation const& operation,

@@ -248,11 +248,31 @@ class AccessContextManagerClient {
       google::identity::accesscontextmanager::v1::AccessPolicy const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAccessPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAccessPolicy(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::AccessPolicy const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAccessPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   CreateAccessPolicy(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -298,6 +318,17 @@ class AccessContextManagerClient {
       google::identity::accesscontextmanager::v1::AccessPolicy const& policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::AccessPolicy const& policy,
@@ -347,12 +378,32 @@ class AccessContextManagerClient {
                          UpdateAccessPolicyRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateAccessPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   UpdateAccessPolicy(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -397,6 +448,17 @@ class AccessContextManagerClient {
                       AccessContextManagerOperationMetadata>>
   DeleteAccessPolicy(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -444,12 +506,32 @@ class AccessContextManagerClient {
                          DeleteAccessPolicyRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteAccessPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
   DeleteAccessPolicy(ExperimentalTag,
@@ -656,6 +738,17 @@ class AccessContextManagerClient {
           access_level,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAccessLevel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAccessLevel(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::identity::accesscontextmanager::v1::AccessLevel const&
@@ -707,12 +800,32 @@ class AccessContextManagerClient {
                         CreateAccessLevelRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAccessLevel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAccessLevel(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateAccessLevelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateAccessLevel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   CreateAccessLevel(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -765,6 +878,17 @@ class AccessContextManagerClient {
           access_level,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessLevel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAccessLevel(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::AccessLevel const&
@@ -817,12 +941,32 @@ class AccessContextManagerClient {
                         UpdateAccessLevelRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessLevel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAccessLevel(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateAccessLevelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAccessLevel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   UpdateAccessLevel(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -870,6 +1014,17 @@ class AccessContextManagerClient {
                       AccessContextManagerOperationMetadata>>
   DeleteAccessLevel(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessLevel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAccessLevel(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -918,12 +1073,32 @@ class AccessContextManagerClient {
                         DeleteAccessLevelRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessLevel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAccessLevel(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteAccessLevelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteAccessLevel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
   DeleteAccessLevel(ExperimentalTag,
@@ -986,12 +1161,32 @@ class AccessContextManagerClient {
                           ReplaceAccessLevelsRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReplaceAccessLevels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReplaceAccessLevels(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           ReplaceAccessLevelsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReplaceAccessLevels
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
   ReplaceAccessLevels(ExperimentalTag,
@@ -1198,6 +1393,17 @@ class AccessContextManagerClient {
           service_perimeter,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateServicePerimeter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateServicePerimeter(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::identity::accesscontextmanager::v1::ServicePerimeter const&
@@ -1250,12 +1456,32 @@ class AccessContextManagerClient {
                              CreateServicePerimeterRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateServicePerimeter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateServicePerimeter(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateServicePerimeterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateServicePerimeter
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   CreateServicePerimeter(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -1305,6 +1531,17 @@ class AccessContextManagerClient {
           service_perimeter,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateServicePerimeter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::ServicePerimeter const&
@@ -1357,12 +1594,32 @@ class AccessContextManagerClient {
                              UpdateServicePerimeterRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateServicePerimeter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateServicePerimeterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateServicePerimeter
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   UpdateServicePerimeter(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -1410,6 +1667,17 @@ class AccessContextManagerClient {
                       AccessContextManagerOperationMetadata>>
   DeleteServicePerimeter(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteServicePerimeter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1458,12 +1726,32 @@ class AccessContextManagerClient {
                              DeleteServicePerimeterRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteServicePerimeter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteServicePerimeterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteServicePerimeter
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
   DeleteServicePerimeter(ExperimentalTag,
@@ -1522,12 +1810,32 @@ class AccessContextManagerClient {
                                ReplaceServicePerimetersRequest const& request,
                            Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReplaceServicePerimeters
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReplaceServicePerimeters(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           ReplaceServicePerimetersRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ReplaceServicePerimeters
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       ReplaceServicePerimetersResponse>>
   ReplaceServicePerimeters(ExperimentalTag,
@@ -1589,12 +1897,32 @@ class AccessContextManagerClient {
                               CommitServicePerimetersRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CommitServicePerimeters
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CommitServicePerimeters(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CommitServicePerimetersRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CommitServicePerimeters
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       CommitServicePerimetersResponse>>
   CommitServicePerimeters(ExperimentalTag,
@@ -1789,6 +2117,17 @@ class AccessContextManagerClient {
           gcp_user_access_binding,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGcpUserAccessBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
@@ -1845,12 +2184,32 @@ class AccessContextManagerClient {
           CreateGcpUserAccessBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGcpUserAccessBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateGcpUserAccessBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateGcpUserAccessBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
   CreateGcpUserAccessBinding(ExperimentalTag,
@@ -1904,6 +2263,17 @@ class AccessContextManagerClient {
           gcp_user_access_binding,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateGcpUserAccessBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
@@ -1955,12 +2325,32 @@ class AccessContextManagerClient {
           UpdateGcpUserAccessBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateGcpUserAccessBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateGcpUserAccessBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateGcpUserAccessBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
   UpdateGcpUserAccessBinding(ExperimentalTag,
@@ -2004,6 +2394,17 @@ class AccessContextManagerClient {
                       GcpUserAccessBindingOperationMetadata>>
   DeleteGcpUserAccessBinding(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGcpUserAccessBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2052,12 +2453,32 @@ class AccessContextManagerClient {
           DeleteGcpUserAccessBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGcpUserAccessBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
       ExperimentalTag, NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteGcpUserAccessBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       GcpUserAccessBindingOperationMetadata>>
   DeleteGcpUserAccessBinding(ExperimentalTag,

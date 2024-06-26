@@ -47,6 +47,9 @@ class MockSpecialistPoolServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateSpecialistPool) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateSpecialistPool(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               CreateSpecialistPool,
               (google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
@@ -77,6 +80,9 @@ class MockSpecialistPoolServiceConnection
       (google::cloud::aiplatform::v1::ListSpecialistPoolsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteSpecialistPool) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteSpecialistPool(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteSpecialistPool,
@@ -96,6 +102,9 @@ class MockSpecialistPoolServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateSpecialistPool) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateSpecialistPool(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               UpdateSpecialistPool,
               (google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&

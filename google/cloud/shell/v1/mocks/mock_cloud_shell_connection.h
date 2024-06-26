@@ -51,6 +51,9 @@ class MockCloudShellServiceConnection
               (google::cloud::shell::v1::GetEnvironmentRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, StartEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, StartEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
       StartEnvironment,
@@ -69,6 +72,9 @@ class MockCloudShellServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AuthorizeEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AuthorizeEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
       AuthorizeEnvironment,
@@ -87,6 +93,9 @@ class MockCloudShellServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AddPublicKey) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AddPublicKey(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>,
               AddPublicKey,
               (google::cloud::shell::v1::AddPublicKeyRequest const& request),
@@ -103,6 +112,9 @@ class MockCloudShellServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, RemovePublicKey) is now ambiguous. Use
+  // EXPECT_CALL(*mock, RemovePublicKey(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
       RemovePublicKey,

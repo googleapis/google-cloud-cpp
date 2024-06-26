@@ -124,6 +124,17 @@ class HttpHealthChecksClient {
                         std::string const& http_health_check,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteHttpHealthCheck
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthCheck(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& http_health_check, Options opts = {});
@@ -167,12 +178,32 @@ class HttpHealthChecksClient {
                             DeleteHttpHealthCheckRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteHttpHealthCheck
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteHttpHealthCheck(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::http_health_checks::v1::
           DeleteHttpHealthCheckRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteHttpHealthCheck
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteHttpHealthCheck(
       ExperimentalTag,
@@ -277,6 +308,17 @@ class HttpHealthChecksClient {
                             http_health_check_resource,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertHttpHealthCheck
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthCheck(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::HttpHealthCheck const&
@@ -323,12 +365,32 @@ class HttpHealthChecksClient {
                             InsertHttpHealthCheckRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertHttpHealthCheck
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertHttpHealthCheck(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::http_health_checks::v1::
           InsertHttpHealthCheckRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertHttpHealthCheck
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertHttpHealthCheck(
       ExperimentalTag,
@@ -454,6 +516,17 @@ class HttpHealthChecksClient {
                            http_health_check_resource,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchHttpHealthCheck
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthCheck(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& http_health_check,
@@ -502,12 +575,32 @@ class HttpHealthChecksClient {
                            PatchHttpHealthCheckRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchHttpHealthCheck
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchHttpHealthCheck(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::http_health_checks::v1::
           PatchHttpHealthCheckRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchHttpHealthCheck
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchHttpHealthCheck(
       ExperimentalTag,
@@ -553,6 +646,17 @@ class HttpHealthChecksClient {
                             http_health_check_resource,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateHttpHealthCheck
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthCheck(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& http_health_check,
@@ -600,12 +704,32 @@ class HttpHealthChecksClient {
                             UpdateHttpHealthCheckRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateHttpHealthCheck
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateHttpHealthCheck(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::http_health_checks::v1::
           UpdateHttpHealthCheckRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateHttpHealthCheck
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateHttpHealthCheck(
       ExperimentalTag,

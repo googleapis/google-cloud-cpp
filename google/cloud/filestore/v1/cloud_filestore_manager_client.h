@@ -292,6 +292,17 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::filestore::v1::Instance const& instance,
@@ -338,11 +349,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> CreateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -387,6 +418,17 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::Instance const& instance,
@@ -430,11 +472,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -481,11 +543,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::RestoreInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestoreInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::RestoreInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestoreInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> RestoreInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -528,11 +610,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::RevertInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RevertInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RevertInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::RevertInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RevertInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> RevertInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -570,6 +672,17 @@ class CloudFilestoreManagerClient {
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -611,11 +724,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -796,6 +929,17 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::Snapshot const& snapshot,
       std::string const& snapshot_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSnapshot(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::filestore::v1::Snapshot const& snapshot,
@@ -839,11 +983,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::CreateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::CreateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> CreateSnapshot(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -881,6 +1045,17 @@ class CloudFilestoreManagerClient {
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteSnapshot(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -922,11 +1097,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::DeleteSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::DeleteSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteSnapshot(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -966,6 +1161,17 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::Snapshot const& snapshot,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::Snapshot const& snapshot,
@@ -1009,11 +1215,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::UpdateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::UpdateSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> UpdateSnapshot(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1200,6 +1426,17 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::filestore::v1::Backup const& backup,
@@ -1243,11 +1480,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1285,6 +1542,17 @@ class CloudFilestoreManagerClient {
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -1328,11 +1596,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1372,6 +1660,17 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::Backup const& backup,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::Backup const& backup,
@@ -1415,11 +1714,31 @@ class CloudFilestoreManagerClient {
       google::cloud::filestore::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::filestore::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

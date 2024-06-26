@@ -47,6 +47,9 @@ class MockManagedIdentitiesServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateMicrosoftAdDomain) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateMicrosoftAdDomain(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               CreateMicrosoftAdDomain,
               (google::cloud::managedidentities::v1::
@@ -83,6 +86,9 @@ class MockManagedIdentitiesServiceConnection
       (google::cloud::managedidentities::v1::GetDomainRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateDomain) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateDomain(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               UpdateDomain,
               (google::cloud::managedidentities::v1::UpdateDomainRequest const&
@@ -101,6 +107,9 @@ class MockManagedIdentitiesServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteDomain) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteDomain(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>,
       DeleteDomain,
@@ -120,6 +129,9 @@ class MockManagedIdentitiesServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, AttachTrust) is now ambiguous. Use
+  // EXPECT_CALL(*mock, AttachTrust(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       AttachTrust,
@@ -138,6 +150,9 @@ class MockManagedIdentitiesServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ReconfigureTrust) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ReconfigureTrust(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       ReconfigureTrust,
@@ -158,6 +173,9 @@ class MockManagedIdentitiesServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DetachTrust) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DetachTrust(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       DetachTrust,
@@ -176,6 +194,9 @@ class MockManagedIdentitiesServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ValidateTrust) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ValidateTrust(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               ValidateTrust,
               (google::cloud::managedidentities::v1::ValidateTrustRequest const&

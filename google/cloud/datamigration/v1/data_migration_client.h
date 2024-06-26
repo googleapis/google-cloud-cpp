@@ -260,6 +260,17 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::MigrationJob const& migration_job,
       std::string const& migration_job_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMigrationJob(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::clouddms::v1::MigrationJob const& migration_job,
@@ -304,11 +315,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   CreateMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -350,6 +381,17 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::MigrationJob const& migration_job,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::MigrationJob const& migration_job,
@@ -394,11 +436,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   UpdateMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -436,6 +498,17 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteMigrationJob(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMigrationJob(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -478,11 +551,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -526,11 +619,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -573,11 +686,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StopMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -622,11 +755,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResumeMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResumeMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ResumeMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   ResumeMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -672,11 +825,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PromoteMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PromoteMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PromoteMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   PromoteMigrationJob(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -722,11 +895,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc VerifyMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> VerifyMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc VerifyMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   VerifyMigrationJob(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -773,11 +966,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestartMigrationJob
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestartMigrationJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RestartMigrationJob
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
   RestartMigrationJob(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -1017,6 +1230,17 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
       std::string const& connection_profile_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectionProfile(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
@@ -1062,12 +1286,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectionProfile(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnectionProfile
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
   CreateConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1109,6 +1353,17 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
@@ -1154,12 +1409,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnectionProfile
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
   UpdateConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1199,6 +1474,17 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteConnectionProfile(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1244,12 +1530,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnectionProfile
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1292,6 +1598,17 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::PrivateConnection const& private_connection,
       std::string const& private_connection_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::clouddms::v1::PrivateConnection const& private_connection,
@@ -1337,12 +1654,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreatePrivateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
   CreatePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1511,6 +1848,17 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeletePrivateConnection(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1554,12 +1902,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePrivateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeletePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1735,6 +2103,17 @@ class DataMigrationServiceClient {
           conversion_workspace,
       std::string const& conversion_workspace_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::clouddms::v1::ConversionWorkspace const&
@@ -1781,12 +2160,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConversionWorkspace
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   CreateConversionWorkspace(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -1829,6 +2228,17 @@ class DataMigrationServiceClient {
           conversion_workspace,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ConversionWorkspace const&
@@ -1875,12 +2285,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConversionWorkspace
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   UpdateConversionWorkspace(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -1918,6 +2348,17 @@ class DataMigrationServiceClient {
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteConversionWorkspace(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1961,12 +2402,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConversionWorkspace
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
   DeleteConversionWorkspace(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -2262,12 +2723,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SeedConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SeedConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SeedConversionWorkspace
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   SeedConversionWorkspace(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -2313,11 +2794,31 @@ class DataMigrationServiceClient {
       google::cloud::clouddms::v1::ImportMappingRulesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportMappingRules
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportMappingRules(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ImportMappingRulesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ImportMappingRules
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   ImportMappingRules(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -2363,12 +2864,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConvertConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ConvertConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ConvertConversionWorkspace
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   ConvertConversionWorkspace(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -2414,12 +2935,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CommitConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CommitConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CommitConversionWorkspace
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   CommitConversionWorkspace(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -2465,12 +3006,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RollbackConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RollbackConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RollbackConversionWorkspace
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   RollbackConversionWorkspace(ExperimentalTag,
                               google::longrunning::Operation const& operation,
@@ -2516,12 +3077,32 @@ class DataMigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ApplyConversionWorkspace
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ApplyConversionWorkspace(
       ExperimentalTag, NoAwaitTag,
       google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ApplyConversionWorkspace
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
   ApplyConversionWorkspace(ExperimentalTag,
                            google::longrunning::Operation const& operation,

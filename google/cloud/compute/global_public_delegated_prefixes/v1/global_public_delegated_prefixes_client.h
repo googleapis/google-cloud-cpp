@@ -129,6 +129,17 @@ class GlobalPublicDelegatedPrefixesClient {
                               std::string const& public_delegated_prefix,
                               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePublicDelegatedPrefix
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicDelegatedPrefix(ExperimentalTag, NoAwaitTag,
                               std::string const& project,
@@ -175,6 +186,17 @@ class GlobalPublicDelegatedPrefixesClient {
           DeletePublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePublicDelegatedPrefix
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicDelegatedPrefix(
       ExperimentalTag, NoAwaitTag,
@@ -182,6 +204,15 @@ class GlobalPublicDelegatedPrefixesClient {
           DeletePublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeletePublicDelegatedPrefix
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicDelegatedPrefix(
       ExperimentalTag,
@@ -289,6 +320,17 @@ class GlobalPublicDelegatedPrefixesClient {
           public_delegated_prefix_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertPublicDelegatedPrefix
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicDelegatedPrefix(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -337,6 +379,17 @@ class GlobalPublicDelegatedPrefixesClient {
           InsertPublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertPublicDelegatedPrefix
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicDelegatedPrefix(
       ExperimentalTag, NoAwaitTag,
@@ -344,6 +397,15 @@ class GlobalPublicDelegatedPrefixesClient {
           InsertPublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertPublicDelegatedPrefix
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPublicDelegatedPrefix(
       ExperimentalTag,
@@ -469,6 +531,17 @@ class GlobalPublicDelegatedPrefixesClient {
           public_delegated_prefix_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchPublicDelegatedPrefix
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicDelegatedPrefix(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -519,6 +592,17 @@ class GlobalPublicDelegatedPrefixesClient {
           PatchPublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchPublicDelegatedPrefix
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicDelegatedPrefix(
       ExperimentalTag, NoAwaitTag,
@@ -526,6 +610,15 @@ class GlobalPublicDelegatedPrefixesClient {
           PatchPublicDelegatedPrefixRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchPublicDelegatedPrefix
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPublicDelegatedPrefix(
       ExperimentalTag,

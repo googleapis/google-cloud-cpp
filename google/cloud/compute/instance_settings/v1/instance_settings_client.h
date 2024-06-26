@@ -189,6 +189,17 @@ class InstanceSettingsClient {
                             instance_settings_resource,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchInstanceSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& update_mask,
@@ -235,12 +246,32 @@ class InstanceSettingsClient {
                             PatchInstanceSettingsRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchInstanceSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::instance_settings::v1::
           PatchInstanceSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PatchInstanceSettings
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInstanceSettings(
       ExperimentalTag,

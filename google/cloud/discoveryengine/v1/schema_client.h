@@ -268,6 +268,17 @@ class SchemaServiceClient {
       google::cloud::discoveryengine::v1::Schema const& schema,
       std::string const& schema_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSchema
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSchema(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::discoveryengine::v1::Schema const& schema,
@@ -311,11 +322,31 @@ class SchemaServiceClient {
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSchema
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSchema(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateSchema
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -358,11 +389,31 @@ class SchemaServiceClient {
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSchema
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSchema(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateSchema
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -401,6 +452,17 @@ class SchemaServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
   DeleteSchema(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSchema
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSchema(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -446,11 +508,31 @@ class SchemaServiceClient {
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSchema
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSchema(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSchema
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
   DeleteSchema(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});

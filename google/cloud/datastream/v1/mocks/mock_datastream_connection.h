@@ -58,6 +58,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
                    request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateConnectionProfile) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateConnectionProfile(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
       CreateConnectionProfile,
@@ -78,6 +81,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateConnectionProfile) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateConnectionProfile(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
       UpdateConnectionProfile,
@@ -98,6 +104,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteConnectionProfile) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteConnectionProfile(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
       DeleteConnectionProfile,
@@ -134,6 +143,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (google::cloud::datastream::v1::GetStreamRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateStream) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateStream(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::Stream>>, CreateStream,
       (google::cloud::datastream::v1::CreateStreamRequest const& request),
@@ -151,6 +163,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateStream) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateStream(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::Stream>>, UpdateStream,
       (google::cloud::datastream::v1::UpdateStreamRequest const& request),
@@ -168,6 +183,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteStream) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteStream(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
       DeleteStream,
@@ -217,6 +235,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (google::cloud::datastream::v1::FetchStaticIpsRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreatePrivateConnection) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreatePrivateConnection(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>,
       CreatePrivateConnection,
@@ -249,6 +270,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (google::cloud::datastream::v1::ListPrivateConnectionsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeletePrivateConnection) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeletePrivateConnection(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
       DeletePrivateConnection,
@@ -269,6 +293,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateRoute) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateRoute(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::Route>>, CreateRoute,
       (google::cloud::datastream::v1::CreateRouteRequest const& request),
@@ -294,6 +321,9 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
               (google::cloud::datastream::v1::ListRoutesRequest request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteRoute) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteRoute(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
       DeleteRoute,

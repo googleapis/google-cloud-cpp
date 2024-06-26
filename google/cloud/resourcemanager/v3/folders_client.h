@@ -397,6 +397,17 @@ class FoldersClient {
       google::cloud::resourcemanager::v3::Folder const& folder,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFolder(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::Folder const& folder,
@@ -466,11 +477,31 @@ class FoldersClient {
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFolder(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFolder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> CreateFolder(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -528,6 +559,17 @@ class FoldersClient {
       google::cloud::resourcemanager::v3::Folder const& folder,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFolder(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::Folder const& folder,
@@ -588,11 +630,31 @@ class FoldersClient {
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFolder(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFolder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UpdateFolder(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -651,6 +713,17 @@ class FoldersClient {
       std::string const& name, std::string const& destination_parent,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc MoveFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> MoveFolder(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::string const& destination_parent, Options opts = {});
@@ -710,11 +783,31 @@ class FoldersClient {
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc MoveFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> MoveFolder(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc MoveFolder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> MoveFolder(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -764,6 +857,17 @@ class FoldersClient {
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFolder(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -819,11 +923,31 @@ class FoldersClient {
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFolder(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFolder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> DeleteFolder(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -873,6 +997,17 @@ class FoldersClient {
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteFolder(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -926,11 +1061,31 @@ class FoldersClient {
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteFolder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteFolder(
       ExperimentalTag, NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UndeleteFolder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Folder>> UndeleteFolder(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

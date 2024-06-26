@@ -54,6 +54,9 @@ class MockConfigServiceV2Connection
               (google::logging::v2::GetBucketRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateBucketAsync) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateBucketAsync(_)) instead.
   MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
               CreateBucketAsync,
               (google::logging::v2::CreateBucketRequest const& request),
@@ -70,6 +73,9 @@ class MockConfigServiceV2Connection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateBucketAsync) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateBucketAsync(_)) instead.
   MOCK_METHOD(future<StatusOr<google::logging::v2::LogBucket>>,
               UpdateBucketAsync,
               (google::logging::v2::UpdateBucketRequest const& request),
@@ -138,6 +144,9 @@ class MockConfigServiceV2Connection
               (google::logging::v2::DeleteSinkRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateLink) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateLink(_)) instead.
   MOCK_METHOD(future<StatusOr<google::logging::v2::Link>>, CreateLink,
               (google::logging::v2::CreateLinkRequest const& request),
               (override));
@@ -152,6 +161,9 @@ class MockConfigServiceV2Connection
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteLink) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteLink(_)) instead.
   MOCK_METHOD(future<StatusOr<google::logging::v2::LinkMetadata>>, DeleteLink,
               (google::logging::v2::DeleteLinkRequest const& request),
               (override));
@@ -207,6 +219,9 @@ class MockConfigServiceV2Connection
               (google::logging::v2::UpdateSettingsRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CopyLogEntries) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CopyLogEntries(_)) instead.
   MOCK_METHOD(future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>,
               CopyLogEntries,
               (google::logging::v2::CopyLogEntriesRequest const& request),

@@ -286,6 +286,17 @@ class PredictionServiceClient {
       google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
       std::map<std::string, std::string> const& params, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchPredict
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchPredict(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
@@ -347,11 +358,31 @@ class PredictionServiceClient {
       google::cloud::automl::v1::BatchPredictRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchPredict
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchPredict(
       ExperimentalTag, NoAwaitTag,
       google::cloud::automl::v1::BatchPredictRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc BatchPredict
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

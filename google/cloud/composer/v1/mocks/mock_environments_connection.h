@@ -46,6 +46,9 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,
@@ -82,6 +85,9 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
            ListEnvironmentsRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateEnvironment(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,
@@ -103,6 +109,9 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteEnvironment) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteEnvironment(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::OperationMetadata>>,
               DeleteEnvironment,
@@ -218,6 +227,9 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    DeleteUserWorkloadsConfigMapRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SaveSnapshot) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SaveSnapshot(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::SaveSnapshotResponse>>,
               SaveSnapshot,
@@ -238,6 +250,9 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, LoadSnapshot) is now ambiguous. Use
+  // EXPECT_CALL(*mock, LoadSnapshot(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::LoadSnapshotResponse>>,
               LoadSnapshot,
@@ -258,6 +273,9 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DatabaseFailover) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DatabaseFailover(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::DatabaseFailoverResponse>>,
               DatabaseFailover,

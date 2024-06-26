@@ -149,6 +149,17 @@ class BigtableInstanceAdminClient {
           clusters,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& instance_id,
@@ -201,11 +212,31 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -391,6 +422,17 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PartialUpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PartialUpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::Instance const& instance,
@@ -435,11 +477,31 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PartialUpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PartialUpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PartialUpdateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -539,6 +601,17 @@ class BigtableInstanceAdminClient {
       std::string const& parent, std::string const& cluster_id,
       google::bigtable::admin::v2::Cluster const& cluster, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& cluster_id,
@@ -588,11 +661,31 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -754,10 +847,30 @@ class BigtableInstanceAdminClient {
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       google::bigtable::admin::v2::Cluster const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::Cluster const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -808,6 +921,17 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PartialUpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PartialUpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::Cluster const& cluster,
@@ -862,11 +986,31 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PartialUpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PartialUpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc PartialUpdateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1155,6 +1299,17 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::AppProfile const& app_profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAppProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppProfile(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::AppProfile const& app_profile,
@@ -1198,11 +1353,31 @@ class BigtableInstanceAdminClient {
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAppProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppProfile(
       ExperimentalTag, NoAwaitTag,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateAppProfile
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

@@ -136,6 +136,17 @@ class DataScanServiceClient {
       google::cloud::dataplex::v1::DataScan const& data_scan,
       std::string const& data_scan_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDataScan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataScan(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::DataScan const& data_scan,
@@ -179,11 +190,31 @@ class DataScanServiceClient {
       google::cloud::dataplex::v1::CreateDataScanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDataScan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataScan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataScanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDataScan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -224,6 +255,17 @@ class DataScanServiceClient {
       google::cloud::dataplex::v1::DataScan const& data_scan,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDataScan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataScan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DataScan const& data_scan,
@@ -267,11 +309,31 @@ class DataScanServiceClient {
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDataScan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataScan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateDataScan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -311,6 +373,17 @@ class DataScanServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataScan(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDataScan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataScan(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -353,11 +426,31 @@ class DataScanServiceClient {
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDataScan
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataScan(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDataScan
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataScan(ExperimentalTag,
                  google::longrunning::Operation const& operation,

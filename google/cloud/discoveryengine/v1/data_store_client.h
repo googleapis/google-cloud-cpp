@@ -145,6 +145,17 @@ class DataStoreServiceClient {
       google::cloud::discoveryengine::v1::DataStore const& data_store,
       std::string const& data_store_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDataStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataStore(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::discoveryengine::v1::DataStore const& data_store,
@@ -195,11 +206,31 @@ class DataStoreServiceClient {
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDataStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataStore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateDataStore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
   CreateDataStore(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -394,6 +425,17 @@ class DataStoreServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
   DeleteDataStore(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDataStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataStore(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -437,11 +479,31 @@ class DataStoreServiceClient {
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDataStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataStore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteDataStore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
   DeleteDataStore(ExperimentalTag,
                   google::longrunning::Operation const& operation,

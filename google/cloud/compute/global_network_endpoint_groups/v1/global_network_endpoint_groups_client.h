@@ -135,6 +135,17 @@ class GlobalNetworkEndpointGroupsClient {
               global_network_endpoint_groups_attach_endpoints_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AttachNetworkEndpoints
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachNetworkEndpoints(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& network_endpoint_group,
@@ -183,12 +194,32 @@ class GlobalNetworkEndpointGroupsClient {
           AttachNetworkEndpointsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AttachNetworkEndpoints
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachNetworkEndpoints(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc AttachNetworkEndpoints
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AttachNetworkEndpoints(
       ExperimentalTag,
@@ -232,6 +263,17 @@ class GlobalNetworkEndpointGroupsClient {
                              std::string const& network_endpoint_group,
                              Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkEndpointGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEndpointGroup(ExperimentalTag, NoAwaitTag,
                              std::string const& project,
@@ -279,6 +321,17 @@ class GlobalNetworkEndpointGroupsClient {
           DeleteNetworkEndpointGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkEndpointGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEndpointGroup(
       ExperimentalTag, NoAwaitTag,
@@ -286,6 +339,15 @@ class GlobalNetworkEndpointGroupsClient {
           DeleteNetworkEndpointGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteNetworkEndpointGroup
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEndpointGroup(
       ExperimentalTag,
@@ -332,6 +394,17 @@ class GlobalNetworkEndpointGroupsClient {
               global_network_endpoint_groups_detach_endpoints_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DetachNetworkEndpoints
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachNetworkEndpoints(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& network_endpoint_group,
@@ -380,12 +453,32 @@ class GlobalNetworkEndpointGroupsClient {
           DetachNetworkEndpointsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DetachNetworkEndpoints
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachNetworkEndpoints(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::global_network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DetachNetworkEndpoints
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DetachNetworkEndpoints(
       ExperimentalTag,
@@ -493,6 +586,17 @@ class GlobalNetworkEndpointGroupsClient {
           network_endpoint_group_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNetworkEndpointGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEndpointGroup(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -541,6 +645,17 @@ class GlobalNetworkEndpointGroupsClient {
           InsertNetworkEndpointGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNetworkEndpointGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEndpointGroup(
       ExperimentalTag, NoAwaitTag,
@@ -548,6 +663,15 @@ class GlobalNetworkEndpointGroupsClient {
           InsertNetworkEndpointGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc InsertNetworkEndpointGroup
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkEndpointGroup(
       ExperimentalTag,

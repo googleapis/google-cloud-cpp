@@ -57,6 +57,9 @@ class MockServiceManagerConnection
       (google::api::servicemanagement::v1::GetServiceRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateService) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateService(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::api::servicemanagement::v1::ManagedService>>,
       CreateService,
@@ -75,6 +78,9 @@ class MockServiceManagerConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteService) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteService(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>,
       DeleteService,
@@ -93,6 +99,9 @@ class MockServiceManagerConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UndeleteService) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UndeleteService(_)) instead.
   MOCK_METHOD(future<StatusOr<
                   google::api::servicemanagement::v1::UndeleteServiceResponse>>,
               UndeleteService,
@@ -130,6 +139,9 @@ class MockServiceManagerConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SubmitConfigSource) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SubmitConfigSource(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::api::servicemanagement::v1::SubmitConfigSourceResponse>>,
@@ -164,6 +176,9 @@ class MockServiceManagerConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateServiceRollout) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateServiceRollout(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::api::servicemanagement::v1::Rollout>>,
       CreateServiceRollout,

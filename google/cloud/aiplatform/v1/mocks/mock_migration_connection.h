@@ -53,6 +53,9 @@ class MockMigrationServiceConnection
       (google::cloud::aiplatform::v1::SearchMigratableResourcesRequest request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchMigrateResources) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchMigrateResources(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>,

@@ -240,11 +240,31 @@ class ConfigServiceV2Client {
       google::logging::v2::CreateBucketRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBucketAsync
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBucketAsync(
       ExperimentalTag, NoAwaitTag,
       google::logging::v2::CreateBucketRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateBucketAsync
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -292,11 +312,31 @@ class ConfigServiceV2Client {
       google::logging::v2::UpdateBucketRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBucketAsync
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBucketAsync(
       ExperimentalTag, NoAwaitTag,
       google::logging::v2::UpdateBucketRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateBucketAsync
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1083,6 +1123,17 @@ class ConfigServiceV2Client {
       std::string const& parent, google::logging::v2::Link const& link,
       std::string const& link_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLink
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateLink(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::logging::v2::Link const& link, std::string const& link_id,
@@ -1127,10 +1178,30 @@ class ConfigServiceV2Client {
   future<StatusOr<google::logging::v2::Link>> CreateLink(
       google::logging::v2::CreateLinkRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLink
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateLink(
       ExperimentalTag, NoAwaitTag,
       google::logging::v2::CreateLinkRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateLink
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::logging::v2::Link>> CreateLink(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1173,6 +1244,17 @@ class ConfigServiceV2Client {
   future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLink
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLink(ExperimentalTag,
                                                       NoAwaitTag,
                                                       std::string const& name,
@@ -1216,10 +1298,30 @@ class ConfigServiceV2Client {
   future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
       google::logging::v2::DeleteLinkRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLink
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLink(
       ExperimentalTag, NoAwaitTag,
       google::logging::v2::DeleteLinkRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteLink
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2028,11 +2130,31 @@ class ConfigServiceV2Client {
       google::logging::v2::CopyLogEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CopyLogEntries
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CopyLogEntries(
       ExperimentalTag, NoAwaitTag,
       google::logging::v2::CopyLogEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CopyLogEntries
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::logging::v2::CopyLogEntriesResponse>> CopyLogEntries(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

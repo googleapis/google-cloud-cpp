@@ -569,11 +569,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ProvisionCloudIdentity
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ProvisionCloudIdentity(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ProvisionCloudIdentity
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -866,11 +886,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::CreateEntitlementRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEntitlement
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEntitlement(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::CreateEntitlementRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEntitlement
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -936,11 +976,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::ChangeParametersRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ChangeParameters
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ChangeParameters(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ChangeParametersRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ChangeParameters
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1007,11 +1067,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ChangeRenewalSettings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ChangeRenewalSettings(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ChangeRenewalSettings
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
   ChangeRenewalSettings(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1076,11 +1156,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::ChangeOfferRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ChangeOffer
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ChangeOffer(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ChangeOfferRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ChangeOffer
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1147,11 +1247,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::StartPaidServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartPaidService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartPaidService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::StartPaidServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc StartPaidService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1215,11 +1335,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::SuspendEntitlementRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SuspendEntitlement
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SuspendEntitlement(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::SuspendEntitlementRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SuspendEntitlement
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1288,11 +1428,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::CancelEntitlementRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CancelEntitlement
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CancelEntitlement(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::CancelEntitlementRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CancelEntitlement
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
   CancelEntitlement(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -1363,11 +1523,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::ActivateEntitlementRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ActivateEntitlement
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ActivateEntitlement(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::ActivateEntitlementRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc ActivateEntitlement
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1443,11 +1623,31 @@ class CloudChannelServiceClient {
       google::cloud::channel::v1::TransferEntitlementsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TransferEntitlements
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TransferEntitlements(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::TransferEntitlementsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TransferEntitlements
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
   TransferEntitlements(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -1521,12 +1721,32 @@ class CloudChannelServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TransferEntitlementsToGoogle
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TransferEntitlementsToGoogle(
       ExperimentalTag, NoAwaitTag,
       google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc TransferEntitlementsToGoogle
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
   TransferEntitlementsToGoogle(ExperimentalTag,
                                google::longrunning::Operation const& operation,

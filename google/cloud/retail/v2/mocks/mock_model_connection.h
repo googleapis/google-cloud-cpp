@@ -46,6 +46,9 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateModel) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateModel(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::Model>>, CreateModel,
               (google::cloud::retail::v2::CreateModelRequest const& request),
               (override));
@@ -84,6 +87,9 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
               (google::cloud::retail::v2::UpdateModelRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, TuneModel) is now ambiguous. Use
+  // EXPECT_CALL(*mock, TuneModel(_)) instead.
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>,
               TuneModel,
               (google::cloud::retail::v2::TuneModelRequest const& request),

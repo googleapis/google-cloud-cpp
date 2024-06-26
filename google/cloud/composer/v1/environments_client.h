@@ -128,6 +128,17 @@ class EnvironmentsClient {
           environment,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::orchestration::airflow::service::v1::Environment const&
@@ -174,12 +185,32 @@ class EnvironmentsClient {
                         CreateEnvironmentRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           CreateEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   CreateEnvironment(ExperimentalTag,
@@ -369,6 +400,17 @@ class EnvironmentsClient {
           environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::orchestration::airflow::service::v1::Environment const&
@@ -415,12 +457,32 @@ class EnvironmentsClient {
                         UpdateEnvironmentRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           UpdateEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
   UpdateEnvironment(ExperimentalTag,
@@ -461,6 +523,17 @@ class EnvironmentsClient {
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -504,12 +577,32 @@ class EnvironmentsClient {
                         DeleteEnvironmentRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(ExperimentalTag,
@@ -1443,12 +1536,32 @@ class EnvironmentsClient {
                    SaveSnapshotRequest const& request,
                Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SaveSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SaveSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           SaveSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SaveSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
   SaveSnapshot(ExperimentalTag, google::longrunning::Operation const& operation,
@@ -1497,12 +1610,32 @@ class EnvironmentsClient {
                    LoadSnapshotRequest const& request,
                Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc LoadSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> LoadSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           LoadSnapshotRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc LoadSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
   LoadSnapshot(ExperimentalTag, google::longrunning::Operation const& operation,
@@ -1548,12 +1681,32 @@ class EnvironmentsClient {
                        DatabaseFailoverRequest const& request,
                    Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DatabaseFailover
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DatabaseFailover(
       ExperimentalTag, NoAwaitTag,
       google::cloud::orchestration::airflow::service::v1::
           DatabaseFailoverRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DatabaseFailover
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                       DatabaseFailoverResponse>>
   DatabaseFailover(ExperimentalTag,

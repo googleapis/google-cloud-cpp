@@ -46,6 +46,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateRecognizer) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateRecognizer(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::Recognizer>>, CreateRecognizer,
       (google::cloud::speech::v2::CreateRecognizerRequest const& request),
@@ -72,6 +75,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
               (google::cloud::speech::v2::GetRecognizerRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateRecognizer) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateRecognizer(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::Recognizer>>, UpdateRecognizer,
       (google::cloud::speech::v2::UpdateRecognizerRequest const& request),
@@ -89,6 +95,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteRecognizer) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteRecognizer(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::Recognizer>>, DeleteRecognizer,
       (google::cloud::speech::v2::DeleteRecognizerRequest const& request),
@@ -106,6 +115,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UndeleteRecognizer) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UndeleteRecognizer(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::Recognizer>>,
       UndeleteRecognizer,
@@ -133,6 +145,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
                    google::cloud::speech::v2::StreamingRecognizeResponse>>),
               AsyncStreamingRecognize, (), (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchRecognize) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchRecognize(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>,
       BatchRecognize,
@@ -158,6 +173,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
               (google::cloud::speech::v2::UpdateConfigRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateCustomClass) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateCustomClass(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::CustomClass>>,
       CreateCustomClass,
@@ -185,6 +203,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
               (google::cloud::speech::v2::GetCustomClassRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdateCustomClass) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdateCustomClass(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::CustomClass>>,
       UpdateCustomClass,
@@ -203,6 +224,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteCustomClass) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteCustomClass(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::CustomClass>>,
       DeleteCustomClass,
@@ -221,6 +245,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UndeleteCustomClass) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UndeleteCustomClass(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::CustomClass>>,
       UndeleteCustomClass,
@@ -239,6 +266,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreatePhraseSet) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreatePhraseSet(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::PhraseSet>>, CreatePhraseSet,
       (google::cloud::speech::v2::CreatePhraseSetRequest const& request),
@@ -265,6 +295,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
               (google::cloud::speech::v2::GetPhraseSetRequest const& request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UpdatePhraseSet) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UpdatePhraseSet(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::PhraseSet>>, UpdatePhraseSet,
       (google::cloud::speech::v2::UpdatePhraseSetRequest const& request),
@@ -282,6 +315,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeletePhraseSet) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeletePhraseSet(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::PhraseSet>>, DeletePhraseSet,
       (google::cloud::speech::v2::DeletePhraseSetRequest const& request),
@@ -299,6 +335,9 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, UndeletePhraseSet) is now ambiguous. Use
+  // EXPECT_CALL(*mock, UndeletePhraseSet(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::PhraseSet>>, UndeletePhraseSet,
       (google::cloud::speech::v2::UndeletePhraseSetRequest const& request),

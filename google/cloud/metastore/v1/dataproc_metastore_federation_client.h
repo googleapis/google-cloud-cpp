@@ -287,6 +287,17 @@ class DataprocMetastoreFederationClient {
       google::cloud::metastore::v1::Federation const& federation,
       std::string const& federation_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFederation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFederation(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::metastore::v1::Federation const& federation,
@@ -330,11 +341,31 @@ class DataprocMetastoreFederationClient {
       google::cloud::metastore::v1::CreateFederationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFederation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFederation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateFederationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateFederation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -380,6 +411,17 @@ class DataprocMetastoreFederationClient {
       google::cloud::metastore::v1::Federation const& federation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFederation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFederation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::Federation const& federation,
@@ -423,11 +465,31 @@ class DataprocMetastoreFederationClient {
       google::cloud::metastore::v1::UpdateFederationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFederation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFederation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateFederationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateFederation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -467,6 +529,17 @@ class DataprocMetastoreFederationClient {
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteFederation(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFederation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFederation(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -509,11 +582,31 @@ class DataprocMetastoreFederationClient {
       google::cloud::metastore::v1::DeleteFederationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFederation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFederation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteFederationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteFederation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteFederation(ExperimentalTag,
                    google::longrunning::Operation const& operation,

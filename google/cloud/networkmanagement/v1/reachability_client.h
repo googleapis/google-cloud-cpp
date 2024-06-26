@@ -291,6 +291,17 @@ class ReachabilityServiceClient {
       google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnectivityTest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectivityTest(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& test_id,
@@ -349,12 +360,32 @@ class ReachabilityServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnectivityTest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectivityTest(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc CreateConnectivityTest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   CreateConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -410,6 +441,17 @@ class ReachabilityServiceClient {
       google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnectivityTest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
       ExperimentalTag, NoAwaitTag,
       google::protobuf::FieldMask const& update_mask,
@@ -469,12 +511,32 @@ class ReachabilityServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnectivityTest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc UpdateConnectivityTest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   UpdateConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -531,12 +593,32 @@ class ReachabilityServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RerunConnectivityTest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RerunConnectivityTest(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RerunConnectivityTest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
   RerunConnectivityTest(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -575,6 +657,17 @@ class ReachabilityServiceClient {
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
   DeleteConnectivityTest(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnectivityTest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -618,12 +711,32 @@ class ReachabilityServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnectivityTest
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteConnectivityTest
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
   DeleteConnectivityTest(ExperimentalTag,
                          google::longrunning::Operation const& operation,

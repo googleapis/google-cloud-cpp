@@ -101,6 +101,9 @@ class MockArtifactRegistryConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportAptArtifacts) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportAptArtifacts(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>,
@@ -123,6 +126,9 @@ class MockArtifactRegistryConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, ImportYumArtifacts) is now ambiguous. Use
+  // EXPECT_CALL(*mock, ImportYumArtifacts(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>,
@@ -158,6 +164,9 @@ class MockArtifactRegistryConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, CreateRepository) is now ambiguous. Use
+  // EXPECT_CALL(*mock, CreateRepository(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::devtools::artifactregistry::v1::Repository>>,
       CreateRepository,
@@ -185,6 +194,9 @@ class MockArtifactRegistryConnection
            request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteRepository) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteRepository(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
@@ -219,6 +231,9 @@ class MockArtifactRegistryConnection
                    request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeletePackage) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeletePackage(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
@@ -253,6 +268,9 @@ class MockArtifactRegistryConnection
                    request),
               (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, DeleteVersion) is now ambiguous. Use
+  // EXPECT_CALL(*mock, DeleteVersion(_)) instead.
   MOCK_METHOD(
       future<
           StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>,
@@ -275,6 +293,9 @@ class MockArtifactRegistryConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, BatchDeleteVersions) is now ambiguous. Use
+  // EXPECT_CALL(*mock, BatchDeleteVersions(_)) instead.
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>,

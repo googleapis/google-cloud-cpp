@@ -105,6 +105,9 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request),
       (override));
 
+  // Due to additional overloads for this method
+  // EXPECT_CALL(*mock, SeekSubscription) is now ambiguous. Use
+  // EXPECT_CALL(*mock, SeekSubscription(_)) instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
       SeekSubscription,

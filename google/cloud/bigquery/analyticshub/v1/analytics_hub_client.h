@@ -897,6 +897,17 @@ class AnalyticsHubServiceClient {
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
   SubscribeDataExchange(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SubscribeDataExchange
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -941,12 +952,32 @@ class AnalyticsHubServiceClient {
                             SubscribeDataExchangeRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SubscribeDataExchange
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SubscribeDataExchange(
       ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           SubscribeDataExchangeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc SubscribeDataExchange
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>>
   SubscribeDataExchange(ExperimentalTag,
@@ -989,6 +1020,17 @@ class AnalyticsHubServiceClient {
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
   RefreshSubscription(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RefreshSubscription
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RefreshSubscription(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1034,12 +1076,32 @@ class AnalyticsHubServiceClient {
                           RefreshSubscriptionRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RefreshSubscription
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RefreshSubscription(
       ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           RefreshSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc RefreshSubscription
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>>
   RefreshSubscription(ExperimentalTag,
@@ -1355,6 +1417,17 @@ class AnalyticsHubServiceClient {
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
   DeleteSubscription(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSubscription
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSubscription(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1397,12 +1470,32 @@ class AnalyticsHubServiceClient {
                          DeleteSubscriptionRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSubscription
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSubscription(
       ExperimentalTag, NoAwaitTag,
       google::cloud::bigquery::analyticshub::v1::
           DeleteSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copydoc DeleteSubscription
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
   DeleteSubscription(ExperimentalTag,
                      google::longrunning::Operation const& operation,
