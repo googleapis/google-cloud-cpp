@@ -61,13 +61,14 @@ class AsyncWriterConnectionTracing
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Write(std::move(p))
         .then([count = ++sent_count_, span = span_, size](auto f) {
-          span->AddEvent("gl-cpp.write",
-                         {
-                             {sc::kMessageType, "SENT"},
-                             {sc::kMessageId, count},
-                             {sc::kThreadId, internal::CurrentThreadId()},
-                             {"gl-cpp.size", size},
-                         });
+          span->AddEvent(
+              "gl-cpp.write",
+              {
+                  {/*sc::kRpcMessageType=*/"rpc.message.type", "SENT"},
+                  {/*sc::kRpcMessageId=*/"rpc.message.id", count},
+                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {"gl-cpp.size", size},
+              });
           auto status = f.get();
           if (!status.ok()) return internal::EndSpan(*span, std::move(status));
           return status;
@@ -80,13 +81,14 @@ class AsyncWriterConnectionTracing
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Finalize(std::move(p))
         .then([count = ++sent_count_, span = span_, size](auto f) {
-          span->AddEvent("gl-cpp.finalize",
-                         {
-                             {sc::kMessageType, "SENT"},
-                             {sc::kMessageId, count},
-                             {sc::kThreadId, internal::CurrentThreadId()},
-                             {"gl-cpp.size", size},
-                         });
+          span->AddEvent(
+              "gl-cpp.finalize",
+              {
+                  {/*sc::kRpcMessageType=*/"rpc.message.type", "SENT"},
+                  {/*sc::kRpcMessageId=*/"rpc.message.id", count},
+                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {"gl-cpp.size", size},
+              });
           return internal::EndSpan(*span, f.get());
         });
   }
@@ -96,13 +98,14 @@ class AsyncWriterConnectionTracing
     auto size = static_cast<std::uint64_t>(p.size());
     return impl_->Flush(std::move(p))
         .then([count = ++sent_count_, span = span_, size](auto f) {
-          span->AddEvent("gl-cpp.flush",
-                         {
-                             {sc::kMessageType, "SENT"},
-                             {sc::kMessageId, count},
-                             {sc::kThreadId, internal::CurrentThreadId()},
-                             {"gl-cpp.size", size},
-                         });
+          span->AddEvent(
+              "gl-cpp.flush",
+              {
+                  {/*sc::kRpcMessageType=*/"rpc.message.type", "SENT"},
+                  {/*sc::kRpcMessageId=*/"rpc.message.id", count},
+                  {sc::kThreadId, internal::CurrentThreadId()},
+                  {"gl-cpp.size", size},
+              });
           auto status = f.get();
           if (!status.ok()) return internal::EndSpan(*span, std::move(status));
           return status;
@@ -112,12 +115,13 @@ class AsyncWriterConnectionTracing
   future<StatusOr<std::int64_t>> Query() override {
     internal::OTelScope scope(span_);
     return impl_->Query().then([count = ++recv_count_, span = span_](auto f) {
-      span->AddEvent("gl-cpp.query",
-                     {
-                         {sc::kMessageType, "RECEIVE"},
-                         {sc::kMessageId, count},
-                         {sc::kThreadId, internal::CurrentThreadId()},
-                     });
+      span->AddEvent(
+          "gl-cpp.query",
+          {
+              {/*sc::kRpcMessageType=*/"rpc.message.type", "RECEIVE"},
+              {/*sc::kRpcMessageId=*/"rpc.message.id", count},
+              {sc::kThreadId, internal::CurrentThreadId()},
+          });
       auto response = f.get();
       if (!response) return internal::EndSpan(*span, std::move(response));
       return response;

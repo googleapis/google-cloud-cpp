@@ -55,7 +55,8 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> StartSubscribeSpan(
   auto span = internal::MakeSpan(
       subscription.subscription_id() + " subscribe",
       {{sc::kMessagingSystem, "gcp_pubsub"},
-       {sc::kMessagingOperation, "subscribe"},
+       {/*sc::kMessagingOperationType=*/"messaging.operation.type",
+        "subscribe"},
        {"gcp.project_id", subscription.project_id()},
        {sc::kMessagingDestinationName, subscription.subscription_id()},
        {sc::kMessagingMessageId, m.message_id()},
@@ -207,7 +208,7 @@ class TracingBatchCallback : public BatchCallback {
     auto span = internal::MakeSpan(
         subscription_.subscription_id() + " modack",
         {{sc::kMessagingSystem, "gcp_pubsub"},
-         {sc::kMessagingOperation, "extend"},
+         {/*sc::kMessagingOperationType=*/"messaging.operation.type", "extend"},
          {sc::kMessagingBatchMessageCount,
           static_cast<int64_t>(request.ack_ids().size())},
          {"messaging.gcp_pubsub.message.ack_deadline_seconds",

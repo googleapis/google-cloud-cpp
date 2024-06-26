@@ -106,16 +106,21 @@ TEST(ReaderConnectionTracing, WithError) {
               AllOf(
                   EventNamed("gl-cpp.read"),
                   SpanEventAttributesAre(
-                      OTelAttribute<std::int64_t>(sc::kMessageId, 1),
-                      OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
+                      OTelAttribute<std::int64_t>(
+                          /*sc::kRpcMessageId=*/"rpc.message.id", 1),
+                      OTelAttribute<std::string>(
+                          /*sc::kRpcMessageType=*/"rpc.message.type",
+                          "RECEIVED"),
                       OTelAttribute<std::int64_t>("message.starting_offset", 0),
                       OTelAttribute<std::string>(sc::kThreadId, _))),
-              AllOf(
-                  EventNamed("gl-cpp.read"),
-                  SpanEventAttributesAre(
-                      OTelAttribute<std::int64_t>(sc::kMessageId, 2),
-                      OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
-                      OTelAttribute<std::string>(sc::kThreadId, _)))))));
+              AllOf(EventNamed("gl-cpp.read"),
+                    SpanEventAttributesAre(
+                        OTelAttribute<std::int64_t>(
+                            /*sc::kRpcMessageId=*/"rpc.message.id", 2),
+                        OTelAttribute<std::string>(
+                            /*sc::kRpcMessageType=*/"rpc.message.type",
+                            "RECEIVED"),
+                        OTelAttribute<std::string>(sc::kThreadId, _)))))));
 }
 
 TEST(ReaderConnectionTracing, WithSuccess) {
@@ -159,24 +164,31 @@ TEST(ReaderConnectionTracing, WithSuccess) {
               AllOf(
                   EventNamed("gl-cpp.read"),
                   SpanEventAttributesAre(
-                      OTelAttribute<std::int64_t>(sc::kMessageId, 1),
-                      OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
+                      OTelAttribute<std::int64_t>(
+                          /*sc::kRpcMessageId=*/"rpc.message.id", 1),
+                      OTelAttribute<std::string>(
+                          /*sc::kRpcMessageType=*/"rpc.message.type",
+                          "RECEIVED"),
                       OTelAttribute<std::int64_t>("message.starting_offset", 0),
                       OTelAttribute<std::string>(sc::kThreadId, _))),
-              AllOf(
-                  EventNamed("gl-cpp.read"),
-                  SpanEventAttributesAre(
-                      OTelAttribute<std::int64_t>(sc::kMessageId, 2),
-                      OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
-                      OTelAttribute<std::int64_t>("message.starting_offset",
-                                                  1024),
-                      OTelAttribute<std::string>(sc::kThreadId, _))),
-              AllOf(
-                  EventNamed("gl-cpp.read"),
-                  SpanEventAttributesAre(
-                      OTelAttribute<std::int64_t>(sc::kMessageId, 3),
-                      OTelAttribute<std::string>(sc::kMessageType, "RECEIVED"),
-                      OTelAttribute<std::string>(sc::kThreadId, _)))))));
+              AllOf(EventNamed("gl-cpp.read"),
+                    SpanEventAttributesAre(
+                        OTelAttribute<std::int64_t>(
+                            /*sc::kRpcMessageId=*/"rpc.message.id", 2),
+                        OTelAttribute<std::string>(
+                            /*sc::kRpcMessageType=*/"rpc.message.type",
+                            "RECEIVED"),
+                        OTelAttribute<std::int64_t>("message.starting_offset",
+                                                    1024),
+                        OTelAttribute<std::string>(sc::kThreadId, _))),
+              AllOf(EventNamed("gl-cpp.read"),
+                    SpanEventAttributesAre(
+                        OTelAttribute<std::int64_t>(
+                            /*sc::kRpcMessageId=*/"rpc.message.id", 3),
+                        OTelAttribute<std::string>(
+                            /*sc::kRpcMessageType=*/"rpc.message.type",
+                            "RECEIVED"),
+                        OTelAttribute<std::string>(sc::kThreadId, _)))))));
 
   auto const metadata = actual->GetRequestMetadata();
   EXPECT_THAT(metadata.headers,

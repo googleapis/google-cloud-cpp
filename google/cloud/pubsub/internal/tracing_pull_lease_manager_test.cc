@@ -172,10 +172,12 @@ TEST(TracingPullLeaseManagerImplTest, AsyncModifyAckDeadlineAttributes) {
               Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(
                                  sc::kMessagingSystem, "gcp_pubsub")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-subscription modack"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "modack")))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(
+                 SpanNamed("test-subscription modack"),
+                 SpanHasAttributes(OTelAttribute<std::string>(
+                     /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                     "modack")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-subscription modack"),
                              SpanHasAttributes(OTelAttribute<std::string>(

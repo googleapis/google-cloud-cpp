@@ -205,10 +205,12 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
                          SpanNamed("test-topic publish"),
                          SpanHasAttributes(OTelAttribute<std::string>(
                              sc::kCodeFunction, "BatchSink::AsyncPublish")))));
-  EXPECT_THAT(spans,
-              Contains(AllOf(SpanNamed("test-topic publish"),
-                             SpanHasAttributes(OTelAttribute<std::string>(
-                                 sc::kMessagingOperation, "publish")))));
+  EXPECT_THAT(
+      spans, Contains(AllOf(
+                 SpanNamed("test-topic publish"),
+                 SpanHasAttributes(OTelAttribute<std::string>(
+                     /*sc::kMessagingOperationType=*/"messaging.operation.type",
+                     "publish")))));
   EXPECT_THAT(spans,
               Contains(AllOf(SpanNamed("test-topic publish"),
                              SpanHasAttributes(OTelAttribute<std::string>(

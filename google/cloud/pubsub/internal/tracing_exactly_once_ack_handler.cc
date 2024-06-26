@@ -75,7 +75,8 @@ class TracingExactlyOnceAckHandler
          {sc::kMessagingDestinationName, sub.subscription_id()},
          {"messaging.gcp_pubsub.message.delivery_attempt",
           static_cast<int32_t>(delivery_attempt())},
-         {sc::kMessagingOperation, "settle"}},
+         {/*sc::kMessagingOperationType=*/"messaging.operation.type",
+          "settle"}},
         std::move(links), options);
     auto scope = internal::OTelScope(span);
     return internal::EndSpan(std::move(span), child_->ack());
@@ -104,7 +105,8 @@ class TracingExactlyOnceAckHandler
          {sc::kMessagingDestinationName, sub.subscription_id()},
          {"messaging.gcp_pubsub.message.delivery_attempt",
           static_cast<int32_t>(delivery_attempt())},
-         {sc::kMessagingOperation, "settle"}},
+         {/*sc::kMessagingOperationType=*/"messaging.operation.type",
+          "settle"}},
         std::move(links), options);
 
     auto scope = internal::OTelScope(span);
