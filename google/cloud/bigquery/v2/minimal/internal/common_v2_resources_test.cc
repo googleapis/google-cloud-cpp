@@ -457,6 +457,25 @@ TEST(CommonV2ResourcesTest, ColumnDataFromJson) {
 
   ColumnData expected;
   expected.value = "12345";
+  expected.is_null = false;
+
+  EXPECT_EQ(expected.value, actual.value);
+}
+
+TEST(CommonV2ResourcesTest, ColumnDataFromJsonNull) {
+  std::string text =
+      R"({
+          "v":null
+      })";
+  auto json = nlohmann::json::parse(text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  ColumnData actual;
+  from_json(json, actual);
+
+  ColumnData expected;
+  expected.value = "";
+  expected.is_null = true;
 
   EXPECT_EQ(expected.value, actual.value);
 }
@@ -510,6 +529,32 @@ TEST(CommonV2ResourcesTest, RowDataFromJson) {
                          actual.columns.begin()));
 }
 
+TEST(CommonV2ResourcesTest, RowDataFromJsonNullValues) {
+  std::string text =
+      R"({
+        "f":[
+          {
+            "v":null
+          },
+          {
+            "v":null
+          }
+        ]
+      })";
+  auto json = nlohmann::json::parse(text, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  RowData actual;
+  from_json(json, actual);
+
+  RowData expected;
+  expected.columns.push_back(ColumnData{"", true});
+  expected.columns.push_back(ColumnData{"", true});
+
+  EXPECT_TRUE(std::equal(expected.columns.begin(), expected.columns.end(),
+                         actual.columns.begin()));
+}
+
 TEST(CommonV2ResourcesTest, ColumnsDebugString) {
   ColumnData column_data;
   column_data.value = "12345";
@@ -517,6 +562,7 @@ TEST(CommonV2ResourcesTest, ColumnsDebugString) {
   EXPECT_EQ(column_data.DebugString("ColumnData", TracingOptions{}),
             R"(ColumnData {)"
             R"( value: "12345")"
+            R"( is_null: false)"
             R"( })");
 
   EXPECT_EQ(column_data.DebugString("ColumnData",
@@ -524,12 +570,14 @@ TEST(CommonV2ResourcesTest, ColumnsDebugString) {
                                         "truncate_string_field_longer_than=2")),
             R"(ColumnData {)"
             R"( value: "12...<truncated>...")"
+            R"( is_null: false)"
             R"( })");
 
   EXPECT_EQ(column_data.DebugString("ColumnData", TracingOptions{}.SetOptions(
                                                       "single_line_mode=F")),
             R"(ColumnData {
   value: "12345"
+  is_null: false
 })");
 }
 
@@ -537,42 +585,50 @@ TEST(CommonV2ResourcesTest, RowDataDebugString) {
   RowData row_data = MakeRowData();
 
   EXPECT_EQ(row_data.DebugString("RowData", TracingOptions{}),
-            R"(RowData { columns { value: "col1" })"
-            R"( columns { value: "col2" } columns {)"
-            R"( value: "col3" } columns {)"
-            R"( value: "col4" } columns {)"
-            R"( value: "col5" } columns { value: "col6" } })");
+            R"(RowData { columns { value: "col1" is_null: false })"
+            R"( columns { value: "col2" is_null: false })"
+            R"( columns { value: "col3" is_null: false })"
+            R"( columns { value: "col4" is_null: false })"
+            R"( columns { value: "col5" is_null: false })"
+            R"( columns { value: "col6" is_null: false } })");
 
-  EXPECT_EQ(row_data.DebugString("RowData",
-                                 TracingOptions{}.SetOptions(
-                                     "truncate_string_field_longer_than=2")),
-            R"(RowData { columns { value: "co...<truncated>..." })"
-            R"( columns { value: "co...<truncated>..." })"
-            R"( columns { value: "co...<truncated>..." })"
-            R"( columns { value: "co...<truncated>..." })"
-            R"( columns { value: "co...<truncated>..." })"
-            R"( columns { value: "co...<truncated>..." } })");
+  EXPECT_EQ(
+      row_data.DebugString(
+          "RowData",
+          TracingOptions{}.SetOptions("truncate_string_field_longer_than=2")),
+      R"(RowData { columns { value: "co...<truncated>..." is_null: false })"
+      R"( columns { value: "co...<truncated>..." is_null: false })"
+      R"( columns { value: "co...<truncated>..." is_null: false })"
+      R"( columns { value: "co...<truncated>..." is_null: false })"
+      R"( columns { value: "co...<truncated>..." is_null: false })"
+      R"( columns { value: "co...<truncated>..." is_null: false } })");
 
   EXPECT_EQ(row_data.DebugString(
                 "RowData", TracingOptions{}.SetOptions("single_line_mode=F")),
             R"(RowData {
   columns {
     value: "col1"
+    is_null: false
   }
   columns {
     value: "col2"
+    is_null: false
   }
   columns {
     value: "col3"
+    is_null: false
   }
   columns {
     value: "col4"
+    is_null: false
   }
   columns {
     value: "col5"
+    is_null: false
   }
   columns {
     value: "col6"
+    is_null: false
   }
 })");
 }
