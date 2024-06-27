@@ -47,9 +47,9 @@ class MockPersistentResourceServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreatePersistentResource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreatePersistentResource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreatePersistentResource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreatePersistentResource(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       CreatePersistentResource,
@@ -83,9 +83,9 @@ class MockPersistentResourceServiceConnection
       (google::cloud::aiplatform::v1::ListPersistentResourcesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePersistentResource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePersistentResource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePersistentResource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePersistentResource(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeletePersistentResource,
@@ -106,9 +106,9 @@ class MockPersistentResourceServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdatePersistentResource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdatePersistentResource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdatePersistentResource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdatePersistentResource(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       UpdatePersistentResource,
@@ -129,9 +129,9 @@ class MockPersistentResourceServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RebootPersistentResource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RebootPersistentResource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RebootPersistentResource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RebootPersistentResource(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       RebootPersistentResource,

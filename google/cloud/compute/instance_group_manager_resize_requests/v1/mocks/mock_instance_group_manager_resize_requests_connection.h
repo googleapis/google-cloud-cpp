@@ -50,9 +50,9 @@ class MockInstanceGroupManagerResizeRequestsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, Cancel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, Cancel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, Cancel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, Cancel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Cancel,
       (google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
@@ -72,10 +72,10 @@ class MockInstanceGroupManagerResizeRequestsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteInstanceGroupManagerResizeRequest) is now
-  // ambiguous. Use EXPECT_CALL(*mock,
-  // DeleteInstanceGroupManagerResizeRequest(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstanceGroupManagerResizeRequest)` is now
+  /// ambiguous. Use `EXPECT_CALL(*mock,
+  /// DeleteInstanceGroupManagerResizeRequest(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteInstanceGroupManagerResizeRequest,
@@ -105,10 +105,10 @@ class MockInstanceGroupManagerResizeRequestsConnection
            GetInstanceGroupManagerResizeRequestRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertInstanceGroupManagerResizeRequest) is now
-  // ambiguous. Use EXPECT_CALL(*mock,
-  // InsertInstanceGroupManagerResizeRequest(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertInstanceGroupManagerResizeRequest)` is now
+  /// ambiguous. Use `EXPECT_CALL(*mock,
+  /// InsertInstanceGroupManagerResizeRequest(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InsertInstanceGroupManagerResizeRequest,

@@ -49,9 +49,9 @@ class MockPublicAdvertisedPrefixesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, Announce) is now ambiguous. Use
-  // EXPECT_CALL(*mock, Announce(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, Announce)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, Announce(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Announce,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
@@ -70,9 +70,9 @@ class MockPublicAdvertisedPrefixesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePublicAdvertisedPrefix) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePublicAdvertisedPrefix(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePublicAdvertisedPrefix)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePublicAdvertisedPrefix(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
@@ -98,9 +98,9 @@ class MockPublicAdvertisedPrefixesConnection
                    GetPublicAdvertisedPrefixRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertPublicAdvertisedPrefix) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertPublicAdvertisedPrefix(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertPublicAdvertisedPrefix)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertPublicAdvertisedPrefix(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
@@ -127,9 +127,9 @@ class MockPublicAdvertisedPrefixesConnection
            ListPublicAdvertisedPrefixesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchPublicAdvertisedPrefix) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchPublicAdvertisedPrefix(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchPublicAdvertisedPrefix)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchPublicAdvertisedPrefix(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPublicAdvertisedPrefix,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::
@@ -149,9 +149,9 @@ class MockPublicAdvertisedPrefixesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, Withdraw) is now ambiguous. Use
-  // EXPECT_CALL(*mock, Withdraw(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, Withdraw)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, Withdraw(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Withdraw,
               (google::cloud::cpp::compute::public_advertised_prefixes::v1::

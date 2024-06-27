@@ -61,9 +61,9 @@ class MockDepServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateLbTrafficExtension) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateLbTrafficExtension(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateLbTrafficExtension)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateLbTrafficExtension(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>,
       CreateLbTrafficExtension,
@@ -84,9 +84,9 @@ class MockDepServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateLbTrafficExtension) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateLbTrafficExtension(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateLbTrafficExtension)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateLbTrafficExtension(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>,
       UpdateLbTrafficExtension,
@@ -107,9 +107,9 @@ class MockDepServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteLbTrafficExtension) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteLbTrafficExtension(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteLbTrafficExtension)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteLbTrafficExtension(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteLbTrafficExtension,
@@ -144,9 +144,9 @@ class MockDepServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateLbRouteExtension) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateLbRouteExtension(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateLbRouteExtension)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateLbRouteExtension(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>,
       CreateLbRouteExtension,
@@ -167,9 +167,9 @@ class MockDepServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateLbRouteExtension) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateLbRouteExtension(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateLbRouteExtension)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateLbRouteExtension(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>,
       UpdateLbRouteExtension,
@@ -190,9 +190,9 @@ class MockDepServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteLbRouteExtension) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteLbRouteExtension(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteLbRouteExtension)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteLbRouteExtension(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteLbRouteExtension,

@@ -47,9 +47,9 @@ class MockBigtableInstanceAdminConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::Instance>>, CreateInstance,
       (google::bigtable::admin::v2::CreateInstanceRequest const& request),
@@ -81,9 +81,9 @@ class MockBigtableInstanceAdminConnection
               (google::bigtable::admin::v2::Instance const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PartialUpdateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PartialUpdateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PartialUpdateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PartialUpdateInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Instance>>,
               PartialUpdateInstance,
               (google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
@@ -107,9 +107,9 @@ class MockBigtableInstanceAdminConnection
       (google::bigtable::admin::v2::DeleteInstanceRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::Cluster>>, CreateCluster,
       (google::bigtable::admin::v2::CreateClusterRequest const& request),
@@ -136,9 +136,9 @@ class MockBigtableInstanceAdminConnection
               (google::bigtable::admin::v2::ListClustersRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Cluster>>,
               UpdateCluster,
               (google::bigtable::admin::v2::Cluster const& request),
@@ -155,9 +155,9 @@ class MockBigtableInstanceAdminConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PartialUpdateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PartialUpdateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PartialUpdateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PartialUpdateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::Cluster>>,
       PartialUpdateCluster,
@@ -196,9 +196,9 @@ class MockBigtableInstanceAdminConnection
               (google::bigtable::admin::v2::ListAppProfilesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateAppProfile) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateAppProfile(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAppProfile)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAppProfile(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::AppProfile>>,
       UpdateAppProfile,

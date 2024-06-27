@@ -59,9 +59,9 @@ class MockSecureSourceManagerConnection
                    request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>,
       CreateInstance,
@@ -82,9 +82,9 @@ class MockSecureSourceManagerConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
@@ -120,9 +120,9 @@ class MockSecureSourceManagerConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateRepository) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateRepository(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateRepository)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateRepository(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>,
       CreateRepository,
@@ -143,9 +143,9 @@ class MockSecureSourceManagerConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteRepository) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteRepository(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRepository)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRepository(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,

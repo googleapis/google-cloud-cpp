@@ -47,9 +47,9 @@ class MockVideoIntelligenceServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AnnotateVideo) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AnnotateVideo(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AnnotateVideo)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AnnotateVideo(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
               AnnotateVideo,

@@ -55,9 +55,9 @@ class MockTargetVpnGatewaysConnection
            AggregatedListTargetVpnGatewaysRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteTargetVpnGateway) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteTargetVpnGateway(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTargetVpnGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTargetVpnGateway(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetVpnGateway,
               (google::cloud::cpp::compute::target_vpn_gateways::v1::
@@ -83,9 +83,9 @@ class MockTargetVpnGatewaysConnection
                    GetTargetVpnGatewayRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertTargetVpnGateway) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertTargetVpnGateway(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertTargetVpnGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertTargetVpnGateway(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetVpnGateway,
               (google::cloud::cpp::compute::target_vpn_gateways::v1::
@@ -111,9 +111,9 @@ class MockTargetVpnGatewaysConnection
                    ListTargetVpnGatewaysRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetLabels) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetLabels(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::target_vpn_gateways::v1::

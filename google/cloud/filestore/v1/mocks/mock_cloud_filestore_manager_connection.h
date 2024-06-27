@@ -56,9 +56,9 @@ class MockCloudFilestoreManagerConnection
               (google::cloud::filestore::v1::GetInstanceRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Instance>>, CreateInstance,
       (google::cloud::filestore::v1::CreateInstanceRequest const& request),
@@ -76,9 +76,9 @@ class MockCloudFilestoreManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Instance>>, UpdateInstance,
       (google::cloud::filestore::v1::UpdateInstanceRequest const& request),
@@ -96,9 +96,9 @@ class MockCloudFilestoreManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RestoreInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RestoreInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestoreInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestoreInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Instance>>, RestoreInstance,
       (google::cloud::filestore::v1::RestoreInstanceRequest const& request),
@@ -116,9 +116,9 @@ class MockCloudFilestoreManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RevertInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RevertInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RevertInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RevertInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Instance>>, RevertInstance,
       (google::cloud::filestore::v1::RevertInstanceRequest const& request),
@@ -136,9 +136,9 @@ class MockCloudFilestoreManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::common::OperationMetadata>>,
       DeleteInstance,
@@ -166,9 +166,9 @@ class MockCloudFilestoreManagerConnection
               (google::cloud::filestore::v1::GetSnapshotRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateSnapshot(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Snapshot>>, CreateSnapshot,
       (google::cloud::filestore::v1::CreateSnapshotRequest const& request),
@@ -186,9 +186,9 @@ class MockCloudFilestoreManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSnapshot(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::common::OperationMetadata>>,
       DeleteSnapshot,
@@ -207,9 +207,9 @@ class MockCloudFilestoreManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSnapshot(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Snapshot>>, UpdateSnapshot,
       (google::cloud::filestore::v1::UpdateSnapshotRequest const& request),
@@ -235,9 +235,9 @@ class MockCloudFilestoreManagerConnection
               (google::cloud::filestore::v1::GetBackupRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Backup>>, CreateBackup,
       (google::cloud::filestore::v1::CreateBackupRequest const& request),
@@ -255,9 +255,9 @@ class MockCloudFilestoreManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::common::OperationMetadata>>, DeleteBackup,
       (google::cloud::filestore::v1::DeleteBackupRequest const& request),
@@ -275,9 +275,9 @@ class MockCloudFilestoreManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Backup>>, UpdateBackup,
       (google::cloud::filestore::v1::UpdateBackupRequest const& request),

@@ -61,9 +61,9 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
       (google::cloud::resourcemanager::v3::SearchFoldersRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateFolder) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateFolder(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateFolder(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       CreateFolder,
@@ -82,9 +82,9 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateFolder) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateFolder(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFolder(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       UpdateFolder,
@@ -103,9 +103,9 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, MoveFolder) is now ambiguous. Use
-  // EXPECT_CALL(*mock, MoveFolder(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MoveFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MoveFolder(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>, MoveFolder,
       (google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
@@ -123,9 +123,9 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteFolder) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteFolder(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFolder(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       DeleteFolder,
@@ -144,9 +144,9 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UndeleteFolder) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UndeleteFolder(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeleteFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeleteFolder(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
               UndeleteFolder,
               (google::cloud::resourcemanager::v3::UndeleteFolderRequest const&

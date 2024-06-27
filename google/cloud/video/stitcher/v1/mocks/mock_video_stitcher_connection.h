@@ -47,9 +47,9 @@ class MockVideoStitcherServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateCdnKey) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateCdnKey(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCdnKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCdnKey(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
       CreateCdnKey,
@@ -78,9 +78,9 @@ class MockVideoStitcherServiceConnection
       (google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteCdnKey) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteCdnKey(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCdnKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCdnKey(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
       DeleteCdnKey,
@@ -99,9 +99,9 @@ class MockVideoStitcherServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateCdnKey) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateCdnKey(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCdnKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCdnKey(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
       UpdateCdnKey,
@@ -171,9 +171,9 @@ class MockVideoStitcherServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateSlate) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateSlate(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateSlate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateSlate(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::Slate>>, CreateSlate,
       (google::cloud::video::stitcher::v1::CreateSlateRequest const& request),
@@ -201,9 +201,9 @@ class MockVideoStitcherServiceConnection
       (google::cloud::video::stitcher::v1::GetSlateRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateSlate) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateSlate(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSlate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSlate(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::Slate>>, UpdateSlate,
       (google::cloud::video::stitcher::v1::UpdateSlateRequest const& request),
@@ -221,9 +221,9 @@ class MockVideoStitcherServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSlate) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSlate(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSlate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSlate(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
       DeleteSlate,
@@ -255,9 +255,9 @@ class MockVideoStitcherServiceConnection
                    request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateLiveConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateLiveConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateLiveConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateLiveConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
       CreateLiveConfig,
@@ -289,9 +289,9 @@ class MockVideoStitcherServiceConnection
       (google::cloud::video::stitcher::v1::GetLiveConfigRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteLiveConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteLiveConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteLiveConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteLiveConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
       DeleteLiveConfig,
@@ -312,9 +312,9 @@ class MockVideoStitcherServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateLiveConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateLiveConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateLiveConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateLiveConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
       UpdateLiveConfig,
@@ -335,9 +335,9 @@ class MockVideoStitcherServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateVodConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateVodConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateVodConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateVodConfig(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
               CreateVodConfig,
               (google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
@@ -367,9 +367,9 @@ class MockVideoStitcherServiceConnection
       (google::cloud::video::stitcher::v1::GetVodConfigRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteVodConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteVodConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteVodConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteVodConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
       DeleteVodConfig,
@@ -389,9 +389,9 @@ class MockVideoStitcherServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateVodConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateVodConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateVodConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateVodConfig(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
               UpdateVodConfig,
               (google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&

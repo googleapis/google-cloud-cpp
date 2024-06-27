@@ -52,9 +52,9 @@ class MockCompletionServiceConnection
               (google::cloud::retail::v2::CompleteQueryRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportCompletionData) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportCompletionData(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportCompletionData)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportCompletionData(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>,
       ImportCompletionData,

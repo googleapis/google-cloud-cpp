@@ -56,9 +56,9 @@ class MockNodeTemplatesConnection
            AggregatedListNodeTemplatesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteNodeTemplate) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteNodeTemplate(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNodeTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNodeTemplate(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::
@@ -89,9 +89,9 @@ class MockNodeTemplatesConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertNodeTemplate) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertNodeTemplate(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertNodeTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertNodeTemplate(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNodeTemplate,
               (google::cloud::cpp::compute::node_templates::v1::

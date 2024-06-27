@@ -186,9 +186,9 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
               (google::cloud::datacatalog::v1::ListTagsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ReconcileTags) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ReconcileTags(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ReconcileTags)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ReconcileTags(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>,
       ReconcileTags,
@@ -231,9 +231,9 @@ class MockDataCatalogConnection : public datacatalog_v1::DataCatalogConnection {
               (google::iam::v1::TestIamPermissionsRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportEntries) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportEntries(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportEntries)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportEntries(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>,
       ImportEntries,

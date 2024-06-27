@@ -47,9 +47,9 @@ class MockLivestreamServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateChannel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateChannel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateChannel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateChannel(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Channel>>,
               CreateChannel,
               (google::cloud::video::livestream::v1::CreateChannelRequest const&
@@ -79,9 +79,9 @@ class MockLivestreamServiceConnection
       (google::cloud::video::livestream::v1::GetChannelRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteChannel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteChannel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteChannel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteChannel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
       DeleteChannel,
@@ -101,9 +101,9 @@ class MockLivestreamServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateChannel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateChannel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateChannel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateChannel(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Channel>>,
               UpdateChannel,
               (google::cloud::video::livestream::v1::UpdateChannelRequest const&
@@ -122,9 +122,9 @@ class MockLivestreamServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StartChannel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StartChannel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartChannel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartChannel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::video::livestream::v1::ChannelOperationResponse>>,
@@ -146,9 +146,9 @@ class MockLivestreamServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StopChannel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StopChannel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopChannel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopChannel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::video::livestream::v1::ChannelOperationResponse>>,
@@ -169,9 +169,9 @@ class MockLivestreamServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateInput) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateInput(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInput)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInput(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Input>>,
       CreateInput,
@@ -200,9 +200,9 @@ class MockLivestreamServiceConnection
       (google::cloud::video::livestream::v1::GetInputRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteInput) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteInput(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInput)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInput(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
       DeleteInput,
@@ -221,9 +221,9 @@ class MockLivestreamServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateInput) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateInput(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInput)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInput(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Input>>,
       UpdateInput,
@@ -262,9 +262,9 @@ class MockLivestreamServiceConnection
       (google::cloud::video::livestream::v1::DeleteEventRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAsset) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAsset(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAsset)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAsset(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Asset>>,
       CreateAsset,
@@ -283,9 +283,9 @@ class MockLivestreamServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAsset) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAsset(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAsset)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAsset(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
       DeleteAsset,
@@ -319,9 +319,9 @@ class MockLivestreamServiceConnection
       (google::cloud::video::livestream::v1::GetPoolRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdatePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdatePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdatePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdatePool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Pool>>, UpdatePool,
       (google::cloud::video::livestream::v1::UpdatePoolRequest const& request),

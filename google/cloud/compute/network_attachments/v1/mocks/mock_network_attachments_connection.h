@@ -55,9 +55,9 @@ class MockNetworkAttachmentsConnection
            AggregatedListNetworkAttachmentsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteNetworkAttachment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteNetworkAttachment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNetworkAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNetworkAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkAttachment,
               (google::cloud::cpp::compute::network_attachments::v1::
@@ -88,9 +88,9 @@ class MockNetworkAttachmentsConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertNetworkAttachment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertNetworkAttachment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertNetworkAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertNetworkAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNetworkAttachment,
               (google::cloud::cpp::compute::network_attachments::v1::
@@ -116,9 +116,9 @@ class MockNetworkAttachmentsConnection
                    ListNetworkAttachmentsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchNetworkAttachment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchNetworkAttachment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchNetworkAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchNetworkAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchNetworkAttachment,
               (google::cloud::cpp::compute::network_attachments::v1::

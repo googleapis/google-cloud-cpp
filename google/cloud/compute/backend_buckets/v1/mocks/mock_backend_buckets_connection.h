@@ -47,9 +47,9 @@ class MockBackendBucketsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AddSignedUrlKey) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AddSignedUrlKey(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddSignedUrlKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddSignedUrlKey(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddSignedUrlKey,
               (google::cloud::cpp::compute::backend_buckets::v1::
@@ -69,9 +69,9 @@ class MockBackendBucketsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteBackendBucket) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteBackendBucket(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackendBucket)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackendBucket(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
@@ -91,9 +91,9 @@ class MockBackendBucketsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSignedUrlKey) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSignedUrlKey(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSignedUrlKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSignedUrlKey(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSignedUrlKey,
               (google::cloud::cpp::compute::backend_buckets::v1::
@@ -124,9 +124,9 @@ class MockBackendBucketsConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertBackendBucket) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertBackendBucket(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertBackendBucket)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertBackendBucket(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
@@ -152,9 +152,9 @@ class MockBackendBucketsConnection
                    ListBackendBucketsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchBackendBucket) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchBackendBucket(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchBackendBucket)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchBackendBucket(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::
@@ -174,9 +174,9 @@ class MockBackendBucketsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetEdgeSecurityPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetEdgeSecurityPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetEdgeSecurityPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetEdgeSecurityPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetEdgeSecurityPolicy,
               (google::cloud::cpp::compute::backend_buckets::v1::
@@ -208,9 +208,9 @@ class MockBackendBucketsConnection
            TestIamPermissionsRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateBackendBucket) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateBackendBucket(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackendBucket)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackendBucket(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendBucket,
               (google::cloud::cpp::compute::backend_buckets::v1::

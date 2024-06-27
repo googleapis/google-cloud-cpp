@@ -47,9 +47,9 @@ class MockNotebookServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateNotebookRuntimeTemplate) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateNotebookRuntimeTemplate(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateNotebookRuntimeTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateNotebookRuntimeTemplate(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>,
       CreateNotebookRuntimeTemplate,
@@ -84,9 +84,9 @@ class MockNotebookServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteNotebookRuntimeTemplate) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteNotebookRuntimeTemplate(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNotebookRuntimeTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNotebookRuntimeTemplate(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteNotebookRuntimeTemplate,
@@ -113,9 +113,9 @@ class MockNotebookServiceConnection
                    UpdateNotebookRuntimeTemplateRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AssignNotebookRuntime) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AssignNotebookRuntime(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AssignNotebookRuntime)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AssignNotebookRuntime(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>,
       AssignNotebookRuntime,
@@ -148,9 +148,9 @@ class MockNotebookServiceConnection
       (google::cloud::aiplatform::v1::ListNotebookRuntimesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteNotebookRuntime) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteNotebookRuntime(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNotebookRuntime)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNotebookRuntime(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteNotebookRuntime,
@@ -171,9 +171,9 @@ class MockNotebookServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpgradeNotebookRuntime) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpgradeNotebookRuntime(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpgradeNotebookRuntime)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpgradeNotebookRuntime(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>,
@@ -196,9 +196,9 @@ class MockNotebookServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StartNotebookRuntime) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StartNotebookRuntime(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartNotebookRuntime)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartNotebookRuntime(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>,
               StartNotebookRuntime,

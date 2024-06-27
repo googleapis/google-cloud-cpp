@@ -77,9 +77,9 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (google::cloud::datacatalog::lineage::v1::ListProcessesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteProcess) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteProcess(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteProcess)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteProcess(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,
@@ -122,9 +122,9 @@ class MockLineageConnection : public datacatalog_lineage_v1::LineageConnection {
       (google::cloud::datacatalog::lineage::v1::ListRunsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteRun) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteRun(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRun)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRun(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>,

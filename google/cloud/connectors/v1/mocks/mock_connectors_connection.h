@@ -56,9 +56,9 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
       (google::cloud::connectors::v1::GetConnectionRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::connectors::v1::Connection>>,
       CreateConnection,
@@ -77,9 +77,9 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::connectors::v1::Connection>>,
       UpdateConnection,
@@ -98,9 +98,9 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>,
       DeleteConnection,
@@ -158,9 +158,10 @@ class MockConnectorsConnection : public connectors_v1::ConnectorsConnection {
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RefreshConnectionSchemaMetadata) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RefreshConnectionSchemaMetadata(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RefreshConnectionSchemaMetadata)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, RefreshConnectionSchemaMetadata(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>,
       RefreshConnectionSchemaMetadata,

@@ -66,9 +66,9 @@ class MockPipelineServiceConnection
       (google::cloud::aiplatform::v1::ListTrainingPipelinesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteTrainingPipeline) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteTrainingPipeline(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTrainingPipeline)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTrainingPipeline(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteTrainingPipeline,
@@ -110,9 +110,9 @@ class MockPipelineServiceConnection
               (google::cloud::aiplatform::v1::ListPipelineJobsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePipelineJob) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePipelineJob(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePipelineJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePipelineJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeletePipelineJob,
@@ -131,9 +131,9 @@ class MockPipelineServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, BatchDeletePipelineJobs) is now ambiguous. Use
-  // EXPECT_CALL(*mock, BatchDeletePipelineJobs(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchDeletePipelineJobs)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchDeletePipelineJobs(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
@@ -161,9 +161,9 @@ class MockPipelineServiceConnection
       (google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, BatchCancelPipelineJobs) is now ambiguous. Use
-  // EXPECT_CALL(*mock, BatchCancelPipelineJobs(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchCancelPipelineJobs)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchCancelPipelineJobs(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>,

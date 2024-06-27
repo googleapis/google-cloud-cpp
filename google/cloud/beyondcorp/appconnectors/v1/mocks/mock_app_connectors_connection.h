@@ -61,9 +61,9 @@ class MockAppConnectorsServiceConnection
            GetAppConnectorRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAppConnector) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAppConnector(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAppConnector)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAppConnector(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
@@ -85,9 +85,9 @@ class MockAppConnectorsServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateAppConnector) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateAppConnector(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAppConnector)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAppConnector(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,
@@ -109,9 +109,9 @@ class MockAppConnectorsServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAppConnector) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAppConnector(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAppConnector)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAppConnector(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                                   AppConnectorOperationMetadata>>,
               DeleteAppConnector,
@@ -132,9 +132,9 @@ class MockAppConnectorsServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ReportStatus) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ReportStatus(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ReportStatus)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ReportStatus(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>,

@@ -59,9 +59,9 @@ class MockUserEventServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportUserEvents) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportUserEvents(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportUserEvents)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportUserEvents(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::ImportUserEventsResponse>>,

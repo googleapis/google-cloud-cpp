@@ -58,9 +58,9 @@ class MockBareMetalSolutionConnection
       (google::cloud::baremetalsolution::v2::GetInstanceRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>,
       UpdateInstance,
@@ -87,9 +87,9 @@ class MockBareMetalSolutionConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ResetInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ResetInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ResetInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ResetInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::baremetalsolution::v2::ResetInstanceResponse>>,
               ResetInstance,
@@ -110,9 +110,9 @@ class MockBareMetalSolutionConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StartInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StartInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::baremetalsolution::v2::StartInstanceResponse>>,
               StartInstance,
@@ -133,9 +133,9 @@ class MockBareMetalSolutionConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StopInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StopInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>,
@@ -157,9 +157,10 @@ class MockBareMetalSolutionConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, EnableInteractiveSerialConsole) is now ambiguous. Use
-  // EXPECT_CALL(*mock, EnableInteractiveSerialConsole(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EnableInteractiveSerialConsole)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EnableInteractiveSerialConsole(::testing::_))`
+  /// instead.
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::
                                   EnableInteractiveSerialConsoleResponse>>,
               EnableInteractiveSerialConsole,
@@ -181,9 +182,10 @@ class MockBareMetalSolutionConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DisableInteractiveSerialConsole) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DisableInteractiveSerialConsole(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DisableInteractiveSerialConsole)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, DisableInteractiveSerialConsole(::testing::_))`
+  /// instead.
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::
                                   DisableInteractiveSerialConsoleResponse>>,
               DisableInteractiveSerialConsole,
@@ -205,9 +207,9 @@ class MockBareMetalSolutionConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DetachLun) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DetachLun(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DetachLun)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DetachLun(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>,
       DetachLun,
@@ -252,9 +254,9 @@ class MockBareMetalSolutionConnection
       (google::cloud::baremetalsolution::v2::GetVolumeRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateVolume) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateVolume(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateVolume)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateVolume(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>,
               UpdateVolume,
               (google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
@@ -279,9 +281,9 @@ class MockBareMetalSolutionConnection
                    request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, EvictVolume) is now ambiguous. Use
-  // EXPECT_CALL(*mock, EvictVolume(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EvictVolume)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EvictVolume(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
       EvictVolume,
@@ -300,9 +302,9 @@ class MockBareMetalSolutionConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ResizeVolume) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ResizeVolume(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ResizeVolume)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ResizeVolume(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>,
               ResizeVolume,
               (google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
@@ -339,9 +341,9 @@ class MockBareMetalSolutionConnection
       (google::cloud::baremetalsolution::v2::GetNetworkRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateNetwork) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateNetwork(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateNetwork(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Network>>,
               UpdateNetwork,
               (google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
@@ -367,9 +369,9 @@ class MockBareMetalSolutionConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RestoreVolumeSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RestoreVolumeSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestoreVolumeSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestoreVolumeSnapshot(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>,
       RestoreVolumeSnapshot,
@@ -420,9 +422,9 @@ class MockBareMetalSolutionConnection
               (google::cloud::baremetalsolution::v2::ListLunsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, EvictLun) is now ambiguous. Use
-  // EXPECT_CALL(*mock, EvictLun(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EvictLun)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EvictLun(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
       EvictLun,
@@ -452,9 +454,9 @@ class MockBareMetalSolutionConnection
       (google::cloud::baremetalsolution::v2::ListNfsSharesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateNfsShare) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateNfsShare(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateNfsShare)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateNfsShare(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
       UpdateNfsShare,
@@ -475,9 +477,9 @@ class MockBareMetalSolutionConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateNfsShare) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateNfsShare(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateNfsShare)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateNfsShare(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
       CreateNfsShare,
@@ -504,9 +506,9 @@ class MockBareMetalSolutionConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteNfsShare) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteNfsShare(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNfsShare)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNfsShare(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
       DeleteNfsShare,

@@ -63,9 +63,9 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
               (google::cloud::dialogflow::v2::SearchAgentsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, TrainAgent) is now ambiguous. Use
-  // EXPECT_CALL(*mock, TrainAgent(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, TrainAgent)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, TrainAgent(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainAgent,
               (google::cloud::dialogflow::v2::TrainAgentRequest const& request),
               (override));
@@ -80,9 +80,9 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ExportAgent) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ExportAgent(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportAgent)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportAgent(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
       ExportAgent,
@@ -101,9 +101,9 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportAgent) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportAgent(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportAgent)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportAgent(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, ImportAgent,
       (google::cloud::dialogflow::v2::ImportAgentRequest const& request),
@@ -120,9 +120,9 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RestoreAgent) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RestoreAgent(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestoreAgent)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestoreAgent(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
       (google::cloud::dialogflow::v2::RestoreAgentRequest const& request),

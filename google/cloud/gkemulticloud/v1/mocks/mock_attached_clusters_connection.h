@@ -47,9 +47,9 @@ class MockAttachedClustersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAttachedCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAttachedCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAttachedCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAttachedCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       CreateAttachedCluster,
@@ -70,9 +70,9 @@ class MockAttachedClustersConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateAttachedCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateAttachedCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAttachedCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAttachedCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       UpdateAttachedCluster,
@@ -93,9 +93,9 @@ class MockAttachedClustersConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportAttachedCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportAttachedCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportAttachedCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportAttachedCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>,
       ImportAttachedCluster,
@@ -129,9 +129,9 @@ class MockAttachedClustersConnection
       (google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAttachedCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAttachedCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAttachedCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAttachedCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAttachedCluster,

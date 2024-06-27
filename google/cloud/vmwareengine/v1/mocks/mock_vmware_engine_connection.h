@@ -58,9 +58,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreatePrivateCloud) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreatePrivateCloud(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreatePrivateCloud)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreatePrivateCloud(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               CreatePrivateCloud,
               (google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const&
@@ -79,9 +79,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdatePrivateCloud) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdatePrivateCloud(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdatePrivateCloud)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdatePrivateCloud(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               UpdatePrivateCloud,
               (google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&
@@ -100,9 +100,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePrivateCloud) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePrivateCloud(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePrivateCloud)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePrivateCloud(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               DeletePrivateCloud,
               (google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const&
@@ -121,9 +121,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UndeletePrivateCloud) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UndeletePrivateCloud(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeletePrivateCloud)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeletePrivateCloud(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
       UndeletePrivateCloud,
@@ -154,9 +154,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetClusterRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>, CreateCluster,
       (google::cloud::vmwareengine::v1::CreateClusterRequest const& request),
@@ -174,9 +174,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>, UpdateCluster,
       (google::cloud::vmwareengine::v1::UpdateClusterRequest const& request),
@@ -194,9 +194,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteCluster,
@@ -241,9 +241,9 @@ class MockVmwareEngineConnection
                    request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateExternalAddress) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateExternalAddress(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateExternalAddress)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateExternalAddress(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
       CreateExternalAddress,
@@ -264,9 +264,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateExternalAddress) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateExternalAddress(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateExternalAddress)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateExternalAddress(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
       UpdateExternalAddress,
@@ -287,9 +287,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteExternalAddress) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteExternalAddress(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteExternalAddress)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteExternalAddress(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteExternalAddress,
@@ -320,9 +320,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetSubnetRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateSubnet) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateSubnet(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSubnet)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSubnet(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>, UpdateSubnet,
       (google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request),
@@ -353,9 +353,9 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateExternalAccessRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateExternalAccessRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateExternalAccessRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateExternalAccessRule(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
       CreateExternalAccessRule,
@@ -376,9 +376,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateExternalAccessRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateExternalAccessRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateExternalAccessRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateExternalAccessRule(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
       UpdateExternalAccessRule,
@@ -399,9 +399,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteExternalAccessRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteExternalAccessRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteExternalAccessRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteExternalAccessRule(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteExternalAccessRule,
@@ -434,9 +434,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateLoggingServer) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateLoggingServer(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateLoggingServer)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateLoggingServer(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
       CreateLoggingServer,
@@ -457,9 +457,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateLoggingServer) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateLoggingServer(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateLoggingServer)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateLoggingServer(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
       UpdateLoggingServer,
@@ -480,9 +480,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteLoggingServer) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteLoggingServer(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteLoggingServer)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteLoggingServer(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteLoggingServer,
@@ -526,9 +526,9 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ResetNsxCredentials) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ResetNsxCredentials(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ResetNsxCredentials)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ResetNsxCredentials(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
       ResetNsxCredentials,
@@ -549,9 +549,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ResetVcenterCredentials) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ResetVcenterCredentials(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ResetVcenterCredentials)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ResetVcenterCredentials(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
       ResetVcenterCredentials,
@@ -578,9 +578,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateDnsForwarding) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateDnsForwarding(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDnsForwarding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDnsForwarding(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>,
       UpdateDnsForwarding,
@@ -613,9 +613,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateNetworkPeering) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateNetworkPeering(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateNetworkPeering)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateNetworkPeering(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
       CreateNetworkPeering,
@@ -636,9 +636,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteNetworkPeering) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteNetworkPeering(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNetworkPeering)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNetworkPeering(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteNetworkPeering,
@@ -659,9 +659,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateNetworkPeering) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateNetworkPeering(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateNetworkPeering)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateNetworkPeering(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
       UpdateNetworkPeering,
@@ -688,9 +688,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::ListPeeringRoutesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateHcxActivationKey) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateHcxActivationKey(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateHcxActivationKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateHcxActivationKey(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>,
       CreateHcxActivationKey,
@@ -736,9 +736,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateNetworkPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateNetworkPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateNetworkPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateNetworkPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
       CreateNetworkPolicy,
@@ -759,9 +759,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateNetworkPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateNetworkPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateNetworkPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateNetworkPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
       UpdateNetworkPolicy,
@@ -782,9 +782,9 @@ class MockVmwareEngineConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteNetworkPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteNetworkPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNetworkPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNetworkPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteNetworkPolicy,
@@ -819,9 +819,10 @@ class MockVmwareEngineConnection
            GetManagementDnsZoneBindingRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateManagementDnsZoneBinding) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateManagementDnsZoneBinding(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateManagementDnsZoneBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateManagementDnsZoneBinding(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
@@ -844,9 +845,10 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateManagementDnsZoneBinding) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateManagementDnsZoneBinding(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateManagementDnsZoneBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateManagementDnsZoneBinding(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
@@ -869,9 +871,10 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteManagementDnsZoneBinding) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteManagementDnsZoneBinding(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteManagementDnsZoneBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteManagementDnsZoneBinding(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteManagementDnsZoneBinding,
@@ -892,9 +895,10 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RepairManagementDnsZoneBinding) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RepairManagementDnsZoneBinding(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RepairManagementDnsZoneBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RepairManagementDnsZoneBinding(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
@@ -917,9 +921,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateVmwareEngineNetwork) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateVmwareEngineNetwork(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateVmwareEngineNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateVmwareEngineNetwork(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
       CreateVmwareEngineNetwork,
@@ -940,9 +944,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateVmwareEngineNetwork) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateVmwareEngineNetwork(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateVmwareEngineNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateVmwareEngineNetwork(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
       UpdateVmwareEngineNetwork,
@@ -963,9 +967,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteVmwareEngineNetwork) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteVmwareEngineNetwork(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteVmwareEngineNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteVmwareEngineNetwork(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteVmwareEngineNetwork,
@@ -1000,9 +1004,9 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreatePrivateConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreatePrivateConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreatePrivateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreatePrivateConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
       CreatePrivateConnection,
@@ -1036,9 +1040,9 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdatePrivateConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdatePrivateConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdatePrivateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdatePrivateConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
       UpdatePrivateConnection,
@@ -1059,9 +1063,9 @@ class MockVmwareEngineConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePrivateConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePrivateConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePrivateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePrivateConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeletePrivateConnection,
@@ -1088,9 +1092,9 @@ class MockVmwareEngineConnection
                    ListPrivateConnectionPeeringRoutesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, GrantDnsBindPermission) is now ambiguous. Use
-  // EXPECT_CALL(*mock, GrantDnsBindPermission(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, GrantDnsBindPermission)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, GrantDnsBindPermission(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>,
       GrantDnsBindPermission,
@@ -1118,9 +1122,9 @@ class MockVmwareEngineConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RevokeDnsBindPermission) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RevokeDnsBindPermission(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RevokeDnsBindPermission)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RevokeDnsBindPermission(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>,
       RevokeDnsBindPermission,

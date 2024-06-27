@@ -61,9 +61,9 @@ class MockPolicyBasedRoutingServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreatePolicyBasedRoute) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreatePolicyBasedRoute(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreatePolicyBasedRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreatePolicyBasedRoute(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>,
@@ -85,9 +85,9 @@ class MockPolicyBasedRoutingServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePolicyBasedRoute) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePolicyBasedRoute(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePolicyBasedRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePolicyBasedRoute(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,

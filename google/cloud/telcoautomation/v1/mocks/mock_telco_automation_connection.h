@@ -61,9 +61,9 @@ class MockTelcoAutomationConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateOrchestrationCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateOrchestrationCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateOrchestrationCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateOrchestrationCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>,
@@ -86,9 +86,9 @@ class MockTelcoAutomationConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteOrchestrationCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteOrchestrationCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteOrchestrationCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteOrchestrationCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteOrchestrationCluster,
@@ -119,9 +119,9 @@ class MockTelcoAutomationConnection
       (google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateEdgeSlm) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateEdgeSlm(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateEdgeSlm)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateEdgeSlm(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>,
       CreateEdgeSlm,
@@ -140,9 +140,9 @@ class MockTelcoAutomationConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteEdgeSlm) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteEdgeSlm(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteEdgeSlm)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteEdgeSlm(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteEdgeSlm,

@@ -72,9 +72,9 @@ class MockTranslationServiceConnection
       (google::cloud::translation::v3::TranslateDocumentRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, BatchTranslateText) is now ambiguous. Use
-  // EXPECT_CALL(*mock, BatchTranslateText(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchTranslateText)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchTranslateText(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
       BatchTranslateText,
@@ -94,9 +94,9 @@ class MockTranslationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, BatchTranslateDocument) is now ambiguous. Use
-  // EXPECT_CALL(*mock, BatchTranslateDocument(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchTranslateDocument)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchTranslateDocument(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
@@ -119,9 +119,9 @@ class MockTranslationServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateGlossary) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateGlossary(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateGlossary)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateGlossary(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::Glossary>>,
       CreateGlossary,
@@ -150,9 +150,9 @@ class MockTranslationServiceConnection
       (google::cloud::translation::v3::GetGlossaryRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteGlossary) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteGlossary(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteGlossary)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteGlossary(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
       DeleteGlossary,

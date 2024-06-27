@@ -47,9 +47,9 @@ class MockTargetPoolsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AddHealthCheck) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AddHealthCheck(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddHealthCheck)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddHealthCheck(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddHealthCheck,
               (google::cloud::cpp::compute::target_pools::v1::
@@ -69,9 +69,9 @@ class MockTargetPoolsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AddInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AddInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AddInstance,
       (google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
@@ -100,9 +100,9 @@ class MockTargetPoolsConnection
            AggregatedListTargetPoolsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteTargetPool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteTargetPool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTargetPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTargetPool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetPool,
               (google::cloud::cpp::compute::target_pools::v1::
@@ -135,9 +135,9 @@ class MockTargetPoolsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertTargetPool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertTargetPool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertTargetPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertTargetPool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetPool,
               (google::cloud::cpp::compute::target_pools::v1::
@@ -164,9 +164,9 @@ class MockTargetPoolsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RemoveHealthCheck) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RemoveHealthCheck(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemoveHealthCheck)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemoveHealthCheck(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveHealthCheck,
               (google::cloud::cpp::compute::target_pools::v1::
@@ -186,9 +186,9 @@ class MockTargetPoolsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RemoveInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RemoveInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemoveInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemoveInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveInstance,
               (google::cloud::cpp::compute::target_pools::v1::
@@ -208,9 +208,9 @@ class MockTargetPoolsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetBackup,
       (google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
@@ -230,9 +230,9 @@ class MockTargetPoolsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetSecurityPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetSecurityPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetSecurityPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetSecurityPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSecurityPolicy,
               (google::cloud::cpp::compute::target_pools::v1::

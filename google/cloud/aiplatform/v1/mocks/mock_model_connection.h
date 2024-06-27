@@ -47,9 +47,9 @@ class MockModelServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UploadModel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UploadModel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UploadModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UploadModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>,
       UploadModel,
@@ -86,9 +86,9 @@ class MockModelServiceConnection
       (google::cloud::aiplatform::v1::UpdateModelRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateExplanationDataset) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateExplanationDataset(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateExplanationDataset)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateExplanationDataset(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
@@ -111,9 +111,9 @@ class MockModelServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteModel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteModel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteModel,
@@ -132,9 +132,9 @@ class MockModelServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteModelVersion) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteModelVersion(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteModelVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteModelVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteModelVersion,
@@ -159,9 +159,9 @@ class MockModelServiceConnection
                    request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ExportModel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ExportModel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
       ExportModel,
@@ -180,9 +180,9 @@ class MockModelServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CopyModel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CopyModel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CopyModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CopyModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
       CopyModel,

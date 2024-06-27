@@ -52,9 +52,9 @@ class MockScheduleServiceConnection
       (google::cloud::aiplatform::v1::CreateScheduleRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSchedule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSchedule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSchedule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSchedule(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteSchedule,

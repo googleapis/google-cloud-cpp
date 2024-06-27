@@ -70,9 +70,9 @@ class MockVizierServiceConnection
       (google::cloud::aiplatform::v1::LookupStudyRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SuggestTrials) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SuggestTrials(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SuggestTrials)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SuggestTrials(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
       SuggestTrials,
@@ -120,9 +120,9 @@ class MockVizierServiceConnection
       (google::cloud::aiplatform::v1::DeleteTrialRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CheckTrialEarlyStoppingState) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CheckTrialEarlyStoppingState(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CheckTrialEarlyStoppingState)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CheckTrialEarlyStoppingState(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,

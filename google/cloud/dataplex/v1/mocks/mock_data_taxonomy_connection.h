@@ -47,9 +47,9 @@ class MockDataTaxonomyServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateDataTaxonomy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateDataTaxonomy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateDataTaxonomy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateDataTaxonomy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>,
       CreateDataTaxonomy,
@@ -68,9 +68,9 @@ class MockDataTaxonomyServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateDataTaxonomy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateDataTaxonomy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDataTaxonomy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDataTaxonomy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>,
       UpdateDataTaxonomy,
@@ -89,9 +89,9 @@ class MockDataTaxonomyServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteDataTaxonomy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteDataTaxonomy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDataTaxonomy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDataTaxonomy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteDataTaxonomy,
@@ -120,9 +120,9 @@ class MockDataTaxonomyServiceConnection
       (google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateDataAttributeBinding) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateDataAttributeBinding(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateDataAttributeBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateDataAttributeBinding(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>,
       CreateDataAttributeBinding,
@@ -143,9 +143,9 @@ class MockDataTaxonomyServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateDataAttributeBinding) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateDataAttributeBinding(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDataAttributeBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDataAttributeBinding(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>,
       UpdateDataAttributeBinding,
@@ -166,9 +166,9 @@ class MockDataTaxonomyServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteDataAttributeBinding) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteDataAttributeBinding(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDataAttributeBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDataAttributeBinding(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteDataAttributeBinding,
@@ -202,9 +202,9 @@ class MockDataTaxonomyServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateDataAttribute) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateDataAttribute(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateDataAttribute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateDataAttribute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>,
       CreateDataAttribute,
@@ -223,9 +223,9 @@ class MockDataTaxonomyServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateDataAttribute) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateDataAttribute(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDataAttribute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDataAttribute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>,
       UpdateDataAttribute,
@@ -244,9 +244,9 @@ class MockDataTaxonomyServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteDataAttribute) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteDataAttribute(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDataAttribute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDataAttribute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteDataAttribute,

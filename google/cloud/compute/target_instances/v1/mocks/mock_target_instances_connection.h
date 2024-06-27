@@ -55,9 +55,9 @@ class MockTargetInstancesConnection
            AggregatedListTargetInstancesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteTargetInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteTargetInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTargetInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTargetInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetInstance,
               (google::cloud::cpp::compute::target_instances::v1::
@@ -83,9 +83,9 @@ class MockTargetInstancesConnection
                    GetTargetInstanceRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertTargetInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertTargetInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertTargetInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertTargetInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetInstance,
               (google::cloud::cpp::compute::target_instances::v1::
@@ -111,9 +111,9 @@ class MockTargetInstancesConnection
                    ListTargetInstancesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetSecurityPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetSecurityPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetSecurityPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetSecurityPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSecurityPolicy,
               (google::cloud::cpp::compute::target_instances::v1::

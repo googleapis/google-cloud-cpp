@@ -51,9 +51,9 @@ class MockSimulatorConnection : public policysimulator_v1::SimulatorConnection {
       (google::cloud::policysimulator::v1::GetReplayRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateReplay) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateReplay(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateReplay)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateReplay(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::policysimulator::v1::Replay>>,
       CreateReplay,

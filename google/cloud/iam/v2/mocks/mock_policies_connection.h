@@ -52,9 +52,9 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
   MOCK_METHOD(StatusOr<google::iam::v2::Policy>, GetPolicy,
               (google::iam::v2::GetPolicyRequest const& request), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreatePolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreatePolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreatePolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreatePolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, CreatePolicy,
               (google::iam::v2::CreatePolicyRequest const& request),
               (override));
@@ -69,9 +69,9 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdatePolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdatePolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdatePolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdatePolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
               (google::iam::v2::UpdatePolicyRequest const& request),
               (override));
@@ -86,9 +86,9 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
               (google::iam::v2::DeletePolicyRequest const& request),
               (override));

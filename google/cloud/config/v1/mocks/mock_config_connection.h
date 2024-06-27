@@ -55,9 +55,9 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (google::cloud::config::v1::GetDeploymentRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateDeployment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateDeployment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateDeployment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateDeployment(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::config::v1::Deployment>>, CreateDeployment,
       (google::cloud::config::v1::CreateDeploymentRequest const& request),
@@ -75,9 +75,9 @@ class MockConfigConnection : public config_v1::ConfigConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateDeployment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateDeployment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDeployment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDeployment(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::config::v1::Deployment>>, UpdateDeployment,
       (google::cloud::config::v1::UpdateDeploymentRequest const& request),
@@ -95,9 +95,9 @@ class MockConfigConnection : public config_v1::ConfigConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteDeployment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteDeployment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDeployment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDeployment(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::config::v1::Deployment>>, DeleteDeployment,
       (google::cloud::config::v1::DeleteDeploymentRequest const& request),
@@ -153,9 +153,9 @@ class MockConfigConnection : public config_v1::ConfigConnection {
       (google::cloud::config::v1::DeleteStatefileRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, LockDeployment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, LockDeployment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, LockDeployment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, LockDeployment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
               LockDeployment,
               (google::cloud::config::v1::LockDeploymentRequest const& request),
@@ -172,9 +172,9 @@ class MockConfigConnection : public config_v1::ConfigConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UnlockDeployment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UnlockDeployment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UnlockDeployment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UnlockDeployment(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::config::v1::Deployment>>, UnlockDeployment,
       (google::cloud::config::v1::UnlockDeploymentRequest const& request),
@@ -196,9 +196,9 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (google::cloud::config::v1::ExportLockInfoRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreatePreview) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreatePreview(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreatePreview)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreatePreview(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Preview>>,
               CreatePreview,
               (google::cloud::config::v1::CreatePreviewRequest const& request),
@@ -223,9 +223,9 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (google::cloud::config::v1::ListPreviewsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePreview) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePreview(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePreview)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePreview(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Preview>>,
               DeletePreview,
               (google::cloud::config::v1::DeletePreviewRequest const& request),

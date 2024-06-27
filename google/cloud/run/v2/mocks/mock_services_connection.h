@@ -46,9 +46,9 @@ class MockServicesConnection : public run_v2::ServicesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateService) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateService(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, CreateService,
               (google::cloud::run::v2::CreateServiceRequest const& request),
               (override));
@@ -71,9 +71,9 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::ListServicesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateService) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateService(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, UpdateService,
               (google::cloud::run::v2::UpdateServiceRequest const& request),
               (override));
@@ -88,9 +88,9 @@ class MockServicesConnection : public run_v2::ServicesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteService) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteService(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
               (google::cloud::run::v2::DeleteServiceRequest const& request),
               (override));

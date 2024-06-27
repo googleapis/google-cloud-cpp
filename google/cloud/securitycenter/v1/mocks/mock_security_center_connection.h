@@ -47,9 +47,9 @@ class MockSecurityCenterConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, BulkMuteFindings) is now ambiguous. Use
-  // EXPECT_CALL(*mock, BulkMuteFindings(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BulkMuteFindings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BulkMuteFindings(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>,
               BulkMuteFindings,
@@ -232,9 +232,9 @@ class MockSecurityCenterConnection
               (google::cloud::securitycenter::v1::ListSourcesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RunAssetDiscovery) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RunAssetDiscovery(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RunAssetDiscovery)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RunAssetDiscovery(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>,

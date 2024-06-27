@@ -67,9 +67,9 @@ class MockRegionInstanceGroupsConnection
            ListInstancesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetNamedPorts) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetNamedPorts(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetNamedPorts)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetNamedPorts(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetNamedPorts,
               (google::cloud::cpp::compute::region_instance_groups::v1::

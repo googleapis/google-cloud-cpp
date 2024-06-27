@@ -54,9 +54,9 @@ class MockIDSConnection : public ids_v1::IDSConnection {
               (google::cloud::ids::v1::GetEndpointRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateEndpoint) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateEndpoint(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateEndpoint)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateEndpoint(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::Endpoint>>,
               CreateEndpoint,
               (google::cloud::ids::v1::CreateEndpointRequest const& request),
@@ -73,9 +73,9 @@ class MockIDSConnection : public ids_v1::IDSConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteEndpoint) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteEndpoint(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteEndpoint)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteEndpoint(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::OperationMetadata>>,
               DeleteEndpoint,
               (google::cloud::ids::v1::DeleteEndpointRequest const& request),

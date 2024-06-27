@@ -60,9 +60,9 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
       (google::cloud::redis::v1::GetInstanceAuthStringRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               CreateInstance,
               (google::cloud::redis::v1::CreateInstanceRequest const& request),
@@ -79,9 +79,9 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               UpdateInstance,
               (google::cloud::redis::v1::UpdateInstanceRequest const& request),
@@ -98,9 +98,9 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpgradeInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpgradeInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpgradeInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpgradeInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               UpgradeInstance,
               (google::cloud::redis::v1::UpgradeInstanceRequest const& request),
@@ -117,9 +117,9 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               ImportInstance,
               (google::cloud::redis::v1::ImportInstanceRequest const& request),
@@ -136,9 +136,9 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ExportInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ExportInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               ExportInstance,
               (google::cloud::redis::v1::ExportInstanceRequest const& request),
@@ -155,9 +155,9 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, FailoverInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, FailoverInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, FailoverInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, FailoverInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::redis::v1::Instance>>, FailoverInstance,
       (google::cloud::redis::v1::FailoverInstanceRequest const& request),
@@ -175,9 +175,9 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::OperationMetadata>>,
               DeleteInstance,
               (google::cloud::redis::v1::DeleteInstanceRequest const& request),
@@ -194,9 +194,9 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RescheduleMaintenance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RescheduleMaintenance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RescheduleMaintenance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RescheduleMaintenance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::redis::v1::Instance>>,
       RescheduleMaintenance,

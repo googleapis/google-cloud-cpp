@@ -57,9 +57,9 @@ class MockCloudRedisClusterConnection
       (google::cloud::redis::cluster::v1::GetClusterRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
       UpdateCluster,
@@ -78,9 +78,9 @@ class MockCloudRedisClusterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Any>>, DeleteCluster,
       (google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
@@ -97,9 +97,9 @@ class MockCloudRedisClusterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
       CreateCluster,

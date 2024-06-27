@@ -47,9 +47,9 @@ class MockDataStoreServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateDataStore) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateDataStore(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateDataStore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateDataStore(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>,
               CreateDataStore,
               (google::cloud::discoveryengine::v1::CreateDataStoreRequest const&
@@ -79,9 +79,9 @@ class MockDataStoreServiceConnection
       (google::cloud::discoveryengine::v1::ListDataStoresRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteDataStore) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteDataStore(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDataStore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDataStore(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>,
               DeleteDataStore,

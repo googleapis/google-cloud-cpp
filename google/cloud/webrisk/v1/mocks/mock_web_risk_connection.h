@@ -68,9 +68,9 @@ class MockWebRiskServiceConnection
       (google::cloud::webrisk::v1::CreateSubmissionRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SubmitUri) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SubmitUri(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SubmitUri)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SubmitUri(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::webrisk::v1::Submission>>,
               SubmitUri,
               (google::cloud::webrisk::v1::SubmitUriRequest const& request),

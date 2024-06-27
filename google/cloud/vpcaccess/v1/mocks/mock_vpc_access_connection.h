@@ -47,9 +47,9 @@ class MockVpcAccessServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateConnector) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateConnector(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateConnector)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateConnector(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vpcaccess::v1::Connector>>,
       CreateConnector,
@@ -78,9 +78,9 @@ class MockVpcAccessServiceConnection
               (google::cloud::vpcaccess::v1::ListConnectorsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteConnector) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteConnector(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteConnector)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteConnector(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>,
       DeleteConnector,

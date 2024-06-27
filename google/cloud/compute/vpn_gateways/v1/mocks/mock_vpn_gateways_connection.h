@@ -56,9 +56,9 @@ class MockVpnGatewaysConnection
            AggregatedListVpnGatewaysRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteVpnGateway) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteVpnGateway(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteVpnGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteVpnGateway(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteVpnGateway,
               (google::cloud::cpp::compute::vpn_gateways::v1::
@@ -91,9 +91,9 @@ class MockVpnGatewaysConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertVpnGateway) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertVpnGateway(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertVpnGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertVpnGateway(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertVpnGateway,
               (google::cloud::cpp::compute::vpn_gateways::v1::
@@ -120,9 +120,9 @@ class MockVpnGatewaysConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetLabels) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetLabels(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&

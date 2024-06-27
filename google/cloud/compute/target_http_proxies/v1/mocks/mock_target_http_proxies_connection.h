@@ -55,9 +55,9 @@ class MockTargetHttpProxiesConnection
            AggregatedListTargetHttpProxiesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteTargetHttpProxy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteTargetHttpProxy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTargetHttpProxy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTargetHttpProxy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetHttpProxy,
               (google::cloud::cpp::compute::target_http_proxies::v1::
@@ -83,9 +83,9 @@ class MockTargetHttpProxiesConnection
                    GetTargetHttpProxyRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertTargetHttpProxy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertTargetHttpProxy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertTargetHttpProxy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertTargetHttpProxy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetHttpProxy,
               (google::cloud::cpp::compute::target_http_proxies::v1::
@@ -111,9 +111,9 @@ class MockTargetHttpProxiesConnection
                    ListTargetHttpProxiesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchTargetHttpProxy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchTargetHttpProxy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchTargetHttpProxy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchTargetHttpProxy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchTargetHttpProxy,
               (google::cloud::cpp::compute::target_http_proxies::v1::
@@ -133,9 +133,9 @@ class MockTargetHttpProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetUrlMap) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetUrlMap(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetUrlMap(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUrlMap,
               (google::cloud::cpp::compute::target_http_proxies::v1::

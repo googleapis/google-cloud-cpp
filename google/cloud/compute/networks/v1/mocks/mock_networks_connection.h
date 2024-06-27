@@ -46,9 +46,9 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AddPeering) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AddPeering(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddPeering)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddPeering(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AddPeering,
       (google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
@@ -68,9 +68,9 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteNetwork) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteNetwork(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNetwork(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteNetwork,
@@ -104,9 +104,9 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
                    GetEffectiveFirewallsRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertNetwork) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertNetwork(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertNetwork(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InsertNetwork,
@@ -139,9 +139,9 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchNetwork) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchNetwork(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchNetwork(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       PatchNetwork,
@@ -162,9 +162,9 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RemovePeering) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RemovePeering(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemovePeering)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemovePeering(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       RemovePeering,
@@ -185,9 +185,9 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SwitchToCustomMode) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SwitchToCustomMode(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SwitchToCustomMode)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SwitchToCustomMode(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SwitchToCustomMode,
               (google::cloud::cpp::compute::networks::v1::
@@ -207,9 +207,9 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdatePeering) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdatePeering(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdatePeering)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdatePeering(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdatePeering,

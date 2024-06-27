@@ -47,9 +47,9 @@ class MockRepositoryManagerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateConnection(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
               CreateConnection,
               (google::devtools::cloudbuild::v2::CreateConnectionRequest const&
@@ -79,9 +79,9 @@ class MockRepositoryManagerConnection
       (google::devtools::cloudbuild::v2::ListConnectionsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateConnection(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
               UpdateConnection,
               (google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
@@ -100,9 +100,9 @@ class MockRepositoryManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteConnection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteConnection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
       DeleteConnection,
@@ -122,9 +122,9 @@ class MockRepositoryManagerConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateRepository) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateRepository(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateRepository)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateRepository(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
               CreateRepository,
               (google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
@@ -143,9 +143,9 @@ class MockRepositoryManagerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, BatchCreateRepositories) is now ambiguous. Use
-  // EXPECT_CALL(*mock, BatchCreateRepositories(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchCreateRepositories)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchCreateRepositories(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
@@ -179,9 +179,9 @@ class MockRepositoryManagerConnection
       (google::devtools::cloudbuild::v2::ListRepositoriesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteRepository) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteRepository(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRepository)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRepository(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
       DeleteRepository,

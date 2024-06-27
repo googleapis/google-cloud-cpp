@@ -55,9 +55,9 @@ class MockServiceAttachmentsConnection
            AggregatedListServiceAttachmentsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteServiceAttachment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteServiceAttachment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteServiceAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteServiceAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
@@ -88,9 +88,9 @@ class MockServiceAttachmentsConnection
                    GetIamPolicyRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertServiceAttachment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertServiceAttachment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertServiceAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertServiceAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::
@@ -116,9 +116,9 @@ class MockServiceAttachmentsConnection
                    ListServiceAttachmentsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchServiceAttachment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchServiceAttachment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchServiceAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchServiceAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchServiceAttachment,
               (google::cloud::cpp::compute::service_attachments::v1::

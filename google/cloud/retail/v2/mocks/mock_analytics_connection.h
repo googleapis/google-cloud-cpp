@@ -47,9 +47,9 @@ class MockAnalyticsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ExportAnalyticsMetrics) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ExportAnalyticsMetrics(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportAnalyticsMetrics)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportAnalyticsMetrics(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>,

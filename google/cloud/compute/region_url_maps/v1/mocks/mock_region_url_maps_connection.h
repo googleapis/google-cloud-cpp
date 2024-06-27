@@ -47,9 +47,9 @@ class MockRegionUrlMapsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteUrlMap) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteUrlMap(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteUrlMap(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
@@ -75,9 +75,9 @@ class MockRegionUrlMapsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertUrlMap) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertUrlMap(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertUrlMap(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
@@ -103,9 +103,9 @@ class MockRegionUrlMapsConnection
                    ListRegionUrlMapsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchUrlMap) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchUrlMap(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchUrlMap(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::
@@ -124,9 +124,9 @@ class MockRegionUrlMapsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateUrlMap) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateUrlMap(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateUrlMap(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateUrlMap,
               (google::cloud::cpp::compute::region_url_maps::v1::

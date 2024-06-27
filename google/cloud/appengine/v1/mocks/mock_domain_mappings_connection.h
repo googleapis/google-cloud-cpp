@@ -56,9 +56,9 @@ class MockDomainMappingsConnection
               (google::appengine::v1::GetDomainMappingRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateDomainMapping) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateDomainMapping(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateDomainMapping)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateDomainMapping(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::appengine::v1::DomainMapping>>,
       CreateDomainMapping,
@@ -77,9 +77,9 @@ class MockDomainMappingsConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateDomainMapping) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateDomainMapping(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDomainMapping)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDomainMapping(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::appengine::v1::DomainMapping>>,
       UpdateDomainMapping,
@@ -98,9 +98,9 @@ class MockDomainMappingsConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteDomainMapping) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteDomainMapping(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDomainMapping)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDomainMapping(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
       DeleteDomainMapping,

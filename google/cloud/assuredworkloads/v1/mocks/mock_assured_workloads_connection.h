@@ -47,9 +47,9 @@ class MockAssuredWorkloadsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateWorkload) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateWorkload(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateWorkload)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateWorkload(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>,
               CreateWorkload,
               (google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&

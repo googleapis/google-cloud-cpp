@@ -53,9 +53,10 @@ class MockCompletionServiceConnection
       (google::cloud::discoveryengine::v1::CompleteQueryRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportSuggestionDenyListEntries) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportSuggestionDenyListEntries(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportSuggestionDenyListEntries)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, ImportSuggestionDenyListEntries(::testing::_))`
+  /// instead.
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   ImportSuggestionDenyListEntriesResponse>>,
               ImportSuggestionDenyListEntries,
@@ -77,9 +78,10 @@ class MockCompletionServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PurgeSuggestionDenyListEntries) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PurgeSuggestionDenyListEntries(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PurgeSuggestionDenyListEntries)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PurgeSuggestionDenyListEntries(::testing::_))`
+  /// instead.
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   PurgeSuggestionDenyListEntriesResponse>>,
               PurgeSuggestionDenyListEntries,

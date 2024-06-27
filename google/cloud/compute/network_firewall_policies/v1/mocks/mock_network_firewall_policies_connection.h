@@ -49,9 +49,9 @@ class MockNetworkFirewallPoliciesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AddAssociation) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AddAssociation(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddAssociation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddAssociation(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddAssociation,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -71,9 +71,9 @@ class MockNetworkFirewallPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AddRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AddRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddRule(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddRule,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -92,9 +92,9 @@ class MockNetworkFirewallPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CloneRules) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CloneRules(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CloneRules)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CloneRules(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CloneRules,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -113,9 +113,9 @@ class MockNetworkFirewallPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteFirewallPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteFirewallPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFirewallPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFirewallPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -159,9 +159,9 @@ class MockNetworkFirewallPoliciesConnection
                    GetRuleRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertFirewallPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertFirewallPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertFirewallPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertFirewallPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -187,9 +187,9 @@ class MockNetworkFirewallPoliciesConnection
                    ListNetworkFirewallPoliciesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchFirewallPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchFirewallPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchFirewallPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchFirewallPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchFirewallPolicy,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -209,9 +209,9 @@ class MockNetworkFirewallPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchRule(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchRule,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -230,9 +230,9 @@ class MockNetworkFirewallPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RemoveAssociation) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RemoveAssociation(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemoveAssociation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemoveAssociation(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveAssociation,
               (google::cloud::cpp::compute::network_firewall_policies::v1::
@@ -252,9 +252,9 @@ class MockNetworkFirewallPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RemoveRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RemoveRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemoveRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemoveRule(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveRule,
               (google::cloud::cpp::compute::network_firewall_policies::v1::

@@ -47,9 +47,9 @@ class MockInterconnectsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteInterconnect) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteInterconnect(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInterconnect)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInterconnect(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
@@ -90,9 +90,9 @@ class MockInterconnectsConnection
                    GetMacsecConfigRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertInterconnect) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertInterconnect(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertInterconnect)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertInterconnect(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
@@ -119,9 +119,9 @@ class MockInterconnectsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchInterconnect) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchInterconnect(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchInterconnect)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchInterconnect(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInterconnect,
               (google::cloud::cpp::compute::interconnects::v1::
@@ -141,9 +141,9 @@ class MockInterconnectsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetLabels) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetLabels(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&

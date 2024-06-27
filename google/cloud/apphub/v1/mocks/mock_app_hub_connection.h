@@ -60,9 +60,10 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateServiceProjectAttachment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateServiceProjectAttachment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateServiceProjectAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateServiceProjectAttachment(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>,
       CreateServiceProjectAttachment,
@@ -90,9 +91,10 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteServiceProjectAttachment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteServiceProjectAttachment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteServiceProjectAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteServiceProjectAttachment(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
       DeleteServiceProjectAttachment,
@@ -144,9 +146,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::ListServicesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateService) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateService(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
               CreateService,
               (google::cloud::apphub::v1::CreateServiceRequest const& request),
@@ -167,9 +169,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::GetServiceRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateService) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateService(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
               UpdateService,
               (google::cloud::apphub::v1::UpdateServiceRequest const& request),
@@ -186,9 +188,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteService) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteService(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteService,
               (google::cloud::apphub::v1::DeleteServiceRequest const& request),
@@ -228,9 +230,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::ListWorkloadsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateWorkload) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateWorkload(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateWorkload)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateWorkload(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
               CreateWorkload,
               (google::cloud::apphub::v1::CreateWorkloadRequest const& request),
@@ -251,9 +253,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::GetWorkloadRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateWorkload) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateWorkload(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateWorkload)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateWorkload(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
               UpdateWorkload,
               (google::cloud::apphub::v1::UpdateWorkloadRequest const& request),
@@ -270,9 +272,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteWorkload) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteWorkload(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteWorkload)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteWorkload(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteWorkload,
               (google::cloud::apphub::v1::DeleteWorkloadRequest const& request),
@@ -294,9 +296,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::ListApplicationsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateApplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateApplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateApplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateApplication(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::Application>>,
       CreateApplication,
@@ -319,9 +321,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::GetApplicationRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateApplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateApplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateApplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateApplication(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::Application>>,
       UpdateApplication,
@@ -340,9 +342,9 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteApplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteApplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteApplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteApplication(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
       DeleteApplication,

@@ -47,9 +47,9 @@ class MockCloudChannelReportsServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RunReportJob) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RunReportJob(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RunReportJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RunReportJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
       RunReportJob,

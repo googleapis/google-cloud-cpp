@@ -50,9 +50,9 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
               (google::appengine::v1::GetApplicationRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateApplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateApplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateApplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateApplication(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               CreateApplication,
               (google::appengine::v1::CreateApplicationRequest const& request),
@@ -69,9 +69,9 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateApplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateApplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateApplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateApplication(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               UpdateApplication,
               (google::appengine::v1::UpdateApplicationRequest const& request),
@@ -88,9 +88,9 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RepairApplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RepairApplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RepairApplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RepairApplication(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               RepairApplication,
               (google::appengine::v1::RepairApplicationRequest const& request),

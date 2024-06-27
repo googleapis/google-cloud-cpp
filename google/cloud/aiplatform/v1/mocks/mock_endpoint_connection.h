@@ -47,9 +47,9 @@ class MockEndpointServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateEndpoint) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateEndpoint(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateEndpoint)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateEndpoint(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>, CreateEndpoint,
       (google::cloud::aiplatform::v1::CreateEndpointRequest const& request),
@@ -82,9 +82,9 @@ class MockEndpointServiceConnection
       (google::cloud::aiplatform::v1::UpdateEndpointRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteEndpoint) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteEndpoint(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteEndpoint)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteEndpoint(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteEndpoint,
@@ -103,9 +103,9 @@ class MockEndpointServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeployModel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeployModel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeployModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeployModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
       DeployModel,
@@ -124,9 +124,9 @@ class MockEndpointServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UndeployModel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UndeployModel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeployModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeployModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
       UndeployModel,
@@ -145,9 +145,9 @@ class MockEndpointServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, MutateDeployedModel) is now ambiguous. Use
-  // EXPECT_CALL(*mock, MutateDeployedModel(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MutateDeployedModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MutateDeployedModel(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,

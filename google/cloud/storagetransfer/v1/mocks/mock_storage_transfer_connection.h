@@ -85,9 +85,9 @@ class MockStorageTransferServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RunTransferJob) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RunTransferJob(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RunTransferJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RunTransferJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::storagetransfer::v1::TransferOperation>>,
       RunTransferJob,

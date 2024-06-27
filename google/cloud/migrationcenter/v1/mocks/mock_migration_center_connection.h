@@ -95,9 +95,9 @@ class MockMigrationCenterConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateImportJob) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateImportJob(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateImportJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateImportJob(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>,
               CreateImportJob,
               (google::cloud::migrationcenter::v1::CreateImportJobRequest const&
@@ -127,9 +127,9 @@ class MockMigrationCenterConnection
       (google::cloud::migrationcenter::v1::GetImportJobRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteImportJob) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteImportJob(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteImportJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteImportJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteImportJob,
@@ -149,9 +149,9 @@ class MockMigrationCenterConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateImportJob) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateImportJob(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateImportJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateImportJob(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>,
               UpdateImportJob,
               (google::cloud::migrationcenter::v1::UpdateImportJobRequest const&
@@ -170,9 +170,9 @@ class MockMigrationCenterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ValidateImportJob) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ValidateImportJob(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ValidateImportJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ValidateImportJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       ValidateImportJob,
@@ -193,9 +193,9 @@ class MockMigrationCenterConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RunImportJob) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RunImportJob(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RunImportJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RunImportJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       RunImportJob,
@@ -227,9 +227,9 @@ class MockMigrationCenterConnection
       (google::cloud::migrationcenter::v1::ListImportDataFilesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateImportDataFile) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateImportDataFile(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateImportDataFile)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateImportDataFile(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>,
       CreateImportDataFile,
@@ -250,9 +250,9 @@ class MockMigrationCenterConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteImportDataFile) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteImportDataFile(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteImportDataFile)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteImportDataFile(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteImportDataFile,
@@ -283,9 +283,9 @@ class MockMigrationCenterConnection
       (google::cloud::migrationcenter::v1::GetGroupRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateGroup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateGroup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateGroup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Group>>, CreateGroup,
       (google::cloud::migrationcenter::v1::CreateGroupRequest const& request),
@@ -303,9 +303,9 @@ class MockMigrationCenterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateGroup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateGroup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateGroup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Group>>, UpdateGroup,
       (google::cloud::migrationcenter::v1::UpdateGroupRequest const& request),
@@ -323,9 +323,9 @@ class MockMigrationCenterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteGroup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteGroup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteGroup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteGroup,
@@ -344,9 +344,9 @@ class MockMigrationCenterConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AddAssetsToGroup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AddAssetsToGroup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddAssetsToGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddAssetsToGroup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
       AddAssetsToGroup,
@@ -367,9 +367,9 @@ class MockMigrationCenterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RemoveAssetsFromGroup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RemoveAssetsFromGroup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemoveAssetsFromGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemoveAssetsFromGroup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Group>>,
       RemoveAssetsFromGroup,
@@ -411,9 +411,9 @@ class MockMigrationCenterConnection
       (google::cloud::migrationcenter::v1::GetSourceRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateSource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateSource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateSource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateSource(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
       CreateSource,
@@ -432,9 +432,9 @@ class MockMigrationCenterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateSource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateSource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSource(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Source>>,
       UpdateSource,
@@ -453,9 +453,9 @@ class MockMigrationCenterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSource(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteSource,
@@ -487,9 +487,9 @@ class MockMigrationCenterConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreatePreferenceSet) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreatePreferenceSet(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreatePreferenceSet)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreatePreferenceSet(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
       CreatePreferenceSet,
@@ -510,9 +510,9 @@ class MockMigrationCenterConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdatePreferenceSet) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdatePreferenceSet(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdatePreferenceSet)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdatePreferenceSet(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>,
       UpdatePreferenceSet,
@@ -533,9 +533,9 @@ class MockMigrationCenterConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeletePreferenceSet) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeletePreferenceSet(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePreferenceSet)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePreferenceSet(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeletePreferenceSet,
@@ -561,9 +561,9 @@ class MockMigrationCenterConnection
       (google::cloud::migrationcenter::v1::GetSettingsRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateSettings) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateSettings(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSettings(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::migrationcenter::v1::Settings>>,
               UpdateSettings,
               (google::cloud::migrationcenter::v1::UpdateSettingsRequest const&
@@ -582,9 +582,9 @@ class MockMigrationCenterConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateReportConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateReportConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateReportConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateReportConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>,
       CreateReportConfig,
@@ -617,9 +617,9 @@ class MockMigrationCenterConnection
       (google::cloud::migrationcenter::v1::ListReportConfigsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteReportConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteReportConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteReportConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteReportConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteReportConfig,
@@ -640,9 +640,9 @@ class MockMigrationCenterConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateReport) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateReport(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateReport)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateReport(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::Report>>,
       CreateReport,
@@ -671,9 +671,9 @@ class MockMigrationCenterConnection
               (google::cloud::migrationcenter::v1::ListReportsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteReport) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteReport(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteReport)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteReport(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>,
       DeleteReport,

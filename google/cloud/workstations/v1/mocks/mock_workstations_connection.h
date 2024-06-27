@@ -60,9 +60,9 @@ class MockWorkstationsConnection
       (google::cloud::workstations::v1::ListWorkstationClustersRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateWorkstationCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateWorkstationCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateWorkstationCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateWorkstationCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       CreateWorkstationCluster,
@@ -83,9 +83,9 @@ class MockWorkstationsConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateWorkstationCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateWorkstationCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateWorkstationCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateWorkstationCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       UpdateWorkstationCluster,
@@ -106,9 +106,9 @@ class MockWorkstationsConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteWorkstationCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteWorkstationCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteWorkstationCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteWorkstationCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       DeleteWorkstationCluster,
@@ -149,9 +149,9 @@ class MockWorkstationsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateWorkstationConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateWorkstationConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateWorkstationConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateWorkstationConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       CreateWorkstationConfig,
@@ -172,9 +172,9 @@ class MockWorkstationsConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateWorkstationConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateWorkstationConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateWorkstationConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateWorkstationConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       UpdateWorkstationConfig,
@@ -195,9 +195,9 @@ class MockWorkstationsConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteWorkstationConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteWorkstationConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteWorkstationConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteWorkstationConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       DeleteWorkstationConfig,
@@ -235,9 +235,9 @@ class MockWorkstationsConnection
       (google::cloud::workstations::v1::ListUsableWorkstationsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateWorkstation) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateWorkstation(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateWorkstation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateWorkstation(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               CreateWorkstation,
               (google::cloud::workstations::v1::CreateWorkstationRequest const&
@@ -256,9 +256,9 @@ class MockWorkstationsConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateWorkstation) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateWorkstation(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateWorkstation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateWorkstation(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               UpdateWorkstation,
               (google::cloud::workstations::v1::UpdateWorkstationRequest const&
@@ -277,9 +277,9 @@ class MockWorkstationsConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteWorkstation) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteWorkstation(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteWorkstation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteWorkstation(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               DeleteWorkstation,
               (google::cloud::workstations::v1::DeleteWorkstationRequest const&
@@ -298,9 +298,9 @@ class MockWorkstationsConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StartWorkstation) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StartWorkstation(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartWorkstation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartWorkstation(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::Workstation>>,
       StartWorkstation,
@@ -319,9 +319,9 @@ class MockWorkstationsConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StopWorkstation) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StopWorkstation(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopWorkstation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopWorkstation(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::Workstation>>,
       StopWorkstation,

@@ -47,9 +47,9 @@ class MockFeatureOnlineStoreAdminServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateFeatureOnlineStore) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateFeatureOnlineStore(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateFeatureOnlineStore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateFeatureOnlineStore(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
       CreateFeatureOnlineStore,
@@ -83,9 +83,9 @@ class MockFeatureOnlineStoreAdminServiceConnection
       (google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateFeatureOnlineStore) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateFeatureOnlineStore(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFeatureOnlineStore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFeatureOnlineStore(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
       UpdateFeatureOnlineStore,
@@ -106,9 +106,9 @@ class MockFeatureOnlineStoreAdminServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteFeatureOnlineStore) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteFeatureOnlineStore(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFeatureOnlineStore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFeatureOnlineStore(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeatureOnlineStore,
@@ -129,9 +129,9 @@ class MockFeatureOnlineStoreAdminServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateFeatureView) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateFeatureView(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateFeatureView)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateFeatureView(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
       CreateFeatureView,
@@ -160,9 +160,9 @@ class MockFeatureOnlineStoreAdminServiceConnection
               (google::cloud::aiplatform::v1::ListFeatureViewsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateFeatureView) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateFeatureView(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFeatureView)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFeatureView(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
       UpdateFeatureView,
@@ -181,9 +181,9 @@ class MockFeatureOnlineStoreAdminServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteFeatureView) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteFeatureView(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFeatureView)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFeatureView(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeatureView,

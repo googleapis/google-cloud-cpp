@@ -51,9 +51,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListStoragePoolsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateStoragePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateStoragePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateStoragePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateStoragePool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
       CreateStoragePool,
@@ -76,9 +76,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::GetStoragePoolRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateStoragePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateStoragePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateStoragePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateStoragePool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::StoragePool>>,
       UpdateStoragePool,
@@ -97,9 +97,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteStoragePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteStoragePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteStoragePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteStoragePool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteStoragePool,
@@ -126,9 +126,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::GetVolumeRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateVolume) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateVolume(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateVolume)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateVolume(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, CreateVolume,
               (google::cloud::netapp::v1::CreateVolumeRequest const& request),
               (override));
@@ -143,9 +143,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateVolume) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateVolume(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateVolume)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateVolume(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, UpdateVolume,
               (google::cloud::netapp::v1::UpdateVolumeRequest const& request),
               (override));
@@ -160,9 +160,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteVolume) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteVolume(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteVolume)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteVolume(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
               DeleteVolume,
               (google::cloud::netapp::v1::DeleteVolumeRequest const& request),
@@ -179,9 +179,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RevertVolume) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RevertVolume(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RevertVolume)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RevertVolume(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Volume>>, RevertVolume,
               (google::cloud::netapp::v1::RevertVolumeRequest const& request),
               (override));
@@ -204,9 +204,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::GetSnapshotRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateSnapshot(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Snapshot>>,
               CreateSnapshot,
               (google::cloud::netapp::v1::CreateSnapshotRequest const& request),
@@ -223,9 +223,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSnapshot(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
               DeleteSnapshot,
               (google::cloud::netapp::v1::DeleteSnapshotRequest const& request),
@@ -242,9 +242,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSnapshot(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Snapshot>>,
               UpdateSnapshot,
               (google::cloud::netapp::v1::UpdateSnapshotRequest const& request),
@@ -271,9 +271,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
       (google::cloud::netapp::v1::GetActiveDirectoryRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateActiveDirectory) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateActiveDirectory(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateActiveDirectory)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateActiveDirectory(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>,
       CreateActiveDirectory,
@@ -292,9 +292,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateActiveDirectory) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateActiveDirectory(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateActiveDirectory)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateActiveDirectory(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>,
       UpdateActiveDirectory,
@@ -313,9 +313,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteActiveDirectory) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteActiveDirectory(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteActiveDirectory)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteActiveDirectory(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteActiveDirectory,
@@ -339,9 +339,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListKmsConfigsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateKmsConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateKmsConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateKmsConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateKmsConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::KmsConfig>>, CreateKmsConfig,
       (google::cloud::netapp::v1::CreateKmsConfigRequest const& request),
@@ -363,9 +363,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::GetKmsConfigRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateKmsConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateKmsConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateKmsConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateKmsConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::KmsConfig>>, UpdateKmsConfig,
       (google::cloud::netapp::v1::UpdateKmsConfigRequest const& request),
@@ -383,9 +383,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, EncryptVolumes) is now ambiguous. Use
-  // EXPECT_CALL(*mock, EncryptVolumes(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EncryptVolumes)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EncryptVolumes(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::KmsConfig>>,
               EncryptVolumes,
               (google::cloud::netapp::v1::EncryptVolumesRequest const& request),
@@ -408,9 +408,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
       (google::cloud::netapp::v1::VerifyKmsConfigRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteKmsConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteKmsConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteKmsConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteKmsConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteKmsConfig,
@@ -438,9 +438,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::GetReplicationRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateReplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateReplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateReplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateReplication(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>,
       CreateReplication,
@@ -459,9 +459,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteReplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteReplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteReplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteReplication(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteReplication,
@@ -480,9 +480,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateReplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateReplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateReplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateReplication(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>,
       UpdateReplication,
@@ -501,9 +501,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StopReplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StopReplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopReplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopReplication(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>, StopReplication,
       (google::cloud::netapp::v1::StopReplicationRequest const& request),
@@ -521,9 +521,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ResumeReplication) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ResumeReplication(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ResumeReplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ResumeReplication(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>,
       ResumeReplication,
@@ -542,9 +542,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ReverseReplicationDirection) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ReverseReplicationDirection(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ReverseReplicationDirection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ReverseReplicationDirection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::Replication>>,
       ReverseReplicationDirection,
@@ -565,9 +565,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateBackupVault) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateBackupVault(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackupVault)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackupVault(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::BackupVault>>,
       CreateBackupVault,
@@ -595,9 +595,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListBackupVaultsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateBackupVault) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateBackupVault(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackupVault)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackupVault(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::BackupVault>>,
       UpdateBackupVault,
@@ -616,9 +616,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteBackupVault) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteBackupVault(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackupVault)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackupVault(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteBackupVault,
@@ -637,9 +637,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Backup>>, CreateBackup,
               (google::cloud::netapp::v1::CreateBackupRequest const& request),
               (override));
@@ -662,9 +662,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListBackupsRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
               DeleteBackup,
               (google::cloud::netapp::v1::DeleteBackupRequest const& request),
@@ -681,9 +681,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::netapp::v1::Backup>>, UpdateBackup,
               (google::cloud::netapp::v1::UpdateBackupRequest const& request),
               (override));
@@ -698,9 +698,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateBackupPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateBackupPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackupPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackupPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>,
       CreateBackupPolicy,
@@ -729,9 +729,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
               (google::cloud::netapp::v1::ListBackupPoliciesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateBackupPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateBackupPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackupPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackupPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>,
       UpdateBackupPolicy,
@@ -750,9 +750,9 @@ class MockNetAppConnection : public netapp_v1::NetAppConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteBackupPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteBackupPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackupPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackupPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>,
       DeleteBackupPolicy,

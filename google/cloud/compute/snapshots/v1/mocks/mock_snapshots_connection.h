@@ -47,9 +47,9 @@ class MockSnapshotsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSnapshot(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteSnapshot,
@@ -82,9 +82,9 @@ class MockSnapshotsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertSnapshot) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertSnapshot(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertSnapshot(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InsertSnapshot,
@@ -117,9 +117,9 @@ class MockSnapshotsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetLabels) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetLabels(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&

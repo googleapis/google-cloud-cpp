@@ -47,9 +47,9 @@ class MockClusterControllerConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::Cluster>>, CreateCluster,
       (google::cloud::dataproc::v1::CreateClusterRequest const& request),
@@ -67,9 +67,9 @@ class MockClusterControllerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::Cluster>>, UpdateCluster,
       (google::cloud::dataproc::v1::UpdateClusterRequest const& request),
@@ -87,9 +87,9 @@ class MockClusterControllerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StopCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StopCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
               StopCluster,
               (google::cloud::dataproc::v1::StopClusterRequest const& request),
@@ -106,9 +106,9 @@ class MockClusterControllerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, StartCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, StartCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
               StartCluster,
               (google::cloud::dataproc::v1::StartClusterRequest const& request),
@@ -125,9 +125,9 @@ class MockClusterControllerConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
       DeleteCluster,
@@ -154,9 +154,9 @@ class MockClusterControllerConnection
               (google::cloud::dataproc::v1::ListClustersRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DiagnoseCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DiagnoseCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DiagnoseCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DiagnoseCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
       DiagnoseCluster,

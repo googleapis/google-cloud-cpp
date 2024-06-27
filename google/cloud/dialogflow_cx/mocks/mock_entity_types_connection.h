@@ -74,9 +74,9 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
       (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ExportEntityTypes) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ExportEntityTypes(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportEntityTypes)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportEntityTypes(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
@@ -99,9 +99,9 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportEntityTypes) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportEntityTypes(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportEntityTypes)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportEntityTypes(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,

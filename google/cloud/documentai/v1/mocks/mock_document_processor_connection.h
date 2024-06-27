@@ -52,9 +52,9 @@ class MockDocumentProcessorServiceConnection
               (google::cloud::documentai::v1::ProcessRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, BatchProcessDocuments) is now ambiguous. Use
-  // EXPECT_CALL(*mock, BatchProcessDocuments(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchProcessDocuments)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchProcessDocuments(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>,
       BatchProcessDocuments,
@@ -101,9 +101,9 @@ class MockDocumentProcessorServiceConnection
       (google::cloud::documentai::v1::GetProcessorRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, TrainProcessorVersion) is now ambiguous. Use
-  // EXPECT_CALL(*mock, TrainProcessorVersion(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, TrainProcessorVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, TrainProcessorVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::TrainProcessorVersionResponse>>,
@@ -138,9 +138,9 @@ class MockDocumentProcessorServiceConnection
       (google::cloud::documentai::v1::ListProcessorVersionsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteProcessorVersion) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteProcessorVersion(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteProcessorVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteProcessorVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>,
@@ -163,9 +163,9 @@ class MockDocumentProcessorServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeployProcessorVersion) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeployProcessorVersion(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeployProcessorVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeployProcessorVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::DeployProcessorVersionResponse>>,
@@ -188,9 +188,9 @@ class MockDocumentProcessorServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UndeployProcessorVersion) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UndeployProcessorVersion(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeployProcessorVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeployProcessorVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::UndeployProcessorVersionResponse>>,
@@ -218,9 +218,9 @@ class MockDocumentProcessorServiceConnection
       (google::cloud::documentai::v1::CreateProcessorRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteProcessor) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteProcessor(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteProcessor)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteProcessor(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>,
       DeleteProcessor,
@@ -239,9 +239,9 @@ class MockDocumentProcessorServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, EnableProcessor) is now ambiguous. Use
-  // EXPECT_CALL(*mock, EnableProcessor(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EnableProcessor)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EnableProcessor(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>,
       EnableProcessor,
@@ -260,9 +260,9 @@ class MockDocumentProcessorServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DisableProcessor) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DisableProcessor(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DisableProcessor)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DisableProcessor(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>,
       DisableProcessor,
@@ -281,9 +281,9 @@ class MockDocumentProcessorServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetDefaultProcessorVersion) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetDefaultProcessorVersion(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetDefaultProcessorVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetDefaultProcessorVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>,
@@ -306,9 +306,9 @@ class MockDocumentProcessorServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ReviewDocument) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ReviewDocument(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ReviewDocument)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ReviewDocument(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>,
       ReviewDocument,
@@ -327,9 +327,9 @@ class MockDocumentProcessorServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, EvaluateProcessorVersion) is now ambiguous. Use
-  // EXPECT_CALL(*mock, EvaluateProcessorVersion(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EvaluateProcessorVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EvaluateProcessorVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>,

@@ -75,9 +75,9 @@ class MockDocumentServiceConnection
                    request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportDocuments) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportDocuments(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportDocuments)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportDocuments(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::discoveryengine::v1::ImportDocumentsResponse>>,
               ImportDocuments,
@@ -98,9 +98,9 @@ class MockDocumentServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PurgeDocuments) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PurgeDocuments(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PurgeDocuments)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PurgeDocuments(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>,

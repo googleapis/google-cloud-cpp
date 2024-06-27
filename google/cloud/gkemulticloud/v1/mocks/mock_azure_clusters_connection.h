@@ -47,9 +47,9 @@ class MockAzureClustersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAzureClient) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAzureClient(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAzureClient)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAzureClient(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>,
               CreateAzureClient,
               (google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
@@ -79,9 +79,9 @@ class MockAzureClustersConnection
       (google::cloud::gkemulticloud::v1::ListAzureClientsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAzureClient) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAzureClient(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAzureClient)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAzureClient(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureClient,
@@ -101,9 +101,9 @@ class MockAzureClustersConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAzureCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAzureCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAzureCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAzureCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
       CreateAzureCluster,
@@ -124,9 +124,9 @@ class MockAzureClustersConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateAzureCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateAzureCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAzureCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAzureCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
       UpdateAzureCluster,
@@ -158,9 +158,9 @@ class MockAzureClustersConnection
       (google::cloud::gkemulticloud::v1::ListAzureClustersRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAzureCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAzureCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAzureCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAzureCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureCluster,
@@ -196,9 +196,9 @@ class MockAzureClustersConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAzureNodePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAzureNodePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAzureNodePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAzureNodePool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
       CreateAzureNodePool,
@@ -219,9 +219,9 @@ class MockAzureClustersConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateAzureNodePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateAzureNodePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAzureNodePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAzureNodePool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
       UpdateAzureNodePool,
@@ -254,9 +254,9 @@ class MockAzureClustersConnection
       (google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAzureNodePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAzureNodePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAzureNodePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAzureNodePool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAzureNodePool,

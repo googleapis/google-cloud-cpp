@@ -58,9 +58,9 @@ class MockEnvironmentsConnection
       (google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateEnvironment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateEnvironment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateEnvironment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateEnvironment(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
       CreateEnvironment,
@@ -81,9 +81,9 @@ class MockEnvironmentsConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateEnvironment) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateEnvironment(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateEnvironment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateEnvironment(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
       UpdateEnvironment,
@@ -117,9 +117,9 @@ class MockEnvironmentsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RunContinuousTest) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RunContinuousTest(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RunContinuousTest)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RunContinuousTest(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
@@ -149,9 +149,9 @@ class MockEnvironmentsConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeployFlow) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeployFlow(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeployFlow)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeployFlow(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
       DeployFlow,

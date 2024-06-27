@@ -47,9 +47,9 @@ class MockAwsClustersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAwsCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAwsCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAwsCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAwsCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               CreateAwsCluster,
               (google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
@@ -68,9 +68,9 @@ class MockAwsClustersConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateAwsCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateAwsCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAwsCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAwsCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               UpdateAwsCluster,
               (google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
@@ -100,9 +100,9 @@ class MockAwsClustersConnection
       (google::cloud::gkemulticloud::v1::ListAwsClustersRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAwsCluster) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAwsCluster(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAwsCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAwsCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAwsCluster,
@@ -137,9 +137,9 @@ class MockAwsClustersConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAwsNodePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAwsNodePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAwsNodePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAwsNodePool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               CreateAwsNodePool,
               (google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
@@ -158,9 +158,9 @@ class MockAwsClustersConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateAwsNodePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateAwsNodePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAwsNodePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAwsNodePool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               UpdateAwsNodePool,
               (google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
@@ -179,9 +179,9 @@ class MockAwsClustersConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RollbackAwsNodePoolUpdate) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RollbackAwsNodePoolUpdate(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RollbackAwsNodePoolUpdate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RollbackAwsNodePoolUpdate(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
       RollbackAwsNodePoolUpdate,
@@ -213,9 +213,9 @@ class MockAwsClustersConnection
       (google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAwsNodePool) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAwsNodePool(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAwsNodePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAwsNodePool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
       DeleteAwsNodePool,

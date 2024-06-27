@@ -56,9 +56,9 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (google::cloud::dialogflow::v2::GetDocumentRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateDocument) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateDocument(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateDocument)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateDocument(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, CreateDocument,
       (google::cloud::dialogflow::v2::CreateDocumentRequest const& request),
@@ -76,9 +76,9 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ImportDocuments) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ImportDocuments(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportDocuments)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportDocuments(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>,
       ImportDocuments,
@@ -97,9 +97,9 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteDocument) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteDocument(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDocument)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDocument(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>,
@@ -120,9 +120,9 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateDocument) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateDocument(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDocument)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDocument(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, UpdateDocument,
       (google::cloud::dialogflow::v2::UpdateDocumentRequest const& request),
@@ -140,9 +140,9 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ReloadDocument) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ReloadDocument(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ReloadDocument)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ReloadDocument(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, ReloadDocument,
       (google::cloud::dialogflow::v2::ReloadDocumentRequest const& request),
@@ -160,9 +160,9 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, ExportDocument) is now ambiguous. Use
-  // EXPECT_CALL(*mock, ExportDocument(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportDocument)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportDocument(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, ExportDocument,
       (google::cloud::dialogflow::v2::ExportDocumentRequest const& request),

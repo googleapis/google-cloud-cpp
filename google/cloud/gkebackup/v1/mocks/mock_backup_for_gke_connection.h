@@ -46,9 +46,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateBackupPlan) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateBackupPlan(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackupPlan)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackupPlan(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>,
       CreateBackupPlan,
@@ -77,9 +77,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::GetBackupPlanRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateBackupPlan) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateBackupPlan(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackupPlan)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackupPlan(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>,
       UpdateBackupPlan,
@@ -98,9 +98,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteBackupPlan) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteBackupPlan(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackupPlan)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackupPlan(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteBackupPlan,
@@ -119,9 +119,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::Backup>>, CreateBackup,
       (google::cloud::gkebackup::v1::CreateBackupRequest const& request),
@@ -147,9 +147,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
               (google::cloud::gkebackup::v1::GetBackupRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::Backup>>, UpdateBackup,
       (google::cloud::gkebackup::v1::UpdateBackupRequest const& request),
@@ -167,9 +167,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteBackup) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteBackup(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteBackup,
@@ -198,9 +198,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateRestorePlan) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateRestorePlan(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateRestorePlan)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateRestorePlan(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>,
       CreateRestorePlan,
@@ -229,9 +229,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
       (google::cloud::gkebackup::v1::GetRestorePlanRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateRestorePlan) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateRestorePlan(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateRestorePlan)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateRestorePlan(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>,
       UpdateRestorePlan,
@@ -250,9 +250,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteRestorePlan) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteRestorePlan(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRestorePlan)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRestorePlan(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteRestorePlan,
@@ -271,9 +271,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateRestore) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateRestore(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateRestore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateRestore(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::Restore>>, CreateRestore,
       (google::cloud::gkebackup::v1::CreateRestoreRequest const& request),
@@ -300,9 +300,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
               (google::cloud::gkebackup::v1::GetRestoreRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateRestore) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateRestore(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateRestore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateRestore(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::Restore>>, UpdateRestore,
       (google::cloud::gkebackup::v1::UpdateRestoreRequest const& request),
@@ -320,9 +320,9 @@ class MockBackupForGKEConnection : public gkebackup_v1::BackupForGKEConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteRestore) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteRestore(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRestore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRestore(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>,
       DeleteRestore,

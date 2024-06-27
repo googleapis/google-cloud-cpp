@@ -47,9 +47,9 @@ class MockRegionInstancesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, BulkInsert) is now ambiguous. Use
-  // EXPECT_CALL(*mock, BulkInsert(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BulkInsert)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BulkInsert(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               BulkInsert,
               (google::cloud::cpp::compute::region_instances::v1::

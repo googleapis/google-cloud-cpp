@@ -46,9 +46,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DisableXpnHost) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DisableXpnHost(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DisableXpnHost)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DisableXpnHost(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DisableXpnHost,
@@ -69,9 +69,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DisableXpnResource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DisableXpnResource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DisableXpnResource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DisableXpnResource(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DisableXpnResource,
               (google::cloud::cpp::compute::projects::v1::
@@ -91,9 +91,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, EnableXpnHost) is now ambiguous. Use
-  // EXPECT_CALL(*mock, EnableXpnHost(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EnableXpnHost)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EnableXpnHost(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       EnableXpnHost,
@@ -114,9 +114,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, EnableXpnResource) is now ambiguous. Use
-  // EXPECT_CALL(*mock, EnableXpnResource(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EnableXpnResource)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EnableXpnResource(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               EnableXpnResource,
               (google::cloud::cpp::compute::projects::v1::
@@ -160,9 +160,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
       (google::cloud::cpp::compute::projects::v1::ListXpnHostsRequest request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, MoveDisk) is now ambiguous. Use
-  // EXPECT_CALL(*mock, MoveDisk(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MoveDisk)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MoveDisk(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               MoveDisk,
               (google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
@@ -181,9 +181,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, MoveInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, MoveInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MoveInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MoveInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       MoveInstance,
@@ -204,9 +204,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetCloudArmorTier) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetCloudArmorTier(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetCloudArmorTier)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetCloudArmorTier(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCloudArmorTier,
               (google::cloud::cpp::compute::projects::v1::
@@ -226,9 +226,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetCommonInstanceMetadata) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetCommonInstanceMetadata(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetCommonInstanceMetadata)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetCommonInstanceMetadata(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCommonInstanceMetadata,
               (google::cloud::cpp::compute::projects::v1::
@@ -248,9 +248,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetDefaultNetworkTier) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetDefaultNetworkTier(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetDefaultNetworkTier)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetDefaultNetworkTier(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetDefaultNetworkTier,
               (google::cloud::cpp::compute::projects::v1::
@@ -270,9 +270,9 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SetUsageExportBucket) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SetUsageExportBucket(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetUsageExportBucket)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetUsageExportBucket(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUsageExportBucket,
               (google::cloud::cpp::compute::projects::v1::

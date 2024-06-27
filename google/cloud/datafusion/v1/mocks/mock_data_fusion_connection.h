@@ -62,9 +62,9 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
       (google::cloud::datafusion::v1::GetInstanceRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::Instance>>, CreateInstance,
       (google::cloud::datafusion::v1::CreateInstanceRequest const& request),
@@ -82,9 +82,9 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>,
       DeleteInstance,
@@ -103,9 +103,9 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::Instance>>, UpdateInstance,
       (google::cloud::datafusion::v1::UpdateInstanceRequest const& request),
@@ -123,9 +123,9 @@ class MockDataFusionConnection : public datafusion_v1::DataFusionConnection {
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RestartInstance) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RestartInstance(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestartInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestartInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::datafusion::v1::Instance>>,
       RestartInstance,

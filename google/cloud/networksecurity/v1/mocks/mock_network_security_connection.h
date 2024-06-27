@@ -61,9 +61,9 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateAuthorizationPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateAuthorizationPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAuthorizationPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAuthorizationPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
       CreateAuthorizationPolicy,
@@ -84,9 +84,9 @@ class MockNetworkSecurityConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateAuthorizationPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateAuthorizationPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAuthorizationPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAuthorizationPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
       UpdateAuthorizationPolicy,
@@ -107,9 +107,9 @@ class MockNetworkSecurityConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteAuthorizationPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteAuthorizationPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAuthorizationPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAuthorizationPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteAuthorizationPolicy,
@@ -144,9 +144,9 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateServerTlsPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateServerTlsPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateServerTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateServerTlsPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
       CreateServerTlsPolicy,
@@ -167,9 +167,9 @@ class MockNetworkSecurityConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateServerTlsPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateServerTlsPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateServerTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateServerTlsPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
       UpdateServerTlsPolicy,
@@ -190,9 +190,9 @@ class MockNetworkSecurityConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteServerTlsPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteServerTlsPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteServerTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteServerTlsPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteServerTlsPolicy,
@@ -227,9 +227,9 @@ class MockNetworkSecurityConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateClientTlsPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateClientTlsPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateClientTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateClientTlsPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
       CreateClientTlsPolicy,
@@ -250,9 +250,9 @@ class MockNetworkSecurityConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateClientTlsPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateClientTlsPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateClientTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateClientTlsPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
       UpdateClientTlsPolicy,
@@ -273,9 +273,9 @@ class MockNetworkSecurityConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteClientTlsPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteClientTlsPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteClientTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteClientTlsPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteClientTlsPolicy,

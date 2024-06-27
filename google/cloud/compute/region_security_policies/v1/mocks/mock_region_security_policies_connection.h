@@ -49,9 +49,9 @@ class MockRegionSecurityPoliciesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, AddRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, AddRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddRule(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddRule,
               (google::cloud::cpp::compute::region_security_policies::v1::
@@ -70,9 +70,9 @@ class MockRegionSecurityPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSecurityPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSecurityPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSecurityPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSecurityPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSecurityPolicy,
               (google::cloud::cpp::compute::region_security_policies::v1::
@@ -104,9 +104,9 @@ class MockRegionSecurityPoliciesConnection
                    GetRuleRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, InsertSecurityPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, InsertSecurityPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertSecurityPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertSecurityPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSecurityPolicy,
               (google::cloud::cpp::compute::region_security_policies::v1::
@@ -132,9 +132,9 @@ class MockRegionSecurityPoliciesConnection
                    ListRegionSecurityPoliciesRequest request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchSecurityPolicy) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchSecurityPolicy(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchSecurityPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchSecurityPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSecurityPolicy,
               (google::cloud::cpp::compute::region_security_policies::v1::
@@ -154,9 +154,9 @@ class MockRegionSecurityPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, PatchRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, PatchRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchRule(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchRule,
               (google::cloud::cpp::compute::region_security_policies::v1::
@@ -175,9 +175,9 @@ class MockRegionSecurityPoliciesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RemoveRule) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RemoveRule(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemoveRule)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemoveRule(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveRule,
               (google::cloud::cpp::compute::region_security_policies::v1::

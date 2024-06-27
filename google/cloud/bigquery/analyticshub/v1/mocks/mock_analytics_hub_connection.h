@@ -125,9 +125,9 @@ class MockAnalyticsHubServiceConnection
            request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, SubscribeDataExchange) is now ambiguous. Use
-  // EXPECT_CALL(*mock, SubscribeDataExchange(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SubscribeDataExchange)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SubscribeDataExchange(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
                                   SubscribeDataExchangeResponse>>,
               SubscribeDataExchange,
@@ -148,9 +148,9 @@ class MockAnalyticsHubServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, RefreshSubscription) is now ambiguous. Use
-  // EXPECT_CALL(*mock, RefreshSubscription(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RefreshSubscription)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RefreshSubscription(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
                                   RefreshSubscriptionResponse>>,
               RefreshSubscription,
@@ -199,9 +199,9 @@ class MockAnalyticsHubServiceConnection
                    RevokeSubscriptionRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteSubscription) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteSubscription(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSubscription)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSubscription(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,

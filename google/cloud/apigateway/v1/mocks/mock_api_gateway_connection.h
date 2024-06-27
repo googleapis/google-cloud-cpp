@@ -56,9 +56,9 @@ class MockApiGatewayServiceConnection
               (google::cloud::apigateway::v1::GetGatewayRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateGateway) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateGateway(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateGateway(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::Gateway>>, CreateGateway,
       (google::cloud::apigateway::v1::CreateGatewayRequest const& request),
@@ -76,9 +76,9 @@ class MockApiGatewayServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateGateway) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateGateway(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateGateway(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::Gateway>>, UpdateGateway,
       (google::cloud::apigateway::v1::UpdateGatewayRequest const& request),
@@ -96,9 +96,9 @@ class MockApiGatewayServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteGateway) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteGateway(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteGateway(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
       DeleteGateway,
@@ -125,9 +125,9 @@ class MockApiGatewayServiceConnection
               (google::cloud::apigateway::v1::GetApiRequest const& request),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateApi) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateApi(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateApi)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateApi(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, CreateApi,
               (google::cloud::apigateway::v1::CreateApiRequest const& request),
               (override));
@@ -142,9 +142,9 @@ class MockApiGatewayServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateApi) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateApi(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateApi)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateApi(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, UpdateApi,
               (google::cloud::apigateway::v1::UpdateApiRequest const& request),
               (override));
@@ -159,9 +159,9 @@ class MockApiGatewayServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteApi) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteApi(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteApi)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteApi(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
       DeleteApi,
@@ -189,9 +189,9 @@ class MockApiGatewayServiceConnection
       (google::cloud::apigateway::v1::GetApiConfigRequest const& request),
       (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, CreateApiConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, CreateApiConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateApiConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateApiConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
       CreateApiConfig,
@@ -210,9 +210,9 @@ class MockApiGatewayServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, UpdateApiConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, UpdateApiConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateApiConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateApiConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
       UpdateApiConfig,
@@ -231,9 +231,9 @@ class MockApiGatewayServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
-  // Due to additional overloads for this method
-  // EXPECT_CALL(*mock, DeleteApiConfig) is now ambiguous. Use
-  // EXPECT_CALL(*mock, DeleteApiConfig(_)) instead.
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteApiConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteApiConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
       DeleteApiConfig,
