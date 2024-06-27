@@ -105,7 +105,7 @@ TEST(JobTest, JobDebugString) {
       R"( referenced_tables { project_id: "2" dataset_id: "1" table_id: "3" })"
       R"( referenced_routines { project_id: "2" dataset_id: "1" routine_id: "3" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode" description: "")"
-      R"( collation: "" default_value_expression: "" max_length: "" precision: 0)"
+      R"( collation: "" default_value_expression: "" max_length: 0 precision: 0)"
       R"( scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } } dml_stats {)"
@@ -212,7 +212,7 @@ TEST(JobTest, JobDebugString) {
       R"( referenced_tables { project_id: "2" dataset_id: "1" table_id: "3" })"
       R"( referenced_routines { project_id: "2" dataset_id: "1" routine_id: "3" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode" description: "")"
-      R"( collation: "" default_value_expression: "" max_length: "" precision: 0)"
+      R"( collation: "" default_value_expression: "" max_length: 0 precision: 0)"
       R"( scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } } dml_stats {)"
@@ -534,7 +534,7 @@ TEST(JobTest, JobDebugString) {
           description: ""
           collation: ""
           default_value_expression: ""
-          max_length: ""
+          max_length: 0
           precision: 0
           scale: 0
           categories {
@@ -736,7 +736,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       R"( dataset_id: "1" table_id: "3" } referenced_routines { project_id: "2")"
       R"( dataset_id: "1" routine_id: "3" } schema { fields { name: "fname-1")"
       R"( type: "" mode: "fmode" description: "" collation: "")"
-      R"( default_value_expression: "" max_length: "" precision: 0 scale: 0)"
+      R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
       R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( dml_stats { inserted_row_count: 1234 deleted_row_count: 1234)"
@@ -849,7 +849,7 @@ TEST(JobTest, ListFormatJobDebugString) {
       R"( dataset_id: "1" table_id: "3" } referenced_routines { project_id: "2")"
       R"( dataset_id: "1" routine_id: "3" } schema { fields { name: "fname-1")"
       R"( type: "" mode: "fmode" description: "" collation: "")"
-      R"( default_value_expression: "" max_length: "" precision: 0 scale: 0)"
+      R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
       R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( dml_stats { inserted_row_count: 1234 deleted_row_count: 1234)"
@@ -1171,7 +1171,7 @@ TEST(JobTest, ListFormatJobDebugString) {
           description: ""
           collation: ""
           default_value_expression: ""
-          max_length: ""
+          max_length: 0
           precision: 0
           scale: 0
           categories {
@@ -1373,7 +1373,7 @@ TEST(JobTest, JobToFromJson) {
       R"(,"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}])"
       R"(,"schema":{"fields":[{"categories":{"names":[]},"collation":"")"
       R"(,"defaultValueExpression":"","description":"","fields":{"fields":[]})"
-      R"(,"maxLength":"","mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
+      R"(,"maxLength":"0","mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
       R"(,"precision":0,"rangeElementType":{"type":""},"roundingMode":"")"
       R"(,"scale":0,"type":""}]},"searchStatistics":{"indexUnusedReasons":[{)"
       R"("baseTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
@@ -1496,7 +1496,7 @@ TEST(JobTest, ListFormatJobToFromJson) {
       R"(,"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}])"
       R"(,"schema":{"fields":[{"categories":{"names":[]},"collation":"")"
       R"(,"defaultValueExpression":"","description":"","fields":{"fields":[]})"
-      R"(,"maxLength":"","mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
+      R"(,"maxLength":"0","mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
       R"(,"precision":0,"rangeElementType":{"type":""},"roundingMode":"")"
       R"(,"scale":0,"type":""}]},"searchStatistics":{"indexUnusedReasons":[{)"
       R"("baseTable":{"datasetId":"1","projectId":"2","tableId":"3"})"

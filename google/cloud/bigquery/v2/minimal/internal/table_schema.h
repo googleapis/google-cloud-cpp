@@ -67,8 +67,8 @@ struct TableFieldSchema {
   std::string description;
   std::string collation;
   std::string default_value_expression;
-  std::string max_length;
 
+  std::int64_t max_length = 0;
   std::int64_t precision = 0;
   std::int64_t scale = 0;
 

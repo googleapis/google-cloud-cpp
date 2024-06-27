@@ -1045,7 +1045,7 @@ TEST(InsertJobResponseTest, Success) {
       R"(,"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}])"
       R"(,"schema":{"fields":[{"categories":{"names":[]},"collation":"")"
       R"(,"defaultValueExpression":"","description":"","fields":{"fields":[]})"
-      R"(,"maxLength":"","mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
+      R"(,"maxLength":0,"mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
       R"(,"precision":0,"rangeElementType":{"type":""},"roundingMode":"")"
       R"(,"scale":0,"type":""}]},"searchStatistics":{"indexUnusedReasons":[{)"
       R"("baseTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
@@ -1527,7 +1527,7 @@ TEST(CancelJobResponseTest, Success) {
       R"(,"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}])"
       R"(,"schema":{"fields":[{"categories":{"names":[]},"collation":"")"
       R"(,"defaultValueExpression":"","description":"","fields":{"fields":[]})"
-      R"(,"maxLength":"","mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
+      R"(,"maxLength":0,"mode":"fmode","name":"fname-1","policyTags":{"names":[]})"
       R"(,"precision":0,"rangeElementType":{"type":""},"roundingMode":"")"
       R"(,"scale":0,"type":""}]},"searchStatistics":{"indexUnusedReasons":[{)"
       R"("baseTable":{"datasetId":"1","projectId":"2","tableId":"3"})"
@@ -2001,7 +2001,7 @@ TEST(QueryResponseTest, DebugString) {
       R"( columns { value: "col5" } columns { value: "col6" } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
-      R"( max_length: "" precision: 0 scale: 0 categories { } policy_tags { })"
+      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
       R"( session_info { session_id: "123" } dml_stats { inserted_row_count: 10)"
@@ -2021,7 +2021,7 @@ TEST(QueryResponseTest, DebugString) {
       R"( columns { value: "col5" } columns { value: "col6" } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
-      R"( max_length: "" precision: 0 scale: 0 categories { } policy_tags { })"
+      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" })"
       R"( session_info { session_id: "123" } dml_stats {)"
@@ -2070,7 +2070,7 @@ TEST(QueryResponseTest, DebugString) {
         description: ""
         collation: ""
         default_value_expression: ""
-        max_length: ""
+        max_length: 0
         precision: 0
         scale: 0
         categories {
@@ -2154,7 +2154,7 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"( columns { value: "col5" } columns { value: "col6" } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
-      R"( max_length: "" precision: 0 scale: 0 categories { } policy_tags { })"
+      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" } } })");
 
@@ -2173,7 +2173,7 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"( columns { value: "col5" } columns { value: "col6" } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
-      R"( max_length: "" precision: 0 scale: 0 categories { } policy_tags { })"
+      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( job_reference { project_id: "p123" job_id: "j123" location: "useast" } } })");
 
@@ -2222,7 +2222,7 @@ TEST(GetQueryResultsResponseTest, DebugString) {
         description: ""
         collation: ""
         default_value_expression: ""
-        max_length: ""
+        max_length: 0
         precision: 0
         scale: 0
         categories {

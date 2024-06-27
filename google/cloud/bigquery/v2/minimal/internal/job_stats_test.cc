@@ -57,7 +57,7 @@ TEST(JobStatsTest, JobStatsToFromJson) {
       R"(,"referencedTables":[{"datasetId":"1","projectId":"2","tableId":"3"}],"schema":{"fields":[{)"
       R"("categories":{"names":[]},"collation":"")"
       R"(,"defaultValueExpression":"","description":"","fields":{"fields":[]})"
-      R"(,"maxLength":"","mode":"fmode","name":"fname-1","policyTags":{"names":[]},"precision":0)"
+      R"(,"maxLength":"0","mode":"fmode","name":"fname-1","policyTags":{"names":[]},"precision":0)"
       R"(,"rangeElementType":{"type":""},"roundingMode":"","scale":0,"type":""}]})"
       R"(,"searchStatistics":{"indexUnusedReasons":[{"baseTable":{"datasetId":"1","projectId":"2")"
       R"(,"tableId":"3"},"code":"BASE_TABLE_TOO_SMALL","indexName":"test-index","message":""}])"
@@ -142,7 +142,7 @@ TEST(JobStatsTest, DebugString) {
       R"( project_id: "2" dataset_id: "1" table_id: "3" } referenced_routines {)"
       R"( project_id: "2" dataset_id: "1" routine_id: "3" } schema { fields {)"
       R"( name: "fname-1" type: "" mode: "fmode" description: "" collation: "")"
-      R"( default_value_expression: "" max_length: "" precision: 0 scale: 0)"
+      R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
       R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } } dml_stats { inserted_row_count: 1234)"
@@ -225,7 +225,7 @@ TEST(JobStatsTest, DebugString) {
       R"( referenced_routines { project_id: "2" dataset_id: "1")"
       R"( routine_id: "3" } schema { fields { name: "fname-1" type: "")"
       R"( mode: "fmode" description: "" collation: "")"
-      R"( default_value_expression: "" max_length: "" precision: 0 scale: 0)"
+      R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
       R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } })"
@@ -403,7 +403,7 @@ TEST(JobStatsTest, DebugString) {
         description: ""
         collation: ""
         default_value_expression: ""
-        max_length: ""
+        max_length: 0
         precision: 0
         scale: 0
         categories {

@@ -56,7 +56,7 @@ std::string TableFieldSchema::DebugString(absl::string_view fname,
       .StringField("description", description)
       .StringField("collation", collation)
       .StringField("default_value_expression", default_value_expression)
-      .StringField("max_length", max_length)
+      .Field("max_length", max_length)
       .Field("precision", precision)
       .Field("scale", scale)
       .SubMessage("categories", categories)
@@ -102,7 +102,7 @@ void to_json(nlohmann::json& j, TableFieldSchema const& t) {
                      {"description", t.description},
                      {"collation", t.collation},
                      {"defaultValueExpression", t.default_value_expression},
-                     {"maxLength", t.max_length},
+                     {"maxLength", std::to_string(t.max_length)},
                      {"precision", t.precision},
                      {"scale", t.scale},
                      {"fields", t.fields},
@@ -119,7 +119,7 @@ void from_json(nlohmann::json const& j, TableFieldSchema& t) {
   SafeGetTo(t.description, j, "description");
   SafeGetTo(t.collation, j, "collation");
   SafeGetTo(t.default_value_expression, j, "defaultValueExpression");
-  SafeGetTo(t.max_length, j, "maxLength");
+  t.max_length = GetNumberFromJson(j, "maxLength");
   SafeGetTo(t.precision, j, "precision");
   SafeGetTo(t.scale, j, "scale");
   SafeGetTo(t.fields, j, "fields");

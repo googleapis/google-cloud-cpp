@@ -346,7 +346,7 @@ TEST(InsertJobRequest, DebugString) {
       R"( project_id: "2" dataset_id: "1" table_id: "3" } referenced_routines {)"
       R"( project_id: "2" dataset_id: "1" routine_id: "3" } schema { fields {)"
       R"( name: "fname-1" type: "" mode: "fmode" description: "" collation: "")"
-      R"( default_value_expression: "" max_length: "" precision: 0 scale: 0)"
+      R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
       R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } } dml_stats { inserted_row_count: 1234)"
@@ -462,7 +462,7 @@ TEST(InsertJobRequest, DebugString) {
       R"( dataset_id: "1" table_id: "3" } referenced_routines { project_id: "2")"
       R"( dataset_id: "1" routine_id: "3" } schema { fields { name: "fname-1")"
       R"( type: "" mode: "fmode" description: "" collation: "")"
-      R"( default_value_expression: "" max_length: "" precision: 0 scale: 0)"
+      R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
       R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( dml_stats { inserted_row_count: 1234 deleted_row_count: 1234)"
@@ -786,7 +786,7 @@ TEST(InsertJobRequest, DebugString) {
             description: ""
             collation: ""
             default_value_expression: ""
-            max_length: ""
+            max_length: 0
             precision: 0
             scale: 0
             categories {

@@ -301,7 +301,7 @@ std::string MakeTableJsonText() {
          R"(,"rangePartitioning":{"field":"range-partition-field","range":{"end":"","interval":"","start":""}})"
          R"(,"requirePartitionFilter":true,"schema":{"fields":[{"categories":{"names":[]})"
          R"(,"collation":"","defaultValueExpression":"","description":"","fields":{"fields":[]})"
-         R"(,"maxLength":"","mode":"fmode","name":"fname-1","policyTags":{"names":[]},"precision":0)"
+         R"(,"maxLength":"0","mode":"fmode","name":"fname-1","policyTags":{"names":[]},"precision":0)"
          R"(,"rangeElementType":{"type":""},"roundingMode":"","scale":0,"type":""}]})"
          R"(,"selfLink":"t-selflink","tableConstraints":{"foreignKeys":[{"columnReferences":[])"
          R"(,"keyName":"fkey-1","referencedTable":{"datasetId":"","projectId":"","tableId":""}}])"

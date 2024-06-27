@@ -84,7 +84,7 @@ TEST(JobQueryStatsTest, JobQueryStatsToFromJson) {
       R"(,"schema":{"fields":[{"categories":{"names":[]})"
       R"(,"collation":"")"
       R"(,"defaultValueExpression":"","description":"","fields":{)"
-      R"("fields":[]},"maxLength":"")"
+      R"("fields":[]},"maxLength":"0")"
       R"(,"mode":"fmode","name":"fname-1","policyTags":{)"
       R"("names":[]},"precision":0,"rangeElementType":{"type":""})"
       R"(,"roundingMode":"","scale":0,"type":""}]})"
@@ -163,7 +163,7 @@ TEST(JobQueryStatsTest, DebugString) {
       R"( referenced_tables { project_id: "2" dataset_id: "1" table_id: "3" })"
       R"( referenced_routines { project_id: "2" dataset_id: "1" routine_id: "3" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode" description: "")"
-      R"( collation: "" default_value_expression: "" max_length: "" precision: 0)"
+      R"( collation: "" default_value_expression: "" max_length: 0 precision: 0)"
       R"( scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } })"
@@ -230,7 +230,7 @@ TEST(JobQueryStatsTest, DebugString) {
       R"( referenced_tables { project_id: "2" dataset_id: "1" table_id: "3" })"
       R"( referenced_routines { project_id: "2" dataset_id: "1" routine_id: "3" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode" description: "")"
-      R"( collation: "" default_value_expression: "" max_length: "" precision: 0)"
+      R"( collation: "" default_value_expression: "" max_length: 0 precision: 0)"
       R"( scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" })"
       R"( range_element_type { type: "" } } })"
@@ -367,7 +367,7 @@ TEST(JobQueryStatsTest, DebugString) {
       description: ""
       collation: ""
       default_value_expression: ""
-      max_length: ""
+      max_length: 0
       precision: 0
       scale: 0
       categories {
