@@ -59,7 +59,10 @@ bool SafeGetTo(ResponseType& value, nlohmann::json const& j,
                std::string const& key) {
   auto i = j.find(key);
   if (i != j.end()) {
-    i->get_to(value);
+    // BQ sends null type values which crashes get_to() so check for null.
+    if (!i->is_null()) {
+      i->get_to(value);
+    }
     return true;
   }
   return false;
@@ -70,10 +73,13 @@ bool SafeGetTo(std::shared_ptr<T>& value, nlohmann::json const& j,
                std::string const& key) {
   auto i = j.find(key);
   if (i == j.end()) return false;
-  if (value == nullptr) {
-    value = std::make_shared<T>();
+  // BQ sends null type values which crashes get_to() so check for null.
+  if (!i->is_null()) {
+    if (value == nullptr) {
+      value = std::make_shared<T>();
+    }
+    i->get_to(*value);
   }
-  i->get_to(*value);
   return true;
 }
 
@@ -84,6 +90,24 @@ void SafeGetTo(nlohmann::json const& j, std::string const& key, R& (C::*f)(T) &,
   if (i != j.end()) {
     (obj.*f)(i->get<T>());
   }
+}
+
+// Same as SafeGetTo but also returns if value was null.
+template <typename ResponseType>
+bool SafeGetToWithNullable(ResponseType& value, bool& is_null,
+                           nlohmann::json const& j, std::string const& key) {
+  auto i = j.find(key);
+  is_null = false;
+  if (i != j.end()) {
+    // BQ sends null type values which crashes get_to() so check for null.
+    if (!i->is_null()) {
+      i->get_to(value);
+    } else {
+      is_null = true;
+    }
+    return true;
+  }
+  return false;
 }
 // NOLINTEND(misc-no-recursion)
 

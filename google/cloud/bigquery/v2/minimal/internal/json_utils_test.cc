@@ -240,6 +240,43 @@ TEST(JsonUtilsTest, RemoveEmptyObjects) {
   EXPECT_EQ(expected, json.dump());
 }
 
+TEST(JsonUtilsTest, SafeGetToNullValue) {
+  auto const* const key = "project_id";
+  auto constexpr kJsonText = R"({"project_id":null})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  std::string val;
+  EXPECT_TRUE(SafeGetTo(val, json, key));
+  EXPECT_EQ(val, "");
+}
+
+TEST(JsonUtilsTest, SafeGetToWithNullable_NullValue) {
+  auto const* const key = "project_id";
+  auto constexpr kJsonText = R"({"project_id":null})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  std::string val;
+  bool is_null;
+  EXPECT_TRUE(SafeGetToWithNullable(val, is_null, json, key));
+  EXPECT_EQ(val, "");
+  EXPECT_TRUE(is_null);
+}
+
+TEST(JsonUtilsTest, SafeGetToWithNullable_NonNull) {
+  auto const* const key = "project_id";
+  auto constexpr kJsonText = R"({"project_id":"123"})";
+  auto json = nlohmann::json::parse(kJsonText, nullptr, false);
+  EXPECT_TRUE(json.is_object());
+
+  std::string val;
+  bool is_null;
+  EXPECT_TRUE(SafeGetToWithNullable(val, is_null, json, key));
+  EXPECT_EQ(val, "123");
+  EXPECT_FALSE(is_null);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_v2_minimal_internal
 }  // namespace cloud

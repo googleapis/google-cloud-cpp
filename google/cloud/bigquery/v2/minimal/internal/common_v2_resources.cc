@@ -634,11 +634,11 @@ void to_json(nlohmann::json& j, ColumnData const& c) {
   j = nlohmann::json{{"v", c.value}};
 }
 void from_json(nlohmann::json const& j, ColumnData& c) {
-  SafeGetTo(c.value, j, "v");
+  SafeGetToWithNullable(c.value, c.is_null, j, "v");
 }
 
 bool operator==(ColumnData const& lhs, ColumnData const& rhs) {
-  return lhs.value == rhs.value;
+  return (lhs.value == rhs.value && lhs.is_null == rhs.is_null);
 }
 
 bool operator==(RowData const& lhs, RowData const& rhs) {
@@ -651,6 +651,7 @@ std::string ColumnData::DebugString(absl::string_view name,
                                     int indent) const {
   return internal::DebugFormatter(name, options, indent)
       .StringField("value", value)
+      .Field("is_null", is_null)
       .Build();
 }
 

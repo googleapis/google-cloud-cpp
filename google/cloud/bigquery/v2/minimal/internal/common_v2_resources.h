@@ -316,6 +316,7 @@ bool operator==(Struct const& lhs, Struct const& rhs);
 
 struct ColumnData {
   std::string value;
+  bool is_null{false};
   std::string DebugString(absl::string_view name,
                           TracingOptions const& options = {},
                           int indent = 0) const;
