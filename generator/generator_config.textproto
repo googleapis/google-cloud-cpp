@@ -1827,6 +1827,7 @@ service {
 
 service {
   service_proto_path: "google/cloud/dataproc/v1/node_groups.proto"
+  additional_proto_files: ["google/cloud/dataproc/v1/operations.proto"]
   product_path: "google/cloud/dataproc/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
