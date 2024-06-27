@@ -99,7 +99,7 @@ RUN curl -fsSL https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz | \
 # GCC 7.x. See https://github.com/open-telemetry/opentelemetry-cpp/issues/1014
 # for more details.
 WORKDIR /var/tmp/build/
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/Stack &GetStack()/Stack \&GetStack() __attribute__((noinline, noclone))/' "api/include/opentelemetry/context/runtime_context.h" && \
     cmake \
@@ -112,8 +112,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
-        -DgRPC_OPENTELEMETRY_PROVIDER=package \
-        -DgRPC_BUILD_GRPCPP_OTEL_PLUGIN=ON \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -GNinja -S . -B cmake-out && \
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
