@@ -214,6 +214,44 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
   EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
 }
 
+TEST_F(InstanceAdminClientTest, CreateInstanceStartAwait) {
+  if (!Emulator() && !RunSlowInstanceTests()) {
+    GTEST_SKIP() << "skipping slow instance tests; set "
+                 << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
+                 << " to override";
+  }
+
+  Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator_));
+
+  auto config_name = spanner_testing::PickInstanceConfig(
+      in.project(), generator_,
+      [](google::spanner::admin::instance::v1::InstanceConfig const& config) {
+        return absl::StrContains(config.name(), "/regional-us-west");
+      });
+  ASSERT_FALSE(config_name.empty()) << "could not get an instance config";
+
+  auto operation =
+      client_.CreateInstance(ExperimentalTag{}, NoAwaitTag{},
+                             CreateInstanceRequestBuilder(in, config_name)
+                                 .SetDisplayName("test-display-name")
+                                 .SetNodeCount(1)
+                                 .SetLabels({{"label-key", "label-value"}})
+                                 .Build());
+  ASSERT_STATUS_OK(operation);
+
+  // Verify that an error is returned if there is a mismatch between the rpc
+  // that returned the operation and the rpc in which is it used.
+  auto instance_config =
+      client_.CreateInstanceConfig(ExperimentalTag{}, *operation).get();
+  EXPECT_THAT(instance_config, StatusIs(StatusCode::kInvalidArgument));
+
+  auto instance = client_.CreateInstance(ExperimentalTag{}, *operation).get();
+  ASSERT_STATUS_OK(instance);
+  EXPECT_EQ(instance->name(), in.FullName());
+  EXPECT_EQ(instance->display_name(), "test-display-name");
+  EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
+}
+
 TEST_F(InstanceAdminClientTest, InstanceConfig) {
   auto project_id = ProjectId();
   ASSERT_FALSE(project_id.empty());
