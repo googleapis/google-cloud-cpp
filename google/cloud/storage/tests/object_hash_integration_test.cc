@@ -199,12 +199,13 @@ TEST_F(ObjectHashIntegrationTest, WriteObjectExplicitEnable) {
   EXPECT_THAT(os.computed_hash(), HasSubstr(ComputeMD5Hash(LoremIpsum())));
   EXPECT_THAT(os.received_hash(), HasSubstr(ComputeMD5Hash(LoremIpsum())));
   if (meta->has_metadata("x_emulator_upload")) {
-    ASSERT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
     if (UsingGrpc()) {
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
       EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_md5", _)));
     } else {
       // REST cannot send the checksums computed at the end of the upload.
-      ASSERT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
     }
   }
 }

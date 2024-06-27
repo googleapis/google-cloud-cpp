@@ -32,10 +32,12 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
+using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pair;
 
 class ObjectFileIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -552,9 +554,8 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta->size());
 
-  EXPECT_THAT(meta->metadata(),
-              ::testing::Contains(::testing::Pair("x_emulator_custom_header",
-                                                  "custom_header_value")));
+  EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_custom_header",
+                                              "custom_header_value")));
 
   // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
