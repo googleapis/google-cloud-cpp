@@ -423,12 +423,12 @@ TEST(RestStubHelpers, PostWithNonEmptySameResponseRequestTypes) {
   auto mock_client = std::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_client,
               Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestContext&, RestRequest const& request,
+      .WillOnce([&](RestContext&, RestRequest const&,
                     std::vector<absl::Span<char const>> const&) {
         return Status(StatusCode::kInternal, "Internal Error");
       })
-      .WillOnce([&](RestContext&, RestRequest const& request,
-                    std::vector<absl::Span<char const>> const& payload)
+      .WillOnce([&](RestContext&, RestRequest const&,
+                    std::vector<absl::Span<char const>> const&)
                     -> google::cloud::StatusOr<
                         std::unique_ptr<rest_internal::RestResponse>> {
         return std::unique_ptr<rest_internal::RestResponse>(mock_200_response);
