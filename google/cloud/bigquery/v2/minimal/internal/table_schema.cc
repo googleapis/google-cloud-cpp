@@ -102,9 +102,9 @@ void to_json(nlohmann::json& j, TableFieldSchema const& t) {
                      {"description", t.description},
                      {"collation", t.collation},
                      {"defaultValueExpression", t.default_value_expression},
-                     {"maxLength", t.max_length},
-                     {"precision", t.precision},
-                     {"scale", t.scale},
+                     {"maxLength", std::to_string(t.max_length)},
+                     {"precision", std::to_string(t.precision)},
+                     {"scale", std::to_string(t.scale)},
                      {"fields", t.fields},
                      {"categories", t.categories},
                      {"policyTags", t.policy_tags},
@@ -119,9 +119,9 @@ void from_json(nlohmann::json const& j, TableFieldSchema& t) {
   SafeGetTo(t.description, j, "description");
   SafeGetTo(t.collation, j, "collation");
   SafeGetTo(t.default_value_expression, j, "defaultValueExpression");
-  SafeGetTo(t.max_length, j, "maxLength");
-  SafeGetTo(t.precision, j, "precision");
-  SafeGetTo(t.scale, j, "scale");
+  t.max_length = GetNumberFromJson(j, "maxLength");
+  t.precision = GetNumberFromJson(j, "precision");
+  t.scale = GetNumberFromJson(j, "scale");
   SafeGetTo(t.fields, j, "fields");
   SafeGetTo(t.categories, j, "categories");
   SafeGetTo(t.policy_tags, j, "policyTags");
