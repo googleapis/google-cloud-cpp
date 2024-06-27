@@ -1996,9 +1996,9 @@ TEST(QueryResponseTest, DebugString) {
       R"( kind: "query-kind" page_token: "np123")"
       R"( total_rows: 1000 total_bytes_processed: 1000 num_dml_affected_rows: 5)"
       R"( job_complete: true cache_hit: true)"
-      R"( rows { columns { value: "col1" } columns { value: "col2" })"
-      R"( columns { value: "col3" } columns { value: "col4" })"
-      R"( columns { value: "col5" } columns { value: "col6" } })"
+      R"( rows { columns { value: "col1" is_null: false } columns { value: "col2" is_null: false })"
+      R"( columns { value: "col3" is_null: false } columns { value: "col4" is_null: false })"
+      R"( columns { value: "col5" is_null: false } columns { value: "col6" is_null: false } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
       R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
@@ -2016,9 +2016,9 @@ TEST(QueryResponseTest, DebugString) {
       R"( query_results { kind: "query-k...<truncated>...")"
       R"( page_token: "np123" total_rows: 1000 total_bytes_processed: 1000)"
       R"( num_dml_affected_rows: 5 job_complete: true cache_hit: true)"
-      R"( rows { columns { value: "col1" } columns { value: "col2" })"
-      R"( columns { value: "col3" } columns { value: "col4" })"
-      R"( columns { value: "col5" } columns { value: "col6" } })"
+      R"( rows { columns { value: "col1" is_null: false } columns { value: "col2" is_null: false })"
+      R"( columns { value: "col3" is_null: false } columns { value: "col4" is_null: false })"
+      R"( columns { value: "col5" is_null: false } columns { value: "col6" is_null: false } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
       R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
@@ -2045,21 +2045,27 @@ TEST(QueryResponseTest, DebugString) {
     rows {
       columns {
         value: "col1"
+        is_null: false
       }
       columns {
         value: "col2"
+        is_null: false
       }
       columns {
         value: "col3"
+        is_null: false
       }
       columns {
         value: "col4"
+        is_null: false
       }
       columns {
         value: "col5"
+        is_null: false
       }
       columns {
         value: "col6"
+        is_null: false
       }
     }
     schema {
@@ -2149,9 +2155,9 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"( kind: "query-kind" etag: "query-etag" page_token: "np123")"
       R"( total_rows: 1000 total_bytes_processed: 1000)"
       R"( num_dml_affected_rows: 5 job_complete: true cache_hit: true)"
-      R"( rows { columns { value: "col1" } columns { value: "col2" })"
-      R"( columns { value: "col3" } columns { value: "col4" })"
-      R"( columns { value: "col5" } columns { value: "col6" } })"
+      R"( rows { columns { value: "col1" is_null: false } columns { value: "col2" is_null: false })"
+      R"( columns { value: "col3" is_null: false } columns { value: "col4" is_null: false })"
+      R"( columns { value: "col5" is_null: false } columns { value: "col6" is_null: false } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
       R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
@@ -2168,9 +2174,9 @@ TEST(GetQueryResultsResponseTest, DebugString) {
       R"( etag: "query-e...<truncated>..." page_token: "np123")"
       R"( total_rows: 1000 total_bytes_processed: 1000)"
       R"( num_dml_affected_rows: 5 job_complete: true cache_hit: true)"
-      R"( rows { columns { value: "col1" } columns { value: "col2" })"
-      R"( columns { value: "col3" } columns { value: "col4" })"
-      R"( columns { value: "col5" } columns { value: "col6" } })"
+      R"( rows { columns { value: "col1" is_null: false } columns { value: "col2" is_null: false })"
+      R"( columns { value: "col3" is_null: false } columns { value: "col4" is_null: false })"
+      R"( columns { value: "col5" is_null: false } columns { value: "col6" is_null: false } })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
       R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
@@ -2197,21 +2203,27 @@ TEST(GetQueryResultsResponseTest, DebugString) {
     rows {
       columns {
         value: "col1"
+        is_null: false
       }
       columns {
         value: "col2"
+        is_null: false
       }
       columns {
         value: "col3"
+        is_null: false
       }
       columns {
         value: "col4"
+        is_null: false
       }
       columns {
         value: "col5"
+        is_null: false
       }
       columns {
         value: "col6"
+        is_null: false
       }
     }
     schema {
