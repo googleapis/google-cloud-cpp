@@ -25,6 +25,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dataproc/v1/node_groups.grpc.pb.h>
+#include <google/cloud/dataproc/v1/operations.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <utility>
