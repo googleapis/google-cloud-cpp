@@ -104,9 +104,9 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
          MethodPattern(
              {
                  {// clang-format off
-    "\n  // Due to additional overloads for this method\n"
-    "  // EXPECT_CALL(*mock, $method_name$) is now ambiguous. Use\n"
-    "  // EXPECT_CALL(*mock, $method_name$(_)) instead.\n"},
+    "\n  /// Due to additional overloads for this method\n"
+    "  /// `EXPECT_CALL(*mock, $method_name$)` is now ambiguous. Use\n"
+    "  /// `EXPECT_CALL(*mock, $method_name$(::testing::_))` instead.\n"},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off

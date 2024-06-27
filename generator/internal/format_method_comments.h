@@ -38,7 +38,7 @@ std::string FormatMethodComments(
 bool CheckMethodCommentSubstitutions();
 
 /**
- *  Comments for LRO Start overload.
+ * Comments for LRO Start overload.
  */
 std::string FormatStartMethodComments();
 
