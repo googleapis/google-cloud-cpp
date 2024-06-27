@@ -30,6 +30,8 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+struct EmptyResponseType {};
+
 std::vector<std::pair<std::string, std::string>> TrimEmptyQueryParameters(
     std::vector<std::pair<std::string, std::string>> query_params);
 
@@ -58,7 +60,9 @@ StatusOr<Response> RestResponseToProto(RestResponse&& rest_response) {
   return destination;
 }
 
-template <typename Request>
+template <
+    typename Response, typename Request,
+    std::enable_if_t<std::is_same<Response, EmptyResponseType>::value, int> = 0>
 Status Delete(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const&, bool, std::string path,
@@ -70,7 +74,9 @@ Status Delete(
   return AsStatus(std::move(**response));
 }
 
-template <typename Response, typename Request>
+template <typename Response, typename Request,
+          std::enable_if_t<!std::is_same<Response, EmptyResponseType>::value,
+                           int> = 0>
 StatusOr<Response> Delete(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const&, bool, std::string path,
@@ -111,7 +117,9 @@ StatusOr<Response> Patch(
   return RestResponseToProto<Response>(std::move(**response));
 }
 
-template <typename Response, typename Request>
+template <typename Response, typename Request,
+          std::enable_if_t<!std::is_same<Response, EmptyResponseType>::value,
+                           int> = 0>
 StatusOr<Response> Post(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const& request, bool preserve_proto_field_names, std::string path,
@@ -128,7 +136,9 @@ StatusOr<Response> Post(
   return RestResponseToProto<Response>(std::move(**response));
 }
 
-template <typename Request>
+template <
+    typename Response, typename Request,
+    std::enable_if_t<std::is_same<Response, EmptyResponseType>::value, int> = 0>
 Status Post(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const& request, bool preserve_proto_field_names, std::string path,
