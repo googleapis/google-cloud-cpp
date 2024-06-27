@@ -22,6 +22,7 @@
 #include "absl/types/variant.h"
 #include <google/api/monitored_resource.pb.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <algorithm>
 #include <type_traits>
 
 namespace google {
@@ -70,8 +71,10 @@ Options MetricsExporterOptions(
 
   return Options{}
       .set<otel_internal::ServiceTimeSeriesOption>(true)
-      .set<otel_internal::MetricNameFormatterOption>(
-          [](auto s) { return "storage.googleapis.com/" + s; })
+      .set<otel_internal::MetricNameFormatterOption>([](std::string s) {
+        std::replace(s.begin(), s.end(), '.', '/');
+        return "storage.googleapis.com/" + std::move(s);
+      })
       .set<otel_internal::MonitoredResourceOption>(
           std::move(monitored_resource));
 }
