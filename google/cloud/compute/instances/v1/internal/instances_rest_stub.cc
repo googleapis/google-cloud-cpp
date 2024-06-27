@@ -876,7 +876,7 @@ Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
     Options const& options,
     google::cloud::cpp::compute::instances::v1::
         SendDiagnosticInterruptRequest const& request) {
-  return rest_internal::Post(
+  return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",

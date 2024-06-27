@@ -101,7 +101,7 @@ Status DefaultGoldenKitchenSinkRestStub::DoNothing(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::protobuf::Empty const& request) {
-  return rest_internal::Post(
+  return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/doNothing"));
 }
@@ -110,7 +110,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-  return rest_internal::Post(
+  return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting1"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
@@ -121,7 +121,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-  return rest_internal::Post(
+  return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting2"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
