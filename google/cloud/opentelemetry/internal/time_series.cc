@@ -69,10 +69,9 @@ double AsDouble(opentelemetry::sdk::metrics::ValueType const& v) {
 google::api::Metric ToMetric(
     opentelemetry::sdk::metrics::MetricData const& metric_data,
     opentelemetry::sdk::metrics::PointAttributes const& attributes,
-    std::string const& prefix) {
+    std::function<std::string(std::string)> const& name_formatter) {
   google::api::Metric proto;
-  auto const metric_type = prefix + metric_data.instrument_descriptor.name_;
-  proto.set_type(metric_type);
+  proto.set_type(name_formatter(metric_data.instrument_descriptor.name_));
 
   auto& labels = *proto.mutable_labels();
   for (auto const& kv : attributes) {
@@ -182,7 +181,7 @@ google::api::MonitoredResource ToMonitoredResource(
 
 std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
     opentelemetry::sdk::metrics::ResourceMetrics const& data,
-    std::string const& prefix) {
+    std::function<std::string(std::string)> const& metrics_name_formatter) {
   std::vector<google::monitoring::v3::TimeSeries> tss;
   for (auto const& scope_metric : data.scope_metric_data_) {
     for (auto const& metric_data : scope_metric.metric_data_) {
@@ -210,7 +209,8 @@ std::vector<google::monitoring::v3::TimeSeries> ToTimeSeries(
         auto ts = absl::visit(Visitor{metric_data}, pda.point_data);
         if (!ts) continue;
         ts->set_unit(metric_data.instrument_descriptor.unit_);
-        *ts->mutable_metric() = ToMetric(metric_data, pda.attributes, prefix);
+        *ts->mutable_metric() =
+            ToMetric(metric_data, pda.attributes, metrics_name_formatter);
         tss.push_back(*std::move(ts));
       }
     }

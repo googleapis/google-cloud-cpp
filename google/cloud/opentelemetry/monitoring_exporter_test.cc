@@ -217,7 +217,7 @@ TEST(MonitoringExporter, ExportFailureWithInvalidArgument) {
                      HasSubstr("INVALID_ARGUMENT"), HasSubstr("nope"))));
 }
 
-TEST(MonitoringExporter, CustomPrefix) {
+TEST(MonitoringExporter, CustomFormatter) {
   auto mock =
       std::make_shared<monitoring_v3_mocks::MockMetricServiceConnection>();
   EXPECT_CALL(*mock, CreateTimeSeries)
@@ -230,8 +230,8 @@ TEST(MonitoringExporter, CustomPrefix) {
             return Status();
           });
 
-  auto options = Options{}.set<otel_internal::MetricPrefixOption>(
-      "custom.googleapis.com/");
+  auto options = Options{}.set<otel_internal::MetricNameFormatterOption>(
+      [](std::string const& s) { return "custom.googleapis.com/" + s; });
   auto exporter = otel_internal::MakeMonitoringExporter(
       Project("test-project"), std::move(mock), options);
   auto data = MakeResourceMetrics(/*expected_time_series_count=*/2);

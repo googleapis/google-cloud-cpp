@@ -20,7 +20,9 @@
 #include "google/cloud/project.h"
 #include "google/cloud/version.h"
 #include <opentelemetry/sdk/metrics/push_metric_exporter.h>
+#include <functional>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -28,14 +30,15 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * The prefix prepended to metric names.
+ * Change formatting for metric names.
  *
- * The default value is "workload.googleapis.com/". Note the trailing slash.
+ * The default formatter prefixes the name with "workload.googleapis.com/".
+ * Note the trailing slash.
  *
  * @see https://cloud.google.com/monitoring/api/v3/naming-conventions for
  *   understanding Google's naming conventions.
  *
- * The typical values for [user metrics] are:
+ * Common prefixes for [user metrics] are:
  * - "workload.googleapis.com/"
  * - "custom.googleapis.com/"
  * - "external.googleapis.com/user/"
@@ -47,8 +50,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [prometheus]: https://prometheus.io/
  * [user metrics]: https://cloud.google.com/monitoring/custom-metrics#identifier
  */
-struct MetricPrefixOption {
-  using Type = std::string;
+struct MetricNameFormatterOption {
+  using Type = std::function<std::string(std::string)>;
 };
 
 /**

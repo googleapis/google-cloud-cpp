@@ -27,8 +27,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 Options DefaultOptions(Options o) {
-  if (!o.has<MetricPrefixOption>()) {
-    o.set<MetricPrefixOption>("workload.googleapis.com/");
+  if (!o.has<MetricNameFormatterOption>()) {
+    o.set<MetricNameFormatterOption>([](std::string s) {
+      return "workload.googleapis.com/" + std::move(s);
+    });
   }
   return o;
 }
@@ -42,7 +44,7 @@ class MonitoringExporter final
       Options const& options)
       : project_(std::move(project)),
         client_(std::move(conn)),
-        prefix_(options.get<MetricPrefixOption>()),
+        formatter_(options.get<MetricNameFormatterOption>()),
         use_service_time_series_(options.get<ServiceTimeSeriesOption>()),
         mr_proto_(internal::FetchOption<MonitoredResourceOption>(options)) {}
 
@@ -71,7 +73,7 @@ class MonitoringExporter final
       opentelemetry::sdk::metrics::ResourceMetrics const& data) {
     auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
 
-    auto tss = ToTimeSeries(data, prefix_);
+    auto tss = ToTimeSeries(data, formatter_);
     if (tss.empty()) {
       GCP_LOG(INFO) << "Cloud Monitoring Export skipped. No data.";
       // Return early to save the littlest bit of processing.
@@ -102,7 +104,7 @@ class MonitoringExporter final
 
   Project project_;
   monitoring_v3::MetricServiceClient client_;
-  std::string prefix_;
+  MetricNameFormatterOption::Type formatter_;
   bool use_service_time_series_;
   absl::optional<google::api::MonitoredResource> mr_proto_;
 };

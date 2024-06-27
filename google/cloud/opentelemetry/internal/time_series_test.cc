@@ -23,6 +23,7 @@
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/resource/resource.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
+#include <algorithm>
 #include <cstdint>
 
 namespace google {
@@ -235,6 +236,10 @@ auto HistogramTimeSeries() {
                    SizeIs(1)));
 }
 
+std::string PrefixWithWorkload(std::string s) {
+  return "workload.googleapis.com/" + std::move(s);
+}
+
 TEST(ToMetric, Simple) {
   opentelemetry::sdk::metrics::MetricData md;
   md.instrument_descriptor.name_ = "test";
@@ -242,14 +247,17 @@ TEST(ToMetric, Simple) {
   opentelemetry::sdk::metrics::PointAttributes attributes = {
       {"key1", "value1"}, {"_key2", "value2"}};
 
-  auto metric = ToMetric(md, attributes, "workload.googleapis.com/");
+  auto metric = ToMetric(md, attributes, PrefixWithWorkload);
 
   EXPECT_EQ(metric.type(), "workload.googleapis.com/test");
   EXPECT_THAT(metric.labels(), UnorderedElementsAre(Pair("key1", "value1"),
                                                     Pair("_key2", "value2")));
 
-  metric = ToMetric(md, {}, "custom.googleapis.com/");
-  EXPECT_EQ(metric.type(), "custom.googleapis.com/test");
+  metric = ToMetric(md, {}, [](std::string s) {
+    std::replace(s.begin(), s.end(), 't', 'T');
+    return "custom.googleapis.com/" + std::move(s);
+  });
+  EXPECT_EQ(metric.type(), "custom.googleapis.com/TesT");
 }
 
 TEST(ToMetric, BadLabelNames) {
@@ -258,7 +266,7 @@ TEST(ToMetric, BadLabelNames) {
   opentelemetry::sdk::metrics::PointAttributes attributes = {
       {"99", "dropped"}, {"a key-with.bad/characters", "value"}};
 
-  auto metric = ToMetric({}, attributes, "workload.googleapis.com/");
+  auto metric = ToMetric({}, attributes, PrefixWithWorkload);
 
   EXPECT_THAT(metric.labels(),
               UnorderedElementsAre(Pair("a_key_with_bad_characters", "value")));
@@ -525,7 +533,7 @@ TEST(ToTimeSeries, Sum) {
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto tss = ToTimeSeries(rm, "workload.googleapis.com/");
+  auto tss = ToTimeSeries(rm, PrefixWithWorkload);
   EXPECT_THAT(tss, ElementsAre(SumTimeSeries(), SumTimeSeries()));
   EXPECT_THAT(tss, Each(AllOf(MetricType("workload.googleapis.com/metric-name"),
                               Unit("unit"))));
@@ -549,7 +557,7 @@ TEST(ToTimeSeries, Gauge) {
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto tss = ToTimeSeries(rm, "workload.googleapis.com/");
+  auto tss = ToTimeSeries(rm, PrefixWithWorkload);
   EXPECT_THAT(tss, ElementsAre(GaugeTimeSeries(), GaugeTimeSeries()));
   EXPECT_THAT(tss, Each(AllOf(MetricType("workload.googleapis.com/metric-name"),
                               Unit("unit"))));
@@ -573,7 +581,7 @@ TEST(ToTimeSeries, Histogram) {
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto tss = ToTimeSeries(rm, "workload.googleapis.com/");
+  auto tss = ToTimeSeries(rm, PrefixWithWorkload);
   EXPECT_THAT(tss, ElementsAre(HistogramTimeSeries(), HistogramTimeSeries()));
   EXPECT_THAT(tss, Each(AllOf(MetricType("workload.googleapis.com/metric-name"),
                               Unit("unit"))));
@@ -597,7 +605,7 @@ TEST(ToTimeSeries, DropIgnored) {
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto tss = ToTimeSeries(rm, "workload.googleapis.com/");
+  auto tss = ToTimeSeries(rm, PrefixWithWorkload);
   EXPECT_THAT(tss, IsEmpty());
 }
 
@@ -627,7 +635,8 @@ TEST(ToTimeSeries, Combined) {
   opentelemetry::sdk::metrics::ResourceMetrics rm;
   rm.scope_metric_data_.push_back(std::move(sm));
 
-  auto tss = ToTimeSeries(rm, "custom.googleapis.com/");
+  auto tss = ToTimeSeries(
+      rm, [](std::string const& s) { return "custom.googleapis.com/" + s; });
   EXPECT_THAT(tss, UnorderedElementsAre(SumTimeSeries(), GaugeTimeSeries(),
                                         HistogramTimeSeries()));
   EXPECT_THAT(tss, Each(AllOf(MetricType("custom.googleapis.com/metric-name"),
