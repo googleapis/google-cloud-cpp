@@ -93,7 +93,6 @@ class AsyncStreamingReadWriteRpcTracing
   }
 
   future<Status> Finish() override {
-    internal::OTelScope scope(span_);
     // It is sufficient to set `span_` as the parent of `finish_span`, because
     // the lower levels do not create any spans.
     opentelemetry::trace::StartSpanOptions options;
