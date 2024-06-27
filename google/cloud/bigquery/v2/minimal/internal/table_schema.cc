@@ -56,7 +56,7 @@ std::string TableFieldSchema::DebugString(absl::string_view fname,
       .StringField("description", description)
       .StringField("collation", collation)
       .StringField("default_value_expression", default_value_expression)
-      .Field("max_length", max_length)
+      .StringField("max_length", max_length)
       .Field("precision", precision)
       .Field("scale", scale)
       .SubMessage("categories", categories)

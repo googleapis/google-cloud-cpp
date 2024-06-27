@@ -197,7 +197,7 @@ TEST(GetTableResponseTest, DebugString) {
       R"( table_id: "t-123" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "")"
-      R"( default_value_expression: "" max_length: 0 precision: 0 scale: 0)"
+      R"( default_value_expression: "" max_length: "" precision: 0 scale: 0)"
       R"( categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( default_rounding_mode { value: "ROUND_HALF_EVEN" })"
@@ -245,7 +245,7 @@ TEST(GetTableResponseTest, DebugString) {
       R"( table_reference { project_id: "t-123" dataset_id: "t-123" table_id: "t-123" })"
       R"( schema { fields { name: "fname-1" type: "" mode: "fmode")"
       R"( description: "" collation: "" default_value_expression: "")"
-      R"( max_length: 0 precision: 0 scale: 0 categories { } policy_tags { })"
+      R"( max_length: "" precision: 0 scale: 0 categories { } policy_tags { })"
       R"( rounding_mode { value: "" } range_element_type { type: "" } } })"
       R"( default_rounding_mode { value: "ROUND_H...<truncated>..." })"
       R"( time_partitioning { type: "" expiration_time { "123ms" })"
@@ -325,7 +325,7 @@ TEST(GetTableResponseTest, DebugString) {
         description: ""
         collation: ""
         default_value_expression: ""
-        max_length: 0
+        max_length: ""
         precision: 0
         scale: 0
         categories {

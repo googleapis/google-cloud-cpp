@@ -118,7 +118,7 @@ TEST(TableTest, TableDebugString) {
             R"( description: "")"
             R"( collation: "")"
             R"( default_value_expression: "")"
-            R"( max_length: 0)"
+            R"( max_length: "")"
             R"( precision: 0)"
             R"( scale: 0)"
             R"( categories { })"
@@ -224,7 +224,7 @@ TEST(TableTest, TableDebugString) {
       R"( description: "")"
       R"( collation: "")"
       R"( default_value_expression: "")"
-      R"( max_length: 0)"
+      R"( max_length: "")"
       R"( precision: 0)"
       R"( scale: 0)"
       R"( categories { })"
@@ -341,7 +341,7 @@ TEST(TableTest, TableDebugString) {
       description: ""
       collation: ""
       default_value_expression: ""
-      max_length: 0
+      max_length: ""
       precision: 0
       scale: 0
       categories {
