@@ -265,10 +265,7 @@ TEST_F(InstanceAdminClientRestTest, CreateInstanceStartAwait) {
                  << " to override";
   }
 
-  std::string instance_id = spanner_testing::RandomInstanceName(generator_);
-  Instance in(ProjectId(), instance_id);
-  ASSERT_FALSE(in.project_id().empty());
-  ASSERT_FALSE(in.instance_id().empty());
+  Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator_));
 
   auto config_name = spanner_testing::PickInstanceConfig(
       in.project(), generator_,
@@ -291,7 +288,7 @@ TEST_F(InstanceAdminClientRestTest, CreateInstanceStartAwait) {
 
   auto instance = client_.CreateInstance(ExperimentalTag{}, *operation).get();
   ASSERT_STATUS_OK(instance);
-  EXPECT_THAT(instance->name(), Eq(in.FullName()));
+  EXPECT_EQ(instance->name(), in.FullName());
   EXPECT_EQ(instance->display_name(), "test-display-name");
   EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
 }

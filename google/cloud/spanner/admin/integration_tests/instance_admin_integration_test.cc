@@ -221,10 +221,7 @@ TEST_F(InstanceAdminClientTest, CreateInstanceStartAwait) {
                  << " to override";
   }
 
-  std::string instance_id = spanner_testing::RandomInstanceName(generator_);
-  Instance in(ProjectId(), instance_id);
-  ASSERT_FALSE(in.project_id().empty());
-  ASSERT_FALSE(in.instance_id().empty());
+  Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator_));
 
   auto config_name = spanner_testing::PickInstanceConfig(
       in.project(), generator_,
@@ -241,13 +238,16 @@ TEST_F(InstanceAdminClientTest, CreateInstanceStartAwait) {
                                  .SetLabels({{"label-key", "label-value"}})
                                  .Build());
   ASSERT_STATUS_OK(operation);
+
+  // Verify that an error is returned if there is a mismatch between the rpc
+  // that returned the operation and the rpc in which is it used.
   auto instance_config =
       client_.CreateInstanceConfig(ExperimentalTag{}, *operation).get();
   EXPECT_THAT(instance_config, StatusIs(StatusCode::kInvalidArgument));
 
   auto instance = client_.CreateInstance(ExperimentalTag{}, *operation).get();
   ASSERT_STATUS_OK(instance);
-  EXPECT_THAT(instance->name(), Eq(in.FullName()));
+  EXPECT_EQ(instance->name(), in.FullName());
   EXPECT_EQ(instance->display_name(), "test-display-name");
   EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
 }
