@@ -123,6 +123,17 @@ class RegionUrlMapsClient {
       std::string const& project, std::string const& region,
       std::string const& url_map, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& url_map, Options opts = {});
@@ -166,12 +177,32 @@ class RegionUrlMapsClient {
           DeleteUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_url_maps::v1::
           DeleteUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteUrlMap
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -276,6 +307,17 @@ class RegionUrlMapsClient {
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -322,12 +364,32 @@ class RegionUrlMapsClient {
           InsertUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_url_maps::v1::
           InsertUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertUrlMap
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -453,6 +515,17 @@ class RegionUrlMapsClient {
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& url_map,
@@ -500,12 +573,32 @@ class RegionUrlMapsClient {
           PatchUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_url_maps::v1::
           PatchUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchUrlMap
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMap(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -550,6 +643,17 @@ class RegionUrlMapsClient {
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& url_map,
@@ -596,12 +700,32 @@ class RegionUrlMapsClient {
           UpdateUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateUrlMap
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_url_maps::v1::
           UpdateUrlMapRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateUrlMap
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

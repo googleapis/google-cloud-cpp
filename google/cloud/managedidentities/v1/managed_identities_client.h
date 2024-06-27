@@ -174,6 +174,17 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::Domain const& domain,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMicrosoftAdDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& domain_name,
@@ -219,12 +230,32 @@ class ManagedIdentitiesServiceClient {
                               CreateMicrosoftAdDomainRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMicrosoftAdDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMicrosoftAdDomain(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::
           CreateMicrosoftAdDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMicrosoftAdDomain
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   CreateMicrosoftAdDomain(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -461,6 +492,17 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::Domain const& domain,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDomain(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::Domain const& domain,
@@ -504,11 +546,31 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDomain(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::UpdateDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDomain
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> UpdateDomain(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -546,6 +608,17 @@ class ManagedIdentitiesServiceClient {
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
   DeleteDomain(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDomain(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -590,11 +663,31 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDomain
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDomain(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::DeleteDomainRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDomain
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
   DeleteDomain(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
@@ -635,6 +728,17 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::Trust const& trust,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AttachTrust
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AttachTrust(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
@@ -678,11 +782,31 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::AttachTrustRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AttachTrust
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AttachTrust(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::AttachTrustRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AttachTrust
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> AttachTrust(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -727,6 +851,17 @@ class ManagedIdentitiesServiceClient {
                    std::vector<std::string> const& target_dns_ip_addresses,
                    Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ReconfigureTrust
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReconfigureTrust(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::string const& target_domain_name,
@@ -773,12 +908,32 @@ class ManagedIdentitiesServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ReconfigureTrust
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReconfigureTrust(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ReconfigureTrust
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>>
   ReconfigureTrust(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -820,6 +975,17 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::Trust const& trust,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DetachTrust
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DetachTrust(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
@@ -863,11 +1029,31 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::DetachTrustRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DetachTrust
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DetachTrust(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::DetachTrustRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DetachTrust
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> DetachTrust(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -909,6 +1095,17 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::Trust const& trust,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ValidateTrust
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ValidateTrust(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::managedidentities::v1::Trust const& trust,
@@ -953,11 +1150,31 @@ class ManagedIdentitiesServiceClient {
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ValidateTrust
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ValidateTrust(
       ExperimentalTag, NoAwaitTag,
       google::cloud::managedidentities::v1::ValidateTrustRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ValidateTrust
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::managedidentities::v1::Domain>> ValidateTrust(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

@@ -254,6 +254,17 @@ class EventarcClient {
       google::cloud::eventarc::v1::Trigger const& trigger,
       std::string const& trigger_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateTrigger
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTrigger(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::eventarc::v1::Trigger const& trigger,
@@ -297,11 +308,31 @@ class EventarcClient {
       google::cloud::eventarc::v1::CreateTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateTrigger
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateTrigger(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::CreateTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateTrigger
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> CreateTrigger(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -345,6 +376,17 @@ class EventarcClient {
       google::protobuf::FieldMask const& update_mask, bool allow_missing,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateTrigger
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTrigger(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::Trigger const& trigger,
@@ -389,11 +431,31 @@ class EventarcClient {
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateTrigger
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTrigger(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::UpdateTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateTrigger
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> UpdateTrigger(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -432,6 +494,17 @@ class EventarcClient {
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       std::string const& name, bool allow_missing, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTrigger
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTrigger(
       ExperimentalTag, NoAwaitTag, std::string const& name, bool allow_missing,
       Options opts = {});
@@ -474,11 +547,31 @@ class EventarcClient {
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTrigger
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTrigger(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTrigger
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -649,6 +742,17 @@ class EventarcClient {
       google::cloud::eventarc::v1::Channel const& channel,
       std::string const& channel_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateChannel(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::eventarc::v1::Channel const& channel,
@@ -692,11 +796,31 @@ class EventarcClient {
       google::cloud::eventarc::v1::CreateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::CreateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -737,6 +861,17 @@ class EventarcClient {
       google::cloud::eventarc::v1::Channel const& channel,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::Channel const& channel,
@@ -780,11 +915,31 @@ class EventarcClient {
       google::cloud::eventarc::v1::UpdateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::UpdateChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -821,6 +976,17 @@ class EventarcClient {
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteChannel(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -862,11 +1028,31 @@ class EventarcClient {
       google::cloud::eventarc::v1::DeleteChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteChannel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteChannel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::DeleteChannelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteChannel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1169,6 +1355,17 @@ class EventarcClient {
       google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
       std::string const& channel_connection_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateChannelConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateChannelConnection(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::eventarc::v1::ChannelConnection const& channel_connection,
@@ -1214,12 +1411,32 @@ class EventarcClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateChannelConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateChannelConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateChannelConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   CreateChannelConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1257,6 +1474,17 @@ class EventarcClient {
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   DeleteChannelConnection(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteChannelConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteChannelConnection(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1300,12 +1528,32 @@ class EventarcClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteChannelConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteChannelConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteChannelConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
   DeleteChannelConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,

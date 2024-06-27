@@ -205,6 +205,17 @@ class ReservationsClient {
   DeleteReservation(std::string const& project, std::string const& zone,
                     std::string const& reservation, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteReservation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservation(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& reservation,
@@ -249,12 +260,32 @@ class ReservationsClient {
                         DeleteReservationRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteReservation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteReservation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           DeleteReservationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteReservation
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteReservation(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -424,6 +455,17 @@ class ReservationsClient {
       google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertReservation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservation(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone,
@@ -470,12 +512,32 @@ class ReservationsClient {
                         InsertReservationRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertReservation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertReservation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           InsertReservationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertReservation
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertReservation(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -601,6 +663,17 @@ class ReservationsClient {
           reservations_resize_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief Resize
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& reservation,
@@ -648,12 +721,32 @@ class ReservationsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief Resize
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief Resize
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -834,6 +927,17 @@ class ReservationsClient {
       google::cloud::cpp::compute::v1::Reservation const& reservation_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateReservation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservation(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& reservation,
@@ -880,12 +984,32 @@ class ReservationsClient {
                         UpdateReservationRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateReservation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateReservation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::reservations::v1::
           UpdateReservationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateReservation
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateReservation(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,

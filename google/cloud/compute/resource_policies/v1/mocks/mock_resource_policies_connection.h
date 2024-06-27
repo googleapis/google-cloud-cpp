@@ -55,6 +55,9 @@ class MockResourcePoliciesConnection
            AggregatedListResourcePoliciesRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteResourcePolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteResourcePolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
@@ -85,6 +88,9 @@ class MockResourcePoliciesConnection
                    GetIamPolicyRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertResourcePolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertResourcePolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::
@@ -110,6 +116,9 @@ class MockResourcePoliciesConnection
                    ListResourcePoliciesRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchResourcePolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchResourcePolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchResourcePolicy,
               (google::cloud::cpp::compute::resource_policies::v1::

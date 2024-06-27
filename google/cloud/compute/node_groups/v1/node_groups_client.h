@@ -126,6 +126,17 @@ class NodeGroupsClient {
           node_groups_add_nodes_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AddNodes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& node_group,
@@ -172,12 +183,32 @@ class NodeGroupsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AddNodes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AddNodes
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -301,6 +332,17 @@ class NodeGroupsClient {
       std::string const& project, std::string const& zone,
       std::string const& node_group, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroup(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& node_group,
@@ -345,12 +387,32 @@ class NodeGroupsClient {
           DeleteNodeGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::
           DeleteNodeGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodeGroup
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodeGroup(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -395,6 +457,17 @@ class NodeGroupsClient {
           node_groups_delete_nodes_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& node_group,
@@ -441,12 +514,32 @@ class NodeGroupsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodes
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNodes(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -621,6 +714,17 @@ class NodeGroupsClient {
       google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroup(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::int32_t initial_node_count,
@@ -667,12 +771,32 @@ class NodeGroupsClient {
           InsertNodeGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::
           InsertNodeGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNodeGroup
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNodeGroup(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -875,6 +999,17 @@ class NodeGroupsClient {
       google::cloud::cpp::compute::v1::NodeGroup const& node_group_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroup(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& node_group,
@@ -920,12 +1055,32 @@ class NodeGroupsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNodeGroup
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNodeGroup(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -971,6 +1126,17 @@ class NodeGroupsClient {
                              node_groups_perform_maintenance_request_resource,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PerformMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& node_group,
@@ -1018,12 +1184,32 @@ class NodeGroupsClient {
                          PerformMaintenanceRequest const& request,
                      Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PerformMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::
           PerformMaintenanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PerformMaintenance
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
       ExperimentalTag,
@@ -1137,6 +1323,17 @@ class NodeGroupsClient {
           node_groups_set_node_template_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetNodeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& node_group,
@@ -1183,12 +1380,32 @@ class NodeGroupsClient {
           SetNodeTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetNodeTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::
           SetNodeTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetNodeTemplate
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetNodeTemplate(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -1236,6 +1453,17 @@ class NodeGroupsClient {
               node_groups_simulate_maintenance_event_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SimulateMaintenanceEvent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& zone, std::string const& node_group,
@@ -1283,12 +1511,32 @@ class NodeGroupsClient {
                                SimulateMaintenanceEventRequest const& request,
                            Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SimulateMaintenanceEvent
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::
           SimulateMaintenanceEventRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SimulateMaintenanceEvent
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SimulateMaintenanceEvent(
       ExperimentalTag,

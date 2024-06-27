@@ -214,6 +214,17 @@ class ServiceAttachmentsClient {
                           std::string const& service_attachment,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServiceAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachment(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& service_attachment,
@@ -258,12 +269,32 @@ class ServiceAttachmentsClient {
                               DeleteServiceAttachmentRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServiceAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           DeleteServiceAttachmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServiceAttachment
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteServiceAttachment(
       ExperimentalTag,
@@ -436,6 +467,17 @@ class ServiceAttachmentsClient {
           service_attachment_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertServiceAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachment(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -483,12 +525,32 @@ class ServiceAttachmentsClient {
                               InsertServiceAttachmentRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertServiceAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           InsertServiceAttachmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertServiceAttachment
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertServiceAttachment(
       ExperimentalTag,
@@ -617,6 +679,17 @@ class ServiceAttachmentsClient {
           service_attachment_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchServiceAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachment(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& service_attachment,
@@ -665,12 +738,32 @@ class ServiceAttachmentsClient {
                              PatchServiceAttachmentRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchServiceAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           PatchServiceAttachmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchServiceAttachment
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchServiceAttachment(
       ExperimentalTag,

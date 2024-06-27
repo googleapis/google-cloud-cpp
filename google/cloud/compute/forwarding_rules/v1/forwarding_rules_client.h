@@ -208,6 +208,17 @@ class ForwardingRulesClient {
   DeleteForwardingRule(std::string const& project, std::string const& region,
                        std::string const& forwarding_rule, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteForwardingRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRule(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& forwarding_rule,
@@ -252,12 +263,32 @@ class ForwardingRulesClient {
                            DeleteForwardingRuleRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteForwardingRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteForwardingRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::forwarding_rules::v1::
           DeleteForwardingRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteForwardingRule
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteForwardingRule(
       ExperimentalTag,
@@ -364,6 +395,17 @@ class ForwardingRulesClient {
                            forwarding_rule_resource,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertForwardingRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRule(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -411,12 +453,32 @@ class ForwardingRulesClient {
                            InsertForwardingRuleRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertForwardingRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertForwardingRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::forwarding_rules::v1::
           InsertForwardingRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertForwardingRule
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertForwardingRule(
       ExperimentalTag,
@@ -546,6 +608,17 @@ class ForwardingRulesClient {
                           forwarding_rule_resource,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchForwardingRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRule(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& forwarding_rule,
@@ -595,12 +668,32 @@ class ForwardingRulesClient {
                           PatchForwardingRuleRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchForwardingRule
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchForwardingRule(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::forwarding_rules::v1::
           PatchForwardingRuleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchForwardingRule
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchForwardingRule(
       ExperimentalTag,
@@ -647,6 +740,17 @@ class ForwardingRulesClient {
           region_set_labels_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& resource,
@@ -694,12 +798,32 @@ class ForwardingRulesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetLabels
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -745,6 +869,17 @@ class ForwardingRulesClient {
           target_reference_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetTarget
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& forwarding_rule,
@@ -792,12 +927,32 @@ class ForwardingRulesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetTarget
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTarget(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetTarget
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTarget(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

@@ -1452,6 +1452,17 @@ class ProductSearchClient {
           input_config,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportProductSets
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportProductSets(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::vision::v1::ImportProductSetsInputConfig const&
@@ -1509,11 +1520,31 @@ class ProductSearchClient {
       google::cloud::vision::v1::ImportProductSetsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportProductSets
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportProductSets(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::ImportProductSetsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportProductSets
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
   ImportProductSets(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -1577,6 +1608,17 @@ class ProductSearchClient {
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeProducts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeProducts(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -1643,11 +1685,31 @@ class ProductSearchClient {
   PurgeProducts(google::cloud::vision::v1::PurgeProductsRequest const& request,
                 Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeProducts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeProducts(
       ExperimentalTag, NoAwaitTag,
       google::cloud::vision::v1::PurgeProductsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeProducts
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
   PurgeProducts(ExperimentalTag,
                 google::longrunning::Operation const& operation,

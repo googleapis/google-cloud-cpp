@@ -54,6 +54,9 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRouter)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRouter(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteRouter,
@@ -100,6 +103,9 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertRouter)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertRouter(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InsertRouter,
@@ -125,6 +131,9 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (google::cloud::cpp::compute::routers::v1::ListRoutersRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchRouter)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchRouter(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, PatchRouter,
       (google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
@@ -150,6 +159,9 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
       (google::cloud::cpp::compute::routers::v1::PreviewRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateRouter)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateRouter(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdateRouter,

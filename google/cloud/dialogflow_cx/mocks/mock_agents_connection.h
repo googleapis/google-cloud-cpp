@@ -71,6 +71,9 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
       (google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportAgent)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportAgent(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>,
       ExportAgent,
@@ -89,6 +92,9 @@ class MockAgentsConnection : public dialogflow_cx::AgentsConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestoreAgent)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestoreAgent(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
       (google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request),

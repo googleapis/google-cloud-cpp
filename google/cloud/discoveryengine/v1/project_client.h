@@ -131,6 +131,17 @@ class ProjectServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
   ProvisionProject(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ProvisionProject
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ProvisionProject(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -179,12 +190,32 @@ class ProjectServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ProvisionProject
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ProvisionProject(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ProvisionProject
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
   ProvisionProject(ExperimentalTag,
                    google::longrunning::Operation const& operation,

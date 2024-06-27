@@ -56,6 +56,9 @@ class MockDataprocMetastoreConnection
               (google::cloud::metastore::v1::GetServiceRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateService(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Service>>, CreateService,
       (google::cloud::metastore::v1::CreateServiceRequest const& request),
@@ -73,6 +76,9 @@ class MockDataprocMetastoreConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateService(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Service>>, UpdateService,
       (google::cloud::metastore::v1::UpdateServiceRequest const& request),
@@ -90,6 +96,9 @@ class MockDataprocMetastoreConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteService(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
       DeleteService,
@@ -119,6 +128,9 @@ class MockDataprocMetastoreConnection
       (google::cloud::metastore::v1::GetMetadataImportRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateMetadataImport)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateMetadataImport(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
               CreateMetadataImport,
               (google::cloud::metastore::v1::CreateMetadataImportRequest const&
@@ -137,6 +149,9 @@ class MockDataprocMetastoreConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateMetadataImport)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateMetadataImport(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
               UpdateMetadataImport,
               (google::cloud::metastore::v1::UpdateMetadataImportRequest const&
@@ -155,6 +170,9 @@ class MockDataprocMetastoreConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportMetadata)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportMetadata(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::MetadataExport>>,
       ExportMetadata,
@@ -173,6 +191,9 @@ class MockDataprocMetastoreConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestoreService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestoreService(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Restore>>, RestoreService,
       (google::cloud::metastore::v1::RestoreServiceRequest const& request),
@@ -198,6 +219,9 @@ class MockDataprocMetastoreConnection
               (google::cloud::metastore::v1::GetBackupRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Backup>>, CreateBackup,
       (google::cloud::metastore::v1::CreateBackupRequest const& request),
@@ -215,6 +239,9 @@ class MockDataprocMetastoreConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackup(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
       DeleteBackup,
@@ -233,6 +260,9 @@ class MockDataprocMetastoreConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, QueryMetadata)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, QueryMetadata(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>,
       QueryMetadata,
@@ -251,6 +281,9 @@ class MockDataprocMetastoreConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MoveTableToDatabase)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MoveTableToDatabase(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>,
@@ -271,6 +304,9 @@ class MockDataprocMetastoreConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AlterMetadataResourceLocation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AlterMetadataResourceLocation(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>,

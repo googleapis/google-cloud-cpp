@@ -131,6 +131,17 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::EntryType const& entry_type,
       std::string const& entry_type_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEntryType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEntryType(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::EntryType const& entry_type,
@@ -174,11 +185,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEntryType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEntryType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEntryType
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::EntryType>> CreateEntryType(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -217,6 +248,17 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::EntryType const& entry_type,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateEntryType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEntryType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::EntryType const& entry_type,
@@ -260,11 +302,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateEntryType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEntryType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateEntryType
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::EntryType>> UpdateEntryType(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -302,6 +364,17 @@ class CatalogServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEntryType(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEntryType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEntryType(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -344,11 +417,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEntryType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEntryType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEntryType
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEntryType(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -525,6 +618,17 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::AspectType const& aspect_type,
       std::string const& aspect_type_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAspectType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAspectType(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::AspectType const& aspect_type,
@@ -568,11 +672,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAspectType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAspectType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAspectType
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::AspectType>> CreateAspectType(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -611,6 +735,17 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::AspectType const& aspect_type,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAspectType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAspectType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::AspectType const& aspect_type,
@@ -654,11 +789,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAspectType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAspectType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAspectType
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::AspectType>> UpdateAspectType(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -696,6 +851,17 @@ class CatalogServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteAspectType(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAspectType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAspectType(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -738,11 +904,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAspectType
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAspectType(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAspectType
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteAspectType(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -919,6 +1105,17 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::EntryGroup const& entry_group,
       std::string const& entry_group_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEntryGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEntryGroup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::EntryGroup const& entry_group,
@@ -962,11 +1159,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEntryGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEntryGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEntryGroup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> CreateEntryGroup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1005,6 +1222,17 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::EntryGroup const& entry_group,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateEntryGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEntryGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::EntryGroup const& entry_group,
@@ -1048,11 +1276,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateEntryGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEntryGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateEntryGroup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::EntryGroup>> UpdateEntryGroup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1090,6 +1338,17 @@ class CatalogServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEntryGroup(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEntryGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEntryGroup(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1132,11 +1391,31 @@ class CatalogServiceClient {
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEntryGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEntryGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEntryGroup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEntryGroup(ExperimentalTag,
                    google::longrunning::Operation const& operation,

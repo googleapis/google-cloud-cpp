@@ -127,6 +127,17 @@ class RegionTargetTcpProxiesClient {
   DeleteTargetTcpProxy(std::string const& project, std::string const& region,
                        std::string const& target_tcp_proxy, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTargetTcpProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& target_tcp_proxy,
@@ -171,12 +182,32 @@ class RegionTargetTcpProxiesClient {
                            v1::DeleteTargetTcpProxyRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTargetTcpProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTargetTcpProxy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetTcpProxy(
       ExperimentalTag,
@@ -283,6 +314,17 @@ class RegionTargetTcpProxiesClient {
                            target_tcp_proxy_resource,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertTargetTcpProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -330,12 +372,32 @@ class RegionTargetTcpProxiesClient {
                            v1::InsertTargetTcpProxyRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertTargetTcpProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::region_target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertTargetTcpProxy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetTcpProxy(
       ExperimentalTag,

@@ -154,12 +154,32 @@ class ConsumerProcurementServiceClient {
                  PlaceOrderRequest const& request,
              Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PlaceOrder
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PlaceOrder(
       ExperimentalTag, NoAwaitTag,
       google::cloud::commerce::consumer::procurement::v1::
           PlaceOrderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PlaceOrder
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
   PlaceOrder(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});

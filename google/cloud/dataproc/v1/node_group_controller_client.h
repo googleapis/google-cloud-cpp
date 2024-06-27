@@ -136,6 +136,17 @@ class NodeGroupControllerClient {
       google::cloud::dataproc::v1::NodeGroup const& node_group,
       std::string const& node_group_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNodeGroup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataproc::v1::NodeGroup const& node_group,
@@ -182,11 +193,31 @@ class NodeGroupControllerClient {
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNodeGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateNodeGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNodeGroup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> CreateNodeGroup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -231,6 +262,17 @@ class NodeGroupControllerClient {
   future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
       std::string const& name, std::int32_t size, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResizeNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResizeNodeGroup(
       ExperimentalTag, NoAwaitTag, std::string const& name, std::int32_t size,
       Options opts = {});
@@ -276,11 +318,31 @@ class NodeGroupControllerClient {
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResizeNodeGroup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResizeNodeGroup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResizeNodeGroup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::NodeGroup>> ResizeNodeGroup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

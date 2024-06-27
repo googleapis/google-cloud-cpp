@@ -125,6 +125,17 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::Endpoint const& endpoint,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Endpoint const& endpoint,
@@ -180,6 +191,17 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::Endpoint const& endpoint,
       std::string const& endpoint_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Endpoint const& endpoint,
@@ -223,11 +245,31 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEndpoint
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -459,6 +501,17 @@ class EndpointServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteEndpoint(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -501,11 +554,31 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEndpoint
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteEndpoint(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -569,6 +642,17 @@ class EndpointServiceClient {
       std::map<std::string, std::int32_t> const& traffic_split,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeployModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeployModel(
       ExperimentalTag, NoAwaitTag, std::string const& endpoint,
       google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
@@ -613,11 +697,31 @@ class EndpointServiceClient {
   DeployModel(google::cloud::aiplatform::v1::DeployModelRequest const& request,
               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeployModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeployModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeployModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeployModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
   DeployModel(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -669,6 +773,17 @@ class EndpointServiceClient {
                 std::map<std::string, std::int32_t> const& traffic_split,
                 Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeployModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeployModel(
       ExperimentalTag, NoAwaitTag, std::string const& endpoint,
       std::string const& deployed_model_id,
@@ -715,11 +830,31 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::UndeployModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeployModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeployModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UndeployModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeployModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
   UndeployModel(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -783,6 +918,17 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief MutateDeployedModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> MutateDeployedModel(
       ExperimentalTag, NoAwaitTag, std::string const& endpoint,
       google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
@@ -830,11 +976,31 @@ class EndpointServiceClient {
       google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief MutateDeployedModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> MutateDeployedModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief MutateDeployedModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
   MutateDeployedModel(ExperimentalTag,
                       google::longrunning::Operation const& operation,

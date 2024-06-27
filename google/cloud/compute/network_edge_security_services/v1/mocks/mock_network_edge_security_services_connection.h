@@ -58,6 +58,10 @@ class MockNetworkEdgeSecurityServicesConnection
            AggregatedListNetworkEdgeSecurityServicesRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNetworkEdgeSecurityService)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, DeleteNetworkEdgeSecurityService(::testing::_))`
+  /// instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -84,6 +88,10 @@ class MockNetworkEdgeSecurityServicesConnection
            GetNetworkEdgeSecurityServiceRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertNetworkEdgeSecurityService)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, InsertNetworkEdgeSecurityService(::testing::_))`
+  /// instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::network_edge_security_services::v1::
@@ -103,6 +111,10 @@ class MockNetworkEdgeSecurityServicesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchNetworkEdgeSecurityService)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, PatchNetworkEdgeSecurityService(::testing::_))`
+  /// instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::network_edge_security_services::v1::

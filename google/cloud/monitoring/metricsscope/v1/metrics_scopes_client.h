@@ -228,6 +228,17 @@ class MetricsScopesClient {
           monitored_project,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMonitoredProject
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::monitoring::metricsscope::v1::MonitoredProject const&
@@ -275,12 +286,32 @@ class MetricsScopesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMonitoredProject
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
       ExperimentalTag, NoAwaitTag,
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMonitoredProject
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
   CreateMonitoredProject(ExperimentalTag,
                          google::longrunning::Operation const& operation,
@@ -324,6 +355,17 @@ class MetricsScopesClient {
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
   DeleteMonitoredProject(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMonitoredProject
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -367,12 +409,32 @@ class MetricsScopesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMonitoredProject
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
       ExperimentalTag, NoAwaitTag,
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMonitoredProject
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
   DeleteMonitoredProject(ExperimentalTag,
                          google::longrunning::Operation const& operation,

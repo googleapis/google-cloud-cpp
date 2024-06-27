@@ -256,6 +256,17 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::edgecontainer::v1::Cluster const& cluster,
@@ -299,11 +310,31 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -346,6 +377,17 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::Cluster const& cluster,
@@ -389,11 +431,31 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -435,6 +497,17 @@ class EdgeContainerClient {
           schedule,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpgradeCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpgradeCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::string const& target_version,
@@ -480,11 +553,31 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpgradeCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpgradeCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpgradeCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -521,6 +614,17 @@ class EdgeContainerClient {
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -563,11 +667,31 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -855,6 +979,17 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
       std::string const& node_pool_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNodePool(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
@@ -898,11 +1033,31 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -945,6 +1100,17 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
@@ -988,11 +1154,31 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1029,6 +1215,17 @@ class EdgeContainerClient {
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteNodePool(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNodePool(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1071,11 +1268,31 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteNodePool(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -1380,6 +1597,17 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::VpnConnection const& vpn_connection,
       std::string const& vpn_connection_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVpnConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVpnConnection(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::edgecontainer::v1::VpnConnection const& vpn_connection,
@@ -1425,12 +1653,32 @@ class EdgeContainerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVpnConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVpnConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVpnConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
   CreateVpnConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -1468,6 +1716,17 @@ class EdgeContainerClient {
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteVpnConnection(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteVpnConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVpnConnection(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1511,12 +1770,32 @@ class EdgeContainerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteVpnConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVpnConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteVpnConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteVpnConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation,

@@ -142,6 +142,17 @@ class VideoIntelligenceServiceClient {
           features,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AnnotateVideo
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AnnotateVideo(
       ExperimentalTag, NoAwaitTag, std::string const& input_uri,
       std::vector<google::cloud::videointelligence::v1::Feature> const&
@@ -190,11 +201,31 @@ class VideoIntelligenceServiceClient {
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AnnotateVideo
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AnnotateVideo(
       ExperimentalTag, NoAwaitTag,
       google::cloud::videointelligence::v1::AnnotateVideoRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AnnotateVideo
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
   AnnotateVideo(ExperimentalTag,
                 google::longrunning::Operation const& operation,

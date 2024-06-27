@@ -58,6 +58,9 @@ class MockNetworkEndpointGroupsConnection
            AggregatedListNetworkEndpointGroupsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AttachNetworkEndpoints)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AttachNetworkEndpoints(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AttachNetworkEndpoints,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -77,6 +80,9 @@ class MockNetworkEndpointGroupsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNetworkEndpointGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNetworkEndpointGroup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetworkEndpointGroup,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -96,6 +102,9 @@ class MockNetworkEndpointGroupsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DetachNetworkEndpoints)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DetachNetworkEndpoints(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DetachNetworkEndpoints,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -121,6 +130,9 @@ class MockNetworkEndpointGroupsConnection
                    GetNetworkEndpointGroupRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertNetworkEndpointGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertNetworkEndpointGroup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNetworkEndpointGroup,
               (google::cloud::cpp::compute::network_endpoint_groups::v1::

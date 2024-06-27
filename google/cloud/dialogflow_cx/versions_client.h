@@ -273,6 +273,17 @@ class VersionsClient {
       google::cloud::dialogflow::cx::v3::Version const& version,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVersion(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::cx::v3::Version const& version,
@@ -327,11 +338,31 @@ class VersionsClient {
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Version>> CreateVersion(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -490,6 +521,17 @@ class VersionsClient {
   future<StatusOr<google::protobuf::Struct>> LoadVersion(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief LoadVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> LoadVersion(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -542,11 +584,31 @@ class VersionsClient {
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief LoadVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> LoadVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief LoadVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> LoadVersion(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

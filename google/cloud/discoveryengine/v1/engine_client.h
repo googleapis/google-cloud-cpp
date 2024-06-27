@@ -136,6 +136,17 @@ class EngineServiceClient {
       google::cloud::discoveryengine::v1::Engine const& engine,
       std::string const& engine_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEngine
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEngine(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::discoveryengine::v1::Engine const& engine,
@@ -179,11 +190,31 @@ class EngineServiceClient {
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEngine
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEngine(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEngine
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -230,6 +261,17 @@ class EngineServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
   DeleteEngine(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEngine
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEngine(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -275,11 +317,31 @@ class EngineServiceClient {
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEngine
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEngine(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEngine
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
   DeleteEngine(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});

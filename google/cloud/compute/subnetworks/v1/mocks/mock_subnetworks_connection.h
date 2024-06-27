@@ -56,6 +56,9 @@ class MockSubnetworksConnection
            AggregatedListSubnetworksRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSubnetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSubnetwork(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSubnetwork,
               (google::cloud::cpp::compute::subnetworks::v1::
@@ -75,6 +78,9 @@ class MockSubnetworksConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExpandIpCidrRange)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExpandIpCidrRange(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               ExpandIpCidrRange,
               (google::cloud::cpp::compute::subnetworks::v1::
@@ -106,6 +112,9 @@ class MockSubnetworksConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertSubnetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertSubnetwork(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSubnetwork,
               (google::cloud::cpp::compute::subnetworks::v1::
@@ -138,6 +147,9 @@ class MockSubnetworksConnection
       (google::cloud::cpp::compute::subnetworks::v1::ListUsableRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchSubnetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchSubnetwork(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSubnetwork,
               (google::cloud::cpp::compute::subnetworks::v1::
@@ -163,6 +175,9 @@ class MockSubnetworksConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetPrivateIpGoogleAccess)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetPrivateIpGoogleAccess(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetPrivateIpGoogleAccess,
               (google::cloud::cpp::compute::subnetworks::v1::

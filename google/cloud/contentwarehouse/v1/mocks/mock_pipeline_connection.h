@@ -47,6 +47,9 @@ class MockPipelineServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RunPipeline)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RunPipeline(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,

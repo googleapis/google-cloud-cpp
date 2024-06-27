@@ -56,6 +56,9 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
       (google::cloud::dialogflow::cx::v3::GetVersionRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>,
       CreateVersion,
@@ -84,6 +87,9 @@ class MockVersionsConnection : public dialogflow_cx::VersionsConnection {
       (google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, LoadVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, LoadVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, LoadVersion,
       (google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request),

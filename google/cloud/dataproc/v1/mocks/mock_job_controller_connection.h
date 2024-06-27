@@ -51,6 +51,9 @@ class MockJobControllerConnection
               (google::cloud::dataproc::v1::SubmitJobRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SubmitJobAsOperation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SubmitJobAsOperation(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Job>>,
               SubmitJobAsOperation,
               (google::cloud::dataproc::v1::SubmitJobRequest const& request),

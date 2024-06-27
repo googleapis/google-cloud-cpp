@@ -456,12 +456,32 @@ class EntityTypesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportEntityTypes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportEntityTypes(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportEntityTypes
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
   ExportEntityTypes(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -507,12 +527,32 @@ class EntityTypesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportEntityTypes
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportEntityTypes(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportEntityTypes
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
   ImportEntityTypes(ExperimentalTag,
                     google::longrunning::Operation const& operation,

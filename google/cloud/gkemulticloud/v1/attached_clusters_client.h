@@ -152,6 +152,17 @@ class AttachedClustersClient {
       google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
       std::string const& attached_cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAttachedCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAttachedCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
@@ -204,12 +215,32 @@ class AttachedClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAttachedCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAttachedCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAttachedCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   CreateAttachedCluster(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -267,6 +298,17 @@ class AttachedClustersClient {
       google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAttachedCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
@@ -313,12 +355,32 @@ class AttachedClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAttachedCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAttachedCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   UpdateAttachedCluster(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -375,6 +437,17 @@ class AttachedClustersClient {
   ImportAttachedCluster(std::string const& parent,
                         std::string const& fleet_membership, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportAttachedCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportAttachedCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& fleet_membership, Options opts = {});
@@ -429,12 +502,32 @@ class AttachedClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportAttachedCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportAttachedCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportAttachedCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   ImportAttachedCluster(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -637,6 +730,17 @@ class AttachedClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAttachedCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAttachedCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -687,12 +791,32 @@ class AttachedClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAttachedCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAttachedCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAttachedCluster(ExperimentalTag,
                         google::longrunning::Operation const& operation,

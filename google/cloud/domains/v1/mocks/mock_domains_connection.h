@@ -58,6 +58,9 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RegisterDomain)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RegisterDomain(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       RegisterDomain,
@@ -83,6 +86,9 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, TransferDomain)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, TransferDomain(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       TransferDomain,
@@ -111,6 +117,9 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
       (google::cloud::domains::v1::GetRegistrationRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateRegistration)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateRegistration(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       UpdateRegistration,
@@ -129,6 +138,9 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ConfigureManagementSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ConfigureManagementSettings(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ConfigureManagementSettings,
@@ -149,6 +161,9 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ConfigureDnsSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ConfigureDnsSettings(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ConfigureDnsSettings,
@@ -167,6 +182,9 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ConfigureContactSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ConfigureContactSettings(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ConfigureContactSettings,
@@ -187,6 +205,9 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportRegistration)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportRegistration(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ExportRegistration,
@@ -205,6 +226,9 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRegistration)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRegistration(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
       DeleteRegistration,

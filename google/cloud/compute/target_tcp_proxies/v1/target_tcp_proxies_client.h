@@ -208,6 +208,17 @@ class TargetTcpProxiesClient {
   DeleteTargetTcpProxy(std::string const& project,
                        std::string const& target_tcp_proxy, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTargetTcpProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_tcp_proxy, Options opts = {});
@@ -251,12 +262,32 @@ class TargetTcpProxiesClient {
                            DeleteTargetTcpProxyRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTargetTcpProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetTcpProxy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           DeleteTargetTcpProxyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteTargetTcpProxy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetTcpProxy(
       ExperimentalTag,
@@ -361,6 +392,17 @@ class TargetTcpProxiesClient {
                            target_tcp_proxy_resource,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertTargetTcpProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::TargetTcpProxy const&
@@ -407,12 +449,32 @@ class TargetTcpProxiesClient {
                            InsertTargetTcpProxyRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertTargetTcpProxy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetTcpProxy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           InsertTargetTcpProxyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertTargetTcpProxy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetTcpProxy(
       ExperimentalTag,
@@ -538,6 +600,17 @@ class TargetTcpProxiesClient {
               target_tcp_proxies_set_backend_service_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetBackendService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_tcp_proxy,
@@ -585,12 +658,32 @@ class TargetTcpProxiesClient {
                         SetBackendServiceRequest const& request,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetBackendService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetBackendService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetBackendServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetBackendService
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetBackendService(ExperimentalTag,
                     google::cloud::cpp::compute::v1::Operation const& operation,
@@ -634,6 +727,17 @@ class TargetTcpProxiesClient {
               target_tcp_proxies_set_proxy_header_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetProxyHeader
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& target_tcp_proxy,
@@ -681,12 +785,32 @@ class TargetTcpProxiesClient {
           SetProxyHeaderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetProxyHeader
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetProxyHeader(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::target_tcp_proxies::v1::
           SetProxyHeaderRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetProxyHeader
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetProxyHeader(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

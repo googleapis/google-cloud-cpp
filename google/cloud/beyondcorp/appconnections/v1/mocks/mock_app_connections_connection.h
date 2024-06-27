@@ -63,6 +63,9 @@ class MockAppConnectionsServiceConnection
            GetAppConnectionRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAppConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAppConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
@@ -84,6 +87,9 @@ class MockAppConnectionsServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAppConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAppConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
@@ -105,6 +111,9 @@ class MockAppConnectionsServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAppConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAppConnection(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                                   AppConnectionOperationMetadata>>,
               DeleteAppConnection,

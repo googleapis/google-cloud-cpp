@@ -214,6 +214,17 @@ class NetworkAttachmentsClient {
                           std::string const& network_attachment,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& network_attachment,
@@ -258,12 +269,32 @@ class NetworkAttachmentsClient {
                               DeleteNetworkAttachmentRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetworkAttachment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::network_attachments::v1::
           DeleteNetworkAttachmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkAttachment
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkAttachment(
       ExperimentalTag,
@@ -436,6 +467,17 @@ class NetworkAttachmentsClient {
           network_attachment_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNetworkAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -483,12 +525,32 @@ class NetworkAttachmentsClient {
                               InsertNetworkAttachmentRequest const& request,
                           Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNetworkAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetworkAttachment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::network_attachments::v1::
           InsertNetworkAttachmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNetworkAttachment
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkAttachment(
       ExperimentalTag,
@@ -616,6 +678,17 @@ class NetworkAttachmentsClient {
           network_attachment_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNetworkAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& network_attachment,
@@ -664,12 +737,32 @@ class NetworkAttachmentsClient {
                              PatchNetworkAttachmentRequest const& request,
                          Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNetworkAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetworkAttachment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::network_attachments::v1::
           PatchNetworkAttachmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNetworkAttachment
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkAttachment(
       ExperimentalTag,

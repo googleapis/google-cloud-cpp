@@ -61,6 +61,9 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
               (google::cloud::aiplatform::v1::ListCustomJobsRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCustomJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCustomJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteCustomJob,
@@ -103,6 +106,9 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (google::cloud::aiplatform::v1::ListDataLabelingJobsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDataLabelingJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDataLabelingJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteDataLabelingJob,
@@ -149,6 +155,9 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteHyperparameterTuningJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteHyperparameterTuningJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteHyperparameterTuningJob,
@@ -187,6 +196,9 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
               (google::cloud::aiplatform::v1::ListNasJobsRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNasJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNasJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteNasJob,
@@ -242,6 +254,9 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
       (google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBatchPredictionJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBatchPredictionJob(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteBatchPredictionJob,
@@ -298,6 +313,10 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateModelDeploymentMonitoringJob)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, UpdateModelDeploymentMonitoringJob(::testing::_))`
+  /// instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>,
               UpdateModelDeploymentMonitoringJob,
@@ -319,6 +338,10 @@ class MockJobServiceConnection : public aiplatform_v1::JobServiceConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteModelDeploymentMonitoringJob)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, DeleteModelDeploymentMonitoringJob(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteModelDeploymentMonitoringJob,

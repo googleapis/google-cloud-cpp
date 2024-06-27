@@ -57,6 +57,9 @@ class MockInterconnectAttachmentsConnection
                    AggregatedListInterconnectAttachmentsRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInterconnectAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInterconnectAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInterconnectAttachment,
               (google::cloud::cpp::compute::interconnect_attachments::v1::
@@ -82,6 +85,9 @@ class MockInterconnectAttachmentsConnection
                    GetInterconnectAttachmentRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertInterconnectAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertInterconnectAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInterconnectAttachment,
               (google::cloud::cpp::compute::interconnect_attachments::v1::
@@ -108,6 +114,9 @@ class MockInterconnectAttachmentsConnection
            ListInterconnectAttachmentsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchInterconnectAttachment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchInterconnectAttachment(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInterconnectAttachment,
               (google::cloud::cpp::compute::interconnect_attachments::v1::
@@ -127,6 +136,9 @@ class MockInterconnectAttachmentsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::interconnect_attachments::v1::

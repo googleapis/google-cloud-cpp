@@ -131,6 +131,17 @@ class RegionNotificationEndpointsClient {
                              std::string const& notification_endpoint,
                              Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNotificationEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNotificationEndpoint(ExperimentalTag, NoAwaitTag,
                              std::string const& project,
@@ -178,6 +189,17 @@ class RegionNotificationEndpointsClient {
           DeleteNotificationEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNotificationEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNotificationEndpoint(
       ExperimentalTag, NoAwaitTag,
@@ -185,6 +207,15 @@ class RegionNotificationEndpointsClient {
           DeleteNotificationEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNotificationEndpoint
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNotificationEndpoint(
       ExperimentalTag,
@@ -294,6 +325,17 @@ class RegionNotificationEndpointsClient {
           notification_endpoint_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNotificationEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNotificationEndpoint(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -343,6 +385,17 @@ class RegionNotificationEndpointsClient {
           InsertNotificationEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNotificationEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNotificationEndpoint(
       ExperimentalTag, NoAwaitTag,
@@ -350,6 +403,15 @@ class RegionNotificationEndpointsClient {
           InsertNotificationEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNotificationEndpoint
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNotificationEndpoint(
       ExperimentalTag,

@@ -59,6 +59,9 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::GetTableRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateTable)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateTable(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>, UpdateTable,
               (google::bigtable::admin::v2::UpdateTableRequest const& request),
               (override));
@@ -77,6 +80,9 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::DeleteTableRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeleteTable)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeleteTable(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::Table>>, UndeleteTable,
       (google::bigtable::admin::v2::UndeleteTableRequest const& request),
@@ -94,6 +100,9 @@ class MockBigtableTableAdminConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAuthorizedView)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAuthorizedView(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
       CreateAuthorizedView,
@@ -122,6 +131,9 @@ class MockBigtableTableAdminConnection
       (google::bigtable::admin::v2::GetAuthorizedViewRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAuthorizedView)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAuthorizedView(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
       UpdateAuthorizedView,
@@ -167,6 +179,9 @@ class MockBigtableTableAdminConnection
       (google::bigtable::admin::v2::CheckConsistencyRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>,
               CreateBackup,
               (google::bigtable::admin::v2::CreateBackupRequest const& request),
@@ -199,6 +214,9 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::ListBackupsRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestoreTable)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestoreTable(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
               RestoreTable,
               (google::bigtable::admin::v2::RestoreTableRequest const& request),
@@ -215,6 +233,9 @@ class MockBigtableTableAdminConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CopyBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CopyBackup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Backup>>, CopyBackup,
               (google::bigtable::admin::v2::CopyBackupRequest const& request),
               (override));

@@ -270,6 +270,17 @@ class NetworkSecurityClient {
           authorization_policy,
       std::string const& authorization_policy_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthorizationPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::networksecurity::v1::AuthorizationPolicy const&
@@ -315,12 +326,32 @@ class NetworkSecurityClient {
                                 CreateAuthorizationPolicyRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthorizationPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::
           CreateAuthorizationPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAuthorizationPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
   CreateAuthorizationPolicy(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -366,6 +397,17 @@ class NetworkSecurityClient {
           authorization_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthorizationPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::AuthorizationPolicy const&
@@ -411,12 +453,32 @@ class NetworkSecurityClient {
                                 UpdateAuthorizationPolicyRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthorizationPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::
           UpdateAuthorizationPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAuthorizationPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
   UpdateAuthorizationPolicy(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -455,6 +517,17 @@ class NetworkSecurityClient {
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteAuthorizationPolicy(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthorizationPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -497,12 +570,32 @@ class NetworkSecurityClient {
                                 DeleteAuthorizationPolicyRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthorizationPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::
           DeleteAuthorizationPolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAuthorizationPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteAuthorizationPolicy(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -684,6 +777,17 @@ class NetworkSecurityClient {
           server_tls_policy,
       std::string const& server_tls_policy_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServerTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::networksecurity::v1::ServerTlsPolicy const&
@@ -730,12 +834,32 @@ class NetworkSecurityClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServerTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServerTlsPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
   CreateServerTlsPolicy(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -782,6 +906,17 @@ class NetworkSecurityClient {
           server_tls_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateServerTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::ServerTlsPolicy const&
@@ -828,12 +963,32 @@ class NetworkSecurityClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateServerTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateServerTlsPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
   UpdateServerTlsPolicy(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -872,6 +1027,17 @@ class NetworkSecurityClient {
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteServerTlsPolicy(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServerTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -915,12 +1081,32 @@ class NetworkSecurityClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServerTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServerTlsPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteServerTlsPolicy(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1102,6 +1288,17 @@ class NetworkSecurityClient {
           client_tls_policy,
       std::string const& client_tls_policy_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateClientTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::networksecurity::v1::ClientTlsPolicy const&
@@ -1148,12 +1345,32 @@ class NetworkSecurityClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateClientTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateClientTlsPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
   CreateClientTlsPolicy(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1200,6 +1417,17 @@ class NetworkSecurityClient {
           client_tls_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateClientTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::ClientTlsPolicy const&
@@ -1246,12 +1474,32 @@ class NetworkSecurityClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateClientTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateClientTlsPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
   UpdateClientTlsPolicy(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1290,6 +1538,17 @@ class NetworkSecurityClient {
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteClientTlsPolicy(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteClientTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1333,12 +1592,32 @@ class NetworkSecurityClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteClientTlsPolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteClientTlsPolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteClientTlsPolicy(ExperimentalTag,
                         google::longrunning::Operation const& operation,

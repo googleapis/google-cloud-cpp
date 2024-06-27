@@ -135,6 +135,17 @@ class ApiKeysClient {
       std::string const& parent, google::api::apikeys::v2::Key const& key,
       std::string const& key_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateKey(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::api::apikeys::v2::Key const& key, std::string const& key_id,
@@ -181,11 +192,31 @@ class ApiKeysClient {
       google::api::apikeys::v2::CreateKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateKey(
       ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::CreateKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -443,6 +474,17 @@ class ApiKeysClient {
       google::api::apikeys::v2::Key const& key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateKey(
       ExperimentalTag, NoAwaitTag, google::api::apikeys::v2::Key const& key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -489,11 +531,31 @@ class ApiKeysClient {
       google::api::apikeys::v2::UpdateKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateKey(
       ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::UpdateKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -534,6 +596,17 @@ class ApiKeysClient {
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteKey(ExperimentalTag,
                                                      NoAwaitTag,
                                                      std::string const& name,
@@ -581,11 +654,31 @@ class ApiKeysClient {
       google::api::apikeys::v2::DeleteKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteKey(
       ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::DeleteKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -631,11 +724,31 @@ class ApiKeysClient {
       google::api::apikeys::v2::UndeleteKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeleteKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteKey(
       ExperimentalTag, NoAwaitTag,
       google::api::apikeys::v2::UndeleteKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeleteKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

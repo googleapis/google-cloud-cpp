@@ -439,11 +439,31 @@ class VizierServiceClient {
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SuggestTrials
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SuggestTrials(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::SuggestTrialsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SuggestTrials
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
   SuggestTrials(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -799,12 +819,32 @@ class VizierServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CheckTrialEarlyStoppingState
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CheckTrialEarlyStoppingState(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CheckTrialEarlyStoppingState
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
   CheckTrialEarlyStoppingState(ExperimentalTag,

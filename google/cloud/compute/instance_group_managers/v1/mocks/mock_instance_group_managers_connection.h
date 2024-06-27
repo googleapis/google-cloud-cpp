@@ -49,6 +49,9 @@ class MockInstanceGroupManagersConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AbandonInstances)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AbandonInstances(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AbandonInstances,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -77,6 +80,9 @@ class MockInstanceGroupManagersConnection
            AggregatedListInstanceGroupManagersRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ApplyUpdatesToInstances)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ApplyUpdatesToInstances(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               ApplyUpdatesToInstances,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -96,6 +102,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInstances)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInstances(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CreateInstances,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -115,6 +124,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstanceGroupManager)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstanceGroupManager(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceGroupManager,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -134,6 +146,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstances)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstances(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstances,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -153,6 +168,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePerInstanceConfigs)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePerInstanceConfigs(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePerInstanceConfigs,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -178,6 +196,9 @@ class MockInstanceGroupManagersConnection
                    GetInstanceGroupManagerRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertInstanceGroupManager)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertInstanceGroupManager(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceGroupManager,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -224,6 +245,9 @@ class MockInstanceGroupManagersConnection
                    ListPerInstanceConfigsRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchInstanceGroupManager)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchInstanceGroupManager(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInstanceGroupManager,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -243,6 +267,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchPerInstanceConfigs)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchPerInstanceConfigs(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPerInstanceConfigs,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -262,6 +289,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RecreateInstances)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RecreateInstances(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RecreateInstances,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -281,6 +311,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, Resize)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, Resize(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -299,6 +332,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetInstanceTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetInstanceTemplate(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetInstanceTemplate,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -318,6 +354,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetTargetPools)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetTargetPools(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetTargetPools,
               (google::cloud::cpp::compute::instance_group_managers::v1::
@@ -337,6 +376,9 @@ class MockInstanceGroupManagersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdatePerInstanceConfigs)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdatePerInstanceConfigs(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdatePerInstanceConfigs,
               (google::cloud::cpp::compute::instance_group_managers::v1::

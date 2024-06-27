@@ -136,6 +136,17 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
       std::string const& data_taxonomy_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataTaxonomy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
@@ -180,11 +191,31 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataTaxonomy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataTaxonomy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   CreateDataTaxonomy(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -225,6 +256,17 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataTaxonomy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
@@ -269,11 +311,31 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataTaxonomy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataTaxonomy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   UpdateDataTaxonomy(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -313,6 +375,17 @@ class DataTaxonomyServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataTaxonomy(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataTaxonomy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -356,11 +429,31 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataTaxonomy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataTaxonomy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataTaxonomy(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -543,6 +636,17 @@ class DataTaxonomyServiceClient {
           data_attribute_binding,
       std::string const& data_attribute_binding_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataAttributeBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::DataAttributeBinding const&
@@ -589,12 +693,32 @@ class DataTaxonomyServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataAttributeBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataAttributeBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   CreateDataAttributeBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -636,6 +760,17 @@ class DataTaxonomyServiceClient {
           data_attribute_binding,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataAttributeBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DataAttributeBinding const&
@@ -682,12 +817,32 @@ class DataTaxonomyServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataAttributeBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataAttributeBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   UpdateDataAttributeBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -728,6 +883,17 @@ class DataTaxonomyServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttributeBinding(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataAttributeBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -773,12 +939,32 @@ class DataTaxonomyServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataAttributeBinding
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataAttributeBinding
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttributeBinding(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -962,6 +1148,17 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
       std::string const& data_attribute_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataAttribute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataAttribute(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
@@ -1006,11 +1203,31 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataAttribute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataAttribute(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataAttribute
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   CreateDataAttribute(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -1051,6 +1268,17 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataAttribute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataAttribute(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
@@ -1095,11 +1323,31 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataAttribute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataAttribute(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDataAttribute
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   UpdateDataAttribute(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -1138,6 +1386,17 @@ class DataTaxonomyServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttribute(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataAttribute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataAttribute(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1180,11 +1439,31 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataAttribute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataAttribute(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataAttribute
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttribute(ExperimentalTag,
                       google::longrunning::Operation const& operation,

@@ -47,6 +47,9 @@ class MockProjectServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ProvisionProject)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ProvisionProject(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::Project>>,
       ProvisionProject,

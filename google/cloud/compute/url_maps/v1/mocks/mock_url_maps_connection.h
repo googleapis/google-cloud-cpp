@@ -54,6 +54,9 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteUrlMap(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteUrlMap,
@@ -80,6 +83,9 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertUrlMap(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InsertUrlMap,
@@ -100,6 +106,9 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InvalidateCache)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InvalidateCache(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InvalidateCache,
@@ -125,6 +134,9 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
       (google::cloud::cpp::compute::url_maps::v1::ListUrlMapsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchUrlMap(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, PatchUrlMap,
       (google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
@@ -144,6 +156,9 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateUrlMap(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdateUrlMap,

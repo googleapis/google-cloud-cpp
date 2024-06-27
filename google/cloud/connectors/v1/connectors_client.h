@@ -257,6 +257,17 @@ class ConnectorsClient {
       google::cloud::connectors::v1::Connection const& connection,
       std::string const& connection_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnection(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::connectors::v1::Connection const& connection,
@@ -300,11 +311,31 @@ class ConnectorsClient {
       google::cloud::connectors::v1::CreateConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::CreateConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::connectors::v1::Connection>> CreateConnection(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -358,6 +389,17 @@ class ConnectorsClient {
       google::cloud::connectors::v1::Connection const& connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::Connection const& connection,
@@ -401,11 +443,31 @@ class ConnectorsClient {
       google::cloud::connectors::v1::UpdateConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::UpdateConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::connectors::v1::Connection>> UpdateConnection(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -443,6 +505,17 @@ class ConnectorsClient {
   future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
   DeleteConnection(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnection(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -485,11 +558,31 @@ class ConnectorsClient {
       google::cloud::connectors::v1::DeleteConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::DeleteConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
   DeleteConnection(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -994,6 +1087,17 @@ class ConnectorsClient {
   future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
   RefreshConnectionSchemaMetadata(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RefreshConnectionSchemaMetadata
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1037,12 +1141,32 @@ class ConnectorsClient {
           RefreshConnectionSchemaMetadataRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RefreshConnectionSchemaMetadata
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RefreshConnectionSchemaMetadata(
       ExperimentalTag, NoAwaitTag,
       google::cloud::connectors::v1::
           RefreshConnectionSchemaMetadataRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RefreshConnectionSchemaMetadata
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
   RefreshConnectionSchemaMetadata(
       ExperimentalTag, google::longrunning::Operation const& operation,

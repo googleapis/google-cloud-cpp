@@ -81,6 +81,9 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ActivateCertificateAuthority)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ActivateCertificateAuthority(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -103,6 +106,9 @@ class MockCertificateAuthorityServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCertificateAuthority)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCertificateAuthority(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -125,6 +131,9 @@ class MockCertificateAuthorityServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DisableCertificateAuthority)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DisableCertificateAuthority(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -147,6 +156,9 @@ class MockCertificateAuthorityServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EnableCertificateAuthority)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EnableCertificateAuthority(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -191,6 +203,9 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeleteCertificateAuthority)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeleteCertificateAuthority(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -213,6 +228,9 @@ class MockCertificateAuthorityServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCertificateAuthority)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCertificateAuthority(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -235,6 +253,9 @@ class MockCertificateAuthorityServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCertificateAuthority)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCertificateAuthority(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
@@ -257,6 +278,9 @@ class MockCertificateAuthorityServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCaPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCaPool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
       CreateCaPool,
@@ -277,6 +301,9 @@ class MockCertificateAuthorityServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCaPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCaPool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
       UpdateCaPool,
@@ -308,6 +335,9 @@ class MockCertificateAuthorityServiceConnection
       (google::cloud::security::privateca::v1::ListCaPoolsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCaPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCaPool(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
@@ -353,6 +383,10 @@ class MockCertificateAuthorityServiceConnection
            ListCertificateRevocationListsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCertificateRevocationList)` is now ambiguous.
+  /// Use `EXPECT_CALL(*mock, UpdateCertificateRevocationList(::testing::_))`
+  /// instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateRevocationList>>,
@@ -375,6 +409,9 @@ class MockCertificateAuthorityServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCertificateTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCertificateTemplate(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               CreateCertificateTemplate,
@@ -396,6 +433,9 @@ class MockCertificateAuthorityServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCertificateTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCertificateTemplate(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
@@ -433,6 +473,9 @@ class MockCertificateAuthorityServiceConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCertificateTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCertificateTemplate(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               UpdateCertificateTemplate,

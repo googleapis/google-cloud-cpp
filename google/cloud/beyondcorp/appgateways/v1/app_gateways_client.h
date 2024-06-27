@@ -281,6 +281,17 @@ class AppGatewaysServiceClient {
       google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
       std::string const& app_gateway_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAppGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppGateway(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
@@ -326,12 +337,32 @@ class AppGatewaysServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAppGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppGateway(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAppGateway
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
   CreateAppGateway(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -371,6 +402,17 @@ class AppGatewaysServiceClient {
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAppGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppGateway(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -415,12 +457,32 @@ class AppGatewaysServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAppGateway
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppGateway(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAppGateway
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(ExperimentalTag,

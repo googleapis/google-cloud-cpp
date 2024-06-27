@@ -6,6 +6,18 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.26.0 - TBD
 
+### BREAKING TESTING CHANGES
+
+If you don't mock Long Running Operations (LRO) in your tests, then these
+changes will not affect you.
+
+With the addition of new methods to support starting Long Running Operations
+(LRO) synchronously and awaiting their completion separately, the overload set
+for the preexisting LRO methods have been expanded. Uses of `EXPECT_CALL` that
+do not have matchers for the arguments will be ambiguous. To quickly remedy this
+change instances of `EXPECT_CALL(*mock, Method)` to
+`EXPECT_CALL(*mock, Method(::testing::_))`.
+
 ### New Libraries
 
 We are happy to announce the following GA libraries. Unless specifically noted,

@@ -53,6 +53,9 @@ class MockInstanceSettingsConnection
                    GetInstanceSettingsRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchInstanceSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchInstanceSettings(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchInstanceSettings,
               (google::cloud::cpp::compute::instance_settings::v1::

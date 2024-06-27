@@ -47,6 +47,9 @@ class MockDatastoreAdminConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportEntities)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportEntities(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>,
       ExportEntities,
@@ -65,6 +68,9 @@ class MockDatastoreAdminConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportEntities)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportEntities(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>,
       ImportEntities,
@@ -83,6 +89,9 @@ class MockDatastoreAdminConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateIndex)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateIndex(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
               CreateIndex,
               (google::datastore::admin::v1::CreateIndexRequest const& request),
@@ -99,6 +108,9 @@ class MockDatastoreAdminConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteIndex)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteIndex(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
               DeleteIndex,
               (google::datastore::admin::v1::DeleteIndexRequest const& request),

@@ -71,6 +71,9 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
       (google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchUpdateEntityTypes)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchUpdateEntityTypes(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>,
@@ -93,6 +96,9 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchDeleteEntityTypes)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchDeleteEntityTypes(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntityTypes,
       (google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
@@ -112,6 +118,9 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchCreateEntities)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchCreateEntities(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchCreateEntities,
               (google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&
                    request),
@@ -128,6 +137,9 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchUpdateEntities)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchUpdateEntities(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchUpdateEntities,
               (google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&
                    request),
@@ -144,6 +156,9 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchDeleteEntities)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchDeleteEntities(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntities,
               (google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&
                    request),

@@ -880,11 +880,31 @@ class AdminServiceClient {
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SeekSubscription
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SeekSubscription(
       ExperimentalTag, NoAwaitTag,
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SeekSubscription
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
   SeekSubscription(ExperimentalTag,
                    google::longrunning::Operation const& operation,

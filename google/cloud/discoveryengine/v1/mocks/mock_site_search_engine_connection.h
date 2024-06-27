@@ -54,6 +54,9 @@ class MockSiteSearchEngineServiceConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateTargetSite)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateTargetSite(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>,
       CreateTargetSite,
@@ -74,6 +77,9 @@ class MockSiteSearchEngineServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchCreateTargetSites)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchCreateTargetSites(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>,
@@ -101,6 +107,9 @@ class MockSiteSearchEngineServiceConnection
       (google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateTargetSite)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateTargetSite(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>,
       UpdateTargetSite,
@@ -121,6 +130,9 @@ class MockSiteSearchEngineServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTargetSite)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTargetSite(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>,
@@ -149,6 +161,9 @@ class MockSiteSearchEngineServiceConnection
       (google::cloud::discoveryengine::v1::ListTargetSitesRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EnableAdvancedSiteSearch)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EnableAdvancedSiteSearch(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   EnableAdvancedSiteSearchResponse>>,
               EnableAdvancedSiteSearch,
@@ -170,6 +185,9 @@ class MockSiteSearchEngineServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DisableAdvancedSiteSearch)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DisableAdvancedSiteSearch(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   DisableAdvancedSiteSearchResponse>>,
               DisableAdvancedSiteSearch,
@@ -191,6 +209,9 @@ class MockSiteSearchEngineServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RecrawlUris)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RecrawlUris(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>,
       RecrawlUris,
@@ -209,6 +230,9 @@ class MockSiteSearchEngineServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchVerifyTargetSites)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchVerifyTargetSites(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>,

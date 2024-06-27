@@ -209,6 +209,17 @@ class PacketMirroringsClient {
   DeletePacketMirroring(std::string const& project, std::string const& region,
                         std::string const& packet_mirroring, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePacketMirroring
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirroring(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& packet_mirroring,
@@ -253,12 +264,32 @@ class PacketMirroringsClient {
                             DeletePacketMirroringRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePacketMirroring
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeletePacketMirroring(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::packet_mirrorings::v1::
           DeletePacketMirroringRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePacketMirroring
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePacketMirroring(
       ExperimentalTag,
@@ -365,6 +396,17 @@ class PacketMirroringsClient {
                             packet_mirroring_resource,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertPacketMirroring
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirroring(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -412,12 +454,32 @@ class PacketMirroringsClient {
                             InsertPacketMirroringRequest const& request,
                         Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertPacketMirroring
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertPacketMirroring(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::packet_mirrorings::v1::
           InsertPacketMirroringRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertPacketMirroring
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPacketMirroring(
       ExperimentalTag,
@@ -546,6 +608,17 @@ class PacketMirroringsClient {
                            packet_mirroring_resource,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchPacketMirroring
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroring(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& packet_mirroring,
@@ -594,12 +667,32 @@ class PacketMirroringsClient {
                            PatchPacketMirroringRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchPacketMirroring
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchPacketMirroring(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::packet_mirrorings::v1::
           PatchPacketMirroringRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchPacketMirroring
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPacketMirroring(
       ExperimentalTag,

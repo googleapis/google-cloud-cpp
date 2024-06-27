@@ -136,6 +136,17 @@ class PersistentResourceServiceClient {
           persistent_resource,
       std::string const& persistent_resource_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePersistentResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePersistentResource(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::PersistentResource const&
@@ -182,12 +193,32 @@ class PersistentResourceServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePersistentResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePersistentResource(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePersistentResource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
   CreatePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -363,6 +394,17 @@ class PersistentResourceServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeletePersistentResource(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePersistentResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePersistentResource(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -406,12 +448,32 @@ class PersistentResourceServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePersistentResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePersistentResource(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePersistentResource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeletePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -458,6 +520,17 @@ class PersistentResourceServiceClient {
           persistent_resource,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdatePersistentResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePersistentResource(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::PersistentResource const&
@@ -504,12 +577,32 @@ class PersistentResourceServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdatePersistentResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePersistentResource(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdatePersistentResource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
   UpdatePersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -549,6 +642,17 @@ class PersistentResourceServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
   RebootPersistentResource(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RebootPersistentResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RebootPersistentResource(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -592,12 +696,32 @@ class PersistentResourceServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RebootPersistentResource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RebootPersistentResource(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RebootPersistentResource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>
   RebootPersistentResource(ExperimentalTag,
                            google::longrunning::Operation const& operation,

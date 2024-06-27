@@ -49,6 +49,9 @@ class MockRegionTargetHttpProxiesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTargetHttpProxy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTargetHttpProxy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetHttpProxy,
               (google::cloud::cpp::compute::region_target_http_proxies::v1::
@@ -74,6 +77,9 @@ class MockRegionTargetHttpProxiesConnection
                    GetTargetHttpProxyRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertTargetHttpProxy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertTargetHttpProxy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetHttpProxy,
               (google::cloud::cpp::compute::region_target_http_proxies::v1::
@@ -99,6 +105,9 @@ class MockRegionTargetHttpProxiesConnection
                    ListRegionTargetHttpProxiesRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetUrlMap)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetUrlMap(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUrlMap,
               (google::cloud::cpp::compute::region_target_http_proxies::v1::

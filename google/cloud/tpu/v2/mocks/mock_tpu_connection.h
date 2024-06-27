@@ -53,6 +53,9 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
               (google::cloud::tpu::v2::GetNodeRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateNode)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateNode(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, CreateNode,
               (google::cloud::tpu::v2::CreateNodeRequest const& request),
               (override));
@@ -67,6 +70,9 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNode)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNode(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>,
               DeleteNode,
               (google::cloud::tpu::v2::DeleteNodeRequest const& request),
@@ -83,6 +89,9 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopNode)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopNode(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StopNode,
               (google::cloud::tpu::v2::StopNodeRequest const& request),
               (override));
@@ -97,6 +106,9 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartNode)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartNode(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StartNode,
               (google::cloud::tpu::v2::StartNodeRequest const& request),
               (override));
@@ -111,6 +123,9 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateNode)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateNode(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, UpdateNode,
               (google::cloud::tpu::v2::UpdateNodeRequest const& request),
               (override));

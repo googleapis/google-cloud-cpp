@@ -49,6 +49,9 @@ class MockRegionBackendServicesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackendService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackendService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
@@ -86,6 +89,9 @@ class MockRegionBackendServicesConnection
                    GetIamPolicyRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertBackendService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertBackendService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
@@ -117,6 +123,9 @@ class MockRegionBackendServicesConnection
                    ListUsableRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchBackendService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchBackendService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
@@ -141,6 +150,9 @@ class MockRegionBackendServicesConnection
                    SetIamPolicyRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetSecurityPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetSecurityPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSecurityPolicy,
               (google::cloud::cpp::compute::region_backend_services::v1::
@@ -167,6 +179,9 @@ class MockRegionBackendServicesConnection
            TestIamPermissionsRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackendService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackendService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::

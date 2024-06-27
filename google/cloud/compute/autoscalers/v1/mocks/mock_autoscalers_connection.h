@@ -56,6 +56,9 @@ class MockAutoscalersConnection
            AggregatedListAutoscalersRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAutoscaler)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAutoscaler(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteAutoscaler,
               (google::cloud::cpp::compute::autoscalers::v1::
@@ -81,6 +84,9 @@ class MockAutoscalersConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertAutoscaler)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertAutoscaler(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertAutoscaler,
               (google::cloud::cpp::compute::autoscalers::v1::
@@ -107,6 +113,9 @@ class MockAutoscalersConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchAutoscaler)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchAutoscaler(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchAutoscaler,
               (google::cloud::cpp::compute::autoscalers::v1::
@@ -126,6 +135,9 @@ class MockAutoscalersConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAutoscaler)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAutoscaler(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateAutoscaler,
               (google::cloud::cpp::compute::autoscalers::v1::

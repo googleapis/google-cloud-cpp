@@ -54,6 +54,9 @@ class MockExecutionsConnection : public run_v2::ExecutionsConnection {
               (google::cloud::run::v2::ListExecutionsRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteExecution)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteExecution(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
               DeleteExecution,
               (google::cloud::run::v2::DeleteExecutionRequest const& request),
@@ -70,6 +73,9 @@ class MockExecutionsConnection : public run_v2::ExecutionsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CancelExecution)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CancelExecution(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
               CancelExecution,
               (google::cloud::run::v2::CancelExecutionRequest const& request),

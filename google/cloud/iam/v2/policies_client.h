@@ -288,6 +288,17 @@ class PoliciesClient {
       std::string const& parent, google::iam::v2::Policy const& policy,
       std::string const& policy_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePolicy(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::iam::v2::Policy const& policy, std::string const& policy_id,
@@ -330,10 +341,30 @@ class PoliciesClient {
   future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
       google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePolicy(
       ExperimentalTag, NoAwaitTag,
       google::iam::v2::CreatePolicyRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::iam::v2::Policy>> CreatePolicy(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -386,10 +417,30 @@ class PoliciesClient {
   future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
       google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdatePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePolicy(
       ExperimentalTag, NoAwaitTag,
       google::iam::v2::UpdatePolicyRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdatePolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::iam::v2::Policy>> UpdatePolicy(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -434,6 +485,17 @@ class PoliciesClient {
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePolicy(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -476,10 +538,30 @@ class PoliciesClient {
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePolicy(
       ExperimentalTag, NoAwaitTag,
       google::iam::v2::DeletePolicyRequest const& request, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePolicy
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::iam::v2::Policy>> DeletePolicy(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

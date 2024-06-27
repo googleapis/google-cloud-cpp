@@ -268,6 +268,17 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::Document const& document,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDocument(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::Document const& document,
@@ -320,11 +331,31 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDocument(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDocument
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -380,11 +411,31 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportDocuments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportDocuments(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportDocuments
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
   ImportDocuments(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -432,6 +483,17 @@ class DocumentsClient {
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
   DeleteDocument(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDocument(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -483,11 +545,31 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDocument(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDocument
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
   DeleteDocument(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -538,6 +620,17 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::Document const& document,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDocument(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::Document const& document,
@@ -590,11 +683,31 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDocument(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDocument
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -653,6 +766,17 @@ class DocumentsClient {
       std::string const& name, std::string const& content_uri,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ReloadDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReloadDocument(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::string const& content_uri, Options opts = {});
@@ -710,11 +834,31 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ReloadDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReloadDocument(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ReloadDocument
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -767,11 +911,31 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportDocument
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportDocument(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportDocument
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

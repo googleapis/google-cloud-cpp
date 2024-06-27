@@ -84,6 +84,9 @@ class MockCloudChannelServiceConnection
       (google::cloud::channel::v1::ImportCustomerRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ProvisionCloudIdentity)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ProvisionCloudIdentity(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Customer>>,
               ProvisionCloudIdentity,
               (google::cloud::channel::v1::ProvisionCloudIdentityRequest const&
@@ -123,6 +126,9 @@ class MockCloudChannelServiceConnection
       (google::cloud::channel::v1::GetEntitlementRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateEntitlement)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateEntitlement(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       CreateEntitlement,
@@ -141,6 +147,9 @@ class MockCloudChannelServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ChangeParameters)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ChangeParameters(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       ChangeParameters,
@@ -159,6 +168,9 @@ class MockCloudChannelServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ChangeRenewalSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ChangeRenewalSettings(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       ChangeRenewalSettings,
@@ -177,6 +189,9 @@ class MockCloudChannelServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ChangeOffer)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ChangeOffer(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::channel::v1::Entitlement>>,
               ChangeOffer,
               (google::cloud::channel::v1::ChangeOfferRequest const& request),
@@ -193,6 +208,9 @@ class MockCloudChannelServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartPaidService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartPaidService(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       StartPaidService,
@@ -211,6 +229,9 @@ class MockCloudChannelServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SuspendEntitlement)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SuspendEntitlement(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       SuspendEntitlement,
@@ -229,6 +250,9 @@ class MockCloudChannelServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CancelEntitlement)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CancelEntitlement(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
       CancelEntitlement,
@@ -247,6 +271,9 @@ class MockCloudChannelServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ActivateEntitlement)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ActivateEntitlement(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::Entitlement>>,
       ActivateEntitlement,
@@ -265,6 +292,9 @@ class MockCloudChannelServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, TransferEntitlements)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, TransferEntitlements(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>,
@@ -285,6 +315,9 @@ class MockCloudChannelServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, TransferEntitlementsToGoogle)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, TransferEntitlementsToGoogle(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::channel::v1::OperationMetadata>>,
       TransferEntitlementsToGoogle,

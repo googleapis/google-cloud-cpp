@@ -494,11 +494,31 @@ class DocumentServiceClient {
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportDocuments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportDocuments(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportDocuments
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
   ImportDocuments(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -562,11 +582,31 @@ class DocumentServiceClient {
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeDocuments
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeDocuments(
       ExperimentalTag, NoAwaitTag,
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeDocuments
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
   PurgeDocuments(ExperimentalTag,
                  google::longrunning::Operation const& operation,

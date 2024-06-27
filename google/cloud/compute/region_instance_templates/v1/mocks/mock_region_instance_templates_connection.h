@@ -49,6 +49,9 @@ class MockRegionInstanceTemplatesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstanceTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstanceTemplate(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_templates::v1::
@@ -74,6 +77,9 @@ class MockRegionInstanceTemplatesConnection
                    GetInstanceTemplateRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertInstanceTemplate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertInstanceTemplate(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_templates::v1::

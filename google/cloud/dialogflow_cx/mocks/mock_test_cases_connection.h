@@ -72,6 +72,9 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RunTestCase)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RunTestCase(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
       RunTestCase,
@@ -90,6 +93,9 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchRunTestCases)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchRunTestCases(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
@@ -119,6 +125,9 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportTestCases)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportTestCases(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>,
@@ -140,6 +149,9 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportTestCases)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportTestCases(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>,

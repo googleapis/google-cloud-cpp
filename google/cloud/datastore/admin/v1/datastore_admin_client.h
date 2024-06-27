@@ -199,6 +199,17 @@ class DatastoreAdminClient {
       google::datastore::admin::v1::EntityFilter const& entity_filter,
       std::string const& output_url_prefix, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportEntities(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::map<std::string, std::string> const& labels,
@@ -251,11 +262,31 @@ class DatastoreAdminClient {
       google::datastore::admin::v1::ExportEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportEntities(
       ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::ExportEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportEntities
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
   ExportEntities(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -322,6 +353,17 @@ class DatastoreAdminClient {
       google::datastore::admin::v1::EntityFilter const& entity_filter,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportEntities(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::map<std::string, std::string> const& labels,
@@ -372,11 +414,31 @@ class DatastoreAdminClient {
       google::datastore::admin::v1::ImportEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportEntities
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportEntities(
       ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::ImportEntitiesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportEntities
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
   ImportEntities(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -435,11 +497,31 @@ class DatastoreAdminClient {
       google::datastore::admin::v1::CreateIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateIndex
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateIndex(
       ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::CreateIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateIndex
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -495,11 +577,31 @@ class DatastoreAdminClient {
       google::datastore::admin::v1::DeleteIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteIndex
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteIndex(
       ExperimentalTag, NoAwaitTag,
       google::datastore::admin::v1::DeleteIndexRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteIndex
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

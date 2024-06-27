@@ -488,6 +488,17 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   ActivateCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ActivateCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ActivateCertificateAuthority(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -543,12 +554,32 @@ class CertificateAuthorityServiceClient {
           ActivateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ActivateCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ActivateCertificateAuthority(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           ActivateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ActivateCertificateAuthority
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   ActivateCertificateAuthority(ExperimentalTag,
                                google::longrunning::Operation const& operation,
@@ -601,6 +632,17 @@ class CertificateAuthorityServiceClient {
           certificate_authority,
       std::string const& certificate_authority_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateAuthority(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::security::privateca::v1::CertificateAuthority const&
@@ -649,12 +691,32 @@ class CertificateAuthorityServiceClient {
           CreateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateAuthority(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           CreateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCertificateAuthority
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   CreateCertificateAuthority(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -695,6 +757,17 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DisableCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DisableCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DisableCertificateAuthority(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -739,12 +812,32 @@ class CertificateAuthorityServiceClient {
           DisableCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DisableCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DisableCertificateAuthority(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DisableCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DisableCertificateAuthority
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DisableCertificateAuthority(ExperimentalTag,
                               google::longrunning::Operation const& operation,
@@ -785,6 +878,17 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   EnableCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EnableCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EnableCertificateAuthority(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -829,12 +933,32 @@ class CertificateAuthorityServiceClient {
           EnableCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EnableCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EnableCertificateAuthority(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           EnableCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EnableCertificateAuthority
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   EnableCertificateAuthority(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -1111,6 +1235,17 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UndeleteCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeleteCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteCertificateAuthority(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1156,12 +1291,32 @@ class CertificateAuthorityServiceClient {
           UndeleteCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeleteCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteCertificateAuthority(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UndeleteCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeleteCertificateAuthority
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UndeleteCertificateAuthority(ExperimentalTag,
                                google::longrunning::Operation const& operation,
@@ -1202,6 +1357,17 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DeleteCertificateAuthority(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateAuthority(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1246,12 +1412,32 @@ class CertificateAuthorityServiceClient {
           DeleteCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateAuthority(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DeleteCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCertificateAuthority
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   DeleteCertificateAuthority(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -1296,6 +1482,17 @@ class CertificateAuthorityServiceClient {
           certificate_authority,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateAuthority(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::CertificateAuthority const&
@@ -1343,12 +1540,32 @@ class CertificateAuthorityServiceClient {
           UpdateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateAuthority
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateAuthority(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateAuthorityRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateAuthority
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
   UpdateCertificateAuthority(ExperimentalTag,
                              google::longrunning::Operation const& operation,
@@ -1394,6 +1611,17 @@ class CertificateAuthorityServiceClient {
       google::cloud::security::privateca::v1::CaPool const& ca_pool,
       std::string const& ca_pool_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCaPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCaPool(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::security::privateca::v1::CaPool const& ca_pool,
@@ -1438,12 +1666,32 @@ class CertificateAuthorityServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCaPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCaPool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCaPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> CreateCaPool(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1483,6 +1731,17 @@ class CertificateAuthorityServiceClient {
       google::cloud::security::privateca::v1::CaPool const& ca_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCaPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCaPool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::CaPool const& ca_pool,
@@ -1527,12 +1786,32 @@ class CertificateAuthorityServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCaPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCaPool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCaPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CaPool>> UpdateCaPool(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1706,6 +1985,17 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCaPool(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCaPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCaPool(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -1752,12 +2042,32 @@ class CertificateAuthorityServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCaPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCaPool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCaPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCaPool(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
@@ -2015,6 +2325,17 @@ class CertificateAuthorityServiceClient {
           certificate_revocation_list,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateRevocationList
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateRevocationList(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::CertificateRevocationList const&
@@ -2063,12 +2384,32 @@ class CertificateAuthorityServiceClient {
           UpdateCertificateRevocationListRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateRevocationList
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateRevocationList(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateRevocationListRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateRevocationList
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::security::privateca::v1::CertificateRevocationList>>
   UpdateCertificateRevocationList(
@@ -2120,6 +2461,17 @@ class CertificateAuthorityServiceClient {
           certificate_template,
       std::string const& certificate_template_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCertificateTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::security::privateca::v1::CertificateTemplate const&
@@ -2167,12 +2519,32 @@ class CertificateAuthorityServiceClient {
                                 CreateCertificateTemplateRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCertificateTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCertificateTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           CreateCertificateTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCertificateTemplate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   CreateCertificateTemplate(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -2214,6 +2586,17 @@ class CertificateAuthorityServiceClient {
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCertificateTemplate(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCertificateTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateTemplate(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2258,12 +2641,32 @@ class CertificateAuthorityServiceClient {
                                 DeleteCertificateTemplateRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCertificateTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCertificateTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           DeleteCertificateTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCertificateTemplate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
   DeleteCertificateTemplate(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -2451,6 +2854,17 @@ class CertificateAuthorityServiceClient {
           certificate_template,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::CertificateTemplate const&
@@ -2497,12 +2911,32 @@ class CertificateAuthorityServiceClient {
                                 UpdateCertificateTemplateRequest const& request,
                             Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateTemplate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCertificateTemplate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::security::privateca::v1::
           UpdateCertificateTemplateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCertificateTemplate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
   UpdateCertificateTemplate(ExperimentalTag,
                             google::longrunning::Operation const& operation,

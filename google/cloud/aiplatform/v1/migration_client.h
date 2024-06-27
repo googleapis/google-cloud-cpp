@@ -213,6 +213,17 @@ class MigrationServiceClient {
           migrate_resource_requests,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchMigrateResources
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const&
@@ -260,12 +271,32 @@ class MigrationServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchMigrateResources
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchMigrateResources
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
   BatchMigrateResources(ExperimentalTag,
                         google::longrunning::Operation const& operation,

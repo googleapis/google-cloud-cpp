@@ -422,6 +422,17 @@ class GkeHubClient {
       google::cloud::gkehub::v1::Membership const& resource,
       std::string const& membership_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMembership
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMembership(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkehub::v1::Membership const& resource,
@@ -469,11 +480,31 @@ class GkeHubClient {
       google::cloud::gkehub::v1::CreateMembershipRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMembership
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMembership(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::CreateMembershipRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMembership
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -515,6 +546,17 @@ class GkeHubClient {
       google::cloud::gkehub::v1::Feature const& resource,
       std::string const& feature_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateFeature
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeature(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkehub::v1::Feature const& resource,
@@ -558,11 +600,31 @@ class GkeHubClient {
       google::cloud::gkehub::v1::CreateFeatureRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateFeature
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeature(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::CreateFeatureRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateFeature
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -604,6 +666,17 @@ class GkeHubClient {
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteMembership(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMembership
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMembership(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -650,11 +723,31 @@ class GkeHubClient {
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMembership
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMembership(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMembership
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteMembership(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -693,6 +786,17 @@ class GkeHubClient {
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteFeature
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeature(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -734,11 +838,31 @@ class GkeHubClient {
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteFeature
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeature(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteFeature
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -787,6 +911,17 @@ class GkeHubClient {
       google::cloud::gkehub::v1::Membership const& resource,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateMembership
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMembership(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::gkehub::v1::Membership const& resource,
@@ -830,11 +965,31 @@ class GkeHubClient {
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateMembership
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMembership(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateMembership
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -883,6 +1038,17 @@ class GkeHubClient {
       google::cloud::gkehub::v1::Feature const& resource,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateFeature
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeature(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::gkehub::v1::Feature const& resource,
@@ -926,11 +1092,31 @@ class GkeHubClient {
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateFeature
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeature(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateFeature
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

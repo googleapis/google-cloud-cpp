@@ -49,6 +49,9 @@ class MockRegionNotificationEndpointsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNotificationEndpoint)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNotificationEndpoint(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNotificationEndpoint,
               (google::cloud::cpp::compute::region_notification_endpoints::v1::
@@ -74,6 +77,9 @@ class MockRegionNotificationEndpointsConnection
                    GetNotificationEndpointRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertNotificationEndpoint)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertNotificationEndpoint(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNotificationEndpoint,
               (google::cloud::cpp::compute::region_notification_endpoints::v1::

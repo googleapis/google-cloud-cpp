@@ -221,6 +221,17 @@ class DatabaseAdminClient {
   CreateDatabase(std::string const& parent, std::string const& create_statement,
                  Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDatabase(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& create_statement, Options opts = {});
@@ -276,12 +287,32 @@ class DatabaseAdminClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDatabase(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDatabase
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   CreateDatabase(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -423,6 +454,17 @@ class DatabaseAdminClient {
                  google::protobuf::FieldMask const& update_mask,
                  Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDatabase(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::Database const& database,
@@ -509,12 +551,32 @@ class DatabaseAdminClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDatabase(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatabase
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   UpdateDatabase(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -565,6 +627,17 @@ class DatabaseAdminClient {
                     std::vector<std::string> const& statements,
                     Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatabaseDdl
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
       ExperimentalTag, NoAwaitTag, std::string const& database,
       std::vector<std::string> const& statements, Options opts = {});
@@ -619,12 +692,32 @@ class DatabaseAdminClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatabaseDdl
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDatabaseDdl
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
   UpdateDatabaseDdl(ExperimentalTag,
@@ -1063,6 +1156,17 @@ class DatabaseAdminClient {
       google::spanner::admin::database::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::spanner::admin::database::v1::Backup const& backup,
@@ -1121,11 +1225,31 @@ class DatabaseAdminClient {
       google::spanner::admin::database::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1195,6 +1319,17 @@ class DatabaseAdminClient {
       std::string const& source_backup,
       google::protobuf::Timestamp const& expire_time, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CopyBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CopyBackup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& backup_id, std::string const& source_backup,
@@ -1254,11 +1389,31 @@ class DatabaseAdminClient {
       google::spanner::admin::database::v1::CopyBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CopyBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CopyBackup(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::CopyBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CopyBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1587,6 +1742,17 @@ class DatabaseAdminClient {
   RestoreDatabase(std::string const& parent, std::string const& database_id,
                   std::string const& backup, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreDatabase(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& database_id, std::string const& backup,
@@ -1652,12 +1818,32 @@ class DatabaseAdminClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreDatabase(
       ExperimentalTag, NoAwaitTag,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreDatabase
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
   RestoreDatabase(ExperimentalTag,
                   google::longrunning::Operation const& operation,

@@ -269,6 +269,17 @@ class BareMetalSolutionClient {
                  google::protobuf::FieldMask const& update_mask,
                  Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::Instance const& instance,
@@ -314,12 +325,32 @@ class BareMetalSolutionClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>
   UpdateInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -420,6 +451,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
   ResetInstance(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResetInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResetInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -463,11 +505,31 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResetInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResetInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::ResetInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResetInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::ResetInstanceResponse>>
   ResetInstance(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -505,6 +567,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
   StartInstance(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -547,11 +620,31 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::StartInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StartInstanceResponse>>
   StartInstance(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -589,6 +682,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
   StopInstance(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StopInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopInstance(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -633,11 +737,31 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StopInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::StopInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StopInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>
   StopInstance(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
@@ -675,6 +799,17 @@ class BareMetalSolutionClient {
                       EnableInteractiveSerialConsoleResponse>>
   EnableInteractiveSerialConsole(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EnableInteractiveSerialConsole
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EnableInteractiveSerialConsole(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -719,12 +854,32 @@ class BareMetalSolutionClient {
           EnableInteractiveSerialConsoleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EnableInteractiveSerialConsole
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EnableInteractiveSerialConsole(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::
           EnableInteractiveSerialConsoleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EnableInteractiveSerialConsole
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::
                       EnableInteractiveSerialConsoleResponse>>
   EnableInteractiveSerialConsole(
@@ -764,6 +919,17 @@ class BareMetalSolutionClient {
                       DisableInteractiveSerialConsoleResponse>>
   DisableInteractiveSerialConsole(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DisableInteractiveSerialConsole
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DisableInteractiveSerialConsole(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -808,12 +974,32 @@ class BareMetalSolutionClient {
           DisableInteractiveSerialConsoleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DisableInteractiveSerialConsole
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DisableInteractiveSerialConsole(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::
           DisableInteractiveSerialConsoleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DisableInteractiveSerialConsole
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::
                       DisableInteractiveSerialConsoleResponse>>
   DisableInteractiveSerialConsole(
@@ -853,6 +1039,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
       std::string const& instance, std::string const& lun, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DetachLun
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DetachLun(
       ExperimentalTag, NoAwaitTag, std::string const& instance,
       std::string const& lun, Options opts = {});
@@ -895,11 +1092,31 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DetachLun
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DetachLun(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::DetachLunRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DetachLun
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Instance>> DetachLun(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1266,6 +1483,17 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::Volume const& volume,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::Volume const& volume,
@@ -1309,11 +1537,31 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::UpdateVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateVolume
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> UpdateVolume(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1412,6 +1660,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   EvictVolume(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EvictVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EvictVolume(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -1457,11 +1716,31 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EvictVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EvictVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EvictVolume
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   EvictVolume(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -1499,6 +1778,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
       std::string const& volume, std::int64_t size_gib, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResizeVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResizeVolume(
       ExperimentalTag, NoAwaitTag, std::string const& volume,
       std::int64_t size_gib, Options opts = {});
@@ -1541,11 +1831,31 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResizeVolume
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ResizeVolume(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::ResizeVolumeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ResizeVolume
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Volume>> ResizeVolume(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1779,6 +2089,17 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::Network const& network,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::Network const& network,
@@ -1822,11 +2143,31 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNetwork
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNetwork(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::UpdateNetworkRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNetwork
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::Network>> UpdateNetwork(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1930,6 +2271,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
   RestoreVolumeSnapshot(std::string const& volume_snapshot, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreVolumeSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
       ExperimentalTag, NoAwaitTag, std::string const& volume_snapshot,
       Options opts = {});
@@ -1975,12 +2327,32 @@ class BareMetalSolutionClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreVolumeSnapshot
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreVolumeSnapshot(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreVolumeSnapshot
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>
   RestoreVolumeSnapshot(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -2340,6 +2712,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   EvictLun(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EvictLun
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EvictLun(ExperimentalTag, NoAwaitTag,
                                                     std::string const& name,
                                                     Options opts = {});
@@ -2383,11 +2766,31 @@ class BareMetalSolutionClient {
   EvictLun(google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
            Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EvictLun
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> EvictLun(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::EvictLunRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief EvictLun
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   EvictLun(ExperimentalTag, google::longrunning::Operation const& operation,
            Options opts = {});
@@ -2563,6 +2966,17 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNfsShare
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNfsShare(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
@@ -2608,12 +3022,32 @@ class BareMetalSolutionClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNfsShare
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNfsShare(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateNfsShare
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   UpdateNfsShare(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -2655,6 +3089,17 @@ class BareMetalSolutionClient {
       google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNfsShare
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNfsShare(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::baremetalsolution::v2::NfsShare const& nfs_share,
@@ -2700,12 +3145,32 @@ class BareMetalSolutionClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNfsShare
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateNfsShare(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateNfsShare
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>
   CreateNfsShare(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -2805,6 +3270,17 @@ class BareMetalSolutionClient {
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   DeleteNfsShare(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNfsShare
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNfsShare(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2848,12 +3324,32 @@ class BareMetalSolutionClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNfsShare
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNfsShare(
       ExperimentalTag, NoAwaitTag,
       google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNfsShare
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>
   DeleteNfsShare(ExperimentalTag,
                  google::longrunning::Operation const& operation,

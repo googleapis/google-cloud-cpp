@@ -63,6 +63,9 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
               (google::cloud::gkehub::v1::GetFeatureRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateMembership)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateMembership(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkehub::v1::Membership>>, CreateMembership,
       (google::cloud::gkehub::v1::CreateMembershipRequest const& request),
@@ -80,6 +83,9 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateFeature)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateFeature(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
               CreateFeature,
               (google::cloud::gkehub::v1::CreateFeatureRequest const& request),
@@ -96,6 +102,9 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteMembership)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteMembership(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
       DeleteMembership,
@@ -114,6 +123,9 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFeature)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFeature(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
               DeleteFeature,
               (google::cloud::gkehub::v1::DeleteFeatureRequest const& request),
@@ -130,6 +142,9 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateMembership)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateMembership(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkehub::v1::Membership>>, UpdateMembership,
       (google::cloud::gkehub::v1::UpdateMembershipRequest const& request),
@@ -147,6 +162,9 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFeature)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFeature(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
               UpdateFeature,
               (google::cloud::gkehub::v1::UpdateFeatureRequest const& request),

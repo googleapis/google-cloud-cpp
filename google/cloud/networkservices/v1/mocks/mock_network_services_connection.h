@@ -60,6 +60,9 @@ class MockNetworkServicesConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateEndpointPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateEndpointPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>,
       CreateEndpointPolicy,
@@ -80,6 +83,9 @@ class MockNetworkServicesConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateEndpointPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateEndpointPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>,
       UpdateEndpointPolicy,
@@ -100,6 +106,9 @@ class MockNetworkServicesConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteEndpointPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteEndpointPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteEndpointPolicy,
@@ -130,6 +139,9 @@ class MockNetworkServicesConnection
       (google::cloud::networkservices::v1::GetGatewayRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateGateway(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::Gateway>>,
       CreateGateway,
@@ -148,6 +160,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateGateway(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::Gateway>>,
       UpdateGateway,
@@ -166,6 +181,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteGateway(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteGateway,
@@ -195,6 +213,9 @@ class MockNetworkServicesConnection
       (google::cloud::networkservices::v1::GetGrpcRouteRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateGrpcRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateGrpcRoute(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>,
               CreateGrpcRoute,
               (google::cloud::networkservices::v1::CreateGrpcRouteRequest const&
@@ -213,6 +234,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateGrpcRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateGrpcRoute(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>,
               UpdateGrpcRoute,
               (google::cloud::networkservices::v1::UpdateGrpcRouteRequest const&
@@ -231,6 +255,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteGrpcRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteGrpcRoute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteGrpcRoute,
@@ -261,6 +288,9 @@ class MockNetworkServicesConnection
       (google::cloud::networkservices::v1::GetHttpRouteRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateHttpRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateHttpRoute(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>,
               CreateHttpRoute,
               (google::cloud::networkservices::v1::CreateHttpRouteRequest const&
@@ -279,6 +309,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateHttpRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateHttpRoute(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>,
               UpdateHttpRoute,
               (google::cloud::networkservices::v1::UpdateHttpRouteRequest const&
@@ -297,6 +330,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteHttpRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteHttpRoute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteHttpRoute,
@@ -327,6 +363,9 @@ class MockNetworkServicesConnection
       (google::cloud::networkservices::v1::GetTcpRouteRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateTcpRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateTcpRoute(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>,
               CreateTcpRoute,
               (google::cloud::networkservices::v1::CreateTcpRouteRequest const&
@@ -345,6 +384,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateTcpRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateTcpRoute(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>,
               UpdateTcpRoute,
               (google::cloud::networkservices::v1::UpdateTcpRouteRequest const&
@@ -363,6 +405,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTcpRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTcpRoute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteTcpRoute,
@@ -393,6 +438,9 @@ class MockNetworkServicesConnection
       (google::cloud::networkservices::v1::GetTlsRouteRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateTlsRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateTlsRoute(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>,
               CreateTlsRoute,
               (google::cloud::networkservices::v1::CreateTlsRouteRequest const&
@@ -411,6 +459,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateTlsRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateTlsRoute(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>,
               UpdateTlsRoute,
               (google::cloud::networkservices::v1::UpdateTlsRouteRequest const&
@@ -429,6 +480,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTlsRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTlsRoute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteTlsRoute,
@@ -461,6 +515,9 @@ class MockNetworkServicesConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateServiceBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateServiceBinding(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>,
       CreateServiceBinding,
@@ -481,6 +538,9 @@ class MockNetworkServicesConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteServiceBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteServiceBinding(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteServiceBinding,
@@ -511,6 +571,9 @@ class MockNetworkServicesConnection
       (google::cloud::networkservices::v1::GetMeshRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateMesh)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateMesh(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::Mesh>>, CreateMesh,
       (google::cloud::networkservices::v1::CreateMeshRequest const& request),
@@ -528,6 +591,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateMesh)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateMesh(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::Mesh>>, UpdateMesh,
       (google::cloud::networkservices::v1::UpdateMeshRequest const& request),
@@ -545,6 +611,9 @@ class MockNetworkServicesConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteMesh)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteMesh(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteMesh,

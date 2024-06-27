@@ -46,6 +46,9 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateKey(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, CreateKey,
               (google::api::apikeys::v2::CreateKeyRequest const& request),
               (override));
@@ -72,6 +75,9 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (google::api::apikeys::v2::GetKeyStringRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateKey(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UpdateKey,
               (google::api::apikeys::v2::UpdateKeyRequest const& request),
               (override));
@@ -86,6 +92,9 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteKey(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, DeleteKey,
               (google::api::apikeys::v2::DeleteKeyRequest const& request),
               (override));
@@ -100,6 +109,9 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeleteKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeleteKey(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UndeleteKey,
               (google::api::apikeys::v2::UndeleteKeyRequest const& request),
               (override));

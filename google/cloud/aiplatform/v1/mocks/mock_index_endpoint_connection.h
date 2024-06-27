@@ -47,6 +47,9 @@ class MockIndexEndpointServiceConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateIndexEndpoint)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateIndexEndpoint(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>,
               CreateIndexEndpoint,
               (google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
@@ -82,6 +85,9 @@ class MockIndexEndpointServiceConnection
                    request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteIndexEndpoint)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteIndexEndpoint(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteIndexEndpoint,
@@ -101,6 +107,9 @@ class MockIndexEndpointServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeployIndex)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeployIndex(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
       DeployIndex,
@@ -119,6 +128,9 @@ class MockIndexEndpointServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeployIndex)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeployIndex(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
       UndeployIndex,
@@ -137,6 +149,9 @@ class MockIndexEndpointServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MutateDeployedIndex)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MutateDeployedIndex(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,

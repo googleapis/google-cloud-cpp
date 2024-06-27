@@ -103,10 +103,15 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
                  Not(IsPaginated))),
          MethodPattern(
              {
+                 {// clang-format off
+    "\n  /// Due to additional overloads for this method\n"
+    "  /// `EXPECT_CALL(*mock, $method_name$)` is now ambiguous. Use\n"
+    "  /// `EXPECT_CALL(*mock, $method_name$(::testing::_))` instead.\n"},
+                 // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
-    "\n  MOCK_METHOD(future<Status>,\n",
-    "\n  MOCK_METHOD(future<StatusOr<$longrunning_deduced_response_type$>>,\n"},
+    "  MOCK_METHOD(future<Status>,\n",
+    "  MOCK_METHOD(future<StatusOr<$longrunning_deduced_response_type$>>,\n"},
    {"  $method_name$,\n"
     "  ($request_type$ const& request), (override));\n\n",},
                  // clang-format on

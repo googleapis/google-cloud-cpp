@@ -130,6 +130,17 @@ class ClusterControllerClient {
       std::string const& project_id, std::string const& region,
       google::cloud::dataproc::v1::Cluster const& cluster, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::string const& region,
@@ -176,11 +187,31 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -238,6 +269,17 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::string const& region, std::string const& cluster_name,
@@ -289,11 +331,31 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -336,11 +398,31 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::StopClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StopCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::StopClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StopCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -383,11 +465,31 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::StartClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::StartClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -431,6 +533,17 @@ class ClusterControllerClient {
   DeleteCluster(std::string const& project_id, std::string const& region,
                 std::string const& cluster_name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::string const& region, std::string const& cluster_name,
@@ -478,11 +591,31 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -725,6 +858,17 @@ class ClusterControllerClient {
   DiagnoseCluster(std::string const& project_id, std::string const& region,
                   std::string const& cluster_name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DiagnoseCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DiagnoseCluster(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::string const& region, std::string const& cluster_name,
@@ -777,11 +921,31 @@ class ClusterControllerClient {
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DiagnoseCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DiagnoseCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DiagnoseCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
   DiagnoseCluster(ExperimentalTag,
                   google::longrunning::Operation const& operation,

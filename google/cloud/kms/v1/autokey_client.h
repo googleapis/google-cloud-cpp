@@ -151,6 +151,17 @@ class AutokeyClient {
       google::cloud::kms::v1::KeyHandle const& key_handle,
       std::string const& key_handle_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateKeyHandle
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateKeyHandle(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::kms::v1::KeyHandle const& key_handle,
@@ -200,11 +211,31 @@ class AutokeyClient {
       google::cloud::kms::v1::CreateKeyHandleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateKeyHandle
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateKeyHandle(
       ExperimentalTag, NoAwaitTag,
       google::cloud::kms::v1::CreateKeyHandleRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateKeyHandle
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

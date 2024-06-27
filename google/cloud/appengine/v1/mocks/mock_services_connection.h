@@ -53,6 +53,9 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
               (google::appengine::v1::GetServiceRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>, UpdateService,
               (google::appengine::v1::UpdateServiceRequest const& request),
               (override));
@@ -67,6 +70,9 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
               DeleteService,
               (google::appengine::v1::DeleteServiceRequest const& request),

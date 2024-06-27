@@ -2239,11 +2239,31 @@ class DataCatalogClient {
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ReconcileTags
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ReconcileTags(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ReconcileTags
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
   ReconcileTags(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -2684,11 +2704,31 @@ class DataCatalogClient {
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportEntries
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportEntries(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportEntries
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
   ImportEntries(ExperimentalTag,
                 google::longrunning::Operation const& operation,

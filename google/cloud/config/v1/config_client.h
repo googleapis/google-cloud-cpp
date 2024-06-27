@@ -261,6 +261,17 @@ class ConfigClient {
       google::cloud::config::v1::Deployment const& deployment,
       std::string const& deployment_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDeployment(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::config::v1::Deployment const& deployment,
@@ -304,11 +315,31 @@ class ConfigClient {
       google::cloud::config::v1::CreateDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDeployment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::CreateDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> CreateDeployment(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -356,6 +387,17 @@ class ConfigClient {
       google::cloud::config::v1::Deployment const& deployment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDeployment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::Deployment const& deployment,
@@ -399,11 +441,31 @@ class ConfigClient {
       google::cloud::config::v1::UpdateDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDeployment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::UpdateDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> UpdateDeployment(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -441,6 +503,17 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDeployment(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -482,11 +555,31 @@ class ConfigClient {
       google::cloud::config::v1::DeleteDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDeployment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::DeleteDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> DeleteDeployment(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -967,6 +1060,17 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief LockDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> LockDeployment(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1008,11 +1112,31 @@ class ConfigClient {
       google::cloud::config::v1::LockDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief LockDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> LockDeployment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::LockDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief LockDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> LockDeployment(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1051,6 +1175,17 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
       std::string const& name, std::int64_t lock_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UnlockDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UnlockDeployment(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::int64_t lock_id, Options opts = {});
@@ -1093,11 +1228,31 @@ class ConfigClient {
       google::cloud::config::v1::UnlockDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UnlockDeployment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UnlockDeployment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::UnlockDeploymentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UnlockDeployment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::config::v1::Deployment>> UnlockDeployment(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1194,6 +1349,17 @@ class ConfigClient {
       std::string const& parent,
       google::cloud::config::v1::Preview const& preview, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePreview
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePreview(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::config::v1::Preview const& preview, Options opts = {});
@@ -1236,11 +1402,31 @@ class ConfigClient {
       google::cloud::config::v1::CreatePreviewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePreview
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePreview(
       ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::CreatePreviewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePreview
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1412,6 +1598,17 @@ class ConfigClient {
   future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePreview
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePreview(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1453,11 +1650,31 @@ class ConfigClient {
       google::cloud::config::v1::DeletePreviewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePreview
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePreview(
       ExperimentalTag, NoAwaitTag,
       google::cloud::config::v1::DeletePreviewRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePreview
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

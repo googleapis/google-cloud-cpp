@@ -57,6 +57,9 @@ class MockDataprocMetastoreFederationConnection
       (google::cloud::metastore::v1::GetFederationRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateFederation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateFederation(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Federation>>,
       CreateFederation,
@@ -75,6 +78,9 @@ class MockDataprocMetastoreFederationConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFederation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFederation(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Federation>>,
       UpdateFederation,
@@ -93,6 +99,9 @@ class MockDataprocMetastoreFederationConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFederation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFederation(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
       DeleteFederation,

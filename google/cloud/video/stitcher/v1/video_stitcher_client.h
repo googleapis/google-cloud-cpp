@@ -137,6 +137,17 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
       std::string const& cdn_key_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCdnKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCdnKey(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
@@ -180,11 +191,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCdnKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCdnKey(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCdnKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -354,6 +385,17 @@ class VideoStitcherServiceClient {
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteCdnKey(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCdnKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCdnKey(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -398,11 +440,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCdnKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCdnKey(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCdnKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteCdnKey(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
@@ -444,6 +506,17 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCdnKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCdnKey(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::CdnKey const& cdn_key,
@@ -488,11 +561,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCdnKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCdnKey(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCdnKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1068,6 +1161,17 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::Slate const& slate,
       std::string const& slate_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSlate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSlate(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::video::stitcher::v1::Slate const& slate,
@@ -1111,11 +1215,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSlate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSlate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSlate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1286,6 +1410,17 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::Slate const& slate,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateSlate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSlate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::Slate const& slate,
@@ -1329,11 +1464,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateSlate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSlate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateSlate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1371,6 +1526,17 @@ class VideoStitcherServiceClient {
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteSlate(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSlate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSlate(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -1415,11 +1581,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSlate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSlate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSlate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteSlate(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});
@@ -1581,6 +1767,17 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::LiveConfig const& live_config,
       std::string const& live_config_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateLiveConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateLiveConfig(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::video::stitcher::v1::LiveConfig const& live_config,
@@ -1627,12 +1824,32 @@ class VideoStitcherServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateLiveConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateLiveConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateLiveConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
   CreateLiveConfig(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1808,6 +2025,17 @@ class VideoStitcherServiceClient {
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteLiveConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteLiveConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLiveConfig(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1851,12 +2079,32 @@ class VideoStitcherServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteLiveConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLiveConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteLiveConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteLiveConfig(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1901,6 +2149,17 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::LiveConfig const& live_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateLiveConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLiveConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::LiveConfig const& live_config,
@@ -1947,12 +2206,32 @@ class VideoStitcherServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateLiveConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLiveConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateLiveConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
   UpdateLiveConfig(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1997,6 +2276,17 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::VodConfig const& vod_config,
       std::string const& vod_config_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVodConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVodConfig(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::video::stitcher::v1::VodConfig const& vod_config,
@@ -2042,11 +2332,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVodConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateVodConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateVodConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
   CreateVodConfig(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -2221,6 +2531,17 @@ class VideoStitcherServiceClient {
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteVodConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteVodConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVodConfig(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2263,11 +2584,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteVodConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVodConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteVodConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
   DeleteVodConfig(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -2312,6 +2653,17 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::VodConfig const& vod_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateVodConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVodConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::VodConfig const& vod_config,
@@ -2357,11 +2709,31 @@ class VideoStitcherServiceClient {
       google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateVodConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVodConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateVodConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
   UpdateVodConfig(ExperimentalTag,
                   google::longrunning::Operation const& operation,

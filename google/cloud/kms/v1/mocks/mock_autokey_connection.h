@@ -46,6 +46,9 @@ class MockAutokeyConnection : public kms_v1::AutokeyConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateKeyHandle)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateKeyHandle(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::kms::v1::KeyHandle>>,
               CreateKeyHandle,
               (google::cloud::kms::v1::CreateKeyHandleRequest const& request),

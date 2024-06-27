@@ -57,6 +57,9 @@ class MockCloudFunctionsServiceConnection
               (google::cloud::functions::v1::GetFunctionRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateFunction)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateFunction(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::functions::v1::CloudFunction>>,
       CreateFunction,
@@ -75,6 +78,9 @@ class MockCloudFunctionsServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFunction)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFunction(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::functions::v1::CloudFunction>>,
       UpdateFunction,
@@ -93,6 +99,9 @@ class MockCloudFunctionsServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFunction)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFunction(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>,
       DeleteFunction,

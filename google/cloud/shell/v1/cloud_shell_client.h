@@ -196,11 +196,31 @@ class CloudShellServiceClient {
       google::cloud::shell::v1::StartEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::shell::v1::StartEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
   StartEnvironment(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -248,11 +268,31 @@ class CloudShellServiceClient {
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AuthorizeEnvironment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AuthorizeEnvironment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AuthorizeEnvironment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
   AuthorizeEnvironment(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -298,11 +338,31 @@ class CloudShellServiceClient {
       google::cloud::shell::v1::AddPublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AddPublicKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AddPublicKey(
       ExperimentalTag, NoAwaitTag,
       google::cloud::shell::v1::AddPublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AddPublicKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>> AddPublicKey(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -349,11 +409,31 @@ class CloudShellServiceClient {
       google::cloud::shell::v1::RemovePublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RemovePublicKey
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RemovePublicKey(
       ExperimentalTag, NoAwaitTag,
       google::cloud::shell::v1::RemovePublicKeyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RemovePublicKey
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
   RemovePublicKey(ExperimentalTag,
                   google::longrunning::Operation const& operation,

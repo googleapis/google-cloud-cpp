@@ -62,6 +62,9 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
       (google::cloud::resourcemanager::v3::SearchProjectsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateProject)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateProject(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       CreateProject,
@@ -80,6 +83,9 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateProject)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateProject(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       UpdateProject,
@@ -98,6 +104,9 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MoveProject)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MoveProject(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       MoveProject,
@@ -116,6 +125,9 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteProject)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteProject(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
       DeleteProject,
@@ -134,6 +146,9 @@ class MockProjectsConnection : public resourcemanager_v3::ProjectsConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeleteProject)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeleteProject(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Project>>,
               UndeleteProject,
               (google::cloud::resourcemanager::v3::UndeleteProjectRequest const&

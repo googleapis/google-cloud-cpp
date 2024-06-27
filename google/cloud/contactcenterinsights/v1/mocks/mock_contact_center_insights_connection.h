@@ -53,6 +53,9 @@ class MockContactCenterInsightsConnection
                    CreateConversationRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UploadConversation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UploadConversation(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>,
       UploadConversation,
@@ -97,6 +100,9 @@ class MockContactCenterInsightsConnection
                    DeleteConversationRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAnalysis)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAnalysis(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>,
       CreateAnalysis,
@@ -135,6 +141,9 @@ class MockContactCenterInsightsConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BulkAnalyzeConversations)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BulkAnalyzeConversations(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   BulkAnalyzeConversationsResponse>>,
               BulkAnalyzeConversations,
@@ -156,6 +165,9 @@ class MockContactCenterInsightsConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BulkDeleteConversations)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BulkDeleteConversations(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   BulkDeleteConversationsResponse>>,
               BulkDeleteConversations,
@@ -176,6 +188,9 @@ class MockContactCenterInsightsConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, IngestConversations)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, IngestConversations(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   IngestConversationsResponse>>,
               IngestConversations,
@@ -196,6 +211,9 @@ class MockContactCenterInsightsConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportInsightsData)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportInsightsData(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   ExportInsightsDataResponse>>,
               ExportInsightsData,
@@ -216,6 +234,9 @@ class MockContactCenterInsightsConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateIssueModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateIssueModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>,
       CreateIssueModel,
@@ -258,6 +279,9 @@ class MockContactCenterInsightsConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteIssueModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteIssueModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>,
@@ -280,6 +304,9 @@ class MockContactCenterInsightsConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeployIssueModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeployIssueModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>,
@@ -302,6 +329,9 @@ class MockContactCenterInsightsConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeployIssueModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeployIssueModel(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   UndeployIssueModelResponse>>,
               UndeployIssueModel,

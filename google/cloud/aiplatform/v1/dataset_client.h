@@ -124,6 +124,17 @@ class DatasetServiceClient {
       std::string const& parent,
       google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataset(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
@@ -166,11 +177,31 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -405,6 +436,17 @@ class DatasetServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDataset(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataset(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -447,11 +489,31 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataset
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataset(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDataset
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDataset(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -496,6 +558,17 @@ class DatasetServiceClient {
                  import_configs,
              Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportData(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const&
@@ -540,11 +613,31 @@ class DatasetServiceClient {
   ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request,
              Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportData(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ImportDataRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportData
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
   ImportData(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});
@@ -587,6 +680,17 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportData(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
@@ -630,11 +734,31 @@ class DatasetServiceClient {
   ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request,
              Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportData
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportData(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::ExportDataRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportData
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
   ExportData(ExperimentalTag, google::longrunning::Operation const& operation,
              Options opts = {});
@@ -679,6 +803,17 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDatasetVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDatasetVersion(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
@@ -723,11 +858,31 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDatasetVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateDatasetVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateDatasetVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
   CreateDatasetVersion(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -830,6 +985,17 @@ class DatasetServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDatasetVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDatasetVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -872,11 +1038,31 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDatasetVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteDatasetVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDatasetVersion(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -1051,6 +1237,17 @@ class DatasetServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
   RestoreDatasetVersion(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreDatasetVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1094,12 +1291,32 @@ class DatasetServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreDatasetVersion
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreDatasetVersion
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
   RestoreDatasetVersion(ExperimentalTag,
                         google::longrunning::Operation const& operation,
@@ -1331,6 +1548,17 @@ class DatasetServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSavedQuery(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSavedQuery
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSavedQuery(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1373,11 +1601,31 @@ class DatasetServiceClient {
       google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSavedQuery
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSavedQuery(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSavedQuery
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSavedQuery(ExperimentalTag,
                    google::longrunning::Operation const& operation,

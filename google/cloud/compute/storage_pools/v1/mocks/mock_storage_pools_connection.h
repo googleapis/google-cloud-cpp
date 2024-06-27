@@ -56,6 +56,9 @@ class MockStoragePoolsConnection
            AggregatedListStoragePoolsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteStoragePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteStoragePool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::
@@ -86,6 +89,9 @@ class MockStoragePoolsConnection
                    GetIamPolicyRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertStoragePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertStoragePool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::
@@ -130,6 +136,9 @@ class MockStoragePoolsConnection
            TestIamPermissionsRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateStoragePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateStoragePool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateStoragePool,
               (google::cloud::cpp::compute::storage_pools::v1::

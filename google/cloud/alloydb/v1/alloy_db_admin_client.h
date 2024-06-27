@@ -260,6 +260,17 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::alloydb::v1::Cluster const& cluster,
@@ -303,11 +314,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -350,6 +381,17 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::Cluster const& cluster,
@@ -393,11 +435,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> UpdateCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -435,6 +497,17 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -476,11 +549,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -521,6 +614,17 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PromoteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PromoteCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -565,11 +669,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::PromoteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PromoteCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PromoteCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::PromoteClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PromoteCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> PromoteCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -614,11 +738,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::RestoreClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::RestoreClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> RestoreCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -661,6 +805,17 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSecondaryCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSecondaryCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::alloydb::v1::Cluster const& cluster,
@@ -705,11 +860,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSecondaryCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSecondaryCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSecondaryCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Cluster>> CreateSecondaryCluster(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -887,6 +1062,17 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::alloydb::v1::Instance const& instance,
@@ -930,11 +1116,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> CreateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -976,6 +1182,17 @@ class AlloyDBAdminClient {
                           google::cloud::alloydb::v1::Instance const& instance,
                           std::string const& instance_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSecondaryInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSecondaryInstance(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::alloydb::v1::Instance const& instance,
@@ -1020,11 +1237,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSecondaryInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSecondaryInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSecondaryInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>>
   CreateSecondaryInstance(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1078,11 +1315,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchCreateInstances
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateInstances(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchCreateInstances
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
   BatchCreateInstances(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -1126,6 +1383,17 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::Instance const& instance,
@@ -1169,11 +1437,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> UpdateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1211,6 +1499,17 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteInstance(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1253,11 +1552,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
   DeleteInstance(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -1298,6 +1617,17 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief FailoverInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> FailoverInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1341,11 +1671,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief FailoverInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> FailoverInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::FailoverInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief FailoverInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> FailoverInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1386,6 +1736,17 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::InjectFaultRequest::FaultType fault_type,
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InjectFault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> InjectFault(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::InjectFaultRequest::FaultType fault_type,
@@ -1430,11 +1791,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::InjectFaultRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InjectFault
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> InjectFault(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::InjectFaultRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InjectFault
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> InjectFault(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1473,6 +1854,17 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestartInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestartInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1515,11 +1907,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::RestartInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestartInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestartInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::RestartInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestartInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Instance>> RestartInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1690,6 +2102,17 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::alloydb::v1::Backup const& backup,
@@ -1733,11 +2156,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Backup>> CreateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1780,6 +2223,17 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::Backup const& backup,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::Backup const& backup,
@@ -1823,11 +2277,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::Backup>> UpdateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1865,6 +2339,17 @@ class AlloyDBAdminClient {
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -1908,11 +2393,31 @@ class AlloyDBAdminClient {
       google::cloud::alloydb::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::alloydb::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>> DeleteBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

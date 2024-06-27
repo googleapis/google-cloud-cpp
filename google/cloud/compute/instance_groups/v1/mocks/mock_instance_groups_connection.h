@@ -47,6 +47,9 @@ class MockInstanceGroupsConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddInstances)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddInstances(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddInstances,
               (google::cloud::cpp::compute::instance_groups::v1::
@@ -74,6 +77,9 @@ class MockInstanceGroupsConnection
            AggregatedListInstanceGroupsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstanceGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstanceGroup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceGroup,
               (google::cloud::cpp::compute::instance_groups::v1::
@@ -99,6 +105,9 @@ class MockInstanceGroupsConnection
                    GetInstanceGroupRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertInstanceGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertInstanceGroup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceGroup,
               (google::cloud::cpp::compute::instance_groups::v1::
@@ -131,6 +140,9 @@ class MockInstanceGroupsConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemoveInstances)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemoveInstances(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveInstances,
               (google::cloud::cpp::compute::instance_groups::v1::
@@ -150,6 +162,9 @@ class MockInstanceGroupsConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetNamedPorts)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetNamedPorts(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetNamedPorts,
               (google::cloud::cpp::compute::instance_groups::v1::

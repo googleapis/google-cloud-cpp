@@ -185,6 +185,17 @@ class JobControllerClient {
       std::string const& project_id, std::string const& region,
       google::cloud::dataproc::v1::Job const& job, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SubmitJobAsOperation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::string const& region, google::cloud::dataproc::v1::Job const& job,
@@ -228,11 +239,31 @@ class JobControllerClient {
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SubmitJobAsOperation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SubmitJobAsOperation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

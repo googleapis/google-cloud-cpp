@@ -149,6 +149,17 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       std::string const& aws_cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAwsCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAwsCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
@@ -199,11 +210,31 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAwsCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAwsCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAwsCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   CreateAwsCluster(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -248,6 +279,17 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAwsCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAwsCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
@@ -292,11 +334,31 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAwsCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAwsCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAwsCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
   UpdateAwsCluster(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -500,6 +562,17 @@ class AwsClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAwsCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAwsCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -553,11 +626,31 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAwsCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAwsCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAwsCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsCluster(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -692,6 +785,17 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       std::string const& aws_node_pool_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAwsNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAwsNodePool(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
@@ -743,11 +847,31 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAwsNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAwsNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAwsNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   CreateAwsNodePool(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -792,6 +916,17 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAwsNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
@@ -836,11 +971,31 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAwsNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAwsNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   UpdateAwsNodePool(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -891,6 +1046,17 @@ class AwsClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RollbackAwsNodePoolUpdate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -939,12 +1105,32 @@ class AwsClustersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RollbackAwsNodePoolUpdate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RollbackAwsNodePoolUpdate
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
   RollbackAwsNodePoolUpdate(ExperimentalTag,
                             google::longrunning::Operation const& operation,
@@ -1149,6 +1335,17 @@ class AwsClustersClient {
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAwsNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1198,11 +1395,31 @@ class AwsClustersClient {
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAwsNodePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
       ExperimentalTag, NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAwsNodePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAwsNodePool(ExperimentalTag,
                     google::longrunning::Operation const& operation,

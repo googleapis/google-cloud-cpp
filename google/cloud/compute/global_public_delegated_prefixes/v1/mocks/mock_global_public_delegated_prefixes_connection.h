@@ -49,6 +49,9 @@ class MockGlobalPublicDelegatedPrefixesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePublicDelegatedPrefix)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePublicDelegatedPrefix(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePublicDelegatedPrefix,
               (google::cloud::cpp::compute::global_public_delegated_prefixes::
@@ -74,6 +77,9 @@ class MockGlobalPublicDelegatedPrefixesConnection
                    v1::GetPublicDelegatedPrefixRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertPublicDelegatedPrefix)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertPublicDelegatedPrefix(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertPublicDelegatedPrefix,
               (google::cloud::cpp::compute::global_public_delegated_prefixes::
@@ -100,6 +106,9 @@ class MockGlobalPublicDelegatedPrefixesConnection
            ListGlobalPublicDelegatedPrefixesRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchPublicDelegatedPrefix)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchPublicDelegatedPrefix(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPublicDelegatedPrefix,
               (google::cloud::cpp::compute::global_public_delegated_prefixes::

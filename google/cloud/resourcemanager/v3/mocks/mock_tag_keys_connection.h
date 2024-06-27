@@ -62,6 +62,9 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateTagKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateTagKey(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
       CreateTagKey,
@@ -80,6 +83,9 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateTagKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateTagKey(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
       UpdateTagKey,
@@ -98,6 +104,9 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTagKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTagKey(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
       DeleteTagKey,

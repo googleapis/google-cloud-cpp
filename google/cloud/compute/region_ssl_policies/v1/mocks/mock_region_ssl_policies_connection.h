@@ -47,6 +47,9 @@ class MockRegionSslPoliciesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSslPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSslPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -72,6 +75,9 @@ class MockRegionSslPoliciesConnection
                    GetSslPolicyRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertSslPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertSslPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::
@@ -104,6 +110,9 @@ class MockRegionSslPoliciesConnection
                    ListAvailableFeaturesRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchSslPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchSslPolicy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSslPolicy,
               (google::cloud::cpp::compute::region_ssl_policies::v1::

@@ -132,6 +132,17 @@ class CloudBuildClient {
       std::string const& project_id,
       google::devtools::cloudbuild::v1::Build const& build, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBuild
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBuild(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       google::devtools::cloudbuild::v1::Build const& build, Options opts = {});
@@ -178,11 +189,31 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBuild
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBuild(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBuild
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -448,6 +479,17 @@ class CloudBuildClient {
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RetryBuild
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RetryBuild(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::string const& id, Options opts = {});
@@ -516,11 +558,31 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RetryBuild
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RetryBuild(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RetryBuild
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -566,6 +628,17 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::ApprovalResult const& approval_result,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ApproveBuild
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ApproveBuild(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::devtools::cloudbuild::v1::ApprovalResult const& approval_result,
@@ -614,11 +687,31 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ApproveBuild
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ApproveBuild(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ApproveBuild
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -991,6 +1084,17 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::RepoSource const& source,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RunBuildTrigger
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunBuildTrigger(
       ExperimentalTag, NoAwaitTag, std::string const& project_id,
       std::string const& trigger_id,
@@ -1041,11 +1145,31 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RunBuildTrigger
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunBuildTrigger(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RunBuildTrigger
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1126,6 +1250,17 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
       std::string const& worker_pool_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkerPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkerPool(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
@@ -1170,11 +1305,31 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkerPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkerPool(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkerPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   CreateWorkerPool(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1272,6 +1427,17 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
   DeleteWorkerPool(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkerPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkerPool(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1315,11 +1481,31 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkerPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkerPool(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkerPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
   DeleteWorkerPool(ExperimentalTag,
@@ -1364,6 +1550,17 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkerPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkerPool(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
@@ -1408,11 +1605,31 @@ class CloudBuildClient {
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkerPool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkerPool(
       ExperimentalTag, NoAwaitTag,
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkerPool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(ExperimentalTag,
                    google::longrunning::Operation const& operation,

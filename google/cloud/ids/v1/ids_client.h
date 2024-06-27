@@ -258,6 +258,17 @@ class IDSClient {
       google::cloud::ids::v1::Endpoint const& endpoint,
       std::string const& endpoint_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::ids::v1::Endpoint const& endpoint,
@@ -301,11 +312,31 @@ class IDSClient {
       google::cloud::ids::v1::CreateEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
       ExperimentalTag, NoAwaitTag,
       google::cloud::ids::v1::CreateEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateEndpoint
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -342,6 +373,17 @@ class IDSClient {
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -383,11 +425,31 @@ class IDSClient {
       google::cloud::ids::v1::DeleteEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEndpoint
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
       ExperimentalTag, NoAwaitTag,
       google::cloud::ids::v1::DeleteEndpointRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteEndpoint
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

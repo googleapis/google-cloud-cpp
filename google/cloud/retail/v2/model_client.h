@@ -135,6 +135,17 @@ class ModelServiceClient {
       std::string const& parent, google::cloud::retail::v2::Model const& model,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateModel(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::retail::v2::Model const& model, Options opts = {});
@@ -177,11 +188,31 @@ class ModelServiceClient {
       google::cloud::retail::v2::CreateModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::CreateModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -586,6 +617,17 @@ class ModelServiceClient {
   future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief TuneModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TuneModel(ExperimentalTag,
                                                      NoAwaitTag,
                                                      std::string const& name,
@@ -629,11 +671,31 @@ class ModelServiceClient {
       google::cloud::retail::v2::TuneModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief TuneModel
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> TuneModel(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::TuneModelRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief TuneModel
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::TuneModelResponse>> TuneModel(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

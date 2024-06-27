@@ -370,6 +370,17 @@ class CloudRedisClient {
       std::string const& parent, std::string const& instance_id,
       google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& instance_id,
@@ -424,11 +435,31 @@ class CloudRedisClient {
       google::cloud::redis::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -480,6 +511,17 @@ class CloudRedisClient {
       google::protobuf::FieldMask const& update_mask,
       google::cloud::redis::v1::Instance const& instance, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::protobuf::FieldMask const& update_mask,
@@ -527,11 +569,31 @@ class CloudRedisClient {
       google::cloud::redis::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -573,6 +635,17 @@ class CloudRedisClient {
       std::string const& name, std::string const& redis_version,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpgradeInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpgradeInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::string const& redis_version, Options opts = {});
@@ -616,11 +689,31 @@ class CloudRedisClient {
       google::cloud::redis::v1::UpgradeInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpgradeInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpgradeInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::UpgradeInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpgradeInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -669,6 +762,17 @@ class CloudRedisClient {
       google::cloud::redis::v1::InputConfig const& input_config,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::redis::v1::InputConfig const& input_config,
@@ -719,11 +823,31 @@ class CloudRedisClient {
       google::cloud::redis::v1::ImportInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::ImportInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -770,6 +894,17 @@ class CloudRedisClient {
       google::cloud::redis::v1::OutputConfig const& output_config,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::redis::v1::OutputConfig const& output_config,
@@ -818,11 +953,31 @@ class CloudRedisClient {
       google::cloud::redis::v1::ExportInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::ExportInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -867,6 +1022,17 @@ class CloudRedisClient {
           data_protection_mode,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief FailoverInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> FailoverInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::redis::v1::FailoverInstanceRequest::DataProtectionMode
@@ -912,11 +1078,31 @@ class CloudRedisClient {
       google::cloud::redis::v1::FailoverInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief FailoverInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> FailoverInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::FailoverInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief FailoverInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -956,6 +1142,17 @@ class CloudRedisClient {
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -998,11 +1195,31 @@ class CloudRedisClient {
       google::cloud::redis::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteInstance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteInstance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::redis::v1::OperationMetadata>> DeleteInstance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1050,6 +1267,17 @@ class CloudRedisClient {
           reschedule_type,
       google::protobuf::Timestamp const& schedule_time, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RescheduleMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       google::cloud::redis::v1::RescheduleMaintenanceRequest::RescheduleType
@@ -1095,11 +1323,31 @@ class CloudRedisClient {
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RescheduleMaintenance
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
       ExperimentalTag, NoAwaitTag,
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RescheduleMaintenance
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::redis::v1::Instance>> RescheduleMaintenance(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

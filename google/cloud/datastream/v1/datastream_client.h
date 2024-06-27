@@ -259,6 +259,17 @@ class DatastreamClient {
           connection_profile,
       std::string const& connection_profile_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectionProfile(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::datastream::v1::ConnectionProfile const&
@@ -305,12 +316,32 @@ class DatastreamClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectionProfile(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateConnectionProfileRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateConnectionProfile
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
   CreateConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -356,6 +387,17 @@ class DatastreamClient {
           connection_profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::ConnectionProfile const&
@@ -402,12 +444,32 @@ class DatastreamClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateConnectionProfile
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
   UpdateConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -445,6 +507,17 @@ class DatastreamClient {
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteConnectionProfile(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -488,12 +561,32 @@ class DatastreamClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteConnectionProfile
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteConnectionProfile
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteConnectionProfile(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -701,6 +794,17 @@ class DatastreamClient {
       google::cloud::datastream::v1::Stream const& stream,
       std::string const& stream_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateStream
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateStream(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::datastream::v1::Stream const& stream,
@@ -744,11 +848,31 @@ class DatastreamClient {
       google::cloud::datastream::v1::CreateStreamRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateStream
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateStream(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateStreamRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateStream
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Stream>> CreateStream(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -791,6 +915,17 @@ class DatastreamClient {
       google::cloud::datastream::v1::Stream const& stream,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateStream
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateStream(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::Stream const& stream,
@@ -834,11 +969,31 @@ class DatastreamClient {
       google::cloud::datastream::v1::UpdateStreamRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateStream
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateStream(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::UpdateStreamRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateStream
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Stream>> UpdateStream(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -875,6 +1030,17 @@ class DatastreamClient {
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteStream
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteStream(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -919,11 +1085,31 @@ class DatastreamClient {
       google::cloud::datastream::v1::DeleteStreamRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteStream
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteStream(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteStreamRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteStream
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteStream(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
@@ -1314,6 +1500,17 @@ class DatastreamClient {
           private_connection,
       std::string const& private_connection_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::datastream::v1::PrivateConnection const&
@@ -1360,12 +1557,32 @@ class DatastreamClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreatePrivateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
   CreatePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1538,6 +1755,17 @@ class DatastreamClient {
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeletePrivateConnection(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1581,12 +1809,32 @@ class DatastreamClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePrivateConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeletePrivateConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeletePrivateConnection(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1629,6 +1877,17 @@ class DatastreamClient {
       google::cloud::datastream::v1::Route const& route,
       std::string const& route_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateRoute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRoute(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::datastream::v1::Route const& route,
@@ -1673,11 +1932,31 @@ class DatastreamClient {
       google::cloud::datastream::v1::CreateRouteRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateRoute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateRoute(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::CreateRouteRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateRoute
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::Route>> CreateRoute(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1846,6 +2125,17 @@ class DatastreamClient {
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteRoute(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRoute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRoute(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -1889,11 +2179,31 @@ class DatastreamClient {
   DeleteRoute(google::cloud::datastream::v1::DeleteRouteRequest const& request,
               Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRoute
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRoute(
       ExperimentalTag, NoAwaitTag,
       google::cloud::datastream::v1::DeleteRouteRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRoute
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
   DeleteRoute(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});

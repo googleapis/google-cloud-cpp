@@ -255,6 +255,17 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::Hub const& hub,
       std::string const& hub_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateHub
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateHub(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::networkconnectivity::v1::Hub const& hub,
@@ -298,11 +309,31 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateHub
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateHub(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateHub
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -346,6 +377,17 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::Hub const& hub,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateHub
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateHub(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::Hub const& hub,
@@ -390,11 +432,31 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateHub
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateHub(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateHub
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -431,6 +493,17 @@ class HubServiceClient {
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteHub(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteHub
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteHub(ExperimentalTag,
                                                      NoAwaitTag,
                                                      std::string const& name,
@@ -475,11 +548,31 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteHub
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteHub(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteHub
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteHub(ExperimentalTag, google::longrunning::Operation const& operation,
             Options opts = {});
@@ -730,6 +823,17 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
       std::string const& spoke_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSpoke(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
@@ -773,11 +877,31 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateSpoke(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateSpoke
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -820,6 +944,17 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSpoke(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
@@ -863,11 +998,31 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSpoke(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateSpoke
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -910,6 +1065,17 @@ class HubServiceClient {
   RejectHubSpoke(std::string const& name, std::string const& spoke_uri,
                  Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RejectHubSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RejectHubSpoke(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::string const& spoke_uri, Options opts = {});
@@ -958,12 +1124,32 @@ class HubServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RejectHubSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RejectHubSpoke(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RejectHubSpoke
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
   RejectHubSpoke(ExperimentalTag,
@@ -1006,6 +1192,17 @@ class HubServiceClient {
   AcceptHubSpoke(std::string const& name, std::string const& spoke_uri,
                  Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AcceptHubSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AcceptHubSpoke(
       ExperimentalTag, NoAwaitTag, std::string const& name,
       std::string const& spoke_uri, Options opts = {});
@@ -1052,12 +1249,32 @@ class HubServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AcceptHubSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AcceptHubSpoke(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AcceptHubSpoke
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
   AcceptHubSpoke(ExperimentalTag,
@@ -1096,6 +1313,17 @@ class HubServiceClient {
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSpoke(ExperimentalTag,
                                                        NoAwaitTag,
                                                        std::string const& name,
@@ -1140,11 +1368,31 @@ class HubServiceClient {
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSpoke
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSpoke(
       ExperimentalTag, NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteSpoke
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(ExperimentalTag, google::longrunning::Operation const& operation,
               Options opts = {});

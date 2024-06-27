@@ -47,6 +47,9 @@ class MockServiceUsageConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, EnableService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, EnableService(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
       EnableService,
@@ -65,6 +68,9 @@ class MockServiceUsageConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DisableService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DisableService(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
       DisableService,
@@ -92,6 +98,9 @@ class MockServiceUsageConnection
               (google::api::serviceusage::v1::ListServicesRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchEnableServices)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchEnableServices(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,

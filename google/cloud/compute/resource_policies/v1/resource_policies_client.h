@@ -209,6 +209,17 @@ class ResourcePoliciesClient {
   DeleteResourcePolicy(std::string const& project, std::string const& region,
                        std::string const& resource_policy, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteResourcePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& resource_policy,
@@ -253,12 +264,32 @@ class ResourcePoliciesClient {
                            DeleteResourcePolicyRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteResourcePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteResourcePolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::resource_policies::v1::
           DeleteResourcePolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteResourcePolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteResourcePolicy(
       ExperimentalTag,
@@ -428,6 +459,17 @@ class ResourcePoliciesClient {
                            resource_policy_resource,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertResourcePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -474,12 +516,32 @@ class ResourcePoliciesClient {
                            InsertResourcePolicyRequest const& request,
                        Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertResourcePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertResourcePolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::resource_policies::v1::
           InsertResourcePolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertResourcePolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertResourcePolicy(
       ExperimentalTag,
@@ -608,6 +670,17 @@ class ResourcePoliciesClient {
                           resource_policy_resource,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchResourcePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& resource_policy,
@@ -655,12 +728,32 @@ class ResourcePoliciesClient {
                           PatchResourcePolicyRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchResourcePolicy
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchResourcePolicy(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::resource_policies::v1::
           PatchResourcePolicyRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchResourcePolicy
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchResourcePolicy(
       ExperimentalTag,

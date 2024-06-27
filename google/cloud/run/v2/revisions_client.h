@@ -255,6 +255,17 @@ class RevisionsClient {
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRevision
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRevision(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -296,11 +307,31 @@ class RevisionsClient {
       google::cloud::run::v2::DeleteRevisionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRevision
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRevision(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::DeleteRevisionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRevision
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

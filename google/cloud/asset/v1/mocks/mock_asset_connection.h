@@ -46,6 +46,9 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportAssets)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportAssets(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>,
               ExportAssets,
               (google::cloud::asset::v1::ExportAssetsRequest const& request),
@@ -108,6 +111,9 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
       (google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AnalyzeIamPolicyLongrunning)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AnalyzeIamPolicyLongrunning(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>,

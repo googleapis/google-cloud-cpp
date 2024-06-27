@@ -289,6 +289,17 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::Service const& service,
       std::string const& service_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::metastore::v1::Service const& service,
@@ -332,11 +343,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -382,6 +413,17 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::Service const& service,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::Service const& service,
@@ -425,11 +467,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -469,6 +531,17 @@ class DataprocMetastoreClient {
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteService(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -511,11 +584,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteService(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -704,6 +797,17 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::MetadataImport const& metadata_import,
       std::string const& metadata_import_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMetadataImport
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMetadataImport(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::metastore::v1::MetadataImport const& metadata_import,
@@ -748,11 +852,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::CreateMetadataImportRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMetadataImport
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMetadataImport(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateMetadataImportRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMetadataImport
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
   CreateMetadataImport(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -801,6 +925,17 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::MetadataImport const& metadata_import,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateMetadataImport
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMetadataImport(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::MetadataImport const& metadata_import,
@@ -846,11 +981,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::UpdateMetadataImportRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateMetadataImport
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMetadataImport(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::UpdateMetadataImportRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateMetadataImport
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
   UpdateMetadataImport(ExperimentalTag,
                        google::longrunning::Operation const& operation,
@@ -894,11 +1049,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::ExportMetadataRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportMetadata
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportMetadata(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::ExportMetadataRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportMetadata
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -942,6 +1117,17 @@ class DataprocMetastoreClient {
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
       std::string const& service, std::string const& backup, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreService(
       ExperimentalTag, NoAwaitTag, std::string const& service,
       std::string const& backup, Options opts = {});
@@ -984,11 +1170,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::RestoreServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RestoreService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::RestoreServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RestoreService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1174,6 +1380,17 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::metastore::v1::Backup const& backup,
@@ -1217,11 +1434,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::CreateBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1261,6 +1498,17 @@ class DataprocMetastoreClient {
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteBackup(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
                                                         NoAwaitTag,
                                                         std::string const& name,
@@ -1304,11 +1552,31 @@ class DataprocMetastoreClient {
   DeleteBackup(google::cloud::metastore::v1::DeleteBackupRequest const& request,
                Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackup
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteBackup
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
   DeleteBackup(ExperimentalTag, google::longrunning::Operation const& operation,
                Options opts = {});
@@ -1352,11 +1620,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::QueryMetadataRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief QueryMetadata
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> QueryMetadata(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::QueryMetadataRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief QueryMetadata
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
   QueryMetadata(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -1401,11 +1689,31 @@ class DataprocMetastoreClient {
       google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief MoveTableToDatabase
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> MoveTableToDatabase(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief MoveTableToDatabase
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
   MoveTableToDatabase(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -1455,12 +1763,32 @@ class DataprocMetastoreClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AlterMetadataResourceLocation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AlterMetadataResourceLocation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AlterMetadataResourceLocation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
   AlterMetadataResourceLocation(ExperimentalTag,

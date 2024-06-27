@@ -47,6 +47,9 @@ class MockRegionDisksConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AddResourcePolicies)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AddResourcePolicies(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddResourcePolicies,
               (google::cloud::cpp::compute::region_disks::v1::
@@ -66,6 +69,9 @@ class MockRegionDisksConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BulkInsert)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BulkInsert(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, BulkInsert,
       (google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
@@ -85,6 +91,9 @@ class MockRegionDisksConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateSnapshot)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateSnapshot(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CreateSnapshot,
               (google::cloud::cpp::compute::region_disks::v1::
@@ -104,6 +113,9 @@ class MockRegionDisksConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDisk)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDisk(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DeleteDisk,
       (google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
@@ -135,6 +147,9 @@ class MockRegionDisksConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertDisk)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertDisk(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, InsertDisk,
       (google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
@@ -160,6 +175,9 @@ class MockRegionDisksConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemoveResourcePolicies)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemoveResourcePolicies(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveResourcePolicies,
               (google::cloud::cpp::compute::region_disks::v1::
@@ -179,6 +197,9 @@ class MockRegionDisksConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, Resize)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, Resize(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Resize,
       (google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
@@ -204,6 +225,9 @@ class MockRegionDisksConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
@@ -223,6 +247,9 @@ class MockRegionDisksConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartAsyncReplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartAsyncReplication(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StartAsyncReplication,
               (google::cloud::cpp::compute::region_disks::v1::
@@ -242,6 +269,9 @@ class MockRegionDisksConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopAsyncReplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopAsyncReplication(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopAsyncReplication,
               (google::cloud::cpp::compute::region_disks::v1::
@@ -261,6 +291,9 @@ class MockRegionDisksConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopGroupAsyncReplication)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopGroupAsyncReplication(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopGroupAsyncReplication,
               (google::cloud::cpp::compute::region_disks::v1::
@@ -287,6 +320,9 @@ class MockRegionDisksConnection
            TestIamPermissionsRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDisk)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDisk(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, UpdateDisk,
       (google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&

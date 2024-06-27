@@ -120,6 +120,17 @@ class ImagesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImage(
       std::string const& project, std::string const& image, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteImage(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& image, Options opts = {});
@@ -163,12 +174,32 @@ class ImagesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteImage(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteImage
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImage(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -212,6 +243,17 @@ class ImagesClient {
           deprecation_status_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief Deprecate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Deprecate(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& image,
@@ -258,11 +300,31 @@ class ImagesClient {
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief Deprecate
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Deprecate(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief Deprecate
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -491,6 +553,17 @@ class ImagesClient {
       google::cloud::cpp::compute::v1::Image const& image_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertImage(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::Image const& image_resource,
@@ -536,12 +609,32 @@ class ImagesClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertImage(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertImage
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImage(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -670,6 +763,17 @@ class ImagesClient {
       google::cloud::cpp::compute::v1::Image const& image_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchImage(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& image,
@@ -715,11 +819,31 @@ class ImagesClient {
       google::cloud::cpp::compute::images::v1::PatchImageRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchImage
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchImage(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::PatchImageRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchImage
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImage(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -829,6 +953,17 @@ class ImagesClient {
           global_set_labels_request_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& resource,
@@ -875,11 +1010,31 @@ class ImagesClient {
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetLabels
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SetLabels
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

@@ -46,6 +46,9 @@ class MockRoutesConnection : public compute_routes_v1::RoutesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRoute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DeleteRoute,
       (google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&
@@ -70,6 +73,9 @@ class MockRoutesConnection : public compute_routes_v1::RoutesConnection {
       (google::cloud::cpp::compute::routes::v1::GetRouteRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertRoute)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertRoute(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, InsertRoute,
       (google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&

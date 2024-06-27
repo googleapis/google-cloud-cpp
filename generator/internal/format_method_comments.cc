@@ -258,6 +258,34 @@ bool CheckMethodCommentSubstitutions() {
   return all_substitutions_used;
 }
 
+std::string FormatStartMethodComments() {
+  return R"""(  // clang-format off
+  ///
+  /// @copybrief $method_name$
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`$longrunning_operation_type$`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+)""";
+}
+
+std::string FormatAwaitMethodComments() {
+  return R"""(  // clang-format off
+  ///
+  /// @copybrief $method_name$
+  ///
+  /// This method accepts a `$longrunning_operation_type$` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+)""";
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

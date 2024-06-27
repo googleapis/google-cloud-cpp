@@ -135,6 +135,17 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
       std::string const& metadata_store_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMetadataStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMetadataStore(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
@@ -179,11 +190,31 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMetadataStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateMetadataStore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateMetadataStore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
   CreateMetadataStore(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -359,6 +390,17 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
   DeleteMetadataStore(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMetadataStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMetadataStore(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -403,11 +445,31 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMetadataStore
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMetadataStore(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteMetadataStore
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<
       google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
   DeleteMetadataStore(ExperimentalTag,
@@ -713,6 +775,17 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteArtifact(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteArtifact
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteArtifact(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -755,11 +828,31 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteArtifact
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteArtifact(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteArtifact
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteArtifact(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -799,6 +892,17 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
   PurgeArtifacts(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeArtifacts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeArtifacts(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -842,11 +946,31 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeArtifacts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeArtifacts(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeArtifacts
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
   PurgeArtifacts(ExperimentalTag,
                  google::longrunning::Operation const& operation,
@@ -1150,6 +1274,17 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteContext(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteContext
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteContext(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1192,11 +1327,31 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteContextRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteContext
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteContext(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteContextRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteContext
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteContext(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -1236,6 +1391,17 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
   PurgeContexts(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeContexts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeContexts(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -1279,11 +1445,31 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeContexts
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeContexts(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeContexts
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
   PurgeContexts(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -1873,6 +2059,17 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteExecution(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteExecution
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExecution(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1915,11 +2112,31 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteExecution
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteExecution(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteExecution
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteExecution(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -1959,6 +2176,17 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
   PurgeExecutions(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeExecutions
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeExecutions(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -2002,11 +2230,31 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeExecutions
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeExecutions(
       ExperimentalTag, NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeExecutions
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
   PurgeExecutions(ExperimentalTag,
                   google::longrunning::Operation const& operation,

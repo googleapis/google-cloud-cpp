@@ -56,6 +56,9 @@ class MockVpnTunnelsConnection
            AggregatedListVpnTunnelsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteVpnTunnel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteVpnTunnel(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteVpnTunnel,
               (google::cloud::cpp::compute::vpn_tunnels::v1::
@@ -81,6 +84,9 @@ class MockVpnTunnelsConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertVpnTunnel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertVpnTunnel(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertVpnTunnel,
               (google::cloud::cpp::compute::vpn_tunnels::v1::
@@ -106,6 +112,9 @@ class MockVpnTunnelsConnection
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&

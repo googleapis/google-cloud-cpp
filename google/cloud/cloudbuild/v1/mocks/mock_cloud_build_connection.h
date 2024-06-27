@@ -46,6 +46,9 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBuild)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBuild(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v1::Build>>, CreateBuild,
       (google::devtools::cloudbuild::v1::CreateBuildRequest const& request),
@@ -78,6 +81,9 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
       (google::devtools::cloudbuild::v1::CancelBuildRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RetryBuild)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RetryBuild(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v1::Build>>, RetryBuild,
       (google::devtools::cloudbuild::v1::RetryBuildRequest const& request),
@@ -95,6 +101,9 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ApproveBuild)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ApproveBuild(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v1::Build>>, ApproveBuild,
       (google::devtools::cloudbuild::v1::ApproveBuildRequest const& request),
@@ -143,6 +152,9 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RunBuildTrigger)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RunBuildTrigger(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v1::Build>>,
       RunBuildTrigger,
@@ -168,6 +180,9 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateWorkerPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateWorkerPool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>,
               CreateWorkerPool,
               (google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const&
@@ -191,6 +206,9 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
       (google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteWorkerPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteWorkerPool(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>,
@@ -212,6 +230,9 @@ class MockCloudBuildConnection : public cloudbuild_v1::CloudBuildConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateWorkerPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateWorkerPool(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>,
               UpdateWorkerPool,
               (google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const&

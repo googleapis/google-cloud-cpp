@@ -54,6 +54,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (google::cloud::alloydb::v1::GetClusterRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
               CreateCluster,
               (google::cloud::alloydb::v1::CreateClusterRequest const& request),
@@ -70,6 +73,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
               UpdateCluster,
               (google::cloud::alloydb::v1::UpdateClusterRequest const& request),
@@ -86,6 +92,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
               DeleteCluster,
               (google::cloud::alloydb::v1::DeleteClusterRequest const& request),
@@ -102,6 +111,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PromoteCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PromoteCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Cluster>>, PromoteCluster,
       (google::cloud::alloydb::v1::PromoteClusterRequest const& request),
@@ -119,6 +131,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestoreCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestoreCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Cluster>>, RestoreCluster,
       (google::cloud::alloydb::v1::RestoreClusterRequest const& request),
@@ -136,6 +151,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateSecondaryCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateSecondaryCluster(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
               CreateSecondaryCluster,
               (google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&
@@ -163,6 +181,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (google::cloud::alloydb::v1::GetInstanceRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Instance>>, CreateInstance,
       (google::cloud::alloydb::v1::CreateInstanceRequest const& request),
@@ -180,6 +201,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateSecondaryInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateSecondaryInstance(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
               CreateSecondaryInstance,
               (google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
@@ -198,6 +222,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchCreateInstances)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchCreateInstances(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>,
@@ -218,6 +245,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Instance>>, UpdateInstance,
       (google::cloud::alloydb::v1::UpdateInstanceRequest const& request),
@@ -235,6 +265,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
       DeleteInstance,
@@ -253,6 +286,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, FailoverInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, FailoverInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Instance>>, FailoverInstance,
       (google::cloud::alloydb::v1::FailoverInstanceRequest const& request),
@@ -270,6 +306,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InjectFault)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InjectFault(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
               InjectFault,
               (google::cloud::alloydb::v1::InjectFaultRequest const& request),
@@ -286,6 +325,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RestartInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RestartInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::alloydb::v1::Instance>>, RestartInstance,
       (google::cloud::alloydb::v1::RestartInstanceRequest const& request),
@@ -311,6 +353,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (google::cloud::alloydb::v1::GetBackupRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateBackup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
               CreateBackup,
               (google::cloud::alloydb::v1::CreateBackupRequest const& request),
@@ -327,6 +372,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateBackup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
               UpdateBackup,
               (google::cloud::alloydb::v1::UpdateBackupRequest const& request),
@@ -343,6 +391,9 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteBackup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteBackup(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
               DeleteBackup,
               (google::cloud::alloydb::v1::DeleteBackupRequest const& request),

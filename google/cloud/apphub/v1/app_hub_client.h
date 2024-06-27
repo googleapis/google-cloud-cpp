@@ -267,6 +267,17 @@ class AppHubClient {
           service_project_attachment,
       std::string const& service_project_attachment_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServiceProjectAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::apphub::v1::ServiceProjectAttachment const&
@@ -313,12 +324,32 @@ class AppHubClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServiceProjectAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServiceProjectAttachment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
   CreateServiceProjectAttachment(
       ExperimentalTag, google::longrunning::Operation const& operation,
@@ -418,6 +449,17 @@ class AppHubClient {
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteServiceProjectAttachment(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServiceProjectAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -461,12 +503,32 @@ class AppHubClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServiceProjectAttachment
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteServiceProjectAttachment
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteServiceProjectAttachment(
       ExperimentalTag, google::longrunning::Operation const& operation,
@@ -853,6 +915,17 @@ class AppHubClient {
       google::cloud::apphub::v1::Service const& service,
       std::string const& service_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::apphub::v1::Service const& service,
@@ -896,11 +969,31 @@ class AppHubClient {
       google::cloud::apphub::v1::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1005,6 +1098,17 @@ class AppHubClient {
       google::cloud::apphub::v1::Service const& service,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::Service const& service,
@@ -1048,11 +1152,31 @@ class AppHubClient {
       google::cloud::apphub::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1091,6 +1215,17 @@ class AppHubClient {
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1132,11 +1267,31 @@ class AppHubClient {
       google::cloud::apphub::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1458,6 +1613,17 @@ class AppHubClient {
       google::cloud::apphub::v1::Workload const& workload,
       std::string const& workload_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkload
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkload(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::apphub::v1::Workload const& workload,
@@ -1501,11 +1667,31 @@ class AppHubClient {
       google::cloud::apphub::v1::CreateWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkload
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkload(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::CreateWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkload
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1610,6 +1796,17 @@ class AppHubClient {
       google::cloud::apphub::v1::Workload const& workload,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkload
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkload(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::Workload const& workload,
@@ -1653,11 +1850,31 @@ class AppHubClient {
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkload
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkload(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkload
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1696,6 +1913,17 @@ class AppHubClient {
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
       std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkload
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkload(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1737,11 +1965,31 @@ class AppHubClient {
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkload
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkload(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkload
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -1861,6 +2109,17 @@ class AppHubClient {
       google::cloud::apphub::v1::Application const& application,
       std::string const& application_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateApplication(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::apphub::v1::Application const& application,
@@ -1904,11 +2163,31 @@ class AppHubClient {
       google::cloud::apphub::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateApplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateApplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Application>> CreateApplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2013,6 +2292,17 @@ class AppHubClient {
       google::cloud::apphub::v1::Application const& application,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::Application const& application,
@@ -2056,11 +2346,31 @@ class AppHubClient {
       google::cloud::apphub::v1::UpdateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::UpdateApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateApplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Application>> UpdateApplication(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -2099,6 +2409,17 @@ class AppHubClient {
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteApplication(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteApplication(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -2141,11 +2462,31 @@ class AppHubClient {
       google::cloud::apphub::v1::DeleteApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteApplication
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteApplication(
       ExperimentalTag, NoAwaitTag,
       google::cloud::apphub::v1::DeleteApplicationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteApplication
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteApplication(ExperimentalTag,
                     google::longrunning::Operation const& operation,

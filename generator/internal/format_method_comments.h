@@ -37,6 +37,16 @@ std::string FormatMethodComments(
  */
 bool CheckMethodCommentSubstitutions();
 
+/**
+ * Comments for LRO Start overload.
+ */
+std::string FormatStartMethodComments();
+
+/**
+ * Comments for LRO Await overload.
+ */
+std::string FormatAwaitMethodComments();
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

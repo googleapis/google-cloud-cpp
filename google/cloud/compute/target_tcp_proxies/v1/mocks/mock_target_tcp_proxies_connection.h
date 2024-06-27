@@ -55,6 +55,9 @@ class MockTargetTcpProxiesConnection
            AggregatedListTargetTcpProxiesRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTargetTcpProxy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTargetTcpProxy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -80,6 +83,9 @@ class MockTargetTcpProxiesConnection
                    GetTargetTcpProxyRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertTargetTcpProxy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertTargetTcpProxy(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetTcpProxy,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -105,6 +111,9 @@ class MockTargetTcpProxiesConnection
                    ListTargetTcpProxiesRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetBackendService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetBackendService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetBackendService,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::
@@ -124,6 +133,9 @@ class MockTargetTcpProxiesConnection
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetProxyHeader)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetProxyHeader(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetProxyHeader,
               (google::cloud::cpp::compute::target_tcp_proxies::v1::

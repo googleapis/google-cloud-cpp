@@ -216,6 +216,17 @@ class NetworkEdgeSecurityServicesClient {
       std::string const& project, std::string const& region,
       std::string const& network_edge_security_service, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkEdgeSecurityService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEdgeSecurityService(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -262,6 +273,17 @@ class NetworkEdgeSecurityServicesClient {
           DeleteNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkEdgeSecurityService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEdgeSecurityService(
       ExperimentalTag, NoAwaitTag,
@@ -269,6 +291,15 @@ class NetworkEdgeSecurityServicesClient {
           DeleteNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteNetworkEdgeSecurityService
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEdgeSecurityService(
       ExperimentalTag,
@@ -378,6 +409,17 @@ class NetworkEdgeSecurityServicesClient {
           network_edge_security_service_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNetworkEdgeSecurityService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEdgeSecurityService(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -427,6 +469,17 @@ class NetworkEdgeSecurityServicesClient {
           InsertNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNetworkEdgeSecurityService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEdgeSecurityService(
       ExperimentalTag, NoAwaitTag,
@@ -434,6 +487,15 @@ class NetworkEdgeSecurityServicesClient {
           InsertNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertNetworkEdgeSecurityService
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkEdgeSecurityService(
       ExperimentalTag,
@@ -482,6 +544,17 @@ class NetworkEdgeSecurityServicesClient {
           network_edge_security_service_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNetworkEdgeSecurityService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchNetworkEdgeSecurityService(
       ExperimentalTag, NoAwaitTag, std::string const& project,
@@ -532,6 +605,17 @@ class NetworkEdgeSecurityServicesClient {
           PatchNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNetworkEdgeSecurityService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchNetworkEdgeSecurityService(
       ExperimentalTag, NoAwaitTag,
@@ -539,6 +623,15 @@ class NetworkEdgeSecurityServicesClient {
           PatchNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchNetworkEdgeSecurityService
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkEdgeSecurityService(
       ExperimentalTag,

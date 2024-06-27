@@ -46,6 +46,9 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteImage)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteImage(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DeleteImage,
       (google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
@@ -65,6 +68,9 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
                google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, Deprecate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, Deprecate(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Deprecate,
               (google::cloud::cpp::compute::images::v1::DeprecateRequest const&
@@ -100,6 +106,9 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertImage)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertImage(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, InsertImage,
       (google::cloud::cpp::compute::images::v1::InsertImageRequest const&
@@ -124,6 +133,9 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
       (google::cloud::cpp::compute::images::v1::ListImagesRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchImage)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchImage(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchImage,
               (google::cloud::cpp::compute::images::v1::PatchImageRequest const&
@@ -148,6 +160,9 @@ class MockImagesConnection : public compute_images_v1::ImagesConnection {
            request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::images::v1::SetLabelsRequest const&

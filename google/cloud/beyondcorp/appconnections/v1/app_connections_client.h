@@ -283,6 +283,17 @@ class AppConnectionsServiceClient {
           app_connection,
       std::string const& app_connection_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAppConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppConnection(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::beyondcorp::appconnections::v1::AppConnection const&
@@ -328,12 +339,32 @@ class AppConnectionsServiceClient {
                           CreateAppConnectionRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAppConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnections::v1::
           CreateAppConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateAppConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
   CreateAppConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -382,6 +413,17 @@ class AppConnectionsServiceClient {
           app_connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAppConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnections::v1::AppConnection const&
@@ -427,12 +469,32 @@ class AppConnectionsServiceClient {
                           UpdateAppConnectionRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAppConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnections::v1::
           UpdateAppConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateAppConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
   UpdateAppConnection(ExperimentalTag,
                       google::longrunning::Operation const& operation,
@@ -472,6 +534,17 @@ class AppConnectionsServiceClient {
                       AppConnectionOperationMetadata>>
   DeleteAppConnection(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAppConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppConnection(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -515,12 +588,32 @@ class AppConnectionsServiceClient {
                           DeleteAppConnectionRequest const& request,
                       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAppConnection
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppConnection(
       ExperimentalTag, NoAwaitTag,
       google::cloud::beyondcorp::appconnections::v1::
           DeleteAppConnectionRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteAppConnection
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                       AppConnectionOperationMetadata>>
   DeleteAppConnection(ExperimentalTag,

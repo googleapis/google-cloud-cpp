@@ -139,11 +139,31 @@ class AssetServiceClient {
       google::cloud::asset::v1::ExportAssetsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportAssets
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ExportAssets(
       ExperimentalTag, NoAwaitTag,
       google::cloud::asset::v1::ExportAssetsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ExportAssets
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
@@ -857,12 +877,32 @@ class AssetServiceClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AnalyzeIamPolicyLongrunning
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
       ExperimentalTag, NoAwaitTag,
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief AnalyzeIamPolicyLongrunning
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
   AnalyzeIamPolicyLongrunning(ExperimentalTag,

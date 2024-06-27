@@ -57,6 +57,9 @@ class MockHubServiceConnection
       (google::cloud::networkconnectivity::v1::GetHubRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateHub)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateHub(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>, CreateHub,
       (google::cloud::networkconnectivity::v1::CreateHubRequest const& request),
@@ -74,6 +77,9 @@ class MockHubServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateHub)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateHub(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>, UpdateHub,
       (google::cloud::networkconnectivity::v1::UpdateHubRequest const& request),
@@ -91,6 +97,9 @@ class MockHubServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteHub)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteHub(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
@@ -127,6 +136,9 @@ class MockHubServiceConnection
       (google::cloud::networkconnectivity::v1::GetSpokeRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateSpoke)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateSpoke(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
               CreateSpoke,
               (google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
@@ -145,6 +157,9 @@ class MockHubServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSpoke)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSpoke(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>,
               UpdateSpoke,
               (google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
@@ -163,6 +178,9 @@ class MockHubServiceConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RejectHubSpoke)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RejectHubSpoke(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>,
@@ -185,6 +203,9 @@ class MockHubServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AcceptHubSpoke)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AcceptHubSpoke(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
@@ -207,6 +228,9 @@ class MockHubServiceConnection
       (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSpoke)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSpoke(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,

@@ -128,6 +128,17 @@ class AssuredWorkloadsServiceClient {
                  google::cloud::assuredworkloads::v1::Workload const& workload,
                  Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkload
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkload(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::assuredworkloads::v1::Workload const& workload,
@@ -172,11 +183,31 @@ class AssuredWorkloadsServiceClient {
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkload
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkload(
       ExperimentalTag, NoAwaitTag,
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkload
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
   CreateWorkload(ExperimentalTag,
                  google::longrunning::Operation const& operation,

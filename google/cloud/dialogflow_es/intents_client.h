@@ -627,6 +627,17 @@ class IntentsClient {
   BatchUpdateIntents(std::string const& parent,
                      std::string const& intent_batch_uri, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchUpdateIntents
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateIntents(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::string const& intent_batch_uri, Options opts = {});
@@ -681,6 +692,17 @@ class IntentsClient {
       google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchUpdateIntents
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateIntents(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline,
@@ -738,11 +760,31 @@ class IntentsClient {
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchUpdateIntents
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateIntents(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchUpdateIntents
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
   BatchUpdateIntents(ExperimentalTag,
                      google::longrunning::Operation const& operation,
@@ -798,6 +840,17 @@ class IntentsClient {
       std::vector<google::cloud::dialogflow::v2::Intent> const& intents,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchDeleteIntents
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteIntents(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::Intent> const& intents,
@@ -854,11 +907,31 @@ class IntentsClient {
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchDeleteIntents
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteIntents(
       ExperimentalTag, NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BatchDeleteIntents
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});

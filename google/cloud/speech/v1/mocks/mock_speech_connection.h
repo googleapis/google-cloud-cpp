@@ -50,6 +50,9 @@ class MockSpeechConnection : public speech_v1::SpeechConnection {
               (google::cloud::speech::v1::RecognizeRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, LongRunningRecognize)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, LongRunningRecognize(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>,
       LongRunningRecognize,

@@ -260,6 +260,17 @@ class WorkstationsClient {
           workstation_cluster,
       std::string const& workstation_cluster_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::workstations::v1::WorkstationCluster const&
@@ -306,12 +317,32 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstationCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   CreateWorkstationCluster(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -354,6 +385,17 @@ class WorkstationsClient {
           workstation_cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::WorkstationCluster const&
@@ -400,12 +442,32 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstationCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   UpdateWorkstationCluster(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -443,6 +505,17 @@ class WorkstationsClient {
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   DeleteWorkstationCluster(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -486,12 +559,32 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstationCluster
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstationCluster
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   DeleteWorkstationCluster(ExperimentalTag,
                            google::longrunning::Operation const& operation,
@@ -746,6 +839,17 @@ class WorkstationsClient {
           workstation_config,
       std::string const& workstation_config_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::workstations::v1::WorkstationConfig const&
@@ -792,12 +896,32 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstationConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   CreateWorkstationConfig(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -840,6 +964,17 @@ class WorkstationsClient {
           workstation_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::WorkstationConfig const&
@@ -886,12 +1021,32 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstationConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -929,6 +1084,17 @@ class WorkstationsClient {
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -972,12 +1138,32 @@ class WorkstationsClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstationConfig
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstationConfig
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(ExperimentalTag,
                           google::longrunning::Operation const& operation,
@@ -1227,6 +1413,17 @@ class WorkstationsClient {
       google::cloud::workstations::v1::Workstation const& workstation,
       std::string const& workstation_id, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkstation(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       google::cloud::workstations::v1::Workstation const& workstation,
@@ -1271,11 +1468,31 @@ class WorkstationsClient {
       google::cloud::workstations::v1::CreateWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkstation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateWorkstation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   CreateWorkstation(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -1317,6 +1534,17 @@ class WorkstationsClient {
       google::cloud::workstations::v1::Workstation const& workstation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkstation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::Workstation const& workstation,
@@ -1361,11 +1589,31 @@ class WorkstationsClient {
       google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkstation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateWorkstation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -1403,6 +1651,17 @@ class WorkstationsClient {
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkstation(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1445,11 +1704,31 @@ class WorkstationsClient {
       google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkstation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteWorkstation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(ExperimentalTag,
                     google::longrunning::Operation const& operation,
@@ -1487,6 +1766,17 @@ class WorkstationsClient {
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartWorkstation(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1529,11 +1819,31 @@ class WorkstationsClient {
       google::cloud::workstations::v1::StartWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StartWorkstation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::StartWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StartWorkstation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1571,6 +1881,17 @@ class WorkstationsClient {
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(std::string const& name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StopWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopWorkstation(
       ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
 
@@ -1613,11 +1934,31 @@ class WorkstationsClient {
       google::cloud::workstations::v1::StopWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StopWorkstation
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> StopWorkstation(
       ExperimentalTag, NoAwaitTag,
       google::cloud::workstations::v1::StopWorkstationRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief StopWorkstation
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(ExperimentalTag,
                   google::longrunning::Operation const& operation,

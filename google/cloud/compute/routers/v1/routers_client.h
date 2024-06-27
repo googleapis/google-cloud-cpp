@@ -204,6 +204,17 @@ class RoutersClient {
       std::string const& project, std::string const& region,
       std::string const& router, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRouter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& router, Options opts = {});
@@ -247,12 +258,32 @@ class RoutersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRouter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteRouter
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -546,6 +577,17 @@ class RoutersClient {
       google::cloud::cpp::compute::v1::Router const& router_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertRouter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region,
@@ -592,12 +634,32 @@ class RoutersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertRouter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief InsertRouter
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -720,6 +782,17 @@ class RoutersClient {
       google::cloud::cpp::compute::v1::Router const& router_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchRouter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& router,
@@ -767,12 +840,32 @@ class RoutersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchRouter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PatchRouter
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
@@ -885,6 +978,17 @@ class RoutersClient {
       google::cloud::cpp::compute::v1::Router const& router_resource,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateRouter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
       ExperimentalTag, NoAwaitTag, std::string const& project,
       std::string const& region, std::string const& router,
@@ -933,12 +1037,32 @@ class RoutersClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateRouter
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::cloud::cpp::compute::v1::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
       ExperimentalTag, NoAwaitTag,
       google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UpdateRouter
+  ///
+  /// This method accepts a `google::cloud::cpp::compute::v1::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
       ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,

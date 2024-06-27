@@ -65,6 +65,9 @@ class MockStorageControlConnection
               (google::storage::control::v2::ListFoldersRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RenameFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RenameFolder(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::storage::control::v2::Folder>>, RenameFolder,
       (google::storage::control::v2::RenameFolderRequest const& request),

@@ -198,11 +198,31 @@ class UserEventServiceClient {
       google::cloud::retail::v2::PurgeUserEventsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeUserEvents
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> PurgeUserEvents(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::PurgeUserEventsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief PurgeUserEvents
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
   PurgeUserEvents(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -253,11 +273,31 @@ class UserEventServiceClient {
       google::cloud::retail::v2::ImportUserEventsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportUserEvents
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> ImportUserEvents(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::ImportUserEventsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief ImportUserEvents
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
   ImportUserEvents(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -309,11 +349,31 @@ class UserEventServiceClient {
       google::cloud::retail::v2::RejoinUserEventsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RejoinUserEvents
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RejoinUserEvents(
       ExperimentalTag, NoAwaitTag,
       google::cloud::retail::v2::RejoinUserEventsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RejoinUserEvents
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
   RejoinUserEvents(ExperimentalTag,
                    google::longrunning::Operation const& operation,

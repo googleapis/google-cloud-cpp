@@ -59,6 +59,9 @@ class MockImageAnnotatorConnection
       (google::cloud::vision::v1::BatchAnnotateFilesRequest const& request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AsyncBatchAnnotateImages)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AsyncBatchAnnotateImages(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<
                   google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
               AsyncBatchAnnotateImages,
@@ -80,6 +83,9 @@ class MockImageAnnotatorConnection
                google::longrunning::Operation const& operation),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AsyncBatchAnnotateFiles)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AsyncBatchAnnotateFiles(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,

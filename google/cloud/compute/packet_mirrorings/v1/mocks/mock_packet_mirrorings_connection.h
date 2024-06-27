@@ -55,6 +55,9 @@ class MockPacketMirroringsConnection
            AggregatedListPacketMirroringsRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeletePacketMirroring)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeletePacketMirroring(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePacketMirroring,
               (google::cloud::cpp::compute::packet_mirrorings::v1::
@@ -80,6 +83,9 @@ class MockPacketMirroringsConnection
                    GetPacketMirroringRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertPacketMirroring)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertPacketMirroring(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertPacketMirroring,
               (google::cloud::cpp::compute::packet_mirrorings::v1::
@@ -105,6 +111,9 @@ class MockPacketMirroringsConnection
                    ListPacketMirroringsRequest request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchPacketMirroring)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchPacketMirroring(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPacketMirroring,
               (google::cloud::cpp::compute::packet_mirrorings::v1::

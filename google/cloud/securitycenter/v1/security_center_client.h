@@ -127,6 +127,17 @@ class SecurityCenterClient {
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BulkMuteFindings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -172,11 +183,31 @@ class SecurityCenterClient {
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BulkMuteFindings
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
       ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief BulkMuteFindings
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
   BulkMuteFindings(ExperimentalTag,
                    google::longrunning::Operation const& operation,
@@ -1989,6 +2020,17 @@ class SecurityCenterClient {
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
   RunAssetDiscovery(std::string const& parent, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RunAssetDiscovery
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunAssetDiscovery(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
@@ -2038,12 +2080,32 @@ class SecurityCenterClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RunAssetDiscovery
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> RunAssetDiscovery(
       ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief RunAssetDiscovery
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
   RunAssetDiscovery(ExperimentalTag,
                     google::longrunning::Operation const& operation,

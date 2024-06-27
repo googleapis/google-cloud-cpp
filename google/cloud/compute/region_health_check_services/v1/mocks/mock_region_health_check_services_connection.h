@@ -49,6 +49,9 @@ class MockRegionHealthCheckServicesConnection
  public:
   MOCK_METHOD(Options, options, (), (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteHealthCheckService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteHealthCheckService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteHealthCheckService,
               (google::cloud::cpp::compute::region_health_check_services::v1::
@@ -74,6 +77,9 @@ class MockRegionHealthCheckServicesConnection
                    GetHealthCheckServiceRequest const& request),
               (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, InsertHealthCheckService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, InsertHealthCheckService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertHealthCheckService,
               (google::cloud::cpp::compute::region_health_check_services::v1::
@@ -100,6 +106,9 @@ class MockRegionHealthCheckServicesConnection
            ListRegionHealthCheckServicesRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchHealthCheckService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchHealthCheckService(::testing::_))` instead.
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchHealthCheckService,
               (google::cloud::cpp::compute::region_health_check_services::v1::

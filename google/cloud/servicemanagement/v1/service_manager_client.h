@@ -236,6 +236,17 @@ class ServiceManagerClient {
       google::api::servicemanagement::v1::ManagedService const& service,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
       ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::ManagedService const& service,
@@ -290,11 +301,31 @@ class ServiceManagerClient {
       google::api::servicemanagement::v1::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
       ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::CreateServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
   CreateService(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -342,6 +373,17 @@ class ServiceManagerClient {
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
   DeleteService(std::string const& service_name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
       ExperimentalTag, NoAwaitTag, std::string const& service_name,
       Options opts = {});
@@ -393,11 +435,31 @@ class ServiceManagerClient {
       google::api::servicemanagement::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
       ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief DeleteService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
   DeleteService(ExperimentalTag,
                 google::longrunning::Operation const& operation,
@@ -442,6 +504,17 @@ class ServiceManagerClient {
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
   UndeleteService(std::string const& service_name, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeleteService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteService(
       ExperimentalTag, NoAwaitTag, std::string const& service_name,
       Options opts = {});
@@ -490,11 +563,31 @@ class ServiceManagerClient {
       google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeleteService
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteService(
       ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief UndeleteService
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
   UndeleteService(ExperimentalTag,
                   google::longrunning::Operation const& operation,
@@ -779,6 +872,17 @@ class ServiceManagerClient {
       google::api::servicemanagement::v1::ConfigSource const& config_source,
       bool validate_only, Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SubmitConfigSource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SubmitConfigSource(
       ExperimentalTag, NoAwaitTag, std::string const& service_name,
       google::api::servicemanagement::v1::ConfigSource const& config_source,
@@ -839,12 +943,32 @@ class ServiceManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SubmitConfigSource
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> SubmitConfigSource(
       ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief SubmitConfigSource
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<
       StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
   SubmitConfigSource(ExperimentalTag,
@@ -1054,6 +1178,17 @@ class ServiceManagerClient {
       google::api::servicemanagement::v1::Rollout const& rollout,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServiceRollout
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceRollout(
       ExperimentalTag, NoAwaitTag, std::string const& service_name,
       google::api::servicemanagement::v1::Rollout const& rollout,
@@ -1112,12 +1247,32 @@ class ServiceManagerClient {
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServiceRollout
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceRollout(
       ExperimentalTag, NoAwaitTag,
       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
           request,
       Options opts = {});
 
+  // clang-format off
+  ///
+  /// @copybrief CreateServiceRollout
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
   CreateServiceRollout(ExperimentalTag,
                        google::longrunning::Operation const& operation,
