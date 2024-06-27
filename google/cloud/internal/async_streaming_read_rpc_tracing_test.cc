@@ -35,6 +35,7 @@ using ::google::cloud::testing_util::SetServerMetadata;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithParent;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
@@ -79,7 +80,7 @@ TEST(AsyncStreamingReadRpcTracing, Cancel) {
                         SpanEventsAre(
                             EventNamed("gl-cpp.cancel"),
                             EventNamed("test-only: underlying stream cancel"))),
-                  SpanNamed("Finish")));
+                  AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingReadRpcTracing, Start) {
@@ -98,10 +99,10 @@ TEST(AsyncStreamingReadRpcTracing, Start) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans, UnorderedElementsAre(
-                 SpanNamed("Start"),
+                 AllOf(SpanNamed("Start"), SpanWithParent(span)),
                  AllOf(SpanNamed("span"), SpanHasAttributes(OTelAttribute<bool>(
                                               "gl-cpp.stream_started", true))),
-                 SpanNamed("Finish")));
+                 AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingReadRpcTracing, Read) {
@@ -146,7 +147,7 @@ TEST(AsyncStreamingReadRpcTracing, Read) {
                                         OTelAttribute<std::string>(
                                             "message.type", "RECEIVED"),
                                         OTelAttribute<int>("message.id", 3))))),
-          SpanNamed("Finish")));
+          AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingReadRpcTracing, Finish) {
@@ -168,7 +169,7 @@ TEST(AsyncStreamingReadRpcTracing, Finish) {
               SpanNamed("span"),
               SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
               SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail")),
-          SpanNamed("Finish")));
+          AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingReadRpcTracing, GetRequestMetadata) {

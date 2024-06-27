@@ -43,7 +43,11 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
   }
 
   future<bool> Start() override {
-    auto start_span = internal::MakeSpan("Start");
+    // It is sufficient to set `span_` as the parent of `start_span`, because
+    // the lower levels do not create any spans.
+    opentelemetry::trace::StartSpanOptions options;
+    options.parent = span_->GetContext();
+    auto start_span = internal::MakeSpan("Start", options);
     return impl_->Start().then(
         [this, ss = std::move(start_span)](future<bool> f) {
           EndSpan(*ss);
@@ -66,7 +70,11 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
   }
 
   future<Status> Finish() override {
-    auto finish_span = internal::MakeSpan("Finish");
+    // It is sufficient to set `span_` as the parent of `finish_span`, because
+    // the lower levels do not create any spans.
+    opentelemetry::trace::StartSpanOptions options;
+    options.parent = span_->GetContext();
+    auto finish_span = internal::MakeSpan("Finish", options);
     return impl_->Finish().then(
         [this, fs = std::move(finish_span)](future<Status> f) {
           EndSpan(*fs);
