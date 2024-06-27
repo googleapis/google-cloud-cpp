@@ -147,7 +147,7 @@ TEST(MetricsExporterOptions, MonitoredResource) {
   mr.mutable_labels()->erase("instance_id");
 
   auto constexpr kExpected = R"pb(
-    type: "storage_client"
+    type: "storage.googleapis.com/Client"
     labels { key: "project_id" value: "test-project" }
     labels { key: "location" value: "us-central1-c" }
     labels { key: "cloud_platform" value: "gcp" }
@@ -172,7 +172,7 @@ TEST(MetricsExporterOptions, DefaultMonitoredResource) {
   mr.mutable_labels()->erase("instance_id");
 
   auto constexpr kExpected = R"pb(
-    type: "storage_client"
+    type: "storage.googleapis.com/Client"
     labels { key: "project_id" value: "test-project" }
     labels { key: "location" value: "global" }
     labels { key: "cloud_platform" value: "unknown" }

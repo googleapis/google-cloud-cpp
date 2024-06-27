@@ -46,7 +46,7 @@ Options MetricsExporterOptions(
 
   auto const& attributes = resource.GetAttributes();
   auto monitored_resource = google::api::MonitoredResource{};
-  monitored_resource.set_type("storage_client");
+  monitored_resource.set_type("storage.googleapis.com/Client");
   auto& labels = *monitored_resource.mutable_labels();
   labels["project_id"] = project.project_id();
   labels["location"] = ByName(attributes, sc::kCloudAvailabilityZone,
