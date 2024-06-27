@@ -251,7 +251,7 @@ TEST(JsonUtilsTest, SafeGetToNullValue) {
   EXPECT_EQ(val, "");
 }
 
-TEST(JsonUtilsTest, SafeGetToWithNullable_NullValue) {
+TEST(JsonUtilsTest, SafeGetToWithNullableNullValue) {
   auto const* const key = "project_id";
   auto constexpr kJsonText = R"({"project_id":null})";
   auto json = nlohmann::json::parse(kJsonText, nullptr, false);
@@ -264,7 +264,7 @@ TEST(JsonUtilsTest, SafeGetToWithNullable_NullValue) {
   EXPECT_TRUE(is_null);
 }
 
-TEST(JsonUtilsTest, SafeGetToWithNullable_NonNull) {
+TEST(JsonUtilsTest, SafeGetToWithNullableNonNull) {
   auto const* const key = "project_id";
   auto constexpr kJsonText = R"({"project_id":"123"})";
   auto json = nlohmann::json::parse(kJsonText, nullptr, false);
