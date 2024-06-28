@@ -34,6 +34,7 @@ using ::google::cloud::testing_util::SetServerMetadata;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithParent;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
@@ -78,7 +79,7 @@ TEST(AsyncStreamingWriteRpcTracing, Cancel) {
                         SpanEventsAre(
                             EventNamed("gl-cpp.cancel"),
                             EventNamed("test-only: underlying stream cancel"))),
-                  SpanNamed("Finish")));
+                  AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingWriteRpcTracing, Start) {
@@ -98,10 +99,10 @@ TEST(AsyncStreamingWriteRpcTracing, Start) {
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans, UnorderedElementsAre(
-                 SpanNamed("Start"),
+                 AllOf(SpanNamed("Start"), SpanWithParent(span)),
                  AllOf(SpanNamed("span"), SpanHasAttributes(OTelAttribute<bool>(
                                               "gl-cpp.stream_started", true))),
-                 SpanNamed("Finish")));
+                 AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingWriteRpcTracing, Write) {
@@ -149,7 +150,7 @@ TEST(AsyncStreamingWriteRpcTracing, Write) {
                             OTelAttribute<int>("message.id", 3),
                             OTelAttribute<bool>("message.is_last", true),
                             OTelAttribute<bool>("message.success", true))))),
-          SpanNamed("Finish")));
+          AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingWriteRpcTracing, WritesDone) {
@@ -171,7 +172,7 @@ TEST(AsyncStreamingWriteRpcTracing, WritesDone) {
                          AllOf(SpanNamed("span"),
                                SpanEventsAre(EventNamed("gl-cpp.first-write"),
                                              EventNamed("gl-cpp.writes_done"))),
-                         SpanNamed("Finish")));
+                         AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingWriteRpcTracing, Finish) {
@@ -194,7 +195,7 @@ TEST(AsyncStreamingWriteRpcTracing, Finish) {
               SpanNamed("span"),
               SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
               SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail")),
-          SpanNamed("Finish")));
+          AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingWriteRpcTracing, GetRequestMetadata) {
