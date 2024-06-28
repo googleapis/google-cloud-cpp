@@ -34,3 +34,11 @@ BIGQUERY_LIBS       := $(shell pkg-config $(BIGQUERY_DEPS) --libs-only-l)
 # A target using the Cloud BigQuery C++ client library.
 $(BIN)/quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(BIGQUERY_CXXFLAGS) $(BIGQUERY_CXXLDFLAGS) -o $@ $^ $(BIGQUERY_LIBS)
+
+BIGQUERY_JOB_DEPS := google_cloud_cpp_bigquery_job
+BIGQUERY_JOB_CXXFLAGS   := $(shell pkg-config $(BIGQUERY_JOB_DEPS) --cflags)
+BIGQUERY_JOB_CXXLDFLAGS := $(shell pkg-config $(BIGQUERY_JOB_DEPS) --libs-only-L)
+BIGQUERY_JOB_LIBS       := $(shell pkg-config $(BIGQUERY_JOB_DEPS) --libs-only-l)
+
+$(BIN)/quickstart_job: quickstart_job.cc
+	$(CXXLD) $(CXXFLAGS) $(BIGQUERY_JOB_CXXFLAGS) $(BIGQUERY_JOB_CXXLDFLAGS) -o $@ $^ $(BIGQUERY_JOB_LIBS)
