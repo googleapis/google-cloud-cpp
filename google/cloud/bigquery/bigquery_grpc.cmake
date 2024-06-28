@@ -28,7 +28,8 @@ google_cloud_cpp_add_gapic_library(
         "migration/v2/"
         "reservation/v1/"
         "storage/v1/"
-    BACKWARDS_COMPAT_PROTO_TARGETS "cloud_bigquery_protos")
+    BACKWARDS_COMPAT_PROTO_TARGETS "cloud_bigquery_protos"
+                                   ADDITIONAL_DOXYGEN_DIRS "job/v2/")
 
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.

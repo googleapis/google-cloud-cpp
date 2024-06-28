@@ -18,6 +18,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-endpoint-snippet)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-endpoint-snippet)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-endpoint-snippet)
+- [\c bigquery_job_v2::JobServiceClient](@ref bigquery_job_v2::JobServiceClient-endpoint-snippet)
 - [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-endpoint-snippet)
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-endpoint-snippet)
 - [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-endpoint-snippet)
@@ -56,6 +57,12 @@ Follow these links to find examples for other \c *Client classes:
 /*! @page bigquery_datatransfer_v1::DataTransferServiceClient-endpoint-snippet Override bigquery_datatransfer_v1::DataTransferServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery_job_v2::JobServiceClient-endpoint-snippet Override bigquery_job_v2::JobServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/job/v2/samples/job_client_samples.cc set-client-endpoint
 
 */
 

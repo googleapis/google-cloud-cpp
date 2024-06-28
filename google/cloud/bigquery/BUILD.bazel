@@ -115,3 +115,77 @@ cc_library(
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigquery_rest_unit_tests]
+
+########################################################################################
+# BigQuery Job
+########################################################################################
+job_service_dirs = ["job/v2/"]
+
+job_code_glob = [d + i + f for d in job_service_dirs for i in [
+    "",
+    "internal/",
+] for f in [
+    "*.h",
+    "*.cc",
+]]
+
+job_sources_glob = [d + "internal/*_sources.cc" for d in job_service_dirs]
+
+filegroup(
+    name = "job_srcs",
+    srcs = glob(job_sources_glob),
+)
+
+filegroup(
+    name = "job_hdrs",
+    srcs = glob(
+        include = job_code_glob,
+        exclude = job_sources_glob,
+    ),
+)
+
+filegroup(
+    name = "job_public_hdrs",
+    srcs = glob([d + "*.h" for d in job_service_dirs]),
+    visibility = ["//:__pkg__"],
+)
+
+filegroup(
+    name = "job_mocks",
+    srcs = glob([d + "mocks/*.h" for d in job_service_dirs]),
+    visibility = ["//:__pkg__"],
+)
+
+cc_library(
+    name = "google_cloud_cpp_bigquery_job",
+    srcs = [":job_srcs"],
+    hdrs = [":job_hdrs"],
+    visibility = ["//:__pkg__"],
+    deps = [
+        "//:common",
+        "//:grpc_utils",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
+        "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_proto",
+    ],
+)
+
+cc_library(
+    name = "google_cloud_cpp_bigquery_job_mocks",
+    hdrs = [":job_mocks"],
+    visibility = ["//:__pkg__"],
+    deps = [
+        ":google_cloud_cpp_bigquery_job",
+        "@com_google_googletest//:gtest",
+    ],
+)
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        ":google_cloud_cpp_bigquery_job",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob([d + "samples/*.cc" for d in job_service_dirs])]
