@@ -211,6 +211,7 @@ time {
 
   mapfile -t libraries < <(features::libraries)
   for library in "${libraries[@]}" opentelemetry; do
+    [[ $library == "bigquery_job" ]] && continue
     ci/generate-markdown/update-library-readme.sh "${library}"
   done
 }

@@ -105,6 +105,13 @@ foreach (feature IN LISTS FEATURES)
         add_make_quickstart_target("${feature}" storage quickstart_grpc)
         continue()
     endif ()
+
+    if ("${feature}" STREQUAL "bigquery_job")
+        add_cmake_quickstart_target("${feature}" bigquery quickstart_job)
+        add_make_quickstart_target("${feature}" bigquery quickstart_job)
+        continue()
+    endif ()
+
     # In vcpkg we cannot use `_` in the name of a feature. We replace that with
     # `-', but then need to convert the feature name back to a valid path.
     if ("${feature}" STREQUAL "dialogflow-cx")
