@@ -434,7 +434,10 @@ GrpcStub::ReadObject(rest_internal::RestContext& context,
   GrpcObjectReadSource::TimerSource timer_source = [] {
     return make_ready_future(false);
   };
-  auto const timeout = options.get<storage::DownloadStallTimeoutOption>();
+  auto const timeout = ScaleStallTimeout(
+      options.get<storage::DownloadStallTimeoutOption>(),
+      options.get<storage::DownloadStallMinimumRateOption>(),
+      google::storage::v2::ServiceConstants::MAX_READ_CHUNK_BYTES);
   if (timeout != std::chrono::seconds(0)) {
     // Change to an active timer.
     timer_source = [timeout, cq = background_->cq()]() mutable {

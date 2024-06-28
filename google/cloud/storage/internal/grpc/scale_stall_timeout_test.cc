@@ -41,6 +41,10 @@ TEST(ScaleStallTimeout, Simple) {
   EXPECT_EQ(ScaleStallTimeout(1s, 1'000'000, 1'000'000), 1'000ms);
   EXPECT_EQ(ScaleStallTimeout(1s, 1'000, 1'000'000), 1'000ms);
   EXPECT_EQ(ScaleStallTimeout(1s, 1, 1'000'000), 1'000ms);
+
+  auto constexpr kMiB = 1024 * 1024;
+  EXPECT_EQ(ScaleStallTimeout(10s, 20 * kMiB, 2 * kMiB), 1000ms);
+  EXPECT_EQ(ScaleStallTimeout(10s, 10 * kMiB, 2 * kMiB), 2000ms);
 }
 
 TEST(ScaleStallTimeout, Unexpected) {
