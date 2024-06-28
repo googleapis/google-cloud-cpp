@@ -16,8 +16,6 @@
 
 set -euo pipefail
 
-export USE_BAZEL_VERSION=6.4.0
-
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/bazel.sh
 source module ci/etc/quickstart-config.sh
@@ -27,6 +25,7 @@ export CC=gcc
 export CXX=g++
 
 mapfile -t args < <(bazel::common_args)
+args+=(--noenable_bzlmod)
 for lib in $(quickstart::libraries); do
   io::log_h2 "Running Bazel quickstart for ${lib}"
   env -C "${PROJECT_ROOT}/google/cloud/${lib}/quickstart" \

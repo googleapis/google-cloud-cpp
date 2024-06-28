@@ -40,7 +40,6 @@ time {
     @local_config_platform//... \
     @local_config_cc_toolchains//... \
     @local_config_sh//... \
-    @go_sdk//... \
     @remotejdk11_linux//:jdk
 }
 echo >&2
