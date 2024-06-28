@@ -30,7 +30,10 @@ TRANSITION_LIBRARIES = GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES
 
 GA_LIBRARIES = GOOGLE_CLOUD_CPP_GA_LIBRARIES
 
-AD_HOC_LIBRARIES = ["storage_grpc"]
+AD_HOC_LIBRARIES = [
+    "storage_grpc",
+    "bigquery_job",
+]
 
 NO_MOCK_LIBRARIES = ["oauth2"] + AD_HOC_LIBRARIES
 
@@ -214,6 +217,14 @@ cc_library(
         "//google/cloud/compute:google_cloud_cpp_{}".format(l)
         for l in GOOGLE_CLOUD_CPP_GA_LIBRARIES
         if l.startswith("compute_")
+    ],
+)
+
+cc_library(
+    name = "experimental-bigquery_job",
+    hdrs = ["//google/cloud/bigquery:job_public_hdrs"],
+    deps = [
+        "//google/cloud/bigquery:google_cloud_cpp_bigquery_job",
     ],
 )
 

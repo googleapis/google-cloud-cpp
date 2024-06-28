@@ -18,6 +18,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-service-account-snippet)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-service-account-snippet)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-service-account-snippet)
+- [\c bigquery_job_v2::JobServiceClient](@ref bigquery_job_v2::JobServiceClient-service-account-snippet)
 - [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-service-account-snippet)
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-service-account-snippet)
 - [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-service-account-snippet)
@@ -66,6 +67,12 @@ guide for more details.
 /*! @page bigquery_datatransfer_v1::DataTransferServiceClient-service-account-snippet Override bigquery_datatransfer_v1::DataTransferServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_job_v2::JobServiceClient-service-account-snippet Override bigquery_job_v2::JobServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/job/v2/samples/job_client_samples.cc with-service-account
 
 */
 

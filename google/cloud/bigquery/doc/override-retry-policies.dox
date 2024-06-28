@@ -88,6 +88,7 @@ Follow these links to find examples for other \c *Client classes:
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-retry-snippet)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-retry-snippet)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-retry-snippet)
+- [\c bigquery_job_v2::JobServiceClient](@ref bigquery_job_v2::JobServiceClient-retry-snippet)
 - [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-retry-snippet)
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-retry-snippet)
 - [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-retry-snippet)
@@ -164,6 +165,18 @@ This shows how to override the retry policies for bigquery_datatransfer_v1::Data
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_job_v2::JobServiceClient-retry-snippet Override bigquery_job_v2::JobServiceClient Retry Policies
+
+This shows how to override the retry policies for bigquery_job_v2::JobServiceClient:
+
+@snippet google/cloud/bigquery/job/v2/samples/job_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/job/v2/samples/job_client_samples.cc custom-idempotency-policy
 
 */
 
