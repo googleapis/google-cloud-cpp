@@ -36,11 +36,7 @@ io::log "Prefetching bazel deps..."
 # build.
 TIMEFORMAT="==> 🕑 prefetching done in %R seconds"
 time {
-  "ci/retry-command.sh" 3 120 bazel fetch ... \
-    @local_config_platform//... \
-    @local_config_cc_toolchains//... \
-    @local_config_sh//... \
-    @remotejdk11_linux//:jdk
+  "ci/retry-command.sh" 3 120 bazel fetch ...
 }
 echo >&2
 
