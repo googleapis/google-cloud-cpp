@@ -71,7 +71,7 @@ Status DefaultSqlOperationsServiceRestStub::Cancel(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
-  return rest_internal::Post(
+  return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "operations", "/",

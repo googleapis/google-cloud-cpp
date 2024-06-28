@@ -47,7 +47,7 @@ Status DefaultGlobalOrganizationOperationsRestStub::DeleteOperation(
     Options const& options,
     google::cloud::cpp::compute::global_organization_operations::v1::
         DeleteOperationRequest const& request) {
-  return rest_internal::Delete(
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",

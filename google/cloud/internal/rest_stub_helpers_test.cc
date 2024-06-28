@@ -156,13 +156,16 @@ TEST(RestStubHelpers, DeleteWithEmptyResponse) {
 
   RestContext context;
   Request request;
-  auto result = Delete(*mock_client, context, request, false, "/v1/delete/");
+  auto result = Delete<EmptyResponseType>(*mock_client, context, request, false,
+                                          "/v1/delete/");
   EXPECT_THAT(result, IsOk());
 
-  result = Delete(*mock_client, context, request, false, "/v1/delete/");
+  result = Delete<EmptyResponseType>(*mock_client, context, request, false,
+                                     "/v1/delete/");
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Delete(*mock_client, context, request, false, "/v1/delete/");
+  result = Delete<EmptyResponseType>(*mock_client, context, request, false,
+                                     "/v1/delete/");
   EXPECT_THAT(result, StatusIs(StatusCode::kPermissionDenied));
   EXPECT_THAT(result.message(), Eq("Permission foo denied on resource bar."));
   EXPECT_THAT(result.error_info().domain(), Eq("googleapis.com"));
@@ -210,6 +213,38 @@ TEST(RestStubHelpers, DeleteWithNonEmptyResponse) {
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(result->seconds(), Eq(123));
   EXPECT_THAT(result->nanos(), Eq(456));
+}
+
+TEST(RestStubHelpers, DeleteWithNonEmptySameResponseRequestTypes) {
+  std::string json_response(kJsonResponsePayload);
+  auto* mock_200_response = new MockRestResponse();
+  EXPECT_CALL(*mock_200_response, StatusCode()).WillOnce([]() {
+    return HttpStatusCode::kOk;
+  });
+  EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
+    return MakeMockHttpPayloadSuccess(json_response);
+  });
+
+  auto mock_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_client, Delete)
+      .WillOnce([&](RestContext&, RestRequest const& request) {
+        EXPECT_THAT(request.path(), Eq("/v1/delete/"));
+        return Status(StatusCode::kInternal, "Internal Error");
+      })
+      .WillOnce([&](RestContext&, RestRequest const& request) {
+        EXPECT_THAT(request.path(), Eq("/v1/delete/"));
+        return std::unique_ptr<rest_internal::RestResponse>(mock_200_response);
+      });
+
+  RestContext context;
+  Request request;
+  auto result =
+      Delete<Request>(*mock_client, context, request, false, "/v1/delete/");
+  EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
+
+  result =
+      Delete<Request>(*mock_client, context, request, false, "/v1/delete/");
+  EXPECT_STATUS_OK(result);
 }
 
 TEST(RestStubHelpers, Get) {
@@ -374,6 +409,40 @@ TEST(RestStubHelpers, PostWithNonEmptyResponse) {
   EXPECT_THAT(result->nanos(), Eq(456));
 }
 
+TEST(RestStubHelpers, PostWithNonEmptySameResponseRequestTypes) {
+  std::string json_response(kJsonUpdateResponse);
+  std::string json_request(kJsonUpdatePayload);
+  auto* mock_200_response = new MockRestResponse();
+  EXPECT_CALL(*mock_200_response, StatusCode()).WillOnce([]() {
+    return HttpStatusCode::kOk;
+  });
+  EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
+    return MakeMockHttpPayloadSuccess(json_response);
+  });
+
+  auto mock_client = std::make_unique<MockRestClient>();
+  EXPECT_CALL(*mock_client,
+              Post(_, _, A<std::vector<absl::Span<char const>> const&>()))
+      .WillOnce([&](RestContext&, RestRequest const&,
+                    std::vector<absl::Span<char const>> const&) {
+        return Status(StatusCode::kInternal, "Internal Error");
+      })
+      .WillOnce([&](RestContext&, RestRequest const&,
+                    std::vector<absl::Span<char const>> const&)
+                    -> google::cloud::StatusOr<
+                        std::unique_ptr<rest_internal::RestResponse>> {
+        return std::unique_ptr<rest_internal::RestResponse>(mock_200_response);
+      });
+
+  RestContext context;
+  Request request;
+  auto result = Post<Request>(*mock_client, context, request, true, "/v1/", {});
+  EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
+
+  result = Post<Request>(*mock_client, context, request, true, "/v1/", {});
+  EXPECT_STATUS_OK(result);
+}
+
 TEST(RestStubHelpers, PostWithEmptyResponse) {
   std::string json_request(kJsonUpdatePayload);
   auto* mock_200_response = new MockRestResponse();
@@ -414,11 +483,12 @@ TEST(RestStubHelpers, PostWithEmptyResponse) {
   RestContext context;
   std::vector<std::pair<std::string, std::string>> params = {
       {"response_type", proto_request.response_type()}, {"foo", "bar"}};
-  auto result =
-      Post(*mock_client, context, proto_request, true, "/v1/", params);
+  auto result = Post<EmptyResponseType>(*mock_client, context, proto_request,
+                                        true, "/v1/", params);
   EXPECT_THAT(result, StatusIs(StatusCode::kInternal));
 
-  result = Post(*mock_client, context, proto_request, true, "/v1/", params);
+  result = Post<EmptyResponseType>(*mock_client, context, proto_request, true,
+                                   "/v1/", params);
   EXPECT_THAT(result, IsOk());
 }
 

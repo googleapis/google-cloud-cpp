@@ -172,7 +172,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
-  return rest_internal::Delete(
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.name()),
@@ -332,7 +332,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstance(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
-  return rest_internal::Delete(
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.name()));
@@ -431,7 +431,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstancePartition(
     Options const& options,
     google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
         request) {
-  return rest_internal::Delete(
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.name()),

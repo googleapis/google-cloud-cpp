@@ -213,7 +213,7 @@ Status DefaultDatabaseAdminRestStub::DropDatabase(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
-  return rest_internal::Delete(
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.database()));
@@ -375,7 +375,7 @@ Status DefaultDatabaseAdminRestStub::DeleteBackup(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
-  return rest_internal::Delete(
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.name()));
