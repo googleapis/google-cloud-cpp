@@ -182,6 +182,14 @@ int WriteInstallDirectories(
                                     "_mocks");
     }
   }
+
+  // TODO(#14402): Consider enhancing the generator_config.proto to allow custom
+  //  libs to be specified. OTOH, it may not be needed often enough to justify.
+  install_directories.emplace_back(
+      "./lib64/cmake/google_cloud_cpp_bigquery_job");
+  install_directories.emplace_back(
+      "./lib64/cmake/google_cloud_cpp_bigquery_job_mocks");
+
   std::sort(install_directories.begin(), install_directories.end());
   auto end =
       std::unique(install_directories.begin(), install_directories.end());

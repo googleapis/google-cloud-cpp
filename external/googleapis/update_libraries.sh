@@ -73,6 +73,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc"
   )"
+  ["bigquery_v2"]="@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_proto"
   ["bigtable"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc" \
