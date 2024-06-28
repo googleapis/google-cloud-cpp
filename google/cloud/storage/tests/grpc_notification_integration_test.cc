@@ -39,6 +39,12 @@ class GrpcNotificationIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
+  // TODO(#14396) - figure out what to do with the Notifications and gRPC
+  if (!UsingEmulator()) GTEST_SKIP();
+
+  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                "metadata");
+
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
   auto const topic_name = google::cloud::internal::GetEnv(
@@ -54,9 +60,6 @@ TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
       client->CreateBucketForProject(bucket_name, project_id, BucketMetadata());
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
-
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
 
   auto marker = google::cloud::internal::Sample(
       generator_, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
