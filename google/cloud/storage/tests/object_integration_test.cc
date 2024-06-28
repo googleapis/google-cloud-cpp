@@ -364,6 +364,9 @@ TEST_F(ObjectIntegrationTest, BasicReadWriteBinary) {
 }
 
 TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

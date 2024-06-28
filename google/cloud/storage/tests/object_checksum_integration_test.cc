@@ -27,8 +27,11 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
+using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pair;
 
 class ObjectChecksumIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -112,6 +115,9 @@ TEST_P(ObjectChecksumIntegrationTest, InsertObjectWithValueSuccess) {
 }
 
 TEST_P(ObjectChecksumIntegrationTest, InsertObjectWithValueFailure) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -140,9 +146,14 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectDefault) {
   EXPECT_THAT(os.computed_hash(),
               HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
   if (meta->has_metadata("x_emulator_upload")) {
-    // Streaming uploads over REST cannot include checksums
-    EXPECT_TRUE(meta->has_metadata("x_emulator_no_crc32c")) << *meta;
-    EXPECT_TRUE(meta->has_metadata("x_emulator_no_md5")) << *meta;
+    if (UsingGrpc()) {
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
+    } else {
+      // Streaming uploads over REST cannot include checksums
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
+    }
   }
 }
 
@@ -166,9 +177,8 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectExplicitDisable) {
   EXPECT_THAT(os.computed_hash(),
               Not(HasSubstr(ComputeCrc32cChecksum(LoremIpsum()))));
   if (meta->has_metadata("x_emulator_upload")) {
-    // Streaming uploads over REST cannot include checksums
-    EXPECT_TRUE(meta->has_metadata("x_emulator_no_crc32c")) << *meta;
-    EXPECT_TRUE(meta->has_metadata("x_emulator_no_md5")) << *meta;
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
   }
 }
 
@@ -192,9 +202,14 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectExplicitEnable) {
   EXPECT_THAT(os.computed_hash(),
               HasSubstr(ComputeCrc32cChecksum(LoremIpsum())));
   if (meta->has_metadata("x_emulator_upload")) {
-    // Streaming uploads over REST cannot include checksums
-    EXPECT_TRUE(meta->has_metadata("x_emulator_no_crc32c")) << *meta;
-    EXPECT_TRUE(meta->has_metadata("x_emulator_no_md5")) << *meta;
+    if (UsingGrpc()) {
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
+    } else {
+      // Streaming uploads over REST cannot include checksums
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_crc32c", _)));
+      EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
+    }
   }
 }
 
@@ -214,15 +229,16 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithValueSuccess) {
   ScheduleForDelete(*meta);
 
   if (meta->has_metadata("x_emulator_upload")) {
-    // Streaming uploads over REST cannot include checksums unless provided by
-    // the application when the upload begins.
-    EXPECT_TRUE(meta->has_metadata("x_emulator_crc32c")) << *meta;
-    EXPECT_TRUE(meta->has_metadata("x_emulator_no_md5")) << *meta;
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_crc32c", _)));
+    EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_no_md5", _)));
   }
 }
 
 /// @test Verify that incorrect CRC32C checksums values work in WriteObject().
 TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithValueFailure) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -239,8 +255,9 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectWithValueFailure) {
 /// receives bad data.
 TEST_F(ObjectChecksumIntegrationTest, WriteObjectReceiveBadChecksum) {
   // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+  // emulator to inject faults. The emulator does not support this type of fault
+  // injection for gRPC either.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -261,6 +278,8 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectReceiveBadChecksum) {
 
 /// @test Verify that CRC32C checksum mismatches are reported by default.
 TEST_F(ObjectChecksumIntegrationTest, WriteObjectUploadBadChecksum) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -278,6 +297,9 @@ TEST_F(ObjectChecksumIntegrationTest, WriteObjectUploadBadChecksum) {
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
 TEST_P(ObjectChecksumIntegrationTest, ReadObjectDefault) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -298,8 +320,9 @@ TEST_P(ObjectChecksumIntegrationTest, ReadObjectDefault) {
 /// downloads.
 TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerGetc) {
   // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+  // emulator to inject faults. The emulator does not support this type of fault
+  // injection for gRPC either.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
@@ -336,8 +359,9 @@ TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerGetc) {
 /// downloads.
 TEST_P(ObjectChecksumIntegrationTest, ReadObjectCorruptedByServerRead) {
   // This test is disabled when not using the emulator as it relies on the
-  // emulator to inject faults.
-  if (!UsingEmulator()) GTEST_SKIP();
+  // emulator to inject faults. The emulator does not support this type of fault
+  // injection for gRPC either.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();

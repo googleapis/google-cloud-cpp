@@ -140,14 +140,18 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   EXPECT_EQ(1, patched->lifecycle().rule.size());
 
   // Patch the metadata again, this time remove billing and website settings.
-  patched = client->PatchBucket(
-      bucket_name, BucketMetadataPatchBuilder().ResetWebsite().ResetBilling());
-  ASSERT_STATUS_OK(patched);
-  // It does not matter if the `billing` compound is set. Only that it has the
-  // same effect as-if it was not set, i.e., it has the default value.
-  EXPECT_EQ(patched->billing_as_optional().value_or(BucketBilling{false}),
-            BucketBilling{false});
-  EXPECT_FALSE(patched->has_website());
+  // The emulator does not support this feature for gRPC.
+  if (!UsingEmulator() || !UsingGrpc()) {
+    patched = client->PatchBucket(
+        bucket_name,
+        BucketMetadataPatchBuilder().ResetWebsite().ResetBilling());
+    ASSERT_STATUS_OK(patched);
+    // It does not matter if the `billing` compound is set. Only that it has the
+    // same effect as-if it was not set, i.e., it has the default value.
+    EXPECT_EQ(patched->billing_as_optional().value_or(BucketBilling{false}),
+              BucketBilling{false});
+    EXPECT_FALSE(patched->has_website());
+  }
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
@@ -565,6 +569,8 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -698,6 +704,8 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -767,6 +775,8 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -1176,6 +1186,9 @@ TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
+  // TODO(#14385) - the emulator does not support this feature for gRPC.
+  if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);

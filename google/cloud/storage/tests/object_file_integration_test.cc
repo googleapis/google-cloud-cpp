@@ -32,10 +32,12 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
+using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pair;
 
 class ObjectFileIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -520,8 +522,9 @@ TEST_F(ObjectFileIntegrationTest, UploadPortionRegularFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
-  // Test relies on emulator for capturing custom header
-  if (!UsingEmulator()) GTEST_SKIP();
+  // Test relies on emulator for capturing custom header. The emulator does not
+  // support this behavior with gRPC, so we need to skip the test in this case.
+  if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
 
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -551,8 +554,8 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   auto expected_str = expected.str();
   ASSERT_EQ(expected_str.size(), meta->size());
 
-  ASSERT_TRUE(meta->has_metadata("x_emulator_custom_header"));
-  EXPECT_EQ(custom_header.value(), meta->metadata("x_emulator_custom_header"));
+  EXPECT_THAT(meta->metadata(), Contains(Pair("x_emulator_custom_header",
+                                              "custom_header_value")));
 
   // Create an iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);
