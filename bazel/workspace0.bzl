@@ -170,11 +170,11 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.64.2.tar.gz",
-            "https://github.com/grpc/grpc/archive/v1.64.2.tar.gz",
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.65.0.tar.gz",
+            "https://github.com/grpc/grpc/archive/v1.65.0.tar.gz",
         ],
-        sha256 = "c682fc39baefc6e804d735e6b48141157b7213602cc66dbe0bf375b904d8b5f9",
-        strip_prefix = "grpc-1.64.2",
+        sha256 = "ebc3acfde70cfae3f4f04b8dbb72259540cb1dc427be362569fbc2607dabfe39",
+        strip_prefix = "grpc-1.65.0",
     )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
