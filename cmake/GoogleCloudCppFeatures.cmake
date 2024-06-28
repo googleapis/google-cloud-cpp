@@ -33,6 +33,7 @@ set(GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sort
+    "bigquery_job" # rpc definitions not yet final
     "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
 )
 
@@ -369,6 +370,7 @@ macro (google_cloud_cpp_enable_cleanup)
     set(compute_features ${GOOGLE_CLOUD_CPP_ENABLE})
     list(FILTER compute_features INCLUDE REGEX "^compute_.*")
     if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        OR (bigquery_job IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (compute IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (compute_features)
         OR (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
@@ -396,6 +398,10 @@ function (google_cloud_cpp_enable_features)
                 OR ("${feature}" STREQUAL "experimental-storage_grpc"))
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
+            endif ()
+        elseif ("${feature}" STREQUAL "bigquery_job")
+            if (NOT ("bigquery" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+                add_subdirectory(google/cloud/bigquery)
             endif ()
         elseif ("${feature}" STREQUAL "experimental-bigquery_rest")
             if (NOT ("bigquery" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
