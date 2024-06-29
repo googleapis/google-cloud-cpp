@@ -52,9 +52,6 @@ test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
 build --@io_opentelemetry_cpp//api:with_abseil
 build --//:enable_opentelemetry
 
-# Enable https support in libcurl.
-build --@com_github_curl_curl//:http_only=False
-
 # Don't show warnings when building external dependencies. This still shows
 # warnings when using these dependencies (say in headers).
 build --output_filter='^//((?!(external):).)*$'
