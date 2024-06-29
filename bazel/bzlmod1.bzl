@@ -14,8 +14,6 @@
 
 """Load dependencies needed to use the google-cloud-cpp libraries."""
 
-load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
-
 def gl_cpp_bzlmod1(name = None):
     """Loads dependencies need to compile the google-cloud-cpp libraries.
 
@@ -26,9 +24,3 @@ def gl_cpp_bzlmod1(name = None):
         name: Unused. It is conventional to provide a `name` argument to all
             workspace functions.
     """
-
-    switched_rules_by_language(
-        name = "com_google_googleapis_imports",
-        cc = True,
-        grpc = True,
-    )
