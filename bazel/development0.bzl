@@ -64,3 +64,16 @@ def gl_cpp_development0(name = None):
         sha256 = "3e7059b6b11fb1bbe28e33e02519398ca94c1818874ebed18e504dc6f709be45",
         strip_prefix = "benchmark-1.8.4",
     )
+
+    # A YAML parser and generator, this is only used in //docfx and //generator.
+    # Both are internal tools used for development only.
+    maybe(
+        http_archive,
+        name = "com_github_jbeder_yaml_cpp",
+        urls = [
+            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_jbeder_yaml_cpp/0.8.0.tar.gz",
+            "https://github.com/jbeder/yaml-cpp/archive/0.8.0.tar.gz",
+        ],
+        sha256 = "fbe74bbdcee21d656715688706da3c8becfd946d92cd44705cc6098bb23b3a16",
+        strip_prefix = "yaml-cpp-0.8.0",
+    )
