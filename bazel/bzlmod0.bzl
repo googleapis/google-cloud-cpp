@@ -28,28 +28,6 @@ def gl_cpp_bzlmod0(name = None):
             workspace functions.
     """
 
-    # TODO(#11485) - use some bazel_dep() from BCR, maybe via archive_override.
-    # Load the googleapis dependency.
-    maybe(
-        http_archive,
-        name = "com_google_googleapis",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
-            "https://github.com/googleapis/googleapis/archive/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
-        ],
-        sha256 = "33c62c03f9479728bdaa1a6553d8b35fa273d010706c75ea85cd8dfe1687586c",
-        strip_prefix = "googleapis-622e10a1e8b2b6908e0ac7448d347a0c1b4130de",
-        build_file = Label("//bazel:googleapis.BUILD"),
-        # Scaffolding for patching googleapis after download. For example:
-        #   patches = ["googleapis.patch"]
-        # NOTE: This should only be used while developing with a new
-        # protobuf message. No changes to `patches` should ever be
-        # committed to the main branch.
-        patch_tool = "patch",
-        patch_args = ["-p1"],
-        patches = [],
-    )
-
     # TODO(#11485) - use some bazel_dep() from BCR.
     # We need libcurl for the Google Cloud Storage client.
     maybe(
