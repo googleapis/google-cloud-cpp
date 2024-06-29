@@ -41,16 +41,3 @@ def gl_cpp_development2(name = None):
         strip_prefix = "pugixml-1.14",
         build_file = Label("//bazel:pugixml.BUILD"),
     )
-
-    # A YAML parser and generator, this is only used in //docfx and //generator.
-    # Both are internal tools used for development only.
-    maybe(
-        http_archive,
-        name = "com_github_jbeder_yaml_cpp",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_jbeder_yaml_cpp/0.8.0.tar.gz",
-            "https://github.com/jbeder/yaml-cpp/archive/0.8.0.tar.gz",
-        ],
-        sha256 = "fbe74bbdcee21d656715688706da3c8becfd946d92cd44705cc6098bb23b3a16",
-        strip_prefix = "yaml-cpp-0.8.0",
-    )

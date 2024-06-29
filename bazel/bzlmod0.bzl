@@ -28,6 +28,7 @@ def gl_cpp_bzlmod0(name = None):
             workspace functions.
     """
 
+    # TODO(#11485) - use some bazel_dep() from BCR, maybe via archive_override.
     # Load the googleapis dependency.
     maybe(
         http_archive,
@@ -49,6 +50,7 @@ def gl_cpp_bzlmod0(name = None):
         patches = [],
     )
 
+    # TODO(#11485) - use some bazel_dep() from BCR.
     # We need libcurl for the Google Cloud Storage client.
     maybe(
         http_archive,
