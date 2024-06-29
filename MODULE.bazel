@@ -54,15 +54,16 @@ python.toolchain(
 )
 
 bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
-archive_override(module_name = "googleapis",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
-            "https://github.com/googleapis/googleapis/archive/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
-        ],
-        strip_prefix = "googleapis-622e10a1e8b2b6908e0ac7448d347a0c1b4130de",
-        integrity = "sha256-M8YsA/lHlyi9qhplU9izX6Jz0BBwbHXqhc2N/haHWGw=",
-        patches = ["//bazel:googleapis.modules.patch"],
-        patch_strip = 1,
+archive_override(
+    module_name = "googleapis",
+    integrity = "sha256-M8YsA/lHlyi9qhplU9izX6Jz0BBwbHXqhc2N/haHWGw=",
+    patch_strip = 1,
+    patches = ["//bazel:googleapis.modules.patch"],
+    strip_prefix = "googleapis-622e10a1e8b2b6908e0ac7448d347a0c1b4130de",
+    urls = [
+        "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
+    ],
 )
 
 switched_rules = use_extension("@com_google_googleapis//:extensions.bzl", "switched_rules")
