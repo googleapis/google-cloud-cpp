@@ -51,9 +51,6 @@ test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
 # By default, build the library with OpenTelemetry
 build --//:enable_opentelemetry
 
-# Enable https support in libcurl.
-build --@com_github_curl_curl//:http_only=False
-
 # Don't show warnings when building external dependencies. This still shows
 # warnings when using these dependencies (say in headers).
 build --output_filter='^//((?!(external):).)*$'
