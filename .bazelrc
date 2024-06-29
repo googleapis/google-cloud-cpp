@@ -82,6 +82,7 @@ build:asan --copt=-fsanitize=address
 # may be assuming that some compiler flags are set when compiling with Address
 # Sanitizier (-DADDRESS_SANITIZER=1 is one possibility).
 build:asan --per_file_copt=com_google_protobuf//@-Wno-error
+build:asan --per_file_copt=protobuf~//@-Wno-error
 build:asan --linkopt=-fsanitize=address
 build:asan --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
 build:asan --action_env=LSAN_OPTIONS=report_objects=1
