@@ -23,7 +23,13 @@ source module ci/cloudbuild/builds/lib/integration.sh
 source module ci/lib/io.sh
 
 mapfile -t args < <(bazel::common_args)
-args+=("--config=asan")
+args+=(
+  --config=asan
+  # TODO(#11485) - asan claims ODR violations when building googleapis and gRPC
+  #   under bzlmod. Disable for now.
+  #   https://github.com/bazelbuild/bazel-central-registry/issues/2334
+  --noenable_bzlmod
+)
 io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
 mapfile -t integration_args < <(integration::bazel_args)
