@@ -20,6 +20,7 @@
 #include "google/cloud/internal/time_utils.h"
 #include "absl/time/time.h"
 #include <grpcpp/grpcpp.h>
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -341,12 +342,25 @@ void Recordable::AddEventImpl(
     opentelemetry::nostd::string_view name,
     opentelemetry::common::SystemTimestamp timestamp,
     opentelemetry::common::KeyValueIterable const& attributes) {
-  // Accept the first N events. Drop the rest.
+  ++timed_event_count_;
   auto& events = *span_.mutable_time_events();
   if (events.time_event().size() == kSpanAnnotationLimit) {
     events.set_dropped_annotations_count(1 +
                                          events.dropped_annotations_count());
-    return;
+    auto const k = generator_(timed_event_count_);
+    auto& collection = *events.mutable_time_event();
+    // Always preserve the first and last events. The rest are randomly sampled
+    // using https://en.wikipedia.org/wiki/Reservoir_sampling
+    if (k < static_cast<std::int64_t>(collection.size() - 1)) {
+      // This is the normal reservoir sampling case. One of the elements in the
+      // collections[1..size-1] range is removed. Moving the remaining elements
+      // preserves the order.
+      collection.erase(std::next(collection.begin(), k + 1));
+    } else {
+      // Just remove the last element, so we can insert the newest element and
+      // preserve the last element ever received.
+      collection.RemoveLast();
+    }
   }
 
   auto& event = *events.add_time_event();

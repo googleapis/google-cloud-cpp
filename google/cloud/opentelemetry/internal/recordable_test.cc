@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/opentelemetry/internal/recordable.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/version.h"
 #include "absl/time/clock.h"
@@ -179,6 +180,14 @@ Matcher<v2::Span::Link const&> Link(
       ResultOf(
           "attributes", [](v2::Span::Link const& l) { return l.attributes(); },
           attributes_matcher));
+}
+
+auto TestGenerator() {
+  // Initialize using the googletest seed.
+  auto generator = internal::DefaultPRNG(::testing::FLAGS_gtest_random_seed);
+  return [g = std::move(generator)](std::int64_t size) mutable {
+    return std::uniform_int_distribution<std::int64_t>(0, size - 1)(g);
+  };
 }
 
 TEST(SetTruncatableString, LessThanLimit) {
@@ -365,7 +374,7 @@ TEST(Recordable, SetResourceCopiesResourceAttributes) {
       {"vector<uint8>", MakeCompositeAttribute<std::uint8_t>(5)},
   });
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetResource(resource);
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(
@@ -414,7 +423,7 @@ TEST(Recordable, AddEvent) {
   auto expected_time = absl::FromChrono(now);
   auto event_attributes = KVIterable({{"key1", "value1"}, {"key2", "value2"}});
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.AddEvent("test-event", now, event_attributes);
   auto proto = std::move(rec).as_proto();
   EXPECT_EQ(proto.time_events().dropped_annotations_count(), 0);
@@ -432,7 +441,7 @@ TEST(Recordable, TruncatesEventName) {
   std::string const expected(kAnnotationDescriptionStringLimit, 'A');
   auto now = std::chrono::system_clock::now();
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.AddEvent(name, now, KVIterable({}));
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.time_events().time_event(),
@@ -442,13 +451,19 @@ TEST(Recordable, TruncatesEventName) {
 TEST(Recordable, DropsNewEventAtLimit) {
   auto now = std::chrono::system_clock::now();
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   for (std::size_t i = 0; i != kSpanAnnotationLimit + 10; ++i) {
     rec.AddEvent("event" + std::to_string(i), now, KVIterable({}));
   }
   auto proto = std::move(rec).as_proto();
   EXPECT_EQ(proto.time_events().dropped_annotations_count(), 10);
   EXPECT_THAT(proto.time_events().time_event(), SizeIs(kSpanAnnotationLimit));
+  EXPECT_THAT(proto.time_events().time_event(0),
+              TimeEvent(_, Annotation("event0", _)));
+  EXPECT_THAT(
+      proto.time_events().time_event(kSpanAnnotationLimit - 1),
+      TimeEvent(_, Annotation(
+                       "event" + std::to_string(kSpanAnnotationLimit + 9), _)));
 }
 
 TEST(Recordable, DropsNewEventAttributeAtLimit) {
@@ -461,7 +476,7 @@ TEST(Recordable, DropsNewEventAttributeAtLimit) {
   auto event_attributes =
       KVIterable(std::move(too_many_attributes), &iteration_count);
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.AddEvent("test-event", now, event_attributes);
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.time_events().time_event(),
@@ -486,7 +501,7 @@ TEST(Recordable, AddLink) {
 
   auto link_attributes = KVIterable({{"key1", "value1"}, {"key2", "value2"}});
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.AddLink(span_context, link_attributes);
   auto proto = std::move(rec).as_proto();
   EXPECT_EQ(proto.links().dropped_links_count(), 0);
@@ -499,7 +514,7 @@ TEST(Recordable, AddLink) {
 }
 
 TEST(Recordable, DropsNewLinkAtLimit) {
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   for (std::size_t i = 0; i != kSpanLinkLimit + 1; ++i) {
     rec.AddLink({false, false}, KVIterable({}));
   }
@@ -517,7 +532,7 @@ TEST(Recordable, DropsNewLinkAttributeAtLimit) {
   auto link_attributes =
       KVIterable(std::move(too_many_attributes), &iteration_count);
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.AddLink({false, false}, link_attributes);
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.links().link(),
@@ -543,7 +558,7 @@ TEST(Recordable, SetStatus) {
                               grpc::StatusCode::OK, ""},
                              {opentelemetry::trace::StatusCode::kError, "fail",
                               grpc::StatusCode::UNKNOWN, "fail"}}) {
-    auto rec = Recordable(Project(kProjectId));
+    auto rec = Recordable(Project(kProjectId), TestGenerator());
     rec.SetStatus(test.code, test.desc);
     auto proto = std::move(rec).as_proto();
     EXPECT_EQ(proto.status().code(), test.expected_code);
@@ -552,7 +567,7 @@ TEST(Recordable, SetStatus) {
 }
 
 TEST(Recordable, SetName) {
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetName("name");
   auto proto = std::move(rec).as_proto();
   EXPECT_EQ(proto.display_name().value(), "name");
@@ -562,7 +577,7 @@ TEST(Recordable, SetNameTruncates) {
   std::string const name(kDisplayNameStringLimit + 1, 'A');
   std::string const expected(kDisplayNameStringLimit, 'A');
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetName(name);
   auto proto = std::move(rec).as_proto();
   EXPECT_EQ(proto.display_name().value(), expected);
@@ -586,7 +601,7 @@ TEST(Recordable, SetSpanKind) {
             google::devtools::cloudtrace::v2::Span::PRODUCER},
            {opentelemetry::trace::SpanKind::kConsumer,
             google::devtools::cloudtrace::v2::Span::CONSUMER}}) {
-    auto rec = Recordable(Project(kProjectId));
+    auto rec = Recordable(Project(kProjectId), TestGenerator());
     rec.SetSpanKind(test.input);
     auto proto = std::move(rec).as_proto();
     EXPECT_EQ(proto.span_kind(), test.expected);
@@ -608,7 +623,7 @@ TEST(Recordable, SetIdentity) {
 
   opentelemetry::trace::SpanContext span_context(trace_id, span_id, {}, false);
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetIdentity(span_context, parent_span_id);
   auto proto = std::move(rec).as_proto();
 
@@ -633,7 +648,7 @@ TEST(Recordable, InvalidParentSpanIsOmitted) {
   opentelemetry::trace::SpanId const invalid_parent_span_id;
   EXPECT_FALSE(invalid_parent_span_id.IsValid());
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetIdentity(span_context, invalid_parent_span_id);
   auto proto = std::move(rec).as_proto();
 
@@ -641,7 +656,7 @@ TEST(Recordable, InvalidParentSpanIsOmitted) {
 }
 
 TEST(Recordable, SetAttribute) {
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetAttribute("key", "value");
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.attributes(),
@@ -649,7 +664,7 @@ TEST(Recordable, SetAttribute) {
 }
 
 TEST(Recordable, SetAttributeRespectsLimit) {
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   for (std::size_t i = 0; i != kSpanAttributeLimit + 1; ++i) {
     rec.SetAttribute("key" + std::to_string(i), "value");
   }
@@ -666,7 +681,7 @@ TEST(Recordable, SetResourceMapsMonitoredResources) {
       {sc::kCloudAvailabilityZone, "us-central1-a"},
   });
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetResource(resource);
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(
@@ -682,7 +697,7 @@ TEST(Recordable, SetStartTime) {
   auto start = std::chrono::system_clock::now();
   auto expected = absl::FromChrono(start);
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetStartTime(start);
   auto proto = std::move(rec).as_proto();
   auto actual = internal::ToAbslTime(proto.start_time());
@@ -694,7 +709,7 @@ TEST(Recordable, SetDuration) {
   auto duration = std::chrono::nanoseconds(12345);
   auto expected = absl::FromChrono(start) + absl::FromChrono(duration);
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetStartTime(start);
   rec.SetDuration(duration);
   auto proto = std::move(rec).as_proto();
@@ -707,7 +722,7 @@ TEST(Recordable, SetInstrumentationScope) {
       opentelemetry::sdk::instrumentationscope::InstrumentationScope::Create(
           "test-name", "test-version");
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetInstrumentationScope(*scope);
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.attributes(),
@@ -721,7 +736,7 @@ TEST(Recordable, SetInstrumentationScopeOmitsEmptyVersion) {
       opentelemetry::sdk::instrumentationscope::InstrumentationScope::Create(
           "test-name");
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetInstrumentationScope(*scope);
   auto proto = std::move(rec).as_proto();
   EXPECT_THAT(proto.attributes(),
@@ -739,7 +754,7 @@ TEST(Recordable, ConstantAttributesOnlyOnRootSpan) {
   auto resource =
       opentelemetry::sdk::resource::Resource::Create({{"key", "value"}});
 
-  auto rec = Recordable(Project(kProjectId));
+  auto rec = Recordable(Project(kProjectId), TestGenerator());
   rec.SetInstrumentationScope(*scope);
   rec.SetIdentity(opentelemetry::trace::SpanContext::GetInvalid(), parent);
   rec.SetResource(resource);
