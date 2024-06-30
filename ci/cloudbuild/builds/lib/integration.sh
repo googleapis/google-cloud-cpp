@@ -250,7 +250,7 @@ function integration::bazel_with_emulators() {
     bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
       //generator:google-cloud-cpp-codegen -- \
       --protobuf_proto_path="${bazel_output_base}/external/protobuf~/src" \
-      --googleapis_proto_path="${bazel_output_base}/external/com_google_googleapis" \
+      --googleapis_proto_path="${bazel_output_base}/external/googleapis~/src" \
       --golden_proto_path="${PWD}" \
       --output_path="${PWD}" \
       --update_ci=false \
