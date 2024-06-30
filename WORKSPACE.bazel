@@ -46,6 +46,6 @@ load("//bazel:development1.bzl", "gl_cpp_development1")
 
 gl_cpp_development1()
 
-load("//bazel:development2.bzl", "gl_cpp_development1")
+load("//bazel:development2.bzl", "gl_cpp_development2")
 
 gl_cpp_development2()
