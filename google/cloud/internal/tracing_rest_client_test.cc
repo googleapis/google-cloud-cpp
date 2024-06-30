@@ -117,8 +117,10 @@ TEST(TracingRestClient, Delete) {
                   OTelAttribute<std::string>(
                       "http.response.header.x-test-header-1", "value1"),
                   OTelAttribute<std::string>(
-                      "http.response.header.x-test-header-2", "value2"))),
-          SpanNamed("SendRequest"), SpanNamed("Read"), SpanNamed("Read")));
+                      "http.response.header.x-test-header-2", "value2")),
+              SpanHasEvents(EventNamed("gl-cpp.read"),
+                            EventNamed("gl-cpp.read"))),
+          SpanNamed("SendRequest")));
 }
 
 TEST(TracingRestClient, HasScope) {
@@ -154,14 +156,15 @@ TEST(TracingRestClient, HasScope) {
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      UnorderedElementsAre(
-          AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                SpanKindIsClient(),
-                SpanHasAttributes(OTelAttribute<std::string>("test.attribute",
-                                                             "test.value"))),
-          SpanNamed("SendRequest"), SpanNamed("Read"), SpanNamed("Read")));
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                        SpanKindIsClient(),
+                        SpanHasAttributes(OTelAttribute<std::string>(
+                            "test.attribute", "test.value")),
+                        SpanHasEvents(EventNamed("gl-cpp.read"),
+                                      EventNamed("gl-cpp.read"))),
+                  SpanNamed("SendRequest")));
 }
 
 TEST(TracingRestClient, PropagatesTraceContext) {
@@ -201,9 +204,8 @@ TEST(TracingRestClient, PropagatesTraceContext) {
   EXPECT_THAT(contents, IsOkAndHolds(MockContents()));
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, UnorderedElementsAre(
-                         SpanNamed("HTTP/PATCH"), SpanNamed("SendRequest"),
-                         SpanNamed("Read"), SpanNamed("Read")));
+  EXPECT_THAT(spans, UnorderedElementsAre(SpanNamed("HTTP/PATCH"),
+                                          SpanNamed("SendRequest")));
 }
 
 TEST(TracingRestClient, WithRestContextDetails) {
@@ -265,14 +267,15 @@ TEST(TracingRestClient, WithRestContextDetails) {
                   OTelAttribute<std::string>(
                       /*sc::kClientAddress=*/"client.address", "127.0.0.1"),
                   OTelAttribute<std::int32_t>(/*sc::kClientPort=*/"client.port",
-                                              32000))),
+                                              32000)),
+              SpanHasEvents(EventNamed("gl-cpp.read"),
+                            EventNamed("gl-cpp.read"))),
           AllOf(SpanNamed("SendRequest"),
                 SpanHasAttributes(
                     OTelAttribute<bool>("gl-cpp.cached_connection", false)),
                 SpanHasEvents(EventNamed("gl-cpp.curl.namelookup"),
                               EventNamed("gl-cpp.curl.connected"),
-                              EventNamed("gl-cpp.curl.ssl.handshake"))),
-          SpanNamed("Read"), SpanNamed("Read")));
+                              EventNamed("gl-cpp.curl.ssl.handshake")))));
 }
 
 TEST(TracingRestClient, CachedConnection) {
@@ -312,8 +315,7 @@ TEST(TracingRestClient, CachedConnection) {
                   AllOf(SpanNamed("SendRequest"),
                         SpanHasAttributes(OTelAttribute<bool>(
                             "gl-cpp.cached_connection", true)),
-                        SpanHasEvents(EventNamed("gl-cpp.curl.connected"))),
-                  SpanNamed("Read"), SpanNamed("Read")));
+                        SpanHasEvents(EventNamed("gl-cpp.curl.connected")))));
 }
 
 #else
