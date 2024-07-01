@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
 #include <sstream>
 #include <string>
@@ -148,7 +149,12 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
 
   // Try again, eventually the retry policy will expire and this will fail.
   if (!retry_policy.OnFailure(child.status())) return std::move(child).status();
-  std::this_thread::sleep_for(backoff_policy.OnCompletion());
+  auto sleeper = google::cloud::internal::MakeTracedSleeper(
+      span_options_,
+      std::function<void(std::chrono::milliseconds)>(
+          [](std::chrono::milliseconds s) { std::this_thread::sleep_for(s); }),
+      "Backoff");
+  sleeper(backoff_policy.OnCompletion());
 
   return MakeChild(retry_policy, backoff_policy);
 }
