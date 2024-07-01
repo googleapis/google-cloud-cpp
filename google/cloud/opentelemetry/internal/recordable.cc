@@ -352,15 +352,13 @@ void Recordable::AddEventImpl(
     // Always preserve the first and last events. The rest are randomly sampled
     // using https://en.wikipedia.org/wiki/Reservoir_sampling
     if (k + 1 < collection.size()) {
-      // This is the normal reservoir sampling case. One of the elements in the
-      // collections[1..size-1] range is removed. Moving the remaining elements
-      // preserves the order.
-      collection.erase(std::next(collection.begin(), k + 1));
-    } else {
-      // Just remove the last element, so we can insert the newest element and
-      // preserve the last element ever received.
-      collection.RemoveLast();
+      // This is the normal reservoir sampling case. We swap the last element
+      // and the element to be removed.
+      collection.SwapElements(k + 1, collection.size() - 1);
     }
+    // Just remove the last element, so we can insert the newest element and
+    // preserve the last element ever received.
+    collection.RemoveLast();
   }
 
   auto& event = *events.add_time_event();
