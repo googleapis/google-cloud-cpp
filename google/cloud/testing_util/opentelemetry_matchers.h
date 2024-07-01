@@ -112,14 +112,14 @@ MATCHER(IsActive, "") {
 }
 
 MATCHER(SpanHasInstrumentationScope,
-        "has instrumentation scope (name: gcloud-cpp | version: " +
+        "has instrumentation scope (name: gl-cpp | version: " +
             version_string() + ")") {
   auto const& scope = arg->GetInstrumentationScope();
   auto const& name = scope.GetName();
   auto const& version = scope.GetVersion();
   *result_listener << "has instrumentation scope (name: " << name
                    << " | version: " << version << ")";
-  return name == "gcloud-cpp" && version == version_string();
+  return name == "gl-cpp" && version == version_string();
 }
 
 MATCHER(SpanKindIsClient,

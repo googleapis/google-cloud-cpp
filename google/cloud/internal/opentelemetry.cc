@@ -33,7 +33,7 @@ namespace internal {
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
     Options const&) {
   auto provider = opentelemetry::trace::Provider::GetTracerProvider();
-  return provider->GetTracer("gcloud-cpp", version_string());
+  return provider->GetTracer("gl-cpp", version_string());
 }
 
 opentelemetry::trace::StartSpanOptions DefaultStartSpanOptions() {
@@ -107,13 +107,13 @@ void EndSpanImpl(opentelemetry::trace::Span& span, Status const& status) {
   span.SetAttribute("gl-cpp.error.message", status.message());
   auto const& ei = status.error_info();
   if (!ei.reason().empty()) {
-    span.SetAttribute("gcloud.error.reason", ei.reason());
+    span.SetAttribute("gl-cpp.error.reason", ei.reason());
   }
   if (!ei.domain().empty()) {
-    span.SetAttribute("gcloud.error.domain", ei.domain());
+    span.SetAttribute("gl-cpp.error.domain", ei.domain());
   }
   for (auto const& kv : ei.metadata()) {
-    span.SetAttribute("gcloud.error.metadata." + kv.first, kv.second);
+    span.SetAttribute("gl-cpp.error.metadata." + kv.first, kv.second);
   }
   span.End();
 }

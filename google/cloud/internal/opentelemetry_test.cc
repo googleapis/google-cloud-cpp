@@ -204,7 +204,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
           SpanHasAttributes(
               OTelAttribute<int>("gl-cpp.status_code", code),
               OTelAttribute<std::string>("gl-cpp.error.message", "not good"),
-              OTelAttribute<std::string>("gcloud.error.reason", "reason")))));
+              OTelAttribute<std::string>("gl-cpp.error.reason", "reason")))));
 
   span = MakeSpan("domain");
   EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
@@ -217,7 +217,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
           SpanHasAttributes(
               OTelAttribute<int>("gl-cpp.status_code", code),
               OTelAttribute<std::string>("gl-cpp.error.message", "not good"),
-              OTelAttribute<std::string>("gcloud.error.domain", "domain")))));
+              OTelAttribute<std::string>("gl-cpp.error.domain", "domain")))));
 
   span = MakeSpan("metadata");
   EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
@@ -230,8 +230,8 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
           SpanHasAttributes(
               OTelAttribute<int>("gl-cpp.status_code", code),
               OTelAttribute<std::string>("gl-cpp.error.message", "not good"),
-              OTelAttribute<std::string>("gcloud.error.metadata.k1", "v1"),
-              OTelAttribute<std::string>("gcloud.error.metadata.k2", "v2")))));
+              OTelAttribute<std::string>("gl-cpp.error.metadata.k1", "v1"),
+              OTelAttribute<std::string>("gl-cpp.error.metadata.k2", "v2")))));
 }
 
 TEST(OpenTelemetry, EndSpanStatus) {
