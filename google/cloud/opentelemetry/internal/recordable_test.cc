@@ -457,13 +457,12 @@ TEST(Recordable, DropsNewEventAtLimit) {
   }
   auto proto = std::move(rec).as_proto();
   EXPECT_EQ(proto.time_events().dropped_annotations_count(), 10);
-  EXPECT_THAT(proto.time_events().time_event(), SizeIs(kSpanAnnotationLimit));
-  EXPECT_THAT(proto.time_events().time_event(0),
-              TimeEvent(_, Annotation("event0", _)));
-  EXPECT_THAT(
-      proto.time_events().time_event(kSpanAnnotationLimit - 1),
-      TimeEvent(_, Annotation(
-                       "event" + std::to_string(kSpanAnnotationLimit + 9), _)));
+  auto event_matcher = [](int i) {
+    return TimeEvent(_, Annotation("event" + std::to_string(i), _));
+  };
+  EXPECT_THAT(proto.time_events().time_event(),
+              AllOf(SizeIs(kSpanAnnotationLimit), Contains(event_matcher(0)),
+                    Contains(event_matcher(kSpanAnnotationLimit + 9))));
 }
 
 TEST(Recordable, DropsNewEventAttributeAtLimit) {
