@@ -15,7 +15,11 @@
 #include "google/cloud/opentelemetry/trace_exporter.h"
 #include "google/cloud/trace/v2/trace_client.h"
 #include "google/cloud/internal/noexcept_action.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
+#include <memory>
+#include <mutex>
+#include <random>
 
 namespace google {
 namespace cloud {
@@ -23,17 +27,36 @@ namespace otel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+class ThreadSafeGenerator {
+ public:
+  ThreadSafeGenerator() : generator_(internal::MakeDefaultPRNG()) {}
+
+  auto generate(int size) {
+    std::lock_guard<std::mutex> lk(mu_);
+    return std::uniform_int_distribution<int>(0, size - 1)(generator_);
+  }
+
+ private:
+  std::mutex mu_;
+  internal::DefaultPRNG generator_;
+};
+
 class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
  public:
   explicit TraceExporter(Project project,
                          std::shared_ptr<trace_v2::TraceServiceConnection> conn)
-      : project_(std::move(project)), client_(std::move(conn)) {}
+      : project_(std::move(project)),
+        client_(std::move(conn)),
+        generator_([state = std::make_shared<ThreadSafeGenerator>()](int size) {
+          return state->generate(size);
+        }) {}
 
   std::unique_ptr<opentelemetry::sdk::trace::Recordable>
   MakeRecordable() noexcept override {
     auto recordable = internal::NoExceptAction<
-        std::unique_ptr<opentelemetry::sdk::trace::Recordable>>(
-        [&] { return std::make_unique<otel_internal::Recordable>(project_); });
+        std::unique_ptr<opentelemetry::sdk::trace::Recordable>>([&] {
+      return std::make_unique<otel_internal::Recordable>(project_, generator_);
+    });
     if (recordable) return *std::move(recordable);
     GCP_LOG(WARNING) << "Exception thrown while creating span.";
     return nullptr;
@@ -76,6 +99,7 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
 
   Project project_;
   trace_v2::TraceServiceClient client_;
+  otel_internal::Recordable::Generator generator_;
 };
 
 }  // namespace
