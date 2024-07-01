@@ -40,10 +40,7 @@ file="doc/packaging.md"
     "demo-ubuntu-focal.Dockerfile,Ubuntu (20.04 LTS - Focal Fossa)"
     "demo-debian-bookworm.Dockerfile,Debian (12 - Bookworm)"
     "demo-debian-bullseye.Dockerfile,Debian (11 - Bullseye)"
-    "demo-debian-buster.Dockerfile,Debian (10 - Buster)"
-    "demo-rockylinux-8.Dockerfile,Rocky Linux (8)"
     "demo-rockylinux-9.Dockerfile,Rocky Linux (9)"
-    "demo-centos-7.Dockerfile,CentOS (7)"
   )
   for distro in "${DOCKER_DISTROS[@]}"; do
     dockerfile="$(cut -f1 -d, <<<"${distro}")"

@@ -4,6 +4,12 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
+## v2.27.0 - TBD
+
+* We have stopped testing on CentOS 7, Debian 10 (Buster), and RockyLinux 8 as
+  these distros are EOL or in some form of "security only" support period.
+  Note that we used CentOS 7 as a proxy for testing RedHat Enterprise Linux 7.
+
 ## v2.26.0 - 2024-07
 
 ### BREAKING TESTING CHANGES
