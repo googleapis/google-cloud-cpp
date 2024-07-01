@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.26.0 - TBD
+## v2.26.0 - 2024-07
 
 ### BREAKING TESTING CHANGES
 
@@ -32,6 +32,43 @@ the APIs in these libraries are stable, and are ready for production use.
   - `GroundedGenerationServiceClient` added
   - `ProjectServiceClient` added
   - `RankServiceClient` added
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- docs(bigtable): include admin options ([#14358](https://github.com/googleapis/google-cloud-cpp/pull/14358))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): include admin options ([#14359](https://github.com/googleapis/google-cloud-cpp/pull/14359))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- docs(spanner): include admin options ([#14360](https://github.com/googleapis/google-cloud-cpp/pull/14360))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- feat(storage): support object retention ([#14351](https://github.com/googleapis/google-cloud-cpp/pull/14351))
+- feat(storage): buckets with object retention ([#14350](https://github.com/googleapis/google-cloud-cpp/pull/14350))
+
+### [StorageControl](/google/cloud/storagecontrol/README.md)
+
+- samples(storagecontrol): add storagecontrol managed folder samples ([#14356](https://github.com/googleapis/google-cloud-cpp/pull/14356))
+- samples(storagecontrol): add storagecontrol folder samples ([#14332](https://github.com/googleapis/google-cloud-cpp/pull/14332))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- New (experimental) functions to start a LRO (longrunning operation) in one
+  function call, and then awaiting for the LRO to complete on a separate
+  function.
+- fix(otel): async read stream tracing ([#14393](https://github.com/googleapis/google-cloud-cpp/pull/14393))
+- fix(otel): async write stream tracing ([#14394](https://github.com/googleapis/google-cloud-cpp/pull/14394))
+- feat(otel): capture error message in traces (again) ([#14389](https://github.com/googleapis/google-cloud-cpp/pull/14389))
+- doc: document Start and Await methods and mocks ([#14375](https://github.com/googleapis/google-cloud-cpp/pull/14375))
+- fix(otel): async read write stream tracing ([#14379](https://github.com/googleapis/google-cloud-cpp/pull/14379))
+
+### [Google APIs interface definitions](https://github.com/googleapis/googleapis)
+
+- This release is based on definitions as of [2024-06-24T13:34:42-07:00](https://github.com/googleapis/googleapis/tree/622e10a1e8b2b6908e0ac7448d347a0c1b4130de)
 
 ## v2.25.0 - 2024-06
 
