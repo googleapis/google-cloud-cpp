@@ -17,6 +17,7 @@
 #include "google/cloud/internal/noexcept_action.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
+#include <memory>
 #include <mutex>
 #include <random>
 
@@ -30,9 +31,9 @@ class ThreadSafeGenerator {
  public:
   ThreadSafeGenerator() : generator_(internal::MakeDefaultPRNG()) {}
 
-  auto generate(std::size_t size) {
+  auto generate(int size) {
     std::lock_guard<std::mutex> lk(mu_);
-    return std::uniform_int_distribution<std::int64_t>(0, size - 1)(generator_);
+    return std::uniform_int_distribution<int>(0, size - 1)(generator_);
   }
 
  private:
@@ -46,8 +47,9 @@ class TraceExporter final : public opentelemetry::sdk::trace::SpanExporter {
                          std::shared_ptr<trace_v2::TraceServiceConnection> conn)
       : project_(std::move(project)),
         client_(std::move(conn)),
-        generator_([state = std::make_shared<ThreadSafeGenerator>()](
-                       std::size_t size) { return state->generate(size); }) {}
+        generator_([state = std::make_shared<ThreadSafeGenerator>()](int size) {
+          return state->generate(size);
+        }) {}
 
   std::unique_ptr<opentelemetry::sdk::trace::Recordable>
   MakeRecordable() noexcept override {

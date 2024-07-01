@@ -351,7 +351,7 @@ void Recordable::AddEventImpl(
     auto& collection = *events.mutable_time_event();
     // Always preserve the first and last events. The rest are randomly sampled
     // using https://en.wikipedia.org/wiki/Reservoir_sampling
-    if (k < static_cast<std::int64_t>(collection.size() - 1)) {
+    if (k + 1 < collection.size()) {
       // This is the normal reservoir sampling case. One of the elements in the
       // collections[1..size-1] range is removed. Moving the remaining elements
       // preserves the order.

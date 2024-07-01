@@ -22,7 +22,6 @@
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/trace/recordable.h>
 #include <opentelemetry/version.h>
-#include <cstdint>
 #include <functional>
 #include <utility>
 
@@ -101,7 +100,7 @@ void AddAttribute(
  */
 class Recordable final : public opentelemetry::sdk::trace::Recordable {
  public:
-  using Generator = std::function<std::int64_t(std::int64_t end)>;
+  using Generator = std::function<int(int)>;
 
   explicit Recordable(Project project, Generator generator)
       : project_(std::move(project)), generator_(std::move(generator)) {}
@@ -172,7 +171,7 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
   std::string scope_name_;
   std::string scope_version_;
   Generator generator_;
-  std::int64_t timed_event_count_ = 0;
+  int timed_event_count_ = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

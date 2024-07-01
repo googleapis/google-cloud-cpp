@@ -185,8 +185,8 @@ Matcher<v2::Span::Link const&> Link(
 auto TestGenerator() {
   // Initialize using the googletest seed.
   auto generator = internal::DefaultPRNG(::testing::FLAGS_gtest_random_seed);
-  return [g = std::move(generator)](std::int64_t size) mutable {
-    return std::uniform_int_distribution<std::int64_t>(0, size - 1)(g);
+  return [g = std::move(generator)](int size) mutable {
+    return std::uniform_int_distribution<int>(0, size - 1)(g);
   };
 }
 
