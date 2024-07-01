@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
 #include <sstream>
 #include <string>
@@ -52,7 +53,10 @@ RetryObjectReadSource::RetryObjectReadSource(
       offset_direction_(request_.HasOption<ReadLast>() ? kFromEnd
                                                        : kFromBeginning),
       current_offset_(InitialOffset(offset_direction_, request_)),
-      backoff_(std::move(backoff)) {}
+      backoff_(std::move(backoff)) {
+  backoff_ = google::cloud::internal::MakeTracedSleeper(
+      *options_, std::move(backoff_), "Backoff");
+}
 
 RetryObjectReadSource::RetryObjectReadSource(
     ReadSourceFactory factory,
