@@ -52,7 +52,6 @@ common:macos --repo_env=BAZEL_NO_APPLE_CPP_TOOLCHAIN=1
 test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
 
 # By default, build the library with OpenTelemetry
-build --@io_opentelemetry_cpp//api:with_abseil
 build --//:enable_opentelemetry
 
 # Don't show warnings when building external dependencies. This still shows

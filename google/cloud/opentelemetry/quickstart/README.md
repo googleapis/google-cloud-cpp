@@ -76,16 +76,20 @@ flags when compiling `opentelemetry-cpp`.
 
 ### Details
 
-Note the following two feature flags explicitly set in the `.bazelrc`. Together,
-these flags enable OpenTelemetry tracing instrumentation in `google-cloud-cpp`.
-Without these flags, the above `bazel build ...` command would fail.
+Note the following feature flag explicitly set in the `.bazelrc`. This flag
+enables OpenTelemetry tracing instrumentation in `google-cloud-cpp`.
 
 ```bash
-# Required for OpenTelemetry + Abseil compatibility
-build --@io_opentelemetry_cpp//api:with_abseil
-
 # Enables tracing instrumentation in google-cloud-cpp
 build --@google_cloud_cpp//:enable_opentelemetry
+```
+
+If you are using an OpenTelemetry version < v1.16.0, you must also supply the
+following flag for compatibility with Abseil. Without this flag, the above
+`bazel build ...` command will fail.
+
+```bash
+build --@io_opentelemetry_cpp//api:with_abseil
 ```
 
 Also note that we explicitly load OpenTelemetry's dependencies in the
