@@ -29,20 +29,31 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
 std::string MockContents() {
   return "The quick brown fox jumps over the lazy dog";
+}
+
+auto MakeReadMatcher(std::int64_t buffer_size, std::int64_t read_size) {
+  return AllOf(EventNamed("gl-cpp.read"),
+               SpanEventAttributesAre(
+                   OTelAttribute<std::int64_t>("read.buffer.size", buffer_size),
+                   OTelAttribute<std::int64_t>("read.returned.size", read_size),
+                   OTelAttribute<std::int64_t>("read.latency.us", _)));
 }
 
 TEST(TracingRestResponseTest, Success) {
@@ -71,24 +82,16 @@ TEST(TracingRestResponseTest, Success) {
   EXPECT_EQ(*status, 0);
 
   auto spans = span_catcher->GetSpans();
-  auto make_read_event_matcher = [](std::int64_t bs, std::int64_t rs) {
-    return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
-                 SpanKindIsClient(),
-                 SpanHasAttributes(
-                     OTelAttribute<std::int32_t>("gl-cpp.status_code", 0),
-                     OTelAttribute<std::int64_t>("read.buffer.size", bs),
-                     OTelAttribute<std::int64_t>("read.returned.size", rs)));
-  };
   auto const content_size = static_cast<std::int64_t>(MockContents().size());
-  EXPECT_THAT(spans,
-              UnorderedElementsAre(
-                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                        SpanKindIsClient(),
-                        SpanHasAttributes(OTelAttribute<std::string>(
-                            /*sc::kNetworkTransport=*/"network.transport",
-                            sc::NetTransportValues::kIpTcp))),
-                  make_read_event_matcher(kBufferSize, content_size),
-                  make_read_event_matcher(kBufferSize, 0)));
+  EXPECT_THAT(
+      spans, UnorderedElementsAre(
+                 AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+                       SpanKindIsClient(),
+                       SpanHasAttributes(OTelAttribute<std::string>(
+                           /*sc::kNetworkTransport=*/"network.transport",
+                           sc::NetTransportValues::kIpTcp)),
+                       SpanHasEvents(MakeReadMatcher(kBufferSize, content_size),
+                                     MakeReadMatcher(kBufferSize, 0)))));
 }
 
 }  // namespace

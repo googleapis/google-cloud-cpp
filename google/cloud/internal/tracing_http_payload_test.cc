@@ -28,21 +28,41 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::OTelAttribute;
+using ::google::cloud::testing_util::SpanEventAttributesAre;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::AllOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
 std::string MockContents() {
   return "The quick brown fox jumps over the lazy dog";
+}
+
+auto MakeReadMatcher(std::int64_t buffer_size, std::int64_t read_size) {
+  return AllOf(EventNamed("gl-cpp.read"),
+               SpanEventAttributesAre(
+                   OTelAttribute<std::int64_t>("read.buffer.size", buffer_size),
+                   OTelAttribute<std::int64_t>("read.returned.size", read_size),
+                   OTelAttribute<std::int64_t>("read.latency.us", _)));
+}
+
+auto MakeReadMatcher(std::int64_t buffer_size) {
+  return AllOf(
+      EventNamed("gl-cpp.read"),
+      SpanEventAttributesAre(
+          OTelAttribute<std::string>("read.status.code", "UNAVAILABLE"),
+          OTelAttribute<std::int64_t>("read.buffer.size", buffer_size),
+          OTelAttribute<std::int64_t>("read.latency.us", _)));
 }
 
 TEST(TracingHttpPayload, Success) {
@@ -59,23 +79,16 @@ TEST(TracingHttpPayload, Success) {
   for (auto s = read(); s && s.value() != 0; s = read()) continue;
 
   auto spans = span_catcher->GetSpans();
-  auto make_read_matcher = [](auto bs, auto rs) {
-    return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
-                 SpanKindIsClient(),
-                 SpanHasAttributes(
-                     OTelAttribute<std::int32_t>("gl-cpp.status_code", 0),
-                     OTelAttribute<std::int64_t>("read.buffer.size", bs),
-                     OTelAttribute<std::int64_t>("read.returned.size", rs)));
-  };
-  EXPECT_THAT(spans,
-              UnorderedElementsAre(
-                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                        SpanKindIsClient(),
-                        SpanHasAttributes(OTelAttribute<std::string>(
-                            /*sc::kNetworkTransport=*/"network.transport",
-                            sc::NetTransportValues::kIpTcp))),
-                  make_read_matcher(16, 16), make_read_matcher(16, 16),
-                  make_read_matcher(16, 11), make_read_matcher(16, 0)));
+  EXPECT_THAT(
+      spans,
+      UnorderedElementsAre(AllOf(
+          SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+          SpanKindIsClient(),
+          SpanHasAttributes(OTelAttribute<std::string>(
+              /*sc::kNetworkTransport=*/"network.transport",
+              sc::NetTransportValues::kIpTcp)),
+          SpanHasEvents(MakeReadMatcher(16, 16), MakeReadMatcher(16, 16),
+                        MakeReadMatcher(16, 11), MakeReadMatcher(16, 0)))));
 }
 
 TEST(TracingHttpPayload, Failure) {
@@ -99,35 +112,18 @@ TEST(TracingHttpPayload, Failure) {
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable));
 
   auto spans = span_catcher->GetSpans();
-  auto make_read_success_matcher = [](auto bs, auto rs) {
-    return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
-                 SpanKindIsClient(),
-                 SpanHasAttributes(
-                     OTelAttribute<std::int32_t>("gl-cpp.status_code", 0),
-                     OTelAttribute<std::int64_t>("read.buffer.size", bs),
-                     OTelAttribute<std::int64_t>("read.returned.size", rs)));
-  };
-  auto make_read_error_matcher = [](auto bs, StatusCode code) {
-    return AllOf(SpanNamed("Read"), SpanHasInstrumentationScope(),
-                 SpanKindIsClient(),
-                 SpanHasAttributes(
-                     OTelAttribute<std::int32_t>(
-                         "gl-cpp.status_code", static_cast<std::int32_t>(code)),
-                     OTelAttribute<std::int64_t>("read.buffer.size", bs)));
-  };
-  EXPECT_THAT(spans,
-              UnorderedElementsAre(
-                  AllOf(SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
-                        SpanKindIsClient(),
-                        SpanHasAttributes(
-                            OTelAttribute<std::string>(
-                                /*sc::kNetworkTransport=*/"network.transport",
-                                sc::NetTransportValues::kIpTcp),
-                            OTelAttribute<int>(
-                                "gl-cpp.status_code",
-                                static_cast<int>(StatusCode::kUnavailable)))),
-                  make_read_success_matcher(16, 16),
-                  make_read_error_matcher(16, StatusCode::kUnavailable)));
+  EXPECT_THAT(
+      spans,
+      UnorderedElementsAre(AllOf(
+          SpanNamed("HTTP/GET"), SpanHasInstrumentationScope(),
+          SpanKindIsClient(),
+          SpanHasAttributes(
+              OTelAttribute<std::string>(
+                  /*sc::kNetworkTransport=*/"network.transport",
+                  sc::NetTransportValues::kIpTcp),
+              OTelAttribute<int>("gl-cpp.status_code",
+                                 static_cast<int>(StatusCode::kUnavailable))),
+          SpanHasEvents(MakeReadMatcher(16, 16), MakeReadMatcher(16)))));
 }
 
 }  // namespace

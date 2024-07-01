@@ -16,6 +16,7 @@
 
 #include "google/cloud/internal/tracing_http_payload.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -33,16 +34,25 @@ bool TracingHttpPayload::HasUnreadData() const {
 
 StatusOr<std::size_t> TracingHttpPayload::Read(absl::Span<char> buffer) {
   auto scope = opentelemetry::trace::Scope(span_);
-  auto span = internal::MakeSpan("Read");
-  span->SetAttribute("read.buffer.size",
-                     static_cast<std::int64_t>(buffer.size()));
+  auto const start = std::chrono::system_clock::now();
   auto status = impl_->Read(buffer);
+  auto const latency = std::chrono::duration_cast<std::chrono::microseconds>(
+                           std::chrono::system_clock::now() - start)
+                           .count();
   if (!status) {
-    internal::EndSpan(*span, status.status());
+    auto const code = StatusCodeToString(status.status().code());
+    span_->AddEvent(
+        "gl-cpp.read", opentelemetry::common::SystemTimestamp(start),
+        {{"read.status.code", code},
+         {"read.buffer.size", static_cast<std::int64_t>(buffer.size())},
+         {"read.latency.us", static_cast<std::int64_t>(latency)}});
     return internal::EndSpan(*span_, std::move(status));
   }
-  span->SetAttribute("read.returned.size", static_cast<std::int64_t>(*status));
-  internal::EndSpan(*span, status.status());
+  span_->AddEvent(
+      "gl-cpp.read", opentelemetry::common::SystemTimestamp(start),
+      {{"read.buffer.size", static_cast<std::int64_t>(buffer.size())},
+       {"read.returned.size", static_cast<std::int64_t>(*status)},
+       {"read.latency.us", static_cast<std::int64_t>(latency)}});
   if (*status != 0) return status;
   return internal::EndSpan(*span_, std::move(status));
 }
