@@ -15,10 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_OBJECT_READ_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RETRY_OBJECT_READ_SOURCE_H
 
-#include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/object_read_source.h"
+#include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/options.h"
 #include "absl/types/optional.h"
+#include <chrono>
+#include <functional>
 #include <memory>
 
 namespace google {
@@ -39,7 +43,19 @@ enum OffsetDirection { kFromBeginning, kFromEnd };
  */
 class RetryObjectReadSource : public ObjectReadSource {
  public:
-  RetryObjectReadSource(std::shared_ptr<StorageConnectionImpl> connection,
+  using ReadSourceFactory =
+      std::function<StatusOr<std::unique_ptr<ObjectReadSource>>(
+          ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>;
+
+  RetryObjectReadSource(ReadSourceFactory factory,
+                        google::cloud::internal::ImmutableOptions current,
+                        ReadObjectRangeRequest request,
+                        std::unique_ptr<ObjectReadSource> child,
+                        std::unique_ptr<RetryPolicy> retry_policy,
+                        std::unique_ptr<BackoffPolicy> backoff_policy,
+                        std::function<void(std::chrono::milliseconds)> backoff);
+  RetryObjectReadSource(ReadSourceFactory factory,
+                        google::cloud::internal::ImmutableOptions current,
                         ReadObjectRangeRequest request,
                         std::unique_ptr<ObjectReadSource> child,
                         std::unique_ptr<RetryPolicy> retry_policy,
@@ -55,7 +71,8 @@ class RetryObjectReadSource : public ObjectReadSource {
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadDiscard(
       std::unique_ptr<ObjectReadSource> child, std::int64_t count) const;
 
-  std::shared_ptr<StorageConnectionImpl> connection_;
+  ReadSourceFactory factory_;
+  google::cloud::internal::ImmutableOptions current_;
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
   absl::optional<std::int64_t> generation_;
@@ -64,9 +81,7 @@ class RetryObjectReadSource : public ObjectReadSource {
   OffsetDirection offset_direction_;
   std::int64_t current_offset_ = 0;
   bool is_gunzipped_ = false;
-  // Capture the options in effect when the stream was created, to reuse as
-  // new requests are generated.
-  google::cloud::Options span_options_;
+  std::function<void(std::chrono::milliseconds)> backoff_;
 };
 
 }  // namespace internal
