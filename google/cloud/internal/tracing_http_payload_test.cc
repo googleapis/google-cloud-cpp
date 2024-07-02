@@ -121,8 +121,7 @@ TEST(TracingHttpPayload, Failure) {
               OTelAttribute<std::string>(
                   /*sc::kNetworkTransport=*/"network.transport",
                   sc::NetTransportValues::kIpTcp),
-              OTelAttribute<int>("gl-cpp.status_code",
-                                 static_cast<int>(StatusCode::kUnavailable))),
+              OTelAttribute<std::string>("gl-cpp.status_code", "UNAVAILABLE")),
           SpanHasEvents(MakeReadMatcher(16, 16), MakeReadMatcher(16)))));
 }
 

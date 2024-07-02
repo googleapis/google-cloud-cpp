@@ -165,16 +165,14 @@ TEST(OpenTelemetry, EndSpanImplSuccess) {
   EndSpanImpl(*span, Status());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      ElementsAre(AllOf(
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
+  EXPECT_THAT(spans, ElementsAre(AllOf(
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             "gl-cpp.status_code", "OK")))));
 }
 
 TEST(OpenTelemetry, EndSpanImplFail) {
   auto span_catcher = InstallSpanCatcher();
-  auto const code = static_cast<int>(StatusCode::kAborted);
 
   auto span = MakeSpan("fail");
   EndSpanImpl(*span, Status(StatusCode::kAborted, "not good"));
@@ -184,14 +182,14 @@ TEST(OpenTelemetry, EndSpanImplFail) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
-          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", code),
-                            OTelAttribute<std::string>("gl-cpp.error.message",
-                                                       "not good")))));
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gl-cpp.status_code", "ABORTED"),
+              OTelAttribute<std::string>("gl-cpp.error.message",
+                                         "not good")))));
 }
 
 TEST(OpenTelemetry, EndSpanImplErrorInfo) {
   auto span_catcher = InstallSpanCatcher();
-  auto const code = static_cast<int>(StatusCode::kAborted);
 
   auto span = MakeSpan("reason");
   EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
@@ -202,7 +200,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", code),
+              OTelAttribute<std::string>("gl-cpp.status_code", "ABORTED"),
               OTelAttribute<std::string>("gl-cpp.error.message", "not good"),
               OTelAttribute<std::string>("gl-cpp.error.reason", "reason")))));
 
@@ -215,7 +213,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", code),
+              OTelAttribute<std::string>("gl-cpp.status_code", "ABORTED"),
               OTelAttribute<std::string>("gl-cpp.error.message", "not good"),
               OTelAttribute<std::string>("gl-cpp.error.domain", "domain")))));
 
@@ -228,7 +226,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", code),
+              OTelAttribute<std::string>("gl-cpp.status_code", "ABORTED"),
               OTelAttribute<std::string>("gl-cpp.error.message", "not good"),
               OTelAttribute<std::string>("gl-cpp.error.metadata.k1", "v1"),
               OTelAttribute<std::string>("gl-cpp.error.metadata.k2", "v2")))));
@@ -355,11 +353,10 @@ TEST(OpenTelemetry, EndSpanVoid) {
   EndSpan(*span, Status());
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans,
-      ElementsAre(AllOf(
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
+  EXPECT_THAT(spans, ElementsAre(AllOf(
+                         SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                         SpanHasAttributes(OTelAttribute<std::string>(
+                             "gl-cpp.status_code", "OK")))));
 }
 
 TEST(OpenTelemetry, TracingEnabled) {

@@ -66,14 +66,15 @@ TEST(BatchingPublisherTracingConnectionTest, PublishSpan) {
   EXPECT_STATUS_OK(response);
   EXPECT_THAT(
       span_catcher->GetSpans(),
-      ElementsAre(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("publisher batching"),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<std::string>(
-                                sc::kCodeFunction,
-                                "pubsub::BatchingPublisherConnection::Publish"),
-                            OTelAttribute<int>("gl-cpp.status_code", 0)))));
+      ElementsAre(
+          AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanNamed("publisher batching"),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>(
+                        sc::kCodeFunction,
+                        "pubsub::BatchingPublisherConnection::Publish"),
+                    OTelAttribute<std::string>("gl-cpp.status_code", "OK")))));
 }
 
 TEST(BatchingPublisherTracingConnectionTest, FlushSpan) {
@@ -88,11 +89,11 @@ TEST(BatchingPublisherTracingConnectionTest, FlushSpan) {
 
   EXPECT_THAT(
       span_catcher->GetSpans(),
-      ElementsAre(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
+      ElementsAre(AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                        SpanNamed("pubsub::BatchingPublisherConnection::Flush"),
+                        SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                        SpanHasAttributes(OTelAttribute<std::string>(
+                            "gl-cpp.status_code", "OK")))));
 }
 
 TEST(BatchingPublisherTracingConnectionTest, ResumePublishSpan) {
@@ -108,11 +109,12 @@ TEST(BatchingPublisherTracingConnectionTest, ResumePublishSpan) {
 
   EXPECT_THAT(
       span_catcher->GetSpans(),
-      ElementsAre(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::BatchingPublisherConnection::ResumePublish"),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
+      ElementsAre(
+          AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanNamed("pubsub::BatchingPublisherConnection::ResumePublish"),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>("gl-cpp.status_code", "OK")))));
 }
 
 TEST(MakeBatchingPublisherTracingConnectionTest, CreateTracingConnection) {

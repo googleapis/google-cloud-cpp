@@ -50,7 +50,7 @@ using ::testing::Return;
 using ::testing::SizeIs;
 using ms = std::chrono::milliseconds;
 
-auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
+auto constexpr kErrorCode = "ABORTED";
 auto constexpr kTableName = "test-table";
 
 bigtable::SingleRowMutation Mutation() {
@@ -106,7 +106,7 @@ TEST(DataTracingConnection, Apply) {
           SpanNamed("bigtable::Table::Apply"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, AsyncApply) {
@@ -129,7 +129,7 @@ TEST(DataTracingConnection, AsyncApply) {
           SpanNamed("bigtable::Table::AsyncApply"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, BulkApplySuccess) {
@@ -263,7 +263,7 @@ TEST(DataTracingConnection, ReadRows) {
           SpanNamed("bigtable::Table::ReadRows"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, ReadRowsFull) {
@@ -290,7 +290,7 @@ TEST(DataTracingConnection, ReadRowsFull) {
           SpanNamed("bigtable::Table::ReadRows"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, ReadRowFound) {
@@ -307,14 +307,15 @@ TEST(DataTracingConnection, ReadRowFound) {
       under_test->ReadRow(kTableName, "row", bigtable::Filter::PassAllFilter());
   EXPECT_THAT(row, IsOkAndHolds(Pair(true, _)));
 
-  EXPECT_THAT(span_catcher->GetSpans(),
-              ElementsAre(AllOf(
-                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                  SpanNamed("bigtable::Table::ReadRow"),
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                  SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0),
-                                    OTelAttribute<bool>(
-                                        "gcloud.bigtable.row_found", true)))));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanNamed("bigtable::Table::ReadRow"),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>("gl-cpp.status_code", "OK"),
+                    OTelAttribute<bool>("gcloud.bigtable.row_found", true)))));
 }
 
 TEST(DataTracingConnection, ReadRowNotFound) {
@@ -331,14 +332,15 @@ TEST(DataTracingConnection, ReadRowNotFound) {
       under_test->ReadRow(kTableName, "row", bigtable::Filter::PassAllFilter());
   EXPECT_THAT(row, IsOkAndHolds(Pair(false, _)));
 
-  EXPECT_THAT(span_catcher->GetSpans(),
-              ElementsAre(AllOf(
-                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                  SpanNamed("bigtable::Table::ReadRow"),
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                  SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0),
-                                    OTelAttribute<bool>(
-                                        "gcloud.bigtable.row_found", false)))));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanNamed("bigtable::Table::ReadRow"),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>("gl-cpp.status_code", "OK"),
+                    OTelAttribute<bool>("gcloud.bigtable.row_found", false)))));
 }
 
 TEST(DataTracingConnection, ReadRowFailure) {
@@ -362,7 +364,7 @@ TEST(DataTracingConnection, ReadRowFailure) {
           SpanNamed("bigtable::Table::ReadRow"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)),
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)),
           Not(SpanHasAttributes(
               OTelAttribute<bool>("gcloud.bigtable.row_found", _))))));
 }
@@ -388,7 +390,7 @@ TEST(DataTracingConnection, CheckAndMutateRow) {
           SpanNamed("bigtable::Table::CheckAndMutateRow"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, AsyncCheckAndMutateRow) {
@@ -414,7 +416,7 @@ TEST(DataTracingConnection, AsyncCheckAndMutateRow) {
           SpanNamed("bigtable::Table::AsyncCheckAndMutateRow"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, SampleRows) {
@@ -438,7 +440,7 @@ TEST(DataTracingConnection, SampleRows) {
           SpanNamed("bigtable::Table::SampleRows"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, AsyncSampleRows) {
@@ -461,7 +463,7 @@ TEST(DataTracingConnection, AsyncSampleRows) {
           SpanNamed("bigtable::Table::AsyncSampleRows"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, ReadModifyWriteRow) {
@@ -484,7 +486,7 @@ TEST(DataTracingConnection, ReadModifyWriteRow) {
           SpanNamed("bigtable::Table::ReadModifyWriteRow"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, AsyncReadModifyWriteRow) {
@@ -507,7 +509,7 @@ TEST(DataTracingConnection, AsyncReadModifyWriteRow) {
           SpanNamed("bigtable::Table::AsyncReadModifyWriteRow"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, AsyncReadRows) {
@@ -558,7 +560,7 @@ TEST(DataTracingConnection, AsyncReadRows) {
           SpanNamed("bigtable::Table::AsyncReadRows"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(DataTracingConnection, AsyncReadRowFound) {
@@ -576,14 +578,15 @@ TEST(DataTracingConnection, AsyncReadRowFound) {
   p.set_value(std::pair<bool, bigtable::Row>({true, {"row", {}}}));
   EXPECT_THAT(row.get(), IsOkAndHolds(Pair(true, _)));
 
-  EXPECT_THAT(span_catcher->GetSpans(),
-              ElementsAre(AllOf(
-                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                  SpanNamed("bigtable::Table::AsyncReadRow"),
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                  SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0),
-                                    OTelAttribute<bool>(
-                                        "gcloud.bigtable.row_found", true)))));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanNamed("bigtable::Table::AsyncReadRow"),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>("gl-cpp.status_code", "OK"),
+                    OTelAttribute<bool>("gcloud.bigtable.row_found", true)))));
 }
 
 TEST(DataTracingConnection, AsyncReadRowNotFound) {
@@ -601,14 +604,15 @@ TEST(DataTracingConnection, AsyncReadRowNotFound) {
   p.set_value(std::pair<bool, bigtable::Row>({false, {"row", {}}}));
   EXPECT_THAT(row.get(), IsOkAndHolds(Pair(false, _)));
 
-  EXPECT_THAT(span_catcher->GetSpans(),
-              ElementsAre(AllOf(
-                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                  SpanNamed("bigtable::Table::AsyncReadRow"),
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                  SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0),
-                                    OTelAttribute<bool>(
-                                        "gcloud.bigtable.row_found", false)))));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanNamed("bigtable::Table::AsyncReadRow"),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>("gl-cpp.status_code", "OK"),
+                    OTelAttribute<bool>("gcloud.bigtable.row_found", false)))));
 }
 
 TEST(DataTracingConnection, AsyncReadRowFailure) {
@@ -633,7 +637,7 @@ TEST(DataTracingConnection, AsyncReadRowFailure) {
           SpanNamed("bigtable::Table::AsyncReadRow"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)),
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)),
           Not(SpanHasAttributes(
               OTelAttribute<bool>("gcloud.bigtable.row_found", _))))));
 }
