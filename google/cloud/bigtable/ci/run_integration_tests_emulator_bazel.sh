@@ -41,7 +41,7 @@ readonly BAZEL_BIN_DIR
 CBT_INSTANCE_ADMIN_EMULATOR_START=(
   "${BAZEL_BIN}"
   run
-  "${baze_test_args[@]}"
+  "${bazel_test_args[@]}"
   --
   //google/cloud/bigtable/tests:instance_admin_emulator
 )
