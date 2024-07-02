@@ -30,5 +30,15 @@ build:macos --host_cxxopt=-std=c++14
 build --experimental_convenience_symlinks=ignore
 
 # Enable OpenTelemetry tracing instrumentation for google-cloud-cpp.
-build --@io_opentelemetry_cpp//api:with_abseil
 build --@google_cloud_cpp//:enable_opentelemetry
+
+# OpenTelemetry versions < v1.16.0 are not compatible with Abseil
+# out-of-the-box. If you are using a version of OpenTelemetry < v1.16.0,
+# uncomment the following configuration:
+#
+# ```
+# build --@io_opentelemetry_cpp//api:with_abseil
+# ```
+#
+# Note that the flag is not required for OpenTelemetry versions >= v1.16.0. In
+# fact, the flag may be removed in future versions of OpenTelemetry.

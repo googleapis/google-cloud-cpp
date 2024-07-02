@@ -45,17 +45,9 @@ capture_build_info(
 )
 
 config_setting(
-    name = "enable_opentelemetry_valid",
+    name = "enable_opentelemetry",
     flag_values = {
         "//:enable_opentelemetry": "true",
-        "@io_opentelemetry_cpp//api:with_abseil": "true",
-    },
-)
-
-config_setting(
-    name = "disable_opentelemetry",
-    flag_values = {
-        "//:enable_opentelemetry": "false",
     },
 )
 
@@ -70,7 +62,7 @@ cc_library(
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
     defines = select({
-        ":enable_opentelemetry_valid": [
+        ":enable_opentelemetry": [
             # Enable OpenTelemetry features in google-cloud-cpp
             "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
         ],
@@ -89,24 +81,6 @@ cc_library(
         ],
         "//conditions:default": [],
     }),
-    target_compatible_with = select(
-        {
-            ":enable_opentelemetry_valid": [],
-            ":disable_opentelemetry": [],
-        },
-        # else, OpenTelemetry is enabled, but with an invalid configuration.
-        no_match_error = """
-
-
-You requested OpenTelemetry support for `google-cloud-cpp`, but OpenTelemetry is
-configured without Abseil support. This configuration will result in ODR
-violations, and possibly build-time errors, as OpenTelemetry redefines Abseil
-symbols in this case, and `google-cloud-cpp` uses Abseil directly too.
-
-To fix this problem, supply the `--@io_opentelemetry_cpp//api:with_abseil` flag
-to your build command, or set this value in your `.bazelrc` file(s).
-""",
-    ),
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
@@ -121,7 +95,7 @@ to your build command, or set this value in your `.bazelrc` file(s).
         "@com_google_absl//absl/types:span",
         "@com_google_absl//absl/types:variant",
     ] + select({
-        ":enable_opentelemetry_valid": [
+        ":enable_opentelemetry": [
             "@io_opentelemetry_cpp//api",
         ],
         "//conditions:default": [],
