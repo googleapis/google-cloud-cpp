@@ -151,7 +151,7 @@ time {
 }
 printf "%-50s" "Running buildifier (format):" >&2
 time {
-  git_files -z -- '*.BUILD' '*.bzl' '*.bazel' |
+  git_files -z -- '*.BUILD' '*.bzl' '*.bazel' '*.bzlmod' |
     xargs -r -P "$(nproc)" -n 50 -0 buildifier -mode=fix
 }
 

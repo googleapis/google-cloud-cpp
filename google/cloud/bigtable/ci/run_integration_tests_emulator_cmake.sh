@@ -38,7 +38,9 @@ if ctest::has_no_tests "${BINARY_DIR}" "^bigtable_" "${ctest_args[@]}"; then
 fi
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
-export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
+CBT_INSTANCE_ADMIN_EMULATOR_START=(
+  "${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
+)
 source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
 cd "${BINARY_DIR}"

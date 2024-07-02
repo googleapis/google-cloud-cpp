@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,38 +14,15 @@
 
 workspace(name = "google_cloud_cpp")
 
-load("//bazel:workspace0.bzl", "gl_cpp_workspace0")
+load("//bazel:bzlmod0.bzl", "gl_cpp_bzlmod0")
 
-gl_cpp_workspace0()
+gl_cpp_bzlmod0()
 
-load("//bazel:workspace1.bzl", "gl_cpp_workspace1")
+load("//bazel:bzlmod1.bzl", "gl_cpp_bzlmod1")
 
-gl_cpp_workspace1()
+gl_cpp_bzlmod1()
 
-load("//bazel:workspace2.bzl", "gl_cpp_workspace2")
-
-gl_cpp_workspace2()
-
-load("//bazel:workspace3.bzl", "gl_cpp_workspace3")
-
-gl_cpp_workspace3()
-
-load("//bazel:workspace4.bzl", "gl_cpp_workspace4")
-
-gl_cpp_workspace4()
-
-load("//bazel:workspace5.bzl", "gl_cpp_workspace5")
-
-gl_cpp_workspace5()
-
-load("//bazel:development0.bzl", "gl_cpp_development0")
-
-gl_cpp_development0()
-
-load("//bazel:development1.bzl", "gl_cpp_development1")
-
-gl_cpp_development1()
-
+# Skip development0 and development1 as those are loaded via bzlmod.
 load("//bazel:development2.bzl", "gl_cpp_development2")
 
 gl_cpp_development2()

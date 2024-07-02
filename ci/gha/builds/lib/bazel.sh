@@ -98,13 +98,10 @@ function bazel::prefetch() {
   mapfile -t args < <(bazel::common_args)
   local common_rules=(
     "..."
-    "@local_config_platform//..."
-    "@local_config_cc_toolchains//..."
-    "@local_config_sh//..."
   )
   local os_rules
   mapfile -t os_rules < <(os::prefetch)
-  "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch "${common_rules[@]}" "${os_rules[@]}"
+  "ci/retry-command.sh" 3 120 bazelisk "${args[@]}" fetch "${common_rules[@]}"
 }
 
 io::log "Prefetching bazel deps..."

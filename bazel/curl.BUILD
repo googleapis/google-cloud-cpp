@@ -3,6 +3,7 @@
 # Description:
 #   curl is a tool for talking to web servers.
 
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
 load("@bazel_skylib//rules:write_file.bzl", "write_file")
 
 licenses(["notice"])  # MIT/X derivative license
@@ -24,6 +25,13 @@ config_setting(
         "@platforms//os:macos",
     ],
     visibility = ["//visibility:public"],
+)
+
+# This is unused, it is here just for compatibility with the Bazel Central
+# Registry modules.
+bool_flag(
+    name = "http_only",
+    build_setting_default = False,
 )
 
 # On Linux, libcurl needs to know, at compile time, the location for the

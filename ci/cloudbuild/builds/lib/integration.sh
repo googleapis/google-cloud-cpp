@@ -249,8 +249,8 @@ function integration::bazel_with_emulators() {
     bazel_output_base="$(bazel info output_base)"
     bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
       //generator:google-cloud-cpp-codegen -- \
-      --protobuf_proto_path="${bazel_output_base}/external/com_google_protobuf/src" \
-      --googleapis_proto_path="${bazel_output_base}/external/com_google_googleapis" \
+      --protobuf_proto_path="${bazel_output_base}/external/protobuf~/src" \
+      --googleapis_proto_path="${bazel_output_base}/external/googleapis~" \
       --golden_proto_path="${PWD}" \
       --output_path="${PWD}" \
       --update_ci=false \
