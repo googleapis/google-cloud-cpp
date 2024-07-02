@@ -62,11 +62,12 @@ function wait_until_emulator_connects() {
   # Wait until the emulator starts responding.
   delay=1
   for _ in $(seq 1 8); do
-    if env BIGTABLE_EMULATOR_HOST="${address}" "${cmd[@]}" >/dev/null 2>&1; then
+    if timeout 10 env BIGTABLE_EMULATOR_HOST="${address}" "${cmd[@]}" >/dev/null 2>&1; then
       io::log_green "Connected to the Cloud Bigtable emulator on ${address}"
       return
     fi
     io::log "waiting for emulator to start on ${address}..."
+    cat instance-admin-emulator.log
     sleep $delay
     delay=$((delay * 2))
   done
@@ -87,7 +88,7 @@ function start_emulators() {
   EMULATOR_PID=$!
 
   # The path to this command must be set by the caller.
-  "${CBT_INSTANCE_ADMIN_EMULATOR_CMD}" "${instance_admin_emulator_port}" >instance-admin-emulator.log 2>&1 </dev/null &
+  env -C "${PROJECT_ROOT}" "${CBT_INSTANCE_ADMIN_EMULATOR_START[@]}" "${instance_admin_emulator_port}" >instance-admin-emulator.log 2>&1 </dev/null &
   INSTANCE_ADMIN_EMULATOR_PID=$!
 
   wait_until_emulator_connects "localhost:${emulator_port}" "ls"
