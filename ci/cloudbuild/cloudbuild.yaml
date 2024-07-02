@@ -28,7 +28,7 @@ options:
     'GENERATE_GOLDEN_ONLY=',
     'UPDATED_DISCOVERY_DOCUMENT=',
     'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=${_POOL_REGION}/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
-    'RAW_LOG_URL=https://storage.googleapis.com/${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}/log-${BUILD_ID}.txt'
+    'RAW_LOG_URL=https://storage.googleapis.com/${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}-${_SHARD}/log-${BUILD_ID}.txt'
   ]
   substitutionOption: 'ALLOW_LOOSE'
   volumes:
