@@ -446,6 +446,15 @@ service {
 }
 
 service {
+  service_proto_path: "google/cloud/bigquery/v2/job.proto"
+  product_path: "google/cloud/bigquery/job/v2"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
+service {
   service_proto_path: "google/cloud/bigquery/migration/v2/migration_service.proto"
   product_path: "google/cloud/bigquery/migration/v2"
   forwarding_product_path: "google/cloud/bigquery"

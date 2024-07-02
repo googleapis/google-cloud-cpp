@@ -30,3 +30,10 @@ endif ()
 # Once the bigquery_client package is found, define new targets.
 add_executable(quickstart quickstart.cc)
 target_link_libraries(quickstart google-cloud-cpp::bigquery)
+
+find_package(google_cloud_cpp_bigquery_job)
+if (google_cloud_cpp_bigquery_job_FOUND)
+    add_executable(quickstart_job quickstart_job.cc)
+    target_link_libraries(quickstart_job
+                          google-cloud-cpp::experimental-bigquery_job)
+endif ()

@@ -34,6 +34,10 @@ environment variables are convenient when troubleshooting problems.
   `EndpointOption` (which defaults to "bigquerydatatransfer.googleapis.com")
   used by `MakeDataTransferServiceConnection()`.
 
+- `GOOGLE_CLOUD_CPP_JOB_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquery.googleapis.com")
+  used by `MakeJobServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_METASTORE_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "biglake.googleapis.com")
   used by `MakeMetastoreServiceConnection()`.

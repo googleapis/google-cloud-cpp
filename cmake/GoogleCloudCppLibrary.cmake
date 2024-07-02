@@ -150,7 +150,7 @@ function (google_cloud_cpp_add_gapic_library library display_name)
         _opt
         "EXPERIMENTAL;TRANSITION"
         ""
-        "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SERVICE_DIRS;SHARED_PROTO_DEPS"
+        "ADDITIONAL_DOXYGEN_DIRS;ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SERVICE_DIRS;SHARED_PROTO_DEPS"
         ${ARGN})
     if (_opt_EXPERIMENTAL AND _opt_TRANSITION)
         message(
@@ -191,6 +191,18 @@ function (google_cloud_cpp_add_gapic_library library display_name)
         list(APPEND source_globs "${dir}*.h" "${dir}internal/*.h"
              "${dir}internal/*_sources.cc")
         list(APPEND mocks_globs "${dir}mocks/*.h")
+        list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "${library}_${ns}internal")
+        if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+            list(APPEND DOXYGEN_EXAMPLE_PATH
+                 "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+        endif ()
+    endforeach ()
+
+    foreach (dir IN LISTS _opt_ADDITIONAL_DOXYGEN_DIRS)
+        if ("${dir}" STREQUAL "__EMPTY__")
+            set(dir "")
+        endif ()
+        string(REPLACE "/" "_" ns "${dir}")
         list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "${library}_${ns}internal")
         if (IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
             list(APPEND DOXYGEN_EXAMPLE_PATH

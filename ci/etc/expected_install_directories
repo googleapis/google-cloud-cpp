@@ -135,6 +135,10 @@
 ./include/google/cloud/bigquery/datatransfer/v1
 ./include/google/cloud/bigquery/datatransfer/v1/internal
 ./include/google/cloud/bigquery/datatransfer/v1/mocks
+./include/google/cloud/bigquery/job
+./include/google/cloud/bigquery/job/v2
+./include/google/cloud/bigquery/job/v2/internal
+./include/google/cloud/bigquery/job/v2/mocks
 ./include/google/cloud/bigquery/migration
 ./include/google/cloud/bigquery/migration/v2
 ./include/google/cloud/bigquery/migration/v2/internal
@@ -148,6 +152,7 @@
 ./include/google/cloud/bigquery/storage/v1
 ./include/google/cloud/bigquery/storage/v1/internal
 ./include/google/cloud/bigquery/storage/v1/mocks
+./include/google/cloud/bigquery/v2
 ./include/google/cloud/bigtable
 ./include/google/cloud/bigtable/admin
 ./include/google/cloud/bigtable/admin/internal
@@ -1271,6 +1276,8 @@
 ./lib64/cmake/google_cloud_cpp_beyondcorp
 ./lib64/cmake/google_cloud_cpp_beyondcorp_mocks
 ./lib64/cmake/google_cloud_cpp_bigquery
+./lib64/cmake/google_cloud_cpp_bigquery_job
+./lib64/cmake/google_cloud_cpp_bigquery_job_mocks
 ./lib64/cmake/google_cloud_cpp_bigquery_mocks
 ./lib64/cmake/google_cloud_cpp_bigtable
 ./lib64/cmake/google_cloud_cpp_bigtable_mocks

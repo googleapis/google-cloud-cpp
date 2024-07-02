@@ -1,5 +1,4 @@
-# ~~~
-# Copyright 2021 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,19 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# ~~~
 
-include(GoogleCloudCppCommon)
+include(CMakeFindDependencyMacro)
+# google_cloud_cpp_googleapis finds both gRPC and Protobuf, no need to load them here.
+find_dependency(google_cloud_cpp_googleapis)
+find_dependency(google_cloud_cpp_common)
+find_dependency(google_cloud_cpp_grpc_utils)
+find_dependency(google_cloud_cpp_rest_internal)
+find_dependency(google_cloud_cpp_rest_protobuf_internal)
+find_dependency(absl)
 
-if (bigquery IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    include(bigquery_grpc.cmake)
-endif ()
-
-if (bigquery_job IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    include(google_cloud_cpp_bigquery_job.cmake)
-endif ()
-
-if (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    include(bigquery_rest.cmake)
-    add_subdirectory(v2/minimal/benchmarks)
-endif ()
+include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_bigquery_job-targets.cmake")
