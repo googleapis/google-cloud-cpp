@@ -37,7 +37,14 @@ fi
 # Configure run_emulators_utils.sh to find the instance admin emulator.
 BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
 readonly BAZEL_BIN_DIR
-export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BAZEL_BIN_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
+
+CBT_INSTANCE_ADMIN_EMULATOR_START=(
+  "${BAZEL_BIN}"
+  run
+  "${baze_test_args[@]}"
+  --
+  //google/cloud/bigtable/tests:instance_admin_emulator
+)
 source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
 # These can only run against production
