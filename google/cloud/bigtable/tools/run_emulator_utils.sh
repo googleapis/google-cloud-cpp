@@ -34,6 +34,16 @@ function kill_emulators() {
   echo -n "."
   wait "${INSTANCE_ADMIN_EMULATOR_PID}" >/dev/null 2>&1 || echo -n "+"
   echo "."
+
+  for log in emulator.log bigtable-instance-emulator.log; do
+    echo "================ ${log} ================"
+    cat --number --show-nonprinting "${HOME}/${log}" | head || true
+    cat --number --show-nonprinting "${BINARY_DIR}/${log}" | head || true
+    echo "================ ${log} ================"
+    cat --number --show-nonprinting "${HOME}/${log}" | tail || true
+    cat --number --show-nonprinting "${BINARY_DIR}/${log}" | tail || true
+    echo "================ ${log} ================"
+  done
 }
 
 ################################################
@@ -67,7 +77,6 @@ function wait_until_emulator_connects() {
       return
     fi
     io::log "waiting for emulator to start on ${address}..."
-    cat instance-admin-emulator.log
     sleep $delay
     delay=$((delay * 2))
   done
