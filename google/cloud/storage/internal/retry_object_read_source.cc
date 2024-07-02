@@ -18,6 +18,7 @@
 #include <sstream>
 #include <string>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -87,19 +88,23 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   auto backoff_policy = backoff_policy_prototype_->clone();
   auto retry_policy = retry_policy_prototype_->clone();
   int counter = 0;
-  for (; !result && retry_policy->OnFailure(result.status());
-       backoff_(backoff_policy->OnCompletion()),
-       result = child_->Read(buf, n)) {
+  while (!result && retry_policy->OnFailure(result.status())) {
     // A Read() request failed, most likely that means the connection failed or
     // stalled. The current child might no longer be usable, so we will try to
     // create a new one and replace it. Should that fail, the retry policy would
     // already be exhausted, so we should fail this operation too.
     child_.reset();
 
+    // The first attempt does not get to backoff.  The previous download was
+    // working fine, so whatever caused the download to stop may not be an
+    // overload condition.
+    if (++counter != 1) {
+      backoff_(backoff_policy->OnCompletion());
+    }
     if (has_emulator_instructions) {
       request_.set_multiple_options(
           CustomHeader("x-goog-emulator-instructions",
-                       instructions + "/retry-" + std::to_string(++counter)));
+                       instructions + "/retry-" + std::to_string(counter)));
     }
 
     if (offset_direction_ == kFromEnd) {
@@ -111,7 +116,11 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
       request_.set_option(Generation(*generation_));
     }
     auto status = MakeChild(*retry_policy, *backoff_policy);
-    if (!status.ok()) return status;
+    if (!status.ok()) {
+      result = status;
+      continue;
+    }
+    result = child_->Read(buf, n);
   }
   if (HandleResult(result)) return result;
   // We have exhausted the retry policy, return the error.
@@ -122,7 +131,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   } else {
     os << "Retry policy exhausted in Read(): " << status.message();
   }
-  return Status(status.code(), std::move(os).str());
+  return Status(status.code(), std::move(os).str(), status.error_info());
 }
 
 bool RetryObjectReadSource::HandleResult(StatusOr<ReadSourceResult> const& r) {
@@ -140,7 +149,6 @@ bool RetryObjectReadSource::HandleResult(StatusOr<ReadSourceResult> const& r) {
   return true;
 }
 
-// NOLINTNEXTLINE(misc-no-recursion)
 Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
                                         BackoffPolicy& backoff_policy) {
   auto on_success = [this](std::unique_ptr<ObjectReadSource> child) {
@@ -158,12 +166,7 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
   // first byte.
   child = ReadDiscard(*std::move(child), current_offset_);
   if (child) return on_success(*std::move(child));
-
-  // Try again, eventually the retry policy will expire and this will fail.
-  if (!retry_policy.OnFailure(child.status())) return std::move(child).status();
-  backoff_(backoff_policy.OnCompletion());
-
-  return MakeChild(retry_policy, backoff_policy);
+  return std::move(child).status();
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryObjectReadSource::ReadDiscard(
