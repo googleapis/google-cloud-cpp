@@ -228,6 +228,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -331,6 +332,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -480,6 +482,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -594,6 +597,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -761,6 +765,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -947,6 +952,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -1057,6 +1063,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -1231,6 +1238,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -1452,6 +1460,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"

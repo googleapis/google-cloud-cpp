@@ -93,15 +93,16 @@ function (google_cloud_cpp_transfer_library_properties target source)
 endfunction ()
 
 include(CTest)
+find_package(GTest CONFIG QUIET)
+find_package(GMock CONFIG QUIET)
+
 if (TARGET GTest::gmock)
     # GTest::gmock is already defined, do not define it again.
-elseif (NOT BUILD_TESTING)
+elseif (NOT BUILD_TESTING AND NOT GOOGLE_CLOUD_CPP_WITH_MOCKS)
     # Tests are turned off via -DBUILD_TESTING, do not load the googletest or
     # googlemock dependency.
 else ()
     # Try to find the config package first. If that is not found
-    find_package(GTest CONFIG QUIET)
-    find_package(GMock CONFIG QUIET)
     if (NOT GTest_FOUND)
         find_package(GTest MODULE REQUIRED)
 
