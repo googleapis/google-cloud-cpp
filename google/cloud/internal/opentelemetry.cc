@@ -94,16 +94,15 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
 }
 
 void EndSpanImpl(opentelemetry::trace::Span& span, Status const& status) {
+  span.SetAttribute("gl-cpp.status_code", StatusCodeToString(status.code()));
   if (status.ok()) {
     span.SetStatus(opentelemetry::trace::StatusCode::kOk);
-    span.SetAttribute("gl-cpp.status_code", 0);
     span.End();
     return;
   }
   // Note that the Cloud Trace UI drops the span's status, so we also write it
   // as an attribute.
   span.SetStatus(opentelemetry::trace::StatusCode::kError, status.message());
-  span.SetAttribute("gl-cpp.status_code", static_cast<int>(status.code()));
   span.SetAttribute("gl-cpp.error.message", status.message());
   auto const& ei = status.error_info();
   if (!ei.reason().empty()) {

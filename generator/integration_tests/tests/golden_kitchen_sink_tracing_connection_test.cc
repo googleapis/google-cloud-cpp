@@ -52,7 +52,7 @@ using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
-auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
+auto constexpr kErrorCode = "ABORTED";
 
 TEST(GoldenKitchenSinkTracingConnectionTest, Options) {
   struct TestOption {
@@ -90,7 +90,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, GenerateAccessToken) {
               "golden_v1::GoldenKitchenSinkConnection::GenerateAccessToken"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, GenerateIdToken) {
@@ -115,7 +115,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, GenerateIdToken) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::GenerateIdToken"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, WriteLogEntries) {
@@ -140,7 +140,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, WriteLogEntries) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::WriteLogEntries"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
@@ -170,7 +170,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::ListLogs"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ListServiceAccountKeys) {
@@ -196,7 +196,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ListServiceAccountKeys) {
               "golden_v1::GoldenKitchenSinkConnection::ListServiceAccountKeys"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, DoNothing) {
@@ -221,7 +221,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, DoNothing) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::DoNothing"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
@@ -246,7 +246,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::Deprecated2"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
@@ -274,7 +274,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::StreamingRead"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, AsyncStreamingReadWrite) {
@@ -316,7 +316,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting1) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::ExplicitRouting1"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting2) {
@@ -341,7 +341,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting2) {
           SpanNamed("golden_v1::GoldenKitchenSinkConnection::ExplicitRouting2"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(MakeGoldenKitchenSinkTracingConnection, TracingEnabled) {

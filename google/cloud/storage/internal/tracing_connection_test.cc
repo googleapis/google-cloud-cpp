@@ -64,6 +64,7 @@ TEST(TracingClientTest, ListBuckets) {
   auto under_test = TracingConnection(mock);
   auto actual = under_test.ListBuckets(storage::internal::ListBucketsRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -71,8 +72,8 @@ TEST(TracingClientTest, ListBuckets) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanNamed("storage::Client::ListBuckets"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, CreateBucket) {
@@ -86,6 +87,7 @@ TEST(TracingClientTest, CreateBucket) {
   auto actual =
       under_test.CreateBucket(storage::internal::CreateBucketRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -93,8 +95,8 @@ TEST(TracingClientTest, CreateBucket) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanNamed("storage::Client::CreateBucket"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetBucketMetadata) {
@@ -108,6 +110,7 @@ TEST(TracingClientTest, GetBucketMetadata) {
   auto actual = under_test.GetBucketMetadata(
       storage::internal::GetBucketMetadataRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -115,8 +118,8 @@ TEST(TracingClientTest, GetBucketMetadata) {
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanNamed("storage::Client::GetBucketMetadata"),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, DeleteBucket) {
@@ -130,6 +133,7 @@ TEST(TracingClientTest, DeleteBucket) {
   auto actual =
       under_test.DeleteBucket(storage::internal::DeleteBucketRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -137,8 +141,8 @@ TEST(TracingClientTest, DeleteBucket) {
                   SpanNamed("storage::Client::DeleteBucket"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, UpdateBucket) {
@@ -152,6 +156,7 @@ TEST(TracingClientTest, UpdateBucket) {
   auto actual =
       under_test.UpdateBucket(storage::internal::UpdateBucketRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -159,8 +164,8 @@ TEST(TracingClientTest, UpdateBucket) {
                   SpanNamed("storage::Client::UpdateBucket"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, PatchBucket) {
@@ -173,6 +178,7 @@ TEST(TracingClientTest, PatchBucket) {
   auto under_test = TracingConnection(mock);
   auto actual = under_test.PatchBucket(storage::internal::PatchBucketRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -180,8 +186,8 @@ TEST(TracingClientTest, PatchBucket) {
                   SpanNamed("storage::Client::PatchBucket"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetNativeBucketIamPolicy) {
@@ -195,6 +201,7 @@ TEST(TracingClientTest, GetNativeBucketIamPolicy) {
   auto actual = under_test.GetNativeBucketIamPolicy(
       storage::internal::GetBucketIamPolicyRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -202,8 +209,8 @@ TEST(TracingClientTest, GetNativeBucketIamPolicy) {
                   SpanNamed("storage::Client::GetNativeBucketIamPolicy"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, SetNativeBucketIamPolicy) {
@@ -219,6 +226,7 @@ TEST(TracingClientTest, SetNativeBucketIamPolicy) {
           "test-bucket",
           storage::NativeIamPolicy(/*bindings=*/{}, /*etag*/ "test-etag")));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -226,8 +234,8 @@ TEST(TracingClientTest, SetNativeBucketIamPolicy) {
                   SpanNamed("storage::Client::SetNativeBucketIamPolicy"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, TestBucketIamPermissions) {
@@ -241,6 +249,7 @@ TEST(TracingClientTest, TestBucketIamPermissions) {
   auto actual = under_test.TestBucketIamPermissions(
       storage::internal::TestBucketIamPermissionsRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -248,8 +257,8 @@ TEST(TracingClientTest, TestBucketIamPermissions) {
                   SpanNamed("storage::Client::TestBucketIamPermissions"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, LockBucketRetentionPolicy) {
@@ -263,6 +272,7 @@ TEST(TracingClientTest, LockBucketRetentionPolicy) {
   auto actual = under_test.LockBucketRetentionPolicy(
       storage::internal::LockBucketRetentionPolicyRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -270,8 +280,8 @@ TEST(TracingClientTest, LockBucketRetentionPolicy) {
                   SpanNamed("storage::Client::LockBucketRetentionPolicy"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, InsertObjectMedia) {
@@ -285,6 +295,7 @@ TEST(TracingClientTest, InsertObjectMedia) {
   auto actual = under_test.InsertObjectMedia(
       storage::internal::InsertObjectMediaRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -292,8 +303,8 @@ TEST(TracingClientTest, InsertObjectMedia) {
                   SpanNamed("storage::Client::InsertObjectMedia"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, CopyObject) {
@@ -306,6 +317,7 @@ TEST(TracingClientTest, CopyObject) {
   auto under_test = TracingConnection(mock);
   auto actual = under_test.CopyObject(storage::internal::CopyObjectRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -313,8 +325,8 @@ TEST(TracingClientTest, CopyObject) {
                   SpanNamed("storage::Client::CopyObject"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetObjectMetadata) {
@@ -328,6 +340,7 @@ TEST(TracingClientTest, GetObjectMetadata) {
   auto actual = under_test.GetObjectMetadata(
       storage::internal::GetObjectMetadataRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -335,8 +348,8 @@ TEST(TracingClientTest, GetObjectMetadata) {
                   SpanNamed("storage::Client::GetObjectMetadata"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ReadObject) {
@@ -350,6 +363,7 @@ TEST(TracingClientTest, ReadObject) {
   auto actual =
       under_test.ReadObject(storage::internal::ReadObjectRangeRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -357,8 +371,8 @@ TEST(TracingClientTest, ReadObject) {
                   SpanNamed("storage::Client::ReadObject"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListObjects) {
@@ -371,6 +385,7 @@ TEST(TracingClientTest, ListObjects) {
   auto under_test = TracingConnection(mock);
   auto actual = under_test.ListObjects(storage::internal::ListObjectsRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -378,8 +393,8 @@ TEST(TracingClientTest, ListObjects) {
                   SpanNamed("storage::Client::ListObjects"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, DeleteObject) {
@@ -393,6 +408,7 @@ TEST(TracingClientTest, DeleteObject) {
   auto actual =
       under_test.DeleteObject(storage::internal::DeleteObjectRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -400,8 +416,8 @@ TEST(TracingClientTest, DeleteObject) {
                   SpanNamed("storage::Client::DeleteObject"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, UpdateObject) {
@@ -415,6 +431,7 @@ TEST(TracingClientTest, UpdateObject) {
   auto actual =
       under_test.UpdateObject(storage::internal::UpdateObjectRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -422,8 +439,8 @@ TEST(TracingClientTest, UpdateObject) {
                   SpanNamed("storage::Client::UpdateObject"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, PatchObject) {
@@ -436,6 +453,7 @@ TEST(TracingClientTest, PatchObject) {
   auto under_test = TracingConnection(mock);
   auto actual = under_test.PatchObject(storage::internal::PatchObjectRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -443,8 +461,8 @@ TEST(TracingClientTest, PatchObject) {
                   SpanNamed("storage::Client::PatchObject"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ComposeObject) {
@@ -458,6 +476,7 @@ TEST(TracingClientTest, ComposeObject) {
   auto actual =
       under_test.ComposeObject(storage::internal::ComposeObjectRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -465,8 +484,8 @@ TEST(TracingClientTest, ComposeObject) {
                   SpanNamed("storage::Client::ComposeObject"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, RewriteObject) {
@@ -480,6 +499,7 @@ TEST(TracingClientTest, RewriteObject) {
   auto actual =
       under_test.RewriteObject(storage::internal::RewriteObjectRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -487,8 +507,8 @@ TEST(TracingClientTest, RewriteObject) {
                   SpanNamed("storage::Client::RewriteObject"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, CreateResumableUpload) {
@@ -502,6 +522,7 @@ TEST(TracingClientTest, CreateResumableUpload) {
   auto actual = under_test.CreateResumableUpload(
       storage::internal::ResumableUploadRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(
@@ -510,8 +531,8 @@ TEST(TracingClientTest, CreateResumableUpload) {
           AllOf(SpanNamed("storage::Client::WriteObject/CreateResumableUpload"),
                 SpanHasInstrumentationScope(), SpanKindIsClient(),
                 SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                SpanHasAttributes(OTelAttribute<int>(
-                    "gl-cpp.status_code", static_cast<int>(code))))));
+                SpanHasAttributes(OTelAttribute<std::string>(
+                    "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, QueryResumableUpload) {
@@ -525,6 +546,7 @@ TEST(TracingClientTest, QueryResumableUpload) {
   auto actual = under_test.QueryResumableUpload(
       storage::internal::QueryResumableUploadRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(
@@ -533,8 +555,8 @@ TEST(TracingClientTest, QueryResumableUpload) {
           AllOf(SpanNamed("storage::Client::WriteObject/QueryResumableUpload"),
                 SpanHasInstrumentationScope(), SpanKindIsClient(),
                 SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                SpanHasAttributes(OTelAttribute<int>(
-                    "gl-cpp.status_code", static_cast<int>(code))))));
+                SpanHasAttributes(OTelAttribute<std::string>(
+                    "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, DeleteResumableUpload) {
@@ -548,6 +570,7 @@ TEST(TracingClientTest, DeleteResumableUpload) {
   auto actual = under_test.DeleteResumableUpload(
       storage::internal::DeleteResumableUploadRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -555,8 +578,8 @@ TEST(TracingClientTest, DeleteResumableUpload) {
                   SpanNamed("storage::Client::DeleteResumableUpload"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, UploadChunk) {
@@ -569,6 +592,7 @@ TEST(TracingClientTest, UploadChunk) {
   auto under_test = TracingConnection(mock);
   auto actual = under_test.UploadChunk(storage::internal::UploadChunkRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -576,8 +600,8 @@ TEST(TracingClientTest, UploadChunk) {
                   SpanNamed("storage::Client::WriteObject/UploadChunk"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListBucketAcl) {
@@ -591,6 +615,7 @@ TEST(TracingClientTest, ListBucketAcl) {
   auto actual =
       under_test.ListBucketAcl(storage::internal::ListBucketAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -598,8 +623,8 @@ TEST(TracingClientTest, ListBucketAcl) {
                   SpanNamed("storage::Client::ListBucketAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, CreateBucketAcl) {
@@ -613,6 +638,7 @@ TEST(TracingClientTest, CreateBucketAcl) {
   auto actual =
       under_test.CreateBucketAcl(storage::internal::CreateBucketAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -620,8 +646,8 @@ TEST(TracingClientTest, CreateBucketAcl) {
                   SpanNamed("storage::Client::CreateBucketAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, DeleteBucketAcl) {
@@ -635,6 +661,7 @@ TEST(TracingClientTest, DeleteBucketAcl) {
   auto actual =
       under_test.DeleteBucketAcl(storage::internal::DeleteBucketAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -642,8 +669,8 @@ TEST(TracingClientTest, DeleteBucketAcl) {
                   SpanNamed("storage::Client::DeleteBucketAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetBucketAcl) {
@@ -657,6 +684,7 @@ TEST(TracingClientTest, GetBucketAcl) {
   auto actual =
       under_test.GetBucketAcl(storage::internal::GetBucketAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -664,8 +692,8 @@ TEST(TracingClientTest, GetBucketAcl) {
                   SpanNamed("storage::Client::GetBucketAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, UpdateBucketAcl) {
@@ -679,6 +707,7 @@ TEST(TracingClientTest, UpdateBucketAcl) {
   auto actual =
       under_test.UpdateBucketAcl(storage::internal::UpdateBucketAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -686,8 +715,8 @@ TEST(TracingClientTest, UpdateBucketAcl) {
                   SpanNamed("storage::Client::UpdateBucketAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, PatchBucketAcl) {
@@ -703,6 +732,7 @@ TEST(TracingClientTest, PatchBucketAcl) {
           "test-bucket-name", "test-entity",
           storage::BucketAccessControlPatchBuilder()));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -710,8 +740,8 @@ TEST(TracingClientTest, PatchBucketAcl) {
                   SpanNamed("storage::Client::PatchBucketAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListObjectAcl) {
@@ -725,6 +755,7 @@ TEST(TracingClientTest, ListObjectAcl) {
   auto actual =
       under_test.ListObjectAcl(storage::internal::ListObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -732,8 +763,8 @@ TEST(TracingClientTest, ListObjectAcl) {
                   SpanNamed("storage::Client::ListObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, CreateObjectAcl) {
@@ -747,6 +778,7 @@ TEST(TracingClientTest, CreateObjectAcl) {
   auto actual =
       under_test.CreateObjectAcl(storage::internal::CreateObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -754,8 +786,8 @@ TEST(TracingClientTest, CreateObjectAcl) {
                   SpanNamed("storage::Client::CreateObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, DeleteObjectAcl) {
@@ -769,6 +801,7 @@ TEST(TracingClientTest, DeleteObjectAcl) {
   auto actual =
       under_test.DeleteObjectAcl(storage::internal::DeleteObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -776,8 +809,8 @@ TEST(TracingClientTest, DeleteObjectAcl) {
                   SpanNamed("storage::Client::DeleteObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetObjectAcl) {
@@ -791,6 +824,7 @@ TEST(TracingClientTest, GetObjectAcl) {
   auto actual =
       under_test.GetObjectAcl(storage::internal::GetObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -798,8 +832,8 @@ TEST(TracingClientTest, GetObjectAcl) {
                   SpanNamed("storage::Client::GetObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, UpdateObjectAcl) {
@@ -813,6 +847,7 @@ TEST(TracingClientTest, UpdateObjectAcl) {
   auto actual =
       under_test.UpdateObjectAcl(storage::internal::UpdateObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -820,8 +855,8 @@ TEST(TracingClientTest, UpdateObjectAcl) {
                   SpanNamed("storage::Client::UpdateObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, PatchObjectAcl) {
@@ -837,6 +872,7 @@ TEST(TracingClientTest, PatchObjectAcl) {
           "test-bucket-name", "test-object-name", "test-entity",
           storage::ObjectAccessControlPatchBuilder()));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -844,8 +880,8 @@ TEST(TracingClientTest, PatchObjectAcl) {
                   SpanNamed("storage::Client::PatchObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListDefaultObjectAcl) {
@@ -859,6 +895,7 @@ TEST(TracingClientTest, ListDefaultObjectAcl) {
   auto actual = under_test.ListDefaultObjectAcl(
       storage::internal::ListDefaultObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -866,8 +903,8 @@ TEST(TracingClientTest, ListDefaultObjectAcl) {
                   SpanNamed("storage::Client::ListDefaultObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, CreateDefaultObjectAcl) {
@@ -881,6 +918,7 @@ TEST(TracingClientTest, CreateDefaultObjectAcl) {
   auto actual = under_test.CreateDefaultObjectAcl(
       storage::internal::CreateDefaultObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -888,8 +926,8 @@ TEST(TracingClientTest, CreateDefaultObjectAcl) {
                   SpanNamed("storage::Client::CreateDefaultObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, DeleteDefaultObjectAcl) {
@@ -903,6 +941,7 @@ TEST(TracingClientTest, DeleteDefaultObjectAcl) {
   auto actual = under_test.DeleteDefaultObjectAcl(
       storage::internal::DeleteDefaultObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -910,8 +949,8 @@ TEST(TracingClientTest, DeleteDefaultObjectAcl) {
                   SpanNamed("storage::Client::DeleteDefaultObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetDefaultObjectAcl) {
@@ -925,6 +964,7 @@ TEST(TracingClientTest, GetDefaultObjectAcl) {
   auto actual = under_test.GetDefaultObjectAcl(
       storage::internal::GetDefaultObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -932,8 +972,8 @@ TEST(TracingClientTest, GetDefaultObjectAcl) {
                   SpanNamed("storage::Client::GetDefaultObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, UpdateDefaultObjectAcl) {
@@ -947,6 +987,7 @@ TEST(TracingClientTest, UpdateDefaultObjectAcl) {
   auto actual = under_test.UpdateDefaultObjectAcl(
       storage::internal::UpdateDefaultObjectAclRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -954,8 +995,8 @@ TEST(TracingClientTest, UpdateDefaultObjectAcl) {
                   SpanNamed("storage::Client::UpdateDefaultObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, PatchDefaultObjectAcl) {
@@ -971,6 +1012,7 @@ TEST(TracingClientTest, PatchDefaultObjectAcl) {
           "test-bucket-name", "test-entity",
           storage::ObjectAccessControlPatchBuilder()));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -978,8 +1020,8 @@ TEST(TracingClientTest, PatchDefaultObjectAcl) {
                   SpanNamed("storage::Client::PatchDefaultObjectAcl"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetServiceAccount) {
@@ -993,6 +1035,7 @@ TEST(TracingClientTest, GetServiceAccount) {
   auto actual = under_test.GetServiceAccount(
       storage::internal::GetProjectServiceAccountRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1000,8 +1043,8 @@ TEST(TracingClientTest, GetServiceAccount) {
                   SpanNamed("storage::Client::GetServiceAccount"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListHmacKeys) {
@@ -1015,6 +1058,7 @@ TEST(TracingClientTest, ListHmacKeys) {
   auto actual = under_test.ListHmacKeys(
       storage::internal::ListHmacKeysRequest("test-project-id"));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1022,8 +1066,8 @@ TEST(TracingClientTest, ListHmacKeys) {
                   SpanNamed("storage::Client::ListHmacKeys"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, CreateHmacKey) {
@@ -1037,6 +1081,7 @@ TEST(TracingClientTest, CreateHmacKey) {
   auto actual =
       under_test.CreateHmacKey(storage::internal::CreateHmacKeyRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1044,8 +1089,8 @@ TEST(TracingClientTest, CreateHmacKey) {
                   SpanNamed("storage::Client::CreateHmacKey"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, DeleteHmacKey) {
@@ -1060,6 +1105,7 @@ TEST(TracingClientTest, DeleteHmacKey) {
       under_test.DeleteHmacKey(storage::internal::DeleteHmacKeyRequest(
           "test-project-id", "test-access-id"));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1067,8 +1113,8 @@ TEST(TracingClientTest, DeleteHmacKey) {
                   SpanNamed("storage::Client::DeleteHmacKey"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetHmacKey) {
@@ -1082,6 +1128,7 @@ TEST(TracingClientTest, GetHmacKey) {
   auto actual = under_test.GetHmacKey(storage::internal::GetHmacKeyRequest(
       "test-project-id", "test-access-id"));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1089,8 +1136,8 @@ TEST(TracingClientTest, GetHmacKey) {
                   SpanNamed("storage::Client::GetHmacKey"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, UpdateHmacKey) {
@@ -1105,6 +1152,7 @@ TEST(TracingClientTest, UpdateHmacKey) {
       under_test.UpdateHmacKey(storage::internal::UpdateHmacKeyRequest(
           "test-project-id", "test-access-id", storage::HmacKeyMetadata()));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1112,8 +1160,8 @@ TEST(TracingClientTest, UpdateHmacKey) {
                   SpanNamed("storage::Client::UpdateHmacKey"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, SignBlob) {
@@ -1127,6 +1175,7 @@ TEST(TracingClientTest, SignBlob) {
   auto actual = under_test.SignBlob(storage::internal::SignBlobRequest(
       "test-service-account", "test-encoded-blob", {}));
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1134,8 +1183,8 @@ TEST(TracingClientTest, SignBlob) {
                   SpanNamed("storage::Client::SignBlob"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, ListNotifications) {
@@ -1149,6 +1198,7 @@ TEST(TracingClientTest, ListNotifications) {
   auto actual = under_test.ListNotifications(
       storage::internal::ListNotificationsRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1156,8 +1206,8 @@ TEST(TracingClientTest, ListNotifications) {
                   SpanNamed("storage::Client::ListNotifications"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, CreateNotification) {
@@ -1171,6 +1221,7 @@ TEST(TracingClientTest, CreateNotification) {
   auto actual = under_test.CreateNotification(
       storage::internal::CreateNotificationRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1178,8 +1229,8 @@ TEST(TracingClientTest, CreateNotification) {
                   SpanNamed("storage::Client::CreateNotification"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, GetNotification) {
@@ -1193,6 +1244,7 @@ TEST(TracingClientTest, GetNotification) {
   auto actual =
       under_test.GetNotification(storage::internal::GetNotificationRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1200,8 +1252,8 @@ TEST(TracingClientTest, GetNotification) {
                   SpanNamed("storage::Client::GetNotification"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 TEST(TracingClientTest, DeleteNotification) {
@@ -1215,6 +1267,7 @@ TEST(TracingClientTest, DeleteNotification) {
   auto actual = under_test.DeleteNotification(
       storage::internal::DeleteNotificationRequest());
   auto const code = PermanentError().code();
+  auto const code_str = StatusCodeToString(code);
   auto const msg = PermanentError().message();
   EXPECT_THAT(actual, StatusIs(code));
   EXPECT_THAT(span_catcher->GetSpans(),
@@ -1222,8 +1275,8 @@ TEST(TracingClientTest, DeleteNotification) {
                   SpanNamed("storage::Client::DeleteNotification"),
                   SpanHasInstrumentationScope(), SpanKindIsClient(),
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
-                  SpanHasAttributes(OTelAttribute<int>(
-                      "gl-cpp.status_code", static_cast<int>(code))))));
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", code_str)))));
 }
 
 }  // namespace

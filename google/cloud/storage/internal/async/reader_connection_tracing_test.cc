@@ -92,7 +92,7 @@ TEST(ReaderConnectionTracing, WithError) {
   (void)f2.get();
 
   auto spans = span_catcher->GetSpans();
-  auto const expected_code = static_cast<std::int32_t>(PermanentError().code());
+  auto const expected_code = StatusCodeToString(PermanentError().code());
   EXPECT_THAT(
       spans,
       ElementsAre(AllOf(
@@ -100,7 +100,7 @@ TEST(ReaderConnectionTracing, WithError) {
           SpanWithStatus(opentelemetry::trace::StatusCode::kError,
                          PermanentError().message()),
           SpanHasAttributes(
-              OTelAttribute<std::int32_t>("gl-cpp.status_code", expected_code)),
+              OTelAttribute<std::string>("gl-cpp.status_code", expected_code)),
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanHasEvents(
               AllOf(

@@ -32,7 +32,7 @@ namespace cloud {
 namespace pubsub_internal {
 namespace {
 
-auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
+auto constexpr kErrorCode = "ABORTED";
 
 using ::google::cloud::pubsub::MessageBuilder;
 using ::google::cloud::pubsub::Topic;
@@ -86,7 +86,7 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnSuccess) {
               OTelAttribute<std::string>(
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
-              OTelAttribute<int>("gl-cpp.status_code", 0),
+              OTelAttribute<std::string>("gl-cpp.status_code", "OK"),
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",
                                           45),
@@ -129,7 +129,7 @@ TEST(BlockingPublisherTracingConnectionTest, PublishSpanOnError) {
               OTelAttribute<std::string>(
                   "messaging.gcp_pubsub.message.ordering_key",
                   "ordering-key-0"),
-              OTelAttribute<int>("gl-cpp.status_code", kErrorCode),
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode),
               OTelAttribute<std::int64_t>(/*sc::kMessagingMessageEnvelopeSize=*/
                                           "messaging.message.envelope.size",
                                           45)))));

@@ -67,16 +67,17 @@ TEST(FlowControlledPublisherTracingConnectionTest, PublishSpan) {
                       .get();
 
   EXPECT_THAT(response, StatusIs(StatusCode::kOk));
-  EXPECT_THAT(span_catcher->GetSpans(),
-              ElementsAre(AllOf(
-                  SpanHasInstrumentationScope(), SpanKindIsClient(),
-                  SpanNamed("publisher flow control"),
-                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-                  SpanHasAttributes(
-                      OTelAttribute<std::string>(
-                          sc::kCodeFunction,
-                          "pubsub::FlowControlledPublisherConnection::Publish"),
-                      OTelAttribute<int>("gl-cpp.status_code", 0)))));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      ElementsAre(
+          AllOf(SpanHasInstrumentationScope(), SpanKindIsClient(),
+                SpanNamed("publisher flow control"),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                SpanHasAttributes(
+                    OTelAttribute<std::string>(
+                        sc::kCodeFunction,
+                        "pubsub::FlowControlledPublisherConnection::Publish"),
+                    OTelAttribute<std::string>("gl-cpp.status_code", "OK")))));
 }
 
 TEST(FlowControlledPublisherTracingConnectionTest, FlushSpan) {
@@ -90,13 +91,13 @@ TEST(FlowControlledPublisherTracingConnectionTest, FlushSpan) {
 
   connection->Flush(PublisherConnection::FlushParams{});
 
-  EXPECT_THAT(
-      span_catcher->GetSpans(),
-      ElementsAre(AllOf(
-          SpanHasInstrumentationScope(), SpanKindIsClient(),
-          SpanNamed("pubsub::FlowControlledPublisherConnection::Flush"),
-          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
+  EXPECT_THAT(span_catcher->GetSpans(),
+              ElementsAre(AllOf(
+                  SpanHasInstrumentationScope(), SpanKindIsClient(),
+                  SpanNamed("pubsub::FlowControlledPublisherConnection::Flush"),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanHasAttributes(OTelAttribute<std::string>(
+                      "gl-cpp.status_code", "OK")))));
 }
 
 TEST(FlowControlledPublisher, ResumePublishSpan) {
@@ -116,7 +117,8 @@ TEST(FlowControlledPublisher, ResumePublishSpan) {
           SpanHasInstrumentationScope(), SpanKindIsClient(),
           SpanNamed("pubsub::FlowControlledPublisherConnection::ResumePublish"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanHasAttributes(OTelAttribute<int>("gl-cpp.status_code", 0)))));
+          SpanHasAttributes(
+              OTelAttribute<std::string>("gl-cpp.status_code", "OK")))));
 }
 
 TEST(MakeFlowControlledPublisherTracingConnectionTest,
