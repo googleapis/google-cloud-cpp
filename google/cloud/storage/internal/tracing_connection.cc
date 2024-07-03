@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/tracing_connection.h"
+#include "google/cloud/storage/internal/tracing_object_read_source.h"
 #include "google/cloud/internal/opentelemetry.h"
 
 namespace google {
@@ -128,8 +129,11 @@ TracingConnection::ReadObject(
     storage::internal::ReadObjectRangeRequest const& request) {
   auto span = internal::MakeSpan("storage::Client::ReadObject");
   auto scope = opentelemetry::trace::Scope(span);
-  // TODO(#11393) - add a wrapper for ReadObjectSource.
-  return internal::EndSpan(*span, impl_->ReadObject(request));
+  auto reader = impl_->ReadObject(request);
+  if (!reader) return internal::EndSpan(*span, std::move(reader));
+  return std::unique_ptr<storage::internal::ObjectReadSource>(
+      std::make_unique<TracingObjectReadSource>(std::move(span),
+                                                *std::move(reader)));
 }
 
 StatusOr<storage::internal::ListObjectsResponse> TracingConnection::ListObjects(

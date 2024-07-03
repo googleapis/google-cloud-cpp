@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -28,11 +29,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::storage::testing::MockClient;
+using ::google::cloud::storage::testing::MockObjectReadSource;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanIsRoot;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithStatus;
@@ -40,6 +43,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
+using ::testing::Not;
 using ::testing::Return;
 
 TEST(TracingClientTest, Options) {
@@ -373,6 +377,44 @@ TEST(TracingClientTest, ReadObject) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
                   SpanHasAttributes(OTelAttribute<std::string>(
                       "gl-cpp.status_code", code_str)))));
+}
+
+TEST(TracingClientTest, ReadObjectPartialSuccess) {
+  using ::google::cloud::storage::internal::ObjectReadSource;
+  using ::google::cloud::storage::internal::ReadSourceResult;
+
+  auto span_catcher = InstallSpanCatcher();
+  auto mock = std::make_shared<MockClient>();
+  EXPECT_CALL(*mock, ReadObject).WillOnce([](auto const&) {
+    EXPECT_TRUE(ThereIsAnActiveSpan());
+    internal::EndSpan(*internal::MakeSpan("Read1"));
+    internal::EndSpan(*internal::MakeSpan("Read2"));
+    auto source = std::make_unique<MockObjectReadSource>();
+    EXPECT_CALL(*source, Read)
+        .WillOnce(Return(ReadSourceResult{}))
+        .WillOnce(Return(PermanentError()));
+    return std::unique_ptr<ObjectReadSource>(std::move(source));
+  });
+  auto under_test = TracingConnection(mock);
+  auto actual =
+      under_test.ReadObject(storage::internal::ReadObjectRangeRequest());
+  ASSERT_STATUS_OK(actual);
+  auto reader = *std::move(actual);
+
+  auto const code = PermanentError().code();
+  auto const msg = PermanentError().message();
+  EXPECT_STATUS_OK(reader->Read(nullptr, 1024));
+  EXPECT_THAT(reader->Read(nullptr, 1024), StatusIs(code));
+  EXPECT_THAT(
+      span_catcher->GetSpans(),
+      UnorderedElementsAre(
+          AllOf(SpanNamed("storage::Client::ReadObject"),
+                SpanHasInstrumentationScope(), SpanKindIsClient(), SpanIsRoot(),
+                SpanWithStatus(opentelemetry::trace::StatusCode::kError, msg),
+                SpanHasAttributes(OTelAttribute<std::string>(
+                    "gl-cpp.status_code", StatusCodeToString(code)))),
+          AllOf(SpanNamed("Read1"), Not(SpanIsRoot())),
+          AllOf(SpanNamed("Read2"), Not(SpanIsRoot()))));
 }
 
 TEST(TracingClientTest, ListObjects) {
