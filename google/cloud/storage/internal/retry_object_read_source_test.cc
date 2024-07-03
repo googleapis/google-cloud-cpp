@@ -214,7 +214,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 
   EXPECT_EQ(0, num_backoff_policy_called);
 
-  // We really do not care how many times the policy is closed before we make
+  // We really do not care how many times the policy is cloned before we make
   // the first `Read()` call.  We only care about how it increases.
   auto const initial_clone_count = backoff_policy_mock.NumClones();
   auto source = client->ReadObject(ReadObjectRangeRequest{});
@@ -293,7 +293,6 @@ TEST(RetryObjectReadSourceTest, ResumePolicyOrder) {
                                           HttpResponse{100, "", {}}}));
     EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
     // No backoffs to resume after a (partially) successful request:
-    //    EXPECT_CALL(backoff, Call).Times(1);
     EXPECT_CALL(factory, Call).WillOnce(make_partial);
     EXPECT_CALL(backoff, Call).Times(1);
     EXPECT_CALL(factory, Call).WillOnce(make_partial);
