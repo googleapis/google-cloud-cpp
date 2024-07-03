@@ -238,7 +238,7 @@ include(CTest)
 # used in the depends condition of the next option.
 include(EnableCxxExceptions)
 
-if (BUILD_TESTING)
+if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_WITH_MOCKS)
     # Discover and add targets for the GTest::gtest and GTest::gmock libraries.
     include(FindGMockWithTargets)
 endif ()
