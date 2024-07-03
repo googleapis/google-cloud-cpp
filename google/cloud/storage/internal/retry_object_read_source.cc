@@ -37,13 +37,13 @@ std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
 
 RetryObjectReadSource::RetryObjectReadSource(
     ReadSourceFactory factory,
-    google::cloud::internal::ImmutableOptions current,
+    google::cloud::internal::ImmutableOptions options,
     ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy,
     std::function<void(std::chrono::milliseconds)> backoff)
     : factory_(std::move(factory)),
-      current_(std::move(current)),
+      options_(std::move(options)),
       request_(std::move(request)),
       child_(std::move(child)),
       retry_policy_prototype_(std::move(retry_policy)),
@@ -55,12 +55,12 @@ RetryObjectReadSource::RetryObjectReadSource(
 
 RetryObjectReadSource::RetryObjectReadSource(
     ReadSourceFactory factory,
-    google::cloud::internal::ImmutableOptions current,
+    google::cloud::internal::ImmutableOptions options,
     ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy)
     : RetryObjectReadSource(
-          std::move(factory), std::move(current), std::move(request),
+          std::move(factory), std::move(options), std::move(request),
           std::move(child), std::move(retry_policy), std::move(backoff_policy),
           [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); }) {
 }
@@ -148,7 +148,7 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
     return Status{};
   };
 
-  OptionsSpan const span(current_);
+  OptionsSpan const span(options_);
   auto child = factory_(request_, retry_policy, backoff_policy);
   if (!child) return std::move(child).status();
   if (!is_gunzipped_) return on_success(*std::move(child));

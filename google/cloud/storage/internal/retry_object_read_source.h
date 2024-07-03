@@ -48,14 +48,14 @@ class RetryObjectReadSource : public ObjectReadSource {
           ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>;
 
   RetryObjectReadSource(ReadSourceFactory factory,
-                        google::cloud::internal::ImmutableOptions current,
+                        google::cloud::internal::ImmutableOptions options,
                         ReadObjectRangeRequest request,
                         std::unique_ptr<ObjectReadSource> child,
                         std::unique_ptr<RetryPolicy> retry_policy,
                         std::unique_ptr<BackoffPolicy> backoff_policy,
                         std::function<void(std::chrono::milliseconds)> backoff);
   RetryObjectReadSource(ReadSourceFactory factory,
-                        google::cloud::internal::ImmutableOptions current,
+                        google::cloud::internal::ImmutableOptions options,
                         ReadObjectRangeRequest request,
                         std::unique_ptr<ObjectReadSource> child,
                         std::unique_ptr<RetryPolicy> retry_policy,
@@ -72,7 +72,7 @@ class RetryObjectReadSource : public ObjectReadSource {
       std::unique_ptr<ObjectReadSource> child, std::int64_t count) const;
 
   ReadSourceFactory factory_;
-  google::cloud::internal::ImmutableOptions current_;
+  google::cloud::internal::ImmutableOptions options_;
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
   absl::optional<std::int64_t> generation_;
