@@ -6,9 +6,31 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.27.0 - TBD
 
-* We have stopped testing on CentOS 7, Debian 10 (Buster), and RockyLinux 8 as
+- We have stopped testing on CentOS 7, Debian 10 (Buster), and RockyLinux 8 as
   these distros are EOL or in some form of "security only" support period.
   Note that we used CentOS 7 as a proxy for testing RedHat Enterprise Linux 7.
+
+### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
+
+#### Bazel
+
+The `--io_opentelemetry_cpp//api:with_abseil` flag was marked as deprecated in
+OpenTelemetry v1.16.0. It may be removed in future versions.
+
+In previous versions of `opentelemetry-cpp`, this flag was required for
+compatibility with Abseil. It is no longer necessary, as `opentelemetry-cpp` is
+compiled with Abseil by default.
+
+We have stopped using the flag to validate Bazel build configurations with
+OpenTelemetry tracing enabled.
+
+If you are building `google-cloud-cpp` with `opentelemetry-cpp` < v1.16.0, you
+will need to supply the flag for compatibility with Abseil. The following can be
+added to your `.bazelrc` file.
+
+```bash
+build --@io_opentelemetry_cpp//api:with_abseil
+```
 
 ## v2.26.0 - 2024-07
 

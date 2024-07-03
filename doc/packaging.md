@@ -126,9 +126,9 @@ quickstart guides also cover this use-case.
 `google-cloud-cpp` also has an **optional** dependency on the following
 libraries:
 
-| Library                           | Minimum version | Description                |
-| --------------------------------- | --------------- | -------------------------- |
-| [OpenTelemetry][opentelemetry-gh] | 1.9.1           | An observability framework |
+| Library                           | Minimum version | Description                    |
+| --------------------------------- | --------------- | ------------------------------ |
+| [OpenTelemetry][opentelemetry-gh] | 1.9.1           | An observability framework[^7] |
 
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
@@ -1531,6 +1531,9 @@ cmake --build cmake-out --target install
     workaround conflicts between system pre-processor macros and symbols used in
     the Protobuf-generated code.
 
+[^7]: See the [OpenTelemetry quickstart][otel-qs] for detailed instructions on how
+    to enable and build this optional dependency.
+
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [abseil/abseil-cpp#696]: https://github.com/abseil/abseil-cpp/issues/696
 [crc32c-gh]: https://github.com/google/crc32c
@@ -1543,6 +1546,7 @@ cmake --build cmake-out --target install
 [nlohmann-json-gh]: https://github.com/nlohmann/json
 [openssl-gh]: https://github.com/openssl/openssl
 [opentelemetry-gh]: https://github.com/open-telemetry/opentelemetry-cpp
+[otel-qs]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/opentelemetry/quickstart#opentelemetry-dependency
 [protobuf-gh]: https://github.com/protocolbuffers/protobuf
 [spanner-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/spanner#readme
 [storage-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/storage#readme
