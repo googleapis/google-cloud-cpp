@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/text_format.h>
+#include <google/storage/v2/storage.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -41,8 +42,8 @@ using ::testing::ByMove;
 using ::testing::NotNull;
 using ::testing::Return;
 
-/// @test Verify downloads have a default timeout.
-TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
+/// @test Verify downloads can be configured to have no timeouts.
+TEST(GrpcClientReadObjectTest, WithNoTimeout) {
   auto constexpr kExpectedRequestText =
       R"pb(bucket: "projects/_/buckets/test-bucket" object: "test-object")pb";
   ReadObjectRequest expected_request;
@@ -80,15 +81,17 @@ TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
   EXPECT_EQ(response->bytes_received, 0);
 }
 
-/// @test Verify options can configured a non-default timeout.
-TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
+/// @test Verify options can configured to have timeouts.
+TEST(GrpcClientReadObjectTest, WithDefaultTimeout) {
   auto constexpr kExpectedRequestText =
       R"pb(bucket: "projects/_/buckets/test-bucket" object: "test-object")pb";
   ReadObjectRequest expected_request;
   ASSERT_TRUE(
       TextFormat::ParseFromString(kExpectedRequestText, &expected_request));
 
-  auto const configured_timeout = std::chrono::seconds(3);
+  auto constexpr kStallTimeout = std::chrono::seconds(3);
+  auto constexpr kStallMinimumRate =
+      2 * google::storage::v2::ServiceConstants::MAX_READ_CHUNK_BYTES;
 
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ReadObject)
@@ -101,7 +104,7 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
       });
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   EXPECT_CALL(*mock_cq,
-              MakeRelativeTimer(std::chrono::nanoseconds(configured_timeout)))
+              MakeRelativeTimer(std::chrono::nanoseconds(kStallTimeout) / 2))
       .WillOnce(Return(ByMove(make_ready_future(
           make_status_or(std::chrono::system_clock::now())))));
   auto cq = CompletionQueue(mock_cq);
@@ -110,7 +113,8 @@ TEST(GrpcClientReadObjectTest, WithExplicitTimeout) {
   auto client = std::make_unique<GrpcStub>(
       mock, iam,
       Options{}
-          .set<storage::DownloadStallTimeoutOption>(configured_timeout)
+          .set<storage::DownloadStallTimeoutOption>(kStallTimeout)
+          .set<storage::DownloadStallMinimumRateOption>(kStallMinimumRate)
           .set<GrpcCompletionQueueOption>(cq));
   auto context = rest_internal::RestContext{};
   auto stream = client->ReadObject(
