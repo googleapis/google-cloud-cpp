@@ -365,36 +365,39 @@ StatusOr<ObjectMetadata> StorageConnectionImpl::GetObjectMetadata(
       google::cloud::internal::CurrentOptions(), request, __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectReadSource>>
-StorageConnectionImpl::ReadObjectNotWrapped(
-    ReadObjectRangeRequest const& request, RetryPolicy& retry_policy,
-    BackoffPolicy& backoff_policy) {
-  auto const idempotency = current_idempotency_policy().IsIdempotent(request)
-                               ? Idempotency::kIdempotent
-                               : Idempotency::kNonIdempotent;
-  return RestRetryLoop(
-      retry_policy, backoff_policy, idempotency,
-      [token = MakeIdempotencyToken(), this](
-          rest_internal::RestContext& context, Options const& options,
-          auto const& request) {
-        context.AddHeader(kIdempotencyTokenHeader, token);
-        return stub_->ReadObject(context, options, request);
-      },
-      google::cloud::internal::CurrentOptions(), request, __func__);
-}
-
 StatusOr<std::unique_ptr<ObjectReadSource>> StorageConnectionImpl::ReadObject(
     ReadObjectRangeRequest const& request) {
-  auto retry_policy = current_retry_policy();
-  auto backoff_policy = current_backoff_policy();
-  auto child = ReadObjectNotWrapped(request, *retry_policy, *backoff_policy);
-  if (!child) {
-    return child;
-  }
+  auto current = google::cloud::internal::SaveCurrentOptions();
+
   auto self = shared_from_this();
-  return std::unique_ptr<ObjectReadSource>(new RetryObjectReadSource(
-      self, request, *std::move(child), std::move(retry_policy),
-      std::move(backoff_policy)));
+  auto const* where = __func__;
+  auto factory = [self = shared_from_this(), current, where](
+                     ReadObjectRangeRequest const& request,
+                     RetryPolicy& retry_policy, BackoffPolicy& backoff_policy) {
+    auto const idempotency =
+        current->get<IdempotencyPolicyOption>()->IsIdempotent(request)
+            ? Idempotency::kIdempotent
+            : Idempotency::kNonIdempotent;
+    return RestRetryLoop(
+        retry_policy, backoff_policy, idempotency,
+        [self, token = self->MakeIdempotencyToken()](
+            rest_internal::RestContext& context, Options const& options,
+            ReadObjectRangeRequest const& request) {
+          context.AddHeader(kIdempotencyTokenHeader, token);
+          return self->stub_->ReadObject(context, options, request);
+        },
+        *current, request, where);
+  };
+
+  auto retry_policy = current->get<RetryPolicyOption>()->clone();
+  auto backoff_policy = current->get<BackoffPolicyOption>()->clone();
+  auto child = factory(request, *retry_policy, *backoff_policy);
+  if (!child) return child;
+
+  return std::unique_ptr<ObjectReadSource>(
+      std::make_unique<RetryObjectReadSource>(
+          std::move(factory), std::move(current), request, *std::move(child),
+          std::move(retry_policy), std::move(backoff_policy)));
 }
 
 StatusOr<ListObjectsResponse> StorageConnectionImpl::ListObjects(

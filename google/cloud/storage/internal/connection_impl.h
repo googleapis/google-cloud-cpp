@@ -71,9 +71,6 @@ class StorageConnectionImpl
   StatusOr<ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
 
-  /// Call ReadObject() but do not wrap the result in a RetryObjectReadSource.
-  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectNotWrapped(
-      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&);
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
 

@@ -134,7 +134,7 @@ TEST(StorageConnectionImpl, ReadObjectTooManyFailures) {
       StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ReadObject(ReadObjectRangeRequest()).status();
-  EXPECT_THAT(response, StoppedOnTooManyTransients("ReadObjectNotWrapped"));
+  EXPECT_THAT(response, StoppedOnTooManyTransients("ReadObject"));
   EXPECT_THAT(transient.captured_tokens(), RetryLoopUsesSingleToken());
   EXPECT_THAT(transient.captured_authority_options(), RetryLoopUsesOptions());
 }
@@ -148,7 +148,7 @@ TEST(StorageConnectionImpl, ReadObjectPermanentFailure) {
       StorageConnectionImpl::Create(std::move(mock), RetryTestOptions());
   google::cloud::internal::OptionsSpan span(client->options());
   auto response = client->ReadObject(ReadObjectRangeRequest()).status();
-  EXPECT_THAT(response, StoppedOnPermanentError("ReadObjectNotWrapped"));
+  EXPECT_THAT(response, StoppedOnPermanentError("ReadObject"));
   EXPECT_THAT(permanent.captured_tokens(), RetryLoopUsesSingleToken());
   EXPECT_THAT(permanent.captured_authority_options(), RetryLoopUsesOptions());
 }

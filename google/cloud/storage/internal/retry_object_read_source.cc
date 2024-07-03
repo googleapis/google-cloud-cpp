@@ -25,7 +25,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::internal::OptionsSpan;
 
 std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
@@ -37,11 +36,14 @@ std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
 }
 
 RetryObjectReadSource::RetryObjectReadSource(
-    std::shared_ptr<StorageConnectionImpl> connection,
+    ReadSourceFactory factory,
+    google::cloud::internal::ImmutableOptions options,
     ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
     std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy)
-    : connection_(std::move(connection)),
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::function<void(std::chrono::milliseconds)> backoff)
+    : factory_(std::move(factory)),
+      options_(std::move(options)),
       request_(std::move(request)),
       child_(std::move(child)),
       retry_policy_prototype_(std::move(retry_policy)),
@@ -49,7 +51,19 @@ RetryObjectReadSource::RetryObjectReadSource(
       offset_direction_(request_.HasOption<ReadLast>() ? kFromEnd
                                                        : kFromBeginning),
       current_offset_(InitialOffset(offset_direction_, request_)),
-      span_options_(CurrentOptions()) {}
+      backoff_(std::move(backoff)) {}
+
+RetryObjectReadSource::RetryObjectReadSource(
+    ReadSourceFactory factory,
+    google::cloud::internal::ImmutableOptions options,
+    ReadObjectRangeRequest request, std::unique_ptr<ObjectReadSource> child,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy)
+    : RetryObjectReadSource(
+          std::move(factory), std::move(options), std::move(request),
+          std::move(child), std::move(retry_policy), std::move(backoff_policy),
+          [](std::chrono::milliseconds d) { std::this_thread::sleep_for(d); }) {
+}
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
@@ -74,7 +88,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   auto retry_policy = retry_policy_prototype_->clone();
   int counter = 0;
   for (; !result && retry_policy->OnFailure(result.status());
-       std::this_thread::sleep_for(backoff_policy->OnCompletion()),
+       backoff_(backoff_policy->OnCompletion()),
        result = child_->Read(buf, n)) {
     // A Read() request failed, most likely that means the connection failed or
     // stalled. The current child might no longer be usable, so we will try to
@@ -134,9 +148,8 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
     return Status{};
   };
 
-  OptionsSpan const span(span_options_);
-  auto child =
-      connection_->ReadObjectNotWrapped(request_, retry_policy, backoff_policy);
+  OptionsSpan const span(options_);
+  auto child = factory_(request_, retry_policy, backoff_policy);
   if (!child) return std::move(child).status();
   if (!is_gunzipped_) return on_success(*std::move(child));
 
@@ -148,7 +161,7 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
 
   // Try again, eventually the retry policy will expire and this will fail.
   if (!retry_policy.OnFailure(child.status())) return std::move(child).status();
-  std::this_thread::sleep_for(backoff_policy.OnCompletion());
+  backoff_(backoff_policy.OnCompletion());
 
   return MakeChild(retry_policy, backoff_policy);
 }
