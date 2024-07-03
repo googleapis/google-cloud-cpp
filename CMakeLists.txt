@@ -30,9 +30,9 @@ if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")
 endif ()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.3)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.5)
         message(
-            WARNING "The `google-cloud-cpp` library is tested with GCC >= 7.3."
+            WARNING "The `google-cloud-cpp` library is tested with GCC >= 7.5."
                     " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

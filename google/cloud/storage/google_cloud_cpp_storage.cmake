@@ -290,12 +290,10 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_storage
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-# GCC-7.3 (the default GCC version on Ubuntu:18.04) issues a warning (a member
-# variable may be used without being initialized), in this file. GCC-8.0 no
-# longer emits that diagnostic, and neither does Clang. On the assumption that
-# this is a spurious warning we disable it for older versions of GCC. I (coryan)
-# did not research in exactly what version was this warning introduced, and when
-# it was fixed. I do not believe we need to be that accurate.
+# GCC-7.x issues a warning (a member variable may be used without being
+# initialized), in this file. GCC-8.0 no longer emits that diagnostic, and
+# neither does Clang. On the assumption that this is a spurious warning we
+# disable it for older versions of GCC.
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" AND ${CMAKE_CXX_COMPILER_VERSION}
                                                 VERSION_LESS 8.0)
     set_property(
