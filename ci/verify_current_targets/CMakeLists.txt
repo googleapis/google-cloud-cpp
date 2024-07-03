@@ -50,7 +50,7 @@ find_package(Threads REQUIRED)
 include(CTest)
 
 function (add_test_case name)
-    add_executable("${name}" "verify_current_targets.cc")
+    add_executable("${name}" verify_current_targets.cc)
     target_link_libraries("${name}" PRIVATE ${ARGN})
     add_test(NAME "${name}" COMMAND "${name}")
 endfunction ()
