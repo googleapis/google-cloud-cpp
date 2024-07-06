@@ -19,7 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include <nlohmann/json_fwd.hpp>
+#include <nlohmann/json.hpp>
 #include <string>
 
 namespace google {
