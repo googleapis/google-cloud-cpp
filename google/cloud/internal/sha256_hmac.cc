@@ -38,6 +38,11 @@ Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
                           std::size_t count) {
   Sha256Type hash;
 #ifdef _WIN32
+// Workaround missing macros in MinGW-w64:
+//     https://github.com/mingw-w64/mingw-w64/issues/49
+#ifndef BCRYPT_HMAC_SHA256_ALG_HANDLE
+#define BCRYPT_HMAC_SHA256_ALG_HANDLE ((BCRYPT_ALG_HANDLE)0x000000b1)
+#endif
   BCryptHash(BCRYPT_HMAC_SHA256_ALG_HANDLE,
              reinterpret_cast<PUCHAR>(const_cast<T*>(key.data())),
              static_cast<ULONG>(key.size()), const_cast<PUCHAR>(data),

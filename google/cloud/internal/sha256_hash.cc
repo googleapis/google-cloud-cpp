@@ -30,6 +30,11 @@ namespace {
 Sha256Type Sha256Hash(void const* data, std::size_t count) {
   Sha256Type hash;
 #ifdef _WIN32
+// Workaround missing macros in MinGW-w64:
+//     https://github.com/mingw-w64/mingw-w64/issues/49
+#ifndef BCRYPT_SHA256_ALG_HANDLE
+#define BCRYPT_SHA256_ALG_HANDLE ((BCRYPT_ALG_HANDLE)0x00000041)
+#endif
   BCryptHash(BCRYPT_SHA256_ALG_HANDLE, nullptr, 0,
              static_cast<PUCHAR>(const_cast<void*>(data)),
              static_cast<ULONG>(count), hash.data(),
