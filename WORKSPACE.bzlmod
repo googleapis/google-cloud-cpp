@@ -21,8 +21,3 @@ gl_cpp_bzlmod0()
 load("//bazel:bzlmod1.bzl", "gl_cpp_bzlmod1")
 
 gl_cpp_bzlmod1()
-
-# Skip development0 and development1 as those are loaded via bzlmod.
-load("//bazel:development2.bzl", "gl_cpp_development2")
-
-gl_cpp_development2()
