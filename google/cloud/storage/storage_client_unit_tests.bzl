@@ -91,6 +91,7 @@ storage_client_unit_tests = [
     "internal/sign_blob_requests_test.cc",
     "internal/signed_url_requests_test.cc",
     "internal/tracing_connection_test.cc",
+    "internal/tracing_object_read_source_test.cc",
     "internal/tuple_filter_test.cc",
     "internal/unified_rest_credentials_test.cc",
     "lifecycle_rule_test.cc",

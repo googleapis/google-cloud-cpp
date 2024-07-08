@@ -189,6 +189,8 @@ add_library(
     internal/storage_connection.h
     internal/tracing_connection.cc
     internal/tracing_connection.h
+    internal/tracing_object_read_source.cc
+    internal/tracing_object_read_source.h
     internal/tuple_filter.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
@@ -498,6 +500,7 @@ if (BUILD_TESTING)
         internal/sign_blob_requests_test.cc
         internal/signed_url_requests_test.cc
         internal/tracing_connection_test.cc
+        internal/tracing_object_read_source_test.cc
         internal/tuple_filter_test.cc
         internal/unified_rest_credentials_test.cc
         lifecycle_rule_test.cc
