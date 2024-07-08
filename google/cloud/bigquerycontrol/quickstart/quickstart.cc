@@ -13,23 +13,27 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/bigquerycontrol/table/v2/ EDIT HERE _client.h"
+#include "google/cloud/bigquerycontrol/job/v2/job_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " project-id\n";
     return 1;
   }
 
-  auto const location = google::cloud::Location(argv[1], argv[2]);
+  auto const project_id = argv[1];
 
-  namespace bigquerycontrol = ::google::cloud::bigquerycontrol_table_v2;
-  auto client = bigquerycontrol::ServiceClient(
-      bigquerycontrol::MakeServiceConnection());  // EDIT HERE
+  namespace bigquerycontrol = ::google::cloud::bigquerycontrol_job_v2;
+  namespace bigquery_v2_proto = ::google::cloud::bigquery::v2;
+  auto client = bigquerycontrol::JobServiceClient(
+      bigquerycontrol::MakeJobServiceConnectionRest());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  bigquery_v2_proto::ListJobsRequest list_request;
+  list_request.set_project_id(project_id);
+
+  for (auto r : client.ListJobs(list_request)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

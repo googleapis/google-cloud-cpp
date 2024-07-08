@@ -32,6 +32,13 @@ added to your `.bazelrc` file.
 build --@io_opentelemetry_cpp//api:with_abseil
 ```
 
+### New Libraries
+
+The following experimental libraries are now available:
+
+- [Cloud BigQuery Control API](/google/cloud/bigquerycontrol/README.md) -
+This library provides support for the Dataset, Job, Model, Project, Routine, RowAccessPolicy, and Table REST resources.
+
 ## v2.26.0 - 2024-07
 
 ### BREAKING TESTING CHANGES
