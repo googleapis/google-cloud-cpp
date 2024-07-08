@@ -1,0 +1,67 @@
+# BigQuery API C++ Client Library
+
+:construction:
+
+This directory contains an idiomatic C++ client library for the \[BigQuery
+API\]\[cloud-service-docs\].
+
+A data platform for customers to create, manage, share and query data.
+
+This library is **experimental**. Its APIs are subject to change without notice.
+
+Please, note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+## Quickstart
+
+The [quickstart/](quickstart/README.md) directory contains a minimal environment
+to get started using this client library in a larger project. The following
+"Hello World" program is used in this quickstart, and should give you a taste of
+this library.
+
+<!-- inject-quickstart-start -->
+
+```cc
+#include "google/cloud/bigquerycontrol/table/v2/ EDIT HERE _client.h"
+#include "google/cloud/location.h"
+#include <iostream>
+
+int main(int argc, char* argv[]) try {
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+    return 1;
+  }
+
+  auto const location = google::cloud::Location(argv[1], argv[2]);
+
+  namespace bigquerycontrol = ::google::cloud::bigquerycontrol_table_v2;
+  auto client = bigquerycontrol::ServiceClient(
+      bigquerycontrol::MakeServiceConnection());  // EDIT HERE
+
+  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+    if (!r) throw std::move(r).status();
+    std::cout << r->DebugString() << "\n";
+  }
+
+  return 0;
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
+  return 1;
+}
+```
+
+<!-- inject-quickstart-end -->
+
+## More Information
+
+- Official documentation about the \[BigQuery API\]\[cloud-service-docs\]
+  service
+- \[Reference doxygen documentation\]\[doxygen-link\] for each release of this
+  client library
+- Detailed header comments in our \[public `.h`\]\[source-link\] files
+
+\[cloud-service-docs\]: https://cloud.google.com/bigquerycontrol \[EDIT HERE\]
+\[doxygen-link\]:
+https://cloud.google.com/cpp/docs/reference/bigquerycontrol/latest/
+\[source-link\]:
+https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/bigquerycontrol

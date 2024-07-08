@@ -1,0 +1,60 @@
+/*!
+
+@mainpage BigQuery API C++ Client Library
+
+An idiomatic C++ client library for the [BigQuery API][cloud-service-docs].
+
+A data platform for customers to create, manage, share and query data.
+
+This library is **experimental**. Its APIs are subject to change without notice.
+
+Please, note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/bigquerycontrol/quickstart/` directory,
+which should give you a taste of the BigQuery API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+This library offers multiple `*Client` classes, which are listed below. Each one
+of these classes exposes all the RPCs for a service as member functions of the
+class. This library groups multiple services because they are part of the same
+product or are often used together. A typical example may be the administrative
+and data plane operations for a single product.
+
+The library also has other classes that provide helpers, configuration
+parameters, and infrastructure to mock the `*Client` classes when testing your
+application.
+
+- [\c bigquerycontrol_dataset_v2::DatasetServiceClient](@ref google::cloud::bigquerycontrol_dataset_v2::DatasetServiceClient)
+- [\c bigquerycontrol_job_v2::JobServiceClient](@ref google::cloud::bigquerycontrol_job_v2::JobServiceClient)
+- [\c bigquerycontrol_model_v2::ModelServiceClient](@ref google::cloud::bigquerycontrol_model_v2::ModelServiceClient)
+- [\c bigquerycontrol_project_v2::ProjectServiceClient](@ref google::cloud::bigquerycontrol_project_v2::ProjectServiceClient)
+- [\c bigquerycontrol_routine_v2::RoutineServiceClient](@ref google::cloud::bigquerycontrol_routine_v2::RoutineServiceClient)
+- [\c bigquerycontrol_row_access_policy_v2::RowAccessPolicyServiceClient](@ref google::cloud::bigquerycontrol_row_access_policy_v2::RowAccessPolicyServiceClient)
+- [\c bigquerycontrol_table_v2::TableServiceClient](@ref google::cloud::bigquerycontrol_table_v2::TableServiceClient)
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref bigquerycontrol-override-endpoint - describes how to override the default
+  endpoint.
+- @ref bigquerycontrol-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref bigquerycontrol-override-retry - describes how to change the default retry
+  policies.
+- @ref bigquerycontrol-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/bigquerycontrol [EDIT HERE]
+
+*/
