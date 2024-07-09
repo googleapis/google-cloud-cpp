@@ -18,6 +18,7 @@ set -euo pipefail
 
 source "$(dirname "$0")/../../../../ci/lib/init.sh"
 source module /ci/cloudbuild/builds/lib/cloudcxxrc.sh
+source module ci/lib/io.sh
 
 if [[ $# -lt 1 ]]; then
   echo "Usage: $(basename "$0") <bazel-program> [bazel-test-args]"
@@ -45,6 +46,13 @@ CBT_INSTANCE_ADMIN_EMULATOR_START=(
   --
   //google/cloud/bigtable/tests:instance_admin_emulator
 )
+# We need to build `instance_admin_emulator` without coverage, so it can start
+# up quickly.
+if [[ "${BAZEL_VERB}" == "coverage" ]]; then
+  io::run "${BAZEL_BIN}" build "${bazel_test_args[@]}" \
+    //google/cloud/bigtable/tests:instance_admin_emulator
+fi
+
 source module /google/cloud/bigtable/tools/run_emulator_utils.sh
 
 # These can only run against production
