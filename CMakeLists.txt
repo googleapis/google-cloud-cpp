@@ -29,6 +29,24 @@ if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")
     set(PROJECT_VERSION "${PROJECT_VERSION}-${PROJECT_VERSION_PRE_RELEASE}")
 endif ()
 
+# Automatically update the version(s) in the `MODULE.bazel` file.
+file(READ "MODULE.bazel" module_contents)
+string(
+    REGEX
+    REPLACE "version = \".*\",  # Updated by CMake"
+            "version = \"${PROJECT_VERSION}\",  # Updated by CMake"
+            updated_contents "${module_contents}")
+string(
+    REGEX
+    REPLACE
+        "compatibility_level = .*,  # Updated by CMake"
+        "compatibility_level = ${PROJECT_VERSION_MAJOR},  # Updated by CMake"
+        updated_contents "${updated_contents}")
+if (NOT ("${updated_contents}" STREQUAL "${module_contents}"))
+    # Rewrite the file *only* if it was updated.
+    file(WRITE "MODULE.bazel" "${updated_contents}")
+endif ()
+
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.5)
         message(
