@@ -482,6 +482,71 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+
+# BigQueryControl
+service {
+  service_proto_path: "google/cloud/bigquery/v2/dataset.proto"
+  product_path: "google/cloud/bigquerycontrol/v2/dataset"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/v2/job.proto"
+  product_path: "google/cloud/bigquerycontrol/v2/job"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/v2/model.proto"
+  product_path: "google/cloud/bigquerycontrol/v2/model"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/v2/project.proto"
+  product_path: "google/cloud/bigquerycontrol/v2/project"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/v2/routine.proto"
+  product_path: "google/cloud/bigquerycontrol/v2/routine"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/v2/row_access_policy.proto"
+  product_path: "google/cloud/bigquerycontrol/v2/row_access_policy"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
+service {
+  service_proto_path: "google/cloud/bigquery/v2/table.proto"
+  product_path: "google/cloud/bigquerycontrol/v2/table"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
+  generate_grpc_transport: false
+}
+
 # Bigtable
 service {
   service_proto_path: "google/bigtable/v2/bigtable.proto"
