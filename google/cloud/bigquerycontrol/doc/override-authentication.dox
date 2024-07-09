@@ -1,0 +1,81 @@
+/*!
+@page bigquerycontrol-override-authentication How to Override the Authentication Credentials
+
+Unless otherwise configured, the client libraries use
+[Application Default Credentials] to authenticate with Google Cloud Services.
+While this works for most applications, in some cases you may need to override
+this default. You can do so by providing the
+[UnifiedCredentialsOption](@ref google::cloud::UnifiedCredentialsOption)
+The following example shows how to explicitly load a service account key file:
+
+<!-- inject-service-account-snippet-start -->
+@snippet dataset_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c bigquerycontrol_v2::DatasetServiceClient](@ref bigquerycontrol_v2::DatasetServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2::JobServiceClient](@ref bigquerycontrol_v2::JobServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2::ModelServiceClient](@ref bigquerycontrol_v2::ModelServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2::ProjectServiceClient](@ref bigquerycontrol_v2::ProjectServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2::RoutineServiceClient](@ref bigquerycontrol_v2::RoutineServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2::RowAccessPolicyServiceClient](@ref bigquerycontrol_v2::RowAccessPolicyServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2::TableServiceClient](@ref bigquerycontrol_v2::TableServiceClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+*/
+
+// <!-- inject-authentication-pages-start -->
+
+/*! @page bigquerycontrol_v2::DatasetServiceClient-service-account-snippet Override bigquerycontrol_v2::DatasetServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/samples/dataset_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2::JobServiceClient-service-account-snippet Override bigquerycontrol_v2::JobServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/samples/job_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2::ModelServiceClient-service-account-snippet Override bigquerycontrol_v2::ModelServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/samples/model_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2::ProjectServiceClient-service-account-snippet Override bigquerycontrol_v2::ProjectServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/samples/project_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2::RoutineServiceClient-service-account-snippet Override bigquerycontrol_v2::RoutineServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/samples/routine_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2::RowAccessPolicyServiceClient-service-account-snippet Override bigquerycontrol_v2::RowAccessPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/samples/row_access_policy_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2::TableServiceClient-service-account-snippet Override bigquerycontrol_v2::TableServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/samples/table_client_samples.cc with-service-account
+
+*/
+// <!-- inject-authentication-pages-end -->
