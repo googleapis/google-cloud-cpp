@@ -1,0 +1,71 @@
+/*!
+@page bigquerycontrol-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `bigquerycontrol_v2_dataset::DatasetServiceClient`:
+
+@snippet dataset_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c bigquerycontrol_v2_dataset::DatasetServiceClient](@ref bigquerycontrol_v2_dataset::DatasetServiceClient-endpoint-snippet)
+- [\c bigquerycontrol_v2_job::JobServiceClient](@ref bigquerycontrol_v2_job::JobServiceClient-endpoint-snippet)
+- [\c bigquerycontrol_v2_model::ModelServiceClient](@ref bigquerycontrol_v2_model::ModelServiceClient-endpoint-snippet)
+- [\c bigquerycontrol_v2_project::ProjectServiceClient](@ref bigquerycontrol_v2_project::ProjectServiceClient-endpoint-snippet)
+- [\c bigquerycontrol_v2_routine::RoutineServiceClient](@ref bigquerycontrol_v2_routine::RoutineServiceClient-endpoint-snippet)
+- [\c bigquerycontrol_v2_row_access_policy::RowAccessPolicyServiceClient](@ref bigquerycontrol_v2_row_access_policy::RowAccessPolicyServiceClient-endpoint-snippet)
+- [\c bigquerycontrol_v2_table::TableServiceClient](@ref bigquerycontrol_v2_table::TableServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page bigquerycontrol_v2_dataset::DatasetServiceClient-endpoint-snippet Override bigquerycontrol_v2_dataset::DatasetServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquerycontrol/v2/dataset/samples/dataset_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquerycontrol_v2_job::JobServiceClient-endpoint-snippet Override bigquerycontrol_v2_job::JobServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquerycontrol/v2/job/samples/job_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquerycontrol_v2_model::ModelServiceClient-endpoint-snippet Override bigquerycontrol_v2_model::ModelServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquerycontrol/v2/model/samples/model_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquerycontrol_v2_project::ProjectServiceClient-endpoint-snippet Override bigquerycontrol_v2_project::ProjectServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquerycontrol/v2/project/samples/project_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquerycontrol_v2_routine::RoutineServiceClient-endpoint-snippet Override bigquerycontrol_v2_routine::RoutineServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquerycontrol/v2/routine/samples/routine_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquerycontrol_v2_row_access_policy::RowAccessPolicyServiceClient-endpoint-snippet Override bigquerycontrol_v2_row_access_policy::RowAccessPolicyServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquerycontrol/v2/row_access_policy/samples/row_access_policy_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquerycontrol_v2_table::TableServiceClient-endpoint-snippet Override bigquerycontrol_v2_table::TableServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquerycontrol/v2/table/samples/table_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

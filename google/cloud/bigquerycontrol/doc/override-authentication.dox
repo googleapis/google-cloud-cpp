@@ -1,0 +1,81 @@
+/*!
+@page bigquerycontrol-override-authentication How to Override the Authentication Credentials
+
+Unless otherwise configured, the client libraries use
+[Application Default Credentials] to authenticate with Google Cloud Services.
+While this works for most applications, in some cases you may need to override
+this default. You can do so by providing the
+[UnifiedCredentialsOption](@ref google::cloud::UnifiedCredentialsOption)
+The following example shows how to explicitly load a service account key file:
+
+<!-- inject-service-account-snippet-start -->
+@snippet dataset_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c bigquerycontrol_v2_dataset::DatasetServiceClient](@ref bigquerycontrol_v2_dataset::DatasetServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2_job::JobServiceClient](@ref bigquerycontrol_v2_job::JobServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2_model::ModelServiceClient](@ref bigquerycontrol_v2_model::ModelServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2_project::ProjectServiceClient](@ref bigquerycontrol_v2_project::ProjectServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2_routine::RoutineServiceClient](@ref bigquerycontrol_v2_routine::RoutineServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2_row_access_policy::RowAccessPolicyServiceClient](@ref bigquerycontrol_v2_row_access_policy::RowAccessPolicyServiceClient-service-account-snippet)
+- [\c bigquerycontrol_v2_table::TableServiceClient](@ref bigquerycontrol_v2_table::TableServiceClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+*/
+
+// <!-- inject-authentication-pages-start -->
+
+/*! @page bigquerycontrol_v2_dataset::DatasetServiceClient-service-account-snippet Override bigquerycontrol_v2_dataset::DatasetServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/dataset/samples/dataset_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2_job::JobServiceClient-service-account-snippet Override bigquerycontrol_v2_job::JobServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/job/samples/job_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2_model::ModelServiceClient-service-account-snippet Override bigquerycontrol_v2_model::ModelServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/model/samples/model_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2_project::ProjectServiceClient-service-account-snippet Override bigquerycontrol_v2_project::ProjectServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/project/samples/project_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2_routine::RoutineServiceClient-service-account-snippet Override bigquerycontrol_v2_routine::RoutineServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/routine/samples/routine_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2_row_access_policy::RowAccessPolicyServiceClient-service-account-snippet Override bigquerycontrol_v2_row_access_policy::RowAccessPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/row_access_policy/samples/row_access_policy_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquerycontrol_v2_table::TableServiceClient-service-account-snippet Override bigquerycontrol_v2_table::TableServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquerycontrol/v2/table/samples/table_client_samples.cc with-service-account
+
+*/
+// <!-- inject-authentication-pages-end -->
