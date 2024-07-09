@@ -55,6 +55,6 @@ application.
 - @ref bigquerycontrol-env - describes environment variables that can configure the
   behavior of the library.
 
-[cloud-service-docs]: https://cloud.google.com/bigquerycontrol [EDIT HERE]
+[cloud-service-docs]: https://cloud.google.com/bigquery/docs
 
 */
