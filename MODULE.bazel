@@ -39,7 +39,7 @@ bazel_dep(name = "pugixml", version = "1.14.bcr.1", dev_dependency = True, repo_
 
 # Our `curl.BUILD` file uses these.
 bazel_dep(name = "zlib", version = "1.3.1.bcr.1")
-bazel_dep(name = "c-ares", version = "1.15.0", repo_name = "com_github_cares_cares")
+bazel_dep(name = "c-ares", version = "1.16.1", repo_name = "com_github_cares_cares")
 
 # `google-cloud-cpp` uses this indirectly in the coverage build. And we need
 # to configure it for our CI builds.
