@@ -28,8 +28,7 @@ export CXX=clang++
 mapfile -t args < <(bazel::common_args)
 args+=(
   # For now, we continue to test Bazel 6.x without bzlmod. Once the minimum
-  # supported version of Bazel is 7.x we can decide if bzlmod is something we
-  # want to continue supporting.
+  # supported version of Bazel is 7.x we can decide how to test without bzlmod.
   --noenable_bzlmod
   # Only run the unit tests, no need to waste time running everything.
   --test_tag_filters=-integration-test
