@@ -25,8 +25,8 @@ bazel_output_base="$(bazel info output_base)"
 io::log_h2 "Running the generator to update the golden files"
 bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
   //generator:google-cloud-cpp-codegen -- \
-  --protobuf_proto_path="${bazel_output_base}/external/com_google_protobuf/src" \
-  --googleapis_proto_path="${bazel_output_base}/external/com_google_googleapis" \
+  --protobuf_proto_path="${bazel_output_base}/external/protobuf~/src" \
+  --googleapis_proto_path="${bazel_output_base}/external/googleapis~" \
   --golden_proto_path="${PWD}" \
   --output_path="${PWD}" \
   --update_ci=false \
@@ -38,8 +38,8 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Running the generator to emit protos from discovery docs"
   bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
     //generator:google-cloud-cpp-codegen -- \
-    --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
-    --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
+    --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
+    --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
     --discovery_proto_path="${PWD}/protos" \
     --output_path="${PROJECT_ROOT}/protos" \
     --export_output_path="${PROJECT_ROOT}" \
@@ -71,8 +71,8 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Running the generator to update the generated libraries"
   bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
     //generator:google-cloud-cpp-codegen -- \
-    --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
-    --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
+    --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
+    --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
     --discovery_proto_path="${PWD}/protos" \
     --output_path="${PROJECT_ROOT}" \
     --check_comment_substitutions=true \

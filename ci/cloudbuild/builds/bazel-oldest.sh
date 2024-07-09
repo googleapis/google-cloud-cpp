@@ -26,4 +26,11 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
+args+=(
+  # For now, we continue to test Bazel 6.x without bzlmod. Once the minimum
+  # supported version of Bazel is 7.x we can decide how to test without bzlmod.
+  --noenable_bzlmod
+  # Only run the unit tests, no need to waste time running everything.
+  --test_tag_filters=-integration-test
+)
+bazel test "${args[@]}" -- "${BAZEL_TARGETS[@]}"

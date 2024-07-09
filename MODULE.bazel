@@ -1,0 +1,75 @@
+# Copyright 2024 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+"""Idiomatic C++ client libraries for Google Cloud Platform."""
+
+module(
+    name = "google_cloud_cpp",
+    # TODO(#11485) - automatically synchronize from (or to) the CMakeList.txt
+    # file.
+    version = "2.26.0-rc",
+    # TODO(#11485) - automatically increase on each major release.
+    compatibility_level = 1,
+)
+
+bazel_dep(name = "platforms", version = "0.0.10")
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "rules_cc", version = "0.0.9")
+bazel_dep(name = "abseil-cpp", version = "20240116.2", repo_name = "com_google_absl")
+bazel_dep(name = "protobuf", version = "27.2", repo_name = "com_google_protobuf")
+bazel_dep(name = "boringssl", version = "0.0.0-20230215-5c22014")
+bazel_dep(name = "grpc", version = "1.63.1", repo_name = "com_github_grpc_grpc")
+bazel_dep(name = "nlohmann_json", version = "3.11.3", repo_name = "com_github_nlohmann_json")
+bazel_dep(name = "crc32c", version = "1.1.0", repo_name = "com_github_google_crc32c")
+bazel_dep(name = "opentelemetry-cpp", version = "1.16.0", repo_name = "io_opentelemetry_cpp")
+
+bazel_dep(name = "rules_proto", version = "6.0.2", dev_dependency = True)
+bazel_dep(name = "googletest", version = "1.14.0", dev_dependency = True, repo_name = "com_google_googletest")
+bazel_dep(name = "google_benchmark", version = "1.8.4", dev_dependency = True, repo_name = "com_google_benchmark")
+bazel_dep(name = "yaml-cpp", version = "0.8.0", dev_dependency = True, repo_name = "com_github_jbeder_yaml_cpp")
+bazel_dep(name = "pugixml", version = "1.14.bcr.1", dev_dependency = True, repo_name = "com_github_zeux_pugixml")
+
+# Our `curl.BUILD` file uses these.
+bazel_dep(name = "zlib", version = "1.2.13")
+bazel_dep(name = "c-ares", version = "1.15.0", repo_name = "com_github_cares_cares")
+
+# `google-cloud-cpp` uses this indirectly in the coverage build. And we need
+# to configure it for our CI builds.
+bazel_dep(name = "rules_python", version = "0.33.2", dev_dependency = True)
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    ignore_root_user_error = True,
+    python_version = "3.11",
+)
+
+bazel_dep(name = "googleapis", version = "0.0.0", repo_name = "com_google_googleapis")
+archive_override(
+    module_name = "googleapis",
+    integrity = "sha256-M8YsA/lHlyi9qhplU9izX6Jz0BBwbHXqhc2N/haHWGw=",
+    patch_strip = 1,
+    patches = ["//bazel:googleapis.modules.patch"],
+    strip_prefix = "googleapis-622e10a1e8b2b6908e0ac7448d347a0c1b4130de",
+    urls = [
+        "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
+        "https://github.com/googleapis/googleapis/archive/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
+    ],
+)
+
+switched_rules = use_extension("@com_google_googleapis//:extensions.bzl", "switched_rules")
+switched_rules.use_languages(
+    cc = True,
+    grpc = True,
+)
+use_repo(switched_rules, "com_google_googleapis_imports")

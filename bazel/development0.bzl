@@ -65,20 +65,6 @@ def gl_cpp_development0(name = None):
         strip_prefix = "benchmark-1.8.4",
     )
 
-    # An XML parser and generator, this is only used in //docfx.
-    # This is an internal tool used to generate the reference documentation.
-    maybe(
-        http_archive,
-        name = "com_github_zeux_pugixml",
-        urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.14.tar.gz",
-            "https://github.com/zeux/pugixml/archive/v1.14.tar.gz",
-        ],
-        sha256 = "610f98375424b5614754a6f34a491adbddaaec074e9044577d965160ec103d2e",
-        strip_prefix = "pugixml-1.14",
-        build_file = Label("//bazel:pugixml.BUILD"),
-    )
-
     # A YAML parser and generator, this is only used in //docfx and //generator.
     # Both are internal tools used for development only.
     maybe(
