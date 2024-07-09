@@ -16,11 +16,8 @@
 
 module(
     name = "google_cloud_cpp",
-    # TODO(#11485) - automatically synchronize from (or to) the CMakeList.txt
-    # file.
-    version = "2.26.0-rc",
-    # TODO(#11485) - automatically increase on each major release.
-    compatibility_level = 1,
+    version = "2.27.0-rc",  # Updated by CMake
+    compatibility_level = 2,  # Updated by CMake
 )
 
 bazel_dep(name = "platforms", version = "0.0.10")
