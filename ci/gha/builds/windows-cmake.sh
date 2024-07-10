@@ -21,7 +21,7 @@ source module ci/gha/builds/lib/windows.sh
 source module ci/gha/builds/lib/cmake.sh
 source module ci/gha/builds/lib/ctest.sh
 
-# Usage: macos-cmake.sh <build-type> <value for GOOGLE_CLOUD_CPP_ENABLE>
+# Usage: windows-cmake.sh <build-type> <value for GOOGLE_CLOUD_CPP_ENABLE>
 #
 # The build-type sets `-DCMAKE_BUILD_TYPE`, typically Release or Debug.
 #
