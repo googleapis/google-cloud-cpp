@@ -33,6 +33,7 @@ set(GOOGLE_CLOUD_CPP_NO_GRPC_FEATURES
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sort
+    "bigquerycontrol" # Some proto RPC comments indicate experimental methods.
     "pubsublite" # This is WIP, it needs a number of hand-crafted APIs.
 )
 
@@ -369,6 +370,7 @@ macro (google_cloud_cpp_enable_cleanup)
     set(compute_features ${GOOGLE_CLOUD_CPP_ENABLE})
     list(FILTER compute_features INCLUDE REGEX "^compute_.*")
     if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        OR (bigquerycontrol IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (compute IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         OR (compute_features)
         OR (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)

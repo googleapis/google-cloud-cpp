@@ -10,6 +10,14 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   these distros are EOL or in some form of "security only" support period.
   Note that we used CentOS 7 as a proxy for testing RedHat Enterprise Linux 7.
 
+### New Libraries
+
+The following experimental libraries are now available:
+
+- [Cloud BigQuery Control API](/google/cloud/bigquerycontrol/README.md) -
+This library provides support for the Dataset, Job, Model, Project, Routine,
+RowAccessPolicy, and Table REST resources.
+
 ### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
 
 #### Bazel
