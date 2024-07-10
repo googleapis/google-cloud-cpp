@@ -61,8 +61,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "platforms",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/platforms/platforms-0.0.10.tar.gz",
-            "https://mirror.bazel.build/github.com/bazelbuild/platforms/releases/download/0.0.10/platforms-0.0.10.tar.gz",
             "https://github.com/bazelbuild/platforms/releases/download/0.0.10/platforms-0.0.10.tar.gz",
         ],
         sha256 = "218efe8ee736d26a3572663b374a253c012b716d8af0c07e842e82f238a0a7ee",
@@ -73,7 +71,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "rules_cc",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/rules_cc/rules_cc-0.0.9.tar.gz",
             "https://github.com/bazelbuild/rules_cc/releases/download/0.0.9/rules_cc-0.0.9.tar.gz",
         ],
         sha256 = "2037875b9a4456dce4a79d112a8ae885bbc4aad968e6587dca6e64f3a0900cdf",
@@ -85,7 +82,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "build_bazel_rules_apple",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/build_bazel_rules_apple/rules_apple.3.6.0.tar.gz",
             "https://github.com/bazelbuild/rules_apple/releases/download/3.6.0/rules_apple.3.6.0.tar.gz",
         ],
         sha256 = "d0f566ad408a6e4d179f0ac4d50a93494a70fcff8fab4c4af0a25b2c241c9b8d",
@@ -96,7 +92,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_absl",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_absl/20240116.2.tar.gz",
             "https://github.com/abseil/abseil-cpp/archive/20240116.2.tar.gz",
         ],
         sha256 = "733726b8c3a6d39a4120d7e45ea8b41a434cdacde401cba500f14236c49b39dc",
@@ -109,7 +104,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googletest",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googletest/v1.14.0.tar.gz",
             "https://github.com/google/googletest/archive/v1.14.0.tar.gz",
         ],
         sha256 = "8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
@@ -121,7 +115,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googleapis",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
             "https://github.com/googleapis/googleapis/archive/622e10a1e8b2b6908e0ac7448d347a0c1b4130de.tar.gz",
         ],
         sha256 = "33c62c03f9479728bdaa1a6553d8b35fa273d010706c75ea85cd8dfe1687586c",
@@ -142,7 +135,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_protobuf",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_protobuf/v27.2.tar.gz",
             "https://github.com/protocolbuffers/protobuf/archive/v27.2.tar.gz",
         ],
         sha256 = "e4ff2aeb767da6f4f52485c2e72468960ddfe5262483879ef6ad552e52757a77",
@@ -155,7 +147,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "boringssl",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/boringssl/82a53d8c902f940eb1310f76a0b96c40c67f632f.tar.gz",
             # Use https://github.com/google/boringssl instead of
             # https://boringssl.googlesource.com/boringssl as the
             # former has a (more) consistent sha256.
@@ -170,7 +161,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.64.2.tar.gz",
             "https://github.com/grpc/grpc/archive/v1.64.2.tar.gz",
         ],
         sha256 = "c682fc39baefc6e804d735e6b48141157b7213602cc66dbe0bf375b904d8b5f9",
@@ -194,7 +184,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_curl_curl",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_curl_curl/curl-7.69.1.tar.gz",
             "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
         ],
         sha256 = "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98",
@@ -207,7 +196,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_nlohmann_json",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_nlohmann_json/v3.11.3.tar.gz",
             "https://github.com/nlohmann/json/archive/v3.11.3.tar.gz",
         ],
         sha256 = "0d8ef5af7f9794e3263480193c491549b2ba6cc74bb018906202ada498a79406",
@@ -219,7 +207,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_google_crc32c",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_google_crc32c/1.1.2.tar.gz",
             "https://github.com/google/crc32c/archive/1.1.2.tar.gz",
         ],
         sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
@@ -235,7 +222,6 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "io_opentelemetry_cpp",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/io_opentelemetry_cpp/v1.16.0.tar.gz",
             "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.0.tar.gz",
         ],
         sha256 = "2209af23f43094651ddf007d44153c23facd41d9891b9b2d8cbc2dc9bb8064dd",

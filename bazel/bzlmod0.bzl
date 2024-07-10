@@ -34,7 +34,6 @@ def gl_cpp_bzlmod0(name = None):
         http_archive,
         name = "com_github_curl_curl",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_curl_curl/curl-7.69.1.tar.gz",
             "https://curl.haxx.se/download/curl-7.69.1.tar.gz",
         ],
         sha256 = "01ae0c123dee45b01bbaef94c0bc00ed2aec89cb2ee0fd598e0d302a6b5e0a98",

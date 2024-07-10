@@ -45,7 +45,6 @@ def gl_cpp_development0(name = None):
         http_archive,
         name = "libpfm",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/libpfm/libpfm-4.11.0.tar.gz",
             "https://sourceforge.net/projects/perfmon2/files/libpfm4/libpfm-4.11.0.tar.gz",
         ],
         sha256 = "5da5f8872bde14b3634c9688d980f68bda28b510268723cc12973eedbab9fecc",
@@ -58,7 +57,6 @@ def gl_cpp_development0(name = None):
         http_archive,
         name = "com_google_benchmark",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_benchmark/v1.8.4.tar.gz",
             "https://github.com/google/benchmark/archive/v1.8.4.tar.gz",
         ],
         sha256 = "3e7059b6b11fb1bbe28e33e02519398ca94c1818874ebed18e504dc6f709be45",
@@ -71,7 +69,6 @@ def gl_cpp_development0(name = None):
         http_archive,
         name = "com_github_jbeder_yaml_cpp",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_jbeder_yaml_cpp/0.8.0.tar.gz",
             "https://github.com/jbeder/yaml-cpp/archive/0.8.0.tar.gz",
         ],
         sha256 = "fbe74bbdcee21d656715688706da3c8becfd946d92cd44705cc6098bb23b3a16",

@@ -17,9 +17,11 @@
 """Verify and (optionally) populate the GCS cache of Bazel dependencies."""
 
 import argparse
+import base64
 import filecmp
 import glob
 import hashlib
+import json
 import os.path
 import subprocess
 import sys
@@ -66,9 +68,31 @@ bucket = "cloud-cpp-community-archive"
 archives = []
 
 
-def http_archive(**kwargs):
+def http_archive(name, urls, integrity, **kwargs):
     """The repo_rule we expect to see in maybe()."""
-    pass
+    filtered_urls = [
+        url
+        for url in urls
+        if not any(url.startswith(prefix) for prefix in mirror_prefixes)
+    ]
+    if len(filtered_urls) != 1:
+        sys.exit(f"{name}: Ambiguous source URL {filtered_urls}")
+    if not integrity.startswith("sha256-"):
+        sys.exit(f"unknown integrity format in integrity = {integrity}")
+    url = filtered_urls[0]
+    url = url.removeprefix("https://")
+    url = url.removeprefix("http://")
+    path = os.path.join(bucket, url)
+    sha256 = base64.b64decode(integrity.removeprefix("sha256-")).hex()
+    archives.append(
+        {
+            "name": name,
+            "source": filtered_urls[0],
+            "sha256": sha256,
+            "cache": f"https://storage.googleapis.com/{path}",
+            "upload": f"gs://{path}",
+        }
+    )
 
 
 def maybe(repo_rule, name, urls, sha256, **kwargs):
@@ -82,7 +106,10 @@ def maybe(repo_rule, name, urls, sha256, **kwargs):
     ]
     if len(filtered_urls) != 1:
         sys.exit(f"{name}: Ambiguous source URL {filtered_urls}")
-    path = os.path.join(bucket, name, os.path.basename(filtered_urls[0]))
+    url = filtered_urls[0]
+    url = url.removeprefix("https://")
+    url = url.removeprefix("http://")
+    path = os.path.join(bucket, url)
     archives.append(
         {
             "name": name,
@@ -142,6 +169,18 @@ def verify(tmpdir, name, source, cache, upload, **kwargs):
     print("")
 
 
+def bzlmod_modules(bzlmod_deps) -> list[str]:
+    """Convert a JSON description of recursive bzlmod deps into a list of dependencies."""
+    result = []
+    for k, v in bzlmod_deps.items():
+        if k == "key" and "@" in v:
+            result.append(v.split("@")[0])
+        elif k == "dependencies":
+            for d in v:
+                result.extend(bzlmod_modules(d))
+    return result
+
+
 def main():
     exec_globals = {
         "__builtins__": None,
@@ -152,12 +191,27 @@ def main():
         "maybe": maybe,
     }
     exec_locals = {}
+    try:
+        p = subprocess.run(
+            ["bazelisk", "mod", "deps", "--output=json", "google_cloud_cpp"],
+            capture_output=True,
+            text=True,
+        )
+        modules = bzlmod_modules(json.loads(p.stdout))
+        p = subprocess.run(
+            ["bazelisk", "mod", "show_repo"] + modules, capture_output=True, text=True
+        )
+        exec(compile(p.stdout, "<show repo output>", "exec"), exec_globals, exec_locals)
+
+    except Exception as e:
+        sys.exit(f"{e}")
     for bzl in args.bzls:
         try:
             with open(bzl) as f:
                 exec(compile(f.read(), bzl, "exec"), exec_globals, exec_locals)
         except Exception as e:
             sys.exit(f"{bzl}: {e}")
+
     for key, func in exec_locals.items():
         # At the moment only the "gl_cpp_*0" functions load cacheable objects.
         if not callable(func) or not key.startswith("gl_cpp_") or not key.endswith("0"):
