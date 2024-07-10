@@ -917,6 +917,10 @@
 ./include/google/cloud/privateca/v1
 ./include/google/cloud/privateca/v1/internal
 ./include/google/cloud/privateca/v1/mocks
+./include/google/cloud/privilegedaccessmanager
+./include/google/cloud/privilegedaccessmanager/v1
+./include/google/cloud/privilegedaccessmanager/v1/internal
+./include/google/cloud/privilegedaccessmanager/v1/mocks
 ./include/google/cloud/profiler
 ./include/google/cloud/profiler/mocks
 ./include/google/cloud/profiler/v2
@@ -1410,6 +1414,8 @@
 ./lib64/cmake/google_cloud_cpp_policytroubleshooter_mocks
 ./lib64/cmake/google_cloud_cpp_privateca
 ./lib64/cmake/google_cloud_cpp_privateca_mocks
+./lib64/cmake/google_cloud_cpp_privilegedaccessmanager
+./lib64/cmake/google_cloud_cpp_privilegedaccessmanager_mocks
 ./lib64/cmake/google_cloud_cpp_profiler
 ./lib64/cmake/google_cloud_cpp_profiler_mocks
 ./lib64/cmake/google_cloud_cpp_publicca
