@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/privilegedaccessmanager/v1/ EDIT HERE _client.h"
+#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -25,12 +25,11 @@ int main(int argc, char* argv[]) try {
 
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
-  namespace privilegedaccessmanager =
-      ::google::cloud::privilegedaccessmanager_v1;
-  auto client = privilegedaccessmanager::ServiceClient(
-      privilegedaccessmanager::MakeServiceConnection());  // EDIT HERE
+  namespace pam = ::google::cloud::privilegedaccessmanager_v1;
+  auto client = pam::PrivilegedAccessManagerClient(
+      pam::MakePrivilegedAccessManagerConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListEntitlements(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

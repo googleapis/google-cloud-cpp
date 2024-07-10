@@ -73,7 +73,7 @@ https://cloud.google.com/docs/authentication/production
 1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
-   bazel run :quickstart -- [...]
+   bazel run :quickstart -- [PROJECT_ID] [LOCATION_ID]
    ```
 
 ## Using with CMake
@@ -110,7 +110,7 @@ https://cloud.google.com/docs/authentication/production
 1. Run the example, changing the placeholder(s) to appropriate values:
 
    ```bash
-   .build/quickstart [...]
+   .build/quickstart [PROJECT_ID] [LOCATION_ID]
    ```
 
 ## Platform Specific Notes
@@ -151,4 +151,4 @@ set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 [grpc-roots-pem-bug]: https://github.com/grpc/grpc/issues/16571
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
-[quickstart-link]: https://cloud.google.com/privilegedaccessmanager/docs/quickstart
+[quickstart-link]: https://cloud.google.com/iam/docs/pam-create-entitlements

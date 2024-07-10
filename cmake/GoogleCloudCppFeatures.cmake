@@ -128,6 +128,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "policysimulator"
     "policytroubleshooter"
     "privateca"
+    "privilegedaccessmanager"
     "profiler"
     "publicca"
     "pubsub"

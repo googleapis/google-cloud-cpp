@@ -3,7 +3,18 @@
 This directory contains an idiomatic C++ client library for the
 [Privileged Access Manager API][cloud-service-docs].
 
-\<UNKNOWN - NO SERVICE CONFIG DOCUMENTATION SUMMARY>
+Privileged Access Manager (PAM) helps you on your journey towards least
+privilege and helps mitigate risks tied to privileged access misuse or abuse.
+PAM allows you to shift from always-on standing privileges towards on-demand
+access with just-in-time, time-bound, and approval-based access elevations. PAM
+allows IAM administrators to create entitlements that can grant just-in-time,
+temporary access to any resource scope. Requesters can explore eligible
+entitlements and request the access needed for their task. Approvers are
+notified when approvals await their decision. Streamlined workflows facilitated
+by using PAM can support various use cases, including emergency access for
+incident responders, time-boxed access for developers for critical deployment or
+maintenance, temporary access for operators for data ingestion and audits, JIT
+access to service accounts for automated tasks, and more.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -18,7 +29,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/privilegedaccessmanager/v1/ EDIT HERE _client.h"
+#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -30,12 +41,11 @@ int main(int argc, char* argv[]) try {
 
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
-  namespace privilegedaccessmanager =
-      ::google::cloud::privilegedaccessmanager_v1;
-  auto client = privilegedaccessmanager::ServiceClient(
-      privilegedaccessmanager::MakeServiceConnection());  // EDIT HERE
+  namespace pam = ::google::cloud::privilegedaccessmanager_v1;
+  auto client = pam::PrivilegedAccessManagerClient(
+      pam::MakePrivilegedAccessManagerConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListEntitlements(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
