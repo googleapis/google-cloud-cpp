@@ -43,7 +43,7 @@ bazel_dep(name = "c-ares", version = "1.16.1", repo_name = "com_github_cares_car
 
 # `google-cloud-cpp` uses this indirectly in the coverage build. And we need
 # to configure it for our CI builds.
-bazel_dep(name = "rules_python", version = "0.33.2", dev_dependency = True)
+bazel_dep(name = "rules_python", version = "0.34.0", dev_dependency = True)
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
