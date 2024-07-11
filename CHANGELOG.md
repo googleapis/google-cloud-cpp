@@ -6,6 +6,18 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 
 ## v2.27.0 - TBD
 
+- We now link our mocking libraries against GoogleTest in CMake.
+
+  The mocking libraries require GoogleTest. Not linking GoogleTest was a bug.
+  This bug surfaced in versions of CMake >= 3.30.
+
+  Note that the mocking libraries are built by default. If you want to opt-out
+  of building or installing the mocking libraries, you can supply
+  `-DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF` to your CMake configure command.
+
+  If your build fails because GoogleTest is not found, supply
+  `-DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF` as mentioned above.
+
 - We have stopped testing on CentOS 7, Debian 10 (Buster), and RockyLinux 8 as
   these distros are EOL or in some form of "security only" support period.
   Note that we used CentOS 7 as a proxy for testing RedHat Enterprise Linux 7.
