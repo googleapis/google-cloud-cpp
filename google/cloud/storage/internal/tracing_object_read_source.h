@@ -28,7 +28,12 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
+ * Maintains a single span for a download, including resumed requests.
  *
+ * Downloads may issue additional RPCs, with their corresponding spans, after
+ * the function that function that starts them returns. We need to hold the
+ * initial span somewhere, and we need to activate that span before calling any
+ * functions that may create RPCs.
  */
 class TracingObjectReadSource : public storage::internal::ObjectReadSource {
  public:

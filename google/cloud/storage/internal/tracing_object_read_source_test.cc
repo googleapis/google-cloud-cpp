@@ -33,6 +33,7 @@ using ::google::cloud::storage::testing::MockObjectReadSource;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::IsActive;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::OTelAttribute;
 using ::google::cloud::testing_util::SpanEventAttributesAre;
@@ -43,7 +44,6 @@ using ::google::cloud::testing_util::SpanNamed;
 using ::google::cloud::testing_util::SpanWithParent;
 using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
-using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
 using ::testing::ResultOf;
 using ::testing::Return;
@@ -77,17 +77,13 @@ TEST(TracingObjectReadSourceSpan, FullDownload) {
   EXPECT_CALL(*mock, IsOpen).WillOnce(Return(true));
   EXPECT_CALL(*mock, Read)
       .WillOnce([root] {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_EQ(opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext(),
-                  root->GetContext());
+        EXPECT_THAT(root, IsActive());
         auto c1 = internal::MakeSpan("Child1");
         internal::EndSpan(*c1);
         return ReadSourceResult{/*.bytes_received=*/1234, {}};
       })
       .WillOnce([root] {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_EQ(opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext(),
-                  root->GetContext());
+        EXPECT_THAT(root, IsActive());
         auto c2 = internal::MakeSpan("Child2");
         auto c3 = internal::MakeSpan("Child3");
         internal::EndSpan(*c3);
@@ -128,17 +124,13 @@ TEST(TracingObjectReadSourceSpan, FailedDownload) {
   EXPECT_CALL(*mock, IsOpen).WillOnce(Return(true));
   EXPECT_CALL(*mock, Read)
       .WillOnce([root] {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_EQ(opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext(),
-                  root->GetContext());
+        EXPECT_THAT(root, IsActive());
         auto c1 = internal::MakeSpan("Child1");
         internal::EndSpan(*c1);
         return ReadSourceResult{/*.bytes_received=*/1234, {}};
       })
       .WillOnce([root] {
-        EXPECT_TRUE(ThereIsAnActiveSpan());
-        EXPECT_EQ(opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext(),
-                  root->GetContext());
+        EXPECT_THAT(root, IsActive());
         auto c2 = internal::MakeSpan("Child2");
         auto c3 = internal::MakeSpan("Child3");
         internal::EndSpan(*c3);
@@ -176,9 +168,7 @@ TEST(TracingObjectReadSourceSpan, CloseDownload) {
   auto mock = std::make_unique<MockObjectReadSource>();
   EXPECT_CALL(*mock, IsOpen).WillOnce(Return(true));
   EXPECT_CALL(*mock, Read).WillOnce([root] {
-    EXPECT_TRUE(ThereIsAnActiveSpan());
-    EXPECT_EQ(opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext(),
-              root->GetContext());
+    EXPECT_THAT(root, IsActive());
     auto c1 = internal::MakeSpan("Child1");
     internal::EndSpan(*c1);
     return ReadSourceResult{/*.bytes_received=*/1234, {}};
