@@ -14,11 +14,11 @@
 # limitations under the License.
 # ~~~
 
-# The tests require googletest to be installed. Force CMake to use the config
-# file for googletest (that is, the CMake file installed by googletest itself),
-# because the generic `FindGTest` module does not define the GTest::gmock
-# target, and the target names are also weird.
-find_package(GTest CONFIG REQUIRED)
+if (NOT BUILD_TESTING)
+    return()
+endif ()
+
+include(FindGMockWithTargets)
 
 set(bigquerycontrol_integration_tests # cmake-format: sort
                                       job_integration_test.cc)

@@ -16,6 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
@@ -33,6 +34,7 @@ using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Not;
+using ::testing::ResultOf;
 
 class BigQueryJobIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
@@ -60,19 +62,17 @@ TEST_F(BigQueryJobIntegrationTest, JobCRUD) {
   auto use_legacy_sql = google::protobuf::BoolValue();
   use_legacy_sql.set_value(false);
   *query.mutable_use_legacy_sql() = use_legacy_sql;
+  query.set_parameter_mode("NAMED");
 
   // Specify value for named integer parameter: @minimum_year
-  query.set_parameter_mode("NAMED");
   bigquery_proto::QueryParameter minimum_year_param;
-  minimum_year_param.set_name("minimum_year");
-  bigquery_proto::QueryParameterType minimum_year_param_type;
-  minimum_year_param_type.set_type("INT64");
-  *minimum_year_param.mutable_parameter_type() = minimum_year_param_type;
-  bigquery_proto::QueryParameterValue minimum_year_param_value;
-  auto year_value = google::protobuf::StringValue();
-  year_value.set_value("1970");
-  *minimum_year_param_value.mutable_value() = year_value;
-  *minimum_year_param.mutable_parameter_value() = minimum_year_param_value;
+  auto constexpr kMinimumYearParam = R"pb(
+    name: "minimum_year"
+    parameter_type { type: "INT64" }
+    parameter_value { value { value: "1970" } }
+  )pb";
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      kMinimumYearParam, &minimum_year_param));
   *query.add_query_parameters() = minimum_year_param;
 
   bigquery_proto::JobConfiguration config;
@@ -99,14 +99,16 @@ TEST_F(BigQueryJobIntegrationTest, JobCRUD) {
 
   google::cloud::bigquery::v2::ListJobsRequest list_request;
   list_request.set_project_id(project_id_);
-  std::vector<bigquery_proto::JobReference> job_refs;
-  std::vector<std::string> job_ids;
+  std::vector<bigquery_proto::ListFormatJob> jobs;
   for (auto job : client.ListJobs(list_request)) {
     ASSERT_STATUS_OK(job);
-    job_refs.push_back(job->job_reference());
-    job_ids.push_back(job->job_reference().job_id());
+    jobs.push_back(*std::move(job));
   }
-  EXPECT_THAT(job_ids, Contains(job_id));
+  EXPECT_THAT(
+      jobs,
+      Contains(ResultOf(
+          "job id", [](auto const& x) { return x.job_reference().job_id(); },
+          job_id)));
 
   google::cloud::bigquery::v2::GetJobRequest get_request;
   get_request.set_project_id(project_id_);
@@ -114,8 +116,11 @@ TEST_F(BigQueryJobIntegrationTest, JobCRUD) {
   bool job_complete = false;
   while (!job_complete) {
     auto get_result = client.GetJob(get_request);
-    ASSERT_STATUS_OK(get_result);
-    EXPECT_THAT(get_result->job_reference().job_id(), Eq(job_id));
+    ASSERT_THAT(
+        get_result,
+        testing_util::IsOkAndHolds(ResultOf(
+            "job id", [](auto const& x) { return x.job_reference().job_id(); },
+            job_id)));
     if (get_result->status().state() == "DONE") job_complete = true;
     std::this_thread::sleep_for(std::chrono::seconds(2));
   }
