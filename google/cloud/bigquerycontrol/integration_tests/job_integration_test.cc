@@ -27,6 +27,7 @@ namespace bigquerycontrol_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
@@ -72,8 +73,7 @@ TEST_F(BigQueryJobIntegrationTest, JobCRUD) {
     parameter_value { value { value: "1970" } }
   )pb";
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      kMinimumYearParam, &minimum_year_param));
-  *query.add_query_parameters() = minimum_year_param;
+      kMinimumYearParam, query.add_query_parameters()));
 
   bigquery_proto::JobConfiguration config;
   *config.mutable_query() = query;
@@ -87,15 +87,11 @@ TEST_F(BigQueryJobIntegrationTest, JobCRUD) {
   ASSERT_STATUS_OK(insert_result);
   std::string job_id = insert_result->job_reference().job_id();
   EXPECT_THAT(job_id, Not(IsEmpty()));
-  EXPECT_THAT(
-      insert_result->configuration().query().destination_table().project_id(),
-      Not(IsEmpty()));
-  EXPECT_THAT(
-      insert_result->configuration().query().destination_table().dataset_id(),
-      Not(IsEmpty()));
-  EXPECT_THAT(
-      insert_result->configuration().query().destination_table().table_id(),
-      Not(IsEmpty()));
+  auto const& table =
+      insert_result->configuration().query().destination_table();
+  EXPECT_THAT(table.project_id(), Not(IsEmpty()));
+  EXPECT_THAT(table.dataset_id(), Not(IsEmpty()));
+  EXPECT_THAT(table.table_id(), Not(IsEmpty()));
 
   google::cloud::bigquery::v2::ListJobsRequest list_request;
   list_request.set_project_id(project_id_);
@@ -114,22 +110,39 @@ TEST_F(BigQueryJobIntegrationTest, JobCRUD) {
   get_request.set_project_id(project_id_);
   get_request.set_job_id(job_id);
   bool job_complete = false;
-  while (!job_complete) {
+  for (auto delay : {2, 2, 2, 2, 2}) {
     auto get_result = client.GetJob(get_request);
     ASSERT_THAT(
         get_result,
-        testing_util::IsOkAndHolds(ResultOf(
+        IsOkAndHolds(ResultOf(
             "job id", [](auto const& x) { return x.job_reference().job_id(); },
             job_id)));
-    if (get_result->status().state() == "DONE") job_complete = true;
-    std::this_thread::sleep_for(std::chrono::seconds(2));
+    if (get_result->status().state() == "DONE") {
+      job_complete = true;
+      break;
+    }
+    std::this_thread::sleep_for(std::chrono::seconds(delay));
   }
 
   google::cloud::bigquery::v2::DeleteJobRequest delete_request;
   delete_request.set_project_id(project_id_);
-  delete_request.set_job_id(job_id);
-  auto delete_result = client.DeleteJob(delete_request);
-  EXPECT_STATUS_OK(delete_result);
+  if (job_complete) {
+    delete_request.set_job_id(job_id);
+    auto delete_result = client.DeleteJob(delete_request);
+    EXPECT_STATUS_OK(delete_result);
+  }
+
+  // Clean up any stale jobs.
+  auto a_week_ago =
+      (std::chrono::system_clock::now() - std::chrono::hours(24 * 7))
+          .time_since_epoch()
+          .count();
+  for (auto const& job : jobs) {
+    if (job.statistics().creation_time() < a_week_ago) {
+      delete_request.set_job_id(job.id());
+      (void)client.DeleteJob(delete_request);
+    }
+  }
 }
 
 }  // namespace
