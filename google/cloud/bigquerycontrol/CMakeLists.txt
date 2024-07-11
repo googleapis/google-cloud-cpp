@@ -197,6 +197,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
 
+add_subdirectory(integration_tests)
+
 # google-cloud-cpp::experimental-bigquerycontrol must be defined before we can
 # add the samples.
 foreach (dir IN LISTS service_dirs)
