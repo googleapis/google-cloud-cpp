@@ -157,10 +157,10 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 
 /// @test Verify the basic CRUD operations for instances work.
 TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
-  if (!Emulator() && !RunSlowInstanceTests()) {
-    GTEST_SKIP() << "skipping slow instance tests; set "
-                 << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
-                 << " to override";
+  if (!Emulator()) {
+    GTEST_SKIP() << "skipping, as there is a quota on CreateInstance requests "
+                    "against production, and other integration tests cover "
+                    "generated client functions for LROs.";
   }
 
   std::string instance_id = spanner_testing::RandomInstanceName(generator_);
@@ -211,44 +211,6 @@ TEST_F(InstanceAdminClientTest, InstanceCRUDOperations) {
     }
   }
 
-  EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
-}
-
-TEST_F(InstanceAdminClientTest, CreateInstanceStartAwait) {
-  if (!Emulator() && !RunSlowInstanceTests()) {
-    GTEST_SKIP() << "skipping slow instance tests; set "
-                 << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
-                 << " to override";
-  }
-
-  Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator_));
-
-  auto config_name = spanner_testing::PickInstanceConfig(
-      in.project(), generator_,
-      [](google::spanner::admin::instance::v1::InstanceConfig const& config) {
-        return absl::StrContains(config.name(), "/regional-us-west");
-      });
-  ASSERT_FALSE(config_name.empty()) << "could not get an instance config";
-
-  auto operation =
-      client_.CreateInstance(ExperimentalTag{}, NoAwaitTag{},
-                             CreateInstanceRequestBuilder(in, config_name)
-                                 .SetDisplayName("test-display-name")
-                                 .SetNodeCount(1)
-                                 .SetLabels({{"label-key", "label-value"}})
-                                 .Build());
-  ASSERT_STATUS_OK(operation);
-
-  // Verify that an error is returned if there is a mismatch between the rpc
-  // that returned the operation and the rpc in which is it used.
-  auto instance_config =
-      client_.CreateInstanceConfig(ExperimentalTag{}, *operation).get();
-  EXPECT_THAT(instance_config, StatusIs(StatusCode::kInvalidArgument));
-
-  auto instance = client_.CreateInstance(ExperimentalTag{}, *operation).get();
-  ASSERT_STATUS_OK(instance);
-  EXPECT_EQ(instance->name(), in.FullName());
-  EXPECT_EQ(instance->display_name(), "test-display-name");
   EXPECT_STATUS_OK(client_.DeleteInstance(in.FullName()));
 }
 
@@ -361,24 +323,30 @@ TEST_F(InstanceAdminClientTest, InstanceConfigUserManaged) {
                 Eq("updated-value"));
   }
 
-  std::string instance_id = spanner_testing::RandomInstanceName(generator_);
-  Instance in(project, instance_id);
-  auto instance =
-      client_
-          .CreateInstance(CreateInstanceRequestBuilder(in, user_config->name())
-                              .SetDisplayName("test-display-name")
-                              .SetProcessingUnits(100)
-                              .SetLabels({{"label-key", "label-value"}})
-                              .Build())
-          .get();
-  EXPECT_THAT(instance, IsOk());
-  if (instance) {
-    EXPECT_EQ(instance->name(), in.FullName());
-    EXPECT_EQ(instance->config(), user_config->name());
-    EXPECT_EQ(instance->display_name(), "test-display-name");
-    EXPECT_EQ(instance->processing_units(), 100);
-    EXPECT_EQ(instance->labels().at("label-key"), "label-value");
-    EXPECT_THAT(client_.DeleteInstance(instance->name()), IsOk());
+  if (Emulator()) {
+    // there is a quota on CreateInstance requests against production, so only
+    // create an instance to verify the config when running against the
+    // emulator.
+    std::string instance_id = spanner_testing::RandomInstanceName(generator_);
+    Instance in(project, instance_id);
+    auto instance =
+        client_
+            .CreateInstance(
+                CreateInstanceRequestBuilder(in, user_config->name())
+                    .SetDisplayName("test-display-name")
+                    .SetProcessingUnits(100)
+                    .SetLabels({{"label-key", "label-value"}})
+                    .Build())
+            .get();
+    EXPECT_THAT(instance, IsOk());
+    if (instance) {
+      EXPECT_EQ(instance->name(), in.FullName());
+      EXPECT_EQ(instance->config(), user_config->name());
+      EXPECT_EQ(instance->display_name(), "test-display-name");
+      EXPECT_EQ(instance->processing_units(), 100);
+      EXPECT_EQ(instance->labels().at("label-key"), "label-value");
+      EXPECT_THAT(client_.DeleteInstance(instance->name()), IsOk());
+    }
   }
 
   EXPECT_THAT(client_.DeleteInstanceConfig(user_config->name()), IsOk());

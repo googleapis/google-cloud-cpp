@@ -654,6 +654,36 @@ TEST_F(DatabaseAdminClientTest, DropDatabaseProtection) {
   EXPECT_STATUS_OK(drop_unprotected);
 }
 
+TEST_F(DatabaseAdminClientTest, LROStartAwait) {
+  EXPECT_FALSE(DatabaseExists()) << "Database " << database_
+                                 << " already exists, this is unexpected as "
+                                    "the database id is selected at random.";
+
+  // Start an LRO.
+  auto operation = client_.CreateDatabase(
+      ExperimentalTag{}, NoAwaitTag{}, database_.instance().FullName(),
+      absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
+  ASSERT_STATUS_OK(operation);
+
+  // Verify that an error is returned if there is a mismatch between the RPC
+  // that returned the operation and the RPC in which is it used.
+  auto fail = client_.UpdateDatabase(ExperimentalTag{}, *operation).get();
+  EXPECT_THAT(fail, StatusIs(StatusCode::kInvalidArgument));
+
+  // Wait for the LRO to complete.
+  auto database = client_.CreateDatabase(ExperimentalTag{}, *operation).get();
+  ASSERT_STATUS_OK(database);
+  EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
+
+  // Verify the operation completed successfully.
+  EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
+
+  // Clean up the test artifacts.
+  auto drop_status = client_.DropDatabase(database_.FullName());
+  EXPECT_STATUS_OK(drop_status);
+  EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner
