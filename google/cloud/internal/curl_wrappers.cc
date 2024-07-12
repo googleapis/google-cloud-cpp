@@ -231,7 +231,7 @@ bool SslLockingCallbacksInstalled() {
 }
 
 CurlPtr MakeCurlPtr() {
-  auto handle = CurlPtr(curl_easy_init(), &curl_easy_cleanup);
+  auto handle = CurlPtr(curl_easy_init());
   // We get better performance using a slightly larger buffer (128KiB) than the
   // default buffer size set by libcurl (16KiB).  We ignore errors because
   // failing to set this parameter just affects performance by a small amount.

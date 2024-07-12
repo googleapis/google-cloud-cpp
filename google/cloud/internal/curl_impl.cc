@@ -169,7 +169,6 @@ CurlImpl::CurlImpl(CurlHandle handle,
                    std::shared_ptr<CurlHandleFactory> factory,
                    Options const& options)
     : factory_(std::move(factory)),
-      request_headers_(nullptr, &curl_slist_free_all),
       handle_(std::move(handle)),
       multi_(factory_->CreateMultiHandle()) {
   CurlInitializeOnce(options);

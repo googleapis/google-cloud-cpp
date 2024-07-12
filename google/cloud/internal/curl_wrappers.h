@@ -32,19 +32,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
   (LIBCURL_VERSION_NUM >= ((((Ma) << 16) | ((Mi) << 8)) | (Pa)))
 #endif  // CURL_AT_LEAST_VERSION
 
+// Wrappers around the `curl_*` functions we need for cleanups.
+struct CurlPtrCleanup {
+  void operator()(CURL* arg) const { return curl_easy_cleanup(arg); }
+};
+
+struct CurlMultiPtrCleanup {
+  void operator()(CURLM* arg) const { (void)curl_multi_cleanup(arg); }
+};
+
+struct CurlFree {
+  void operator()(char* arg) const { return curl_free(arg); }
+};
+
+struct CurlSListFreeAll {
+  void operator()(curl_slist* arg) const { return curl_slist_free_all(arg); }
+};
+
+struct CurlShareCleanup {
+  void operator()(CURLSH* arg) const { (void)curl_share_cleanup(arg); }
+};
+
 /// Hold a CURL* handle and automatically clean it up.
-using CurlPtr = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
+using CurlPtr = std::unique_ptr<CURL, CurlPtrCleanup>;
 
 /// Create a new (wrapped) CURL* with one-time configuration options set.
 CurlPtr MakeCurlPtr();
 
 /// Hold a CURLM* handle and automatically clean it up.
-using CurlMulti = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
+using CurlMulti = std::unique_ptr<CURLM, CurlMultiPtrCleanup>;
 
 /// Hold a character string created by CURL use correct deleter.
-using CurlString = std::unique_ptr<char, decltype(&curl_free)>;
+using CurlString = std::unique_ptr<char, CurlFree>;
 
-using CurlHeaders = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
+using CurlHeaders = std::unique_ptr<curl_slist, CurlSListFreeAll>;
 
 using CurlReceivedHeaders = std::multimap<std::string, std::string>;
 std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
@@ -56,7 +77,7 @@ std::string DebugSendHeader(char const* data, std::size_t size);
 std::string DebugInData(char const* data, std::size_t size);
 std::string DebugOutData(char const* data, std::size_t size);
 
-using CurlShare = std::unique_ptr<CURLSH, decltype(&curl_share_cleanup)>;
+using CurlShare = std::unique_ptr<CURLSH, CurlShareCleanup>;
 
 /// Returns true if the SSL locking callbacks are installed.
 bool SslLockingCallbacksInstalled();

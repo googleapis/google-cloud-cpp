@@ -97,6 +97,9 @@ build:tsan --action_env=TSAN_OPTIONS=halt_on_error=1:second_deadlock_stack=1:rep
 build:ubsan --config=sanitizer
 build:ubsan --config=libcxx
 build:ubsan --copt=-fsanitize=undefined
+# By default libcurl calls functions through pointers not matching the original
+# type.
+build:ubsan --copt=-DCURL_STRICTER
 build:ubsan --linkopt=-fsanitize=undefined
 build:ubsan --linkopt=-fsanitize-link-c++-runtime
 build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
