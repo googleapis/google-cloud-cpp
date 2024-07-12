@@ -105,6 +105,8 @@ add_library(
     internal/async/connection_tracing.h
     internal/async/default_options.cc
     internal/async/default_options.h
+    internal/async/handle_redirect_error.cc
+    internal/async/handle_redirect_error.h
     internal/async/insert_object.cc
     internal/async/insert_object.h
     internal/async/object_descriptor_impl.cc
