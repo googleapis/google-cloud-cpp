@@ -259,10 +259,9 @@ TEST_F(InstanceAdminClientRestTest, InstanceCRUDOperations) {
 }
 
 TEST_F(InstanceAdminClientRestTest, CreateInstanceStartAwait) {
-  if (!Emulator() && !RunSlowInstanceTests()) {
-    GTEST_SKIP() << "skipping slow instance tests; set "
-                 << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
-                 << " to override";
+  if (!Emulator()) {
+    GTEST_SKIP() << "skipping, as there is a quota on CreateInstance requests "
+                    "against production.";
   }
 
   Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator_));
