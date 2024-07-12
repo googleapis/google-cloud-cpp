@@ -37,7 +37,9 @@ using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
+using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::Field;
 using ::testing::NotNull;
 using ::testing::Pair;
 
@@ -51,8 +53,8 @@ TEST(OpenImpl, RequestParams) {
       bucket: "projects/_/buckets/test-bucket-name"
       object: "test-object-unused"
       generation: 42
+      read_handle { handle: "unused" }
     }
-    read_handle: "unused"
   )pb";
   auto constexpr kWithRoutingToken = R"pb(
     read_object_spec {
@@ -81,15 +83,25 @@ TEST(OpenImpl, Basic) {
     object: "test-object"
     generation: 42
   )pb";
+  auto constexpr kReadResponse = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-123" }
+  )pb";
+
   auto request = google::storage::v2::BidiReadObjectRequest{};
   ASSERT_TRUE(
       TextFormat::ParseFromString(kText, request.mutable_read_object_spec()));
+  auto expected_response = google::storage::v2::BidiReadObjectResponse{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kReadResponse, &expected_response));
 
   AsyncSequencer<bool> sequencer;
   MockStorageStub mock;
   EXPECT_CALL(mock, AsyncBidiReadObject)
-      .WillOnce([&sequencer, request](
-                    CompletionQueue const&,
+      .WillOnce([&](CompletionQueue const&,
                     std::shared_ptr<grpc::ClientContext> const& context,
                     google::cloud::internal::ImmutableOptions const&) {
         google::cloud::testing_util::ValidateMetadataFixture md;
@@ -111,7 +123,12 @@ TEST(OpenImpl, Basic) {
                   return sequencer.PushBack("Write").then(
                       [](auto f) { return f.get(); });
                 });
-        return std::unique_ptr<OpenObject::StreamingRpc>(std::move(stream));
+        EXPECT_CALL(*stream, Read).WillOnce([&sequencer, expected_response]() {
+          return sequencer.PushBack("Read").then([expected_response](auto) {
+            return absl::make_optional(expected_response);
+          });
+        });
+        return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
       });
 
   CompletionQueue cq;
@@ -125,23 +142,17 @@ TEST(OpenImpl, Basic) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
 
   auto response = pending.get();
-  ASSERT_THAT(response, IsOkAndHolds(NotNull()));
-
-  auto constexpr kExpectedMetadata = R"pb(
-    bucket: "projects/_/buckets/test-bucket"
-    name: "test-object"
-    generation: 42
-  )pb";
-  auto expected_metadata = google::storage::v2::Object{};
-  EXPECT_TRUE(
-      TextFormat::ParseFromString(kExpectedMetadata, &expected_metadata));
-  auto constexpr kExpectedHandle = R"pb(
-    handle: "handle-12345"
-  )pb";
-  auto expected_handle = google::storage::v2::BidiReadHandle{};
-  EXPECT_TRUE(TextFormat::ParseFromString(kExpectedHandle, &expected_handle));
+  auto expected_result = [expected_response]() {
+    return AllOf(Field(&OpenStreamResult::stream, NotNull()),
+                 Field(&OpenStreamResult::first_response,
+                       IsProtoEqual(expected_response)));
+  };
+  ASSERT_THAT(response, IsOkAndHolds(expected_result()));
 }
 
 TEST(OpenImpl, BasicReadHandle) {
@@ -152,15 +163,25 @@ TEST(OpenImpl, BasicReadHandle) {
     read_handle { handle: "test-handle-1234" }
     routing_token: "test-token"
   )pb";
+  auto constexpr kReadResponse = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-123" }
+  )pb";
+
   auto request = google::storage::v2::BidiReadObjectRequest{};
   ASSERT_TRUE(
       TextFormat::ParseFromString(kText, request.mutable_read_object_spec()));
+  auto expected_response = google::storage::v2::BidiReadObjectResponse{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kReadResponse, &expected_response));
 
   AsyncSequencer<bool> sequencer;
   MockStorageStub mock;
   EXPECT_CALL(mock, AsyncBidiReadObject)
-      .WillOnce([&sequencer, request](
-                    CompletionQueue const&,
+      .WillOnce([&](CompletionQueue const&,
                     std::shared_ptr<grpc::ClientContext> const& context,
                     google::cloud::internal::ImmutableOptions const&) {
         google::cloud::testing_util::ValidateMetadataFixture md;
@@ -184,7 +205,12 @@ TEST(OpenImpl, BasicReadHandle) {
                   return sequencer.PushBack("Write").then(
                       [](auto f) { return f.get(); });
                 });
-        return std::unique_ptr<OpenObject::StreamingRpc>(std::move(stream));
+        EXPECT_CALL(*stream, Read).WillOnce([&sequencer, expected_response]() {
+          return sequencer.PushBack("Read").then([expected_response](auto) {
+            return absl::make_optional(expected_response);
+          });
+        });
+        return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
       });
 
   CompletionQueue cq;
@@ -198,18 +224,17 @@ TEST(OpenImpl, BasicReadHandle) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
+  next.first.set_value(true);
 
   auto response = pending.get();
-  ASSERT_THAT(response, IsOkAndHolds(NotNull()));
-
-  auto constexpr kExpectedMetadata = R"pb(
-    bucket: "projects/_/buckets/test-bucket"
-    name: "test-object"
-    generation: 42
-  )pb";
-  auto expected_metadata = google::storage::v2::Object{};
-  EXPECT_TRUE(
-      TextFormat::ParseFromString(kExpectedMetadata, &expected_metadata));
+  auto expected_result = [expected_response]() {
+    return AllOf(Field(&OpenStreamResult::stream, NotNull()),
+                 Field(&OpenStreamResult::first_response,
+                       IsProtoEqual(expected_response)));
+  };
+  ASSERT_THAT(response, IsOkAndHolds(expected_result()));
 }
 
 TEST(OpenImpl, StartError) {
@@ -224,7 +249,7 @@ TEST(OpenImpl, StartError) {
       return sequencer.PushBack("Finish").then(
           [](auto) { return PermanentError(); });
     });
-    return std::unique_ptr<OpenObject::StreamingRpc>(std::move(stream));
+    return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
   });
 
   CompletionQueue cq;
@@ -259,7 +284,7 @@ TEST(OpenImpl, WriteError) {
       return sequencer.PushBack("Finish").then(
           [](auto) { return PermanentError(); });
     });
-    return std::unique_ptr<OpenObject::StreamingRpc>(std::move(stream));
+    return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
   });
 
   CompletionQueue cq;
@@ -273,6 +298,52 @@ TEST(OpenImpl, WriteError) {
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Write");
+  next.first.set_value(false);  // simulate an error
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  auto response = pending.get();
+  EXPECT_THAT(response, StatusIs(PermanentError().code()));
+}
+
+TEST(OpenImpl, ReadError) {
+  AsyncSequencer<bool> sequencer;
+  MockStorageStub mock;
+  EXPECT_CALL(mock, AsyncBidiReadObject).WillOnce([&sequencer]() {
+    auto stream = std::make_unique<MockStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Start").then([](auto f) { return f.get(); });
+    });
+    EXPECT_CALL(*stream, Write).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Write").then([](auto f) { return f.get(); });
+    });
+    EXPECT_CALL(*stream, Read).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Read").then([](auto) {
+        return absl::optional<google::storage::v2::BidiReadObjectResponse>();
+      });
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Finish").then(
+          [](auto) { return PermanentError(); });
+    });
+    return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
+  });
+
+  CompletionQueue cq;
+  auto coro = std::make_shared<OpenObject>(
+      mock, cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}),
+      google::storage::v2::BidiReadObjectRequest{});
+  auto pending = coro->Call();
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Read");
   next.first.set_value(false);  // simulate an error
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
@@ -296,7 +367,7 @@ TEST(OpenImpl, UnexpectedFinish) {
     EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
       return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
     });
-    return std::unique_ptr<OpenObject::StreamingRpc>(std::move(stream));
+    return std::unique_ptr<OpenStream::StreamingRpc>(std::move(stream));
   });
 
   CompletionQueue cq;

@@ -203,6 +203,7 @@ AsyncConnectionImpl::Open(OpenParams p) {
                   google::storage::v2::BidiReadObjectRequest const& request) {
     auto open = std::make_shared<OpenObject>(*stub, cq, std::move(context),
                                              std::move(options), request);
+    // Extend the lifetime of the coroutine until it finishes.
     return open->Call().then([open](auto f) mutable {
       open.reset();
       return f.get();
@@ -218,28 +219,23 @@ AsyncConnectionImpl::Open(OpenParams p) {
        current = std::move(current), call = std::move(call),
        where](google::storage::v2::BidiReadObjectRequest request) {
         return google::cloud::internal::AsyncRetryLoop(
-                   retry->clone(), backoff->clone(), Idempotency::kIdempotent,
-                   cq, std::move(call), current, std::move(request), where)
-            .then([](auto f) -> StatusOr<std::shared_ptr<OpenStream>> {
-              auto s = f.get();
-              if (!s) return std::move(s).status();
-              return std::make_shared<OpenStream>(*std::move(s));
-            });
+            retry->clone(), backoff->clone(), Idempotency::kIdempotent, cq,
+            std::move(call), current, std::move(request), where);
       });
 
   auto pending = factory(std::move(initial_request));
   using ReturnType =
       std::shared_ptr<storage_experimental::ObjectDescriptorConnection>;
-  return pending.then(
-      [rp = std::move(resume_policy), fa = std::move(factory),
-       rs = std::move(p.read_spec)](auto f) mutable -> StatusOr<ReturnType> {
-        auto rpc = f.get();
-        if (!rpc) return std::move(rpc).status();
-        auto impl = std::make_shared<ObjectDescriptorImpl>(
-            std::move(rp), std::move(fa), std::move(rs), *std::move(rpc));
-        impl->Start();
-        return ReturnType(impl);
-      });
+  return pending.then([rp = std::move(resume_policy), fa = std::move(factory),
+                       rs = std::move(p.read_spec)](
+                          auto f) mutable -> StatusOr<ReturnType> {
+    auto result = f.get();
+    if (!result) return std::move(result).status();
+    auto impl = std::make_shared<ObjectDescriptorImpl>(
+        std::move(rp), std::move(fa), std::move(rs), std::move(result->stream));
+    impl->Start(std::move(result->first_response));
+    return ReturnType(impl);
+  });
 }
 
 future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>

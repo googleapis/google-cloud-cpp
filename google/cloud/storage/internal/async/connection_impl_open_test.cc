@@ -181,15 +181,13 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
   EXPECT_EQ(next.second, "Write");
   next.first.set_value(true);
 
-  auto p = pending.get();
-  ASSERT_THAT(p, IsOkAndHolds(NotNull()));
-  auto descriptor = *std::move(p);
-
-  EXPECT_EQ(descriptor->metadata(), absl::nullopt);
-
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
+
+  auto p = pending.get();
+  ASSERT_THAT(p, IsOkAndHolds(NotNull()));
+  auto descriptor = *std::move(p);
 
   auto expected_metadata = google::storage::v2::Object{};
   EXPECT_TRUE(TextFormat::ParseFromString(kMetadataText, &expected_metadata));

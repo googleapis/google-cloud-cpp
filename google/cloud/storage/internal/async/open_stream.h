@@ -15,9 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OPEN_STREAM_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OPEN_STREAM_H
 
-#include "google/cloud/storage/internal/async/open_object.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <google/storage/v2/storage.pb.h>
@@ -54,11 +55,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class OpenStream : public std::enable_shared_from_this<OpenStream> {
  public:
+  using StreamingRpc = google::cloud::AsyncStreamingReadWriteRpc<
+      google::storage::v2::BidiReadObjectRequest,
+      google::storage::v2::BidiReadObjectResponse>;
   using ReadType = absl::optional<google::storage::v2::BidiReadObjectResponse>;
 
-  explicit OpenStream(std::shared_ptr<OpenObject::StreamingRpc> rpc);
+  explicit OpenStream(std::unique_ptr<StreamingRpc> rpc);
 
   void Cancel();
+  future<bool> Start();
   future<bool> Write(google::storage::v2::BidiReadObjectRequest const& request);
   future<ReadType> Read();
   future<Status> Finish();
@@ -72,12 +77,16 @@ class OpenStream : public std::enable_shared_from_this<OpenStream> {
   std::atomic<bool> pending_read_{false};
   std::atomic<bool> pending_write_{false};
   std::atomic<bool> finish_issued_{false};
-  std::shared_ptr<OpenObject::StreamingRpc> rpc_;
+  std::unique_ptr<StreamingRpc> rpc_;
 };
 
-using OpenStreamFactory =
-    std::function<future<StatusOr<std::shared_ptr<OpenStream>>>(
-        google::storage::v2::BidiReadObjectRequest)>;
+struct OpenStreamResult {
+  std::shared_ptr<OpenStream> stream;
+  google::storage::v2::BidiReadObjectResponse first_response;
+};
+
+using OpenStreamFactory = std::function<future<StatusOr<OpenStreamResult>>(
+    google::storage::v2::BidiReadObjectRequest)>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

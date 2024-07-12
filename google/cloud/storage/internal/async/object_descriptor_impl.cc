@@ -34,8 +34,9 @@ ObjectDescriptorImpl::ObjectDescriptorImpl(
 
 ObjectDescriptorImpl::~ObjectDescriptorImpl() { stream_->Cancel(); }
 
-void ObjectDescriptorImpl::Start() {
-  DoRead(std::unique_lock<std::mutex>(mu_));
+void ObjectDescriptorImpl::Start(
+    google::storage::v2::BidiReadObjectResponse first_response) {
+  OnRead(std::move(first_response));
 }
 
 void ObjectDescriptorImpl::Cancel() { return stream_->Cancel(); }
@@ -174,14 +175,13 @@ void ObjectDescriptorImpl::Resume(Status const& status) {
   });
 }
 
-void ObjectDescriptorImpl::OnResume(
-    StatusOr<std::shared_ptr<OpenStream>> stream) {
-  if (!stream) return OnFinish(std::move(stream).status());
+void ObjectDescriptorImpl::OnResume(StatusOr<OpenStreamResult> result) {
+  if (!result) return OnFinish(std::move(result).status());
   std::unique_lock<std::mutex> lk(mu_);
-  stream_ = *std::move(stream);
+  stream_ = std::move(result->stream);
   // TODO(#36) - this should be done without release the lock.
-  DoRead(std::move(lk));
-  Flush(std::unique_lock<std::mutex>(mu_));
+  Flush(std::move(lk));
+  OnRead(std::move(result->first_response));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

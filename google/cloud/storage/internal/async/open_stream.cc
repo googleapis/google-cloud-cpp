@@ -20,13 +20,18 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-OpenStream::OpenStream(std::shared_ptr<OpenObject::StreamingRpc> rpc)
+OpenStream::OpenStream(std::unique_ptr<StreamingRpc> rpc)
     : rpc_(std::move(rpc)) {}
 
 void OpenStream::Cancel() {
   cancel_.store(true);
   rpc_->Cancel();
   MaybeFinish();
+}
+
+future<bool> OpenStream::Start() {
+  if (cancel_) return make_ready_future(false);
+  return rpc_->Start();
 }
 
 future<bool> OpenStream::Write(
