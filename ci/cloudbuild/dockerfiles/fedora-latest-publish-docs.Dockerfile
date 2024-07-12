@@ -44,7 +44,7 @@ RUN dnf makecache && dnf install -y libxslt
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
-RUN echo 'root:' | chpasswd
+RUN echo 'root:cloudcxx' | chpasswd
 
 # We would prefer to say `dnf install -y doxygen`, but Fedora 40 ships with
 # Doxygen 1.10.0 and we need fixes that were released in Doxygen 1.11.0. Also,
