@@ -73,7 +73,7 @@ Options MetricsExporterOptions(
       .set<otel_internal::ServiceTimeSeriesOption>(true)
       .set<otel_internal::MetricNameFormatterOption>([](std::string s) {
         std::replace(s.begin(), s.end(), '.', '/');
-        return "storage.googleapis.com/" + std::move(s);
+        return "storage.googleapis.com/client/" + std::move(s);
       })
       .set<otel_internal::MonitoredResourceOption>(
           std::move(monitored_resource));
