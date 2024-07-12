@@ -72,9 +72,8 @@ class CurlHandle {
 
   /// URL-escapes a string.
   CurlString MakeEscapedString(std::string const& s) {
-    return CurlString(
-        curl_easy_escape(handle_.get(), s.data(), static_cast<int>(s.length())),
-        &curl_free);
+    return CurlString(curl_easy_escape(handle_.get(), s.data(),
+                                       static_cast<int>(s.length())));
   }
 
   template <typename T>

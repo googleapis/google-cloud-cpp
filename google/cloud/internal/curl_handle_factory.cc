@@ -65,7 +65,7 @@ void DefaultCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition) {
 }
 
 CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
-  return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
+  return CurlMulti(curl_multi_init());
 }
 
 void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
@@ -161,7 +161,7 @@ CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
   }
   ++active_multi_handles_;
   lk.unlock();
-  return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
+  return CurlMulti(curl_multi_init());
 }
 
 void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,

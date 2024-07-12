@@ -41,6 +41,14 @@ extern "C" size_t CurlOnWriteData(char* ptr, size_t size, size_t nmemb,
   return size * nmemb;
 }
 
+struct CurlPtrCleanup {
+  void operator()(CURL* arg) const { return curl_easy_cleanup(arg); }
+};
+
+struct CurlSListFreeAll {
+  void operator()(curl_slist* arg) const { return curl_slist_free_all(arg); }
+};
+
 google::cloud::StatusOr<std::string> HttpGet(std::string const& url,
                                              std::string const& token) {
   static auto const kCurlInit = [] {
@@ -48,11 +56,11 @@ google::cloud::StatusOr<std::string> HttpGet(std::string const& url,
   }();
   (void)kCurlInit;
   auto const authorization = "Authorization: Bearer " + token;
-  using Headers = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
-  auto const headers = Headers{
-      curl_slist_append(nullptr, authorization.c_str()), curl_slist_free_all};
-  using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
-  auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
+  using Headers = std::unique_ptr<curl_slist, CurlSListFreeAll>;
+  auto const headers =
+      Headers{curl_slist_append(nullptr, authorization.c_str())};
+  using CurlHandle = std::unique_ptr<CURL, CurlPtrCleanup>;
+  auto curl = CurlHandle(curl_easy_init());
   if (!curl) throw std::runtime_error("Failed to create CurlHandle");
   std::string buffer;
   curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
