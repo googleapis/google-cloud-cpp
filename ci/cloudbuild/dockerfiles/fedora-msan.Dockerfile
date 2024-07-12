@@ -35,7 +35,7 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
 # the container's /etc/passwd file.
-RUN echo 'root:' | chpasswd
+RUN echo 'root:cloudcxx' | chpasswd
 
 WORKDIR /var/tmp/build
 
