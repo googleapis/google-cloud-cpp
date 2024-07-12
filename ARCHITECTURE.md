@@ -107,7 +107,7 @@ defined, there are separate `${library}::*Client` objects.
 
 These are some examples:
 
-- Bigtable has a [`bigtable::Table`](/google/cloud/bigtable/table.h) client. It
+- Bigtable has a [`bigtable::DataClient`](/google/cloud/bigtable/data_client.h) client. It
   also has two admin clients:
   [`bigtable_admin::BigtableInstanceAdminClient`](/google/cloud/bigtable/admin/bigtable_instance_admin_client.h)
   and
