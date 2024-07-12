@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
-#include "google/cloud/internal/status_payload_keys.h"
+#include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include <google/rpc/status.pb.h>
 #include <utility>
 
@@ -145,22 +145,12 @@ void ObjectDescriptorImpl::OnFinish(Status const& status) {
 }
 
 void ObjectDescriptorImpl::Resume(Status const& status) {
-  auto proto_status = google::rpc::Status{};
-  auto payload = google::cloud::internal::GetPayload(
-      status, google::cloud::internal::StatusPayloadGrpcProto());
-  if (payload) proto_status.ParseFromString(*payload);
+  auto proto_status = ExtractGrpcStatus(status);
 
   std::unique_lock<std::mutex> lk(mu_);
-  // This loop needs to happen inside the lock, as it may modify
+  // This call needs to happen inside the lock, as it may modify
   // `read_object_spec_`.
-  for (auto const& any : proto_status.details()) {
-    auto error = google::storage::v2::BidiReadObjectRedirectedError{};
-    if (!any.UnpackTo(&error)) continue;
-    *read_object_spec_.mutable_read_handle() =
-        std::move(*error.mutable_read_handle());
-    *read_object_spec_.mutable_routing_token() =
-        std::move(*error.mutable_routing_token());
-  }
+  ApplyRedirectErrors(read_object_spec_, proto_status);
   auto request = google::storage::v2::BidiReadObjectRequest{};
   *request.mutable_read_object_spec() = read_object_spec_;
   for (auto const& kv : active_ranges_) {
