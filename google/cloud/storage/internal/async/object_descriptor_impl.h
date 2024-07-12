@@ -46,7 +46,7 @@ class ObjectDescriptorImpl
   ~ObjectDescriptorImpl() override;
 
   // Start the read loop.
-  void Start();
+  void Start(google::storage::v2::BidiReadObjectResponse first_response);
 
   // Cancel the underlying RPC and stop the resume loop.
   void Cancel();
@@ -85,7 +85,7 @@ class ObjectDescriptorImpl
   void DoFinish(std::unique_lock<std::mutex>);
   void OnFinish(Status const& status);
   void Resume(Status const& status);
-  void OnResume(StatusOr<std::shared_ptr<OpenStream>> stream);
+  void OnResume(StatusOr<OpenStreamResult> result);
 
   std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
   OpenStreamFactory make_stream_;
