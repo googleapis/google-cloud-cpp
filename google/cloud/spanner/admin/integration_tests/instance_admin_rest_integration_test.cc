@@ -259,9 +259,10 @@ TEST_F(InstanceAdminClientRestTest, InstanceCRUDOperations) {
 }
 
 TEST_F(InstanceAdminClientRestTest, CreateInstanceStartAwait) {
-  if (!Emulator()) {
-    GTEST_SKIP() << "skipping, as there is a quota on CreateInstance requests "
-                    "against production.";
+  if (!Emulator() && !RunSlowInstanceTests()) {
+    GTEST_SKIP() << "skipping slow instance tests; set "
+                 << "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS=instance"
+                 << " to override";
   }
 
   Instance in(ProjectId(), spanner_testing::RandomInstanceName(generator_));
@@ -281,6 +282,8 @@ TEST_F(InstanceAdminClientRestTest, CreateInstanceStartAwait) {
                                  .SetLabels({{"label-key", "label-value"}})
                                  .Build());
   ASSERT_STATUS_OK(operation);
+  // Verify that an error is returned if there is a mismatch between the RPC
+  // that returned the operation and the RPC in which is it used.
   auto instance_config =
       client_.CreateInstanceConfig(ExperimentalTag{}, *operation).get();
   EXPECT_THAT(instance_config, StatusIs(StatusCode::kInvalidArgument));
