@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OPEN_OBJECT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ASYNC_OPEN_OBJECT_H
 
+#include "google/cloud/storage/internal/async/open_stream.h"
 #include "google/cloud/storage/internal/storage_stub.h"
-#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
@@ -50,13 +50,12 @@ std::string RequestParams(
  *     google::storage::v2::BidiReadObjectRequest,
  *     google::storage::v2::BidiReadObjectResponse>;
  *
- * struct Response {
- *   std::shared_ptr<StreamingRpc> rpc;
- *   google::storage::v2::Object metadata;
- *   google::storage::v2::BidiReadHandle handle;
+ * struct Result {
+ *   std::unique_ptr<StreamingRpc> rpc;
+ *   google::storage::v2::BidiReadObjectResponse response;
  * };
  *
- * future<StatusOr<std::unique_ptr<StreamingRpc>>> Open(
+ * future<StatusOr<Result>> Open(
  *     storage_internal::StorageStub& stub,
  *     CompletionQueue& cq,
  *     std::shared_ptr<grpc::ClientContext> context,
@@ -69,7 +68,9 @@ std::string RequestParams(
  *   if (!start) co_return co_await rpc->Finish();
  *   auto write = co_await rpc->Write(request, grpc::WriteOptions{});
  *   if (!write) co_return co_await rpc->Finish();
- *   co_return rpc;
+ *   auto read = co_await rpc->Read();
+ *   if (!read) co_return co_await rpc->Finish();
+ *   co_return Result{std::move(rpc), std::move(*read)};
  * }
  * @endcode
  *
@@ -78,10 +79,6 @@ std::string RequestParams(
  */
 class OpenObject : public std::enable_shared_from_this<OpenObject> {
  public:
-  using StreamingRpc = google::cloud::AsyncStreamingReadWriteRpc<
-      google::storage::v2::BidiReadObjectRequest,
-      google::storage::v2::BidiReadObjectResponse>;
-
   /// Create a coroutine to create an open a bidi streaming read RPC.
   OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
@@ -89,12 +86,12 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
              google::storage::v2::BidiReadObjectRequest request);
 
   /// Start the coroutine.
-  future<StatusOr<std::shared_ptr<StreamingRpc>>> Call();
+  future<StatusOr<OpenStreamResult>> Call();
 
  private:
   std::weak_ptr<OpenObject> WeakFromThis();
 
-  static std::unique_ptr<StreamingRpc> CreateRpc(
+  static std::unique_ptr<OpenStream::StreamingRpc> CreateRpc(
       storage_internal::StorageStub& stub, CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
@@ -102,11 +99,13 @@ class OpenObject : public std::enable_shared_from_this<OpenObject> {
 
   void OnStart(bool ok);
   void OnWrite(bool ok);
+  void OnRead(
+      absl::optional<google::storage::v2::BidiReadObjectResponse> response);
   void DoFinish();
   void OnFinish(Status status);
 
-  std::shared_ptr<StreamingRpc> rpc_;
-  promise<StatusOr<std::shared_ptr<StreamingRpc>>> promise_;
+  std::shared_ptr<OpenStream> rpc_;
+  promise<StatusOr<OpenStreamResult>> promise_;
   google::storage::v2::BidiReadObjectRequest initial_request_;
 };
 

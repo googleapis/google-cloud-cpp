@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/open_stream.h"
 #include "google/cloud/mocks/mock_async_streaming_read_write_rpc.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/storage/v2/storage.pb.h>
@@ -35,7 +36,8 @@ using MockStream = google::cloud::mocks::MockAsyncStreamingReadWriteRpc<
 
 TEST(OpenStream, CancelBlocksAllRequest) {
   AsyncSequencer<bool> sequencer;
-  auto mock = std::make_shared<MockStream>();
+  auto mock = std::make_unique<MockStream>();
+  EXPECT_CALL(*mock, Start).Times(0);
   EXPECT_CALL(*mock, Write).Times(0);
   EXPECT_CALL(*mock, Read).Times(0);
   EXPECT_CALL(*mock, Cancel).Times(1);
@@ -48,6 +50,7 @@ TEST(OpenStream, CancelBlocksAllRequest) {
   auto actual = std::make_shared<OpenStream>(std::move(mock));
   actual->Cancel();
 
+  EXPECT_FALSE(actual->Start().get());
   EXPECT_FALSE(actual->Write({}).get());
   EXPECT_FALSE(actual->Read().get().has_value());
 
@@ -60,7 +63,7 @@ TEST(OpenStream, CancelBlocksAllRequest) {
 
 TEST(OpenStream, DuplicateFinish) {
   AsyncSequencer<bool> sequencer;
-  auto mock = std::make_shared<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Cancel).Times(1);
   EXPECT_CALL(*mock, Finish).WillOnce([&sequencer] {
     return sequencer.PushBack("Finish").then([](auto) {
@@ -83,7 +86,7 @@ TEST(OpenStream, DuplicateFinish) {
 
 TEST(OpenStream, CleanShutdown) {
   AsyncSequencer<bool> sequencer;
-  auto mock = std::make_shared<MockStream>();
+  auto mock = std::make_unique<MockStream>();
   EXPECT_CALL(*mock, Write).WillOnce([&sequencer] {
     return sequencer.PushBack("Write").then([](auto) { return false; });
   });

@@ -36,11 +36,11 @@ OpenObject::OpenObject(storage_internal::StorageStub& stub, CompletionQueue& cq,
                        std::shared_ptr<grpc::ClientContext> context,
                        google::cloud::internal::ImmutableOptions options,
                        google::storage::v2::BidiReadObjectRequest request)
-    : rpc_(
-          CreateRpc(stub, cq, std::move(context), std::move(options), request)),
+    : rpc_(std::make_shared<OpenStream>(CreateRpc(
+          stub, cq, std::move(context), std::move(options), request))),
       initial_request_(std::move(request)) {}
 
-future<StatusOr<std::shared_ptr<OpenObject::StreamingRpc>>> OpenObject::Call() {
+future<StatusOr<OpenStreamResult>> OpenObject::Call() {
   auto future = promise_.get_future();
   rpc_->Start().then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnStart(f.get());
@@ -52,7 +52,7 @@ std::weak_ptr<OpenObject> OpenObject::WeakFromThis() {
   return shared_from_this();
 }
 
-std::unique_ptr<OpenObject::StreamingRpc> OpenObject::CreateRpc(
+std::unique_ptr<OpenStream::StreamingRpc> OpenObject::CreateRpc(
     storage_internal::StorageStub& stub, CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
@@ -64,15 +64,22 @@ std::unique_ptr<OpenObject::StreamingRpc> OpenObject::CreateRpc(
 
 void OpenObject::OnStart(bool ok) {
   if (!ok) return DoFinish();
-  rpc_->Write(initial_request_, grpc::WriteOptions{})
-      .then([w = WeakFromThis()](auto f) {
-        if (auto self = w.lock()) self->OnWrite(f.get());
-      });
+  rpc_->Write(initial_request_).then([w = WeakFromThis()](auto f) {
+    if (auto self = w.lock()) self->OnWrite(f.get());
+  });
 }
 
 void OpenObject::OnWrite(bool ok) {
   if (!ok) return DoFinish();
-  promise_.set_value(std::move(rpc_));
+  rpc_->Read().then([w = WeakFromThis()](auto f) {
+    if (auto self = w.lock()) self->OnRead(f.get());
+  });
+}
+
+void OpenObject::OnRead(
+    absl::optional<google::storage::v2::BidiReadObjectResponse> response) {
+  if (!response) return DoFinish();
+  promise_.set_value(OpenStreamResult{std::move(rpc_), std::move(*response)});
 }
 
 void OpenObject::DoFinish() {
