@@ -34,7 +34,6 @@ def gl_cpp_development2(name = None):
         http_archive,
         name = "com_github_zeux_pugixml",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_zeux_pugixml/v1.14.tar.gz",
             "https://github.com/zeux/pugixml/archive/v1.14.tar.gz",
         ],
         sha256 = "610f98375424b5614754a6f34a491adbddaaec074e9044577d965160ec103d2e",

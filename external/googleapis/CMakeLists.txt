@@ -22,7 +22,7 @@ include(GoogleapisConfig)
 
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
     "https://github.com/googleapis/googleapis/archive/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
-    "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
+    "https://storage.googleapis.com/cloud-cpp-community-archive/github.com/googleapis/googleapis/archive/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH
     "${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}")
