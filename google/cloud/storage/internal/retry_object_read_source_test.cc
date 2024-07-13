@@ -19,6 +19,7 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -484,6 +485,119 @@ TEST(RetryObjectReadSourceTest, DiscardDataForDecompressiveTranscoding) {
   EXPECT_THAT(response->response.headers,
               Contains(Pair("x-test-only", "download 3 r1")));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+using ::google::cloud::testing_util::DisableTracing;
+using ::google::cloud::testing_util::EnableTracing;
+using ::google::cloud::testing_util::SpanNamed;
+using ::testing::ElementsAre;
+using ::testing::IsEmpty;
+
+TEST(RetryObjectReadSourceTest, TracingEnabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  ::testing::MockFunction<void(std::chrono::milliseconds)> backoff;
+  ::testing::MockFunction<StatusOr<std::unique_ptr<ObjectReadSource>>(
+      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>
+      factory;
+
+  auto make_partial = [] {
+    auto source = std::make_unique<MockObjectReadSource>();
+    EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
+    return std::unique_ptr<ObjectReadSource>(std::move(source));
+  };
+
+  auto source = std::make_unique<MockObjectReadSource>();
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*source, Read)
+        .WillOnce(Return(ReadSourceResult{static_cast<std::size_t>(512 * 1024),
+                                          HttpResponse{100, "", {}}}));
+    EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
+    // No backoffs to resume after a (partially) successful request:
+    //    EXPECT_CALL(backoff, Call).Times(1);
+    EXPECT_CALL(factory, Call).WillOnce(make_partial);
+    EXPECT_CALL(backoff, Call).Times(1);
+    EXPECT_CALL(factory, Call).WillOnce(make_partial);
+    EXPECT_CALL(backoff, Call).Times(1);
+    EXPECT_CALL(factory, Call).WillOnce(make_partial);
+  }
+
+  // Override the default backoff policy, it results in very short periods which
+  // are skipped by the span wrappers.
+  using ms = std::chrono::milliseconds;
+  auto options = EnableTracing(BasicTestPolicies().set<BackoffPolicyOption>(
+      ExponentialBackoffPolicy(ms(2), ms(2), 2.0).clone()));
+  auto retry_policy = options.get<RetryPolicyOption>()->clone();
+  auto backoff_policy = options.get<BackoffPolicyOption>()->clone();
+
+  RetryObjectReadSource tested(
+      factory.AsStdFunction(),
+      google::cloud::internal::MakeImmutableOptions(std::move(options)),
+      ReadObjectRangeRequest{}, std::move(source), std::move(retry_policy),
+      std::move(backoff_policy), backoff.AsStdFunction());
+
+  ASSERT_STATUS_OK(tested.Read(nullptr, 1024));
+  auto response = tested.Read(nullptr, 1024);
+  EXPECT_THAT(response, StatusIs(TransientError().code()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("Backoff"), SpanNamed("Backoff")));
+}
+
+TEST(RetryObjectReadSourceTest, TracingDisabled) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  ::testing::MockFunction<void(std::chrono::milliseconds)> backoff;
+  ::testing::MockFunction<StatusOr<std::unique_ptr<ObjectReadSource>>(
+      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&)>
+      factory;
+
+  auto make_partial = [] {
+    auto source = std::make_unique<MockObjectReadSource>();
+    EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
+    return std::unique_ptr<ObjectReadSource>(std::move(source));
+  };
+
+  auto source = std::make_unique<MockObjectReadSource>();
+  {
+    ::testing::InSequence sequence;
+    EXPECT_CALL(*source, Read)
+        .WillOnce(Return(ReadSourceResult{static_cast<std::size_t>(512 * 1024),
+                                          HttpResponse{100, "", {}}}));
+    EXPECT_CALL(*source, Read).WillOnce(Return(TransientError()));
+    // No backoffs to resume after a (partially) successful request:
+    //    EXPECT_CALL(backoff, Call).Times(1);
+    EXPECT_CALL(factory, Call).WillOnce(make_partial);
+    EXPECT_CALL(backoff, Call).Times(1);
+    EXPECT_CALL(factory, Call).WillOnce(make_partial);
+    EXPECT_CALL(backoff, Call).Times(1);
+    EXPECT_CALL(factory, Call).WillOnce(make_partial);
+  }
+
+  // Override the default backoff policy, it results in very short periods which
+  // are skipped by the span wrappers.
+  using ms = std::chrono::milliseconds;
+  auto options = DisableTracing(BasicTestPolicies().set<BackoffPolicyOption>(
+      ExponentialBackoffPolicy(ms(2), ms(2), 2.0).clone()));
+  auto retry_policy = options.get<RetryPolicyOption>()->clone();
+  auto backoff_policy = options.get<BackoffPolicyOption>()->clone();
+
+  RetryObjectReadSource tested(
+      factory.AsStdFunction(),
+      google::cloud::internal::MakeImmutableOptions(std::move(options)),
+      ReadObjectRangeRequest{}, std::move(source), std::move(retry_policy),
+      std::move(backoff_policy), backoff.AsStdFunction());
+
+  ASSERT_STATUS_OK(tested.Read(nullptr, 1024));
+  auto response = tested.Read(nullptr, 1024);
+  EXPECT_THAT(response, StatusIs(TransientError().code()));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal
