@@ -693,7 +693,13 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
         ValidateCommittedSize(request, *result, expected_committed_size);
     if (!validate.ok()) return validate;
 
-    committed_size = *result->committed_size;
+    if (committed_size != *result->committed_size) {
+      // A partial write is a sign of progress. We reset the backoff policy.
+      // Otherwise we would unnecessarily delay the next upload.
+      backoff_policy = current_backoff_policy();
+      committed_size = *result->committed_size;
+    }
+
 
     if (committed_size != expected_committed_size || request.last_chunk()) {
       // If we still have to send data, restart the loop. On the last chunk,
