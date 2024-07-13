@@ -53,10 +53,8 @@ RetryObjectReadSource::RetryObjectReadSource(
       offset_direction_(request_.HasOption<ReadLast>() ? kFromEnd
                                                        : kFromBeginning),
       current_offset_(InitialOffset(offset_direction_, request_)),
-      backoff_(std::move(backoff)) {
-  backoff_ = google::cloud::internal::MakeTracedSleeper(
-      *options_, std::move(backoff_), "Backoff");
-}
+      backoff_(google::cloud::internal::MakeTracedSleeper(
+          *options_, std::move(backoff), "Backoff")) {}
 
 RetryObjectReadSource::RetryObjectReadSource(
     ReadSourceFactory factory,
