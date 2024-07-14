@@ -700,7 +700,6 @@ StatusOr<QueryResumableUploadResponse> StorageConnectionImpl::UploadChunk(
       committed_size = *result->committed_size;
     }
 
-
     if (committed_size != expected_committed_size || request.last_chunk()) {
       // If we still have to send data, restart the loop. On the last chunk,
       // even if the service reports all the data as received, we need to keep
