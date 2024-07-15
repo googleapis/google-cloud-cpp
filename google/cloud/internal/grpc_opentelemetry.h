@@ -33,6 +33,7 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 /**
