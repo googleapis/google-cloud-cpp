@@ -33,6 +33,7 @@ DOWNLOAD="$(mktemp)"
 curl -fsSL "https://github.com/${REPO}/archive/${COMMIT}.tar.gz" -o "${DOWNLOAD}"
 gsutil -q cp "${DOWNLOAD}" "gs://cloud-cpp-community-archive/com_google_googleapis/${COMMIT}.tar.gz"
 SHA256=$(sha256sum "${DOWNLOAD}" | sed "s/ .*//")
+SHA256_BASE64=$(openssl dgst -sha256 -binary <"${DOWNLOAD}" | openssl base64 -A)
 PIPERORIGIN_REVID=
 REV_COMMIT="${COMMIT}"
 until grep -q "/googleapis/archive/${REV_COMMIT}\.tar" bazel/workspace0.bzl; do
@@ -43,12 +44,22 @@ until grep -q "/googleapis/archive/${REV_COMMIT}\.tar" bazel/workspace0.bzl; do
 done
 rm -f "${DOWNLOAD}"
 
+banner "Updating Cache for Bazel"
+bazel/deps-cache.py -p
+
 banner "Updating Bazel/CMake dependencies"
 sed -i -f - bazel/workspace0.bzl <<EOT
   /name = "com_google_googleapis",/,/strip_prefix = "/ {
     s;/com_google_googleapis/.*.tar.gz",;/com_google_googleapis/${COMMIT}.tar.gz",;
     s;/${REPO}/archive/.*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
     s/sha256 = ".*",/sha256 = "${SHA256}",/
+    s/strip_prefix = "googleapis-.*",/strip_prefix = "googleapis-${COMMIT}",/
+  }
+EOT
+sed -i -f - MODULE.bazel <<EOT
+  /module_name = "googleapis",/,/^)/ {
+    s;/${REPO}/archive/.*.tar.gz",;/${REPO}/archive/${COMMIT}.tar.gz",;
+    s;integrity = "sha256-.*",;integrity = "sha256-${SHA256_BASE64}",;
     s/strip_prefix = "googleapis-.*",/strip_prefix = "googleapis-${COMMIT}",/
   }
 EOT
@@ -63,8 +74,8 @@ sed -i -f - cmake/GoogleapisConfig.cmake <<EOT
   }
 EOT
 
-if git diff --quiet bazel/google_cloud_cpp_deps.bzl \
-  cmake/GoogleapisConfig.cmake; then
+if git diff --quiet bazel/workspace0.bzl \
+  cmake/GoogleapisConfig.cmake MODULE.bazel; then
   echo "No updates"
   exit 0
 fi
@@ -77,7 +88,7 @@ TRIGGER_TYPE='pr' ci/cloudbuild/build.sh \
 banner "Creating commits"
 git commit -m"chore: update googleapis SHA circa $(date +%Y-%m-%d)" \
   ${PIPERORIGIN_REVID:+-m "${PIPERORIGIN_REVID}"} \
-  bazel/workspace0.bzl cmake/GoogleapisConfig.cmake
+  bazel/workspace0.bzl cmake/GoogleapisConfig.cmake MODULE.bazel
 if ! git diff --quiet external/googleapis/protodeps \
   external/googleapis/protolists; then
   git commit -m"Update the protodeps/protolists" \
