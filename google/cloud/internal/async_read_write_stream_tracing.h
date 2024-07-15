@@ -54,6 +54,7 @@ class AsyncStreamingReadWriteRpcTracing
           EndSpan(*ss);
           auto started = f.get();
           span_->SetAttribute("gl-cpp.stream_started", started);
+          started_ = started;
           return started;
         });
   }
@@ -112,7 +113,12 @@ class AsyncStreamingReadWriteRpcTracing
  private:
   Status End(Status status) {
     if (!context_) return status;
-    return EndSpan(*std::move(context_), *std::move(span_), std::move(status));
+    if (started_) {
+      return EndSpan(*std::move(context_), *std::move(span_), std::move(status));
+    } else {
+      return EndSpan(*std::move(span_), std::move(status));
+    }
+    
   }
 
   std::shared_ptr<grpc::ClientContext> context_;
@@ -120,6 +126,7 @@ class AsyncStreamingReadWriteRpcTracing
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
   int read_count_ = 0;
   int write_count_ = 0;
+  bool started_ = false;
 };
 
 }  // namespace internal

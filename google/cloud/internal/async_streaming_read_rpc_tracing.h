@@ -53,7 +53,7 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
           EndSpan(*ss);
           auto started = f.get();
           span_->SetAttribute("gl-cpp.stream_started", started);
-          this->started_ = started;
+          started_ = started;
           return started;
         });
   }

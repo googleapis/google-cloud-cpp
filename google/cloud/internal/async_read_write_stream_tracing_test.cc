@@ -321,6 +321,42 @@ TEST(AsyncStreamingReadWriteRpcTracing, SpanEndsOnDestruction) {
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
 }
 
+TEST(AsyncStreamingReadWriteRpcTracing, UnstartedStreamShouldNotExtractMetadata) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  {
+    auto mock = std::make_unique<MockStream>();
+    auto span = MakeSpan("span");
+    auto context = std::make_shared<grpc::ClientContext>();
+    TestedStream stream(context, std::move(mock), span);
+  }
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
+}
+
+TEST(AsyncStreamingReadWriteRpcTracing, StartedStreamShouldExtractMetadata) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  {
+    auto span = MakeSpan("span");
+    auto mock = std::make_unique<MockStream>();
+    auto context = std::make_shared<grpc::ClientContext>();
+    EXPECT_CALL(*mock, Start).WillOnce([context] {
+      SetServerMetadata(*context, {});
+      return make_ready_future(true);
+    });
+
+    TestedStream stream(context, std::move(mock), span);
+    EXPECT_TRUE(stream.Start().get());
+  }
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, testing::UnorderedElementsAre(
+                 AllOf(SpanNamed("Start")),
+                 AllOf(SpanNamed("span"))));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
