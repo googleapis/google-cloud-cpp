@@ -72,9 +72,11 @@ RpcMetadata GetRequestMetadataFromContext(grpc::ClientContext const& context,
                                           GrpcMetadataView view) {
   RpcMetadata metadata;
   AddContextMetadata(context, metadata);
+  std::cout << "1-111111111111111" << std::endl;
   if (view == GrpcMetadataView::kWithServerMetadata) {
     AddServerRequestMetadata(context, metadata);
   }
+  std::cout << "1-2222222222222222" << std::endl;
   return metadata;
 }
 

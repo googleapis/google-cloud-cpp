@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#define GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/async_streaming_read_rpc_tracing.h"
 #include "google/cloud/internal/make_status.h"
@@ -193,6 +194,42 @@ TEST(AsyncStreamingReadRpcTracing, SpanEndsOnDestruction) {
 
     auto spans = span_catcher->GetSpans();
     EXPECT_THAT(spans, IsEmpty());
+  }
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
+}
+
+TEST(AsyncStreamingReadRpcTracing, UnstartedStreamShouldNotExtractMetadata) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  {
+    auto mock = std::make_unique<MockStream>();
+    auto span = MakeSpan("span");
+    auto context = std::make_shared<grpc::ClientContext>();
+    TestedStream stream(context, std::move(mock), span);
+  }
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
+}
+
+TEST(AsyncStreamingReadRpcTracing, StartedStreamShouldExtractMetadata) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  {
+    auto mock = std::make_unique<MockStream>();
+    EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
+    EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
+    EXPECT_CALL(*mock, GetRequestMetadata)
+      .WillOnce(Return(RpcMetadata{{{"key", "value"}}, {}}));
+
+    auto span = MakeSpan("span");
+    auto context = std::make_shared<grpc::ClientContext>();
+    TestedStream stream(context, std::move(mock), span);
+    EXPECT_TRUE(stream.Start().get());
+    std::cout << "-------------start to destruct stream-----------" << std::endl;
   }
 
   auto spans = span_catcher->GetSpans();
