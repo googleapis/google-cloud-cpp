@@ -47,6 +47,14 @@ class CompletionServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency PurgeSuggestionDenyListEntries(
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request);
+
+  virtual google::cloud::Idempotency ImportCompletionSuggestions(
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request);
+
+  virtual google::cloud::Idempotency PurgeCompletionSuggestions(
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request);
 };
 
 std::unique_ptr<CompletionServiceConnectionIdempotencyPolicy>

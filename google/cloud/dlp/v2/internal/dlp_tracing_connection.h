@@ -194,6 +194,20 @@ class DlpServiceTracingConnection : public dlp_v2::DlpServiceConnection {
       google::privacy::dlp::v2::GetProjectDataProfileRequest const& request)
       override;
 
+  StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
+  ListFileStoreDataProfiles(
+      google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+  GetFileStoreDataProfile(
+      google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request)
+      override;
+
+  Status DeleteFileStoreDataProfile(
+      google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+          request) override;
+
   StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
       google::privacy::dlp::v2::GetTableDataProfileRequest const& request)
       override;

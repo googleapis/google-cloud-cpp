@@ -315,6 +315,29 @@ class DatabaseAdminConnection {
   virtual StreamRange<google::spanner::admin::database::v1::DatabaseRole>
   ListDatabaseRoles(
       google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
+
+  virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  CreateBackupSchedule(
+      google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+          request);
+
+  virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  GetBackupSchedule(
+      google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+          request);
+
+  virtual StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  UpdateBackupSchedule(
+      google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+          request);
+
+  virtual Status DeleteBackupSchedule(
+      google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+          request);
+
+  virtual StreamRange<google::spanner::admin::database::v1::BackupSchedule>
+  ListBackupSchedules(
+      google::spanner::admin::database::v1::ListBackupSchedulesRequest request);
 };
 
 /**

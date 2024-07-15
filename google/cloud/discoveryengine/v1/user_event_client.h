@@ -114,7 +114,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.UserEvent]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event.proto#L36}
-  /// [google.cloud.discoveryengine.v1.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L98}
+  /// [google.cloud.discoveryengine.v1.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L101}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
@@ -149,7 +149,7 @@ class UserEventServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
-  /// [google.cloud.discoveryengine.v1.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L125}
+  /// [google.cloud.discoveryengine.v1.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/user_event_service.proto#L128}
   ///
   // clang-format on
   StatusOr<google::api::HttpBody> CollectUserEvent(
@@ -193,8 +193,8 @@ class UserEventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L365}
-  /// [google.cloud.discoveryengine.v1.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L401}
+  /// [google.cloud.discoveryengine.v1.ImportUserEventsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L397}
+  /// [google.cloud.discoveryengine.v1.ImportUserEventsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L433}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>

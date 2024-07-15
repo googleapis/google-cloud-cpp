@@ -112,8 +112,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L206}
-  /// [google.cloud.bigquery.v2.GetDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L455}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L211}
+  /// [google.cloud.bigquery.v2.GetDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L460}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> GetDataset(
@@ -143,8 +143,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L206}
-  /// [google.cloud.bigquery.v2.InsertDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L486}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L211}
+  /// [google.cloud.bigquery.v2.InsertDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L491}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> InsertDataset(
@@ -177,8 +177,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L206}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L495}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L211}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L500}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> PatchDataset(
@@ -210,8 +210,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L206}
-  /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L495}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L211}
+  /// [google.cloud.bigquery.v2.UpdateOrPatchDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L500}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> UpdateDataset(
@@ -242,7 +242,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L508}
+  /// [google.cloud.bigquery.v2.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L513}
   ///
   // clang-format on
   Status DeleteDataset(
@@ -282,8 +282,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L521}
-  /// [google.cloud.bigquery.v2.ListFormatDataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L548}
+  /// [google.cloud.bigquery.v2.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L526}
+  /// [google.cloud.bigquery.v2.ListFormatDataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L553}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatDataset> ListDatasets(
@@ -315,8 +315,8 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L206}
-  /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L601}
+  /// [google.cloud.bigquery.v2.Dataset]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L211}
+  /// [google.cloud.bigquery.v2.UndeleteDatasetRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/dataset.proto#L606}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Dataset> UndeleteDataset(

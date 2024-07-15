@@ -99,6 +99,52 @@ CompletionServiceMetadata::PurgeSuggestionDenyListEntries(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CompletionServiceMetadata::AsyncImportCompletionSuggestions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::
+        ImportCompletionSuggestionsRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncImportCompletionSuggestions(cq, std::move(context),
+                                                  std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceMetadata::ImportCompletionSuggestions(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        ImportCompletionSuggestionsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ImportCompletionSuggestions(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CompletionServiceMetadata::AsyncPurgeCompletionSuggestions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncPurgeCompletionSuggestions(cq, std::move(context),
+                                                 std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceMetadata::PurgeCompletionSuggestions(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->PurgeCompletionSuggestions(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CompletionServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

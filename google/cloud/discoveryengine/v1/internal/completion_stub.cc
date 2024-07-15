@@ -114,6 +114,76 @@ DefaultCompletionServiceStub::PurgeSuggestionDenyListEntries(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultCompletionServiceStub::AsyncImportCompletionSuggestions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::
+        ImportCompletionSuggestionsRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::discoveryengine::v1::
+                 ImportCompletionSuggestionsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncImportCompletionSuggestions(context, request,
+                                                            cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCompletionServiceStub::ImportCompletionSuggestions(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::
+        ImportCompletionSuggestionsRequest const& request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->ImportCompletionSuggestions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCompletionServiceStub::AsyncPurgeCompletionSuggestions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::discoveryengine::v1::
+                 PurgeCompletionSuggestionsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncPurgeCompletionSuggestions(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultCompletionServiceStub::PurgeCompletionSuggestions(
+    grpc::ClientContext& context, Options,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->PurgeCompletionSuggestions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultCompletionServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

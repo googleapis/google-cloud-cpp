@@ -88,6 +88,18 @@ class LivestreamServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteEvent(
       google::cloud::video::livestream::v1::DeleteEventRequest const& request);
 
+  virtual google::cloud::Idempotency ListClips(
+      google::cloud::video::livestream::v1::ListClipsRequest request);
+
+  virtual google::cloud::Idempotency GetClip(
+      google::cloud::video::livestream::v1::GetClipRequest const& request);
+
+  virtual google::cloud::Idempotency CreateClip(
+      google::cloud::video::livestream::v1::CreateClipRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteClip(
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request);
+
   virtual google::cloud::Idempotency CreateAsset(
       google::cloud::video::livestream::v1::CreateAssetRequest const& request);
 

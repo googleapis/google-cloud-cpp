@@ -113,10 +113,9 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsConnection::DeleteJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::run::v2::Execution>> JobsConnection::RunJob(
+future<StatusOr<Execution>> JobsConnection::RunJob(
     google::cloud::run::v2::RunJobRequest const&) {
-  return google::cloud::make_ready_future<
-      StatusOr<google::cloud::run::v2::Execution>>(
+  return google::cloud::make_ready_future<StatusOr<Execution>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
@@ -126,10 +125,9 @@ StatusOr<google::longrunning::Operation> JobsConnection::RunJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-future<StatusOr<google::cloud::run::v2::Execution>> JobsConnection::RunJob(
+future<StatusOr<Execution>> JobsConnection::RunJob(
     ExperimentalTag, google::longrunning::Operation const&) {
-  return google::cloud::make_ready_future<
-      StatusOr<google::cloud::run::v2::Execution>>(
+  return google::cloud::make_ready_future<StatusOr<Execution>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 

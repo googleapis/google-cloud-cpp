@@ -333,6 +333,55 @@ DatabaseAdminAuth::ListDatabaseRoles(
   return child_->ListDatabaseRoles(context, options, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminAuth::CreateBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBackupSchedule(context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminAuth::GetBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBackupSchedule(context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminAuth::UpdateBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBackupSchedule(context, options, request);
+}
+
+Status DatabaseAdminAuth::DeleteBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBackupSchedule(context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+DatabaseAdminAuth::ListBackupSchedules(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBackupSchedules(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

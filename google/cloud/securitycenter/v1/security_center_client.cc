@@ -258,6 +258,38 @@ Status SecurityCenterClient::DeleteSecurityHealthAnalyticsCustomModule(
   return connection_->DeleteSecurityHealthAnalyticsCustomModule(request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::Simulation>
+SecurityCenterClient::GetSimulation(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::GetSimulationRequest request;
+  request.set_name(name);
+  return connection_->GetSimulation(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::Simulation>
+SecurityCenterClient::GetSimulation(
+    google::cloud::securitycenter::v1::GetSimulationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetSimulation(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ValuedResource>
+SecurityCenterClient::GetValuedResource(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::GetValuedResourceRequest request;
+  request.set_name(name);
+  return connection_->GetValuedResource(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ValuedResource>
+SecurityCenterClient::GetValuedResource(
+    google::cloud::securitycenter::v1::GetValuedResourceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetValuedResource(request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterClient::GetBigQueryExport(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -981,6 +1013,311 @@ SecurityCenterClient::ListBigQueryExports(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListBigQueryExports(std::move(request));
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::CreateEventThreatDetectionCustomModule(
+    std::string const& parent,
+    google::cloud::securitycenter::v1::EventThreatDetectionCustomModule const&
+        event_threat_detection_custom_module,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      CreateEventThreatDetectionCustomModuleRequest request;
+  request.set_parent(parent);
+  *request.mutable_event_threat_detection_custom_module() =
+      event_threat_detection_custom_module;
+  return connection_->CreateEventThreatDetectionCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::CreateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        CreateEventThreatDetectionCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateEventThreatDetectionCustomModule(request);
+}
+
+Status SecurityCenterClient::DeleteEventThreatDetectionCustomModule(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      DeleteEventThreatDetectionCustomModuleRequest request;
+  request.set_name(name);
+  return connection_->DeleteEventThreatDetectionCustomModule(request);
+}
+
+Status SecurityCenterClient::DeleteEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        DeleteEventThreatDetectionCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteEventThreatDetectionCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::GetEventThreatDetectionCustomModule(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::GetEventThreatDetectionCustomModuleRequest
+      request;
+  request.set_name(name);
+  return connection_->GetEventThreatDetectionCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::GetEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEventThreatDetectionCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEventThreatDetectionCustomModule(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::ListDescendantEventThreatDetectionCustomModules(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      ListDescendantEventThreatDetectionCustomModulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListDescendantEventThreatDetectionCustomModules(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::ListDescendantEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListDescendantEventThreatDetectionCustomModulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListDescendantEventThreatDetectionCustomModules(
+      std::move(request));
+}
+
+StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::ListEventThreatDetectionCustomModules(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      ListEventThreatDetectionCustomModulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListEventThreatDetectionCustomModules(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::ListEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEventThreatDetectionCustomModulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListEventThreatDetectionCustomModules(std::move(request));
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::UpdateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::EventThreatDetectionCustomModule const&
+        event_threat_detection_custom_module,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      UpdateEventThreatDetectionCustomModuleRequest request;
+  *request.mutable_event_threat_detection_custom_module() =
+      event_threat_detection_custom_module;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateEventThreatDetectionCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterClient::UpdateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        UpdateEventThreatDetectionCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateEventThreatDetectionCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ValidateEventThreatDetectionCustomModuleResponse>
+SecurityCenterClient::ValidateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        ValidateEventThreatDetectionCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ValidateEventThreatDetectionCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveEventThreatDetectionCustomModule>
+SecurityCenterClient::GetEffectiveEventThreatDetectionCustomModule(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      GetEffectiveEventThreatDetectionCustomModuleRequest request;
+  request.set_name(name);
+  return connection_->GetEffectiveEventThreatDetectionCustomModule(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveEventThreatDetectionCustomModule>
+SecurityCenterClient::GetEffectiveEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEffectiveEventThreatDetectionCustomModuleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetEffectiveEventThreatDetectionCustomModule(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveEventThreatDetectionCustomModule>
+SecurityCenterClient::ListEffectiveEventThreatDetectionCustomModules(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::
+      ListEffectiveEventThreatDetectionCustomModulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListEffectiveEventThreatDetectionCustomModules(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveEventThreatDetectionCustomModule>
+SecurityCenterClient::ListEffectiveEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEffectiveEventThreatDetectionCustomModulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListEffectiveEventThreatDetectionCustomModules(
+      std::move(request));
+}
+
+StatusOr<
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+SecurityCenterClient::BatchCreateResourceValueConfigs(
+    std::string const& parent,
+    std::vector<google::cloud::securitycenter::v1::
+                    CreateResourceValueConfigRequest> const& requests,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_requests() = {requests.begin(), requests.end()};
+  return connection_->BatchCreateResourceValueConfigs(request);
+}
+
+StatusOr<
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+SecurityCenterClient::BatchCreateResourceValueConfigs(
+    google::cloud::securitycenter::v1::
+        BatchCreateResourceValueConfigsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BatchCreateResourceValueConfigs(request);
+}
+
+Status SecurityCenterClient::DeleteResourceValueConfig(std::string const& name,
+                                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteResourceValueConfig(request);
+}
+
+Status SecurityCenterClient::DeleteResourceValueConfig(
+    google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteResourceValueConfig(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterClient::GetResourceValueConfig(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::GetResourceValueConfigRequest request;
+  request.set_name(name);
+  return connection_->GetResourceValueConfig(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterClient::GetResourceValueConfig(
+    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetResourceValueConfig(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterClient::ListResourceValueConfigs(std::string const& parent,
+                                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::ListResourceValueConfigsRequest request;
+  request.set_parent(parent);
+  return connection_->ListResourceValueConfigs(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterClient::ListResourceValueConfigs(
+    google::cloud::securitycenter::v1::ListResourceValueConfigsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListResourceValueConfigs(std::move(request));
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterClient::UpdateResourceValueConfig(
+    google::cloud::securitycenter::v1::ResourceValueConfig const&
+        resource_value_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest request;
+  *request.mutable_resource_value_config() = resource_value_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateResourceValueConfig(request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterClient::UpdateResourceValueConfig(
+    google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateResourceValueConfig(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::ValuedResource>
+SecurityCenterClient::ListValuedResources(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::ListValuedResourcesRequest request;
+  request.set_parent(parent);
+  return connection_->ListValuedResources(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::ValuedResource>
+SecurityCenterClient::ListValuedResources(
+    google::cloud::securitycenter::v1::ListValuedResourcesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListValuedResources(std::move(request));
+}
+
+StreamRange<google::cloud::securitycenter::v1::AttackPath>
+SecurityCenterClient::ListAttackPaths(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securitycenter::v1::ListAttackPathsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAttackPaths(request);
+}
+
+StreamRange<google::cloud::securitycenter::v1::AttackPath>
+SecurityCenterClient::ListAttackPaths(
+    google::cloud::securitycenter::v1::ListAttackPathsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAttackPaths(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

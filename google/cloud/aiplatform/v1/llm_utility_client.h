@@ -153,7 +153,7 @@ class LlmUtilityServiceClient {
   ///
   /// @param endpoint  Required. The name of the Endpoint requested to get lists of tokens and
   ///  token ids.
-  /// @param instances  Required. The instances that are the input to token computing API call.
+  /// @param instances  Optional. The instances that are the input to token computing API call.
   ///  Schema is identical to the prediction schema of the text model, even for
   ///  the non-text models, like chat models, or Codey models.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -169,8 +169,8 @@ class LlmUtilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ComputeTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L68}
-  /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L95}
+  /// [google.cloud.aiplatform.v1.ComputeTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L69}
+  /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L107}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(
@@ -200,8 +200,8 @@ class LlmUtilityServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ComputeTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L68}
-  /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L95}
+  /// [google.cloud.aiplatform.v1.ComputeTokensRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L69}
+  /// [google.cloud.aiplatform.v1.ComputeTokensResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/llm_utility_service.proto#L107}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse> ComputeTokens(

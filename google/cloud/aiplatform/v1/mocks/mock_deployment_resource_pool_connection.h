@@ -85,6 +85,29 @@ class MockDeploymentResourcePoolServiceConnection
       (override));
 
   /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDeploymentResourcePool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDeploymentResourcePool(::testing::_))` instead.
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
+      UpdateDeploymentResourcePool,
+      (google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDeploymentResourcePool,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
+      UpdateDeploymentResourcePool,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteDeploymentResourcePool)` is now ambiguous. Use
   /// `EXPECT_CALL(*mock, DeleteDeploymentResourcePool(::testing::_))` instead.
   MOCK_METHOD(

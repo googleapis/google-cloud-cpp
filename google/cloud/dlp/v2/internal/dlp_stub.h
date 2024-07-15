@@ -240,6 +240,23 @@ class DlpServiceStub {
       google::privacy::dlp::v2::GetProjectDataProfileRequest const&
           request) = 0;
 
+  virtual StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
+  ListFileStoreDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+  GetFileStoreDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetFileStoreDataProfileRequest const&
+          request) = 0;
+
+  virtual Status DeleteFileStoreDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+          request) = 0;
+
   virtual StatusOr<google::privacy::dlp::v2::TableDataProfile>
   GetTableDataProfile(
       grpc::ClientContext& context, Options const& options,
@@ -502,6 +519,23 @@ class DefaultDlpServiceStub : public DlpServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::GetProjectDataProfileRequest const& request)
       override;
+
+  StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
+  ListFileStoreDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+  GetFileStoreDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request)
+      override;
+
+  Status DeleteFileStoreDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+          request) override;
 
   StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
       grpc::ClientContext& context, Options const& options,

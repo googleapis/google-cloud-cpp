@@ -174,6 +174,33 @@ Status SecurityCenterLogging::DeleteSecurityHealthAnalyticsCustomModule(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::securitycenter::v1::Simulation>
+SecurityCenterLogging::GetSimulation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetSimulationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::GetSimulationRequest const&
+                 request) {
+        return child_->GetSimulation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ValuedResource>
+SecurityCenterLogging::GetValuedResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+                 request) {
+        return child_->GetValuedResource(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterLogging::GetBigQueryExport(
     grpc::ClientContext& context, Options const& options,
@@ -699,6 +726,248 @@ SecurityCenterLogging::ListBigQueryExports(
           google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
               request) {
         return child_->ListBigQueryExports(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterLogging::CreateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        CreateEventThreatDetectionCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 CreateEventThreatDetectionCustomModuleRequest const& request) {
+        return child_->CreateEventThreatDetectionCustomModule(context, options,
+                                                              request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status SecurityCenterLogging::DeleteEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        DeleteEventThreatDetectionCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 DeleteEventThreatDetectionCustomModuleRequest const& request) {
+        return child_->DeleteEventThreatDetectionCustomModule(context, options,
+                                                              request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterLogging::GetEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        GetEventThreatDetectionCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 GetEventThreatDetectionCustomModuleRequest const& request) {
+        return child_->GetEventThreatDetectionCustomModule(context, options,
+                                                           request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListDescendantEventThreatDetectionCustomModulesResponse>
+SecurityCenterLogging::ListDescendantEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListDescendantEventThreatDetectionCustomModulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 ListDescendantEventThreatDetectionCustomModulesRequest const&
+                     request) {
+        return child_->ListDescendantEventThreatDetectionCustomModules(
+            context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListEventThreatDetectionCustomModulesResponse>
+SecurityCenterLogging::ListEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListEventThreatDetectionCustomModulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 ListEventThreatDetectionCustomModulesRequest const& request) {
+        return child_->ListEventThreatDetectionCustomModules(context, options,
+                                                             request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterLogging::UpdateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        UpdateEventThreatDetectionCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 UpdateEventThreatDetectionCustomModuleRequest const& request) {
+        return child_->UpdateEventThreatDetectionCustomModule(context, options,
+                                                              request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ValidateEventThreatDetectionCustomModuleResponse>
+SecurityCenterLogging::ValidateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ValidateEventThreatDetectionCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::
+              ValidateEventThreatDetectionCustomModuleRequest const& request) {
+        return child_->ValidateEventThreatDetectionCustomModule(
+            context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveEventThreatDetectionCustomModule>
+SecurityCenterLogging::GetEffectiveEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 GetEffectiveEventThreatDetectionCustomModuleRequest const&
+                     request) {
+        return child_->GetEffectiveEventThreatDetectionCustomModule(
+            context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListEffectiveEventThreatDetectionCustomModulesResponse>
+SecurityCenterLogging::ListEffectiveEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListEffectiveEventThreatDetectionCustomModulesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 ListEffectiveEventThreatDetectionCustomModulesRequest const&
+                     request) {
+        return child_->ListEffectiveEventThreatDetectionCustomModules(
+            context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+SecurityCenterLogging::BatchCreateResourceValueConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        BatchCreateResourceValueConfigsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 BatchCreateResourceValueConfigsRequest const& request) {
+        return child_->BatchCreateResourceValueConfigs(context, options,
+                                                       request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status SecurityCenterLogging::DeleteResourceValueConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 DeleteResourceValueConfigRequest const& request) {
+        return child_->DeleteResourceValueConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterLogging::GetResourceValueConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 GetResourceValueConfigRequest const& request) {
+        return child_->GetResourceValueConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListResourceValueConfigsResponse>
+SecurityCenterLogging::ListResourceValueConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 ListResourceValueConfigsRequest const& request) {
+        return child_->ListResourceValueConfigs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterLogging::UpdateResourceValueConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::
+                 UpdateResourceValueConfigRequest const& request) {
+        return child_->UpdateResourceValueConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListValuedResourcesResponse>
+SecurityCenterLogging::ListValuedResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
+              request) {
+        return child_->ListValuedResources(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListAttackPathsResponse>
+SecurityCenterLogging::ListAttackPaths(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListAttackPathsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::securitycenter::v1::ListAttackPathsRequest const&
+                 request) {
+        return child_->ListAttackPaths(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }

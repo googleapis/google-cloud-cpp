@@ -588,6 +588,98 @@ DatabaseAdminClient::ListDatabaseRoles(
   return connection_->ListDatabaseRoles(std::move(request));
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminClient::CreateBackupSchedule(
+    std::string const& parent,
+    google::spanner::admin::database::v1::BackupSchedule const& backup_schedule,
+    std::string const& backup_schedule_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::CreateBackupScheduleRequest request;
+  request.set_parent(parent);
+  *request.mutable_backup_schedule() = backup_schedule;
+  request.set_backup_schedule_id(backup_schedule_id);
+  return connection_->CreateBackupSchedule(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminClient::CreateBackupSchedule(
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateBackupSchedule(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminClient::GetBackupSchedule(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::GetBackupScheduleRequest request;
+  request.set_name(name);
+  return connection_->GetBackupSchedule(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminClient::GetBackupSchedule(
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetBackupSchedule(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminClient::UpdateBackupSchedule(
+    google::spanner::admin::database::v1::BackupSchedule const& backup_schedule,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::UpdateBackupScheduleRequest request;
+  *request.mutable_backup_schedule() = backup_schedule;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateBackupSchedule(request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminClient::UpdateBackupSchedule(
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateBackupSchedule(request);
+}
+
+Status DatabaseAdminClient::DeleteBackupSchedule(std::string const& name,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::DeleteBackupScheduleRequest request;
+  request.set_name(name);
+  return connection_->DeleteBackupSchedule(request);
+}
+
+Status DatabaseAdminClient::DeleteBackupSchedule(
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteBackupSchedule(request);
+}
+
+StreamRange<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminClient::ListBackupSchedules(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::database::v1::ListBackupSchedulesRequest request;
+  request.set_parent(parent);
+  return connection_->ListBackupSchedules(request);
+}
+
+StreamRange<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminClient::ListBackupSchedules(
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListBackupSchedules(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin
 }  // namespace cloud

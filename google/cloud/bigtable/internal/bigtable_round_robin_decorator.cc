@@ -78,6 +78,14 @@ BigtableRoundRobin::ReadModifyWriteRow(
   return Child()->ReadModifyWriteRow(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::ExecuteQueryResponse>>
+BigtableRoundRobin::ExecuteQuery(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::bigtable::v2::ExecuteQueryRequest const& request) {
+  return Child()->ExecuteQuery(std::move(context), options, request);
+}
+
 std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableRoundRobin::AsyncReadRows(

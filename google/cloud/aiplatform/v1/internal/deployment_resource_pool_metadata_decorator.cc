@@ -86,6 +86,33 @@ DeploymentResourcePoolServiceMetadata::ListDeploymentResourcePools(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DeploymentResourcePoolServiceMetadata::AsyncUpdateDeploymentResourcePool(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("deployment_resource_pool.name=",
+                           internal::UrlEncode(
+                               request.deployment_resource_pool().name())));
+  return child_->AsyncUpdateDeploymentResourcePool(cq, std::move(context),
+                                                   std::move(options), request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceMetadata::UpdateDeploymentResourcePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("deployment_resource_pool.name=",
+                           internal::UrlEncode(
+                               request.deployment_resource_pool().name())));
+  return child_->UpdateDeploymentResourcePool(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DeploymentResourcePoolServiceMetadata::AsyncDeleteDeploymentResourcePool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

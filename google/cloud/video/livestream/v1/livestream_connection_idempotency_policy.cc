@@ -114,6 +114,26 @@ Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteEvent(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::ListClips(
+    google::cloud::video::livestream::v1::ListClipsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::GetClip(
+    google::cloud::video::livestream::v1::GetClipRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateClip(
+    google::cloud::video::livestream::v1::CreateClipRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency LivestreamServiceConnectionIdempotencyPolicy::DeleteClip(
+    google::cloud::video::livestream::v1::DeleteClipRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency LivestreamServiceConnectionIdempotencyPolicy::CreateAsset(
     google::cloud::video::livestream::v1::CreateAssetRequest const&) {
   return Idempotency::kNonIdempotent;

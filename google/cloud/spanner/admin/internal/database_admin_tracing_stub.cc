@@ -367,6 +367,70 @@ DatabaseAdminTracingStub::ListDatabaseRoles(
       context, *span, child_->ListDatabaseRoles(context, options, request));
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminTracingStub::CreateBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "CreateBackupSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->CreateBackupSchedule(context, options, request));
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminTracingStub::GetBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "GetBackupSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetBackupSchedule(context, options, request));
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminTracingStub::UpdateBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "UpdateBackupSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->UpdateBackupSchedule(context, options, request));
+}
+
+Status DatabaseAdminTracingStub::DeleteBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "DeleteBackupSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteBackupSchedule(context, options, request));
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+DatabaseAdminTracingStub::ListBackupSchedules(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.database.v1.DatabaseAdmin", "ListBackupSchedules");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListBackupSchedules(context, options, request));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

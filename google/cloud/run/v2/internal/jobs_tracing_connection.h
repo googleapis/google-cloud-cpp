@@ -77,14 +77,14 @@ class JobsTracingConnection : public run_v2::JobsConnection {
       ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
-  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
+  future<StatusOr<Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RunJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::RunJobRequest const& request) override;
 
-  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
+  future<StatusOr<Execution>> RunJob(
       ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 

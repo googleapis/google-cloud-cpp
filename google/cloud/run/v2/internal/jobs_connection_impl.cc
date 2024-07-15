@@ -355,13 +355,12 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::DeleteJob(
       polling_policy(*current), __func__);
 }
 
-future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
+future<StatusOr<Execution>> JobsConnectionImpl::RunJob(
     google::cloud::run::v2::RunJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
   auto const idempotent = idempotency_policy(*current)->RunJob(request_copy);
-  return google::cloud::internal::AsyncLongRunningOperation<
-      google::cloud::run::v2::Execution>(
+  return google::cloud::internal::AsyncLongRunningOperation<Execution>(
       background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
@@ -385,8 +384,7 @@ future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
         return stub->AsyncCancelOperation(cq, std::move(context),
                                           std::move(options), request);
       },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::run::v2::Execution>,
+      &google::cloud::internal::ExtractLongRunningResultResponse<Execution>,
       retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
@@ -405,19 +403,18 @@ StatusOr<google::longrunning::Operation> JobsConnectionImpl::RunJob(
       *current, request, __func__);
 }
 
-future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
+future<StatusOr<Execution>> JobsConnectionImpl::RunJob(
     ExperimentalTag, google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  if (!operation.metadata().Is<typename google::cloud::run::v2::Execution>()) {
-    return make_ready_future<StatusOr<google::cloud::run::v2::Execution>>(
+  if (!operation.metadata().Is<typename Execution>()) {
+    return make_ready_future<StatusOr<Execution>>(
         internal::InvalidArgumentError(
             "operation does not correspond to RunJob",
             GCP_ERROR_INFO().WithMetadata("operation",
                                           operation.metadata().DebugString())));
   }
 
-  return google::cloud::internal::AsyncAwaitLongRunningOperation<
-      google::cloud::run::v2::Execution>(
+  return google::cloud::internal::AsyncAwaitLongRunningOperation<Execution>(
       background_->cq(), current, operation,
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
@@ -434,8 +431,7 @@ future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
         return stub->AsyncCancelOperation(cq, std::move(context),
                                           std::move(options), request);
       },
-      &google::cloud::internal::ExtractLongRunningResultResponse<
-          google::cloud::run::v2::Execution>,
+      &google::cloud::internal::ExtractLongRunningResultResponse<Execution>,
       polling_policy(*current), __func__);
 }
 

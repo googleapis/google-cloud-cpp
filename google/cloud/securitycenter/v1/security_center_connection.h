@@ -237,6 +237,14 @@ class SecurityCenterConnection {
       google::cloud::securitycenter::v1::
           DeleteSecurityHealthAnalyticsCustomModuleRequest const& request);
 
+  virtual StatusOr<google::cloud::securitycenter::v1::Simulation> GetSimulation(
+      google::cloud::securitycenter::v1::GetSimulationRequest const& request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::ValuedResource>
+  GetValuedResource(
+      google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+          request);
+
   virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
   GetBigQueryExport(
       google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
@@ -407,6 +415,91 @@ class SecurityCenterConnection {
   virtual StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
   ListBigQueryExports(
       google::cloud::securitycenter::v1::ListBigQueryExportsRequest request);
+
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  CreateEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          CreateEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual Status DeleteEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          DeleteEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  GetEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          GetEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual StreamRange<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  ListDescendantEventThreatDetectionCustomModules(
+      google::cloud::securitycenter::v1::
+          ListDescendantEventThreatDetectionCustomModulesRequest request);
+
+  virtual StreamRange<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  ListEventThreatDetectionCustomModules(
+      google::cloud::securitycenter::v1::
+          ListEventThreatDetectionCustomModulesRequest request);
+
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  UpdateEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          UpdateEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       ValidateEventThreatDetectionCustomModuleResponse>
+  ValidateEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          ValidateEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       EffectiveEventThreatDetectionCustomModule>
+  GetEffectiveEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          GetEffectiveEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual StreamRange<google::cloud::securitycenter::v1::
+                          EffectiveEventThreatDetectionCustomModule>
+  ListEffectiveEventThreatDetectionCustomModules(
+      google::cloud::securitycenter::v1::
+          ListEffectiveEventThreatDetectionCustomModulesRequest request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(
+      google::cloud::securitycenter::v1::
+          BatchCreateResourceValueConfigsRequest const& request);
+
+  virtual Status DeleteResourceValueConfig(
+      google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+  GetResourceValueConfig(
+      google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>
+  ListResourceValueConfigs(
+      google::cloud::securitycenter::v1::ListResourceValueConfigsRequest
+          request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+  UpdateResourceValueConfig(
+      google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::securitycenter::v1::ValuedResource>
+  ListValuedResources(
+      google::cloud::securitycenter::v1::ListValuedResourcesRequest request);
+
+  virtual StreamRange<google::cloud::securitycenter::v1::AttackPath>
+  ListAttackPaths(
+      google::cloud::securitycenter::v1::ListAttackPathsRequest request);
 };
 
 /**

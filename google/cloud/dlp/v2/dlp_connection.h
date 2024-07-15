@@ -328,6 +328,18 @@ class DlpServiceConnection {
   GetProjectDataProfile(
       google::privacy::dlp::v2::GetProjectDataProfileRequest const& request);
 
+  virtual StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
+  ListFileStoreDataProfiles(
+      google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request);
+
+  virtual StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+  GetFileStoreDataProfile(
+      google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request);
+
+  virtual Status DeleteFileStoreDataProfile(
+      google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+          request);
+
   virtual StatusOr<google::privacy::dlp::v2::TableDataProfile>
   GetTableDataProfile(
       google::privacy::dlp::v2::GetTableDataProfileRequest const& request);

@@ -78,6 +78,40 @@ class CompletionServiceTracingConnection
       ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
  private:
   std::shared_ptr<discoveryengine_v1::CompletionServiceConnection> child_;
 };

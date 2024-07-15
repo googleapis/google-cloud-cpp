@@ -108,7 +108,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L110}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -142,7 +142,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.CreateMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L110}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -170,7 +170,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L126}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -200,7 +200,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.GetMigrationWorkflowRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L126}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L38}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -238,7 +238,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L141}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -277,7 +277,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.ListMigrationWorkflowsRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L141}
-  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L36}
+  /// [google.cloud.bigquery.migration.v2.MigrationWorkflow]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L38}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -414,7 +414,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L201}
-  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L191}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
@@ -444,7 +444,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.GetMigrationSubtaskRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L201}
-  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L191}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
@@ -482,7 +482,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L217}
-  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L191}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
@@ -521,7 +521,7 @@ class MigrationServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.migration.v2.ListMigrationSubtasksRequest]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_service.proto#L217}
-  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L160}
+  /// [google.cloud.bigquery.migration.v2.MigrationSubtask]: @googleapis_reference_link{google/cloud/bigquery/migration/v2/migration_entities.proto#L191}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>

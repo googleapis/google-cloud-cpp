@@ -108,6 +108,70 @@ CompletionServiceTracingStub::PurgeSuggestionDenyListEntries(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CompletionServiceTracingStub::AsyncImportCompletionSuggestions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::
+        ImportCompletionSuggestionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.CompletionService",
+      "ImportCompletionSuggestions");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncImportCompletionSuggestions(
+      cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceTracingStub::ImportCompletionSuggestions(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::
+        ImportCompletionSuggestionsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.CompletionService",
+      "ImportCompletionSuggestions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ImportCompletionSuggestions(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+CompletionServiceTracingStub::AsyncPurgeCompletionSuggestions(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.CompletionService",
+      "PurgeCompletionSuggestions");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncPurgeCompletionSuggestions(cq, context,
+                                                   std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceTracingStub::PurgeCompletionSuggestions(
+    grpc::ClientContext& context, Options options,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.discoveryengine.v1.CompletionService",
+      "PurgeCompletionSuggestions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->PurgeCompletionSuggestions(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CompletionServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

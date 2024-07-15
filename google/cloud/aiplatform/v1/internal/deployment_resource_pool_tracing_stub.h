@@ -65,6 +65,19 @@ class DeploymentResourcePoolServiceTracingStub
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateDeploymentResourcePool(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDeploymentResourcePool(
+      grpc::ClientContext& context, Options options,
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteDeploymentResourcePool(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

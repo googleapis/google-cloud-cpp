@@ -109,7 +109,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1974}
+  /// [google.cloud.bigquery.v2.GetModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1975}
   /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L152}
   ///
   // clang-format on
@@ -140,7 +140,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1974}
+  /// [google.cloud.bigquery.v2.GetModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1975}
   /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L152}
   ///
   // clang-format on
@@ -180,7 +180,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListModelsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2014}
+  /// [google.cloud.bigquery.v2.ListModelsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2015}
   /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L152}
   ///
   // clang-format on
@@ -222,7 +222,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListModelsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2014}
+  /// [google.cloud.bigquery.v2.ListModelsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2015}
   /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L152}
   ///
   // clang-format on
@@ -254,7 +254,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L152}
-  /// [google.cloud.bigquery.v2.PatchModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1985}
+  /// [google.cloud.bigquery.v2.PatchModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1986}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Model> PatchModel(
@@ -286,7 +286,7 @@ class ModelServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.bigquery.v2.Model]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L152}
-  /// [google.cloud.bigquery.v2.PatchModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1985}
+  /// [google.cloud.bigquery.v2.PatchModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L1986}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Model> PatchModel(
@@ -311,7 +311,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2002}
+  /// [google.cloud.bigquery.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2003}
   ///
   // clang-format on
   Status DeleteModel(std::string const& project_id,
@@ -339,7 +339,7 @@ class ModelServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2002}
+  /// [google.cloud.bigquery.v2.DeleteModelRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/model.proto#L2003}
   ///
   // clang-format on
   Status DeleteModel(

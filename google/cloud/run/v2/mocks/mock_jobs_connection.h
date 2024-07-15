@@ -107,7 +107,7 @@ class MockJobsConnection : public run_v2::JobsConnection {
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, RunJob)` is now ambiguous. Use
   /// `EXPECT_CALL(*mock, RunJob(::testing::_))` instead.
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
+  MOCK_METHOD(future<StatusOr<Execution>>, RunJob,
               (google::cloud::run::v2::RunJobRequest const& request),
               (override));
 
@@ -116,7 +116,7 @@ class MockJobsConnection : public run_v2::JobsConnection {
                google::cloud::run::v2::RunJobRequest const& request),
               (override));
 
-  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
+  MOCK_METHOD(future<StatusOr<Execution>>, RunJob,
               (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));

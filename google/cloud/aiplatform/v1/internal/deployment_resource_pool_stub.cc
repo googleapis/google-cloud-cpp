@@ -96,6 +96,41 @@ DefaultDeploymentResourcePoolServiceStub::ListDeploymentResourcePools(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultDeploymentResourcePoolServiceStub::AsyncUpdateDeploymentResourcePool(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::
+                 UpdateDeploymentResourcePoolRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateDeploymentResourcePool(context, request,
+                                                             cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultDeploymentResourcePoolServiceStub::UpdateDeploymentResourcePool(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->UpdateDeploymentResourcePool(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultDeploymentResourcePoolServiceStub::AsyncDeleteDeploymentResourcePool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

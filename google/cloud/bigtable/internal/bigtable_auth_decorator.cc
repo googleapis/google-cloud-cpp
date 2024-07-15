@@ -102,6 +102,18 @@ BigtableAuth::ReadModifyWriteRow(
   return child_->ReadModifyWriteRow(context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::ExecuteQueryResponse>>
+BigtableAuth::ExecuteQuery(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::bigtable::v2::ExecuteQueryRequest const& request) {
+  using ErrorStream = ::google::cloud::internal::StreamingReadRpcError<
+      google::bigtable::v2::ExecuteQueryResponse>;
+  auto status = auth_->ConfigureContext(*context);
+  if (!status.ok()) return std::make_unique<ErrorStream>(std::move(status));
+  return child_->ExecuteQuery(std::move(context), options, request);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableAuth::AsyncReadRows(

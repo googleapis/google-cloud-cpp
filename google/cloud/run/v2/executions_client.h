@@ -108,8 +108,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
-  /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L85}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
+  /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L86}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
@@ -138,8 +138,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
-  /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L85}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
+  /// [google.cloud.run.v2.GetExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L86}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
@@ -148,7 +148,8 @@ class ExecutionsClient {
 
   // clang-format off
   ///
-  /// Lists Executions from a Job.
+  /// Lists Executions from a Job. Results are sorted by creation time,
+  /// descending.
   ///
   /// @param parent  Required. The Execution from which the Executions should be listed.
   ///  To list all Executions across Jobs, use "-" instead of Job name.
@@ -176,8 +177,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
-  /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L97}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
+  /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L98}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Execution> ListExecutions(
@@ -185,7 +186,8 @@ class ExecutionsClient {
 
   // clang-format off
   ///
-  /// Lists Executions from a Job.
+  /// Lists Executions from a Job. Results are sorted by creation time,
+  /// descending.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -215,8 +217,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
-  /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L97}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
+  /// [google.cloud.run.v2.ListExecutionsRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L98}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Execution> ListExecutions(
@@ -250,8 +252,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L131}
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  /// [google.cloud.run.v2.DeleteExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L132}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
@@ -301,8 +303,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L131}
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  /// [google.cloud.run.v2.DeleteExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L132}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
@@ -366,8 +368,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L151}
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  /// [google.cloud.run.v2.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L152}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
@@ -417,8 +419,8 @@ class ExecutionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L151}
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
+  /// [google.cloud.run.v2.CancelExecutionRequest]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L152}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
