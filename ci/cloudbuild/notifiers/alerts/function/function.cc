@@ -60,13 +60,20 @@ nlohmann::json MakeChatPayload(BuildStatus const& bs) {
   return nlohmann::json{{"text", std::move(text)}};
 }
 
+struct CurlPtrCleanup {
+  void operator()(CURL* arg) const { return curl_easy_cleanup(arg); }
+};
+
+struct CurlSListFreeAll {
+  void operator()(curl_slist* arg) const { return curl_slist_free_all(arg); }
+};
+
 void HttpPost(std::string const& url, std::string const& data) {
   static constexpr auto kContentType = "Content-Type: application/json";
-  using Headers = std::unique_ptr<curl_slist, decltype(&curl_slist_free_all)>;
-  auto const headers =
-      Headers{curl_slist_append(nullptr, kContentType), curl_slist_free_all};
-  using CurlHandle = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
-  auto curl = CurlHandle(curl_easy_init(), curl_easy_cleanup);
+  using Headers = std::unique_ptr<curl_slist, CurlSListFreeAll>;
+  auto const headers = Headers{curl_slist_append(nullptr, kContentType)};
+  using CurlHandle = std::unique_ptr<CURL, CurlPtrCleanup>;
+  auto curl = CurlHandle(curl_easy_init());
   if (!curl) throw std::runtime_error("Failed to create CurlHandle");
   curl_easy_setopt(curl.get(), CURLOPT_URL, url.c_str());
   curl_easy_setopt(curl.get(), CURLOPT_HTTPHEADER, headers.get());
