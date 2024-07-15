@@ -22,6 +22,10 @@ locals {
       config = "ci/cloudbuild/cloudbuild.yaml"
       distro = "fedora-latest-bazel"
     }
+    msan = {
+      config = "ci/cloudbuild/cloudbuild.yaml"
+      distro = "fedora-msan"
+    }
     checkers = {
       config = "ci/cloudbuild/cloudbuild.yaml"
       distro = "checkers"
