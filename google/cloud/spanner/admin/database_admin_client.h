@@ -2365,7 +2365,7 @@ class DatabaseAdminClient {
   ///
   /// @param parent  Required. Database is the parent resource whose backup schedules should be
   ///  listed. Values are of the form
-  ///  projects/<project>/instances/<instance>/databases/<database>
+  ///  `projects/<project>/instances/<instance>/databases/<database>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
