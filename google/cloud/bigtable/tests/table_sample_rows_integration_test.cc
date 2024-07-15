@@ -23,8 +23,9 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <chrono>
+#include <iomanip>
 #include <memory>
-#include <ostream>
+#include <sstream>
 #include <string>
 #include <vector>
 

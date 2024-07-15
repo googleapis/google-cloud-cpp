@@ -23,6 +23,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
+#include <iomanip>
+#include <sstream>
 #include <thread>
 
 namespace google {
