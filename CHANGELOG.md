@@ -27,6 +27,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
+- [Developer Connect API](/google/cloud/developerconnect/README.md)
 - [Privileged Access Manager API](/google/cloud/privilegedaccessmanager/README.md)
 
 The following experimental libraries are now available:
@@ -76,7 +77,6 @@ change instances of `EXPECT_CALL(*mock, Method)` to
 We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
-- [Developer Connect API](/google/cloud/developerconnect/README.md)
 - [Managed Kafka API](/google/cloud/managedkafka/README.md)
 
 ### Updated Libraries
