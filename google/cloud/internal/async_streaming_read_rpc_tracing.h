@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_TRACING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_STREAMING_READ_RPC_TRACING_H
 
-#define GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
@@ -92,7 +91,6 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
   Status End(Status status) {
     if (!context_) return status;
     if (started_) {
-      std::cout << "----------------stream started----------------" << std::endl;
       return EndSpan(*std::move(context_), *std::move(span_), std::move(status));
     } else {
       return EndSpan(*std::move(span_), std::move(status));
