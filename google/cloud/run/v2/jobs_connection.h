@@ -31,6 +31,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/cloud/run/v2/execution.pb.h>
 #include <google/cloud/run/v2/job.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -219,14 +220,14 @@ class JobsConnection {
   virtual future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
       ExperimentalTag, google::longrunning::Operation const& operation);
 
-  virtual future<StatusOr<Execution>> RunJob(
+  virtual future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RunJob(
       ExperimentalTag, NoAwaitTag,
       google::cloud::run::v2::RunJobRequest const& request);
 
-  virtual future<StatusOr<Execution>> RunJob(
+  virtual future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       ExperimentalTag, google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(

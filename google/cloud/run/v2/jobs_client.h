@@ -587,7 +587,7 @@ class JobsClient {
   ///     In this case the [`StatusOr`] returned by the future contains the
   ///     error. If the LRO completes successfully the value of the future
   ///     contains the LRO's result. For this RPC the result is a
-  ///     [Execution] proto message.
+  ///     [google.cloud.run.v2.Execution] proto message.
   ///     The C++ class representing this message is created by Protobuf, using
   ///     the [Protobuf mapping rules].
   ///
@@ -598,11 +598,12 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   /// [google.cloud.run.v2.RunJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L279}
   ///
   // clang-format on
-  future<StatusOr<Execution>> RunJob(std::string const& name,
-                                     Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -638,7 +639,7 @@ class JobsClient {
   ///     In this case the [`StatusOr`] returned by the future contains the
   ///     error. If the LRO completes successfully the value of the future
   ///     contains the LRO's result. For this RPC the result is a
-  ///     [Execution] proto message.
+  ///     [google.cloud.run.v2.Execution] proto message.
   ///     The C++ class representing this message is created by Protobuf, using
   ///     the [Protobuf mapping rules].
   ///
@@ -649,10 +650,11 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
   /// [google.cloud.run.v2.RunJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L279}
   ///
   // clang-format on
-  future<StatusOr<Execution>> RunJob(
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
 
   // clang-format off
@@ -679,7 +681,7 @@ class JobsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<Execution>> RunJob(
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
 

@@ -175,8 +175,8 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsClient::DeleteJob(
   return connection_->DeleteJob(ExperimentalTag{}, operation);
 }
 
-future<StatusOr<Execution>> JobsClient::RunJob(std::string const& name,
-                                               Options opts) {
+future<StatusOr<google::cloud::run::v2::Execution>> JobsClient::RunJob(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::run::v2::RunJobRequest request;
   request.set_name(name);
@@ -191,7 +191,7 @@ StatusOr<google::longrunning::Operation> JobsClient::RunJob(
   return connection_->RunJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
-future<StatusOr<Execution>> JobsClient::RunJob(
+future<StatusOr<google::cloud::run::v2::Execution>> JobsClient::RunJob(
     google::cloud::run::v2::RunJobRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RunJob(request);
@@ -204,7 +204,7 @@ StatusOr<google::longrunning::Operation> JobsClient::RunJob(
   return connection_->RunJob(ExperimentalTag{}, NoAwaitTag{}, request);
 }
 
-future<StatusOr<Execution>> JobsClient::RunJob(
+future<StatusOr<google::cloud::run::v2::Execution>> JobsClient::RunJob(
     ExperimentalTag, google::longrunning::Operation const& operation,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
