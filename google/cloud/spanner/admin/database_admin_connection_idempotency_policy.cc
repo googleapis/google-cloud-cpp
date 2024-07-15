@@ -137,6 +137,32 @@ Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListDatabaseRoles(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DatabaseAdminConnectionIdempotencyPolicy::CreateBackupSchedule(
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DatabaseAdminConnectionIdempotencyPolicy::GetBackupSchedule(
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DatabaseAdminConnectionIdempotencyPolicy::UpdateBackupSchedule(
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DatabaseAdminConnectionIdempotencyPolicy::DeleteBackupSchedule(
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DatabaseAdminConnectionIdempotencyPolicy::ListBackupSchedules(
+    google::spanner::admin::database::v1::
+        ListBackupSchedulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>
 MakeDefaultDatabaseAdminConnectionIdempotencyPolicy() {
   return std::make_unique<DatabaseAdminConnectionIdempotencyPolicy>();

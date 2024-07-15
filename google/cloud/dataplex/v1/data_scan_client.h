@@ -674,7 +674,7 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L525}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L529}
   /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L304}
   ///
   // clang-format on
@@ -704,7 +704,7 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L525}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L529}
   /// [google.cloud.dataplex.v1.GetDataScanJobRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L304}
   ///
   // clang-format on
@@ -742,7 +742,7 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L525}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L529}
   /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L333}
   ///
   // clang-format on
@@ -781,7 +781,7 @@ class DataScanServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L525}
+  /// [google.cloud.dataplex.v1.DataScanJob]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L529}
   /// [google.cloud.dataplex.v1.ListDataScanJobsRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/datascans.proto#L333}
   ///
   // clang-format on

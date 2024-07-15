@@ -281,6 +281,8 @@ ParameterCommentSubstitution substitutions[] = {
     {" <parent>/instanceConfigs/us-east1,",
      " `<parent>/instanceConfigs/us-east1`,"},
     {" <parent>/instanceConfigs/nam3.", " `<parent>/instanceConfigs/nam3`."},
+    {" projects/<project>/instances/<instance>/databases/<database>",
+     " `projects/<project>/instances/<instance>/databases/<database>`"},
 
     // Extra quotes in asset/v1.
     {R"""( "folders/12345")", or a )""", R"""( "folders/12345"), or a )"""},

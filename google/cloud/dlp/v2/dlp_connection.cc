@@ -292,6 +292,25 @@ DlpServiceConnection::GetProjectDataProfile(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceConnection::ListFileStoreDataProfiles(
+    google::privacy::dlp::v2::
+        ListFileStoreDataProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>>();
+}
+
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceConnection::GetFileStoreDataProfile(
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status DlpServiceConnection::DeleteFileStoreDataProfile(
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DlpServiceConnection::GetTableDataProfile(
     google::privacy::dlp::v2::GetTableDataProfileRequest const&) {

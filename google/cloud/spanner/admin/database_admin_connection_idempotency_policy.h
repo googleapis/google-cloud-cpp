@@ -103,6 +103,25 @@ class DatabaseAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListDatabaseRoles(
       google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
+
+  virtual google::cloud::Idempotency CreateBackupSchedule(
+      google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetBackupSchedule(
+      google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateBackupSchedule(
+      google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteBackupSchedule(
+      google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListBackupSchedules(
+      google::spanner::admin::database::v1::ListBackupSchedulesRequest request);
 };
 
 std::unique_ptr<DatabaseAdminConnectionIdempotencyPolicy>

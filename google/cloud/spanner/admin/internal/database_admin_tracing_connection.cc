@@ -361,6 +361,57 @@ DatabaseAdminTracingConnection::ListDatabaseRoles(
                                                           std::move(sr));
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminTracingConnection::CreateBackupSchedule(
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::CreateBackupSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateBackupSchedule(request));
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminTracingConnection::GetBackupSchedule(
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::GetBackupSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackupSchedule(request));
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminTracingConnection::UpdateBackupSchedule(
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::UpdateBackupSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateBackupSchedule(request));
+}
+
+Status DatabaseAdminTracingConnection::DeleteBackupSchedule(
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::DeleteBackupSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteBackupSchedule(request));
+}
+
+StreamRange<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminTracingConnection::ListBackupSchedules(
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::ListBackupSchedules");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListBackupSchedules(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::spanner::admin::database::v1::BackupSchedule>(std::move(span),
+                                                            std::move(sr));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<spanner_admin::DatabaseAdminConnection>

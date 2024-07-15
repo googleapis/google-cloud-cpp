@@ -109,6 +109,18 @@ Status SecurityCenterConnection::DeleteSecurityHealthAnalyticsCustomModule(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::securitycenter::v1::Simulation>
+SecurityCenterConnection::GetSimulation(
+    google::cloud::securitycenter::v1::GetSimulationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::ValuedResource>
+SecurityCenterConnection::GetValuedResource(
+    google::cloud::securitycenter::v1::GetValuedResourceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterConnection::GetBigQueryExport(
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&) {
@@ -377,6 +389,126 @@ SecurityCenterConnection::ListBigQueryExports(
         ListBigQueryExportsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::securitycenter::v1::BigQueryExport>>();
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterConnection::CreateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        CreateEventThreatDetectionCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status SecurityCenterConnection::DeleteEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        DeleteEventThreatDetectionCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterConnection::GetEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEventThreatDetectionCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterConnection::ListDescendantEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListDescendantEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>();
+}
+
+StreamRange<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterConnection::ListEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>>();
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterConnection::UpdateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        UpdateEventThreatDetectionCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ValidateEventThreatDetectionCustomModuleResponse>
+SecurityCenterConnection::ValidateEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        ValidateEventThreatDetectionCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveEventThreatDetectionCustomModule>
+SecurityCenterConnection::GetEffectiveEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEffectiveEventThreatDetectionCustomModuleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securitycenter::v1::
+                EffectiveEventThreatDetectionCustomModule>
+SecurityCenterConnection::ListEffectiveEventThreatDetectionCustomModules(
+    google::cloud::securitycenter::v1::
+        ListEffectiveEventThreatDetectionCustomModulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::
+                      EffectiveEventThreatDetectionCustomModule>>();
+}
+
+StatusOr<
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+SecurityCenterConnection::BatchCreateResourceValueConfigs(
+    google::cloud::securitycenter::v1::
+        BatchCreateResourceValueConfigsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status SecurityCenterConnection::DeleteResourceValueConfig(
+    google::cloud::securitycenter::v1::
+        DeleteResourceValueConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterConnection::GetResourceValueConfig(
+    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterConnection::ListResourceValueConfigs(
+    google::cloud::securitycenter::v1::
+        ListResourceValueConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::ResourceValueConfig>>();
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterConnection::UpdateResourceValueConfig(
+    google::cloud::securitycenter::v1::
+        UpdateResourceValueConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::securitycenter::v1::ValuedResource>
+SecurityCenterConnection::ListValuedResources(
+    google::cloud::securitycenter::v1::
+        ListValuedResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::ValuedResource>>();
+}
+
+StreamRange<google::cloud::securitycenter::v1::AttackPath>
+SecurityCenterConnection::ListAttackPaths(
+    google::cloud::securitycenter::v1::
+        ListAttackPathsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::securitycenter::v1::AttackPath>>();
 }
 
 std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(

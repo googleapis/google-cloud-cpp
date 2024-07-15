@@ -521,6 +521,45 @@ DlpServiceTracingStub::GetProjectDataProfile(
       context, *span, child_->GetProjectDataProfile(context, options, request));
 }
 
+StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
+DlpServiceTracingStub::ListFileStoreDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "ListFileStoreDataProfiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListFileStoreDataProfiles(context, options, request));
+}
+
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceTracingStub::GetFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "GetFileStoreDataProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->GetFileStoreDataProfile(context, options, request));
+}
+
+Status DlpServiceTracingStub::DeleteFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc("google.privacy.dlp.v2.DlpService",
+                                     "DeleteFileStoreDataProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteFileStoreDataProfile(context, options, request));
+}
+
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DlpServiceTracingStub::GetTableDataProfile(
     grpc::ClientContext& context, Options const& options,

@@ -259,6 +259,24 @@ class MockDlpServiceConnection : public dlp_v2::DlpServiceConnection {
       (override));
 
   MOCK_METHOD(
+      (StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>),
+      ListFileStoreDataProfiles,
+      (google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>,
+      GetFileStoreDataProfile,
+      (google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteFileStoreDataProfile,
+      (google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::privacy::dlp::v2::TableDataProfile>, GetTableDataProfile,
       (google::privacy::dlp::v2::GetTableDataProfileRequest const& request),
       (override));

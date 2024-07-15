@@ -401,6 +401,33 @@ DlpServiceMetadata::GetProjectDataProfile(
   return child_->GetProjectDataProfile(context, options, request);
 }
 
+StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
+DlpServiceMetadata::ListFileStoreDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListFileStoreDataProfiles(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceMetadata::GetFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetFileStoreDataProfile(context, options, request);
+}
+
+Status DlpServiceMetadata::DeleteFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteFileStoreDataProfile(context, options, request);
+}
+
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DlpServiceMetadata::GetTableDataProfile(
     grpc::ClientContext& context, Options const& options,

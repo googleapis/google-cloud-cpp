@@ -131,7 +131,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L196}
-  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L35}
+  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
@@ -189,7 +189,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.CreateFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L196}
-  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L35}
+  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L36}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
@@ -247,7 +247,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L35}
+  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L36}
   /// [google.cloud.aiplatform.v1.GetFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L223}
   ///
   // clang-format on
@@ -277,7 +277,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L35}
+  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L36}
   /// [google.cloud.aiplatform.v1.GetFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L223}
   ///
   // clang-format on
@@ -316,7 +316,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L35}
+  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L36}
   /// [google.cloud.aiplatform.v1.ListFeatureOnlineStoresRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L235}
   ///
   // clang-format on
@@ -355,7 +355,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L35}
+  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L36}
   /// [google.cloud.aiplatform.v1.ListFeatureOnlineStoresRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L235}
   ///
   // clang-format on
@@ -405,7 +405,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L35}
+  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L304}
   ///
   // clang-format on
@@ -462,7 +462,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L35}
+  /// [google.cloud.aiplatform.v1.FeatureOnlineStore]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store.proto#L36}
   /// [google.cloud.aiplatform.v1.UpdateFeatureOnlineStoreRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L304}
   ///
   // clang-format on

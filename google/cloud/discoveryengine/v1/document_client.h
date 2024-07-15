@@ -485,8 +485,8 @@ class DocumentServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L35}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L455}
-  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L595}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L487}
+  /// [google.cloud.discoveryengine.v1.ImportDocumentsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L630}
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>

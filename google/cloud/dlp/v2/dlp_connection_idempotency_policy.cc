@@ -239,6 +239,21 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::GetProjectDataProfile(
   return Idempotency::kIdempotent;
 }
 
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListFileStoreDataProfiles(
+    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetFileStoreDataProfile(
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteFileStoreDataProfile(
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency DlpServiceConnectionIdempotencyPolicy::GetTableDataProfile(
     google::privacy::dlp::v2::GetTableDataProfileRequest const&) {
   return Idempotency::kIdempotent;

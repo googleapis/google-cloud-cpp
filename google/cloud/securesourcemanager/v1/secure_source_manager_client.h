@@ -138,7 +138,7 @@ class SecureSourceManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L201}
-  /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L497}
+  /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L542}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Instance> ListInstances(
@@ -177,7 +177,7 @@ class SecureSourceManagerClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L201}
-  /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L497}
+  /// [google.cloud.securesourcemanager.v1.ListInstancesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L542}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Instance> ListInstances(
@@ -202,7 +202,7 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L532}
+  /// [google.cloud.securesourcemanager.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L577}
   /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L201}
   ///
   // clang-format on
@@ -232,7 +232,7 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L532}
+  /// [google.cloud.securesourcemanager.v1.GetInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L577}
   /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L201}
   ///
   // clang-format on
@@ -267,7 +267,7 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L543}
+  /// [google.cloud.securesourcemanager.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L588}
   /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L201}
   ///
   // clang-format on
@@ -323,7 +323,7 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L543}
+  /// [google.cloud.securesourcemanager.v1.CreateInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L588}
   /// [google.cloud.securesourcemanager.v1.Instance]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L201}
   ///
   // clang-format on
@@ -389,8 +389,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L575}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L601}
+  /// [google.cloud.securesourcemanager.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L620}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L646}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -440,8 +440,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L575}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L601}
+  /// [google.cloud.securesourcemanager.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L620}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L646}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -510,8 +510,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L631}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L301}
+  /// [google.cloud.securesourcemanager.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L676}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L344}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Repository>
@@ -551,8 +551,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L631}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L301}
+  /// [google.cloud.securesourcemanager.v1.ListRepositoriesRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L676}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L344}
   ///
   // clang-format on
   StreamRange<google::cloud::securesourcemanager::v1::Repository>
@@ -582,8 +582,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L660}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L301}
+  /// [google.cloud.securesourcemanager.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L705}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L344}
   ///
   // clang-format on
   StatusOr<google::cloud::securesourcemanager::v1::Repository> GetRepository(
@@ -614,8 +614,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L660}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L301}
+  /// [google.cloud.securesourcemanager.v1.GetRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L705}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L344}
   ///
   // clang-format on
   StatusOr<google::cloud::securesourcemanager::v1::Repository> GetRepository(
@@ -655,8 +655,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L673}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L301}
+  /// [google.cloud.securesourcemanager.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L718}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L344}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
@@ -713,8 +713,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L673}
-  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L301}
+  /// [google.cloud.securesourcemanager.v1.CreateRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L718}
+  /// [google.cloud.securesourcemanager.v1.Repository]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L344}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
@@ -783,8 +783,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L693}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L601}
+  /// [google.cloud.securesourcemanager.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L738}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L646}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -836,8 +836,8 @@ class SecureSourceManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securesourcemanager.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L693}
-  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L601}
+  /// [google.cloud.securesourcemanager.v1.DeleteRepositoryRequest]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L738}
+  /// [google.cloud.securesourcemanager.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/securesourcemanager/v1/secure_source_manager.proto#L646}
   ///
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>

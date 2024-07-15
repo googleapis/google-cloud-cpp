@@ -126,7 +126,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L101}
+  /// [google.cloud.aiplatform.v1.CreateDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L117}
   /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
   ///
   // clang-format on
@@ -184,7 +184,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L101}
+  /// [google.cloud.aiplatform.v1.CreateDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L117}
   /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
   ///
   // clang-format on
@@ -246,7 +246,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
-  /// [google.cloud.aiplatform.v1.GetDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L132}
+  /// [google.cloud.aiplatform.v1.GetDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
@@ -276,7 +276,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
-  /// [google.cloud.aiplatform.v1.GetDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L132}
+  /// [google.cloud.aiplatform.v1.GetDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L148}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
@@ -314,7 +314,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListDeploymentResourcePoolsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L145}
+  /// [google.cloud.aiplatform.v1.ListDeploymentResourcePoolsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L161}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
@@ -353,13 +353,142 @@ class DeploymentResourcePoolServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListDeploymentResourcePoolsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L145}
+  /// [google.cloud.aiplatform.v1.ListDeploymentResourcePoolsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L161}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DeploymentResourcePool>
   ListDeploymentResourcePools(
       google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a DeploymentResourcePool.
+  ///
+  /// @param deployment_resource_pool  Required. The DeploymentResourcePool to update.
+  ///  @n
+  ///  The DeploymentResourcePool's `name` field is used to identify the
+  ///  DeploymentResourcePool to update.
+  ///  Format:
+  ///  `projects/{project}/locations/{location}/deploymentResourcePools/{deployment_resource_pool}`
+  /// @param update_mask  Required. The list of fields to update.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DeploymentResourcePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
+  /// [google.cloud.aiplatform.v1.UpdateDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  UpdateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::DeploymentResourcePool const&
+          deployment_resource_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDeploymentResourcePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::DeploymentResourcePool const&
+          deployment_resource_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Update a DeploymentResourcePool.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.UpdateDeploymentResourcePoolRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.DeploymentResourcePool] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.DeploymentResourcePool]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool.proto#L35}
+  /// [google.cloud.aiplatform.v1.UpdateDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L195}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  UpdateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDeploymentResourcePool
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> UpdateDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief UpdateDeploymentResourcePool
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  UpdateDeploymentResourcePool(ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -388,7 +517,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L185}
+  /// [google.cloud.aiplatform.v1.DeleteDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L217}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -439,7 +568,7 @@ class DeploymentResourcePoolServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L185}
+  /// [google.cloud.aiplatform.v1.DeleteDeploymentResourcePoolRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/deployment_resource_pool_service.proto#L217}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on

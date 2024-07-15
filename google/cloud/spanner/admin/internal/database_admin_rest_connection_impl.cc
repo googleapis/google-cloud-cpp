@@ -910,6 +910,105 @@ DatabaseAdminRestConnectionImpl::ListDatabaseRoles(
       });
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestConnectionImpl::CreateBackupSchedule(
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateBackupSchedule(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 CreateBackupScheduleRequest const& request) {
+        return stub_->CreateBackupSchedule(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestConnectionImpl::GetBackupSchedule(
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetBackupSchedule(request),
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+              request) {
+        return stub_->GetBackupSchedule(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestConnectionImpl::UpdateBackupSchedule(
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateBackupSchedule(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 UpdateBackupScheduleRequest const& request) {
+        return stub_->UpdateBackupSchedule(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+Status DatabaseAdminRestConnectionImpl::DeleteBackupSchedule(
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteBackupSchedule(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 DeleteBackupScheduleRequest const& request) {
+        return stub_->DeleteBackupSchedule(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+StreamRange<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestConnectionImpl::ListBackupSchedules(
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListBackupSchedules(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::spanner::admin::database::v1::BackupSchedule>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::spanner::admin::database::v1::
+                                      ListBackupSchedulesRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::spanner::admin::database::v1::
+                       ListBackupSchedulesRequest const& request) {
+              return stub->ListBackupSchedules(rest_context, options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::spanner::admin::database::v1::ListBackupSchedulesResponse r) {
+        std::vector<google::spanner::admin::database::v1::BackupSchedule>
+            result(r.backup_schedules().size());
+        auto& messages = *r.mutable_backup_schedules();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin_internal
 }  // namespace cloud

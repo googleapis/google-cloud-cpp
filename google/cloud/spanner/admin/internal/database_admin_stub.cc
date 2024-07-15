@@ -393,6 +393,70 @@ DefaultDatabaseAdminStub::ListDatabaseRoles(
   return response;
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DefaultDatabaseAdminStub::CreateBackupSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  google::spanner::admin::database::v1::BackupSchedule response;
+  auto status = grpc_stub_->CreateBackupSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DefaultDatabaseAdminStub::GetBackupSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  google::spanner::admin::database::v1::BackupSchedule response;
+  auto status = grpc_stub_->GetBackupSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DefaultDatabaseAdminStub::UpdateBackupSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  google::spanner::admin::database::v1::BackupSchedule response;
+  auto status = grpc_stub_->UpdateBackupSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultDatabaseAdminStub::DeleteBackupSchedule(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteBackupSchedule(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+DefaultDatabaseAdminStub::ListBackupSchedules(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+        request) {
+  google::spanner::admin::database::v1::ListBackupSchedulesResponse response;
+  auto status = grpc_stub_->ListBackupSchedules(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

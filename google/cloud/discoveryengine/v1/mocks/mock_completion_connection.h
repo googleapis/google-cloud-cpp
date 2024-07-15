@@ -102,6 +102,54 @@ class MockCompletionServiceConnection
               (ExperimentalTag,
                google::longrunning::Operation const& operation),
               (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportCompletionSuggestions)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportCompletionSuggestions(::testing::_))` instead.
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  ImportCompletionSuggestionsResponse>>,
+              ImportCompletionSuggestions,
+              (google::cloud::discoveryengine::v1::
+                   ImportCompletionSuggestionsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              ImportCompletionSuggestions,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::discoveryengine::v1::
+                   ImportCompletionSuggestionsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  ImportCompletionSuggestionsResponse>>,
+              ImportCompletionSuggestions,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PurgeCompletionSuggestions)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PurgeCompletionSuggestions(::testing::_))` instead.
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  PurgeCompletionSuggestionsResponse>>,
+              PurgeCompletionSuggestions,
+              (google::cloud::discoveryengine::v1::
+                   PurgeCompletionSuggestionsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              PurgeCompletionSuggestions,
+              (ExperimentalTag, NoAwaitTag,
+               google::cloud::discoveryengine::v1::
+                   PurgeCompletionSuggestionsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  PurgeCompletionSuggestionsResponse>>,
+              PurgeCompletionSuggestions,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

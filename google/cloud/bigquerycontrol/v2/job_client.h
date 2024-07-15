@@ -111,8 +111,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.CancelJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L172}
-  /// [google.cloud.bigquery.v2.JobCancelResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L191}
+  /// [google.cloud.bigquery.v2.CancelJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L173}
+  /// [google.cloud.bigquery.v2.JobCancelResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L194}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::JobCancelResponse> CancelJob(
@@ -144,8 +144,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L200}
-  /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L128}
+  /// [google.cloud.bigquery.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L203}
+  /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Job> GetJob(
@@ -185,8 +185,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.InsertJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L219}
-  /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L128}
+  /// [google.cloud.bigquery.v2.InsertJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L224}
+  /// [google.cloud.bigquery.v2.Job]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L129}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::Job> InsertJob(
@@ -215,7 +215,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L228}
+  /// [google.cloud.bigquery.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L233}
   ///
   // clang-format on
   Status DeleteJob(google::cloud::bigquery::v2::DeleteJobRequest const& request,
@@ -257,8 +257,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.ListFormatJob]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L321}
-  /// [google.cloud.bigquery.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L245}
+  /// [google.cloud.bigquery.v2.ListFormatJob]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L326}
+  /// [google.cloud.bigquery.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L250}
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::ListFormatJob> ListJobs(
@@ -287,8 +287,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.GetQueryResultsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L378}
-  /// [google.cloud.bigquery.v2.GetQueryResultsResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L426}
+  /// [google.cloud.bigquery.v2.GetQueryResultsRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L383}
+  /// [google.cloud.bigquery.v2.GetQueryResultsResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L433}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::GetQueryResultsResponse>
@@ -320,8 +320,8 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.bigquery.v2.PostQueryRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L488}
-  /// [google.cloud.bigquery.v2.QueryResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L657}
+  /// [google.cloud.bigquery.v2.PostQueryRequest]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L495}
+  /// [google.cloud.bigquery.v2.QueryResponse]: @googleapis_reference_link{google/cloud/bigquery/v2/job.proto#L664}
   ///
   // clang-format on
   StatusOr<google::cloud::bigquery::v2::QueryResponse> Query(

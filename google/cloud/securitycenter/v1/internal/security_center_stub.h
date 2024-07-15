@@ -95,6 +95,17 @@ class SecurityCenterStub {
       google::cloud::securitycenter::v1::
           DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) = 0;
 
+  virtual StatusOr<google::cloud::securitycenter::v1::Simulation> GetSimulation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::GetSimulationRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::ValuedResource>
+  GetValuedResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+          request) = 0;
+
   virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
   GetBigQueryExport(
       grpc::ClientContext& context, Options const& options,
@@ -314,6 +325,114 @@ class SecurityCenterStub {
       google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  CreateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          CreateEventThreatDetectionCustomModuleRequest const& request) = 0;
+
+  virtual Status DeleteEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          DeleteEventThreatDetectionCustomModuleRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  GetEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          GetEventThreatDetectionCustomModuleRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       ListDescendantEventThreatDetectionCustomModulesResponse>
+  ListDescendantEventThreatDetectionCustomModules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          ListDescendantEventThreatDetectionCustomModulesRequest const&
+              request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       ListEventThreatDetectionCustomModulesResponse>
+  ListEventThreatDetectionCustomModules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          ListEventThreatDetectionCustomModulesRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  UpdateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          UpdateEventThreatDetectionCustomModuleRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       ValidateEventThreatDetectionCustomModuleResponse>
+  ValidateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          ValidateEventThreatDetectionCustomModuleRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       EffectiveEventThreatDetectionCustomModule>
+  GetEffectiveEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          GetEffectiveEventThreatDetectionCustomModuleRequest const&
+              request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       ListEffectiveEventThreatDetectionCustomModulesResponse>
+  ListEffectiveEventThreatDetectionCustomModules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          ListEffectiveEventThreatDetectionCustomModulesRequest const&
+              request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::
+                       BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          BatchCreateResourceValueConfigsRequest const& request) = 0;
+
+  virtual Status DeleteResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+  GetResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::ListResourceValueConfigsResponse>
+  ListResourceValueConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+  UpdateResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::ListValuedResourcesResponse>
+  ListValuedResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::ListAttackPathsResponse>
+  ListAttackPaths(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::ListAttackPathsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -393,6 +512,16 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
       google::cloud::securitycenter::v1::
           DeleteSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
+
+  StatusOr<google::cloud::securitycenter::v1::Simulation> GetSimulation(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::GetSimulationRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securitycenter::v1::ValuedResource> GetValuedResource(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+          request) override;
 
   StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
       grpc::ClientContext& context, Options const& options,
@@ -609,6 +738,113 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
       grpc::ClientContext& context, Options const& options,
       google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
           request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  CreateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          CreateEventThreatDetectionCustomModuleRequest const& request)
+      override;
+
+  Status DeleteEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          DeleteEventThreatDetectionCustomModuleRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  GetEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          GetEventThreatDetectionCustomModuleRequest const& request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               ListDescendantEventThreatDetectionCustomModulesResponse>
+  ListDescendantEventThreatDetectionCustomModules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          ListDescendantEventThreatDetectionCustomModulesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               ListEventThreatDetectionCustomModulesResponse>
+  ListEventThreatDetectionCustomModules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          ListEventThreatDetectionCustomModulesRequest const& request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+  UpdateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          UpdateEventThreatDetectionCustomModuleRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               ValidateEventThreatDetectionCustomModuleResponse>
+  ValidateEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          ValidateEventThreatDetectionCustomModuleRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               EffectiveEventThreatDetectionCustomModule>
+  GetEffectiveEventThreatDetectionCustomModule(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          GetEffectiveEventThreatDetectionCustomModuleRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               ListEffectiveEventThreatDetectionCustomModulesResponse>
+  ListEffectiveEventThreatDetectionCustomModules(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          ListEffectiveEventThreatDetectionCustomModulesRequest const& request)
+      override;
+
+  StatusOr<google::cloud::securitycenter::v1::
+               BatchCreateResourceValueConfigsResponse>
+  BatchCreateResourceValueConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::
+          BatchCreateResourceValueConfigsRequest const& request) override;
+
+  Status DeleteResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+  GetResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::ListResourceValueConfigsResponse>
+  ListResourceValueConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+  UpdateResourceValueConfig(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::ListValuedResourcesResponse>
+  ListValuedResources(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::ListAttackPathsResponse>
+  ListAttackPaths(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::securitycenter::v1::ListAttackPathsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

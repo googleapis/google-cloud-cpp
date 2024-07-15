@@ -189,6 +189,30 @@ class DatabaseAdminRestConnectionImpl
       google::spanner::admin::database::v1::ListDatabaseRolesRequest request)
       override;
 
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  CreateBackupSchedule(
+      google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  GetBackupSchedule(
+      google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  UpdateBackupSchedule(
+      google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+          request) override;
+
+  Status DeleteBackupSchedule(
+      google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+          request) override;
+
+  StreamRange<google::spanner::admin::database::v1::BackupSchedule>
+  ListBackupSchedules(
+      google::spanner::admin::database::v1::ListBackupSchedulesRequest request)
+      override;
+
  private:
   static std::unique_ptr<spanner_admin::DatabaseAdminRetryPolicy> retry_policy(
       Options const& options) {

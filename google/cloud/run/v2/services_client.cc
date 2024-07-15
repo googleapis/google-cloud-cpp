@@ -121,6 +121,26 @@ StatusOr<google::longrunning::Operation> ServicesClient::UpdateService(
 }
 
 future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::UpdateService(
+    google::cloud::run::v2::Service const& service,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::run::v2::UpdateServiceRequest request;
+  *request.mutable_service() = service;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateService(request);
+}
+
+StatusOr<google::longrunning::Operation> ServicesClient::UpdateService(
+    ExperimentalTag, NoAwaitTag, google::cloud::run::v2::Service const& service,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::run::v2::UpdateServiceRequest request;
+  *request.mutable_service() = service;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::run::v2::Service>> ServicesClient::UpdateService(
     google::cloud::run::v2::UpdateServiceRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateService(request);

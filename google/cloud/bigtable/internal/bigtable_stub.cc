@@ -112,6 +112,17 @@ DefaultBigtableStub::ReadModifyWriteRow(
   return response;
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::ExecuteQueryResponse>>
+DefaultBigtableStub::ExecuteQuery(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::bigtable::v2::ExecuteQueryRequest const& request) {
+  auto stream = grpc_stub_->ExecuteQuery(context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::bigtable::v2::ExecuteQueryResponse>>(std::move(context),
+                                                   std::move(stream));
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 DefaultBigtableStub::AsyncReadRows(

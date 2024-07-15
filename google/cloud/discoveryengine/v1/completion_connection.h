@@ -224,6 +224,38 @@ class CompletionServiceConnection {
                               PurgeSuggestionDenyListEntriesResponse>>
   PurgeSuggestionDenyListEntries(
       ExperimentalTag, google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(ExperimentalTag,
+                              google::longrunning::Operation const& operation);
+
+  virtual future<StatusOr<
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(ExperimentalTag,
+                             google::longrunning::Operation const& operation);
 };
 
 /**

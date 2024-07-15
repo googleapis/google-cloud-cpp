@@ -233,6 +233,22 @@ class DeploymentResourcePoolServiceConnection {
           request);
 
   virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  UpdateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request);
+
+  virtual StatusOr<google::longrunning::Operation> UpdateDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  UpdateDeploymentResourcePool(ExperimentalTag,
+                               google::longrunning::Operation const& operation);
+
+  virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDeploymentResourcePool(
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&

@@ -172,6 +172,39 @@ class LivestreamServiceStub {
       google::cloud::video::livestream::v1::DeleteEventRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::video::livestream::v1::ListClipsResponse>
+  ListClips(grpc::ClientContext& context, Options const& options,
+            google::cloud::video::livestream::v1::ListClipsRequest const&
+                request) = 0;
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::GetClipRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateClip(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateClipRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateClip(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::CreateClipRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteClip(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteClipRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> DeleteClip(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::DeleteClipRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
@@ -378,6 +411,40 @@ class DefaultLivestreamServiceStub : public LivestreamServiceStub {
   Status DeleteEvent(
       grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::DeleteEventRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::ListClipsResponse> ListClips(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::ListClipsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::video::livestream::v1::GetClipRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateClip(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateClip(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDeleteClip(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> DeleteClip(
+      grpc::ClientContext& context, Options options,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAsset(

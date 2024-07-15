@@ -387,6 +387,33 @@ DlpServiceAuth::GetProjectDataProfile(
   return child_->GetProjectDataProfile(context, options, request);
 }
 
+StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
+DlpServiceAuth::ListFileStoreDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListFileStoreDataProfiles(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceAuth::GetFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetFileStoreDataProfile(context, options, request);
+}
+
+Status DlpServiceAuth::DeleteFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteFileStoreDataProfile(context, options, request);
+}
+
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DlpServiceAuth::GetTableDataProfile(
     grpc::ClientContext& context, Options const& options,

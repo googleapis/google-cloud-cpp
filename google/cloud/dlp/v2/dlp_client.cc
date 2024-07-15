@@ -688,6 +688,55 @@ DlpServiceClient::GetProjectDataProfile(
   return connection_->GetProjectDataProfile(request);
 }
 
+StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceClient::ListFileStoreDataProfiles(std::string const& parent,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request;
+  request.set_parent(parent);
+  return connection_->ListFileStoreDataProfiles(request);
+}
+
+StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceClient::ListFileStoreDataProfiles(
+    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListFileStoreDataProfiles(std::move(request));
+}
+
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceClient::GetFileStoreDataProfile(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::GetFileStoreDataProfileRequest request;
+  request.set_name(name);
+  return connection_->GetFileStoreDataProfile(request);
+}
+
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceClient::GetFileStoreDataProfile(
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetFileStoreDataProfile(request);
+}
+
+Status DlpServiceClient::DeleteFileStoreDataProfile(std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest request;
+  request.set_name(name);
+  return connection_->DeleteFileStoreDataProfile(request);
+}
+
+Status DlpServiceClient::DeleteFileStoreDataProfile(
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteFileStoreDataProfile(request);
+}
+
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DlpServiceClient::GetTableDataProfile(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

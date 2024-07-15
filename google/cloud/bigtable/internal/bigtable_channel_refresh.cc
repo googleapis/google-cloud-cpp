@@ -71,6 +71,14 @@ BigtableChannelRefresh::ReadModifyWriteRow(
   return child_->ReadModifyWriteRow(client_context, options, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::bigtable::v2::ExecuteQueryResponse>>
+BigtableChannelRefresh::ExecuteQuery(
+    std::shared_ptr<grpc::ClientContext> client_context, Options const& options,
+    google::bigtable::v2::ExecuteQueryRequest const& request) {
+  return child_->ExecuteQuery(client_context, options, request);
+}
+
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
     google::bigtable::v2::ReadRowsResponse>>
 BigtableChannelRefresh::AsyncReadRows(

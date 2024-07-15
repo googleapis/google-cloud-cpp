@@ -70,6 +70,32 @@ class CompletionServiceAuth : public CompletionServiceStub {
       google::cloud::discoveryengine::v1::
           PurgeSuggestionDenyListEntriesRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncImportCompletionSuggestions(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncPurgeCompletionSuggestions(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request) override;
+
+  StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
+      grpc::ClientContext& context, Options options,
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

@@ -112,8 +112,8 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L94}
-  /// [google.cloud.discoveryengine.v1.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L154}
+  /// [google.cloud.discoveryengine.v1.CompleteQueryRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L132}
+  /// [google.cloud.discoveryengine.v1.CompleteQueryResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion_service.proto#L192}
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
@@ -153,8 +153,8 @@ class CompletionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L606}
-  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L643}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L641}
+  /// [google.cloud.discoveryengine.v1.ImportSuggestionDenyListEntriesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L678}
   /// [google.cloud.discoveryengine.v1.SuggestionDenyListEntry]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L32}
   ///
   // clang-format on
@@ -272,6 +272,158 @@ class CompletionServiceClient {
   PurgeSuggestionDenyListEntries(
       ExperimentalTag, google::longrunning::Operation const& operation,
       Options opts = {});
+
+  // clang-format off
+  ///
+  /// Imports
+  /// [CompletionSuggestion][google.cloud.discoveryengine.v1.CompletionSuggestion]s
+  /// for a DataStore.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.CompletionSuggestion]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L55}
+  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L704}
+  /// [google.cloud.discoveryengine.v1.ImportCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/import_config.proto#L744}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ImportCompletionSuggestions
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          ImportCompletionSuggestionsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief ImportCompletionSuggestions
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+  ImportCompletionSuggestions(ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts = {});
+
+  // clang-format off
+  ///
+  /// Permanently deletes all
+  /// [CompletionSuggestion][google.cloud.discoveryengine.v1.CompletionSuggestion]s
+  /// for a DataStore.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.discoveryengine.v1.CompletionSuggestion]: @googleapis_reference_link{google/cloud/discoveryengine/v1/completion.proto#L55}
+  /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L132}
+  /// [google.cloud.discoveryengine.v1.PurgeCompletionSuggestionsResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/purge_config.proto#L147}
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PurgeCompletionSuggestions
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::discoveryengine::v1::
+          PurgeCompletionSuggestionsRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief PurgeCompletionSuggestions
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<
+      google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+  PurgeCompletionSuggestions(ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts = {});
 
  private:
   std::shared_ptr<CompletionServiceConnection> connection_;

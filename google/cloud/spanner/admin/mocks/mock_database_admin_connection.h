@@ -257,6 +257,40 @@ class MockDatabaseAdminConnection
       ListDatabaseRoles,
       (google::spanner::admin::database::v1::ListDatabaseRolesRequest request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::BackupSchedule>,
+      CreateBackupSchedule,
+      (google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::BackupSchedule>,
+      GetBackupSchedule,
+      (google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::database::v1::BackupSchedule>,
+      UpdateBackupSchedule,
+      (google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteBackupSchedule,
+      (google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::spanner::admin::database::v1::BackupSchedule>),
+      ListBackupSchedules,
+      (google::spanner::admin::database::v1::ListBackupSchedulesRequest
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
