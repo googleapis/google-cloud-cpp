@@ -1,0 +1,58 @@
+/*!
+
+@mainpage Privileged Access Manager API C++ Client Library
+
+An idiomatic C++ client library for the [Privileged Access Manager API][cloud-service-docs].
+
+Privileged Access Manager (PAM) helps you on your journey towards least
+privilege and helps mitigate risks tied to privileged access misuse or abuse.
+PAM allows you to shift from always-on standing privileges towards on-demand
+access with just-in-time, time-bound, and approval-based access elevations. PAM
+allows IAM administrators to create entitlements that can grant just-in-time,
+temporary access to any resource scope. Requesters can explore eligible
+entitlements and request the access needed for their task. Approvers are
+notified when approvals await their decision. Streamlined workflows facilitated
+by using PAM can support various use cases, including emergency access for
+incident responders, time-boxed access for developers for critical deployment or
+maintenance, temporary access for operators for data ingestion and audits, JIT
+access to service accounts for automated tasks, and more.
+
+While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
+[Semantic Versioning](https://semver.org/).
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/privilegedaccessmanager/quickstart/` directory,
+which should give you a taste of the Privileged Access Manager API C++ client library API.
+
+@snippet quickstart.cc all
+
+## Main classes
+
+<!-- inject-client-list-start -->
+The main class in this library is
+[`privilegedaccessmanager_v1::PrivilegedAccessManagerClient`](@ref google::cloud::privilegedaccessmanager_v1::PrivilegedAccessManagerClient). All RPCs are exposed
+as member functions of this class. Other classes provide helpers, configuration
+parameters, and infrastructure to mock
+[`privilegedaccessmanager_v1::PrivilegedAccessManagerClient`](@ref google::cloud::privilegedaccessmanager_v1::PrivilegedAccessManagerClient) when testing your
+application.
+<!-- inject-client-list-end -->
+
+## More Information
+
+- @ref common-error-handling - describes how the library reports errors.
+- @ref privilegedaccessmanager-override-endpoint - describes how to override the default
+  endpoint.
+- @ref privilegedaccessmanager-override-authentication - describes how to change the
+  authentication credentials used by the library.
+- @ref privilegedaccessmanager-override-retry - describes how to change the default retry
+  policies.
+- @ref privilegedaccessmanager-env - describes environment variables that can configure the
+  behavior of the library.
+
+[cloud-service-docs]: https://cloud.google.com/iam/docs/pam-overview
+
+*/

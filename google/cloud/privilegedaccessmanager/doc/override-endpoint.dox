@@ -1,0 +1,25 @@
+/*!
+@page privilegedaccessmanager-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `privilegedaccessmanager_v1::PrivilegedAccessManagerClient`:
+
+@snippet privileged_access_manager_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page privilegedaccessmanager_v1::PrivilegedAccessManagerClient-endpoint-snippet Override privilegedaccessmanager_v1::PrivilegedAccessManagerClient Endpoint Configuration
+
+@snippet google/cloud/privilegedaccessmanager/v1/samples/privileged_access_manager_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->

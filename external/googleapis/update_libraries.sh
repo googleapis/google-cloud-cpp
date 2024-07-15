@@ -221,6 +221,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/policytroubleshooter/iam/v3:iam_cc_grpc"
   )"
   ["privateca"]="@com_google_googleapis//google/cloud/security/privateca/v1:privateca_cc_grpc"
+  ["privilegedaccessmanager"]="@com_google_googleapis//google/cloud/privilegedaccessmanager/v1:privilegedaccessmanager_cc_grpc"
   ["profiler"]="@com_google_googleapis//google/devtools/cloudprofiler/v2:cloudprofiler_cc_grpc"
   ["publicca"]="@com_google_googleapis//google/cloud/security/publicca/v1:publicca_cc_grpc"
   ["pubsub"]="@com_google_googleapis//google/pubsub/v1:pubsub_cc_grpc"

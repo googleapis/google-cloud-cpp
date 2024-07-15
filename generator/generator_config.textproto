@@ -2941,6 +2941,14 @@ service {
   omitted_services: ["ProfilerService"]
 }
 
+# Privileged Access Manager
+service {
+  service_proto_path: "google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto"
+  product_path: "google/cloud/privilegedaccessmanager/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Pub/Sub
 service {
   service_proto_path: "google/pubsub/v1/pubsub.proto"
