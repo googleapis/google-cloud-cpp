@@ -245,7 +245,7 @@ TEST(AsyncStreamingReadRpcTracing, StartedStreamShouldExtractMetadata) {
     auto mock = std::make_unique<MockStream>();
     auto context = std::make_shared<grpc::ClientContext>();
     EXPECT_CALL(*mock, Start).WillOnce([context] {
-      SetServerMetadata(*context, RpcMetadata{{{"key", "value"}}});
+      SetServerMetadata(*context, RpcMetadata{{{"hk", "hv"}}, {{"tk", "tv"}}});
       return make_ready_future(true);
     });
 
@@ -259,7 +259,7 @@ TEST(AsyncStreamingReadRpcTracing, StartedStreamShouldExtractMetadata) {
                   SpanNamed("Start"),
                   AllOf(SpanNamed("span"),
                         SpanHasAttributes(OTelAttribute<std::string>(
-                            "rpc.grpc.response.metadata.key", "value")))));
+                            "rpc.grpc.response.metadata.hk", "hv")))));
 }
 
 }  // namespace
