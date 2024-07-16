@@ -36,7 +36,9 @@ class AsyncStreamingWriteRpcTracing
       : context_(std::move(context)),
         impl_(std::move(impl)),
         span_(std::move(span)) {}
-  ~AsyncStreamingWriteRpcTracing() override { (void)End(StatusOr<Response>()); }
+  ~AsyncStreamingWriteRpcTracing() override {
+    (void)End(make_status_or<Response>({}));
+  }
 
   void Cancel() override {
     span_->AddEvent("gl-cpp.cancel");
@@ -101,7 +103,7 @@ class AsyncStreamingWriteRpcTracing
 
  private:
   StatusOr<Response> End(StatusOr<Response> status) {
-    if (!context_) return status;
+    if (!span_) return status;
     if (started_) {
       return EndSpan(*std::move(context_), *std::move(span_),
                      std::move(status));

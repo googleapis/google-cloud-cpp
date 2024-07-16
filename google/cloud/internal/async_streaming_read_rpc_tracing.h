@@ -89,7 +89,7 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
 
  private:
   Status End(Status status) {
-    if (!context_) return status;
+    if (!span_) return status;
     if (started_) {
       return EndSpan(*std::move(context_), *std::move(span_),
                      std::move(status));

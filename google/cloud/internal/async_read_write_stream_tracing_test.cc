@@ -272,14 +272,14 @@ TEST(AsyncStreamingReadWriteRpcTracing, FinishWithoutStart) {
   TestedStream stream(context(), std::move(mock), span);
   EXPECT_THAT(stream.Finish().get(), StatusIs(StatusCode::kAborted, "fail"));
 
-  // The stream is not started, the metadata will not be extracted when
-  // ending the span, so the span will not contain `grpc.peer` in the end.
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans,
-              testing::UnorderedElementsAre(
+              UnorderedElementsAre(
                   AllOf(SpanNamed("span"),
                         SpanWithStatus(opentelemetry::trace::StatusCode::kError,
-                                       "fail")),
+                                       "fail"),
+                        Not(SpanHasAttributes(
+                            OTelAttribute<std::string>("grpc.peer", _)))),
                   AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
@@ -369,7 +369,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, StartedStreamShouldExtractMetadata) {
     auto mock = std::make_unique<MockStream>();
     auto context = std::make_shared<grpc::ClientContext>();
     EXPECT_CALL(*mock, Start).WillOnce([context] {
-      SetServerMetadata(*context, {});
+      SetServerMetadata(*context, RpcMetadata{{{"key", "value"}}});
       return make_ready_future(true);
     });
 
@@ -378,8 +378,12 @@ TEST(AsyncStreamingReadWriteRpcTracing, StartedStreamShouldExtractMetadata) {
   }
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans, testing::UnorderedElementsAre(AllOf(SpanNamed("Start")),
-                                                   AllOf(SpanNamed("span"))));
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  SpanNamed("Start"),
+                  AllOf(SpanNamed("span"),
+                        SpanHasAttributes(OTelAttribute<std::string>(
+                            "rpc.grpc.response.metadata.key", "value")))));
 }
 
 }  // namespace

@@ -324,8 +324,6 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
-  // Start() return false, the metadata will not be extracted when
-  // ending the span, so the span will not contain `grpc.peer` in the end.
   EXPECT_THAT(
       spans,
       Contains(AllOf(
@@ -334,7 +332,8 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
               "google.test.admin.database.v1.GoldenKitchenSink/StreamingRead"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)),
+          Not(SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _))))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
@@ -363,8 +362,6 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
-  // Start() return false, the metadata will not be extracted when
-  // ending the span, so the span will not contain `grpc.peer` in the end.
   EXPECT_THAT(
       spans,
       Contains(AllOf(
@@ -373,7 +370,8 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
               "google.test.admin.database.v1.GoldenKitchenSink/StreamingWrite"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)),
+          Not(SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _))))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
@@ -402,8 +400,6 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
   EXPECT_THAT(finish, StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
-  // Start() return false, the metadata will not be extracted when
-  // ending the span, so the span will not contain `grpc.peer` in the end.
   EXPECT_THAT(
       spans,
       Contains(AllOf(
@@ -412,7 +408,8 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
                     "StreamingReadWrite"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)),
+          Not(SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _))))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting1) {
