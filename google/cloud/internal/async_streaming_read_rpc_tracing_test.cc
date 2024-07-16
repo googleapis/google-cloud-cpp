@@ -254,12 +254,11 @@ TEST(AsyncStreamingReadRpcTracing, StartedStreamShouldExtractMetadata) {
   }
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(spans,
-              UnorderedElementsAre(
-                  SpanNamed("Start"),
-                  AllOf(SpanNamed("span"),
-                        SpanHasAttributes(OTelAttribute<std::string>(
-                            "rpc.grpc.response.metadata.hk", "hv")))));
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         SpanNamed("Start"),
+                         AllOf(SpanNamed("span"),
+                               SpanHasAttributes(OTelAttribute<std::string>(
+                                   "rpc.grpc.response.metadata.hk", "hv")))));
 }
 
 }  // namespace
