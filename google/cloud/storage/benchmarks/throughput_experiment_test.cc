@@ -55,14 +55,13 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   if (UsingEmulator() && ProductionOnly(GetParam())) GTEST_SKIP();
 
   auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   ThroughputOptions options;
   options.minimum_write_buffer_size = 1 * kMiB;
   options.libs = {GetParam().library};
   options.transports = {GetParam().transport};
 
-  auto provider = [&](ExperimentTransport) { return *client; };
+  auto provider = [&](ExperimentTransport) { return client; };
   auto experiments = CreateUploadExperiments(options, provider);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
@@ -72,7 +71,7 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
         /*enable_md5=*/false,    absl::nullopt};
     auto result = e->Run(bucket_name_, object_name, config);
     ASSERT_STATUS_OK(result.status);
-    auto status = client->DeleteObject(bucket_name_, object_name);
+    auto status = client.DeleteObject(bucket_name_, object_name);
     EXPECT_THAT(status,
                 StatusIs(AnyOf(StatusCode::kOk, StatusCode::kNotFound)));
   }
@@ -82,14 +81,13 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
   if (UsingEmulator() && ProductionOnly(GetParam())) GTEST_SKIP();
 
   auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   ThroughputOptions options;
   options.minimum_write_buffer_size = 1 * kMiB;
   options.libs = {GetParam().library};
   options.transports = {GetParam().transport};
 
-  auto provider = [&](ExperimentTransport) { return *client; };
+  auto provider = [&](ExperimentTransport) { return client; };
   auto experiments =
       CreateDownloadExperiments(options, provider, /*thread_id=*/0);
   for (auto& e : experiments) {
@@ -105,14 +103,14 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
 
     auto contents = MakeRandomData(kObjectSize);
     auto insert =
-        client->InsertObject(bucket_name_, object_name, std::move(contents));
+        client.InsertObject(bucket_name_, object_name, std::move(contents));
     ASSERT_STATUS_OK(insert);
 
     // With the raw protocols this might fail, that is fine, we just want the
     // code to not crash and return the result (including failures).
     (void)e->Run(bucket_name_, object_name, config);
 
-    auto status = client->DeleteObject(bucket_name_, object_name);
+    auto status = client.DeleteObject(bucket_name_, object_name);
     EXPECT_THAT(status,
                 StatusIs(AnyOf(StatusCode::kOk, StatusCode::kNotFound)));
   }

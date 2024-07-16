@@ -46,11 +46,8 @@ class StorageIntegrationTest
    * should use short backoff and retry periods. This returns a client so
    * configured.
    */
-  static google::cloud::StatusOr<google::cloud::storage::Client>
-  MakeIntegrationTestClient();
-
   static google::cloud::storage::Client MakeIntegrationTestClient(
-      google::cloud::Options opts);
+      google::cloud::Options opts = {});
 
   /**
    * Return a client with retry policies suitable for CreateBucket() class.
