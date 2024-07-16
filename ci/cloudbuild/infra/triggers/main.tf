@@ -46,6 +46,18 @@ locals {
       config = "ci/cloudbuild/cloudbuild.yaml"
       distro = "fedora-latest-cmake"
     }
+    clang-cxx20 = {
+      config = "ci/cloudbuild/cloudbuild.yaml"
+      distro = "fedora-latest-cxx20"
+    }
+    cxx14 = {
+      config = "ci/cloudbuild/cloudbuild.yaml"
+      distro = "fedora-latest-cxx14"
+    }
+    cxx20 = {
+      config = "ci/cloudbuild/cloudbuild.yaml"
+      distro = "fedora-latest-cxx20"
+    }
   }
 }
 
