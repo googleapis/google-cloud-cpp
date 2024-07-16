@@ -261,7 +261,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, WritesDone) {
                          AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
-TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
+TEST(AsyncStreamingReadWriteRpcTracing, FinishWithoutStart) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto span = MakeSpan("span");
@@ -272,6 +272,31 @@ TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
   TestedStream stream(context(), std::move(mock), span);
   EXPECT_THAT(stream.Finish().get(), StatusIs(StatusCode::kAborted, "fail"));
 
+  // The stream is not started, the metadata will not be extracted when
+  // ending the span, so the span will not contain `grpc.peer` in the end.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              testing::UnorderedElementsAre(
+                  AllOf(SpanNamed("span"),
+                        SpanWithStatus(opentelemetry::trace::StatusCode::kError,
+                                       "fail")),
+                  AllOf(SpanNamed("Finish"), SpanWithParent(span))));
+}
+
+TEST(AsyncStreamingReadWriteRpcTracing, FinishWithStart) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  auto mock = std::make_unique<MockStream>();
+
+  EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
+
+  TestedStream stream(context(), std::move(mock), span);
+  EXPECT_TRUE(stream.Start().get());
+  EXPECT_THAT(stream.Finish().get(), StatusIs(StatusCode::kAborted, "fail"));
+
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
@@ -280,7 +305,8 @@ TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
               SpanNamed("span"),
               SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
               SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail")),
-          AllOf(SpanNamed("Finish"), SpanWithParent(span))));
+          AllOf(SpanNamed("Finish"), SpanWithParent(span)),
+          AllOf(SpanNamed("Start"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, GetRequestMetadata) {
@@ -321,7 +347,8 @@ TEST(AsyncStreamingReadWriteRpcTracing, SpanEndsOnDestruction) {
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
 }
 
-TEST(AsyncStreamingReadWriteRpcTracing, UnstartedStreamShouldNotExtractMetadata) {
+TEST(AsyncStreamingReadWriteRpcTracing,
+     UnstartedStreamShouldNotExtractMetadata) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   {
@@ -351,10 +378,8 @@ TEST(AsyncStreamingReadWriteRpcTracing, StartedStreamShouldExtractMetadata) {
   }
 
   auto spans = span_catcher->GetSpans();
-  EXPECT_THAT(
-      spans, testing::UnorderedElementsAre(
-                 AllOf(SpanNamed("Start")),
-                 AllOf(SpanNamed("span"))));
+  EXPECT_THAT(spans, testing::UnorderedElementsAre(AllOf(SpanNamed("Start")),
+                                                   AllOf(SpanNamed("span"))));
 }
 
 }  // namespace

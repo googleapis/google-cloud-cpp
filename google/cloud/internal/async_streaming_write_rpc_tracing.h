@@ -104,17 +104,16 @@ class AsyncStreamingWriteRpcTracing
     if (!context_) return status;
     if (started_) {
       return EndSpan(*std::move(context_), *std::move(span_),
-                    std::move(status));
-    } else {
-      return EndSpan(*std::move(span_), std::move(status));
+                     std::move(status));
     }
+    return EndSpan(*std::move(span_), std::move(status));
   }
 
   std::shared_ptr<grpc::ClientContext> context_;
   std::unique_ptr<AsyncStreamingWriteRpc<Request, Response>> impl_;
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
   int write_count_ = 0;
-  int started_ = false;
+  bool started_ = false;
 };
 
 }  // namespace internal

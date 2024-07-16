@@ -91,10 +91,10 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
   Status End(Status status) {
     if (!context_) return status;
     if (started_) {
-      return EndSpan(*std::move(context_), *std::move(span_), std::move(status));
-    } else {
-      return EndSpan(*std::move(span_), std::move(status));
+      return EndSpan(*std::move(context_), *std::move(span_),
+                     std::move(status));
     }
+    return EndSpan(*std::move(span_), std::move(status));
   }
 
   std::shared_ptr<grpc::ClientContext> context_;
