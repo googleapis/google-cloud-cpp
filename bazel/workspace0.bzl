@@ -104,10 +104,10 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_google_googletest",
         urls = [
-            "https://github.com/google/googletest/archive/v1.14.0.tar.gz",
+            "https://github.com/google/googletest/archive/v1.15.0.tar.gz",
         ],
-        sha256 = "8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7",
-        strip_prefix = "googletest-1.14.0",
+        sha256 = "7315acb6bf10e99f332c8a43f00d5fbb1ee6ca48c52f6b936991b216c586aaad",
+        strip_prefix = "googletest-1.15.0",
     )
 
     # Load the googleapis dependency.
