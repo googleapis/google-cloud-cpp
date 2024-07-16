@@ -19,6 +19,7 @@
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/resume_policy.h"
 #include "google/cloud/storage/internal/async/default_options.h"
+#include "google/cloud/storage/internal/async/handle_redirect_error.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/internal/async/open_object.h"
@@ -196,31 +197,37 @@ AsyncConnectionImpl::Open(OpenParams p) {
   auto resume_policy =
       current->get<storage_experimental::ResumePolicyOption>()();
 
-  auto call = [stub = stub_](
-                  CompletionQueue& cq,
-                  std::shared_ptr<grpc::ClientContext> context,
-                  google::cloud::internal::ImmutableOptions options,
-                  google::storage::v2::BidiReadObjectRequest const& request) {
-    auto open = std::make_shared<OpenObject>(*stub, cq, std::move(context),
-                                             std::move(options), request);
-    // Extend the lifetime of the coroutine until it finishes.
-    return open->Call().then([open](auto f) mutable {
-      open.reset();
-      return f.get();
-    });
-  };
-
   auto retry = std::shared_ptr<storage::RetryPolicy>(retry_policy(*current));
   auto backoff =
       std::shared_ptr<storage::BackoffPolicy>(backoff_policy(*current));
-  auto const* where = __func__;
+  auto const* function_name = __func__;
   auto factory = OpenStreamFactory(
-      [cq = cq_, retry = std::move(retry), backoff = std::move(backoff),
-       current = std::move(current), call = std::move(call),
-       where](google::storage::v2::BidiReadObjectRequest request) {
+      [stub = stub_, cq = cq_, retry = std::move(retry),
+       backoff = std::move(backoff), current = std::move(current),
+       function_name](google::storage::v2::BidiReadObjectRequest request) {
+        struct DummyRequest {};
+
+        auto call = [stub, request = std::move(request)](
+                        CompletionQueue& cq,
+                        std::shared_ptr<grpc::ClientContext> context,
+                        google::cloud::internal::ImmutableOptions options,
+                        DummyRequest const&) mutable {
+          auto open = std::make_shared<OpenObject>(
+              *stub, cq, std::move(context), std::move(options), request);
+          // Extend the lifetime of the coroutine until it finishes.
+          return open->Call().then([open, &request](auto f) mutable {
+            open.reset();
+            auto response = f.get();
+            if (response) return response;
+            ApplyRedirectErrors(*request.mutable_read_object_spec(),
+                                ExtractGrpcStatus(response.status()));
+            return response;
+          });
+        };
+
         return google::cloud::internal::AsyncRetryLoop(
             retry->clone(), backoff->clone(), Idempotency::kIdempotent, cq,
-            std::move(call), current, std::move(request), where);
+            std::move(call), current, DummyRequest{}, function_name);
       });
 
   auto pending = factory(std::move(initial_request));
