@@ -45,12 +45,11 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
 
   std::string bucket_name = MakeRandomBucketName();
   auto client = MakeBucketIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test, with the "private"
   // PredefinedDefaultObjectAcl, so we know what the contents of the ACL will
   // be.
-  auto metadata = client->CreateBucketForProject(
+  auto metadata = client.CreateBucketForProject(
       bucket_name, project_id, BucketMetadata(),
       PredefinedDefaultObjectAcl("authenticatedRead"), Projection("full"));
   ASSERT_STATUS_OK(metadata);
@@ -70,38 +69,38 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
       << " this result.";
 
   auto const existing_entity = metadata->default_acl().front();
-  auto current_acl = client->ListDefaultObjectAcl(bucket_name);
+  auto current_acl = client.ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl),
               Contains(existing_entity.entity()).Times(1));
 
   auto get_acl =
-      client->GetDefaultObjectAcl(bucket_name, existing_entity.entity());
+      client.GetDefaultObjectAcl(bucket_name, existing_entity.entity());
   ASSERT_STATUS_OK(get_acl);
   EXPECT_EQ(*get_acl, existing_entity);
 
   auto not_found_acl =
-      client->GetDefaultObjectAcl(bucket_name, "not-found-entity");
+      client.GetDefaultObjectAcl(bucket_name, "not-found-entity");
   EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
 
-  auto create_acl = client->CreateDefaultObjectAcl(
+  auto create_acl = client.CreateDefaultObjectAcl(
       bucket_name, viewers, ObjectAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(create_acl);
 
-  current_acl = client->ListDefaultObjectAcl(bucket_name);
+  current_acl = client.ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl),
               Contains(create_acl->entity()).Times(1));
 
-  auto c2 = client->CreateDefaultObjectAcl(bucket_name, viewers,
-                                           ObjectAccessControl::ROLE_READER());
+  auto c2 = client.CreateDefaultObjectAcl(bucket_name, viewers,
+                                          ObjectAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(c2);
   // There is no guarantee that the ETag remains unchanged, even if the
   // operation has no effect.  Reset the one field that might change.
   create_acl->set_etag(c2->etag());
   EXPECT_EQ(*create_acl, *c2);
 
-  auto updated_acl = client->UpdateDefaultObjectAcl(
+  auto updated_acl = client.UpdateDefaultObjectAcl(
       bucket_name, ObjectAccessControl().set_entity(viewers).set_role(
                        ObjectAccessControl::ROLE_OWNER()));
   ASSERT_STATUS_OK(updated_acl);
@@ -109,41 +108,41 @@ TEST_F(GrpcDefaultObjectAclIntegrationTest, AclCRUD) {
   EXPECT_EQ(updated_acl->role(), ObjectAccessControl::ROLE_OWNER());
 
   // "Updating" an entity that does not exist should create the entity
-  auto delete_acl = client->DeleteDefaultObjectAcl(bucket_name, viewers);
+  auto delete_acl = client.DeleteDefaultObjectAcl(bucket_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
-  updated_acl = client->UpdateDefaultObjectAcl(
+  updated_acl = client.UpdateDefaultObjectAcl(
       bucket_name, ObjectAccessControl().set_entity(viewers).set_role(
                        ObjectAccessControl::ROLE_OWNER()));
   ASSERT_STATUS_OK(updated_acl);
 
   auto patched_acl =
-      client->PatchDefaultObjectAcl(bucket_name, viewers,
-                                    ObjectAccessControlPatchBuilder().set_role(
-                                        ObjectAccessControl::ROLE_READER()));
+      client.PatchDefaultObjectAcl(bucket_name, viewers,
+                                   ObjectAccessControlPatchBuilder().set_role(
+                                       ObjectAccessControl::ROLE_READER()));
   ASSERT_STATUS_OK(patched_acl);
   EXPECT_EQ(patched_acl->entity(), create_acl->entity());
   EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
 
   // "Patching" an entity that does not exist should create the entity
-  delete_acl = client->DeleteDefaultObjectAcl(bucket_name, viewers);
+  delete_acl = client.DeleteDefaultObjectAcl(bucket_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
   patched_acl =
-      client->PatchDefaultObjectAcl(bucket_name, viewers,
-                                    ObjectAccessControlPatchBuilder().set_role(
-                                        ObjectAccessControl::ROLE_READER()));
+      client.PatchDefaultObjectAcl(bucket_name, viewers,
+                                   ObjectAccessControlPatchBuilder().set_role(
+                                       ObjectAccessControl::ROLE_READER()));
   ASSERT_STATUS_OK(patched_acl);
   EXPECT_EQ(patched_acl->entity(), create_acl->entity());
   EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
 
-  delete_acl = client->DeleteDefaultObjectAcl(bucket_name, viewers);
+  delete_acl = client.DeleteDefaultObjectAcl(bucket_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
 
-  current_acl = client->ListDefaultObjectAcl(bucket_name);
+  current_acl = client.ListDefaultObjectAcl(bucket_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl),
               Not(Contains(create_acl->entity())));
 
-  auto status = client->DeleteBucket(bucket_name);
+  auto status = client.DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
 }
 

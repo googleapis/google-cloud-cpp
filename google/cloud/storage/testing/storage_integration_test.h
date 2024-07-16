@@ -49,6 +49,9 @@ class StorageIntegrationTest
   static google::cloud::StatusOr<google::cloud::storage::Client>
   MakeIntegrationTestClient();
 
+  static google::cloud::storage::Client MakeIntegrationTestClient(
+      google::cloud::Options opts);
+
   /**
    * Return a client with retry policies suitable for CreateBucket() class.
    *
@@ -57,17 +60,7 @@ class StorageIntegrationTest
    * one bucket every two seconds, suggesting that the default backoff should be
    * at least that long.
    */
-  static google::cloud::StatusOr<google::cloud::storage::Client>
-  MakeBucketIntegrationTestClient();
-
-  /// Like MakeIntegrationTestClient() but with a custom retry policy
-  static google::cloud::StatusOr<google::cloud::storage::Client>
-  MakeIntegrationTestClient(std::unique_ptr<RetryPolicy> retry_policy);
-
-  /// Like MakeIntegrationTestClient() but with custom retry and bucket policies
-  static google::cloud::StatusOr<google::cloud::storage::Client>
-  MakeIntegrationTestClient(std::unique_ptr<RetryPolicy> retry_policy,
-                            std::unique_ptr<BackoffPolicy> backoff_policy);
+  static google::cloud::storage::Client MakeBucketIntegrationTestClient();
 
   static std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
   static std::unique_ptr<RetryPolicy> TestRetryPolicy();

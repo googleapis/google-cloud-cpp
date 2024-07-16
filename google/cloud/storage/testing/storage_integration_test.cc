@@ -53,24 +53,36 @@ StorageIntegrationTest::~StorageIntegrationTest() {
   // The client configured to create and delete buckets is good for our
   // purposes.
   auto client = MakeBucketIntegrationTestClient();
-  if (!client) return;
   for (auto& o : objects_to_delete_) {
-    (void)client->DeleteObject(o.bucket(), o.name(),
-                               Generation(o.generation()));
+    (void)client.DeleteObject(o.bucket(), o.name(), Generation(o.generation()));
   }
   for (auto& b : buckets_to_delete_) {
-    (void)RemoveBucketAndContents(*client, b);
+    (void)RemoveBucketAndContents(client, b);
   }
+}
+
+google::cloud::storage::Client
+StorageIntegrationTest::MakeIntegrationTestClient(google::cloud::Options opts) {
+  opts = google::cloud::internal::MergeOptions(
+      std::move(opts), Options{}
+                           .set<RetryPolicyOption>(TestRetryPolicy())
+                           .set<BackoffPolicyOption>(TestBackoffPolicy()));
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  if (UseGrpcForMedia() || UseGrpcForMetadata()) {
+    return storage_experimental::DefaultGrpcClient(std::move(opts));
+  }
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  return Client(std::move(opts));
 }
 
 google::cloud::StatusOr<google::cloud::storage::Client>
 StorageIntegrationTest::MakeIntegrationTestClient() {
-  return MakeIntegrationTestClient(TestRetryPolicy());
+  return MakeIntegrationTestClient(Options{});
 }
 
-google::cloud::StatusOr<google::cloud::storage::Client>
+google::cloud::storage::Client
 StorageIntegrationTest::MakeBucketIntegrationTestClient() {
-  if (UsingEmulator()) return MakeIntegrationTestClient();
+  if (UsingEmulator()) return MakeIntegrationTestClient(Options{});
 
   auto constexpr kInitialDelay = std::chrono::seconds(5);
   auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);
@@ -79,48 +91,13 @@ StorageIntegrationTest::MakeBucketIntegrationTestClient() {
   // little sense to wait any longer.
   auto constexpr kMaximumRetryTime = std::chrono::minutes(10);
   return MakeIntegrationTestClient(
-      LimitedTimeRetryPolicy(kMaximumRetryTime).clone(),
-      ExponentialBackoffPolicy(kInitialDelay, kMaximumBackoffDelay,
-                               kBackoffScalingFactor)
-          .clone());
-}
-
-google::cloud::StatusOr<google::cloud::storage::Client>
-StorageIntegrationTest::MakeIntegrationTestClient(
-    std::unique_ptr<RetryPolicy> retry_policy) {
-  return MakeIntegrationTestClient(std::move(retry_policy),
-                                   TestBackoffPolicy());
-}
-
-google::cloud::StatusOr<google::cloud::storage::Client>
-StorageIntegrationTest::MakeIntegrationTestClient(
-    std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy) {
-  auto client_options = ClientOptions::CreateDefaultClientOptions();
-  if (!client_options) return std::move(client_options).status();
-
-  auto opts = internal::MakeOptions(*std::move(client_options))
-                  .set<RetryPolicyOption>(std::move(retry_policy))
-                  .set<BackoffPolicyOption>(std::move(backoff_policy));
-
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (UseGrpcForMedia() || UseGrpcForMetadata()) {
-    return storage_experimental::DefaultGrpcClient(std::move(opts));
-  }
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-
-  auto const idempotency =
-      google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY")
-          .value_or("always-retry");
-  if (idempotency == "strict") {
-    opts.set<IdempotencyPolicyOption>(StrictIdempotencyPolicy{}.clone());
-  } else if (idempotency != "always-retry") {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid value for CLOUD_STORAGE_IDEMPOTENCY environment variable");
-  }
-  auto credentials = opts.get<Oauth2CredentialsOption>();
-  return Client(std::move(opts));
+      Options{}
+          .set<RetryPolicyOption>(
+              LimitedTimeRetryPolicy(kMaximumRetryTime).clone())
+          .set<BackoffPolicyOption>(
+              ExponentialBackoffPolicy(kInitialDelay, kMaximumBackoffDelay,
+                                       kBackoffScalingFactor)
+                  .clone()));
 }
 
 std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {

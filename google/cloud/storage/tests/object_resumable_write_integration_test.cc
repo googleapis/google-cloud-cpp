@@ -324,18 +324,15 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
-  std::chrono::seconds timeout(3);
-  auto retry_policy =
-      LimitedTimeRetryPolicy(/*maximum_duration=*/timeout).clone();
-  StatusOr<Client> client = MakeIntegrationTestClient(std::move(retry_policy));
-  ASSERT_STATUS_OK(client);
+  auto const timeout = std::chrono::seconds(3);
+  auto client = MakeIntegrationTestClient(Options{}.set<RetryPolicyOption>(
+      LimitedTimeRetryPolicy(/*maximum_duration=*/timeout).clone()));
 
   auto object_name = MakeRandomObjectName();
 
   auto data = MakeRandomData(1024 * 1024);
 
-  auto os =
-      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+  auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
   os.write(data.data(), data.size());
   EXPECT_FALSE(os.bad());
   std::cout << "Sleeping to force timeout ... " << std::flush;
