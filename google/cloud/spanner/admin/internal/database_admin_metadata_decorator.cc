@@ -307,6 +307,57 @@ DatabaseAdminMetadata::ListDatabaseRoles(
   return child_->ListDatabaseRoles(context, options, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminMetadata::CreateBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateBackupSchedule(context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminMetadata::GetBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackupSchedule(context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminMetadata::UpdateBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  SetMetadata(
+      context, options,
+      absl::StrCat("backup_schedule.name=",
+                   internal::UrlEncode(request.backup_schedule().name())));
+  return child_->UpdateBackupSchedule(context, options, request);
+}
+
+Status DatabaseAdminMetadata::DeleteBackupSchedule(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackupSchedule(context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+DatabaseAdminMetadata::ListBackupSchedules(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackupSchedules(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

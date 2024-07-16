@@ -83,6 +83,16 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetSimulation(
+    google::cloud::securitycenter::v1::GetSimulationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetValuedResource(
+    google::cloud::securitycenter::v1::GetValuedResourceRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency SecurityCenterConnectionIdempotencyPolicy::GetBigQueryExport(
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&) {
   return Idempotency::kIdempotent;
@@ -278,6 +288,111 @@ Idempotency SecurityCenterConnectionIdempotencyPolicy::UpdateBigQueryExport(
 
 Idempotency SecurityCenterConnectionIdempotencyPolicy::ListBigQueryExports(
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    CreateEventThreatDetectionCustomModule(
+        google::cloud::securitycenter::v1::
+            CreateEventThreatDetectionCustomModuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    DeleteEventThreatDetectionCustomModule(
+        google::cloud::securitycenter::v1::
+            DeleteEventThreatDetectionCustomModuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecurityCenterConnectionIdempotencyPolicy::GetEventThreatDetectionCustomModule(
+    google::cloud::securitycenter::v1::
+        GetEventThreatDetectionCustomModuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    ListDescendantEventThreatDetectionCustomModules(
+        google::cloud::securitycenter::v1::
+            ListDescendantEventThreatDetectionCustomModulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    ListEventThreatDetectionCustomModules(
+        google::cloud::securitycenter::v1::
+            ListEventThreatDetectionCustomModulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    UpdateEventThreatDetectionCustomModule(
+        google::cloud::securitycenter::v1::
+            UpdateEventThreatDetectionCustomModuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    ValidateEventThreatDetectionCustomModule(
+        google::cloud::securitycenter::v1::
+            ValidateEventThreatDetectionCustomModuleRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    GetEffectiveEventThreatDetectionCustomModule(
+        google::cloud::securitycenter::v1::
+            GetEffectiveEventThreatDetectionCustomModuleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::
+    ListEffectiveEventThreatDetectionCustomModules(
+        google::cloud::securitycenter::v1::
+            ListEffectiveEventThreatDetectionCustomModulesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+SecurityCenterConnectionIdempotencyPolicy::BatchCreateResourceValueConfigs(
+    google::cloud::securitycenter::v1::
+        BatchCreateResourceValueConfigsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+SecurityCenterConnectionIdempotencyPolicy::DeleteResourceValueConfig(
+    google::cloud::securitycenter::v1::
+        DeleteResourceValueConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::GetResourceValueConfig(
+    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListResourceValueConfigs(
+    google::cloud::securitycenter::v1::
+        ListResourceValueConfigsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+SecurityCenterConnectionIdempotencyPolicy::UpdateResourceValueConfig(
+    google::cloud::securitycenter::v1::
+        UpdateResourceValueConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListValuedResources(
+    google::cloud::securitycenter::v1::ListValuedResourcesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency SecurityCenterConnectionIdempotencyPolicy::ListAttackPaths(
+    google::cloud::securitycenter::v1::ListAttackPathsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

@@ -320,6 +320,36 @@ class LivestreamServiceConnection {
   virtual Status DeleteEvent(
       google::cloud::video::livestream::v1::DeleteEventRequest const& request);
 
+  virtual StreamRange<google::cloud::video::livestream::v1::Clip> ListClips(
+      google::cloud::video::livestream::v1::ListClipsRequest request);
+
+  virtual StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
+      google::cloud::video::livestream::v1::GetClipRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Clip>>
+  CreateClip(
+      google::cloud::video::livestream::v1::CreateClipRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> CreateClip(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request);
+
+  virtual future<StatusOr<google::cloud::video::livestream::v1::Clip>>
+  CreateClip(ExperimentalTag, google::longrunning::Operation const& operation);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteClip(
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request);
+
+  virtual StatusOr<google::longrunning::Operation> DeleteClip(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteClip(ExperimentalTag, google::longrunning::Operation const& operation);
+
   virtual future<StatusOr<google::cloud::video::livestream::v1::Asset>>
   CreateAsset(
       google::cloud::video::livestream::v1::CreateAssetRequest const& request);

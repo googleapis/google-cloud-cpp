@@ -128,6 +128,7 @@ declare -A -r LIBRARIES=(
   )"
   ["datastream"]="@com_google_googleapis//google/cloud/datastream/v1:datastream_cc_grpc"
   ["deploy"]="@com_google_googleapis//google/cloud/deploy/v1:deploy_cc_grpc"
+  ["developerconnect"]="@com_google_googleapis//google/cloud/developerconnect/v1:developerconnect_cc_grpc"
   ["dialogflow_es"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
   ["dialogflow_cx"]="@com_google_googleapis//google/cloud/dialogflow/cx/v3:cx_cc_grpc"
   ["discoveryengine"]="@com_google_googleapis//google/cloud/discoveryengine/v1:discoveryengine_cc_grpc"

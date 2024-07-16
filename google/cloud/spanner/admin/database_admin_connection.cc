@@ -272,6 +272,37 @@ DatabaseAdminConnection::ListDatabaseRoles(
       StreamRange<google::spanner::admin::database::v1::DatabaseRole>>();
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminConnection::CreateBackupSchedule(
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminConnection::GetBackupSchedule(
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminConnection::UpdateBackupSchedule(
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status DatabaseAdminConnection::DeleteBackupSchedule(
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminConnection::ListBackupSchedules(
+    google::spanner::admin::database::v1::
+        ListBackupSchedulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::spanner::admin::database::v1::BackupSchedule>>();
+}
+
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

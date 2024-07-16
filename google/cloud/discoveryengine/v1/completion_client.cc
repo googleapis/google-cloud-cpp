@@ -102,6 +102,66 @@ CompletionServiceClient::PurgeSuggestionDenyListEntries(
                                                      operation);
 }
 
+future<StatusOr<
+    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+CompletionServiceClient::ImportCompletionSuggestions(
+    google::cloud::discoveryengine::v1::
+        ImportCompletionSuggestionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportCompletionSuggestions(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceClient::ImportCompletionSuggestions(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::
+        ImportCompletionSuggestionsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportCompletionSuggestions(ExperimentalTag{},
+                                                  NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
+CompletionServiceClient::ImportCompletionSuggestions(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ImportCompletionSuggestions(ExperimentalTag{}, operation);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+CompletionServiceClient::PurgeCompletionSuggestions(
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeCompletionSuggestions(request);
+}
+
+StatusOr<google::longrunning::Operation>
+CompletionServiceClient::PurgeCompletionSuggestions(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeCompletionSuggestions(ExperimentalTag{},
+                                                 NoAwaitTag{}, request);
+}
+
+future<StatusOr<
+    google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
+CompletionServiceClient::PurgeCompletionSuggestions(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PurgeCompletionSuggestions(ExperimentalTag{}, operation);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace discoveryengine_v1
 }  // namespace cloud

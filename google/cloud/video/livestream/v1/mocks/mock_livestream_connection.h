@@ -262,6 +262,57 @@ class MockLivestreamServiceConnection
       (google::cloud::video::livestream::v1::DeleteEventRequest const& request),
       (override));
 
+  MOCK_METHOD((StreamRange<google::cloud::video::livestream::v1::Clip>),
+              ListClips,
+              (google::cloud::video::livestream::v1::ListClipsRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::video::livestream::v1::Clip>, GetClip,
+      (google::cloud::video::livestream::v1::GetClipRequest const& request),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateClip)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateClip(::testing::_))` instead.
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::Clip>>, CreateClip,
+      (google::cloud::video::livestream::v1::CreateClipRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateClip,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::livestream::v1::CreateClipRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Clip>>,
+              CreateClip,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteClip)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteClip(::testing::_))` instead.
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteClip,
+      (google::cloud::video::livestream::v1::DeleteClipRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteClip,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::livestream::v1::DeleteClipRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteClip,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, CreateAsset)` is now ambiguous. Use
   /// `EXPECT_CALL(*mock, CreateAsset(::testing::_))` instead.

@@ -117,8 +117,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.CreateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L182}
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
+  /// [google.cloud.run.v2.CreateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L181}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
@@ -171,8 +171,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.CreateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L182}
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
+  /// [google.cloud.run.v2.CreateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L181}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
@@ -228,8 +228,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L204}
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
+  /// [google.cloud.run.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L203}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Job> GetJob(std::string const& name,
@@ -258,8 +258,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L204}
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
+  /// [google.cloud.run.v2.GetJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L203}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Job> GetJob(
@@ -267,7 +267,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// Lists Jobs.
+  /// Lists Jobs. Results are sorted by creation time, descending.
   ///
   /// @param parent  Required. The location and project to list resources on.
   ///  Format: projects/{project}/locations/{location}, where {project} can be
@@ -294,8 +294,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
-  /// [google.cloud.run.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L230}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
+  /// [google.cloud.run.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L229}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Job> ListJobs(std::string const& parent,
@@ -303,7 +303,7 @@ class JobsClient {
 
   // clang-format off
   ///
-  /// Lists Jobs.
+  /// Lists Jobs. Results are sorted by creation time, descending.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -333,8 +333,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
-  /// [google.cloud.run.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L230}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
+  /// [google.cloud.run.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L229}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Job> ListJobs(
@@ -365,8 +365,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
-  /// [google.cloud.run.v2.UpdateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L215}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
+  /// [google.cloud.run.v2.UpdateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L214}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
@@ -417,8 +417,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
-  /// [google.cloud.run.v2.UpdateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L215}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
+  /// [google.cloud.run.v2.UpdateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L214}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
@@ -481,8 +481,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L261}
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
+  /// [google.cloud.run.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L260}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
@@ -534,8 +534,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L261}
-  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
+  /// [google.cloud.run.v2.DeleteJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L260}
+  /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L335}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
@@ -598,8 +598,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
-  /// [google.cloud.run.v2.RunJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L280}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
+  /// [google.cloud.run.v2.RunJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L279}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
@@ -650,8 +650,8 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L173}
-  /// [google.cloud.run.v2.RunJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L280}
+  /// [google.cloud.run.v2.Execution]: @googleapis_reference_link{google/cloud/run/v2/execution.proto#L174}
+  /// [google.cloud.run.v2.RunJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L279}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(

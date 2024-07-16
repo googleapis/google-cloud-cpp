@@ -414,6 +414,76 @@ DatabaseAdminRestLogging::ListDatabaseRoles(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestLogging::CreateBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 CreateBackupScheduleRequest const& request) {
+        return child_->CreateBackupSchedule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestLogging::GetBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+              request) {
+        return child_->GetBackupSchedule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestLogging::UpdateBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 UpdateBackupScheduleRequest const& request) {
+        return child_->UpdateBackupSchedule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+Status DatabaseAdminRestLogging::DeleteBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 DeleteBackupScheduleRequest const& request) {
+        return child_->DeleteBackupSchedule(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+DatabaseAdminRestLogging::ListBackupSchedules(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::database::v1::
+                 ListBackupSchedulesRequest const& request) {
+        return child_->ListBackupSchedules(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

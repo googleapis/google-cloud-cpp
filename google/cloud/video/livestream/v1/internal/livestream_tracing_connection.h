@@ -179,6 +179,39 @@ class LivestreamServiceTracingConnection
       google::cloud::video::livestream::v1::DeleteEventRequest const& request)
       override;
 
+  StreamRange<google::cloud::video::livestream::v1::Clip> ListClips(
+      google::cloud::video::livestream::v1::ListClipsRequest request) override;
+
+  StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
+      google::cloud::video::livestream::v1::GetClipRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
+      google::cloud::video::livestream::v1::CreateClipRequest const& request)
+      override;
+
+  StatusOr<google::longrunning::Operation> CreateClip(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::CreateClipRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteClip(google::cloud::video::livestream::v1::DeleteClipRequest const&
+                 request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteClip(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::video::livestream::v1::DeleteClipRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
+  DeleteClip(ExperimentalTag,
+             google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
       google::cloud::video::livestream::v1::CreateAssetRequest const& request)
       override;

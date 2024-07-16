@@ -62,6 +62,12 @@ class MockBigtableStub : public bigtable_internal::BigtableStub {
               (grpc::ClientContext&, Options const&,
                google::bigtable::v2::ReadModifyWriteRowRequest const&),
               (override));
+  MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+                  google::bigtable::v2::ExecuteQueryResponse>>,
+              ExecuteQuery,
+              (std::shared_ptr<grpc::ClientContext>, Options const&,
+               google::bigtable::v2::ExecuteQueryRequest const&),
+              (override));
   MOCK_METHOD(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
                   google::bigtable::v2::ReadRowsResponse>>,
               AsyncReadRows,

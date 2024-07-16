@@ -71,6 +71,13 @@ class SecurityCenterConnectionIdempotencyPolicy {
       google::cloud::securitycenter::v1::
           DeleteSecurityHealthAnalyticsCustomModuleRequest const& request);
 
+  virtual google::cloud::Idempotency GetSimulation(
+      google::cloud::securitycenter::v1::GetSimulationRequest const& request);
+
+  virtual google::cloud::Idempotency GetValuedResource(
+      google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetBigQueryExport(
       google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
           request);
@@ -203,6 +210,71 @@ class SecurityCenterConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListBigQueryExports(
       google::cloud::securitycenter::v1::ListBigQueryExportsRequest request);
+
+  virtual google::cloud::Idempotency CreateEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          CreateEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          DeleteEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual google::cloud::Idempotency GetEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          GetEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual google::cloud::Idempotency
+  ListDescendantEventThreatDetectionCustomModules(
+      google::cloud::securitycenter::v1::
+          ListDescendantEventThreatDetectionCustomModulesRequest request);
+
+  virtual google::cloud::Idempotency ListEventThreatDetectionCustomModules(
+      google::cloud::securitycenter::v1::
+          ListEventThreatDetectionCustomModulesRequest request);
+
+  virtual google::cloud::Idempotency UpdateEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          UpdateEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual google::cloud::Idempotency ValidateEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          ValidateEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual google::cloud::Idempotency
+  GetEffectiveEventThreatDetectionCustomModule(
+      google::cloud::securitycenter::v1::
+          GetEffectiveEventThreatDetectionCustomModuleRequest const& request);
+
+  virtual google::cloud::Idempotency
+  ListEffectiveEventThreatDetectionCustomModules(
+      google::cloud::securitycenter::v1::
+          ListEffectiveEventThreatDetectionCustomModulesRequest request);
+
+  virtual google::cloud::Idempotency BatchCreateResourceValueConfigs(
+      google::cloud::securitycenter::v1::
+          BatchCreateResourceValueConfigsRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteResourceValueConfig(
+      google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetResourceValueConfig(
+      google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListResourceValueConfigs(
+      google::cloud::securitycenter::v1::ListResourceValueConfigsRequest
+          request);
+
+  virtual google::cloud::Idempotency UpdateResourceValueConfig(
+      google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListValuedResources(
+      google::cloud::securitycenter::v1::ListValuedResourcesRequest request);
+
+  virtual google::cloud::Idempotency ListAttackPaths(
+      google::cloud::securitycenter::v1::ListAttackPathsRequest request);
 };
 
 std::unique_ptr<SecurityCenterConnectionIdempotencyPolicy>

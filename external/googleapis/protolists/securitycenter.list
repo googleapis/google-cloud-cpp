@@ -1,6 +1,8 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:access.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:application.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:asset.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:attack_exposure.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:attack_path.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:backup_disaster_recovery.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:bigquery_export.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:cloud_armor.proto
@@ -11,7 +13,10 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:contact_details.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:container.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:database.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:effective_event_threat_detection_custom_module.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:effective_security_health_analytics_custom_module.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:event_threat_detection_custom_module.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:event_threat_detection_custom_module_validation_errors.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:exfiltration.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:external_system.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:file.proto
@@ -34,14 +39,17 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:organization_settings.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:process.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:resource.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:resource_value_config.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:run_asset_discovery_response.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:security_health_analytics_custom_config.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:security_health_analytics_custom_module.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:security_marks.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:security_posture.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_service.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:simulation.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:source.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:toxic_combination.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:valued_resource.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:vulnerability.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:access.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:application.proto
@@ -49,6 +57,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v2:attack_path.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:backup_disaster_recovery.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:bigquery_export.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:cloud_armor.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:cloud_dlp_data_profile.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:cloud_dlp_inspection.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:compliance.proto
@@ -60,6 +69,8 @@
 @com_google_googleapis//google/cloud/securitycenter/v2:external_system.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:file.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:finding.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:folder.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:group_membership.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:iam_binding.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:indicator.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:kernel_rootkit.proto
@@ -69,6 +80,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v2:log_entry.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:mitre_attack.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:mute_config.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:notebook.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:notification_config.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:notification_message.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:org_policy.proto
@@ -80,5 +92,6 @@
 @com_google_googleapis//google/cloud/securitycenter/v2:securitycenter_service.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:simulation.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:source.proto
+@com_google_googleapis//google/cloud/securitycenter/v2:toxic_combination.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:valued_resource.proto
 @com_google_googleapis//google/cloud/securitycenter/v2:vulnerability.proto

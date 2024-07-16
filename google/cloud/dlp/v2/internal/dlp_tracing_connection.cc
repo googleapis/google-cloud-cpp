@@ -411,6 +411,36 @@ DlpServiceTracingConnection::GetProjectDataProfile(
   return internal::EndSpan(*span, child_->GetProjectDataProfile(request));
 }
 
+StreamRange<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceTracingConnection::ListFileStoreDataProfiles(
+    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::ListFileStoreDataProfiles");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListFileStoreDataProfiles(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::privacy::dlp::v2::FileStoreDataProfile>(std::move(span),
+                                                      std::move(sr));
+}
+
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceTracingConnection::GetFileStoreDataProfile(
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::GetFileStoreDataProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFileStoreDataProfile(request));
+}
+
+Status DlpServiceTracingConnection::DeleteFileStoreDataProfile(
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dlp_v2::DlpServiceConnection::DeleteFileStoreDataProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteFileStoreDataProfile(request));
+}
+
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DlpServiceTracingConnection::GetTableDataProfile(
     google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {

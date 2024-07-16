@@ -1,4 +1,5 @@
 @com_google_googleapis//google/spanner/admin/database/v1:backup.proto
+@com_google_googleapis//google/spanner/admin/database/v1:backup_schedule.proto
 @com_google_googleapis//google/spanner/admin/database/v1:common.proto
 @com_google_googleapis//google/spanner/admin/database/v1:spanner_database_admin.proto
 @com_google_googleapis//google/spanner/admin/instance/v1:common.proto

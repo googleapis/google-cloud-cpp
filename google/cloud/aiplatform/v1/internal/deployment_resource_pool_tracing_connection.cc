@@ -97,6 +97,44 @@ DeploymentResourcePoolServiceTracingConnection::ListDeploymentResourcePools(
                                                              std::move(sr));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+DeploymentResourcePoolServiceTracingConnection::UpdateDeploymentResourcePool(
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
+      "UpdateDeploymentResourcePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDeploymentResourcePool(request));
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceTracingConnection::UpdateDeploymentResourcePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
+      "UpdateDeploymentResourcePool");
+  opentelemetry::trace::Scope scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateDeploymentResourcePool(ExperimentalTag{},
+                                                  NoAwaitTag{}, request));
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+DeploymentResourcePoolServiceTracingConnection::UpdateDeploymentResourcePool(
+    ExperimentalTag, google::longrunning::Operation const& operation) {
+  auto span = internal::MakeSpan(
+      "aiplatform_v1::DeploymentResourcePoolServiceConnection::"
+      "UpdateDeploymentResourcePool");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(
+      std::move(span),
+      child_->UpdateDeploymentResourcePool(ExperimentalTag{}, operation));
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DeploymentResourcePoolServiceTracingConnection::DeleteDeploymentResourcePool(
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&

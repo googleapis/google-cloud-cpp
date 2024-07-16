@@ -271,6 +271,50 @@ DatabaseAdminRestMetadata::ListDatabaseRoles(
   return child_->ListDatabaseRoles(rest_context, options, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestMetadata::CreateBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->CreateBackupSchedule(rest_context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestMetadata::GetBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->GetBackupSchedule(rest_context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DatabaseAdminRestMetadata::UpdateBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->UpdateBackupSchedule(rest_context, options, request);
+}
+
+Status DatabaseAdminRestMetadata::DeleteBackupSchedule(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->DeleteBackupSchedule(rest_context, options, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+DatabaseAdminRestMetadata::ListBackupSchedules(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+        request) {
+  SetMetadata(rest_context, options);
+  return child_->ListBackupSchedules(rest_context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

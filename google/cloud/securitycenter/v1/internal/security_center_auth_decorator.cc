@@ -134,6 +134,25 @@ Status SecurityCenterAuth::DeleteSecurityHealthAnalyticsCustomModule(
                                                            request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::Simulation>
+SecurityCenterAuth::GetSimulation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetSimulationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetSimulation(context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ValuedResource>
+SecurityCenterAuth::GetValuedResource(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetValuedResource(context, options, request);
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterAuth::GetBigQueryExport(
     grpc::ClientContext& context, Options const& options,
@@ -507,6 +526,177 @@ SecurityCenterAuth::ListBigQueryExports(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListBigQueryExports(context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterAuth::CreateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        CreateEventThreatDetectionCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateEventThreatDetectionCustomModule(context, options,
+                                                        request);
+}
+
+Status SecurityCenterAuth::DeleteEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        DeleteEventThreatDetectionCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteEventThreatDetectionCustomModule(context, options,
+                                                        request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterAuth::GetEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        GetEventThreatDetectionCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetEventThreatDetectionCustomModule(context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListDescendantEventThreatDetectionCustomModulesResponse>
+SecurityCenterAuth::ListDescendantEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListDescendantEventThreatDetectionCustomModulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDescendantEventThreatDetectionCustomModules(
+      context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListEventThreatDetectionCustomModulesResponse>
+SecurityCenterAuth::ListEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListEventThreatDetectionCustomModulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListEventThreatDetectionCustomModules(context, options,
+                                                       request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+SecurityCenterAuth::UpdateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        UpdateEventThreatDetectionCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateEventThreatDetectionCustomModule(context, options,
+                                                        request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ValidateEventThreatDetectionCustomModuleResponse>
+SecurityCenterAuth::ValidateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ValidateEventThreatDetectionCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ValidateEventThreatDetectionCustomModule(context, options,
+                                                          request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveEventThreatDetectionCustomModule>
+SecurityCenterAuth::GetEffectiveEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetEffectiveEventThreatDetectionCustomModule(context, options,
+                                                              request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListEffectiveEventThreatDetectionCustomModulesResponse>
+SecurityCenterAuth::ListEffectiveEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        ListEffectiveEventThreatDetectionCustomModulesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListEffectiveEventThreatDetectionCustomModules(
+      context, options, request);
+}
+
+StatusOr<
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+SecurityCenterAuth::BatchCreateResourceValueConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::
+        BatchCreateResourceValueConfigsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->BatchCreateResourceValueConfigs(context, options, request);
+}
+
+Status SecurityCenterAuth::DeleteResourceValueConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteResourceValueConfig(context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterAuth::GetResourceValueConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetResourceValueConfig(context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListResourceValueConfigsResponse>
+SecurityCenterAuth::ListResourceValueConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListResourceValueConfigs(context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+SecurityCenterAuth::UpdateResourceValueConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateResourceValueConfig(context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListValuedResourcesResponse>
+SecurityCenterAuth::ListValuedResources(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListValuedResources(context, options, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListAttackPathsResponse>
+SecurityCenterAuth::ListAttackPaths(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::securitycenter::v1::ListAttackPathsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAttackPaths(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

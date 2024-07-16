@@ -78,6 +78,21 @@ class DeploymentResourcePoolServiceConnectionImpl
       google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest request)
       override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  UpdateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> UpdateDeploymentResourcePool(
+      ExperimentalTag, NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+  UpdateDeploymentResourcePool(
+      ExperimentalTag,
+      google::longrunning::Operation const& operation) override;
+
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteDeploymentResourcePool(
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&

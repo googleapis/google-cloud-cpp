@@ -281,6 +281,64 @@ Status LivestreamServiceMetadata::DeleteEvent(
   return child_->DeleteEvent(context, options, request);
 }
 
+StatusOr<google::cloud::video::livestream::v1::ListClipsResponse>
+LivestreamServiceMetadata::ListClips(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::ListClipsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListClips(context, options, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Clip>
+LivestreamServiceMetadata::GetClip(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::GetClipRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetClip(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncCreateClip(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateClip(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::CreateClip(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateClip(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceMetadata::AsyncDeleteClip(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteClip(cq, std::move(context), std::move(options),
+                                 request);
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceMetadata::DeleteClip(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteClip(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceMetadata::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,

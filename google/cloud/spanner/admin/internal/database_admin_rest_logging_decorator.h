@@ -206,6 +206,40 @@ class DatabaseAdminRestLogging : public DatabaseAdminRestStub {
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) override;
 
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  CreateBackupSchedule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  GetBackupSchedule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  UpdateBackupSchedule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+          request) override;
+
+  Status DeleteBackupSchedule(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+  ListBackupSchedules(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,

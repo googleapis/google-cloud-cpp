@@ -543,6 +543,45 @@ DlpServiceLogging::GetProjectDataProfile(
       context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::privacy::dlp::v2::ListFileStoreDataProfilesResponse>
+DlpServiceLogging::ListFileStoreDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::ListFileStoreDataProfilesRequest const&
+                 request) {
+        return child_->ListFileStoreDataProfiles(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::privacy::dlp::v2::FileStoreDataProfile>
+DlpServiceLogging::GetFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::GetFileStoreDataProfileRequest const&
+                 request) {
+        return child_->GetFileStoreDataProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+Status DlpServiceLogging::DeleteFileStoreDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+                 request) {
+        return child_->DeleteFileStoreDataProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::privacy::dlp::v2::TableDataProfile>
 DlpServiceLogging::GetTableDataProfile(
     grpc::ClientContext& context, Options const& options,

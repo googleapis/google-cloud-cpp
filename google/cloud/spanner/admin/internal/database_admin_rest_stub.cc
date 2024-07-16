@@ -493,6 +493,74 @@ DefaultDatabaseAdminRestStub::ListDatabaseRoles(
            std::make_pair("page_token", request.page_token())}));
 }
 
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DefaultDatabaseAdminRestStub::CreateBackupSchedule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+        request) {
+  return rest_internal::Post<
+      google::spanner::admin::database::v1::BackupSchedule>(
+      *service_, rest_context, request.backup_schedule(), false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.parent(), "/", "backupSchedules"),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair(
+          "backup_schedule_id", request.backup_schedule_id())}));
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DefaultDatabaseAdminRestStub::GetBackupSchedule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+        request) {
+  return rest_internal::Get<
+      google::spanner::admin::database::v1::BackupSchedule>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name()));
+}
+
+StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+DefaultDatabaseAdminRestStub::UpdateBackupSchedule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+        request) {
+  return rest_internal::Patch<
+      google::spanner::admin::database::v1::BackupSchedule>(
+      *service_, rest_context, request.backup_schedule(), false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.backup_schedule().name()));
+}
+
+Status DefaultDatabaseAdminRestStub::DeleteBackupSchedule(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+        request) {
+  return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name()));
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+DefaultDatabaseAdminRestStub::ListBackupSchedules(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+        request) {
+  return rest_internal::Get<
+      google::spanner::admin::database::v1::ListBackupSchedulesResponse>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.parent(), "/", "backupSchedules"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

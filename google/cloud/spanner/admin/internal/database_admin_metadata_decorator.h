@@ -183,6 +183,35 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
       google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
           request) override;
 
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  CreateBackupSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::database::v1::CreateBackupScheduleRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  GetBackupSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::database::v1::GetBackupScheduleRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::BackupSchedule>
+  UpdateBackupSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
+          request) override;
+
+  Status DeleteBackupSchedule(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::database::v1::ListBackupSchedulesResponse>
+  ListBackupSchedules(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::database::v1::ListBackupSchedulesRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,

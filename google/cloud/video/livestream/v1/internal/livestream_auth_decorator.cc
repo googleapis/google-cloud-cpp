@@ -326,6 +326,80 @@ Status LivestreamServiceAuth::DeleteEvent(
   return child_->DeleteEvent(context, options, request);
 }
 
+StatusOr<google::cloud::video::livestream::v1::ListClipsResponse>
+LivestreamServiceAuth::ListClips(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::ListClipsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListClips(context, options, request);
+}
+
+StatusOr<google::cloud::video::livestream::v1::Clip>
+LivestreamServiceAuth::GetClip(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::video::livestream::v1::GetClipRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetClip(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncCreateClip(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateClip(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::CreateClip(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::CreateClipRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateClip(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+LivestreamServiceAuth::AsyncDeleteClip(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDeleteClip(cq, *std::move(context),
+                                      std::move(options), request);
+      });
+}
+
+StatusOr<google::longrunning::Operation> LivestreamServiceAuth::DeleteClip(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::livestream::v1::DeleteClipRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteClip(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 LivestreamServiceAuth::AsyncCreateAsset(
     google::cloud::CompletionQueue& cq,

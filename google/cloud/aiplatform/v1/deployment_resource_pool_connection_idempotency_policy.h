@@ -50,6 +50,10 @@ class DeploymentResourcePoolServiceConnectionIdempotencyPolicy {
       google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest
           request);
 
+  virtual google::cloud::Idempotency UpdateDeploymentResourcePool(
+      google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+          request);
+
   virtual google::cloud::Idempotency DeleteDeploymentResourcePool(
       google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
           request);

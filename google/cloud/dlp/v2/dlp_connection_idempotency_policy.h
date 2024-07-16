@@ -159,6 +159,16 @@ class DlpServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency GetProjectDataProfile(
       google::privacy::dlp::v2::GetProjectDataProfileRequest const& request);
 
+  virtual google::cloud::Idempotency ListFileStoreDataProfiles(
+      google::privacy::dlp::v2::ListFileStoreDataProfilesRequest request);
+
+  virtual google::cloud::Idempotency GetFileStoreDataProfile(
+      google::privacy::dlp::v2::GetFileStoreDataProfileRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteFileStoreDataProfile(
+      google::privacy::dlp::v2::DeleteFileStoreDataProfileRequest const&
+          request);
+
   virtual google::cloud::Idempotency GetTableDataProfile(
       google::privacy::dlp::v2::GetTableDataProfileRequest const& request);
 

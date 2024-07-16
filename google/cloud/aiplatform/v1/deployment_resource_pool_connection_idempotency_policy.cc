@@ -56,6 +56,13 @@ Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
 }
 
 Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
+    UpdateDeploymentResourcePool(
+        google::cloud::aiplatform::v1::
+            UpdateDeploymentResourcePoolRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency DeploymentResourcePoolServiceConnectionIdempotencyPolicy::
     DeleteDeploymentResourcePool(
         google::cloud::aiplatform::v1::
             DeleteDeploymentResourcePoolRequest const&) {

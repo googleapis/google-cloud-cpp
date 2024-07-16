@@ -127,6 +127,61 @@ DeploymentResourcePoolServiceClient::ListDeploymentResourcePools(
   return connection_->ListDeploymentResourcePools(std::move(request));
 }
 
+future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+DeploymentResourcePoolServiceClient::UpdateDeploymentResourcePool(
+    google::cloud::aiplatform::v1::DeploymentResourcePool const&
+        deployment_resource_pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest request;
+  *request.mutable_deployment_resource_pool() = deployment_resource_pool;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDeploymentResourcePool(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceClient::UpdateDeploymentResourcePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::DeploymentResourcePool const&
+        deployment_resource_pool,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest request;
+  *request.mutable_deployment_resource_pool() = deployment_resource_pool;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateDeploymentResourcePool(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+DeploymentResourcePoolServiceClient::UpdateDeploymentResourcePool(
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeploymentResourcePool(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceClient::UpdateDeploymentResourcePool(
+    ExperimentalTag, NoAwaitTag,
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeploymentResourcePool(ExperimentalTag{},
+                                                   NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
+DeploymentResourcePoolServiceClient::UpdateDeploymentResourcePool(
+    ExperimentalTag, google::longrunning::Operation const& operation,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateDeploymentResourcePool(ExperimentalTag{},
+                                                   operation);
+}
+
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DeploymentResourcePoolServiceClient::DeleteDeploymentResourcePool(
     std::string const& name, Options opts) {

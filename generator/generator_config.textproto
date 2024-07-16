@@ -1969,6 +1969,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# Developer Connect
+service {
+  service_proto_path: "google/cloud/developerconnect/v1/developer_connect.proto"
+  product_path: "google/cloud/developerconnect/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Dialogflow CX
 service {
   service_proto_path: "google/cloud/dialogflow/cx/v3/environment.proto"
@@ -3245,6 +3253,7 @@ service {
 
 service {
   service_proto_path: "google/cloud/run/v2/job.proto"
+  additional_proto_files: ["google/cloud/run/v2/execution.proto"]
   product_path: "google/cloud/run/v2"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]

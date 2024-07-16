@@ -23,6 +23,7 @@
 #include <gmock/gmock.h>
 #include <cmath>
 #include <cstdint>
+#include <iomanip>
 #include <ios>
 #include <limits>
 #include <string>

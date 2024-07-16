@@ -1,4 +1,5 @@
 @com_google_googleapis//google/cloud/discoveryengine/v1:answer.proto
+@com_google_googleapis//google/cloud/discoveryengine/v1:chunk.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:common.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:completion.proto
 @com_google_googleapis//google/cloud/discoveryengine/v1:completion_service.proto

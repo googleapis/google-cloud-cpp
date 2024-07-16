@@ -164,6 +164,31 @@ Status DefaultSecurityCenterStub::DeleteSecurityHealthAnalyticsCustomModule(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::securitycenter::v1::Simulation>
+DefaultSecurityCenterStub::GetSimulation(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::GetSimulationRequest const& request) {
+  google::cloud::securitycenter::v1::Simulation response;
+  auto status = grpc_stub_->GetSimulation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::ValuedResource>
+DefaultSecurityCenterStub::GetValuedResource(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::GetValuedResourceRequest const&
+        request) {
+  google::cloud::securitycenter::v1::ValuedResource response;
+  auto status = grpc_stub_->GetValuedResource(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 DefaultSecurityCenterStub::GetBigQueryExport(
     grpc::ClientContext& context, Options const&,
@@ -652,6 +677,237 @@ DefaultSecurityCenterStub::ListBigQueryExports(
         request) {
   google::cloud::securitycenter::v1::ListBigQueryExportsResponse response;
   auto status = grpc_stub_->ListBigQueryExports(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+DefaultSecurityCenterStub::CreateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        CreateEventThreatDetectionCustomModuleRequest const& request) {
+  google::cloud::securitycenter::v1::EventThreatDetectionCustomModule response;
+  auto status = grpc_stub_->CreateEventThreatDetectionCustomModule(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultSecurityCenterStub::DeleteEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        DeleteEventThreatDetectionCustomModuleRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteEventThreatDetectionCustomModule(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+DefaultSecurityCenterStub::GetEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        GetEventThreatDetectionCustomModuleRequest const& request) {
+  google::cloud::securitycenter::v1::EventThreatDetectionCustomModule response;
+  auto status = grpc_stub_->GetEventThreatDetectionCustomModule(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListDescendantEventThreatDetectionCustomModulesResponse>
+DefaultSecurityCenterStub::ListDescendantEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        ListDescendantEventThreatDetectionCustomModulesRequest const& request) {
+  google::cloud::securitycenter::v1::
+      ListDescendantEventThreatDetectionCustomModulesResponse response;
+  auto status = grpc_stub_->ListDescendantEventThreatDetectionCustomModules(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListEventThreatDetectionCustomModulesResponse>
+DefaultSecurityCenterStub::ListEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        ListEventThreatDetectionCustomModulesRequest const& request) {
+  google::cloud::securitycenter::v1::
+      ListEventThreatDetectionCustomModulesResponse response;
+  auto status = grpc_stub_->ListEventThreatDetectionCustomModules(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::EventThreatDetectionCustomModule>
+DefaultSecurityCenterStub::UpdateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        UpdateEventThreatDetectionCustomModuleRequest const& request) {
+  google::cloud::securitycenter::v1::EventThreatDetectionCustomModule response;
+  auto status = grpc_stub_->UpdateEventThreatDetectionCustomModule(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ValidateEventThreatDetectionCustomModuleResponse>
+DefaultSecurityCenterStub::ValidateEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        ValidateEventThreatDetectionCustomModuleRequest const& request) {
+  google::cloud::securitycenter::v1::
+      ValidateEventThreatDetectionCustomModuleResponse response;
+  auto status = grpc_stub_->ValidateEventThreatDetectionCustomModule(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             EffectiveEventThreatDetectionCustomModule>
+DefaultSecurityCenterStub::GetEffectiveEventThreatDetectionCustomModule(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
+  google::cloud::securitycenter::v1::EffectiveEventThreatDetectionCustomModule
+      response;
+  auto status = grpc_stub_->GetEffectiveEventThreatDetectionCustomModule(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::
+             ListEffectiveEventThreatDetectionCustomModulesResponse>
+DefaultSecurityCenterStub::ListEffectiveEventThreatDetectionCustomModules(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        ListEffectiveEventThreatDetectionCustomModulesRequest const& request) {
+  google::cloud::securitycenter::v1::
+      ListEffectiveEventThreatDetectionCustomModulesResponse response;
+  auto status = grpc_stub_->ListEffectiveEventThreatDetectionCustomModules(
+      &context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
+    google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse>
+DefaultSecurityCenterStub::BatchCreateResourceValueConfigs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::
+        BatchCreateResourceValueConfigsRequest const& request) {
+  google::cloud::securitycenter::v1::BatchCreateResourceValueConfigsResponse
+      response;
+  auto status =
+      grpc_stub_->BatchCreateResourceValueConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultSecurityCenterStub::DeleteResourceValueConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::DeleteResourceValueConfigRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteResourceValueConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+DefaultSecurityCenterStub::GetResourceValueConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::GetResourceValueConfigRequest const&
+        request) {
+  google::cloud::securitycenter::v1::ResourceValueConfig response;
+  auto status =
+      grpc_stub_->GetResourceValueConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListResourceValueConfigsResponse>
+DefaultSecurityCenterStub::ListResourceValueConfigs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::ListResourceValueConfigsRequest const&
+        request) {
+  google::cloud::securitycenter::v1::ListResourceValueConfigsResponse response;
+  auto status =
+      grpc_stub_->ListResourceValueConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::ResourceValueConfig>
+DefaultSecurityCenterStub::UpdateResourceValueConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::UpdateResourceValueConfigRequest const&
+        request) {
+  google::cloud::securitycenter::v1::ResourceValueConfig response;
+  auto status =
+      grpc_stub_->UpdateResourceValueConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListValuedResourcesResponse>
+DefaultSecurityCenterStub::ListValuedResources(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::ListValuedResourcesRequest const&
+        request) {
+  google::cloud::securitycenter::v1::ListValuedResourcesResponse response;
+  auto status = grpc_stub_->ListValuedResources(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListAttackPathsResponse>
+DefaultSecurityCenterStub::ListAttackPaths(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::securitycenter::v1::ListAttackPathsRequest const& request) {
+  google::cloud::securitycenter::v1::ListAttackPathsResponse response;
+  auto status = grpc_stub_->ListAttackPaths(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

@@ -97,6 +97,40 @@ DeploymentResourcePoolServiceLogging::ListDeploymentResourcePools(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DeploymentResourcePoolServiceLogging::AsyncUpdateDeploymentResourcePool(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::cloud::aiplatform::v1::
+                 UpdateDeploymentResourcePoolRequest const& request) {
+        return child_->AsyncUpdateDeploymentResourcePool(
+            cq, std::move(context), std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+DeploymentResourcePoolServiceLogging::UpdateDeploymentResourcePool(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 UpdateDeploymentResourcePoolRequest const& request) {
+        return child_->UpdateDeploymentResourcePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DeploymentResourcePoolServiceLogging::AsyncDeleteDeploymentResourcePool(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
