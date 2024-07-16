@@ -15,6 +15,7 @@
 """Load dependencies needed for google-cloud-cpp development / Phase 3."""
 
 load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+load("@com_google_googletest//:googletest_deps.bzl", "googletest_deps")
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 load("@io_opentelemetry_cpp//bazel:repository.bzl", "opentelemetry_cpp_deps")
 
@@ -34,3 +35,6 @@ def gl_cpp_workspace3(name = None):
     # Protobuf dependencies must be loaded after the gRPC dependencies.
     protobuf_deps()
     opentelemetry_cpp_deps()
+
+    # Googletest dependencies
+    googletest_deps()
