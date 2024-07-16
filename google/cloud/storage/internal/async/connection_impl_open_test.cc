@@ -87,6 +87,25 @@ std::unique_ptr<BidiReadStream> MakeErrorStream(AsyncSequencer<void>& sequencer,
   return std::unique_ptr<BidiReadStream>(std::move(stream));
 }
 
+Status RedirectError(absl::string_view handle, absl::string_view token) {
+  auto make_details = [&] {
+    auto redirected = google::storage::v2::BidiReadObjectRedirectedError{};
+    redirected.mutable_read_handle()->set_handle(std::string(handle));
+    redirected.set_routing_token(std::string(token));
+    auto details_proto = google::rpc::Status{};
+    details_proto.set_code(grpc::UNAVAILABLE);
+    details_proto.set_message("redirect");
+    details_proto.add_details()->PackFrom(redirected);
+
+    std::string details;
+    details_proto.SerializeToString(&details);
+    return details;
+  };
+
+  return google::cloud::MakeStatusFromRpcError(
+      grpc::Status(grpc::UNAVAILABLE, "redirect", make_details()));
+}
+
 // Verify we can open a stream, without retries, timeouts, or any other
 // difficulties. This test does not read any data.
 TEST(AsyncConnectionImplTest, OpenSimple) {
@@ -208,6 +227,87 @@ TEST(AsyncConnectionImplTest, OpenSimple) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
+}
+
+TEST(AsyncConnectionImplTest, HandleRedirectErrors) {
+  auto constexpr kExpectedRequest0 = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    generation: 24
+    if_generation_match: 42
+  )pb";
+  auto constexpr kExpectedRequestN = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    generation: 24
+    if_generation_match: 42
+    read_handle { handle: "test-read-handle" }
+    routing_token: "test-routing-token"
+  )pb";
+
+  AsyncSequencer<void> sequencer;
+  auto make_redirect_stream = [&sequencer](char const* expected_text) {
+    auto stream = std::make_unique<MockStream>();
+    EXPECT_CALL(*stream, Start).WillOnce([&] {
+      return sequencer.PushBack("Start").then([](auto) { return true; });
+    });
+    EXPECT_CALL(*stream, Write)
+        .WillOnce([&sequencer, expected_text](
+                      google::storage::v2::BidiReadObjectRequest const& r,
+                      grpc::WriteOptions) {
+          auto expected = google::storage::v2::BidiReadObjectSpec{};
+          EXPECT_TRUE(TextFormat::ParseFromString(expected_text, &expected));
+          EXPECT_THAT(r.read_object_spec(), IsProtoEqual(expected));
+          return sequencer.PushBack("Write").then([](auto) { return true; });
+        });
+    EXPECT_CALL(*stream, Read).WillOnce([&] {
+      return sequencer.PushBack("Read").then([](auto) {
+        return absl::optional<google::storage::v2::BidiReadObjectResponse>();
+      });
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([&] {
+      return sequencer.PushBack("Finish").then([](auto) {
+        return RedirectError("test-read-handle", "test-routing-token");
+      });
+    });
+    EXPECT_CALL(*stream, Cancel).WillRepeatedly([] {});
+    return std::unique_ptr<BidiReadStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncBidiReadObject)
+      .WillOnce([&] { return make_redirect_stream(kExpectedRequest0); })
+      .WillOnce([&] { return make_redirect_stream(kExpectedRequestN); })
+      .WillOnce([&] { return make_redirect_stream(kExpectedRequestN); });
+
+  // Easier to just use a real CQ vs. mock its behavior.
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = std::make_shared<AsyncConnectionImpl>(
+      pool.cq(), std::shared_ptr<GrpcChannelRefresh>(), mock, TestOptions());
+
+  auto request = google::storage::v2::BidiReadObjectSpec{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest0, &request));
+  auto pending = connection->Open({std::move(request), connection->options()});
+
+  for (int i = 0; i != kRetryAttempts + 1; ++i) {
+    auto next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Start");
+    next.first.set_value();
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Write");
+    next.first.set_value();
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Read");
+    next.first.set_value();
+
+    next = sequencer.PopFrontWithName();
+    EXPECT_EQ(next.second, "Finish");
+    next.first.set_value();
+  }
+
+  ASSERT_THAT(pending.get(), StatusIs(StatusCode::kUnavailable));
 }
 
 TEST(AsyncConnectionImplTest, StopOnPermanentError) {
