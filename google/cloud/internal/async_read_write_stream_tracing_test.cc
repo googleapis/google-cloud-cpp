@@ -261,7 +261,7 @@ TEST(AsyncStreamingReadWriteRpcTracing, WritesDone) {
                          AllOf(SpanNamed("Finish"), SpanWithParent(span))));
 }
 
-TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
+TEST(AsyncStreamingReadWriteRpcTracing, FinishWithoutStart) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto span = MakeSpan("span");
@@ -273,6 +273,31 @@ TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
   EXPECT_THAT(stream.Finish().get(), StatusIs(StatusCode::kAborted, "fail"));
 
   auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans,
+              UnorderedElementsAre(
+                  AllOf(SpanNamed("span"),
+                        SpanWithStatus(opentelemetry::trace::StatusCode::kError,
+                                       "fail"),
+                        Not(SpanHasAttributes(
+                            OTelAttribute<std::string>("grpc.peer", _)))),
+                  AllOf(SpanNamed("Finish"), SpanWithParent(span))));
+}
+
+TEST(AsyncStreamingReadWriteRpcTracing, FinishWithStart) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  auto mock = std::make_unique<MockStream>();
+
+  EXPECT_CALL(*mock, Start).WillOnce([] { return make_ready_future(true); });
+  EXPECT_CALL(*mock, Finish)
+      .WillOnce(Return(make_ready_future(internal::AbortedError("fail"))));
+
+  TestedStream stream(context(), std::move(mock), span);
+  EXPECT_TRUE(stream.Start().get());
+  EXPECT_THAT(stream.Finish().get(), StatusIs(StatusCode::kAborted, "fail"));
+
+  auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
       UnorderedElementsAre(
@@ -280,7 +305,8 @@ TEST(AsyncStreamingReadWriteRpcTracing, Finish) {
               SpanNamed("span"),
               SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _)),
               SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail")),
-          AllOf(SpanNamed("Finish"), SpanWithParent(span))));
+          AllOf(SpanNamed("Finish"), SpanWithParent(span)),
+          AllOf(SpanNamed("Start"), SpanWithParent(span))));
 }
 
 TEST(AsyncStreamingReadWriteRpcTracing, GetRequestMetadata) {
@@ -319,6 +345,44 @@ TEST(AsyncStreamingReadWriteRpcTracing, SpanEndsOnDestruction) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
+}
+
+TEST(AsyncStreamingReadWriteRpcTracing,
+     UnstartedStreamShouldNotExtractMetadata) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+
+  {
+    auto mock = std::make_unique<MockStream>();
+    auto span = MakeSpan("span");
+    auto context = std::make_shared<grpc::ClientContext>();
+    TestedStream stream(context, std::move(mock), span);
+  }
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
+}
+
+TEST(AsyncStreamingReadWriteRpcTracing, StartedStreamShouldExtractMetadata) {
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  {
+    auto span = MakeSpan("span");
+    auto mock = std::make_unique<MockStream>();
+    auto context = std::make_shared<grpc::ClientContext>();
+    EXPECT_CALL(*mock, Start).WillOnce([context] {
+      SetServerMetadata(*context, RpcMetadata{{{"hk", "hv"}}, {{"tk", "tv"}}});
+      return make_ready_future(true);
+    });
+
+    TestedStream stream(context, std::move(mock), span);
+    EXPECT_TRUE(stream.Start().get());
+  }
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, UnorderedElementsAre(
+                         SpanNamed("Start"),
+                         AllOf(SpanNamed("span"),
+                               SpanHasAttributes(OTelAttribute<std::string>(
+                                   "rpc.grpc.response.metadata.hk", "hv")))));
 }
 
 }  // namespace

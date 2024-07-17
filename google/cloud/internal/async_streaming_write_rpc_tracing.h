@@ -37,9 +37,7 @@ class AsyncStreamingWriteRpcTracing
         impl_(std::move(impl)),
         span_(std::move(span)) {}
   ~AsyncStreamingWriteRpcTracing() override {
-    if (context_) {
-      (void)EndSpan(*std::move(context_), *std::move(span_), Status());
-    }
+    (void)End(make_status_or<Response>({}));
   }
 
   void Cancel() override {
@@ -58,6 +56,7 @@ class AsyncStreamingWriteRpcTracing
           EndSpan(*ss);
           auto started = f.get();
           span_->SetAttribute("gl-cpp.stream_started", started);
+          started_ = started;
           return started;
         });
   }
@@ -94,10 +93,7 @@ class AsyncStreamingWriteRpcTracing
     return impl_->Finish().then(
         [this, fs = std::move(finish_span)](future<StatusOr<Response>> f) {
           EndSpan(*fs);
-          auto response = f.get();
-          if (!context_) return response;
-          return EndSpan(*std::move(context_), *std::move(span_),
-                         std::move(response));
+          return End(f.get());
         });
   }
 
@@ -106,10 +102,20 @@ class AsyncStreamingWriteRpcTracing
   }
 
  private:
+  StatusOr<Response> End(StatusOr<Response> status) {
+    if (!span_) return status;
+    if (started_) {
+      return EndSpan(*std::move(context_), *std::move(span_),
+                     std::move(status));
+    }
+    return EndSpan(*std::move(span_), std::move(status));
+  }
+
   std::shared_ptr<grpc::ClientContext> context_;
   std::unique_ptr<AsyncStreamingWriteRpc<Request, Response>> impl_;
   opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> span_;
   int write_count_ = 0;
+  bool started_ = false;
 };
 
 }  // namespace internal
