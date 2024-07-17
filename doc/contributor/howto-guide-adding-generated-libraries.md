@@ -145,8 +145,8 @@ Then run the micro-generator to create the scaffold and the C++ sources:
 ```shell
 bazel run \
   //generator:google-cloud-cpp-codegen -- \
-  --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
-  --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
+  --protobuf_proto_path="${bazel_output_base}"/external/protobuf~/src \
+  --googleapis_proto_path="${bazel_output_base}"/external/googleapis~ \
   --discovery_proto_path="${PWD}/protos" \
   --output_path="${PWD}" \
   --config_file="${PWD}/generator/generator_config.textproto" \
