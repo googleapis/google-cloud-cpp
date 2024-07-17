@@ -827,6 +827,93 @@ Status RedirectError(absl::string_view handle, absl::string_view token) {
 }
 
 /// @test Verify that resuming a stream uses a handle and routing token.
+TEST(ObjectDescriptorImpl, PendingFinish) {
+  auto constexpr kResponse0 = R"pb(
+    metadata {
+      bucket: "projects/_/buckets/test-bucket"
+      name: "test-object"
+      generation: 42
+    }
+    read_handle { handle: "handle-12345" }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+
+  auto initial_stream = [&sequencer]() {
+    auto constexpr kRequest1 = R"pb(
+      read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    )pb";
+
+    auto stream = std::make_unique<MockStream>();
+    EXPECT_CALL(*stream, Cancel).Times(1);  // Always called by OpenStream
+    EXPECT_CALL(*stream, Write)
+        .WillOnce([&](Request const& request, grpc::WriteOptions) {
+          auto expected = Request{};
+          EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
+          EXPECT_THAT(request, IsProtoEqual(expected));
+          return sequencer.PushBack("Write[1]").then([](auto) {
+            return false;
+          });
+        });
+
+    EXPECT_CALL(*stream, Read).WillOnce([&]() {
+      return sequencer.PushBack("Read[1]").then(
+          [](auto) { return absl::optional<Response>{}; });
+    });
+
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+      return sequencer.PushBack("Finish").then(
+          [](auto) { return TransientError(); });
+    });
+
+    return stream;
+  };
+
+  auto constexpr kLimit = 100;
+  auto constexpr kOffset = 20000;
+  auto constexpr kReadSpecText = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    generation: 24
+    if_generation_match: 42
+  )pb";
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).Times(0);
+
+  auto spec = google::storage::v2::BidiReadObjectSpec{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(), spec,
+      std::make_shared<OpenStream>(initial_stream()));
+  auto response = Response{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kResponse0, &response));
+  tested->Start(std::move(response));
+  EXPECT_TRUE(tested->metadata().has_value());
+
+  auto read1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(read1.second, "Read[1]");
+
+  auto s1 = tested->Read({kOffset, kLimit});
+  ASSERT_THAT(s1, NotNull());
+
+  // Asking for data should result in an immediate `Write()` message with the
+  // first range.
+  auto write1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(write1.second, "Write[1]");
+
+  // Simulate a (nearly) simultaneous error in the `Write()` and `Read()` calls.
+  read1.first.set_value(false);
+  write1.first.set_value(false);
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  // The ranges fails with the same error.
+  EXPECT_THAT(s1->Read().get(), VariantWith<Status>(TransientError()));
+}
+
+/// @test Verify that resuming a stream uses a handle and routing token.
 TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
   auto constexpr kResponse0 = R"pb(
     metadata {
@@ -921,12 +1008,13 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
 
   // Asking for data should result in an immediate `Write()` message with the
   // first range.
-  auto next = sequencer.PopFrontWithName();
-  EXPECT_EQ(next.second, "Write[1]");
+  auto write1 = sequencer.PopFrontWithName();
+  EXPECT_EQ(write1.second, "Write[1]");
 
   // Simulate the recoverable failure.
   read1.first.set_value(false);
-  next = sequencer.PopFrontWithName();
+  write1.first.set_value(false);
+  auto next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
   next = sequencer.PopFrontWithName();
