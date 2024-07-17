@@ -128,7 +128,9 @@ void ObjectDescriptorImpl::CleanupDoneRanges(
 }
 
 void ObjectDescriptorImpl::DoFinish(std::unique_lock<std::mutex> lk) {
-  CurrentStream(std::move(lk))->Finish().then([w = WeakFromThis()](auto f) {
+  auto pending = CurrentStream(std::move(lk))->Finish();
+  if (!pending.valid()) return;
+  pending.then([w = WeakFromThis()](auto f) {
     if (auto self = w.lock()) self->OnFinish(f.get());
   });
 }

@@ -57,7 +57,7 @@ future<OpenStream::ReadType> OpenStream::Read() {
 }
 
 future<Status> OpenStream::Finish() {
-  finish_issued_.store(true);
+  if (finish_issued_.exchange(true)) return {};
   return rpc_->Finish().then([s = shared_from_this()](auto f) mutable {
     auto result = f.get();
     s.reset();
@@ -78,7 +78,7 @@ void OpenStream::OnRead() {
 void OpenStream::MaybeFinish() {
   if (!cancel_) return;
   // Once `cancel_` is true these can only become false.
-  if (pending_read_ || pending_write_ || finish_issued_) return;
+  if (pending_read_ || pending_write_) return;
   Finish();
 }
 
