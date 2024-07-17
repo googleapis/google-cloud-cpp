@@ -7,8 +7,8 @@ output in unexpected ways. If you need to update these files, use this command:
 bazel_output_base="$(bazel info output_base)"
 bazel run \
   //generator:google-cloud-cpp-codegen -- \
-  --protobuf_proto_path="${bazel_output_base}/external/com_google_protobuf/src" \
-  --googleapis_proto_path="${bazel_output_base}/external/com_google_googleapis" \
+  --protobuf_proto_path="${bazel_output_base}/external/protobuf~/src" \
+  --googleapis_proto_path="${bazel_output_base}/external/googleapis~" \
   --golden_proto_path="${PWD}" \
   --output_path="${PWD}" \
   --update_ci=false \
