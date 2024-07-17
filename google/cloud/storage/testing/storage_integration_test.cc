@@ -29,21 +29,19 @@ namespace storage {
 namespace testing {
 namespace {
 
+using ::google::cloud::internal::GetEnv;
+
 absl::optional<std::string> EmulatorEndpoint() {
-  return google::cloud::internal::GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
+  return GetEnv("CLOUD_STORAGE_EMULATOR_ENDPOINT");
 }
 
 bool UseGrpcForMetadata() {
-  auto v =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
-          .value_or("");
+  auto v = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG").value_or("");
   return absl::StrContains(v, "metadata");
 }
 
 bool UseGrpcForMedia() {
-  auto v =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
-          .value_or("");
+  auto v = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG").value_or("");
   return absl::StrContains(v, "media");
 }
 
@@ -61,12 +59,29 @@ StorageIntegrationTest::~StorageIntegrationTest() {
   }
 }
 
+google::cloud::Options StorageIntegrationTest::MakeTestOptions(
+    google::cloud::Options opts) {
+  auto fallback = Options{}
+                      .set<RetryPolicyOption>(TestRetryPolicy())
+                      .set<BackoffPolicyOption>(TestBackoffPolicy());
+  if (auto v = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_GRPC_ENDPOINT")) {
+    fallback.set<EndpointOption>(*v);
+  }
+  if (auto v = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_JSON_ENDPOINT")) {
+    fallback.set<RestEndpointOption>(*v);
+  }
+  if (auto v = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_AUTHORITY")) {
+    fallback.set<AuthorityOption>(*v);
+  }
+  if (auto v = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_TARGET_API_VERSION")) {
+    fallback.set<google::cloud::storage::internal::TargetApiVersionOption>(*v);
+  }
+  return google::cloud::internal::MergeOptions(std::move(opts), fallback);
+}
+
 google::cloud::storage::Client
 StorageIntegrationTest::MakeIntegrationTestClient(google::cloud::Options opts) {
-  opts = google::cloud::internal::MergeOptions(
-      std::move(opts), Options{}
-                           .set<RetryPolicyOption>(TestRetryPolicy())
-                           .set<BackoffPolicyOption>(TestBackoffPolicy()));
+  opts = MakeTestOptions(std::move(opts));
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (UseGrpcForMedia() || UseGrpcForMetadata()) {
     return storage_experimental::DefaultGrpcClient(std::move(opts));
