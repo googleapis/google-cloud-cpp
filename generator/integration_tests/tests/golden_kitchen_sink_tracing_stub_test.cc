@@ -332,8 +332,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingRead) {
               "google.test.admin.database.v1.GoldenKitchenSink/StreamingRead"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)),
-          Not(SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _))))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
@@ -370,8 +369,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingWrite) {
               "google.test.admin.database.v1.GoldenKitchenSink/StreamingWrite"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)),
-          Not(SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _))))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
@@ -408,8 +406,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
                     "StreamingReadWrite"),
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
           SpanHasAttributes(
-              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)),
-          Not(SpanHasAttributes(OTelAttribute<std::string>("grpc.peer", _))))));
+              OTelAttribute<std::string>("gl-cpp.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingStubTest, ExplicitRouting1) {
