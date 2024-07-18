@@ -222,7 +222,7 @@ DefaultSqlInstancesServiceRestStub::PromoteReplica(
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "promoteReplica"),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("failover", request.failover() ? "1" : "0")}));
+          {std::make_pair("failover", (request.failover() ? "1" : "0"))}));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -373,10 +373,10 @@ DefaultSqlInstancesServiceRestStub::VerifyExternalSyncSettings(
                    request.instance(), "/", "verifyExternalSyncSettings"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("verify_connection_only",
-                          request.verify_connection_only() ? "1" : "0"),
+                          (request.verify_connection_only() ? "1" : "0")),
            std::make_pair("sync_mode", std::to_string(request.sync_mode())),
            std::make_pair("verify_replication_only",
-                          request.verify_replication_only() ? "1" : "0"),
+                          (request.verify_replication_only() ? "1" : "0")),
            std::make_pair("migration_type",
                           std::to_string(request.migration_type())),
            std::make_pair("sync_parallel_level",
@@ -397,7 +397,7 @@ DefaultSqlInstancesServiceRestStub::StartExternalSync(
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("sync_mode", std::to_string(request.sync_mode())),
            std::make_pair("skip_verification",
-                          request.skip_verification() ? "1" : "0"),
+                          (request.skip_verification() ? "1" : "0")),
            std::make_pair("sync_parallel_level",
                           std::to_string(request.sync_parallel_level())),
            std::make_pair("migration_type",

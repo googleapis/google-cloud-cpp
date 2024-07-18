@@ -171,12 +171,12 @@ DefaultInstancesRestStub::AggregatedListInstances(
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("include_all_scopes",
-                          request.include_all_scopes() ? "1" : "0"),
+                          (request.include_all_scopes() ? "1" : "0")),
            std::make_pair("max_results", std::to_string(request.max_results())),
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0"),
+                          (request.return_partial_success() ? "1" : "0")),
            std::make_pair("service_project_number",
                           request.service_project_number())}));
 }
@@ -204,7 +204,7 @@ DefaultInstancesRestStub::AsyncAttachDisk(
                              "/", request.instance(), "/", "attachDisk"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("force_attach",
-                                    request.force_attach() ? "1" : "0"),
+                                    (request.force_attach() ? "1" : "0")),
                      std::make_pair("request_id", request.request_id())})));
       },
       std::move(p),
@@ -232,7 +232,7 @@ DefaultInstancesRestStub::AttachDisk(
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "attachDisk"),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("force_attach", request.force_attach() ? "1" : "0"),
+          {std::make_pair("force_attach", (request.force_attach() ? "1" : "0")),
            std::make_pair("request_id", request.request_id())}));
 }
 
@@ -640,7 +640,7 @@ DefaultInstancesRestStub::ListInstances(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          (request.return_partial_success() ? "1" : "0"))}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceListReferrers>
@@ -663,7 +663,7 @@ DefaultInstancesRestStub::ListReferrers(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          (request.return_partial_success() ? "1" : "0"))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -907,8 +907,9 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
                              "/", request.resource(), "/",
                              "setDeletionProtection"),
                 rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("deletion_protection",
-                                    request.deletion_protection() ? "1" : "0"),
+                    {std::make_pair(
+                         "deletion_protection",
+                         (request.deletion_protection() ? "1" : "0")),
                      std::make_pair("request_id", request.request_id())})));
       },
       std::move(p),
@@ -937,7 +938,7 @@ DefaultInstancesRestStub::SetDeletionProtection(
                    "/", "setDeletionProtection"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("deletion_protection",
-                          request.deletion_protection() ? "1" : "0"),
+                          (request.deletion_protection() ? "1" : "0")),
            std::make_pair("request_id", request.request_id())}));
 }
 
@@ -963,7 +964,7 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
                              "/", request.instance(), "/", "setDiskAutoDelete"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("auto_delete",
-                                    request.auto_delete() ? "1" : "0"),
+                                    (request.auto_delete() ? "1" : "0")),
                      std::make_pair("device_name", request.device_name()),
                      std::make_pair("request_id", request.request_id())})));
       },
@@ -992,7 +993,7 @@ DefaultInstancesRestStub::SetDiskAutoDelete(
                    request.zone(), "/", "instances", "/", request.instance(),
                    "/", "setDiskAutoDelete"),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("auto_delete", request.auto_delete() ? "1" : "0"),
+          {std::make_pair("auto_delete", (request.auto_delete() ? "1" : "0")),
            std::make_pair("device_name", request.device_name()),
            std::make_pair("request_id", request.request_id())}));
 }
@@ -1615,7 +1616,8 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
                     {std::make_pair("request_id", request.request_id()),
                      std::make_pair(
                          "with_extended_notifications",
-                         request.with_extended_notifications() ? "1" : "0")})));
+                         (request.with_extended_notifications() ? "1"
+                                                                : "0"))})));
       },
       std::move(p),
       service_,
@@ -1643,8 +1645,9 @@ DefaultInstancesRestStub::SimulateMaintenanceEvent(
                    "/", "simulateMaintenanceEvent"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("request_id", request.request_id()),
-           std::make_pair("with_extended_notifications",
-                          request.with_extended_notifications() ? "1" : "0")}));
+           std::make_pair(
+               "with_extended_notifications",
+               (request.with_extended_notifications() ? "1" : "0"))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1772,7 +1775,7 @@ DefaultInstancesRestStub::AsyncStop(
                              "/", request.instance(), "/", "stop"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("discard_local_ssd",
-                                    request.discard_local_ssd() ? "1" : "0"),
+                                    (request.discard_local_ssd() ? "1" : "0")),
                      std::make_pair("request_id", request.request_id())})));
       },
       std::move(p),
@@ -1800,7 +1803,7 @@ DefaultInstancesRestStub::Stop(
                    "/", "stop"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("discard_local_ssd",
-                          request.discard_local_ssd() ? "1" : "0"),
+                          (request.discard_local_ssd() ? "1" : "0")),
            std::make_pair("request_id", request.request_id())}));
 }
 
@@ -1825,7 +1828,7 @@ DefaultInstancesRestStub::AsyncSuspend(
                              "/", request.instance(), "/", "suspend"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("discard_local_ssd",
-                                    request.discard_local_ssd() ? "1" : "0"),
+                                    (request.discard_local_ssd() ? "1" : "0")),
                      std::make_pair("request_id", request.request_id())})));
       },
       std::move(p),
@@ -1853,7 +1856,7 @@ DefaultInstancesRestStub::Suspend(
                    "/", "suspend"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("discard_local_ssd",
-                          request.discard_local_ssd() ? "1" : "0"),
+                          (request.discard_local_ssd() ? "1" : "0")),
            std::make_pair("request_id", request.request_id())}));
 }
 

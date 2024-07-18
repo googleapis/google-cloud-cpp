@@ -114,12 +114,12 @@ DefaultDisksRestStub::AggregatedListDisks(
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("include_all_scopes",
-                          request.include_all_scopes() ? "1" : "0"),
+                          (request.include_all_scopes() ? "1" : "0")),
            std::make_pair("max_results", std::to_string(request.max_results())),
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0"),
+                          (request.return_partial_success() ? "1" : "0")),
            std::make_pair("service_project_number",
                           request.service_project_number())}));
 }
@@ -195,7 +195,7 @@ DefaultDisksRestStub::AsyncCreateSnapshot(
                              request.disk(), "/", "createSnapshot"),
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("guest_flush",
-                                    request.guest_flush() ? "1" : "0"),
+                                    (request.guest_flush() ? "1" : "0")),
                      std::make_pair("request_id", request.request_id())})));
       },
       std::move(p),
@@ -223,7 +223,7 @@ DefaultDisksRestStub::CreateSnapshot(
                    request.zone(), "/", "disks", "/", request.disk(), "/",
                    "createSnapshot"),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("guest_flush", request.guest_flush() ? "1" : "0"),
+          {std::make_pair("guest_flush", (request.guest_flush() ? "1" : "0")),
            std::make_pair("request_id", request.request_id())}));
 }
 
@@ -371,7 +371,7 @@ DefaultDisksRestStub::ListDisks(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          (request.return_partial_success() ? "1" : "0"))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

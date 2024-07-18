@@ -104,9 +104,18 @@ DefaultJobServiceRestStub::ListJobs(
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "jobs"),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("all_users", request.all_users() ? "1" : "0"),
+          {std::make_pair("all_users", (request.all_users() ? "1" : "0")),
+           std::make_pair("max_results",
+                          (request.has_max_results()
+                               ? std::to_string(request.max_results().value())
+                               : "")),
            std::make_pair("min_creation_time",
                           std::to_string(request.min_creation_time())),
+           std::make_pair(
+               "max_creation_time",
+               (request.has_max_creation_time()
+                    ? std::to_string(request.max_creation_time().value())
+                    : "")),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("projection", std::to_string(request.projection())),
            std::make_pair("parent_job_id", request.parent_job_id())}));
@@ -125,7 +134,19 @@ DefaultJobServiceRestStub::GetQueryResults(
                    "projects", "/", request.project_id(), "/", "queries", "/",
                    request.job_id()),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_token", request.page_token()),
+          {std::make_pair("start_index",
+                          (request.has_start_index()
+                               ? std::to_string(request.start_index().value())
+                               : "")),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("max_results",
+                          (request.has_max_results()
+                               ? std::to_string(request.max_results().value())
+                               : "")),
+           std::make_pair("timeout_ms",
+                          (request.has_timeout_ms()
+                               ? std::to_string(request.timeout_ms().value())
+                               : "")),
            std::make_pair("location", request.location())}));
 }
 
