@@ -95,12 +95,11 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
 TEST_F(ThreadIntegrationTest, Unshared) {
   std::string bucket_name = MakeRandomBucketName();
   auto bucket_client = MakeBucketIntegrationTestClient();
-  ASSERT_STATUS_OK(bucket_client);
 
-  StatusOr<Client> client = MakeIntegrationTestClient();
+  auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  StatusOr<BucketMetadata> meta = bucket_client->CreateBucketForProject(
+  StatusOr<BucketMetadata> meta = bucket_client.CreateBucketForProject(
       bucket_name, project_id_,
       BucketMetadata()
           .set_storage_class(storage_class::Standard())
@@ -146,7 +145,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
                  });
   for (auto& t : tasks) t.get();
 
-  auto delete_status = bucket_client->DeleteBucket(bucket_name);
+  auto delete_status = bucket_client.DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(delete_status);
 }
 

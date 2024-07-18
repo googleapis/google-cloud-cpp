@@ -54,36 +54,35 @@ TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
 
   std::string bucket_name = MakeRandomBucketName();
   auto client = MakeBucketIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
   auto metadata =
-      client->CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+      client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
   auto marker = google::cloud::internal::Sample(
       generator_, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
-  auto create = client->CreateNotification(
+  auto create = client.CreateNotification(
       bucket_name, topic_name,
       NotificationMetadata().upsert_custom_attributes("test-key", marker));
   ASSERT_STATUS_OK(create);
   EXPECT_THAT(create->custom_attributes(), Contains(Pair("test-key", marker)));
 
-  auto get = client->GetNotification(bucket_name, create->id());
+  auto get = client.GetNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(get);
   EXPECT_EQ(*create, *get);
 
-  auto list = client->ListNotifications(bucket_name);
+  auto list = client.ListNotifications(bucket_name);
   ASSERT_STATUS_OK(list);
   EXPECT_THAT(*list, ElementsAre(*get));
 
-  auto delete_status = client->DeleteNotification(bucket_name, create->id());
+  auto delete_status = client.DeleteNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(delete_status);
 
-  auto not_found = client->GetNotification(bucket_name, create->id());
+  auto not_found = client.GetNotification(bucket_name, create->id());
   EXPECT_THAT(not_found, StatusIs(StatusCode::kNotFound));
 
-  auto empty_list = client->ListNotifications(bucket_name);
+  auto empty_list = client.ListNotifications(bucket_name);
   ASSERT_STATUS_OK(empty_list);
   EXPECT_THAT(*empty_list, IsEmpty());
 }

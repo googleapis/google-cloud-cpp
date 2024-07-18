@@ -39,13 +39,12 @@ using ObjectListObjectsVersionsIntegrationTest =
 
 TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-  ASSERT_STATUS_OK(bucket_client);
 
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = MakeRandomBucketName();
-  auto create = bucket_client->CreateBucketForProject(
+  auto create = bucket_client.CreateBucketForProject(
       bucket_name, project_id_,
       BucketMetadata{}.set_versioning(BucketVersioning{true}));
   ASSERT_STATUS_OK(create) << bucket_name;

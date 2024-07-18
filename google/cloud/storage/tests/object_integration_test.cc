@@ -797,19 +797,18 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
-  StatusOr<Client> client = MakeIntegrationTestClient(
-      std::make_unique<LimitedErrorCountRetryPolicy>(1));
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{}.set<RetryPolicyOption>(
+      LimitedErrorCountRetryPolicy(1).clone()));
 
   auto object_name = MakeRandomObjectName();
-  auto stream = client->WriteObject(bucket_name_, object_name,
-                                    NewResumableUploadSession());
+  auto stream = client.WriteObject(bucket_name_, object_name,
+                                   NewResumableUploadSession());
   auto session_id = stream.resumable_session_id();
 
   stream << "This data will not get uploaded, it is too small\n";
   std::move(stream).Suspend();
 
-  auto status = client->DeleteResumableUpload(session_id);
+  auto status = client.DeleteResumableUpload(session_id);
   EXPECT_STATUS_OK(status);
 
   Client client_resumable(Options{}.set<MaximumSimpleUploadSizeOption>(0));
