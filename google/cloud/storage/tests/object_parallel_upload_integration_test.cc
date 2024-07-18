@@ -40,16 +40,13 @@ using ObjectParallelUploadIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectParallelUploadIntegrationTest, ParallelUpload) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
-
   testing::TempFile temp_file(LoremIpsum());
 
   auto object_metadata = ParallelUploadFile(
-      *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
+      client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), IfGenerationMatch(0),
       WithObjectMetadata(
           ObjectMetadata().set_content_type("application/binary")));
@@ -58,13 +55,13 @@ TEST_F(ObjectParallelUploadIntegrationTest, ParallelUpload) {
   EXPECT_EQ("application/binary", object_metadata->content_type());
 
   auto stream =
-      client->ReadObject(bucket_name_, dest_object_name,
-                         IfGenerationMatch(object_metadata->generation()));
+      client.ReadObject(bucket_name_, dest_object_name,
+                        IfGenerationMatch(object_metadata->generation()));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(LoremIpsum(), actual);
 
   std::vector<std::string> names;
-  for (auto& object : client->ListObjects(bucket_name_, Prefix(prefix))) {
+  for (auto& object : client.ListObjects(bucket_name_, Prefix(prefix))) {
     if (!object) break;
     names.push_back(object->name());
   }
@@ -72,8 +69,7 @@ TEST_F(ObjectParallelUploadIntegrationTest, ParallelUpload) {
 }
 
 TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   // Create the local file, we overwrite its contents manually because creating
   // a large block is fairly tedious.
@@ -83,13 +79,13 @@ TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
   auto prefix = CreateRandomPrefixName();
   auto const dest_object_name = prefix + ".dest";
   // First insert the object, verify that it did not exist before the upload.
-  auto insert = client->InsertObject(bucket_name_, dest_object_name,
-                                     LoremIpsum(), IfGenerationMatch(0));
+  auto insert = client.InsertObject(bucket_name_, dest_object_name,
+                                    LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
   auto object_metadata = ParallelUploadFile(
-      *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
+      client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), MaxStreams(64));
   ASSERT_STATUS_OK(object_metadata);
   ScheduleForDelete(*object_metadata);
@@ -97,7 +93,7 @@ TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
   EXPECT_EQ(block.size(), object_metadata->size());
 
   std::vector<std::string> names;
-  for (auto& object : client->ListObjects(bucket_name_, Prefix(prefix))) {
+  for (auto& object : client.ListObjects(bucket_name_, Prefix(prefix))) {
     if (!object) break;
     names.push_back(object->name());
   }
@@ -105,8 +101,7 @@ TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
 }
 
 TEST_F(ObjectParallelUploadIntegrationTest, PreconditionsPreventOverwrites) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   // Create the local file, we overwrite its contents manually because creating
   // a large block is fairly tedious.
@@ -116,19 +111,19 @@ TEST_F(ObjectParallelUploadIntegrationTest, PreconditionsPreventOverwrites) {
   auto prefix = CreateRandomPrefixName();
   auto const dest_object_name = prefix + ".dest";
   // First insert the object, verify that it did not exist before the upload.
-  auto insert = client->InsertObject(bucket_name_, dest_object_name,
-                                     LoremIpsum(), IfGenerationMatch(0));
+  auto insert = client.InsertObject(bucket_name_, dest_object_name,
+                                    LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
   auto object_metadata = ParallelUploadFile(
-      *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
+      client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), MaxStreams(64), IfGenerationMatch(0));
   EXPECT_THAT(object_metadata, StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                               StatusCode::kAborted)));
 
   std::vector<std::string> names;
-  for (auto& object : client->ListObjects(bucket_name_, Prefix(prefix))) {
+  for (auto& object : client.ListObjects(bucket_name_, Prefix(prefix))) {
     if (!object) break;
     names.push_back(object->name());
   }

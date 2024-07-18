@@ -157,12 +157,11 @@ class ObjectFileMultiThreadedTest
 };
 
 TEST_F(ObjectFileMultiThreadedTest, Download) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const names = CreateNames();
+
   std::cout << "Create test objects " << std::flush;
-  ASSERT_NO_FATAL_FAILURE(CreateObjects(*client, names));
+  ASSERT_NO_FATAL_FAILURE(CreateObjects(client, names));
   std::cout << " DONE\n";
 
   // Create multiple threads, each downloading a portion of the objects.
@@ -178,7 +177,7 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
         std::cout << '.' << std::flush;
       }
       auto status =
-          client->DownloadToFile(bucket_name_, name.object_name, name.filename);
+          client.DownloadToFile(bucket_name_, name.object_name, name.filename);
       if (!status.ok()) return status;  // stop on the first error
     }
     return Status();
@@ -200,7 +199,7 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
   }
 
   std::cout << "Delete test objects " << std::flush;
-  ASSERT_NO_FATAL_FAILURE(DeleteObjects(*client, names));
+  ASSERT_NO_FATAL_FAILURE(DeleteObjects(client, names));
   std::cout << " DONE\n";
 }
 

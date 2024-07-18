@@ -49,9 +49,7 @@ class ObjectMediaIntegrationTest
 };
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomFilename();
 
@@ -67,13 +65,13 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
     large_text += line + "\n";
   }
   // Create an object with the contents to download.
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
   std::string actual;
   std::copy_n(std::istreambuf_iterator<char>{stream}, 1024,
               std::back_inserter(actual));
@@ -86,9 +84,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   // The emulator always requires multiple iterations to copy this object.
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // This produces a 64 KiB text object. Normally applications should download
@@ -105,15 +101,15 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
     large_text += line + "\n";
   }
 
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name,
-                                   ReadRange(1 * kChunk, 2 * kChunk),
-                                   IfGenerationNotMatch(0));
+  auto stream = client.ReadObject(bucket_name_, object_name,
+                                  ReadRange(1 * kChunk, 2 * kChunk),
+                                  IfGenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(1 * kChunk, actual.size());
   EXPECT_EQ(large_text.substr(1 * kChunk, 1 * kChunk), actual);
@@ -122,9 +118,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
   // The emulator always requires multiple iterations to copy this object.
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // This produces a 64 KiB text object. Normally applications should download
@@ -141,15 +135,15 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
     large_text += line + "\n";
   }
 
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
   auto stream =
-      client->ReadObject(bucket_name_, object_name, ReadFromOffset(2 * kChunk),
-                         IfGenerationNotMatch(0));
+      client.ReadObject(bucket_name_, object_name, ReadFromOffset(2 * kChunk),
+                        IfGenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(2 * kChunk, actual.size());
   EXPECT_EQ(large_text.substr(2 * kChunk), actual);
@@ -158,9 +152,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
 /// @test Read a relatively large object using chunks of different sizes.
 TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
   // The emulator always requires multiple iterations to copy this object.
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // This produces a 4 MiB text object. Normally applications should download
@@ -177,13 +169,13 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
     large_text += line + "\n";
   }
 
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
 
   // Read the object with a random mix of std::getline(), and stream.read()
   // it is unlikely that any application would actually read like this,
@@ -214,9 +206,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
 
 /// @test Read the last chunk of an object.
 TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // This produces an object larger than 3MiB, but with a size that is not a
@@ -238,15 +228,15 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
                 "Object must be multiple of line size");
   EXPECT_EQ(kObjectSize, large_text.size());
 
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
 
   // Create an iostream to read the last 256KiB of the object, but simulate an
   // application that does not know how large that last chunk is.
-  auto stream = client->ReadObject(bucket_name_, object_name,
-                                   ReadRange(3 * kMiB, 4 * kMiB));
+  auto stream = client.ReadObject(bucket_name_, object_name,
+                                  ReadRange(3 * kMiB, 4 * kMiB));
 
   std::vector<char> buffer(1 * kMiB);
   stream.read(buffer.data(), buffer.size());
@@ -260,9 +250,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
 
 /// @test Verify left over data in the spill buffer is read.
 TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // This is a regression test for #3051, where the object was treated as
@@ -280,13 +268,13 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
   int constexpr kUnreadBytes = 16;
   std::string contents = MakeRandomData(kInitialReadSize + kTrailerSize);
 
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, contents, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
 
   // Create an iostream to read just the first few bytes of the object.
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
 
   // Read most of the data, but leave some in the spill buffer, this `is testing
   // for a regression of #3051.
@@ -314,9 +302,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // This produces an object larger than 3MiB, but with a size that is not a
@@ -338,7 +324,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
                 "Object must be multiple of line size");
   EXPECT_EQ(kObjectSize, large_text.size());
 
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
@@ -346,7 +332,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
   // Create an iostream to read the last 129KiB of the object, but simulate an
   // application that does not know how large that last chunk is.
   auto stream =
-      client->ReadObject(bucket_name_, object_name, ReadLast(129 * kKiB));
+      client.ReadObject(bucket_name_, object_name, ReadLast(129 * kKiB));
 
   std::vector<char> buffer(1 * kMiB);
   stream.read(buffer.data(), buffer.size());
@@ -360,9 +346,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
 
 /// @test Read the last chunk of an object by setting ReadLast option.
 TEST_F(ObjectMediaIntegrationTest, ReadLastTellg) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // This produces an object larger than 3MiB, but with a size that is not a
@@ -370,14 +354,14 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastTellg) {
   auto constexpr kKiB = 1024L;
   auto constexpr kObjectSize = 256 * kKiB;
   auto const expected = MakeRandomData(kObjectSize);
-  auto insert = client->InsertObject(bucket_name_, object_name, expected,
-                                     IfGenerationMatch(0));
+  auto insert = client.InsertObject(bucket_name_, object_name, expected,
+                                    IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
   // Create an iostream to read the last 129KiB of the object, but simulate an
   // application that does not know how large that last chunk is.
-  auto is = client->ReadObject(bucket_name_, object_name, ReadLast(129 * kKiB));
+  auto is = client.ReadObject(bucket_name_, object_name, ReadLast(129 * kKiB));
   EXPECT_EQ(is.tellg(), kObjectSize - 129 * kKiB);
   std::vector<char> buffer(1024 * kKiB);
   is.read(buffer.data(), 1000);
@@ -389,9 +373,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastTellg) {
 
 /// @test Read an object by chunks of equal size.
 TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // This produces a 3.25 MiB text object.
@@ -412,7 +394,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
                 "Object must be multiple of line size");
   EXPECT_EQ(kObjectSize, large_text.size());
 
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
@@ -421,8 +403,8 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
   for (int i = 0; i != 3; ++i) {
     SCOPED_TRACE("Reading chunk from object, chunk=" + std::to_string(i));
     // Create an iostream to read from (i * kMiB) to ((i + 1) * kMiB).
-    auto stream = client->ReadObject(bucket_name_, object_name,
-                                     ReadRange(i * kMiB, (i + 1) * kMiB));
+    auto stream = client.ReadObject(bucket_name_, object_name,
+                                    ReadRange(i * kMiB, (i + 1) * kMiB));
 
     stream.read(buffer.data(), buffer.size());
     EXPECT_FALSE(stream.eof());
@@ -437,8 +419,8 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
 
   // Create an iostream to read the last 256KiB of the object, but simulate an
   // application that does not know how large that last chunk is.
-  auto stream = client->ReadObject(bucket_name_, object_name,
-                                   ReadRange(3 * kMiB, 4 * kMiB));
+  auto stream = client.ReadObject(bucket_name_, object_name,
+                                  ReadRange(3 * kMiB, 4 * kMiB));
 
   stream.read(buffer.data(), buffer.size());
   EXPECT_TRUE(stream.eof());
@@ -639,36 +621,32 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StringView) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const contents = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name_, object_name,
-                           absl::string_view(contents), IfGenerationMatch(0));
+      client.InsertObject(bucket_name_, object_name,
+                          absl::string_view(contents), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name_, meta->bucket());
 
   // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(contents, actual);
 }
 
 TEST_F(ObjectMediaIntegrationTest, String) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   std::string const contents = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
       bucket_name_, object_name, contents, IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
@@ -676,20 +654,18 @@ TEST_F(ObjectMediaIntegrationTest, String) {
   EXPECT_EQ(bucket_name_, meta->bucket());
 
   // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(contents, actual);
 }
 
 TEST_F(ObjectMediaIntegrationTest, CharConstPointer) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   std::string const contents = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
+  StatusOr<ObjectMetadata> meta = client.InsertObject(
       bucket_name_, object_name, contents.c_str(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
@@ -697,7 +673,7 @@ TEST_F(ObjectMediaIntegrationTest, CharConstPointer) {
   EXPECT_EQ(bucket_name_, meta->bucket());
 
   // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(contents, actual);
 }

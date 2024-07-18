@@ -40,15 +40,13 @@ class ObjectReadStreamIntegrationTest
 };
 
 TEST_F(ObjectReadStreamIntegrationTest, MoveWorkingStream) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto constexpr kBlockSize = 128 * 1024;
   auto constexpr kBlockCount = 16;
   auto const block = MakeRandomData(kBlockSize);
   auto writer =
-      client->WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
+      client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
   for (int i = 0; i != kBlockCount; ++i) {
     if (!writer.write(block.data(), kBlockSize)) break;
   }
@@ -56,7 +54,7 @@ TEST_F(ObjectReadStreamIntegrationTest, MoveWorkingStream) {
   ASSERT_STATUS_OK(writer.metadata());
   ScheduleForDelete(*writer.metadata());
 
-  auto r1 = client->ReadObject(bucket_name(), object_name);
+  auto r1 = client.ReadObject(bucket_name(), object_name);
   ASSERT_TRUE(r1.good());
 
   std::vector<char> buffer(kBlockSize);
