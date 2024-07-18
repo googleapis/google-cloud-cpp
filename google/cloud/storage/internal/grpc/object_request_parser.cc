@@ -377,29 +377,28 @@ StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
   if (request.HasOption<storage::Generation>()) {
     r.set_generation(request.GetOption<storage::Generation>().value());
   }
-  if (request.HasOption<storage::ReadRange>()) {
+  auto const offset = request.GetOption<storage::ReadFromOffset>().value_or(0);
+  if (!request.HasOption<storage::ReadRange>()) {
+    r.set_read_offset(offset);
+  } else {
     auto const range = request.GetOption<storage::ReadRange>().value();
-    r.set_read_offset(range.begin);
-    r.set_read_limit(range.end - range.begin);
+    auto const merged_offset = (std::max)(range.begin, offset);
+    auto const merged_limit = range.end - merged_offset;
+    if (merged_limit <= 0) {
+      return internal::InvalidArgumentError(
+          absl::StrCat("Invalid gRPC range offset=", merged_offset,
+                       ", limit=", merged_limit, ") from offset=", offset,
+                       " range=[", range.begin, ",", range.end, ")"),
+          GCP_ERROR_INFO());
+    }
+
+    r.set_read_offset(merged_offset);
+    r.set_read_limit(merged_limit);
   }
+
   if (request.HasOption<storage::ReadLast>()) {
     auto const offset = request.GetOption<storage::ReadLast>().value();
     r.set_read_offset(-offset);
-  }
-  if (request.HasOption<storage::ReadFromOffset>()) {
-    auto const offset = request.GetOption<storage::ReadFromOffset>().value();
-    if (r.read_limit() > 0 && offset >= r.read_offset() + r.read_limit()) {
-      return internal::InvalidArgumentError(
-          "ReadRange() and ReadFromOffset() options produce an empty range",
-          GCP_ERROR_INFO());
-    }
-    if (offset > r.read_offset()) {
-      if (r.read_limit() > 0) {
-        auto const limit = r.read_limit() - (offset - r.read_offset());
-        r.set_read_limit(limit);
-      }
-      r.set_read_offset(offset);
-    }
   }
   SetGenerationConditions(r, request);
   SetMetagenerationConditions(r, request);
