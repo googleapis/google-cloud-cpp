@@ -39,10 +39,9 @@ TEST_F(GrpcServiceAccountIntegrationTest, GetServiceAccount) {
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
 
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
-  auto response = client->GetServiceAccountForProject(project_id);
+  auto response = client.GetServiceAccountForProject(project_id);
   ASSERT_STATUS_OK(response);
   EXPECT_THAT(response->email_address(), Not(IsEmpty()));
 }

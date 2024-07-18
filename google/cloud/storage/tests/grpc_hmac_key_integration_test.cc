@@ -51,11 +51,11 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
 
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
-  auto client = MakeIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto get_ids = [&] {
     std::vector<std::string> ids;
-    auto range = client->ListHmacKeys(ServiceAccountFilter(service_account));
+    auto range = client.ListHmacKeys(ServiceAccountFilter(service_account));
     std::transform(range.begin(), range.end(), std::back_inserter(ids),
                    [](StatusOr<HmacKeyMetadata> x) { return x.value().id(); });
     return ids;
@@ -63,7 +63,7 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
 
   auto const initial_ids = get_ids();
 
-  auto create = client->CreateHmacKey(service_account);
+  auto create = client.CreateHmacKey(service_account);
   ASSERT_STATUS_OK(create);
   auto const key = create->second;
   auto const metadata = create->first;
@@ -73,18 +73,18 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
   auto current_ids = get_ids();
   EXPECT_THAT(current_ids, Contains(metadata.id()));
 
-  auto get = client->GetHmacKey(metadata.access_id());
+  auto get = client.GetHmacKey(metadata.access_id());
   ASSERT_STATUS_OK(get);
   EXPECT_EQ(*get, metadata);
 
   // Before we can delete the HmacKey we need to move it to the inactive state.
   auto update = metadata;
   update.set_state(HmacKeyMetadata::state_inactive());
-  auto update_response = client->UpdateHmacKey(update.access_id(), update);
+  auto update_response = client.UpdateHmacKey(update.access_id(), update);
   ASSERT_STATUS_OK(update_response);
   EXPECT_EQ(update_response->state(), HmacKeyMetadata::state_inactive());
 
-  auto delete_response = client->DeleteHmacKey(get->access_id());
+  auto delete_response = client.DeleteHmacKey(get->access_id());
   ASSERT_STATUS_OK(delete_response);
 
   current_ids = get_ids();
