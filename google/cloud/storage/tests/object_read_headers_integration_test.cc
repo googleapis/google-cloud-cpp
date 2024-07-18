@@ -55,18 +55,16 @@ class ObjectReadHeadersIntegrationTest
 };
 
 TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJson) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
 
-  auto insert = client->InsertObject(bucket_name(), object_name, LoremIpsum(),
-                                     IfGenerationMatch(0));
+  auto insert = client.InsertObject(bucket_name(), object_name, LoremIpsum(),
+                                    IfGenerationMatch(0));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 
-  auto is = client->ReadObject(bucket_name(), object_name,
-                               Generation(insert->generation()));
+  auto is = client.ReadObject(bucket_name(), object_name,
+                              Generation(insert->generation()));
   EXPECT_EQ(insert->generation(), is.generation().value_or(0));
   EXPECT_EQ(insert->metageneration(), is.metageneration().value_or(0));
   EXPECT_EQ(insert->storage_class(), is.storage_class().value_or(""));
@@ -78,18 +76,16 @@ TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJson) {
 }
 
 TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJsonRanged) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
 
-  auto insert = client->InsertObject(bucket_name(), object_name, LoremIpsum(),
-                                     IfGenerationMatch(0));
+  auto insert = client.InsertObject(bucket_name(), object_name, LoremIpsum(),
+                                    IfGenerationMatch(0));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 
-  auto is = client->ReadObject(bucket_name(), object_name,
-                               Generation(insert->generation()));
+  auto is = client.ReadObject(bucket_name(), object_name,
+                              Generation(insert->generation()));
   EXPECT_EQ(insert->generation(), is.generation().value_or(0));
   EXPECT_EQ(insert->metageneration(), is.metageneration().value_or(0));
   EXPECT_EQ(insert->storage_class(), is.storage_class().value_or(""));
@@ -101,18 +97,16 @@ TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJsonRanged) {
 }
 
 TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
 
-  auto insert = client->InsertObject(bucket_name(), object_name, LoremIpsum(),
-                                     IfGenerationMatch(0));
+  auto insert = client.InsertObject(bucket_name(), object_name, LoremIpsum(),
+                                    IfGenerationMatch(0));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 
-  auto is = client->ReadObject(bucket_name(), object_name,
-                               Generation(insert->generation()));
+  auto is = client.ReadObject(bucket_name(), object_name,
+                              Generation(insert->generation()));
   auto const actual = std::string{std::istreambuf_iterator<char>(is), {}};
   is.Close();
   EXPECT_THAT(is.status(), IsOk());
@@ -139,9 +133,7 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
 }
 
 TEST_F(ObjectReadHeadersIntegrationTest, NoDuplicatePeers) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const block = MakeRandomData(1024 * 1024L);
   auto constexpr kBlockCount = 128;
@@ -149,7 +141,7 @@ TEST_F(ObjectReadHeadersIntegrationTest, NoDuplicatePeers) {
   auto constexpr kBufferSize = 16 * 1024L;
 
   auto writer =
-      client->WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
+      client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
   for (int i = 0; i != kBlockCount; ++i) {
     writer.write(block.data(), block.size());
   }
@@ -158,8 +150,8 @@ TEST_F(ObjectReadHeadersIntegrationTest, NoDuplicatePeers) {
   ASSERT_THAT(object, IsOk());
   ScheduleForDelete(*object);
 
-  auto is = client->ReadObject(bucket_name(), object_name,
-                               Generation(object->generation()));
+  auto is = client.ReadObject(bucket_name(), object_name,
+                              Generation(object->generation()));
   std::vector<char> buffer(kBufferSize);
   while (is) {
     is.read(buffer.data(), buffer.size());

@@ -40,14 +40,13 @@ class ObjectWriteStreamIntegrationTest
 };
 
 TEST_F(ObjectWriteStreamIntegrationTest, MoveWorkingStream) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto constexpr kBlockSize = 256 * 1024;
   auto const block = MakeRandomData(kBlockSize);
   auto w1 =
-      client->WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
+      client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
   ASSERT_TRUE(w1.good());
 
   EXPECT_TRUE(w1.write(block.data(), kBlockSize));
@@ -75,14 +74,13 @@ TEST_F(ObjectWriteStreamIntegrationTest, MoveWorkingStream) {
 }
 
 TEST_F(ObjectWriteStreamIntegrationTest, DoubleClose) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto constexpr kBlockSize = 256 * 1024;
   auto const block = MakeRandomData(kBlockSize);
   auto w1 =
-      client->WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
+      client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
   ASSERT_TRUE(w1.good());
 
   EXPECT_TRUE(w1.write(block.data(), kBlockSize));

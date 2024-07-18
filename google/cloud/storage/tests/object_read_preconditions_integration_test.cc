@@ -53,69 +53,65 @@ class ObjectReadPreconditionsIntegrationTest
 };
 
 TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto reader = client->ReadObject(bucket_name(), object_name,
-                                   IfGenerationMatch(meta->generation()));
+  auto reader = client.ReadObject(bucket_name(), object_name,
+                                  IfGenerationMatch(meta->generation()));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
 }
 
 TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto reader = client->ReadObject(bucket_name(), object_name,
-                                   IfGenerationMatch(meta->generation() + 1));
+  auto reader = client.ReadObject(bucket_name(), object_name,
+                                  IfGenerationMatch(meta->generation() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
 }
 
 TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto reader = client->ReadObject(
-      bucket_name(), object_name, IfGenerationNotMatch(meta->generation() + 1));
+  auto reader = client.ReadObject(bucket_name(), object_name,
+                                  IfGenerationNotMatch(meta->generation() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
 }
 
 TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto reader = client->ReadObject(bucket_name(), object_name,
-                                   IfGenerationNotMatch(meta->generation()));
+  auto reader = client.ReadObject(bucket_name(), object_name,
+                                  IfGenerationNotMatch(meta->generation()));
   reader.Close();
   // GCS returns different error codes depending on the API used by the client
   // library. This is a bit terrible, but in this context we just want to verify
@@ -126,75 +122,71 @@ TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
 }
 
 TEST_F(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
   auto reader =
-      client->ReadObject(bucket_name(), object_name,
-                         IfMetagenerationMatch(meta->metageneration()));
+      client.ReadObject(bucket_name(), object_name,
+                        IfMetagenerationMatch(meta->metageneration()));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
 }
 
 TEST_F(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
   auto reader =
-      client->ReadObject(bucket_name(), object_name,
-                         IfMetagenerationMatch(meta->metageneration() + 1));
+      client.ReadObject(bucket_name(), object_name,
+                        IfMetagenerationMatch(meta->metageneration() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
 }
 
 TEST_F(ObjectReadPreconditionsIntegrationTest,
        IfMetagenerationNotMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
   auto reader =
-      client->ReadObject(bucket_name(), object_name,
-                         IfMetagenerationNotMatch(meta->generation() + 1));
+      client.ReadObject(bucket_name(), object_name,
+                        IfMetagenerationNotMatch(meta->generation() + 1));
   reader.Close();
   EXPECT_THAT(reader.status(), IsOk());
 }
 
 TEST_F(ObjectReadPreconditionsIntegrationTest,
        IfMetagenerationNotMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
   auto reader =
-      client->ReadObject(bucket_name(), object_name,
-                         IfMetagenerationNotMatch(meta->metageneration()));
+      client.ReadObject(bucket_name(), object_name,
+                        IfMetagenerationNotMatch(meta->metageneration()));
   reader.Close();
   // GCS returns different error codes depending on the API used by the client
   // library. This is a bit terrible, but in this context we just want to verify

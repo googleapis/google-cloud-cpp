@@ -53,144 +53,136 @@ class ObjectInsertPreconditionsIntegrationTest
 };
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
-                                     IfGenerationMatch(meta->generation()));
+  auto insert = client.InsertObject(bucket_name(), object_name, expected_text,
+                                    IfGenerationMatch(meta->generation()));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
+  auto insert = client.InsertObject(bucket_name(), object_name, expected_text,
 
-                                     IfGenerationMatch(meta->generation() + 1));
+                                    IfGenerationMatch(meta->generation() + 1));
   ASSERT_THAT(insert, StatusIs(StatusCode::kFailedPrecondition));
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
   auto insert =
-      client->InsertObject(bucket_name(), object_name, expected_text,
-                           IfGenerationNotMatch(meta->generation() + 1));
+      client.InsertObject(bucket_name(), object_name, expected_text,
+                          IfGenerationNotMatch(meta->generation() + 1));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
+  auto insert = client.InsertObject(bucket_name(), object_name, expected_text,
 
-                                     IfGenerationNotMatch(meta->generation()));
+                                    IfGenerationNotMatch(meta->generation()));
   ASSERT_THAT(insert, StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                      StatusCode::kAborted)));
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
   auto insert =
-      client->InsertObject(bucket_name(), object_name, expected_text,
-                           IfMetagenerationMatch(meta->metageneration()));
+      client.InsertObject(bucket_name(), object_name, expected_text,
+                          IfMetagenerationMatch(meta->metageneration()));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
   auto insert =
-      client->InsertObject(bucket_name(), object_name, expected_text,
-                           IfMetagenerationMatch(meta->metageneration() + 1));
+      client.InsertObject(bucket_name(), object_name, expected_text,
+                          IfMetagenerationMatch(meta->metageneration() + 1));
   ASSERT_THAT(insert, StatusIs(StatusCode::kFailedPrecondition));
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest,
        IfMetagenerationNotMatchSuccess) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto insert = client->InsertObject(
-      bucket_name(), object_name, expected_text,
-      IfMetagenerationNotMatch(meta->metageneration() + 1));
+  auto insert =
+      client.InsertObject(bucket_name(), object_name, expected_text,
+                          IfMetagenerationNotMatch(meta->metageneration() + 1));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest,
        IfMetagenerationNotMatchFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
-  auto meta = client->InsertObject(bucket_name(), object_name, expected_text,
-                                   IfGenerationMatch(0));
+
+  auto meta = client.InsertObject(bucket_name(), object_name, expected_text,
+                                  IfGenerationMatch(0));
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
   auto insert =
-      client->InsertObject(bucket_name(), object_name, expected_text,
-                           IfMetagenerationNotMatch(meta->metageneration()));
+      client.InsertObject(bucket_name(), object_name, expected_text,
+                          IfMetagenerationNotMatch(meta->metageneration()));
   ASSERT_THAT(insert, StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                      StatusCode::kAborted)));
 }

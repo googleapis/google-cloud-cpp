@@ -37,17 +37,15 @@ using ObjectResumableParallelUploadIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
 
   std::string resumable_session_id;
   {
     auto state =
-        PrepareParallelUpload(*client, bucket_name_, dest_object_name, 2,
-                              prefix, UseResumableUploadSession(""));
+        PrepareParallelUpload(client, bucket_name_, dest_object_name, 2, prefix,
+                              UseResumableUploadSession(""));
     ASSERT_STATUS_OK(state);
     resumable_session_id = state->resumable_session_id();
     state->shards()[0] << "1";
@@ -57,9 +55,9 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
   }
   std::int64_t res_gen;
   {
-    auto state = PrepareParallelUpload(
-        *client, bucket_name_, dest_object_name, 2, prefix,
-        UseResumableUploadSession(resumable_session_id));
+    auto state =
+        PrepareParallelUpload(client, bucket_name_, dest_object_name, 2, prefix,
+                              UseResumableUploadSession(resumable_session_id));
     ASSERT_STATUS_OK(state);
     ASSERT_EQ(0, state->shards()[0].next_expected_byte());
     state->shards()[0] << "12";
@@ -69,22 +67,20 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
     ScheduleForDelete(*res);
     res_gen = res->generation();
   }
-  auto stream = client->ReadObject(bucket_name_, dest_object_name,
-                                   IfGenerationMatch(res_gen));
+  auto stream = client.ReadObject(bucket_name_, dest_object_name,
+                                  IfGenerationMatch(res_gen));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ("1234", actual);
 }
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
 
   testing::TempFile temp_file(LoremIpsum());
 
-  auto shards = CreateUploadShards(*client, temp_file.name(), bucket_name_,
+  auto shards = CreateUploadShards(client, temp_file.name(), bucket_name_,
                                    dest_object_name, prefix, MinStreamSize(0),
                                    MaxStreams(3), IfGenerationMatch(0),
                                    UseResumableUploadSession(""));
@@ -101,7 +97,7 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
   EXPECT_EQ(StatusCode::kCancelled, first_part_res.status().code());
 
   auto object_metadata = ParallelUploadFile(
-      *client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
+      client, temp_file.name(), bucket_name_, dest_object_name, prefix, false,
       MinStreamSize(0), IfGenerationMatch(0),
       UseResumableUploadSession(resumable_session_id),
       WithObjectMetadata(
@@ -111,13 +107,13 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
   EXPECT_EQ("application/binary", object_metadata->content_type());
 
   auto stream =
-      client->ReadObject(bucket_name_, dest_object_name,
-                         IfGenerationMatch(object_metadata->generation()));
+      client.ReadObject(bucket_name_, dest_object_name,
+                        IfGenerationMatch(object_metadata->generation()));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(LoremIpsum(), actual);
 
   std::vector<ObjectMetadata> objects;
-  for (auto& object : client->ListObjects(bucket_name_)) {
+  for (auto& object : client.ListObjects(bucket_name_)) {
     ASSERT_STATUS_OK(object);
     if (object->name().substr(0, prefix.size()) == prefix &&
         object->name() != prefix) {

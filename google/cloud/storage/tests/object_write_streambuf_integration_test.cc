@@ -39,14 +39,13 @@ class ObjectWriteStreambufIntegrationTest
   }
 
   void CheckUpload(int line_count, int line_size) {
-    StatusOr<Client> client = MakeIntegrationTestClient();
-    ASSERT_STATUS_OK(client);
+    auto client = MakeIntegrationTestClient(Options{});
     auto object_name = MakeRandomObjectName();
 
     ResumableUploadRequest request(bucket_name_, object_name);
     request.set_multiple_options(IfGenerationMatch(0));
 
-    auto connection = internal::ClientImplDetails::GetConnection(*client);
+    auto connection = internal::ClientImplDetails::GetConnection(client);
     // Normally this is done by `storage::Client`, but here we are intentionally
     // bypassing it.
     google::cloud::internal::OptionsSpan const span(connection->options());
@@ -66,7 +65,7 @@ class ObjectWriteStreambufIntegrationTest
     ASSERT_STATUS_OK(writer.metadata());
     ScheduleForDelete(*writer.metadata());
 
-    ObjectReadStream reader = client->ReadObject(bucket_name_, object_name);
+    ObjectReadStream reader = client.ReadObject(bucket_name_, object_name);
 
     std::string actual(std::istreambuf_iterator<char>{reader}, {});
 

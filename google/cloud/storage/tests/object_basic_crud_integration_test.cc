@@ -41,12 +41,11 @@ using ObjectBasicCRUDIntegrationTest =
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto list_object_names = [&client, this] {
     std::vector<std::string> names;
-    for (auto o : client->ListObjects(bucket_name_)) {
+    for (auto o : client.ListObjects(bucket_name_)) {
       EXPECT_STATUS_OK(o);
       if (!o) break;
       names.push_back(o->name());
@@ -61,12 +60,12 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 
   // Create the object, but only if it does not exist already.
   StatusOr<ObjectMetadata> insert_meta =
-      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                           IfGenerationMatch(0), Projection("full"));
+      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_THAT(list_object_names(), Contains(object_name).Times(1));
 
-  StatusOr<ObjectMetadata> get_meta = client->GetObjectMetadata(
+  StatusOr<ObjectMetadata> get_meta = client.GetObjectMetadata(
       bucket_name_, object_name, Generation(insert_meta->generation()),
       Projection("full"));
   ASSERT_STATUS_OK(get_meta);
@@ -82,7 +81,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       .set_content_language("en")
       .set_content_type("plain/text");
   update.mutable_metadata().emplace("updated", "true");
-  StatusOr<ObjectMetadata> updated_meta = client->UpdateObject(
+  StatusOr<ObjectMetadata> updated_meta = client.UpdateObject(
       bucket_name_, object_name, update, Projection("full"));
   ASSERT_STATUS_OK(updated_meta);
 
@@ -119,8 +118,8 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
   desired_patch.mutable_metadata().erase("updated");
   desired_patch.mutable_metadata().emplace("patched", "true");
   StatusOr<ObjectMetadata> patched_meta =
-      client->PatchObject(bucket_name_, object_name, *updated_meta,
-                          desired_patch, PredefinedAcl::Private());
+      client.PatchObject(bucket_name_, object_name, *updated_meta,
+                         desired_patch, PredefinedAcl::Private());
   ASSERT_STATUS_OK(patched_meta);
 
   EXPECT_EQ(desired_patch.metadata(), patched_meta->metadata())
@@ -129,7 +128,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
       << *patched_meta;
 
   // This is the test for Object CRUD, we cannot rely on `ScheduleForDelete()`.
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
   EXPECT_THAT(list_object_names(), Not(Contains(object_name)));
 }
@@ -187,52 +186,50 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteJSON) {
 
 /// @test Verify inserting an object does not set the customTime attribute.
 TEST_F(ObjectBasicCRUDIntegrationTest, InsertWithoutCustomTime) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
-  auto insert = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                                     IfGenerationMatch(0), Projection("full"));
+
+  auto insert = client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                    IfGenerationMatch(0), Projection("full"));
   ASSERT_STATUS_OK(insert);
   EXPECT_FALSE(insert->has_custom_time());
 
-  auto get = client->GetObjectMetadata(bucket_name_, object_name);
+  auto get = client.GetObjectMetadata(bucket_name_, object_name);
   ASSERT_STATUS_OK(get);
   EXPECT_FALSE(get->has_custom_time());
 
-  auto patch = client->PatchObject(
+  auto patch = client.PatchObject(
       bucket_name_, object_name,
       ObjectMetadataPatchBuilder().SetContentType("text/plain"));
   ASSERT_STATUS_OK(patch);
   EXPECT_FALSE(patch->has_custom_time());
 
-  get = client->GetObjectMetadata(bucket_name_, object_name);
+  get = client.GetObjectMetadata(bucket_name_, object_name);
   ASSERT_STATUS_OK(get);
   EXPECT_FALSE(get->has_custom_time());
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
 /// @test Verify writing an object does not set the customTime attribute.
 TEST_F(ObjectBasicCRUDIntegrationTest, WriteWithoutCustomTime) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto object_name = MakeRandomObjectName();
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                                Projection("full"));
+  auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
+                               Projection("full"));
   os << LoremIpsum();
   os.Close();
   auto metadata = os.metadata();
   ASSERT_STATUS_OK(metadata);
   EXPECT_FALSE(metadata->has_custom_time());
 
-  auto get = client->GetObjectMetadata(bucket_name_, object_name);
+  auto get = client.GetObjectMetadata(bucket_name_, object_name);
   ASSERT_STATUS_OK(get);
   EXPECT_FALSE(get->has_custom_time());
 
-  auto status = client->DeleteObject(bucket_name_, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
