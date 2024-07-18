@@ -41,9 +41,7 @@ class SmallReadsIntegrationTest
 
 /// @test This is a repro for #5096, the download should not stall
 TEST_F(SmallReadsIntegrationTest, Repro5096) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // Create an object with enough data to repro the problem.
@@ -53,7 +51,7 @@ TEST_F(SmallReadsIntegrationTest, Repro5096) {
 
   auto const block = MakeRandomData(kRandomDataBlock);
   auto writer =
-      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+      client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
   for (int i = 0; i != kBlockCount; ++i) {
     writer.write(block.data(), block.size());
   }
@@ -61,7 +59,7 @@ TEST_F(SmallReadsIntegrationTest, Repro5096) {
   ASSERT_STATUS_OK(writer.metadata());
   ScheduleForDelete(*writer.metadata());
 
-  auto reader = client->ReadObject(bucket_name_, object_name);
+  auto reader = client.ReadObject(bucket_name_, object_name);
 
   using std::chrono::duration_cast;
   using std::chrono::milliseconds;
@@ -85,20 +83,18 @@ TEST_F(SmallReadsIntegrationTest, Repro5096) {
 }
 
 TEST_F(SmallReadsIntegrationTest, ReadFullSingleRead) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
   auto const contents = LoremIpsum();
 
   // Create a small object, read it all in the first .read() call
-  auto meta = client->InsertObject(bucket_name_, object_name, contents,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name_, object_name, contents,
+                                  IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
   std::vector<char> buffer(2 * contents.size());
-  auto reader = client->ReadObject(bucket_name_, object_name);
+  auto reader = client.ReadObject(bucket_name_, object_name);
   reader.read(buffer.data(), static_cast<std::streamsize>(buffer.size()));
   ASSERT_GT(reader.gcount(), 0);
   auto const size = static_cast<std::size_t>(reader.gcount());
@@ -110,18 +106,16 @@ TEST_F(SmallReadsIntegrationTest, ReadFullSingleRead) {
 }
 
 TEST_F(SmallReadsIntegrationTest, ReadFullByChar) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // Create a small object, read it all in the first .read() call
-  auto meta = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                  IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto reader = client->ReadObject(bucket_name_, object_name);
+  auto reader = client.ReadObject(bucket_name_, object_name);
   auto actual = std::string{std::istreambuf_iterator<char>(reader), {}};
   ASSERT_STATUS_OK(reader.status());
   EXPECT_FALSE(reader.eof());

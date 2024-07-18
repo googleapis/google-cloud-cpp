@@ -46,59 +46,56 @@ class AutoFinalizeIntegrationTest
 };
 
 TEST_F(AutoFinalizeIntegrationTest, DefaultIsEnabled) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
   {
     auto stream =
-        client->WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
+        client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0));
     stream << expected_text;
   }
-  auto reader = client->ReadObject(bucket_name(), object_name);
+  auto reader = client.ReadObject(bucket_name(), object_name);
   ASSERT_TRUE(reader.good());
   ASSERT_STATUS_OK(reader.status());
   auto const actual =
       std::string{std::istreambuf_iterator<char>{reader.rdbuf()}, {}};
   EXPECT_EQ(expected_text, actual);
 
-  (void)client->DeleteObject(bucket_name(), object_name);
+  (void)client.DeleteObject(bucket_name(), object_name);
 }
 
 TEST_F(AutoFinalizeIntegrationTest, ExplicitlyEnabled) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
   {
     auto stream =
-        client->WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
-                            AutoFinalizeEnabled());
+        client.WriteObject(bucket_name(), object_name, IfGenerationMatch(0),
+                           AutoFinalizeEnabled());
     stream << expected_text;
   }
-  auto reader = client->ReadObject(bucket_name(), object_name);
+  auto reader = client.ReadObject(bucket_name(), object_name);
   EXPECT_TRUE(reader.good());
   EXPECT_STATUS_OK(reader.status());
   auto const actual =
       std::string{std::istreambuf_iterator<char>{reader.rdbuf()}, {}};
   EXPECT_EQ(expected_text, actual);
 
-  (void)client->DeleteObject(bucket_name(), object_name);
+  (void)client.DeleteObject(bucket_name(), object_name);
 }
 
 TEST_F(AutoFinalizeIntegrationTest, Disabled) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   auto const object_name = MakeRandomObjectName();
   auto constexpr kQuantum = internal::UploadChunkRequest::kChunkSizeQuantum;
   auto constexpr kSize = 8 * kQuantum;
   auto const expected_text = MakeRandomData(kSize);
   auto const upload_session = [&] {
-    auto os = client->WriteObject(bucket_name(), object_name,
-                                  IfGenerationMatch(0), AutoFinalizeDisabled());
+    auto os = client.WriteObject(bucket_name(), object_name,
+                                 IfGenerationMatch(0), AutoFinalizeDisabled());
     auto id = os.resumable_session_id();
     os.write(expected_text.data(), kQuantum);
     os << std::flush;
@@ -107,14 +104,14 @@ TEST_F(AutoFinalizeIntegrationTest, Disabled) {
 
   {
     // The upload is not finalized, so the object should not exist:
-    auto reader = client->ReadObject(bucket_name(), object_name);
+    auto reader = client.ReadObject(bucket_name(), object_name);
     ASSERT_THAT(reader.status(), StatusIs(StatusCode::kNotFound));
   }
 
   for (std::uint64_t from = 0; kQuantum <= (kSize - from);) {
     auto os =
-        client->WriteObject(bucket_name(), object_name, AutoFinalizeDisabled(),
-                            UseResumableUploadSession(upload_session));
+        client.WriteObject(bucket_name(), object_name, AutoFinalizeDisabled(),
+                           UseResumableUploadSession(upload_session));
     from = os.next_expected_byte();
     if (from >= kSize) break;
     os.write(expected_text.data() + from, kQuantum);
@@ -123,14 +120,14 @@ TEST_F(AutoFinalizeIntegrationTest, Disabled) {
     EXPECT_THAT(os.last_status(), IsOk());
   }
   auto os =
-      client->WriteObject(bucket_name(), object_name, AutoFinalizeDisabled(),
-                          UseResumableUploadSession(upload_session));
+      client.WriteObject(bucket_name(), object_name, AutoFinalizeDisabled(),
+                         UseResumableUploadSession(upload_session));
   os.Close();
   ASSERT_THAT(os.metadata(), IsOk());
   ScheduleForDelete(*os.metadata());
   EXPECT_EQ(os.metadata()->size(), kSize);
 
-  auto reader = client->ReadObject(bucket_name(), object_name);
+  auto reader = client.ReadObject(bucket_name(), object_name);
   EXPECT_TRUE(reader.good());
   EXPECT_STATUS_OK(reader.status());
   auto const actual =

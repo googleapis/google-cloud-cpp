@@ -55,20 +55,18 @@ class SignedUrlIntegrationTest
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
-
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  auto meta = client->InsertObject(bucket_name_, object_name, expected,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name_, object_name, expected,
+                                  IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  StatusOr<std::string> signed_url = client->CreateV2SignedUrl(
+  StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
       "GET", bucket_name_, object_name, SigningAccount(service_account_));
   ASSERT_STATUS_OK(signed_url);
 
@@ -81,14 +79,12 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
   // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
-
   std::string expected = LoremIpsum();
 
-  StatusOr<std::string> signed_url = client->CreateV2SignedUrl(
+  StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
       "PUT", bucket_name_, object_name, SigningAccount(service_account_),
       ContentType("application/octet-stream"));
   ASSERT_STATUS_OK(signed_url);
@@ -101,31 +97,29 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
   auto response = RetryHttpPut(*signed_url, factory, expected);
   ASSERT_STATUS_OK(response);
 
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto deleted = client->DeleteObject(bucket_name_, object_name);
+  auto deleted = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(deleted);
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
-
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already.
-  auto meta = client->InsertObject(bucket_name_, object_name, expected,
-                                   IfGenerationMatch(0));
+  auto meta = client.InsertObject(bucket_name_, object_name, expected,
+                                  IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  StatusOr<std::string> signed_url = client->CreateV4SignedUrl(
+  StatusOr<std::string> signed_url = client.CreateV4SignedUrl(
       "GET", bucket_name_, object_name, SigningAccount(service_account_));
   ASSERT_STATUS_OK(signed_url);
 
@@ -138,14 +132,12 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
   // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
 
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
-
   std::string expected = LoremIpsum();
 
-  StatusOr<std::string> signed_url = client->CreateV4SignedUrl(
+  StatusOr<std::string> signed_url = client.CreateV4SignedUrl(
       "PUT", bucket_name_, object_name, SigningAccount(service_account_));
   ASSERT_STATUS_OK(signed_url);
 
@@ -157,11 +149,11 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
   auto response = RetryHttpPut(*signed_url, factory, expected);
   ASSERT_STATUS_OK(response);
 
-  auto stream = client->ReadObject(bucket_name_, object_name);
+  auto stream = client.ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto deleted = client->DeleteObject(bucket_name_, object_name);
+  auto deleted = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(deleted);
 }
 

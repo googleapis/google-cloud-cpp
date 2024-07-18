@@ -43,15 +43,13 @@ class SlowReaderChunkIntegrationTest
 };
 
 TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // Construct an object too large to fit in the first chunk.
   auto const read_size = 1024 * 1024L;
   auto const large_text = MakeRandomData(4 * read_size);
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
   ScheduleForDelete(*source_meta);
@@ -61,13 +59,12 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
   // in the middle.
   auto make_reader = [this, object_name, &client](int64_t offset) {
     if (UsingEmulator()) {
-      return client->ReadObject(
+      return client.ReadObject(
           bucket_name_, object_name,
           CustomHeader("x-goog-emulator-instructions", "return-broken-stream"),
           ReadFromOffset(offset));
     }
-    return client->ReadObject(bucket_name_, object_name,
-                              ReadFromOffset(offset));
+    return client.ReadObject(bucket_name_, object_name, ReadFromOffset(offset));
   };
 
   ObjectReadStream stream = make_reader(0);
