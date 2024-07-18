@@ -1281,7 +1281,7 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues("my.service.v1.Service.Method1",
                              "method_http_query_parameters", R"""(,
       rest_internal::TrimEmptyQueryParameters({std::make_pair("number", std::to_string(request.number())),
-        std::make_pair("toggle", request.toggle() ? "1" : "0"),
+        std::make_pair("toggle", (request.toggle() ? "1" : "0")),
         std::make_pair("title", request.title()),
         std::make_pair("parent", request.parent())}))"""),
         // Method2
@@ -1310,7 +1310,7 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_http_query_parameters", R"""(,
       rest_internal::TrimEmptyQueryParameters({std::make_pair("number", std::to_string(request.number())),
         std::make_pair("name", request.name()),
-        std::make_pair("toggle", request.toggle() ? "1" : "0"),
+        std::make_pair("toggle", (request.toggle() ? "1" : "0")),
         std::make_pair("title", request.title())}))"""),
         // Method3
         MethodVarsTestValues("my.service.v1.Service.Method3",

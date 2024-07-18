@@ -69,6 +69,24 @@ void SetHttpDerivedMethodVars(
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars);
 
+struct QueryParameterInfo {
+  protobuf::FieldDescriptor::CppType cpp_type;
+  // A code fragment the generator emits to access the value of the field.
+  std::string request_field_accessor;
+  // Check presence for MESSAGE types as their default values may result in
+  // undesired behavior.
+  bool check_presence;
+};
+
+/**
+ * Determine if a field is a query parameter candidate, such that it's a
+ * non-repeated field that is also not an aggregate type. This includes numeric,
+ * bool, and string native protobuf data types, as well as, protobuf "Well Known
+ * Types" that wrap those data types.
+ */
+absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
+    google::protobuf::FieldDescriptor const& field);
+
 /**
  * Sets the "method_http_query_parameters" value in method_vars based on the
  * parsed_http_info.

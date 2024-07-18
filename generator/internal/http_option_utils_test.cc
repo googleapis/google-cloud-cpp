@@ -106,6 +106,42 @@ syntax = "proto3";
 package google.protobuf;
 // Leading comments about message Empty.
 message Empty {}
+message DoubleValue {
+  // The double value.
+  double value = 1;
+}
+message FloatValue {
+  // The float value.
+  float value = 1;
+}
+message Int64Value {
+  // The int64 value.
+  int64 value = 1;
+}
+message UInt64Value {
+  // The uint64 value.
+  uint64 value = 1;
+}
+message Int32Value {
+  // The int32 value.
+  int32 value = 1;
+}
+message UInt32Value {
+  // The uint32 value.
+  uint32 value = 1;
+}
+message BoolValue {
+  // The bool value.
+  bool value = 1;
+}
+message StringValue {
+  // The string value.
+  string value = 1;
+}
+message BytesValue {
+  // The bytes value.
+  bytes value = 1;
+}
 )""";
 
 char const* const kServiceProto =
@@ -275,6 +311,65 @@ char const* const kServiceProtoWithoutVersion =
     "  }\n"
     "}\n";
 
+char const* const kBigQueryServiceProto = R"""(
+syntax = "proto3";
+package my.package.v1;
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/http.proto";
+import "google/protobuf/well_known.proto";
+
+service BigQueryLikeService {
+  // RPC to get the results of a query job.
+  rpc GetQueryResults(GetQueryResultsRequest)
+      returns (GetQueryResultsResponse) {
+    option (google.api.http) = {
+      get: "/bigquery/v2/projects/{project_id=*}/queries/{job_id=*}"
+    };
+  }
+}
+
+// Request object of GetQueryResults.
+message GetQueryResultsRequest {
+  // Required. Project ID of the query job.
+  string project_id = 1;
+
+  // Required. Job ID of the query job.
+  string job_id = 2;
+
+  // Zero-based index of the starting row.
+  google.protobuf.UInt64Value start_index = 3;
+
+  // Page token, returned by a previous call, to request the next page of
+  // results.
+  google.protobuf.StringValue page_token = 4;
+
+  // Maximum number of results to read.
+  google.protobuf.UInt32Value max_results = 5;
+
+  // The geographic location of the job.
+  google.protobuf.BoolValue include_location = 7;
+
+  // Double field.
+  google.protobuf.DoubleValue double_value = 8;
+
+  // Float field.
+  google.protobuf.FloatValue float_value = 9;
+
+  // Int32 field.
+  google.protobuf.Int32Value int32_value = 10;
+
+  // Int64 field.
+  google.protobuf.Int64Value int64_value = 11;
+
+  // Non supported message type that is not a query param.
+  google.protobuf.Empty non_supported_type = 12;
+}
+
+// Response object of GetQueryResults.
+message GetQueryResultsResponse {}
+)""";
+
 struct MethodVarsTestValues {
   MethodVarsTestValues(std::string m, std::string k, std::string v)
       : method(std::move(m)),
@@ -298,7 +393,9 @@ class HttpOptionUtilsTest
             {std::string("google/protobuf/well_known.proto"), kWellKnownProto},
             {std::string("google/foo/v1/service.proto"), kServiceProto},
             {std::string("google/foo/v1/service_without_version.proto"),
-             kServiceProtoWithoutVersion}}),
+             kServiceProtoWithoutVersion},
+            {std::string("google/foo/v1/big_query_service.proto"),
+             kBigQueryServiceProto}}),
         source_tree_db_(&source_tree_),
         merged_db_(&simple_db_, &source_tree_db_),
         pool_(&merged_db_, &collector_) {
@@ -550,7 +647,26 @@ TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
       rest_internal::TrimEmptyQueryParameters({std::make_pair("page_size", std::to_string(request.page_size())),
         std::make_pair("page_token", request.page_token()),
         std::make_pair("name", request.name()),
-        std::make_pair("include_foo", request.include_foo() ? "1" : "0")}))"""));
+        std::make_pair("include_foo", (request.include_foo() ? "1" : "0"))}))"""));
+}
+
+TEST_F(HttpOptionUtilsTest,
+       SetHttpGetQueryParametersGetWellKnownTypesPaginated) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/big_query_service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(0);
+  VarsDictionary vars;
+  SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
+  EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(R"""(,
+      rest_internal::TrimEmptyQueryParameters({std::make_pair("start_index", (request.has_start_index() ? std::to_string(request.start_index().value()) : "")),
+        std::make_pair("page_token", (request.has_page_token() ? request.page_token().value() : "")),
+        std::make_pair("max_results", (request.has_max_results() ? std::to_string(request.max_results().value()) : "")),
+        std::make_pair("include_location", (request.has_include_location() ? (request.include_location().value() ? "1" : "0") : "")),
+        std::make_pair("double_value", (request.has_double_value() ? std::to_string(request.double_value().value()) : "")),
+        std::make_pair("float_value", (request.has_float_value() ? std::to_string(request.float_value().value()) : "")),
+        std::make_pair("int32_value", (request.has_int32_value() ? std::to_string(request.int32_value().value()) : "")),
+        std::make_pair("int64_value", (request.has_int64_value() ? std::to_string(request.int64_value().value()) : ""))}))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, HasHttpAnnotationRoutingHeaderSuccess) {
