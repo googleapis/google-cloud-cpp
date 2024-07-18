@@ -14,11 +14,11 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_tracing_connection.h"
 #include "generator/integration_tests/golden/v1/mocks/mock_golden_thing_admin_connection.h"
-#include "generator/integration_tests/test.pb.h"
 #include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <generator/integration_tests/test.pb.h>
 #include <gmock/gmock.h>
 #include <memory>
 

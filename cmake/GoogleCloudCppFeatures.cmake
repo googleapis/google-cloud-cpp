@@ -394,6 +394,7 @@ function (google_cloud_cpp_enable_features)
     set(compute_added FALSE)
     foreach (feature IN LISTS GOOGLE_CLOUD_CPP_ENABLE)
         if ("${feature}" STREQUAL "generator")
+            add_subdirectory(protos/generator)
             add_subdirectory(generator)
         elseif (("${feature}" STREQUAL "storage_grpc")
                 # TODO(#13857) - remove backwards compatibility shims

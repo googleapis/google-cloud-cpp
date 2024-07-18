@@ -177,25 +177,6 @@ target_link_libraries(
     protoc-gen-cpp_codegen LINK_PUBLIC google_cloud_cpp_generator
     protobuf::libprotoc ${Protobuf_LIBRARIES})
 
-# Generate protobuf code and library
-if (COMMAND protobuf_generate)
-    set(protobuf_PROTOC_EXE ${Protobuf_PROTOC_EXECUTABLE})
-    add_library(google_cloud_cpp_generator_config)
-    protobuf_generate(LANGUAGE cpp TARGET google_cloud_cpp_generator_config
-                      PROTOS generator_config.proto)
-elseif (COMMAND protobuf_generate_cpp)
-    protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS generator_config.proto)
-    add_library(google_cloud_cpp_generator_config ${PROTO_HDRS} ${PROTO_SRCS})
-else ()
-    message(FATAL_ERROR "Missing protobuf_generate_cpp and protobuf_generate")
-endif ()
-target_link_libraries(google_cloud_cpp_generator_config
-                      PUBLIC protobuf::libprotobuf)
-google_cloud_cpp_add_common_options(google_cloud_cpp_generator_config
-                                    NO_WARNINGS)
-set_target_properties(google_cloud_cpp_generator_config
-                      PROPERTIES CXX_CLANG_TIDY "")
-
 # Build standalone executable
 add_executable(google-cloud-cpp-codegen standalone_main.cc)
 google_cloud_cpp_add_common_options(google-cloud-cpp-codegen)

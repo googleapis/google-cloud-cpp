@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_auth_decorator.h"
-#include "generator/integration_tests/test.pb.h"
 #include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include "google/cloud/testing_util/mock_grpc_authentication_strategy.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <generator/integration_tests/test.pb.h>
 #include <gmock/gmock.h>
 #include <memory>
 
