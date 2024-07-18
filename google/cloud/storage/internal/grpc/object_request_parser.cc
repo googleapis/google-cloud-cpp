@@ -388,8 +388,8 @@ StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
     if (merged_limit <= 0) {
       return internal::InvalidArgumentError(
           absl::StrCat("Invalid gRPC range offset=", merged_offset,
-                       ", limit=", merged_limit, ") from offset=", offset,
-                       " range=[", range.begin, ",", range.end, ")"),
+                       ", limit=", merged_limit, ", from offset=", offset,
+                       " range=[", range.begin, ",", range.end, "]"),
           GCP_ERROR_INFO());
     }
 
