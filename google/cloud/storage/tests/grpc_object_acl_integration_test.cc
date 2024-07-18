@@ -48,13 +48,11 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
 
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  // Create a new object to run the tests.
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
-  auto insert = client->InsertObject(bucket_name, object_name, LoremIpsum(),
-                                     IfGenerationMatch(0), Projection::Full());
+
+  auto insert = client.InsertObject(bucket_name, object_name, LoremIpsum(),
+                                    IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
@@ -71,83 +69,83 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
       << " created with a predefined ACL which should preclude this result.";
 
   auto const existing_entity = insert->acl().front();
-  auto current_acl = client->ListObjectAcl(bucket_name, object_name);
+  auto current_acl = client.ListObjectAcl(bucket_name, object_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl),
               Contains(existing_entity.entity()).Times(1));
 
-  auto create_acl = client->CreateObjectAcl(bucket_name, object_name, viewers,
-                                            BucketAccessControl::ROLE_READER());
+  auto create_acl = client.CreateObjectAcl(bucket_name, object_name, viewers,
+                                           BucketAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(create_acl);
 
-  current_acl = client->ListObjectAcl(bucket_name, object_name);
+  current_acl = client.ListObjectAcl(bucket_name, object_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl),
               Contains(create_acl->entity()).Times(1));
 
-  auto c2 = client->CreateObjectAcl(bucket_name, object_name, viewers,
-                                    BucketAccessControl::ROLE_READER());
+  auto c2 = client.CreateObjectAcl(bucket_name, object_name, viewers,
+                                   BucketAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(c2);
   // There is no guarantee that the ETag remains unchanged, even if the
   // operation has no effect.  Reset the one field that might change.
   create_acl->set_etag(c2->etag());
   EXPECT_EQ(*create_acl, *c2);
 
-  auto get_acl = client->GetObjectAcl(bucket_name, object_name, viewers);
+  auto get_acl = client.GetObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(get_acl);
   EXPECT_EQ(*c2, *get_acl);
 
   auto not_found_acl =
-      client->GetObjectAcl(bucket_name, object_name, "not-found-entity");
+      client.GetObjectAcl(bucket_name, object_name, "not-found-entity");
   EXPECT_THAT(not_found_acl, StatusIs(StatusCode::kNotFound));
 
-  auto updated_acl = client->UpdateObjectAcl(
-      bucket_name, object_name,
-      ObjectAccessControl().set_entity(viewers).set_role(
-          ObjectAccessControl::ROLE_OWNER()));
+  auto updated_acl =
+      client.UpdateObjectAcl(bucket_name, object_name,
+                             ObjectAccessControl().set_entity(viewers).set_role(
+                                 ObjectAccessControl::ROLE_OWNER()));
   ASSERT_STATUS_OK(updated_acl);
   EXPECT_EQ(updated_acl->entity(), create_acl->entity());
   EXPECT_EQ(updated_acl->role(), ObjectAccessControl::ROLE_OWNER());
 
   // "Updating" an entity that does not exist should create the entity
-  auto delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
+  auto delete_acl = client.DeleteObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
-  updated_acl = client->UpdateObjectAcl(
-      bucket_name, object_name,
-      ObjectAccessControl().set_entity(viewers).set_role(
-          ObjectAccessControl::ROLE_OWNER()));
+  updated_acl =
+      client.UpdateObjectAcl(bucket_name, object_name,
+                             ObjectAccessControl().set_entity(viewers).set_role(
+                                 ObjectAccessControl::ROLE_OWNER()));
   ASSERT_STATUS_OK(updated_acl);
   EXPECT_EQ(updated_acl->entity(), create_acl->entity());
   EXPECT_EQ(updated_acl->role(), ObjectAccessControl::ROLE_OWNER());
 
   auto patched_acl =
-      client->PatchObjectAcl(bucket_name, object_name, create_acl->entity(),
-                             ObjectAccessControlPatchBuilder().set_role(
-                                 ObjectAccessControl::ROLE_READER()));
+      client.PatchObjectAcl(bucket_name, object_name, create_acl->entity(),
+                            ObjectAccessControlPatchBuilder().set_role(
+                                ObjectAccessControl::ROLE_READER()));
   ASSERT_STATUS_OK(patched_acl);
   EXPECT_EQ(patched_acl->entity(), create_acl->entity());
   EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
 
   // "Patching" an entity that does not exist should create the entity
-  delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
+  delete_acl = client.DeleteObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
   patched_acl =
-      client->PatchObjectAcl(bucket_name, object_name, create_acl->entity(),
-                             ObjectAccessControlPatchBuilder().set_role(
-                                 ObjectAccessControl::ROLE_READER()));
+      client.PatchObjectAcl(bucket_name, object_name, create_acl->entity(),
+                            ObjectAccessControlPatchBuilder().set_role(
+                                ObjectAccessControl::ROLE_READER()));
   ASSERT_STATUS_OK(patched_acl);
   EXPECT_EQ(patched_acl->entity(), create_acl->entity());
   EXPECT_EQ(patched_acl->role(), ObjectAccessControl::ROLE_READER());
 
-  delete_acl = client->DeleteObjectAcl(bucket_name, object_name, viewers);
+  delete_acl = client.DeleteObjectAcl(bucket_name, object_name, viewers);
   ASSERT_STATUS_OK(delete_acl);
 
-  current_acl = client->ListObjectAcl(bucket_name, object_name);
+  current_acl = client.ListObjectAcl(bucket_name, object_name);
   ASSERT_STATUS_OK(current_acl);
   EXPECT_THAT(AclEntityNames(*current_acl),
               Not(Contains(create_acl->entity())));
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(status);
 }
 

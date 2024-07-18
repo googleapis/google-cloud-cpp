@@ -43,18 +43,16 @@ TEST_F(GrpcObjectMediaIntegrationTest, CancelResumableUpload) {
   ASSERT_THAT(bucket_name, Not(IsEmpty()))
       << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
 
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // Start an upload, capture its upload ID and suspend it.
-  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                                NewResumableUploadSession());
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               NewResumableUploadSession());
   auto const upload_id = os.resumable_session_id();
   std::move(os).Suspend();
 
-  auto status = client->DeleteResumableUpload(upload_id);
+  auto status = client.DeleteResumableUpload(upload_id);
   EXPECT_STATUS_OK(status);
 }
 

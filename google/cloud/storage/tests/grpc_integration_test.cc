@@ -63,30 +63,28 @@ class GrpcIntegrationTest
 
 TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
+
   auto bucket_metadata = bucket_client.CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
 
   EXPECT_EQ(bucket_name, bucket_metadata->name());
 
-  auto object_metadata = client->InsertObject(
+  auto object_metadata = client.InsertObject(
       bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(object_metadata);
 
-  auto stream = client->ReadObject(bucket_name, object_name);
+  auto stream = client.ReadObject(bucket_name, object_name);
 
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(LoremIpsum(), actual);
   EXPECT_STATUS_OK(stream.status());
 
   // This is part of the test, not just a cleanup.
-  auto delete_object_status = client->DeleteObject(
+  auto delete_object_status = client.DeleteObject(
       bucket_name, object_name, Generation(object_metadata->generation()));
   EXPECT_STATUS_OK(delete_object_status);
 
@@ -96,12 +94,10 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
 
 TEST_P(GrpcIntegrationTest, WriteResume) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
+
   auto bucket_metadata = bucket_client.CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
@@ -113,15 +109,15 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
   std::string session_id;
   {
     auto old_os =
-        client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                            NewResumableUploadSession());
+        client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                           NewResumableUploadSession());
     ASSERT_TRUE(old_os.good()) << "status=" << old_os.metadata().status();
     session_id = old_os.resumable_session_id();
     std::move(old_os).Suspend();
   }
 
-  auto os = client->WriteObject(bucket_name, object_name,
-                                RestoreResumableUploadSession(session_id));
+  auto os = client.WriteObject(bucket_name, object_name,
+                               RestoreResumableUploadSession(session_id));
   ASSERT_TRUE(os.good()) << "status=" << os.metadata().status();
   EXPECT_EQ(session_id, os.resumable_session_id());
   os << LoremIpsum();
@@ -137,7 +133,7 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
     EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
 
   auto delete_bucket_status = bucket_client.DeleteBucket(bucket_name);
@@ -146,12 +142,10 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
 
 TEST_P(GrpcIntegrationTest, InsertLarge) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
+
   auto bucket_metadata = bucket_client.CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
@@ -161,8 +155,8 @@ TEST_P(GrpcIntegrationTest, InsertLarge) {
   // multiple of 256 KiB.
   auto const desired_size = 8 * 1024 * 1024L + 253 * 1024 + 15;
   auto data = MakeRandomData(desired_size);
-  auto metadata = client->InsertObject(bucket_name, object_name, data,
-                                       IfGenerationMatch(0));
+  auto metadata =
+      client.InsertObject(bucket_name, object_name, data, IfGenerationMatch(0));
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
@@ -171,12 +165,10 @@ TEST_P(GrpcIntegrationTest, InsertLarge) {
 
 TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
+
   auto bucket_metadata = bucket_client.CreateBucketForProject(
       bucket_name, project_id(), BucketMetadata());
   ASSERT_STATUS_OK(bucket_metadata);
@@ -186,7 +178,7 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   auto const desired_size = 8 * 1024 * 1024L;
   auto data = MakeRandomData(desired_size);
   auto stream =
-      client->WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+      client.WriteObject(bucket_name, object_name, IfGenerationMatch(0));
   stream.write(data.data(), data.size());
   EXPECT_TRUE(stream.good());
   stream.write(data.data(), data.size());
@@ -200,14 +192,12 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
 }
 
 TEST_P(GrpcIntegrationTest, QuotaUser) {
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   auto metadata =
-      client->InsertObject(bucket_name(), object_name, LoremIpsum(),
-                           IfGenerationMatch(0), QuotaUser("test-only"));
+      client.InsertObject(bucket_name(), object_name, LoremIpsum(),
+                          IfGenerationMatch(0), QuotaUser("test-only"));
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 }
@@ -217,12 +207,10 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
   auto const* fields = UsingGrpc() ? "resource.bucket,resource.name,resource."
                                      "generation,resource.content_type"
                                    : "bucket,name,generation,contentType";
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
-  auto metadata = client->InsertObject(
+  auto metadata = client.InsertObject(
       bucket_name(), object_name, LoremIpsum(), IfGenerationMatch(0),
       ContentType("text/plain"), ContentEncoding("utf-8"), Fields(fields));
   ASSERT_STATUS_OK(metadata);
