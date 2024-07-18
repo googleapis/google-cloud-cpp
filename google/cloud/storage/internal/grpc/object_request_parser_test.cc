@@ -367,6 +367,45 @@ TEST(GrpcObjectRequestParser,
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
 }
 
+TEST(GrpcObjectRequestParser, ReadObjectRangeMergeWithOffset) {
+  auto expected = google::storage::v2::ReadObjectRequest{};
+  EXPECT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket"
+        object: "test-object"
+        read_offset: 2000
+        read_limit: 1000
+      )pb",
+      &expected));
+  auto request =
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_multiple_options(storage::ReadRange(2000, 3000));
+  EXPECT_THAT(ToProto(request), IsOkAndHolds(IsProtoEqual(expected)));
+
+  request.set_multiple_options(storage::ReadFromOffset(1900));
+  EXPECT_THAT(ToProto(request), IsOkAndHolds(IsProtoEqual(expected)));
+
+  request.set_multiple_options(storage::ReadFromOffset(2100));
+  expected.set_read_offset(2100);
+  expected.set_read_limit(900);
+  EXPECT_THAT(ToProto(request), IsOkAndHolds(IsProtoEqual(expected)));
+
+  request.set_multiple_options(storage::ReadFromOffset(2300));
+  expected.set_read_offset(2300);
+  expected.set_read_limit(700);
+  EXPECT_THAT(ToProto(request), IsOkAndHolds(IsProtoEqual(expected)));
+}
+
+TEST(GrpcObjectRequestParser, ReadOffsetEmptyRange) {
+  auto request =
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_multiple_options(storage::ReadFromOffset(3000),
+                                storage::ReadRange(2000, 3000));
+
+  auto const actual = ToProto(request);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument));
+}
+
 TEST(GrpcObjectRequestParser, PatchObjectRequestAllOptions) {
   auto constexpr kTextProto = R"pb(
     predefined_acl: "projectPrivate"
