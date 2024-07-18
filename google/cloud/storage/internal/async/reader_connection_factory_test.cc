@@ -13,10 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/async/reader_connection_factory.h"
-#include "google/cloud/storage/internal/grpc/object_request_parser.h"
-#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
+#include <google/storage/v2/storage.pb.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -35,10 +34,7 @@ TEST(AsyncReaderConnectionFactory, UpdateGenerationDefault) {
         bucket: "projects/_/buckets/test-bucket" object: "test-object"
       )pb",
       &expected));
-  auto request =
-      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object");
-  auto actual = ToProto(request).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
+  auto actual = expected;
   UpdateGeneration(actual, storage::Generation());
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
@@ -65,12 +61,7 @@ TEST(AsyncReaderConnectionFactory, UpdateGenerationWithGeneration) {
         generation: 1234
       )pb",
       &expected));
-  auto request =
-      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
-          .set_option(storage::Generation(1234));
-  auto actual = ToProto(request).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
-
+  auto actual = expected;
   UpdateGeneration(actual, storage::Generation());
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
@@ -85,10 +76,7 @@ TEST(AsyncReaderConnectionFactory, UpdateReadRangeDefault) {
         bucket: "projects/_/buckets/test-bucket" object: "test-object"
       )pb",
       &expected));
-  auto request =
-      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object");
-  auto actual = ToProto(request).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
+  auto actual = expected;
   UpdateReadRange(actual, 1000);
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -119,11 +107,7 @@ TEST(AsyncReaderConnectionFactory, UpdateReadRangeWithRange) {
         read_limit: 1000000
       )pb",
       &expected));
-  auto request =
-      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
-          .set_option(storage::ReadRange(1000, 1'001'000));
-  auto actual = ToProto(request).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
+  auto actual = expected;
   UpdateReadRange(actual, 1000);
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -155,11 +139,7 @@ TEST(AsyncReaderConnectionFactory, UpdateReadRangeFromOffset) {
         read_offset: 1000000
       )pb",
       &expected));
-  auto request =
-      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
-          .set_option(storage::ReadFromOffset(1'000'000));
-  auto actual = ToProto(request).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
+  auto actual = expected;
   UpdateReadRange(actual, 1000);
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -189,11 +169,7 @@ TEST(AsyncReaderConnectionFactory, UpdateReadRangeLast) {
         read_offset: -1000000
       )pb",
       &expected));
-  auto request =
-      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
-          .set_option(storage::ReadLast(1'000'000));
-  auto actual = ToProto(request).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
+  auto actual = expected;
   UpdateReadRange(actual, 1000);
   EXPECT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -224,11 +200,7 @@ TEST(AsyncReaderConnectionFactory, UpdateReadRangeUnexpected) {
         read_limit: 1000
       )pb",
       &expected));
-  auto request =
-      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
-          .set_option(storage::ReadRange(1000, 2000));
-  auto actual = ToProto(request).value();
-  EXPECT_THAT(actual, IsProtoEqual(expected));
+  auto actual = expected;
   UpdateReadRange(actual, -1000);
   EXPECT_THAT(actual, IsProtoEqual(expected));
 
