@@ -35,20 +35,18 @@ using ErrorParsingIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ErrorParsingIntegrationTest, FailureContainsErrorInfo) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
 
   // Start a resumable upload and finalize the upload.
-  auto insert = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                                     IfGenerationMatch(0));
+  auto insert = client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                                    IfGenerationMatch(0));
   ASSERT_THAT(insert, StatusIs(StatusCode::kOk));
   ScheduleForDelete(*insert);
 
   // Overwrite the object.
-  insert = client->InsertObject(bucket_name_, object_name, LoremIpsum(),
-                                IfGenerationMatch(0));
+  insert = client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                               IfGenerationMatch(0));
   ASSERT_THAT(insert, Not(StatusIs(StatusCode::kOk)));
   if (UsingEmulator() || UsingGrpc()) return;
   EXPECT_THAT(insert.status().message(),

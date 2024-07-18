@@ -46,11 +46,9 @@ class ServiceAccountIntegrationTest
 };
 
 TEST_F(ServiceAccountIntegrationTest, Get) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
-  StatusOr<ServiceAccount> a1 =
-      client->GetServiceAccountForProject(project_id_);
+  StatusOr<ServiceAccount> a1 = client.GetServiceAccountForProject(project_id_);
   ASSERT_STATUS_OK(a1);
   EXPECT_FALSE(a1->email_address().empty());
 

@@ -70,12 +70,10 @@ auto AlwaysRetry() {
 }
 
 TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto object_name = MakeRandomObjectName();
-
   auto async = AsyncClient();
+
   auto insert = async
                     .InsertObject(BucketName(bucket_name()), object_name,
                                   LoremIpsum(), AlwaysRetry())
@@ -105,19 +103,17 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
                     .get();
   EXPECT_STATUS_OK(status);
 
-  auto get = client->GetObjectMetadata(bucket_name(), object_name);
+  auto get = client.GetObjectMetadata(bucket_name(), object_name);
   EXPECT_THAT(get, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(AsyncClientIntegrationTest, ComposeObject) {
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
+  auto client = MakeIntegrationTestClient(Options{});
   auto o1 = MakeRandomObjectName();
   auto o2 = MakeRandomObjectName();
   auto destination = MakeRandomObjectName();
-
   auto async = AsyncClient();
+
   auto insert1 = async.InsertObject(BucketName(bucket_name()), o1, LoremIpsum(),
                                     AlwaysRetry());
   auto insert2 = async.InsertObject(BucketName(bucket_name()), o2, LoremIpsum(),

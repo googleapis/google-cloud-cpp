@@ -43,21 +43,19 @@ class ThreadIntegrationTest
                             ObjectNameList const& group,
                             std::string const& contents) {
     // Create our own client so no state is shared with the other threads.
-    StatusOr<Client> client = MakeIntegrationTestClient();
-    ASSERT_STATUS_OK(client);
+    auto client = MakeIntegrationTestClient(Options{});
     for (auto const& object_name : group) {
-      (void)client->InsertObject(bucket_name, object_name, contents,
-                                 IfGenerationMatch(0));
+      (void)client.InsertObject(bucket_name, object_name, contents,
+                                IfGenerationMatch(0));
     }
   }
 
   static void DeleteObjects(std::string const& bucket_name,
                             ObjectNameList const& group) {
     // Create our own client so no state is shared with the other threads.
-    StatusOr<Client> client = MakeIntegrationTestClient();
-    ASSERT_STATUS_OK(client);
+    auto client = MakeIntegrationTestClient(Options{});
     for (auto const& object_name : group) {
-      (void)client->DeleteObject(bucket_name, object_name);
+      (void)client.DeleteObject(bucket_name, object_name);
     }
   }
 
@@ -95,9 +93,7 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
 TEST_F(ThreadIntegrationTest, Unshared) {
   std::string bucket_name = MakeRandomBucketName();
   auto bucket_client = MakeBucketIntegrationTestClient();
-
-  auto client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
+  auto client = MakeIntegrationTestClient(Options{});
 
   StatusOr<BucketMetadata> meta = bucket_client.CreateBucketForProject(
       bucket_name, project_id_,
@@ -132,7 +128,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   // with the default policies an object may be successfully created, but
   // `InsertObject()` returns an error due to retries.
   std::size_t found = 0;
-  for (auto& o : client->ListObjects(bucket_name)) {
+  for (auto& o : client.ListObjects(bucket_name)) {
     if (!o.ok()) break;
     ++found;
   }
