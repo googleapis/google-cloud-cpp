@@ -388,9 +388,15 @@ StatusOr<google::storage::v2::ReadObjectRequest> ToProto(
   }
   if (request.HasOption<storage::ReadFromOffset>()) {
     auto const offset = request.GetOption<storage::ReadFromOffset>().value();
+    if (r.read_limit() > 0 && offset >= r.read_offset() + r.read_limit()) {
+      return internal::InvalidArgumentError(
+          "ReadRange() and ReadFromOffset() options produce an empty range",
+          GCP_ERROR_INFO());
+    }
     if (offset > r.read_offset()) {
       if (r.read_limit() > 0) {
-        r.set_read_limit(offset - r.read_offset());
+        auto const limit = r.read_limit() - (offset - r.read_offset());
+        r.set_read_limit(limit);
       }
       r.set_read_offset(offset);
     }
