@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "generator/generator.h"
-#include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/discovery_to_proto.h"
@@ -29,6 +28,7 @@
 #include "absl/strings/match.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
+#include <generator/generator_config.pb.h>
 #include <algorithm>
 #include <fstream>
 #include <future>

@@ -54,6 +54,9 @@ cc_library(
     testonly = True,
     srcs = ["cbt_test_proxy.cc"],
     hdrs = ["cbt_test_proxy.h"],
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     deps = [
         ":test_proxy_cc_grpc",
         ":test_proxy_cc_proto",
@@ -65,5 +68,8 @@ cc_binary(
     name = "cbt_test_proxy_main",
     testonly = True,
     srcs = ["cbt_test_proxy_main.cc"],
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     deps = [":cbt_test_proxy"],
 )

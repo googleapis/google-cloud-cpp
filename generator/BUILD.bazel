@@ -24,6 +24,9 @@ cc_library(
     name = "google_cloud_cpp_generator",
     srcs = google_cloud_cpp_generator_srcs,
     hdrs = google_cloud_cpp_generator_hdrs,
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     target_compatible_with = select({
         "@platforms//os:macos": ["@platforms//:incompatible"],
         "@platforms//os:windows": ["@platforms//:incompatible"],
@@ -69,6 +72,9 @@ cc_library(
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     target_compatible_with = select({
         "@platforms//os:macos": ["@platforms//:incompatible"],
         "@platforms//os:windows": ["@platforms//:incompatible"],
@@ -84,6 +90,9 @@ cc_library(
 cc_binary(
     name = "protoc-gen-cpp_codegen",
     srcs = ["plugin_main.cc"],
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     target_compatible_with = select({
         "@platforms//os:macos": ["@platforms//:incompatible"],
         "@platforms//os:windows": ["@platforms//:incompatible"],
@@ -106,6 +115,9 @@ cc_proto_library(
 cc_binary(
     name = "google-cloud-cpp-codegen",
     srcs = ["standalone_main.cc"],
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     target_compatible_with = select({
         "@platforms//os:macos": ["@platforms//:incompatible"],
         "@platforms//os:windows": ["@platforms//:incompatible"],

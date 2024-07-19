@@ -43,6 +43,9 @@ VARIATIONS = {
     name = test.replace("/", "_").replace(".cc", "") + "-" + v_label,
     timeout = "long",
     srcs = [test],
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     env = v_env,
     linkopts = select({
         "@platforms//os:windows": [],

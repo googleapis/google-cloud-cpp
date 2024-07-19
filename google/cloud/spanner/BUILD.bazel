@@ -113,6 +113,9 @@ cc_library(
     testonly = True,
     srcs = spanner_client_testing_srcs,
     hdrs = spanner_client_testing_hdrs,
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     visibility = [
         ":__subpackages__",
     ],
@@ -143,6 +146,9 @@ cc_library(
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     deps = [
         ":google_cloud_cpp_spanner",
         ":google_cloud_cpp_spanner_mocks",

@@ -22,6 +22,9 @@ licenses(["notice"])  # Apache 2.0
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "eternal",
     srcs = [test],
+    # See #14507 for details, we need to use angle brackes to include *.pb.h
+    # files.
+    copts = ["-I$(GENDIR)"],
     tags = [
         "integration-test",
     ],

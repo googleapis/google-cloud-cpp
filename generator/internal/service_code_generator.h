@@ -15,13 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
 
-#include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/status.h"
 #include <google/protobuf/descriptor.h>
+#include <generator/generator_config.pb.h>
 
 namespace google {
 namespace cloud {

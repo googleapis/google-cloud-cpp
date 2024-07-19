@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "generator/internal/descriptor_utils.h"
-#include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/doxygen.h"
 #include "generator/internal/format_class_comments.h"
@@ -38,6 +37,7 @@
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/compiler/cpp/names.h>
+#include <generator/generator_config.pb.h>
 #include <regex>
 #include <set>
 #include <string>
