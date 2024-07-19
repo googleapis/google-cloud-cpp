@@ -31,6 +31,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Require that the PR author be a member of the same organization as this
+  # repository in order to continue execution.
+  author-association-member:
+    name: Require Org Membership
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Membership
+        if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.author_association != 'MEMBER' }}
+        run: |
+          echo "Event not triggered by organization member."
+          exit 1
+
   pre-flight:
     # For external contributors, run the build in the `external` environment.
     # This requires manual approval from a contributor. It also saves the
@@ -43,6 +55,7 @@ jobs:
           'external'
       }}
     name: Require Approval for External PRs
+    needs: [author-association-member]
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
