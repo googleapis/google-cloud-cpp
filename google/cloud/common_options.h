@@ -180,7 +180,7 @@ class ProxyConfig {
   std::string const& scheme() const { return scheme_; }
 
   ///@{
-  ///@ name Modifiers.
+  /// @name Modifiers.
   ProxyConfig& set_hostname(std::string v) & {
     hostname_ = std::move(v);
     return *this;
