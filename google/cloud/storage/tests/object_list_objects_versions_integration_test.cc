@@ -39,7 +39,7 @@ using ObjectListObjectsVersionsIntegrationTest =
 
 TEST_F(ObjectListObjectsVersionsIntegrationTest, ListObjectsVersions) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   auto create = bucket_client.CreateBucketForProject(

@@ -39,7 +39,7 @@ class ObjectWriteStreambufIntegrationTest
   }
 
   void CheckUpload(int line_count, int line_size) {
-    auto client = MakeIntegrationTestClient(Options{});
+    auto client = MakeIntegrationTestClient();
     auto object_name = MakeRandomObjectName();
 
     ResumableUploadRequest request(bucket_name_, object_name);

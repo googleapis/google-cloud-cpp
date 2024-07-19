@@ -44,7 +44,7 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto encoded = Base64Encode(LoremIpsum());
   SignBlobRequest request(service_account_, encoded, {});
 

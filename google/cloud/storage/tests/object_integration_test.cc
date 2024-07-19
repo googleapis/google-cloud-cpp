@@ -46,7 +46,7 @@ using ObjectIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectIntegrationTest, FullPatch) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
   // Create the object, but only if it does not exist already.
@@ -114,7 +114,7 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_prefix = MakeRandomObjectName();
   for (auto const* suffix :
@@ -140,7 +140,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_prefix = MakeRandomObjectName();
   for (auto const* suffix :
@@ -173,7 +173,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixes) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixesWithFolders) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_prefix = MakeRandomObjectName();
   for (auto const* suffix :
@@ -207,7 +207,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsAndPrefixesWithFolders) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_prefix = MakeRandomObjectName();
   for (auto const* suffix :
@@ -239,7 +239,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsStartEndOffset) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsMatchGlob) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_prefix = MakeRandomObjectName();
   for (auto const* suffix :
@@ -263,7 +263,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsMatchGlob) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsIncludeTrailingDelimiter) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_prefix = MakeRandomObjectName();
   for (auto const* suffix : {"/foo", "/foo/", "/foo/bar", "/foo/baz", "/qux/",
@@ -301,7 +301,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsIncludeTrailingDelimiter) {
 }
 
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -323,7 +323,7 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, BasicReadWriteBinary) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
   auto const expected = [] {
@@ -358,7 +358,7 @@ TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -386,7 +386,7 @@ TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, ReadNotFound) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -400,7 +400,7 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWrite) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -428,7 +428,7 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingResumableWriteSizeMismatch) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -451,7 +451,7 @@ TEST_F(ObjectIntegrationTest, StreamingResumableWriteSizeMismatch) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -475,7 +475,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -496,7 +496,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -557,7 +557,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(ObjectIntegrationTest, WriteWithContentType) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -579,7 +579,7 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
 }
 
 TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -590,7 +590,7 @@ TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -619,7 +619,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -649,7 +649,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
 
 TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
   auto bucket_name = MakeRandomBucketName();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   // This operation should fail because the bucket does not exist.
   ListObjectsReader reader = client.ListObjects(bucket_name, Versions(true));
@@ -659,7 +659,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -668,7 +668,7 @@ TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -678,7 +678,7 @@ TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -688,7 +688,7 @@ TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This operation should fail because the source object does not exist.
@@ -697,7 +697,7 @@ TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -708,7 +708,7 @@ TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -718,7 +718,7 @@ TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -730,7 +730,7 @@ TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
 
@@ -742,7 +742,7 @@ TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
   auto entity_name = MakeEntityName();
@@ -776,7 +776,7 @@ TEST_F(ObjectIntegrationTest, DeleteResumableUpload) {
 }
 
 TEST_F(ObjectIntegrationTest, InsertWithCustomTime) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -795,7 +795,7 @@ TEST_F(ObjectIntegrationTest, InsertWithCustomTime) {
 }
 
 TEST_F(ObjectIntegrationTest, WriteWithCustomTime) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 

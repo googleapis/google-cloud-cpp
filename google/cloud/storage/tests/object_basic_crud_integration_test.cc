@@ -41,7 +41,7 @@ using ObjectBasicCRUDIntegrationTest =
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto list_object_names = [&client, this] {
     std::vector<std::string> names;
@@ -186,7 +186,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteJSON) {
 
 /// @test Verify inserting an object does not set the customTime attribute.
 TEST_F(ObjectBasicCRUDIntegrationTest, InsertWithoutCustomTime) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   auto insert = client.InsertObject(bucket_name_, object_name, LoremIpsum(),
@@ -214,7 +214,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, InsertWithoutCustomTime) {
 
 /// @test Verify writing an object does not set the customTime attribute.
 TEST_F(ObjectBasicCRUDIntegrationTest, WriteWithoutCustomTime) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
   auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),

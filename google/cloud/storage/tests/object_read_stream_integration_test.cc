@@ -40,7 +40,7 @@ class ObjectReadStreamIntegrationTest
 };
 
 TEST_F(ObjectReadStreamIntegrationTest, MoveWorkingStream) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto constexpr kBlockSize = 128 * 1024;
   auto constexpr kBlockCount = 16;

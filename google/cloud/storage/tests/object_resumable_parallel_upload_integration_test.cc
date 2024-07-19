@@ -37,7 +37,7 @@ using ObjectResumableParallelUploadIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
 
@@ -74,7 +74,7 @@ TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumableParallelUpload) {
 }
 
 TEST_F(ObjectResumableParallelUploadIntegrationTest, ResumeParallelUploadFile) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
 

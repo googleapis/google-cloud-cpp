@@ -157,7 +157,7 @@ class ObjectFileMultiThreadedTest
 };
 
 TEST_F(ObjectFileMultiThreadedTest, Download) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const names = CreateNames();
 
   std::cout << "Create test objects " << std::flush;

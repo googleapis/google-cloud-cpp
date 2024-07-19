@@ -36,7 +36,7 @@ using ObjectComposeManyIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectComposeManyIntegrationTest, ComposeMany) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
 

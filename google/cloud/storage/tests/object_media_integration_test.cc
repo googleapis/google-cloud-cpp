@@ -49,7 +49,7 @@ class ObjectMediaIntegrationTest
 };
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomFilename();
 
@@ -84,7 +84,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   // The emulator always requires multiple iterations to copy this object.
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This produces a 64 KiB text object. Normally applications should download
@@ -118,7 +118,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
   // The emulator always requires multiple iterations to copy this object.
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This produces a 64 KiB text object. Normally applications should download
@@ -152,7 +152,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
 /// @test Read a relatively large object using chunks of different sizes.
 TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
   // The emulator always requires multiple iterations to copy this object.
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This produces a 4 MiB text object. Normally applications should download
@@ -206,7 +206,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
 
 /// @test Read the last chunk of an object.
 TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This produces an object larger than 3MiB, but with a size that is not a
@@ -250,7 +250,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
 
 /// @test Verify left over data in the spill buffer is read.
 TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This is a regression test for #3051, where the object was treated as
@@ -302,7 +302,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This produces an object larger than 3MiB, but with a size that is not a
@@ -346,7 +346,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunkReadLast) {
 
 /// @test Read the last chunk of an object by setting ReadLast option.
 TEST_F(ObjectMediaIntegrationTest, ReadLastTellg) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This produces an object larger than 3MiB, but with a size that is not a
@@ -373,7 +373,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastTellg) {
 
 /// @test Read an object by chunks of equal size.
 TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // This produces a 3.25 MiB text object.
@@ -621,7 +621,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StringView) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const contents = LoremIpsum();
 
@@ -641,7 +641,7 @@ TEST_F(ObjectMediaIntegrationTest, StringView) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, String) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   std::string const contents = LoremIpsum();
 
@@ -660,7 +660,7 @@ TEST_F(ObjectMediaIntegrationTest, String) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, CharConstPointer) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   std::string const contents = LoremIpsum();
 

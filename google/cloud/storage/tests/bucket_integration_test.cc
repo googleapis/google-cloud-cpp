@@ -426,7 +426,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 /// @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   // Create a Bucket, use the default settings for all fields. Fetch the full
   // attributes of the bucket.
@@ -458,7 +458,7 @@ TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
 /// @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   // Create a Bucket, use the default settings for all fields. Fetch the full
   // attributes of the bucket.
@@ -489,7 +489,7 @@ TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
 /// @test Verify that we can set the RPO in a Bucket.
 TEST_F(BucketIntegrationTest, RpoPatch) {
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto insert_meta = client.CreateBucketForProject(
       bucket_name, project_id_,
@@ -548,7 +548,7 @@ TEST_F(BucketIntegrationTest, MatchesPrefixSuffixPatch) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto metadata = client.GetBucketMetadata(bucket_name_);
   ASSERT_STATUS_OK(metadata);
@@ -560,7 +560,7 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto metadata = client.GetBucketMetadata(bucket_name_, Fields("name"));
   ASSERT_STATUS_OK(metadata);
@@ -883,7 +883,7 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
 
 TEST_F(BucketIntegrationTest, BucketLock) {
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   // Create a new bucket to run the test.
   auto meta =
@@ -909,7 +909,7 @@ TEST_F(BucketIntegrationTest, BucketLock) {
 
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   // This should fail because the bucket does not exist.
   StatusOr<BucketMetadata> status =
@@ -918,7 +918,7 @@ TEST_F(BucketIntegrationTest, BucketLockFailure) {
 }
 
 TEST_F(BucketIntegrationTest, ListFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   // Project IDs must end with a letter or number, test with an invalid ID.
   auto stream = client.ListBucketsForProject("Invalid-project-id-");
@@ -940,7 +940,7 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
 }
 
 TEST_F(BucketIntegrationTest, GetFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to get information about a bucket that does not exist, or at least
@@ -950,7 +950,7 @@ TEST_F(BucketIntegrationTest, GetFailure) {
 }
 
 TEST_F(BucketIntegrationTest, DeleteFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to delete a bucket that does not exist, or at least it is very unlikely
@@ -960,7 +960,7 @@ TEST_F(BucketIntegrationTest, DeleteFailure) {
 }
 
 TEST_F(BucketIntegrationTest, UpdateFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to update a bucket that does not exist, or at least it is very unlikely
@@ -970,7 +970,7 @@ TEST_F(BucketIntegrationTest, UpdateFailure) {
 }
 
 TEST_F(BucketIntegrationTest, PatchFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to update a bucket that does not exist, or at least it is very unlikely
@@ -980,7 +980,7 @@ TEST_F(BucketIntegrationTest, PatchFailure) {
 }
 
 TEST_F(BucketIntegrationTest, GetNativeBucketIamPolicyFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to get information about a bucket that does not exist, or at least it
@@ -990,7 +990,7 @@ TEST_F(BucketIntegrationTest, GetNativeBucketIamPolicyFailure) {
 }
 
 TEST_F(BucketIntegrationTest, SetNativeBucketIamPolicyFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
@@ -1001,7 +1001,7 @@ TEST_F(BucketIntegrationTest, SetNativeBucketIamPolicyFailure) {
 }
 
 TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
@@ -1011,7 +1011,7 @@ TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
 }
 
 TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // This operation should fail because the target bucket does not exist.
@@ -1020,7 +1020,7 @@ TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1030,7 +1030,7 @@ TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1040,7 +1040,7 @@ TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1052,7 +1052,7 @@ TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1064,7 +1064,7 @@ TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1074,7 +1074,7 @@ TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
 
   // This operation should fail because the target bucket does not exist.
@@ -1083,7 +1083,7 @@ TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1095,7 +1095,7 @@ TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1105,7 +1105,7 @@ TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1120,7 +1120,7 @@ TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 
@@ -1135,7 +1135,7 @@ TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
 

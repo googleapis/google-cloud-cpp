@@ -56,7 +56,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
   // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -80,7 +80,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
   // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -109,7 +109,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
   // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -133,7 +133,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
   // The emulator does not implement signed URLs.
   if (UsingEmulator()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 

@@ -54,7 +54,7 @@ std::string DebugRss() {
 }
 
 TEST_F(ObjectReadLargeIntegrationTest, LimitedMemoryGrowth) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME");
   ASSERT_TRUE(bucket_name.has_value());
 

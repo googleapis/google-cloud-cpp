@@ -49,7 +49,7 @@ class ObjectReadRangeIntegrationTest
 };
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadRanges) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto constexpr kChunk = 1000;
   auto constexpr kObjectSize = 10 * kChunk;
@@ -107,7 +107,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadRanges) {
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto constexpr kChunk = 1000;
   auto constexpr kObjectSize = 10 * kChunk;
@@ -161,7 +161,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffset) {
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto constexpr kChunk = 1000;
   auto constexpr kObjectSize = 10 * kChunk;
@@ -211,7 +211,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadLast) {
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadRangeSmall) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto const contents = LoremIpsum();
   auto const object_name = MakeRandomObjectName();
@@ -247,7 +247,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadRangeSmall) {
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffsetSmall) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto const contents = LoremIpsum();
   auto const object_name = MakeRandomObjectName();
@@ -281,7 +281,7 @@ TEST_F(ObjectReadRangeIntegrationTest, ReadFromOffsetSmall) {
 }
 
 TEST_F(ObjectReadRangeIntegrationTest, ReadLastSmall) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto const contents = LoremIpsum();
   auto const object_name = MakeRandomObjectName();

@@ -70,7 +70,7 @@ auto AlwaysRetry() {
 }
 
 TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto async = AsyncClient();
 
@@ -108,7 +108,7 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
 }
 
 TEST_F(AsyncClientIntegrationTest, ComposeObject) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto o1 = MakeRandomObjectName();
   auto o2 = MakeRandomObjectName();
   auto destination = MakeRandomObjectName();

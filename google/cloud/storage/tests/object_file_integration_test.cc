@@ -58,7 +58,7 @@ Client ClientWithSimpleUploadDisabled() {
 }
 
 TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomFilename();
 
@@ -90,7 +90,7 @@ TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, DownloadFileFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomFilename();
 
@@ -99,7 +99,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileFailure) {
 }
 
 TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<ObjectMetadata> meta =
@@ -117,7 +117,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
 
 TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
 #if GTEST_OS_LINUX
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<ObjectMetadata> meta =
@@ -143,7 +143,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFile) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -174,7 +174,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -213,7 +213,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileEmpty) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -239,7 +239,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileEmpty) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileMissingFileFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -249,7 +249,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileMissingFileFailure) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -280,7 +280,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
   // do on Linux, and hard to do on the other platforms we support, so just run
   // the test there.
 #if GTEST_OS_LINUX || GTEST_OS_MAC
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -343,7 +343,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -468,7 +468,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableUploadFailure) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadPortionRegularFile) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -504,7 +504,7 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   // support this behavior with gRPC, so we need to skip the test in this case.
   if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
@@ -544,7 +544,7 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileWithContentType) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 

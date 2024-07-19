@@ -46,7 +46,7 @@ class AutoFinalizeIntegrationTest
 };
 
 TEST_F(AutoFinalizeIntegrationTest, DefaultIsEnabled) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
@@ -66,7 +66,7 @@ TEST_F(AutoFinalizeIntegrationTest, DefaultIsEnabled) {
 }
 
 TEST_F(AutoFinalizeIntegrationTest, ExplicitlyEnabled) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
@@ -87,7 +87,7 @@ TEST_F(AutoFinalizeIntegrationTest, ExplicitlyEnabled) {
 }
 
 TEST_F(AutoFinalizeIntegrationTest, Disabled) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto const object_name = MakeRandomObjectName();
   auto constexpr kQuantum = internal::UploadChunkRequest::kChunkSizeQuantum;

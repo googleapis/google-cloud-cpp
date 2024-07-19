@@ -42,7 +42,7 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   // own tests.
   if (UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
@@ -64,7 +64,7 @@ TEST_F(ObjectPlentyClientsSeriallyIntegrationTest, PlentyClientsSerially) {
   }
   std::size_t delta = 0;
   for (int i = 0; i != 100; ++i) {
-    auto read_client = MakeIntegrationTestClient(Options{});
+    auto read_client = MakeIntegrationTestClient();
     auto stream = read_client.ReadObject(bucket_name_, object_name);
     char c;
     stream.read(&c, 1);

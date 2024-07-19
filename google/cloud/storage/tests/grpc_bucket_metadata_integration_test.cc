@@ -51,7 +51,7 @@ TEST_F(GrpcBucketMetadataIntegrationTest, BucketMetadataCRUD) {
   ASSERT_THAT(project_name, Not(IsEmpty()))
       << "GOOGLE_CLOUD_PROJECT is not set";
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto bucket_name = MakeRandomBucketName();
   auto insert = client.CreateBucketForProject(bucket_name, project_name,
@@ -145,7 +145,7 @@ TEST_F(GrpcBucketMetadataIntegrationTest, PatchLabels) {
   ASSERT_THAT(project_name, Not(IsEmpty()))
       << "GOOGLE_CLOUD_PROJECT is not set";
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
 
   auto insert = client.CreateBucketForProject(bucket_name, project_name,

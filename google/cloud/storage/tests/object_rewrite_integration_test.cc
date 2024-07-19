@@ -49,7 +49,7 @@ class ObjectRewriteIntegrationTest
 };
 
 TEST_F(ObjectRewriteIntegrationTest, Copy) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto source_object_name = MakeRandomObjectName();
   auto destination_object_name = MakeRandomObjectName();
 
@@ -81,7 +81,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
 
@@ -110,7 +110,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
 
@@ -140,7 +140,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
 
@@ -175,7 +175,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
 
@@ -208,7 +208,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
 
@@ -241,7 +241,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
 
@@ -270,7 +270,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -295,7 +295,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   std::string content = LoremIpsum();
@@ -325,7 +325,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto source_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -349,7 +349,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
   // TODO(#14385) - the emulator does not support this feature for gRPC.
   if (UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto source_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -377,7 +377,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
   // The emulator always requires multiple iterations to copy this object.
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto source_name = MakeRandomObjectName();
 
   std::string large_text;
@@ -417,7 +417,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto source_object_name = MakeRandomObjectName();
   auto destination_object_name = MakeRandomObjectName();
 
@@ -428,7 +428,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto composed_object_name = MakeRandomObjectName();
   std::vector<ComposeSourceObject> source_objects = {{object_name, {}, {}},
@@ -441,7 +441,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto source_object_name = MakeRandomObjectName();
   auto destination_object_name = MakeRandomObjectName();
 

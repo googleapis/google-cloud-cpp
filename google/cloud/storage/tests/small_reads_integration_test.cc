@@ -41,7 +41,7 @@ class SmallReadsIntegrationTest
 
 /// @test This is a repro for #5096, the download should not stall
 TEST_F(SmallReadsIntegrationTest, Repro5096) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // Create an object with enough data to repro the problem.
@@ -83,7 +83,7 @@ TEST_F(SmallReadsIntegrationTest, Repro5096) {
 }
 
 TEST_F(SmallReadsIntegrationTest, ReadFullSingleRead) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto const contents = LoremIpsum();
 
@@ -106,7 +106,7 @@ TEST_F(SmallReadsIntegrationTest, ReadFullSingleRead) {
 }
 
 TEST_F(SmallReadsIntegrationTest, ReadFullByChar) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // Create a small object, read it all in the first .read() call
