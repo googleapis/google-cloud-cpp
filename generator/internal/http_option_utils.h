@@ -39,8 +39,6 @@ struct HttpExtensionInfo {
   std::string url_path;
   std::vector<std::pair<std::string, std::string>> field_substitutions;
   std::string body;
-  std::string path_prefix;
-  std::string path_suffix;
   std::vector<RestPathPiece> rest_path;
   std::string rest_path_verb;
 };

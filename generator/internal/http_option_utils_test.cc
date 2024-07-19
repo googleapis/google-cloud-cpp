@@ -445,8 +445,6 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithPrefixAndSuffix) {
               Eq("projects/*/instances/*"));
   EXPECT_THAT(extension_info.body, Eq("*"));
   EXPECT_THAT(extension_info.http_verb, Eq("Post"));
-  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
-  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -464,8 +462,6 @@ TEST_F(HttpOptionUtilsTest,
   EXPECT_THAT(extension_info.field_substitutions[0].second, Eq("project"));
   EXPECT_THAT(extension_info.body, Eq("body"));
   EXPECT_THAT(extension_info.http_verb, Eq("Post"));
-  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/projects/"));
-  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -486,8 +482,6 @@ TEST_F(HttpOptionUtilsTest,
   EXPECT_THAT(extension_info.field_substitutions[1].second, Eq("instance"));
   EXPECT_THAT(extension_info.body, Eq("*"));
   EXPECT_THAT(extension_info.http_verb, Eq("Post"));
-  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/projects/"));
-  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
 }
 
 TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithOnlyPrefix) {
@@ -506,8 +500,6 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithOnlyPrefix) {
               Eq("projects/*/instances/*/backups/*"));
   EXPECT_THAT(extension_info.body, Eq(""));
   EXPECT_THAT(extension_info.http_verb, Eq("Delete"));
-  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
-  EXPECT_THAT(extension_info.path_suffix, Eq(""));
 }
 
 TEST_F(HttpOptionUtilsTest, ParseHttpExtensionSimpleInfo) {
