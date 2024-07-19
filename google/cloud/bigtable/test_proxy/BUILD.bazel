@@ -12,41 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load(
-    "@com_google_googleapis_imports//:imports.bzl",
-    "cc_grpc_library",
-    "cc_proto_library",
-)
-load("@rules_proto//proto:defs.bzl", "proto_library")
-
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-# Defines an interface for driving Cloud Bigtable client bindings, as
-# implemented in different languages.
-proto_library(
-    name = "test_proxy_proto",
-    srcs = ["test_proxy.proto"],
-    deps = [
-        "@com_google_googleapis//google/api:client_proto",
-        "@com_google_googleapis//google/bigtable/v2:bigtable_proto",
-        "@com_google_googleapis//google/rpc:status_proto",
-        "@com_google_protobuf//:duration_proto",
-    ],
-)
-
-cc_proto_library(
-    name = "test_proxy_cc_proto",
-    deps = [":test_proxy_proto"],
-)
-
-cc_grpc_library(
-    name = "test_proxy_cc_grpc",
-    srcs = [":test_proxy_proto"],
-    grpc_only = True,
-    deps = [":test_proxy_cc_proto"],
-)
 
 # Client proxies for CBT.
 cc_library(
@@ -55,8 +23,9 @@ cc_library(
     srcs = ["cbt_test_proxy.cc"],
     hdrs = ["cbt_test_proxy.h"],
     deps = [
-        ":test_proxy_cc_grpc",
-        ":test_proxy_cc_proto",
+        "//protos/google/cloud/bigtable/test_proxy:test_proxy_cc_grpc",
+        "//protos/google/cloud/bigtable/test_proxy:test_proxy_cc_proto",
+        "//protos:system_includes",
         "//:bigtable",
     ],
 )

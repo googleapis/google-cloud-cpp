@@ -12,24 +12,6 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-include(CompileProtos)
-google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
-
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_bigtable_test_proxy_protos
-    test_proxy.proto
-    PROTO_PATH_DIRECTORIES
-    ${PROTO_INCLUDE_DIR}
-    ${PROJECT_SOURCE_DIR}
-    ${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download
-    ${PROJECT_SOURCE_DIR}/google/cloud/bigtable/test_proxy)
-target_link_libraries(
-    google_cloud_cpp_bigtable_test_proxy_protos
-    PUBLIC google-cloud-cpp::api_client_protos
-           google-cloud-cpp::bigtable_protos
-           google-cloud-cpp::rpc_status_protos)
-set_target_properties(google_cloud_cpp_bigtable_test_proxy_protos
-                      PROPERTIES CXX_CLANG_TIDY "")
 
 add_library(cbt_test_proxy cbt_test_proxy.cc cbt_test_proxy.h)
 target_link_libraries(
