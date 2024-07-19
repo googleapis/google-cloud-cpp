@@ -75,11 +75,6 @@ StorageIntegrationTest::MakeIntegrationTestClient(google::cloud::Options opts) {
   return Client(std::move(opts));
 }
 
-google::cloud::StatusOr<google::cloud::storage::Client>
-StorageIntegrationTest::MakeIntegrationTestClient() {
-  return MakeIntegrationTestClient(Options{});
-}
-
 google::cloud::storage::Client
 StorageIntegrationTest::MakeBucketIntegrationTestClient() {
   if (UsingEmulator()) return MakeIntegrationTestClient(Options{});
