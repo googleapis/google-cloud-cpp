@@ -414,30 +414,6 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
     out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
   };
 
-  auto first_variable = std::find_if(
-      parsed_http_rule->segments.begin(), parsed_http_rule->segments.end(),
-      [](std::shared_ptr<PathTemplate::Segment> const& s) {
-        return absl::holds_alternative<PathTemplate::Variable>(s->value);
-      });
-  PathTemplate path_prefix;
-  path_prefix.segments = PathTemplate::Segments{
-      parsed_http_rule->segments.begin(), first_variable};
-  info.path_prefix = absl::StrCat(
-      "/", absl::StrJoin(path_prefix.segments, "/", segment_formatter), "/");
-
-  auto last_variable = std::find_if(
-      parsed_http_rule->segments.rbegin(), parsed_http_rule->segments.rend(),
-      [](std::shared_ptr<PathTemplate::Segment> const& s) {
-        return absl::holds_alternative<PathTemplate::Variable>(s->value);
-      });
-  PathTemplate path_suffix;
-  path_suffix.segments = PathTemplate::Segments{
-      parsed_http_rule->segments.rbegin(), last_variable};
-  if (!path_suffix.segments.empty()) {
-    info.path_suffix = absl::StrCat(
-        "/", absl::StrJoin(path_suffix.segments, "/", segment_formatter));
-  }
-
   auto rest_path_visitor = RestPathVisitor(*api_version, info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
     if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {
