@@ -46,7 +46,7 @@ class ObjectResumableWriteIntegrationTest
 };
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -73,7 +73,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -90,7 +90,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -115,7 +115,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -150,7 +150,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeWithPartial) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto constexpr kUploadQuantum = 256 * 1024;
   auto const q0 = MakeRandomData(kUploadQuantum);
@@ -203,7 +203,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeWithPartial) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto constexpr kUploadQuantum = 256 * 1024;
   auto const payload =
@@ -238,7 +238,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   // Start a resumable upload and finalize the upload.
   std::string session_id;
@@ -267,7 +267,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
 
@@ -400,7 +400,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
   if (UsingEmulator() || UsingGrpc()) GTEST_SKIP();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto constexpr kChunkSize = 256 * 1024L;
   auto const chunk = MakeRandomData(kChunkSize);

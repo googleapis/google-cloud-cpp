@@ -40,7 +40,7 @@ using ObjectParallelUploadIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ObjectParallelUploadIntegrationTest, ParallelUpload) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
   testing::TempFile temp_file(LoremIpsum());
@@ -69,7 +69,7 @@ TEST_F(ObjectParallelUploadIntegrationTest, ParallelUpload) {
 }
 
 TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   // Create the local file, we overwrite its contents manually because creating
   // a large block is fairly tedious.
@@ -101,7 +101,7 @@ TEST_F(ObjectParallelUploadIntegrationTest, DefaultAllowOverwrites) {
 }
 
 TEST_F(ObjectParallelUploadIntegrationTest, PreconditionsPreventOverwrites) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   // Create the local file, we overwrite its contents manually because creating
   // a large block is fairly tedious.

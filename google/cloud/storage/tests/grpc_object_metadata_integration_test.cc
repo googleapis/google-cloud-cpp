@@ -48,7 +48,7 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   ASSERT_THAT(bucket_name, Not(IsEmpty()))
       << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   auto rewrite_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
@@ -121,7 +121,7 @@ TEST_F(GrpcObjectMetadataIntegrationTest, PatchMetadata) {
   ASSERT_THAT(bucket_name, Not(IsEmpty()))
       << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
 
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // Use the full projection to get consistent behavior out of gRPC and REST.

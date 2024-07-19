@@ -53,7 +53,7 @@ class ObjectInsertPreconditionsIntegrationTest
 };
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
 
@@ -69,7 +69,7 @@ TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
 
@@ -85,7 +85,7 @@ TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchFailure) {
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
 
@@ -102,7 +102,7 @@ TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
 
@@ -119,7 +119,7 @@ TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
 
@@ -136,7 +136,7 @@ TEST_F(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
 }
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
 
@@ -153,7 +153,7 @@ TEST_F(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest,
        IfMetagenerationNotMatchSuccess) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
 
@@ -171,7 +171,7 @@ TEST_F(ObjectInsertPreconditionsIntegrationTest,
 
 TEST_F(ObjectInsertPreconditionsIntegrationTest,
        IfMetagenerationNotMatchFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const expected_text = LoremIpsum();
 

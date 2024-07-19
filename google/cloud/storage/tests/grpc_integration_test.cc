@@ -63,7 +63,7 @@ class GrpcIntegrationTest
 
 TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -94,7 +94,7 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
 
 TEST_P(GrpcIntegrationTest, WriteResume) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -142,7 +142,7 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
 
 TEST_P(GrpcIntegrationTest, InsertLarge) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -165,7 +165,7 @@ TEST_P(GrpcIntegrationTest, InsertLarge) {
 
 TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -192,7 +192,7 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
 }
 
 TEST_P(GrpcIntegrationTest, QuotaUser) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   auto metadata =
@@ -207,7 +207,7 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
   auto const* fields = UsingGrpc() ? "resource.bucket,resource.name,resource."
                                      "generation,resource.content_type"
                                    : "bucket,name,generation,contentType";
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   auto metadata = client.InsertObject(

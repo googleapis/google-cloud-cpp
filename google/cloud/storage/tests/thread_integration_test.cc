@@ -43,7 +43,7 @@ class ThreadIntegrationTest
                             ObjectNameList const& group,
                             std::string const& contents) {
     // Create our own client so no state is shared with the other threads.
-    auto client = MakeIntegrationTestClient(Options{});
+    auto client = MakeIntegrationTestClient();
     for (auto const& object_name : group) {
       (void)client.InsertObject(bucket_name, object_name, contents,
                                 IfGenerationMatch(0));
@@ -53,7 +53,7 @@ class ThreadIntegrationTest
   static void DeleteObjects(std::string const& bucket_name,
                             ObjectNameList const& group) {
     // Create our own client so no state is shared with the other threads.
-    auto client = MakeIntegrationTestClient(Options{});
+    auto client = MakeIntegrationTestClient();
     for (auto const& object_name : group) {
       (void)client.DeleteObject(bucket_name, object_name);
     }
@@ -93,7 +93,7 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
 TEST_F(ThreadIntegrationTest, Unshared) {
   std::string bucket_name = MakeRandomBucketName();
   auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   StatusOr<BucketMetadata> meta = bucket_client.CreateBucketForProject(
       bucket_name, project_id_,

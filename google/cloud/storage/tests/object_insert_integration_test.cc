@@ -82,7 +82,7 @@ class ObjectInsertIntegrationTest
 };
 
 TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -102,7 +102,7 @@ TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -121,7 +121,7 @@ TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -141,7 +141,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -161,7 +161,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
   std::string expected = LoremIpsum();
 
@@ -186,7 +186,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<ObjectMetadata> meta = client.InsertObject(
@@ -203,7 +203,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<BucketMetadata> bucket =
@@ -225,7 +225,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<BucketMetadata> bucket =
@@ -247,7 +247,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<ObjectMetadata> meta = client.InsertObject(
@@ -265,7 +265,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<ObjectMetadata> meta = client.InsertObject(
@@ -283,7 +283,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   StatusOr<ObjectMetadata> meta = client.InsertObject(
@@ -449,7 +449,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertSimpleWithUserIpBlank) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
@@ -463,7 +463,7 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
 }
 
 TEST_P(ObjectInsertIntegrationTest, InsertFailure) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();

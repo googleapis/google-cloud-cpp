@@ -46,7 +46,7 @@ class ServiceAccountIntegrationTest
 };
 
 TEST_F(ServiceAccountIntegrationTest, Get) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   StatusOr<ServiceAccount> a1 = client.GetServiceAccountForProject(project_id_);
   ASSERT_STATUS_OK(a1);

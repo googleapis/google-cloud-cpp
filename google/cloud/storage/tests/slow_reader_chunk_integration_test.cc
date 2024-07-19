@@ -43,7 +43,7 @@ class SlowReaderChunkIntegrationTest
 };
 
 TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // Construct an object too large to fit in the first chunk.

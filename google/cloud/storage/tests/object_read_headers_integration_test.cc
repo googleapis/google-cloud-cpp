@@ -55,7 +55,7 @@ class ObjectReadHeadersIntegrationTest
 };
 
 TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJson) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
 
   auto insert = client.InsertObject(bucket_name(), object_name, LoremIpsum(),
@@ -76,7 +76,7 @@ TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJson) {
 }
 
 TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJsonRanged) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
 
   auto insert = client.InsertObject(bucket_name(), object_name, LoremIpsum(),
@@ -97,7 +97,7 @@ TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJsonRanged) {
 }
 
 TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
 
   auto insert = client.InsertObject(bucket_name(), object_name, LoremIpsum(),
@@ -133,7 +133,7 @@ TEST_F(ObjectReadHeadersIntegrationTest, SmokeTest) {
 }
 
 TEST_F(ObjectReadHeadersIntegrationTest, NoDuplicatePeers) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto const object_name = MakeRandomObjectName();
   auto const block = MakeRandomData(1024 * 1024L);
   auto constexpr kBlockCount = 128;

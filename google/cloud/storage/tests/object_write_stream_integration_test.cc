@@ -40,7 +40,7 @@ class ObjectWriteStreamIntegrationTest
 };
 
 TEST_F(ObjectWriteStreamIntegrationTest, MoveWorkingStream) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto const object_name = MakeRandomObjectName();
   auto constexpr kBlockSize = 256 * 1024;
@@ -74,7 +74,7 @@ TEST_F(ObjectWriteStreamIntegrationTest, MoveWorkingStream) {
 }
 
 TEST_F(ObjectWriteStreamIntegrationTest, DoubleClose) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
 
   auto const object_name = MakeRandomObjectName();
   auto constexpr kBlockSize = 256 * 1024;

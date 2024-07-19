@@ -77,7 +77,7 @@ StorageIntegrationTest::MakeIntegrationTestClient(google::cloud::Options opts) {
 
 google::cloud::storage::Client
 StorageIntegrationTest::MakeBucketIntegrationTestClient() {
-  if (UsingEmulator()) return MakeIntegrationTestClient(Options{});
+  if (UsingEmulator()) return MakeIntegrationTestClient();
 
   auto constexpr kInitialDelay = std::chrono::seconds(5);
   auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);

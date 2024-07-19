@@ -35,7 +35,7 @@ using ErrorParsingIntegrationTest =
     ::google::cloud::storage::testing::ObjectIntegrationTest;
 
 TEST_F(ErrorParsingIntegrationTest, FailureContainsErrorInfo) {
-  auto client = MakeIntegrationTestClient(Options{});
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   // Start a resumable upload and finalize the upload.
