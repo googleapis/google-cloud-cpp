@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/object_descriptor_impl.h"
 #include "google/cloud/storage/internal/async/handle_redirect_error.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include <google/rpc/status.pb.h>
 #include <utility>
 
@@ -136,9 +137,9 @@ void ObjectDescriptorImpl::DoFinish(std::unique_lock<std::mutex> lk) {
 }
 
 void ObjectDescriptorImpl::OnFinish(Status const& status) {
-  using Action = storage_experimental::ResumePolicy::Action;
-  auto const action = resume_policy_->OnFinish(status);
-  if (action == Action::kContinue) return Resume(status);
+  auto proto_status = ExtractGrpcStatus(status);
+
+  if (IsResumable(status, proto_status)) return Resume(proto_status);
   std::unique_lock<std::mutex> lk(mu_);
   auto copy = CopyActiveRanges(std::move(lk));
   for (auto const& kv : copy) {
@@ -146,9 +147,7 @@ void ObjectDescriptorImpl::OnFinish(Status const& status) {
   }
 }
 
-void ObjectDescriptorImpl::Resume(Status const& status) {
-  auto proto_status = ExtractGrpcStatus(status);
-
+void ObjectDescriptorImpl::Resume(google::rpc::Status const& proto_status) {
   std::unique_lock<std::mutex> lk(mu_);
   // This call needs to happen inside the lock, as it may modify
   // `read_object_spec_`.
@@ -174,6 +173,26 @@ void ObjectDescriptorImpl::OnResume(StatusOr<OpenStreamResult> result) {
   // TODO(#36) - this should be done without release the lock.
   Flush(std::move(lk));
   OnRead(std::move(result->first_response));
+}
+
+bool ObjectDescriptorImpl::IsResumable(
+    Status const& status, google::rpc::Status const& proto_status) {
+  for (auto const& any : proto_status.details()) {
+    auto error = google::storage::v2::BidiReadObjectError{};
+    if (!any.UnpackTo(&error)) continue;
+    auto ranges = CopyActiveRanges();
+    for (auto range : CopyActiveRanges()) {
+      for (auto range_error : error.read_range_errors()) {
+        if (range.first != range_error.read_id()) continue;
+        range.second->OnFinish(MakeStatusFromRpcError(range_error.status()));
+      }
+    }
+    CleanupDoneRanges(std::unique_lock<std::mutex>(mu_));
+    return true;
+  }
+
+  return resume_policy_->OnFinish(status) ==
+         storage_experimental::ResumePolicy::kContinue;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

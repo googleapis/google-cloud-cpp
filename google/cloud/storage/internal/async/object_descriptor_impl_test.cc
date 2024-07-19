@@ -39,6 +39,7 @@ using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::ElementsAre;
 using ::testing::NotNull;
@@ -1023,6 +1024,164 @@ TEST(ObjectDescriptorImpl, ResumeUsesRouting) {
 
   // The ranges fails with the same error.
   EXPECT_THAT(s1->Read().get(), VariantWith<Status>(PermanentError()));
+}
+
+Status PartialFailure(std::int64_t read_id) {
+  auto details = [&] {
+    auto error = google::storage::v2::BidiReadObjectError{};
+    auto& range_error = *error.add_read_range_errors();
+    range_error.set_read_id(read_id);
+    range_error.mutable_status()->set_code(grpc::INVALID_ARGUMENT);
+    range_error.mutable_status()->set_message("out of range read");
+
+    auto details_proto = google::rpc::Status{};
+    details_proto.set_code(grpc::INVALID_ARGUMENT);
+    details_proto.set_message("some reads are out of range");
+    details_proto.add_details()->PackFrom(error);
+
+    std::string details;
+    details_proto.SerializeToString(&details);
+    return details;
+  };
+
+  return google::cloud::MakeStatusFromRpcError(
+      grpc::Status(grpc::INVALID_ARGUMENT, "redirect", details()));
+}
+
+/// @test When the underlying stream fails with unrecoverable errors all ranges
+/// fail.
+TEST(ObjectDescriptorImpl, RecoverFromPartialFailure) {
+  auto constexpr kLimit = 100;
+  auto constexpr kOffset = 20000;
+  auto constexpr kReadSpecText = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    generation: 24
+    if_generation_match: 42
+  )pb";
+  auto constexpr kRequest1 = R"pb(
+    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+  )pb";
+  auto constexpr kRequest2 = R"pb(
+    read_ranges { read_id: 2 read_offset: 4000000 read_limit: 100 }
+    read_ranges { read_id: 3 read_offset: 60000 read_limit: 100 }
+  )pb";
+
+  // The resume request should include all the remaining ranges.
+  auto constexpr kResumeRequest = R"pb(
+    read_object_spec {
+      bucket: "test-only-invalid"
+      object: "test-object"
+      generation: 24
+      if_generation_match: 42
+    }
+    read_ranges { read_id: 1 read_offset: 20000 read_limit: 100 }
+    read_ranges { read_id: 3 read_offset: 60000 read_limit: 100 }
+  )pb";
+
+  AsyncSequencer<bool> sequencer;
+  auto stream = std::make_unique<MockStream>();
+  EXPECT_CALL(*stream, Write)
+      .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        auto expected = Request{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kRequest1, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("Write[1]").then([](auto f) {
+          return f.get();
+        });
+      })
+      .WillOnce([&](Request const& request, grpc::WriteOptions) {
+        auto expected = Request{};
+        EXPECT_TRUE(TextFormat::ParseFromString(kRequest2, &expected));
+        EXPECT_THAT(request, IsProtoEqual(expected));
+        return sequencer.PushBack("Write[2]").then([](auto f) {
+          return f.get();
+        });
+      });
+
+  EXPECT_CALL(*stream, Read).WillOnce([&]() {
+    return sequencer.PushBack("Read[1]").then(
+        [](auto) { return absl::optional<Response>{}; });
+  });
+
+  EXPECT_CALL(*stream, Finish).WillOnce([&sequencer]() {
+    return sequencer.PushBack("Finish").then([](auto) {
+      // Return an error, indicating that range #2 is invalid. It should
+      // resume with the new ranges.
+      return PartialFailure(2);
+    });
+  });
+  EXPECT_CALL(*stream, Cancel).Times(1);
+
+  MockFactory factory;
+  EXPECT_CALL(factory, Call).WillOnce([&sequencer](Request const& request) {
+    auto expected = Request{};
+    EXPECT_TRUE(TextFormat::ParseFromString(kResumeRequest, &expected));
+    EXPECT_THAT(request, IsProtoEqualModuloRepeatedFieldOrdering(expected));
+    // Resume with an unrecoverable failure to simplify the test.
+    return sequencer.PushBack("Factory").then(
+        [&](auto) { return StatusOr<OpenStreamResult>(PermanentError()); });
+  });
+
+  auto spec = google::storage::v2::BidiReadObjectSpec{};
+  EXPECT_TRUE(TextFormat::ParseFromString(kReadSpecText, &spec));
+  auto tested = std::make_shared<ObjectDescriptorImpl>(
+      NoResume(), factory.AsStdFunction(), spec,
+      std::make_shared<OpenStream>(std::move(stream)));
+  tested->Start(Response{});
+  EXPECT_FALSE(tested->metadata().has_value());
+
+  auto read = sequencer.PopFrontWithName();
+  EXPECT_EQ(read.second, "Read[1]");
+
+  auto s1 = tested->Read({kOffset, kLimit});
+  ASSERT_THAT(s1, NotNull());
+
+  // Asking for data should result in an immediate `Write()` message with the
+  // first range.
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write[1]");
+
+  // Additional ranges are queued until the first `Write()` call is completed.
+  auto s2 = tested->Read({2 * kOffset * 100, kLimit});
+  ASSERT_THAT(s2, NotNull());
+
+  auto s3 = tested->Read({3 * kOffset, kLimit});
+  ASSERT_THAT(s3, NotNull());
+
+  // Complete the first `Write()` call, that should result in a second
+  // `Write()` call with the two additional ranges.
+  next.first.set_value(true);
+
+  // And then the follow up `Write()` message with the queued information.
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Write[2]");
+  next.first.set_value(true);
+
+  auto s1r1 = s1->Read();
+  auto s2r1 = s2->Read();
+  auto s3r1 = s3->Read();
+  EXPECT_FALSE(s1r1.is_ready());
+  EXPECT_FALSE(s2r1.is_ready());
+  EXPECT_FALSE(s3r1.is_ready());
+
+  // Simulate a failure.
+  read.first.set_value(false);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Finish");
+  next.first.set_value(true);
+
+  // Range 2 should fail with the invalid argument error.
+  EXPECT_THAT(s2r1.get(),
+              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Factory");
+  next.first.set_value(true);
+
+  // All the other ranges fail with the same error.
+  EXPECT_THAT(s1r1.get(), VariantWith<Status>(PermanentError()));
+  EXPECT_THAT(s3r1.get(), VariantWith<Status>(PermanentError()));
 }
 
 }  // namespace
