@@ -84,8 +84,10 @@ class ObjectDescriptorImpl
   void CleanupDoneRanges(std::unique_lock<std::mutex> const&);
   void DoFinish(std::unique_lock<std::mutex>);
   void OnFinish(Status const& status);
-  void Resume(Status const& status);
+  void Resume(google::rpc::Status const& proto_status);
   void OnResume(StatusOr<OpenStreamResult> result);
+  bool IsResumable(Status const& status,
+                   google::rpc::Status const& proto_status);
 
   std::unique_ptr<storage_experimental::ResumePolicy> resume_policy_;
   OpenStreamFactory make_stream_;
