@@ -105,7 +105,11 @@ DefaultRoutineServiceRestStub::ListRoutines(
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id(), "/", "routines"),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_token", request.page_token()),
+          {std::make_pair("max_results",
+                          (request.has_max_results()
+                               ? std::to_string(request.max_results().value())
+                               : "")),
+           std::make_pair("page_token", request.page_token()),
            std::make_pair("filter", request.filter())}));
 }
 

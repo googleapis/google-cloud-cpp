@@ -471,7 +471,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListRegionInstanceGroupManagers(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          (request.return_partial_success() ? "1" : "0"))}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -495,7 +495,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListErrors(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          (request.return_partial_success() ? "1" : "0"))}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -521,7 +521,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListManagedInstances(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          (request.return_partial_success() ? "1" : "0"))}));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -547,7 +547,7 @@ DefaultRegionInstanceGroupManagersRestStub::ListPerInstanceConfigs(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          (request.return_partial_success() ? "1" : "0"))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

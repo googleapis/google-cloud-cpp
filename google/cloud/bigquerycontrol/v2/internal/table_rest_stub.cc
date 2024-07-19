@@ -82,7 +82,7 @@ DefaultTableServiceRestStub::PatchTable(
                    request.dataset_id(), "/", "tables", "/",
                    request.table_id()),
       rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "autodetect_schema", request.autodetect_schema() ? "1" : "0")}));
+          "autodetect_schema", (request.autodetect_schema() ? "1" : "0"))}));
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
@@ -98,7 +98,7 @@ DefaultTableServiceRestStub::UpdateTable(
                    request.dataset_id(), "/", "tables", "/",
                    request.table_id()),
       rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "autodetect_schema", request.autodetect_schema() ? "1" : "0")}));
+          "autodetect_schema", (request.autodetect_schema() ? "1" : "0"))}));
 }
 
 Status DefaultTableServiceRestStub::DeleteTable(
@@ -126,7 +126,11 @@ DefaultTableServiceRestStub::ListTables(
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id(), "/", "tables"),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_token", request.page_token())}));
+          {std::make_pair("max_results",
+                          (request.has_max_results()
+                               ? std::to_string(request.max_results().value())
+                               : "")),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

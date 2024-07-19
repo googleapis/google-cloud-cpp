@@ -103,7 +103,7 @@ Status DefaultDatasetServiceRestStub::DeleteDataset(
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id()),
       rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "delete_contents", request.delete_contents() ? "1" : "0")}));
+          "delete_contents", (request.delete_contents() ? "1" : "0"))}));
 }
 
 StatusOr<google::cloud::bigquery::v2::DatasetList>
@@ -117,8 +117,12 @@ DefaultDatasetServiceRestStub::ListDatasets(
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "datasets"),
       rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("page_token", request.page_token()),
-           std::make_pair("all", request.all() ? "1" : "0"),
+          {std::make_pair("max_results",
+                          (request.has_max_results()
+                               ? std::to_string(request.max_results().value())
+                               : "")),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("all", (request.all() ? "1" : "0")),
            std::make_pair("filter", request.filter())}));
 }
 

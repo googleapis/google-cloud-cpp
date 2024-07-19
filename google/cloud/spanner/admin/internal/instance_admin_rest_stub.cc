@@ -94,7 +94,7 @@ DefaultInstanceAdminRestStub::AsyncCreateInstanceConfig(
                 {std::make_pair("instance_config_id",
                                 request.instance_config_id()),
                  std::make_pair("validate_only",
-                                request.validate_only() ? "1" : "0")})));
+                                (request.validate_only() ? "1" : "0"))})));
       },
       std::move(p),
       service_,
@@ -120,7 +120,7 @@ DefaultInstanceAdminRestStub::CreateInstanceConfig(
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("instance_config_id", request.instance_config_id()),
            std::make_pair("validate_only",
-                          request.validate_only() ? "1" : "0")}));
+                          (request.validate_only() ? "1" : "0"))}));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -140,7 +140,7 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstanceConfig(
                          rest_internal::DetermineApiVersion("v1", *options),
                          "/", request.instance_config().name()),
             rest_internal::TrimEmptyQueryParameters({std::make_pair(
-                "validate_only", request.validate_only() ? "1" : "0")})));
+                "validate_only", (request.validate_only() ? "1" : "0"))})));
       },
       std::move(p),
       service_,
@@ -164,7 +164,7 @@ DefaultInstanceAdminRestStub::UpdateInstanceConfig(
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.instance_config().name()),
       rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "validate_only", request.validate_only() ? "1" : "0")}));
+          "validate_only", (request.validate_only() ? "1" : "0"))}));
 }
 
 Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
@@ -179,7 +179,7 @@ Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("etag", request.etag()),
            std::make_pair("validate_only",
-                          request.validate_only() ? "1" : "0")}));
+                          (request.validate_only() ? "1" : "0"))}));
 }
 
 StatusOr<

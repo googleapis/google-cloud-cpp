@@ -73,7 +73,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncAddAssociation(
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair(
                          "replace_existing_association",
-                         request.replace_existing_association() ? "1" : "0"),
+                         (request.replace_existing_association() ? "1" : "0")),
                      std::make_pair("request_id", request.request_id())})));
       },
       std::move(p),
@@ -103,7 +103,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AddAssociation(
                    request.firewall_policy(), "/", "addAssociation"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("replace_existing_association",
-                          request.replace_existing_association() ? "1" : "0"),
+                          (request.replace_existing_association() ? "1" : "0")),
            std::make_pair("request_id", request.request_id())}));
 }
 
@@ -435,7 +435,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::ListRegionNetworkFirewallPolicies(
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0")}));
+                          (request.return_partial_success() ? "1" : "0"))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

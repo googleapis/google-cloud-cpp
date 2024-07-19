@@ -61,7 +61,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/token:generate"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("name", request.name()),
         std::make_pair("audience", request.audience()),
-        std::make_pair("include_email", request.include_email() ? "1" : "0")}));
+        std::make_pair("include_email", (request.include_email() ? "1" : "0"))}));
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>

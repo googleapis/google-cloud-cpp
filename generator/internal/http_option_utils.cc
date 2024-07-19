@@ -195,7 +195,52 @@ void SetHttpDerivedMethodVars(
   absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
 }
 
-// Request fields not appering in the path may not wind up as part of the json
+absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
+    google::protobuf::FieldDescriptor const& field) {
+  static auto* const kSupportedWellKnownValueTypes = [] {
+    auto foo = std::make_unique<
+        std::unordered_map<std::string, protobuf::FieldDescriptor::CppType>>();
+    foo->emplace("google.protobuf.BoolValue",
+                 protobuf::FieldDescriptor::CPPTYPE_BOOL);
+    foo->emplace("google.protobuf.DoubleValue",
+                 protobuf::FieldDescriptor::CPPTYPE_DOUBLE);
+    foo->emplace("google.protobuf.FloatValue",
+                 protobuf::FieldDescriptor::CPPTYPE_FLOAT);
+    foo->emplace("google.protobuf.Int32Value",
+                 protobuf::FieldDescriptor::CPPTYPE_INT32);
+    foo->emplace("google.protobuf.Int64Value",
+                 protobuf::FieldDescriptor::CPPTYPE_INT64);
+    foo->emplace("google.protobuf.StringValue",
+                 protobuf::FieldDescriptor::CPPTYPE_STRING);
+    foo->emplace("google.protobuf.UInt32Value",
+                 protobuf::FieldDescriptor::CPPTYPE_UINT32);
+    foo->emplace("google.protobuf.UInt64Value",
+                 protobuf::FieldDescriptor::CPPTYPE_UINT64);
+    return foo.release();
+  }();
+
+  absl::optional<QueryParameterInfo> param_info;
+  // Only attempt to make non-repeated, simple fields query parameters.
+  if (!field.is_repeated() && !field.options().deprecated()) {
+    if (field.cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+      param_info = QueryParameterInfo{
+          field.cpp_type(), absl::StrCat("request.", field.name(), "()"),
+          false};
+    } else {
+      // But also consider protobuf well known types that wrap simple types.
+      auto iter = kSupportedWellKnownValueTypes->find(
+          field.message_type()->full_name());
+      if (iter != kSupportedWellKnownValueTypes->end()) {
+        param_info = QueryParameterInfo{
+            iter->second, absl::StrCat("request.", field.name(), "().value()"),
+            true};
+      }
+    }
+  }
+  return param_info;
+}
+
+// Request fields not appearing in the path may not wind up as part of the json
 // request body, so per https://cloud.google.com/apis/design/standard_methods,
 // for HTTP transcoding we need to turn the request fields into query
 // parameters.
@@ -211,36 +256,41 @@ void SetHttpQueryParameters(
         : method(method), method_vars(method_vars) {}
     void FormatQueryParameterCode(
         std::vector<std::string> const& param_field_names) {
-      std::vector<std::pair<std::string, protobuf::FieldDescriptor::CppType>>
+      std::vector<std::pair<std::string, QueryParameterInfo>>
           remaining_request_fields;
       auto const* request = method.input_type();
       for (int i = 0; i < request->field_count(); ++i) {
         auto const* field = request->field(i);
-        // Only attempt to make non-repeated, simple fields query parameters.
-        if (!field->is_repeated() && !field->options().deprecated() &&
-            field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
-          if (!internal::Contains(param_field_names, field->name())) {
-            remaining_request_fields.emplace_back(field->name(),
-                                                  field->cpp_type());
-          }
+        auto param_info = DetermineQueryParameterInfo(*field);
+        if (param_info &&
+            !internal::Contains(param_field_names, field->name())) {
+          remaining_request_fields.emplace_back(field->name(), *param_info);
         }
       }
+
       auto format = [](auto* out, auto const& i) {
-        if (i.second == protobuf::FieldDescriptor::CPPTYPE_STRING) {
-          out->append(absl::StrFormat("std::make_pair(\"%s\", request.%s())",
-                                      i.first, i.first));
-          return;
+        std::string field_access;
+        if (i.second.cpp_type == protobuf::FieldDescriptor::CPPTYPE_STRING) {
+          field_access = i.second.request_field_accessor;
+        } else if (i.second.cpp_type ==
+                   protobuf::FieldDescriptor::CPPTYPE_BOOL) {
+          field_access = absl::StrCat("(", i.second.request_field_accessor,
+                                      R"""( ? "1" : "0"))""");
+        } else {
+          field_access = absl::StrCat("std::to_string(",
+                                      i.second.request_field_accessor, ")");
         }
-        if (i.second == protobuf::FieldDescriptor::CPPTYPE_BOOL) {
+
+        if (i.second.check_presence) {
           out->append(absl::StrFormat(
-              R"""(std::make_pair("%s", request.%s() ? "1" : "0"))""", i.first,
-              i.first));
-          return;
+              R"""(std::make_pair("%s", (request.has_%s() ? %s : "")))""",
+              i.first, i.first, field_access));
+        } else {
+          out->append(absl::StrFormat(R"""(std::make_pair("%s", %s))""",
+                                      i.first, field_access));
         }
-        out->append(absl::StrFormat(
-            "std::make_pair(\"%s\", std::to_string(request.%s()))", i.first,
-            i.first));
       };
+
       if (remaining_request_fields.empty()) {
         method_vars["method_http_query_parameters"] = "";
       } else {

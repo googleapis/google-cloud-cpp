@@ -66,12 +66,12 @@ DefaultNetworkEdgeSecurityServicesRestStub::
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("include_all_scopes",
-                          request.include_all_scopes() ? "1" : "0"),
+                          (request.include_all_scopes() ? "1" : "0")),
            std::make_pair("max_results", std::to_string(request.max_results())),
            std::make_pair("order_by", request.order_by()),
            std::make_pair("page_token", request.page_token()),
            std::make_pair("return_partial_success",
-                          request.return_partial_success() ? "1" : "0"),
+                          (request.return_partial_success() ? "1" : "0")),
            std::make_pair("service_project_number",
                           request.service_project_number())}));
 }
@@ -170,7 +170,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
                 rest_internal::TrimEmptyQueryParameters(
                     {std::make_pair("request_id", request.request_id()),
                      std::make_pair("validate_only",
-                                    request.validate_only() ? "1" : "0")})));
+                                    (request.validate_only() ? "1" : "0"))})));
       },
       std::move(p),
       service_,
@@ -199,7 +199,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::InsertNetworkEdgeSecurityService(
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("request_id", request.request_id()),
            std::make_pair("validate_only",
-                          request.validate_only() ? "1" : "0")}));
+                          (request.validate_only() ? "1" : "0"))}));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
