@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Configure the GCS+gRPC plugin.
  *
  * @deprecated use `google::cloud::storage::Client()` to create JSON-based
- *     clients and `google::cloud::storage::MakeGrpcClient()` to create
+ *     clients and `google::cloud::storage::DefaultGrpcClient()` to create
  *     gRPC-based clients. If you need to pick one dynamically a simple
  *     `if()` statement or ternary expression can do the job.
  */
