@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/spanner/testing/singer.pb.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
+#include <google/cloud/spanner/testing/singer.pb.h>
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <cmath>

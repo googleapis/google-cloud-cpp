@@ -399,10 +399,6 @@ function (spanner_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
-    google_cloud_cpp_proto_library(
-        spanner_client_testing_protos testing/singer.proto
-        PROTO_PATH_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR})
-
     add_library(
         spanner_client_testing # cmake-format: sort
         testing/cleanup_stale_databases.cc
@@ -435,7 +431,7 @@ function (spanner_client_define_tests)
     target_link_libraries(
         spanner_client_testing
         PUBLIC google_cloud_cpp_testing
-               spanner_client_testing_protos
+               google_cloud_cpp_spanner_client_testing_protos
                google-cloud-cpp::spanner_mocks
                google-cloud-cpp::spanner
                GTest::gmock_main

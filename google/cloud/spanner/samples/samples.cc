@@ -30,7 +30,6 @@
 #include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
-#include "google/cloud/spanner/testing/singer.pb.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -42,6 +41,7 @@
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
+#include <google/cloud/spanner/testing/singer.pb.h>
 #include <chrono>
 #include <iomanip>
 #include <iterator>
