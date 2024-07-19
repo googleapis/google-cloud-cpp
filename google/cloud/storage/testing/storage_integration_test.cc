@@ -78,20 +78,8 @@ Options StorageIntegrationTest::MakeTestOptions(Options opts) {
   return google::cloud::internal::MergeOptions(std::move(opts), fallback);
 }
 
-google::cloud::storage::Client
-StorageIntegrationTest::MakeIntegrationTestClient(Options opts) {
-  opts = MakeTestOptions(std::move(opts));
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (UseGrpcForMedia() || UseGrpcForMetadata()) {
-    return storage_experimental::DefaultGrpcClient(std::move(opts));
-  }
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  return Client(std::move(opts));
-}
-
-google::cloud::storage::Client
-StorageIntegrationTest::MakeBucketIntegrationTestClient() {
-  if (UsingEmulator()) return MakeIntegrationTestClient();
+Options StorageIntegrationTest::MakeBucketTestOptions() {
+  if (UsingEmulator()) return MakeTestOptions();
 
   auto constexpr kInitialDelay = std::chrono::seconds(5);
   auto constexpr kMaximumBackoffDelay = std::chrono::minutes(5);
@@ -99,7 +87,7 @@ StorageIntegrationTest::MakeBucketIntegrationTestClient() {
   // This is comparable to the timeout for each integration test, it makes
   // little sense to wait any longer.
   auto constexpr kMaximumRetryTime = std::chrono::minutes(10);
-  return MakeIntegrationTestClient(
+  return MakeTestOptions(
       Options{}
           .set<RetryPolicyOption>(
               LimitedTimeRetryPolicy(kMaximumRetryTime).clone())
@@ -107,6 +95,28 @@ StorageIntegrationTest::MakeBucketIntegrationTestClient() {
               ExponentialBackoffPolicy(kInitialDelay, kMaximumBackoffDelay,
                                        kBackoffScalingFactor)
                   .clone()));
+}
+
+google::cloud::storage::Client
+StorageIntegrationTest::MakeIntegrationTestClient(bool use_grpc, Options opts) {
+  opts = MakeTestOptions(std::move(opts));
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  if (use_grpc) return storage_experimental::DefaultGrpcClient(std::move(opts));
+#else
+  (void)use_grpc;
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  return Client(std::move(opts));
+}
+
+google::cloud::storage::Client
+StorageIntegrationTest::MakeIntegrationTestClient(Options opts) {
+  auto const use_grpc = UseGrpcForMedia() || UseGrpcForMetadata();
+  return MakeIntegrationTestClient(use_grpc, std::move(opts));
+}
+
+google::cloud::storage::Client
+StorageIntegrationTest::MakeBucketIntegrationTestClient() {
+  return MakeIntegrationTestClient(MakeBucketTestOptions());
 }
 
 std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {

@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <iterator>
@@ -28,7 +27,6 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::AclEntityNames;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
@@ -38,8 +36,6 @@ class GrpcObjectAclIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
   auto const bucket_name =
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
   ASSERT_THAT(bucket_name, Not(IsEmpty()))
@@ -48,7 +44,7 @@ TEST_F(GrpcObjectAclIntegrationTest, AclCRUD) {
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
 
-  auto client = MakeIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/true);
   auto object_name = MakeRandomObjectName();
 
   auto insert = client.InsertObject(bucket_name, object_name, LoremIpsum(),

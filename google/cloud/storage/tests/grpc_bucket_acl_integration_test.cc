@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <iterator>
@@ -28,7 +27,6 @@ namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::storage::testing::AclEntityNames;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::IsEmpty;
@@ -38,13 +36,12 @@ class GrpcBucketAclIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcBucketAclIntegrationTest, AclCRUD) {
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
 
   std::string bucket_name = MakeRandomBucketName();
-  auto client = MakeBucketIntegrationTestClient();
+  auto client =
+      MakeIntegrationTestClient(/*use_grpc=*/true, MakeBucketTestOptions());
 
   // Create a new bucket to run the test, with the "private" PredefinedAcl so
   // we know what the contents of the ACL will be.

@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -25,7 +24,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Contains;
 using ::testing::IsEmpty;
 using ::testing::Not;
@@ -49,9 +47,7 @@ TEST_F(GrpcHmacKeyMetadataIntegrationTest, HmacKeyCRUD) {
           .value_or("");
   ASSERT_THAT(service_account, Not(IsEmpty()));
 
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
-  auto client = MakeIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/true);
 
   auto get_ids = [&] {
     std::vector<std::string> ids;
