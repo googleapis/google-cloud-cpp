@@ -491,9 +491,9 @@ std::string FormatApiVersionFromPackageName(
   std::vector<std::string> parts =
       absl::StrSplit(method.file()->package(), '.');
   if (absl::StartsWith(parts.back(), "v")) return parts.back();
-  GCP_LOG(FATAL) << "Unrecognized API version in package name: "
-                 << method.file()->package()
-                 << ", method: " << method.full_name();
+  GCP_LOG(FATAL) << "Unrecognized API version in file: "
+                 << method.file()->name()
+                 << ", package: " << method.file()->package();
   return {};  // Suppress clang-tidy warnings
 }
 

@@ -787,7 +787,8 @@ TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageNameError) {
       service_file_descriptor->service(0)->method(0);
   EXPECT_DEATH_IF_SUPPORTED(
       FormatApiVersionFromPackageName(*method),
-      "Unrecognized API version in package name: my.service");
+      "Unrecognized API version in file: "
+      "google/foo/v1/service_without_version.proto, package: my.service");
 }
 
 }  // namespace
