@@ -62,8 +62,8 @@ struct RestPathVisitor {
   explicit RestPathVisitor(std::string api_version,
                            std::vector<HttpExtensionInfo::RestPathPiece>& path)
       : api_version(std::move(api_version)), path(path) {}
-  void operator()(PathTemplate::Match const&) { ; }
-  void operator()(PathTemplate::MatchRecursive const&) { ; }
+  void operator()(PathTemplate::Match const&) {}
+  void operator()(PathTemplate::MatchRecursive const&) {}
   void operator()(std::string const& s) {
     path.emplace_back(
         [piece = s, api = api_version](
