@@ -48,8 +48,8 @@ struct HttpExtensionInfo {
  * for the provided method per AIP-4222. Output is also used for gRPC/HTTP
  * transcoding and REST transport.
  */
-absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-ParseHttpExtension(google::protobuf::MethodDescriptor const& method);
+HttpExtensionInfo ParseHttpExtension(
+    google::protobuf::MethodDescriptor const& method);
 
 /**
  * Sets the following method_vars based on the provided parsed_http_info:

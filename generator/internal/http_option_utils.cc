@@ -337,8 +337,8 @@ void SetHttpQueryParameters(
       absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
 }
 
-absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
+HttpExtensionInfo ParseHttpExtension(
+    google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) return {};
   auto api_version = FormatApiVersionFromPackageName(method);
 
@@ -380,15 +380,6 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
                    << parsed_http_rule.status();
   }
 
-  if (std::find_if(
-          parsed_http_rule->segments.begin(), parsed_http_rule->segments.end(),
-          [](std::shared_ptr<PathTemplate::Segment> const& s) {
-            return absl::holds_alternative<PathTemplate::Variable>(s->value);
-          }) == parsed_http_rule->segments.end()) {
-    return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body(),
-                          api_version};
-  }
-
   info.body = http_rule.body();
   info.url_path = url_pattern;
 
@@ -428,13 +419,11 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
 
 bool HasHttpRoutingHeader(MethodDescriptor const& method) {
   auto result = ParseHttpExtension(method);
-  return absl::holds_alternative<HttpExtensionInfo>(result);
+  return !result.field_substitutions.empty();
 }
 
 bool HasHttpAnnotation(MethodDescriptor const& method) {
-  auto result = ParseHttpExtension(method);
-  return absl::holds_alternative<HttpExtensionInfo>(result) ||
-         absl::holds_alternative<HttpSimpleInfo>(result);
+  return method.options().HasExtension(google::api::http);
 }
 
 std::string FormatRequestResource(
