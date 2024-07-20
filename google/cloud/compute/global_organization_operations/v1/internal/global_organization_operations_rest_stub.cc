@@ -81,9 +81,9 @@ DefaultGlobalOrganizationOperationsRestStub::ListGlobalOrganizationOperations(
         ListGlobalOrganizationOperationsRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::compute::v1::OperationList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/compute/",
-                   rest_internal::DetermineApiVersion("v1", options),
-                   "/locations/global/operations"),
+      absl::StrCat("/", "compute", "/",
+                   rest_internal::DetermineApiVersion("v1", options), "/",
+                   "locations", "/", "global", "/", "operations"),
       rest_internal::TrimEmptyQueryParameters(
           {std::make_pair("filter", request.filter()),
            std::make_pair("max_results", std::to_string(request.max_results())),

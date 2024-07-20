@@ -47,7 +47,7 @@ Status DefaultGoldenRestOnlyRestStub::Noop(
       google::protobuf::Empty const& request) {
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/noop"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "noop"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
