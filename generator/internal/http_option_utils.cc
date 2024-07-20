@@ -200,7 +200,6 @@ void SetHttpDerivedMethodVars(
     //   get: "/v1/foo/bar"
     void operator()(HttpSimpleInfo const& info) {
       method_vars["method_http_verb"] = info.http_verb;
-      method_vars["method_request_params"] = method.full_name();
       if (absl::StrContains(info.url_path, info.api_version)) {
         std::string needle = absl::StrFormat("/%s/", info.api_version);
         auto url_path = absl::string_view(info.url_path);
