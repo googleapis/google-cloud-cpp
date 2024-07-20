@@ -20,6 +20,7 @@
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/remove_stale_buckets.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/strings/match.h"
 #include <nlohmann/json.hpp>
 
@@ -101,7 +102,11 @@ google::cloud::storage::Client
 StorageIntegrationTest::MakeIntegrationTestClient(bool use_grpc, Options opts) {
   opts = MakeTestOptions(std::move(opts));
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (use_grpc) return storage_experimental::DefaultGrpcClient(std::move(opts));
+  if (use_grpc) {
+    testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                        "metadata");
+    return storage_experimental::DefaultGrpcClient(std::move(opts));
+  }
 #else
   (void)use_grpc;
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
