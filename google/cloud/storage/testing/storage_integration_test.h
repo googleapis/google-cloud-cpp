@@ -40,6 +40,13 @@ class StorageIntegrationTest
   ~StorageIntegrationTest() override;
 
   /**
+   * Returns the recommended options to run integration tests.
+   *
+   * Most tests should use these options or call `MakeIntegrationTestClient()`.
+   */
+  static Options MakeTestOptions(Options opts = {});
+
+  /**
    * Return a client suitable for most integration tests.
    *
    * Most integration tests, particularly when running against the emulator,
@@ -47,7 +54,7 @@ class StorageIntegrationTest
    * configured.
    */
   static google::cloud::storage::Client MakeIntegrationTestClient(
-      google::cloud::Options opts = {});
+      Options opts = {});
 
   /**
    * Return a client with retry policies suitable for CreateBucket() class.
