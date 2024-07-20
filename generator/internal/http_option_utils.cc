@@ -347,7 +347,6 @@ absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
 ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) return {};
   auto api_version = FormatApiVersionFromPackageName(method);
-  if (!api_version) return {};
 
   HttpExtensionInfo info;
   google::api::HttpRule http_rule =
@@ -393,7 +392,7 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
             return absl::holds_alternative<PathTemplate::Variable>(s->value);
           }) == parsed_http_rule->segments.end()) {
     return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body(),
-                          *api_version};
+                          api_version};
   }
 
   info.body = http_rule.body();
@@ -414,7 +413,7 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
     out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
   };
 
-  auto rest_path_visitor = RestPathVisitor(*api_version, info.rest_path);
+  auto rest_path_visitor = RestPathVisitor(api_version, info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
     if (absl::holds_alternative<PathTemplate::Variable>(s->value)) {
       auto v = absl::get<PathTemplate::Variable>(s->value);
@@ -487,15 +486,15 @@ std::string FormatRequestResource(
 // For protos we generate from Discovery Documents the api version is always the
 // last part of the package name. Protos found in googleapis have package names
 // that mirror their directory path, which ends in the api version as well.
-StatusOr<std::string> FormatApiVersionFromPackageName(
+std::string FormatApiVersionFromPackageName(
     google::protobuf::MethodDescriptor const& method) {
   std::vector<std::string> parts =
       absl::StrSplit(method.file()->package(), '.');
   if (absl::StartsWith(parts.back(), "v")) return parts.back();
-  return internal::InvalidArgumentError(
-      absl::StrCat("Unrecognized API version in package name: ",
-                   method.file()->package()),
-      GCP_ERROR_INFO().WithMetadata("method", method.full_name()));
+  GCP_LOG(FATAL) << "Unrecognized API version in package name: "
+                 << method.file()->package()
+                 << ", method: " << method.full_name();
+  return {};  // Suppress clang-tidy warnings
 }
 
 }  // namespace generator_internal

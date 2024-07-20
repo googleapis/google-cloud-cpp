@@ -123,7 +123,7 @@ std::string FormatRequestResource(
 /**
  * Parses the package name of the method and returns its API version.
  */
-StatusOr<std::string> FormatApiVersionFromPackageName(
+std::string FormatApiVersionFromPackageName(
     google::protobuf::MethodDescriptor const& method);
 
 }  // namespace generator_internal

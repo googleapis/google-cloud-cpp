@@ -15,7 +15,6 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/testing/error_collectors.h"
 #include "generator/testing/fake_source_tree.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/descriptor.pb.h>
 #include <google/protobuf/descriptor_database.h>
 #include <google/protobuf/text_format.h>
@@ -27,14 +26,11 @@ namespace generator_internal {
 namespace {
 
 using ::google::cloud::generator_testing::FakeSourceTree;
-using ::google::cloud::testing_util::IsOkAndHolds;
-using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
 using ::testing::Eq;
-using ::testing::HasSubstr;
 using ::testing::SizeIs;
 
 char const* const kHttpProto =
@@ -683,15 +679,15 @@ TEST_F(HttpOptionUtilsTest, HasRoutingHeaderWrongUrlFormat) {
   /// @cond
   auto constexpr kServiceText = R"pb(
     name: "google/foo/v1/service.proto"
-    package: "google.protobuf"
+    package: "google.foo.v1"
     message_type { name: "Bar" }
     message_type { name: "Empty" }
     service {
       name: "Service"
       method {
         name: "Method0"
-        input_type: "google.protobuf.Bar"
-        output_type: "google.protobuf.Empty"
+        input_type: "google.foo.v1.Bar"
+        output_type: "google.foo.v1.Empty"
         options {
           [google.api.http] { post: "/v2/entries:list" body: "*" }
         }
@@ -781,7 +777,7 @@ TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageName) {
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(8);
-  EXPECT_THAT(FormatApiVersionFromPackageName(*method), IsOkAndHolds(Eq("v1")));
+  EXPECT_THAT(FormatApiVersionFromPackageName(*method), Eq("v1"));
 }
 
 TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageNameError) {
@@ -789,11 +785,9 @@ TEST_F(HttpOptionUtilsTest, FormatApiVersionFromPackageNameError) {
       pool_.FindFileByName("google/foo/v1/service_without_version.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(0);
-  EXPECT_THAT(
+  EXPECT_DEATH_IF_SUPPORTED(
       FormatApiVersionFromPackageName(*method),
-      StatusIs(
-          StatusCode::kInvalidArgument,
-          HasSubstr("Unrecognized API version in package name: my.service")));
+      "Unrecognized API version in package name: my.service");
 }
 
 }  // namespace
