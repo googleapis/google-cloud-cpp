@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -35,13 +34,9 @@ class GrpcIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<std::string> {
  protected:
-  GrpcIntegrationTest()
-      : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}) {}
+  GrpcIntegrationTest() = default;
 
   void SetUp() override {
-    std::string const grpc_config_value = GetParam();
-    google::cloud::testing_util::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                        grpc_config_value);
     project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_THAT(project_id_, Not(IsEmpty()))
         << "GOOGLE_CLOUD_PROJECT is not set";
@@ -52,18 +47,20 @@ class GrpcIntegrationTest
         << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
   }
 
+  static bool ParamIsGrpc() { return GetParam() == "grpc"; }
+
   std::string project_id() const { return project_id_; }
   std::string bucket_name() const { return bucket_name_; }
 
  private:
   std::string project_id_;
   std::string bucket_name_;
-  testing_util::ScopedEnvironment grpc_config_;
 };
 
 TEST_P(GrpcIntegrationTest, ObjectCRUD) {
-  auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient();
+  auto bucket_client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc(),
+                                                 MakeBucketTestOptions());
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -93,8 +90,9 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
 }
 
 TEST_P(GrpcIntegrationTest, WriteResume) {
-  auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient();
+  auto bucket_client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc(),
+                                                 MakeBucketTestOptions());
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -141,8 +139,9 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
 }
 
 TEST_P(GrpcIntegrationTest, InsertLarge) {
-  auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient();
+  auto bucket_client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc(),
+                                                 MakeBucketTestOptions());
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -164,8 +163,9 @@ TEST_P(GrpcIntegrationTest, InsertLarge) {
 }
 
 TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
-  auto bucket_client = MakeBucketIntegrationTestClient();
-  auto client = MakeIntegrationTestClient();
+  auto bucket_client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc(),
+                                                 MakeBucketTestOptions());
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -192,7 +192,7 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
 }
 
 TEST_P(GrpcIntegrationTest, QuotaUser) {
-  auto client = MakeIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
   auto object_name = MakeRandomObjectName();
 
   auto metadata =
@@ -204,10 +204,10 @@ TEST_P(GrpcIntegrationTest, QuotaUser) {
 
 TEST_P(GrpcIntegrationTest, FieldFilter) {
   if (UsingEmulator()) GTEST_SKIP();
-  auto const* fields = UsingGrpc() ? "resource.bucket,resource.name,resource."
-                                     "generation,resource.content_type"
-                                   : "bucket,name,generation,contentType";
-  auto client = MakeIntegrationTestClient();
+  auto const* fields = ParamIsGrpc() ? "resource.bucket,resource.name,resource."
+                                       "generation,resource.content_type"
+                                     : "bucket,name,generation,contentType";
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
   auto object_name = MakeRandomObjectName();
 
   auto metadata = client.InsertObject(
@@ -226,7 +226,7 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
-                         ::testing::Values("media"));
+                         ::testing::Values("grpc"));
 #else
 INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
                          ::testing::Values("none"));

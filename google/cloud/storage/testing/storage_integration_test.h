@@ -47,6 +47,13 @@ class StorageIntegrationTest
   static Options MakeTestOptions(Options opts = {});
 
   /**
+   * Create options suitable for Bucket integration tests.
+   *
+   * Buckets need longer initial backoffs.
+   */
+  static Options MakeBucketTestOptions();
+
+  /**
    * Return a client suitable for most integration tests.
    *
    * Most integration tests, particularly when running against the emulator,
@@ -55,6 +62,15 @@ class StorageIntegrationTest
    */
   static google::cloud::storage::Client MakeIntegrationTestClient(
       Options opts = {});
+
+  /**
+   * Create a gRPC or JSON client.
+   *
+   * If @p use_grpc is `true` and gRPC is not compiled-in, it creates a JSON
+   * client.
+   */
+  static google::cloud::storage::Client MakeIntegrationTestClient(
+      bool use_grpc, Options opts = {});
 
   /**
    * Return a client with retry policies suitable for CreateBucket() class.

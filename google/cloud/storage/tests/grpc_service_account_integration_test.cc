@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <vector>
@@ -26,7 +25,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
@@ -34,12 +32,10 @@ class GrpcServiceAccountIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcServiceAccountIntegrationTest, GetServiceAccount) {
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
 
-  auto client = MakeIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/true);
 
   auto response = client.GetServiceAccountForProject(project_id);
   ASSERT_STATUS_OK(response);

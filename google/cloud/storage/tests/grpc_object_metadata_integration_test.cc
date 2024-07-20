@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <vector>
@@ -26,7 +25,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
-using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
@@ -41,14 +39,12 @@ class GrpcObjectMetadataIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
   auto const bucket_name =
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
   ASSERT_THAT(bucket_name, Not(IsEmpty()))
       << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
 
-  auto client = MakeIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/true);
   auto object_name = MakeRandomObjectName();
   auto rewrite_name = MakeRandomObjectName();
   auto copy_name = MakeRandomObjectName();
@@ -114,14 +110,12 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
 }
 
 TEST_F(GrpcObjectMetadataIntegrationTest, PatchMetadata) {
-  ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                "metadata");
   auto const bucket_name =
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value_or("");
   ASSERT_THAT(bucket_name, Not(IsEmpty()))
       << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
 
-  auto client = MakeIntegrationTestClient();
+  auto client = MakeIntegrationTestClient(/*use_grpc=*/true);
   auto object_name = MakeRandomObjectName();
 
   // Use the full projection to get consistent behavior out of gRPC and REST.
