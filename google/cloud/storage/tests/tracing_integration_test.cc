@@ -62,6 +62,8 @@ class TracingIntegrationTest
 };
 
 TEST_F(TracingIntegrationTest, StorageConnection) {
+  if (UsingGrpc()) GTEST_SKIP();
+
   auto client = MakeIntegrationTestClient(
       Options{}.set<LoggingComponentsOption>({"raw-client", "http"}));
 

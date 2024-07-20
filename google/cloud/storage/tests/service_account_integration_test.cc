@@ -135,6 +135,8 @@ TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
 }
 
 TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
+  if (UsingGrpc()) GTEST_SKIP();
+
   auto client =
       MakeIntegrationTestClient(Options{}.set<ProjectIdOption>(project_id_));
 

@@ -50,7 +50,9 @@ struct ObjectBasicCRUDIntegrationTest
       options.set<RestEndpointOption>(endpoint + ":443");
     }
     endpoint = options.get<EndpointOption>();
-    if (!absl::EndsWith(endpoint, ":443")) {
+    if (endpoint.empty()) {
+      options.set<EndpointOption>("storage.googleapis.com:443");
+    } else if (!absl::EndsWith(endpoint, ":443")) {
       options.set<EndpointOption>(endpoint + ":443");
     }
     return MakeIntegrationTestClient(std::move(options));
@@ -152,7 +154,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, BasicCRUD) {
 }
 
 /// @test Verify that the client works with non-default endpoints.
-TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsertJSON) {
+TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsert) {
   auto client = MakeNonDefaultClient();
   auto object_name = MakeRandomObjectName();
   auto const expected = LoremIpsum();
@@ -167,7 +169,7 @@ TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointInsertJSON) {
 }
 
 /// @test Verify that the client works with non-default endpoints.
-TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWriteJSON) {
+TEST_F(ObjectBasicCRUDIntegrationTest, NonDefaultEndpointWrite) {
   auto client = MakeNonDefaultClient();
   auto object_name = MakeRandomObjectName();
   auto const expected = LoremIpsum();
