@@ -32,10 +32,8 @@ using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
 using ::testing::ElementsAre;
 using ::testing::Eq;
-using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Pair;
-using ::testing::SizeIs;
 
 char const* const kHttpProto =
     "syntax = \"proto3\";\n"
