@@ -59,8 +59,7 @@ StorageIntegrationTest::~StorageIntegrationTest() {
   }
 }
 
-google::cloud::Options StorageIntegrationTest::MakeTestOptions(
-    google::cloud::Options opts) {
+Options StorageIntegrationTest::MakeTestOptions(Options opts) {
   auto fallback = Options{}
                       .set<RetryPolicyOption>(TestRetryPolicy())
                       .set<BackoffPolicyOption>(TestBackoffPolicy());
@@ -80,7 +79,7 @@ google::cloud::Options StorageIntegrationTest::MakeTestOptions(
 }
 
 google::cloud::storage::Client
-StorageIntegrationTest::MakeIntegrationTestClient(google::cloud::Options opts) {
+StorageIntegrationTest::MakeIntegrationTestClient(Options opts) {
   opts = MakeTestOptions(std::move(opts));
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (UseGrpcForMedia() || UseGrpcForMetadata()) {

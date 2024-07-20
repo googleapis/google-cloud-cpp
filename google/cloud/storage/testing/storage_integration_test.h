@@ -44,8 +44,7 @@ class StorageIntegrationTest
    *
    * Most tests should use these options or call `MakeIntegrationTestClient()`.
    */
-  static google::cloud::Options MakeTestOptions(
-      google::cloud::Options opts = {});
+  static Options MakeTestOptions(Options opts = {});
 
   /**
    * Return a client suitable for most integration tests.
@@ -55,7 +54,7 @@ class StorageIntegrationTest
    * configured.
    */
   static google::cloud::storage::Client MakeIntegrationTestClient(
-      google::cloud::Options opts = {});
+      Options opts = {});
 
   /**
    * Return a client with retry policies suitable for CreateBucket() class.
