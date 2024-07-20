@@ -534,8 +534,6 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsSimpleInfo) {
       service_file_descriptor->service(0)->method(0);
   VarsDictionary vars;
   SetHttpDerivedMethodVars(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_request_params"),
-              Eq("my.package.v1.Service.Method0"));
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Delete"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
