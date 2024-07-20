@@ -99,6 +99,50 @@ void RestPathVisitorHelper(
   absl::visit(RestPathVisitor{api_version, path}, s.value);
 }
 
+std::string FormatQueryParameterCode(
+    google::protobuf::MethodDescriptor const& method,
+    std::vector<std::string> param_field_names) {
+  std::vector<std::pair<std::string, QueryParameterInfo>>
+      remaining_request_fields;
+  auto const* request = method.input_type();
+  for (int i = 0; i < request->field_count(); ++i) {
+    auto const* field = request->field(i);
+    auto param_info = DetermineQueryParameterInfo(*field);
+    if (param_info && !internal::Contains(param_field_names, field->name())) {
+      remaining_request_fields.emplace_back(field->name(), *param_info);
+    }
+  }
+
+  auto format = [](auto* out, auto const& i) {
+    std::string field_access;
+    if (i.second.cpp_type == protobuf::FieldDescriptor::CPPTYPE_STRING) {
+      field_access = i.second.request_field_accessor;
+    } else if (i.second.cpp_type == protobuf::FieldDescriptor::CPPTYPE_BOOL) {
+      field_access = absl::StrCat("(", i.second.request_field_accessor,
+                                  R"""( ? "1" : "0"))""");
+    } else {
+      field_access =
+          absl::StrCat("std::to_string(", i.second.request_field_accessor, ")");
+    }
+
+    if (i.second.check_presence) {
+      out->append(absl::StrFormat(
+          R"""(std::make_pair("%s", (request.has_%s() ? %s : "")))""", i.first,
+          i.first, field_access));
+    } else {
+      out->append(absl::StrFormat(R"""(std::make_pair("%s", %s))""", i.first,
+                                  field_access));
+    }
+  };
+
+  if (remaining_request_fields.empty()) {
+    return "";
+  }
+  return absl::StrCat(
+      ",\n      rest_internal::TrimEmptyQueryParameters({",
+      absl::StrJoin(remaining_request_fields, ",\n        ", format), "})");
+}
+
 }  // namespace
 
 void SetHttpDerivedMethodVars(
@@ -254,53 +298,6 @@ void SetHttpQueryParameters(
     HttpInfoVisitor(google::protobuf::MethodDescriptor const& method,
                     VarsDictionary& method_vars)
         : method(method), method_vars(method_vars) {}
-    void FormatQueryParameterCode(
-        std::vector<std::string> const& param_field_names) {
-      std::vector<std::pair<std::string, QueryParameterInfo>>
-          remaining_request_fields;
-      auto const* request = method.input_type();
-      for (int i = 0; i < request->field_count(); ++i) {
-        auto const* field = request->field(i);
-        auto param_info = DetermineQueryParameterInfo(*field);
-        if (param_info &&
-            !internal::Contains(param_field_names, field->name())) {
-          remaining_request_fields.emplace_back(field->name(), *param_info);
-        }
-      }
-
-      auto format = [](auto* out, auto const& i) {
-        std::string field_access;
-        if (i.second.cpp_type == protobuf::FieldDescriptor::CPPTYPE_STRING) {
-          field_access = i.second.request_field_accessor;
-        } else if (i.second.cpp_type ==
-                   protobuf::FieldDescriptor::CPPTYPE_BOOL) {
-          field_access = absl::StrCat("(", i.second.request_field_accessor,
-                                      R"""( ? "1" : "0"))""");
-        } else {
-          field_access = absl::StrCat("std::to_string(",
-                                      i.second.request_field_accessor, ")");
-        }
-
-        if (i.second.check_presence) {
-          out->append(absl::StrFormat(
-              R"""(std::make_pair("%s", (request.has_%s() ? %s : "")))""",
-              i.first, i.first, field_access));
-        } else {
-          out->append(absl::StrFormat(R"""(std::make_pair("%s", %s))""",
-                                      i.first, field_access));
-        }
-      };
-
-      if (remaining_request_fields.empty()) {
-        method_vars["method_http_query_parameters"] = "";
-      } else {
-        method_vars["method_http_query_parameters"] = absl::StrCat(
-            ",\n      rest_internal::TrimEmptyQueryParameters({",
-            absl::StrJoin(remaining_request_fields, ",\n        ", format),
-            "})");
-      }
-    }
-
     // This visitor handles the case where the url field contains a token,
     // or tokens, surrounded by curly braces:
     //   patch: "/v1/{parent=projects/*/instances/*}/databases"
@@ -310,37 +307,35 @@ void SetHttpQueryParameters(
     // second case, both 'project' and 'instance' are expected as fields in
     // the request and are already present in the url. No need to duplicate
     // these fields as query parameters.
-    void operator()(HttpExtensionInfo const& info) {
-      FormatQueryParameterCode([&] {
-        std::vector<std::string> param_field_names;
-        param_field_names.reserve(info.field_substitutions.size());
-        for (auto const& p : info.field_substitutions) {
-          param_field_names.push_back(FormatFieldAccessorCall(method, p.first));
-        }
-        return param_field_names;
-      }());
+    std::string operator()(HttpExtensionInfo const& info) {
+      std::vector<std::string> param_field_names;
+      param_field_names.reserve(info.field_substitutions.size());
+      for (auto const& p : info.field_substitutions) {
+        param_field_names.push_back(FormatFieldAccessorCall(method, p.first));
+      }
+      return FormatQueryParameterCode(method, std::move(param_field_names));
     }
 
     // This visitor handles the case where no request field is specified in the
     // url:
     //   get: "/v1/foo/bar"
     // In this case, all non-repeated, simple fields should be query parameters.
-    void operator()(HttpSimpleInfo const&) { FormatQueryParameterCode({}); }
+    std::string operator()(HttpSimpleInfo const&) {
+      return FormatQueryParameterCode(method, {});
+    }
 
     // This visitor is an error diagnostic, in case we encounter an url that the
     // generator does not currently parse. Emitting the method name causes code
     // generation that does not compile and points to the proto location to be
     // investigated.
-    void operator()(absl::monostate) {
-      method_vars["method_http_query_parameters"] = method.full_name();
-    }
+    std::string operator()(absl::monostate) { return method.full_name(); }
 
     google::protobuf::MethodDescriptor const& method;
     VarsDictionary& method_vars;
   };
 
-  method_vars["method_http_query_parameters"] = "";
-  absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
+  method_vars["method_http_query_parameters"] =
+      absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
 }
 
 absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
