@@ -58,6 +58,10 @@ locals {
       config = "ci/cloudbuild/cloudbuild.yaml"
       distro = "fedora-latest-cxx20"
     }
+    libcxx = {
+      config = "ci/cloudbuild/cloudbuild.yaml"
+      distro = "fedora-latest-bazel"
+    }
     noex = {
       config = "ci/cloudbuild/cloudbuild.yaml"
       distro = "fedora-latest-cmake"
