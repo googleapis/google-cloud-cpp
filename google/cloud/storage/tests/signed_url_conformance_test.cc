@@ -83,7 +83,8 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   ASSERT_STATUS_OK(creds);
 
   std::string account_email = (*creds)->AccountEmail();
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  auto client =
+      MakeIntegrationTestClient(Options{}.set<Oauth2CredentialsOption>(*creds));
   std::string actual_canonical_request;
   std::string actual_string_to_sign;
 
@@ -186,7 +187,8 @@ TEST_P(V4PostPolicyConformanceTest, V4PostPolicy) {
   ASSERT_STATUS_OK(creds);
 
   std::string account_email = (*creds)->AccountEmail();
-  Client client(Options{}.set<Oauth2CredentialsOption>(*creds));
+  auto client =
+      MakeIntegrationTestClient(Options{}.set<Oauth2CredentialsOption>(*creds));
 
   auto const& test_params = (*post_policy_tests)[GetParam()];
   auto const& input = test_params.policyinput();

@@ -513,7 +513,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
 
-  Client client(
+  auto client = MakeIntegrationTestClient(
       Options{}
           .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone()));
@@ -544,7 +544,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
   // The emulator does not support this type of fault injection for gRPC.
   if (!UsingEmulator() || UsingGrpc()) GTEST_SKIP();
 
-  Client client(
+  auto client = MakeIntegrationTestClient(
       Options{}
           .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(10).clone()));
@@ -580,7 +580,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
   if (!UsingEmulator()) GTEST_SKIP();
 
-  Client client(
+  auto client = MakeIntegrationTestClient(
       Options{}
           .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
           .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
