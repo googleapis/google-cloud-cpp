@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/well_known_parameters.h"
 #include <map>
+#include <string>
 
 namespace google {
 namespace cloud {

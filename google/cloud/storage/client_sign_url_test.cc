@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/universe_domain_options.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

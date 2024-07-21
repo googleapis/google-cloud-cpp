@@ -20,6 +20,8 @@
 #include "google/cloud/status.h"
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

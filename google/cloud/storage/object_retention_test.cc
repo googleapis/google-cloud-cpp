@@ -16,6 +16,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include <gmock/gmock.h>
 #include <sstream>
+#include <utility>
 
 namespace google {
 namespace cloud {

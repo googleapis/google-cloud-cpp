@@ -30,7 +30,9 @@
 #include <cstdlib>
 #include <set>
 #include <sstream>
+#include <string>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

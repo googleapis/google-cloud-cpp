@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/notification_requests.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace google {
 namespace cloud {

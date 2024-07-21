@@ -15,6 +15,7 @@
 #include "google/cloud/storage/bucket_cors_entry.h"
 #include <gmock/gmock.h>
 #include <sstream>
+#include <utility>
 
 namespace google {
 namespace cloud {

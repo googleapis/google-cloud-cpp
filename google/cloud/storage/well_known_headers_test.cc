@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/well_known_headers.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

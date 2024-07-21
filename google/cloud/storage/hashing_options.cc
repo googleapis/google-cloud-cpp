@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/crc32c.h"
 #include "google/cloud/storage/internal/md5hash.h"
 #include "google/cloud/internal/big_endian.h"
+#include <string>
 
 namespace google {
 namespace cloud {

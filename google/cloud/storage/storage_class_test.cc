@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

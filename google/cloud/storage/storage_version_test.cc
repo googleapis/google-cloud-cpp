@@ -15,6 +15,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/build_info.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

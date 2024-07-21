@@ -17,6 +17,8 @@
 #include "absl/types/optional.h"
 #include <nlohmann/json.hpp>
 #include <sstream>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
