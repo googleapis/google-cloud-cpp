@@ -33,7 +33,6 @@ using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
-using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsSubsetOf;
 using ::testing::Not;
