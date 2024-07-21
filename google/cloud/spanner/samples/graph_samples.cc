@@ -128,8 +128,6 @@ void InsertData(google::cloud::spanner::Client client) {
     .EmplaceRow(7, google::cloud::spanner::Value("2020-01-10T06:22:20.12Z"), false, "Vacation Fund")
     .EmplaceRow(16, google::cloud::spanner::Value("2020-01-27T17:55:09.12Z"), true, "Vacation Fund")
     .EmplaceRow(20, google::cloud::spanner::Value("2020-02-18T05:44:20.12Z"), false, "Rainy Day Fund")
-    // .EmplaceRow(1, google::cloud::spanner::Value("2014-09-27T11:17:42.18Z"), false, "Savings")
-    // .EmplaceRow(2, DatabaseNow(client), false, "Checking")
     .Build();
 
   auto insert_persons = spanner::InsertMutationBuilder(
@@ -137,8 +135,6 @@ void InsertData(google::cloud::spanner::Client client) {
     .EmplaceRow(1, "Alex", "male", google::cloud::spanner::Value("1991-12-21T00:00:00.12Z"), "Australia"," Adelaide")
     .EmplaceRow(2, "Dana", "female", google::cloud::spanner::Value("1980-10-31T00:00:00.12Z"),"Czech_Republic", "Moravia")
     .EmplaceRow(3, "Lee", "male", google::cloud::spanner::Value("1986-12-07T00:00:00.12Z"), "India", "Kollam")
-    // .EmplaceRow(1, "Izumi", "F", google::cloud::spanner::Value("2001-01-05T00:00:00.18Z"), "USA", "Mountain View")
-    // .EmplaceRow(2, "Tal", "M", google::cloud::spanner::Value("2000-06-22T00:00:00.12Z"), "FR", "Paris")
     .Build();
 
 
