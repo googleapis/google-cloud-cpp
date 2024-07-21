@@ -38,7 +38,7 @@ class GrpcNotificationIntegrationTest
 
 TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
   // TODO(#14396) - figure out what to do with the Notifications and gRPC
-  if (!UsingEmulator()) GTEST_SKIP();
+  if (!UsingEmulator() && UsingGrpc()) GTEST_SKIP();
 
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_id, Not(IsEmpty())) << "GOOGLE_CLOUD_PROJECT is not set";
@@ -48,8 +48,7 @@ TEST_F(GrpcNotificationIntegrationTest, NotificationCRUD) {
   ASSERT_THAT(topic_name, Not(IsEmpty()));
 
   std::string bucket_name = MakeRandomBucketName();
-  auto client =
-      MakeIntegrationTestClient(/*use_grpc=*/true, MakeBucketTestOptions());
+  auto client = MakeIntegrationTestClient(MakeBucketTestOptions());
 
   auto metadata =
       client.CreateBucketForProject(bucket_name, project_id, BucketMetadata());
