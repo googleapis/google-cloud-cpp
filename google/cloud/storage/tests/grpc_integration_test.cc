@@ -17,7 +17,6 @@
 #include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <nlohmann/json.hpp>
 #include <vector>
 
 namespace google {
@@ -31,8 +30,7 @@ using ::testing::IsEmpty;
 using ::testing::Not;
 
 class GrpcIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest,
-      public ::testing::WithParamInterface<std::string> {
+    : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   GrpcIntegrationTest() = default;
 
@@ -47,8 +45,6 @@ class GrpcIntegrationTest
         << "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set";
   }
 
-  static bool ParamIsGrpc() { return GetParam() == "grpc"; }
-
   std::string project_id() const { return project_id_; }
   std::string bucket_name() const { return bucket_name_; }
 
@@ -57,10 +53,9 @@ class GrpcIntegrationTest
   std::string bucket_name_;
 };
 
-TEST_P(GrpcIntegrationTest, ObjectCRUD) {
-  auto bucket_client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc(),
-                                                 MakeBucketTestOptions());
-  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
+TEST_F(GrpcIntegrationTest, ObjectCRUD) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -89,10 +84,9 @@ TEST_P(GrpcIntegrationTest, ObjectCRUD) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
-TEST_P(GrpcIntegrationTest, WriteResume) {
-  auto bucket_client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc(),
-                                                 MakeBucketTestOptions());
-  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
+TEST_F(GrpcIntegrationTest, WriteResume) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -138,10 +132,9 @@ TEST_P(GrpcIntegrationTest, WriteResume) {
   EXPECT_STATUS_OK(delete_bucket_status);
 }
 
-TEST_P(GrpcIntegrationTest, InsertLarge) {
-  auto bucket_client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc(),
-                                                 MakeBucketTestOptions());
-  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
+TEST_F(GrpcIntegrationTest, InsertLarge) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -162,10 +155,9 @@ TEST_P(GrpcIntegrationTest, InsertLarge) {
   EXPECT_EQ(desired_size, metadata->size());
 }
 
-TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
-  auto bucket_client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc(),
-                                                 MakeBucketTestOptions());
-  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
+TEST_F(GrpcIntegrationTest, StreamLargeChunks) {
+  auto bucket_client = MakeBucketIntegrationTestClient();
+  auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -191,8 +183,8 @@ TEST_P(GrpcIntegrationTest, StreamLargeChunks) {
   EXPECT_EQ(2 * desired_size, stream.metadata()->size());
 }
 
-TEST_P(GrpcIntegrationTest, QuotaUser) {
-  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
+TEST_F(GrpcIntegrationTest, QuotaUser) {
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   auto metadata =
@@ -202,12 +194,12 @@ TEST_P(GrpcIntegrationTest, QuotaUser) {
   ScheduleForDelete(*metadata);
 }
 
-TEST_P(GrpcIntegrationTest, FieldFilter) {
+TEST_F(GrpcIntegrationTest, FieldFilter) {
   if (UsingEmulator()) GTEST_SKIP();
-  auto const* fields = ParamIsGrpc() ? "resource.bucket,resource.name,resource."
-                                       "generation,resource.content_type"
-                                     : "bucket,name,generation,contentType";
-  auto client = MakeIntegrationTestClient(/*use_grpc=*/ParamIsGrpc());
+  auto const* fields = UsingGrpc() ? "resource.bucket,resource.name,resource."
+                                     "generation,resource.content_type"
+                                   : "bucket,name,generation,contentType";
+  auto client = MakeIntegrationTestClient();
   auto object_name = MakeRandomObjectName();
 
   auto metadata = client.InsertObject(
@@ -216,21 +208,13 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
   ASSERT_STATUS_OK(metadata);
   ScheduleForDelete(*metadata);
 
-  // If the Fields() filter works, then size() would be 0
-  if (!UsingEmulator()) {
-    EXPECT_EQ(metadata->size(), 0);
-    EXPECT_EQ(metadata->content_type(), "text/plain");
-    EXPECT_EQ(metadata->content_encoding(), "");
-  }
+  // If the Fields() filter works, then `size()` and `content_encoding()` should
+  // have default values (despite having non-defaults in production) but the
+  // `content_type()` should have the value set in production.
+  EXPECT_EQ(metadata->size(), 0);
+  EXPECT_EQ(metadata->content_encoding(), "");
+  EXPECT_EQ(metadata->content_type(), "text/plain");
 }
-
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
-                         ::testing::Values("grpc"));
-#else
-INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
-                         ::testing::Values("none"));
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/internal/unified_rest_credentials.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/storage/testing/temp_file.h"
@@ -80,11 +79,9 @@ KlXA1yQW/ClmnHVg57SN1g1rvOJCcnHBnSbT7kGFqUol
 )""";
 
 class UnifiedCredentialsIntegrationTest
-    : public ::google::cloud::storage::testing::StorageIntegrationTest,
-      public ::testing::WithParamInterface<std::string> {
+    : public ::google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  UnifiedCredentialsIntegrationTest()
-      : grpc_config_("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG", {}) {}
+  UnifiedCredentialsIntegrationTest() = default;
 
   void SetUp() override {
     bucket_name_ =
@@ -102,14 +99,7 @@ class UnifiedCredentialsIntegrationTest
   }
 
   static Client MakeTestClient(Options opts) {
-    std::string const client_type = GetParam();
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    if (client_type == "grpc") {
-      return google::cloud::storage_experimental::DefaultGrpcClient(
-          std::move(opts));
-    }
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-    return Client(std::move(opts));
+    return MakeIntegrationTestClient(std::move(opts));
   }
 
   std::string const& bucket_name() const { return bucket_name_; }
@@ -167,10 +157,9 @@ class UnifiedCredentialsIntegrationTest
   std::string roots_pem_;
   TempFile invalid_pem_{kCACertificate};
   TempFile empty_file_{std::string{}};
-  testing_util::ScopedEnvironment grpc_config_;
 };
 
-TEST_P(UnifiedCredentialsIntegrationTest, GoogleDefaultCredentials) {
+TEST_F(UnifiedCredentialsIntegrationTest, GoogleDefaultCredentials) {
   if (UsingEmulator()) GTEST_SKIP();
   auto client = MakeTestClient(
       Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials()));
@@ -179,7 +168,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, GoogleDefaultCredentials) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, SAImpersonation) {
+TEST_F(UnifiedCredentialsIntegrationTest, SAImpersonation) {
   if (UsingEmulator()) GTEST_SKIP();
 
   auto client = MakeTestClient(Options{}.set<UnifiedCredentialsOption>(
@@ -190,7 +179,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, SAImpersonation) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, SAImpersonationCustomTrustStore) {
+TEST_F(UnifiedCredentialsIntegrationTest, SAImpersonationCustomTrustStore) {
   if (UsingEmulator()) GTEST_SKIP();
 
   auto client =
@@ -203,7 +192,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, SAImpersonationCustomTrustStore) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, SAImpersonationEmptyTrustStore) {
+TEST_F(UnifiedCredentialsIntegrationTest, SAImpersonationEmptyTrustStore) {
   if (UsingEmulator()) GTEST_SKIP();
 
   auto client =
@@ -216,7 +205,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, SAImpersonationEmptyTrustStore) {
       ExpectInsertFailure(client, bucket_name(), MakeRandomObjectName()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccount) {
+TEST_F(UnifiedCredentialsIntegrationTest, ServiceAccount) {
   if (UsingEmulator()) GTEST_SKIP();
   auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (!keyfile.has_value()) GTEST_SKIP();
@@ -233,7 +222,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccount) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccountCustomTrustStore) {
+TEST_F(UnifiedCredentialsIntegrationTest, ServiceAccountCustomTrustStore) {
   if (UsingEmulator()) GTEST_SKIP();
   auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (!keyfile.has_value()) GTEST_SKIP();
@@ -251,7 +240,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccountCustomTrustStore) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccountEmptyTrustStore) {
+TEST_F(UnifiedCredentialsIntegrationTest, ServiceAccountEmptyTrustStore) {
   if (UsingEmulator()) GTEST_SKIP();
   auto keyfile = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON");
   if (!keyfile.has_value()) GTEST_SKIP();
@@ -269,7 +258,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, ServiceAccountEmptyTrustStore) {
       ExpectInsertFailure(client, bucket_name(), MakeRandomObjectName()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, AccessToken) {
+TEST_F(UnifiedCredentialsIntegrationTest, AccessToken) {
   if (UsingEmulator()) GTEST_SKIP();
   // First use the default credentials to obtain an access token, then use the
   // access token to test the AccessTokenCredentials() function. In a real
@@ -293,7 +282,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, AccessToken) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
+TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
   if (UsingEmulator()) GTEST_SKIP();
 
   // First use the default credentials to obtain an access token, then use the
@@ -322,7 +311,7 @@ TEST_P(UnifiedCredentialsIntegrationTest, AccessTokenCustomTrustStore) {
       UseClient(client, bucket_name(), MakeRandomObjectName(), LoremIpsum()));
 }
 
-TEST_P(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
+TEST_F(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
   if (UsingEmulator()) GTEST_SKIP();
   // First use the default credentials to obtain an access token, then use the
   // access token to test the AccessTokenCredentials() function. In a real
@@ -348,15 +337,6 @@ TEST_P(UnifiedCredentialsIntegrationTest, AccessTokenEmptyTrustStore) {
   EXPECT_NO_FATAL_FAILURE(
       ExpectInsertFailure(client, bucket_name(), MakeRandomObjectName()));
 }
-
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-INSTANTIATE_TEST_SUITE_P(UnifiedCredentialsGrpcIntegrationTest,
-                         UnifiedCredentialsIntegrationTest,
-                         ::testing::Values("grpc"));
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-INSTANTIATE_TEST_SUITE_P(UnifiedCredentialsRestIntegrationTest,
-                         UnifiedCredentialsIntegrationTest,
-                         ::testing::Values("rest"));
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
