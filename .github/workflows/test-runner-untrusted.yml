@@ -29,7 +29,6 @@ jobs:
     environment: 'external'
     name: Require Approval for External PRs
     if: ${{ github.event.pull_request.author_association != 'MEMBER' }}
-    needs: [author-association-external]
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
