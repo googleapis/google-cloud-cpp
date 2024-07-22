@@ -40,8 +40,11 @@ jobs:
     name: Save PR ref
     if: >-
       ${{
-          github.event_name == 'pull_request_target' &&
-          github.event.pull_request.author_association == 'MEMBER'
+          github.event.pull_request.author_association == 'MEMBER' &&
+          (github.event_name == 'pull_request_target' ||
+          github.event_name == 'push' ||
+          github.event_name == 'schedule')
+
       }}
     runs-on: ubuntu-latest
     outputs:
