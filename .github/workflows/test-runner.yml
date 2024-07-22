@@ -21,7 +21,6 @@ on:
     - reopened
   schedule:
     - cron: '0 5 * * 1,2,3,4,5'
-  workflow_dispatch:
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
 # PR or branch. That reduces billing, but it creates more noise about cancelled
@@ -32,17 +31,21 @@ concurrency:
 
 jobs:
   pre-flight:
-    # For external contributors, run the build in the `external` environment.
-    # This requires manual approval from a contributor. It also saves the
-    # `ref` of the pull request, so downstream jobs know what to checkout.
+    # Save the `ref` of the pull request, so downstream jobs know what to checkout.
     environment: >-
       ${{
           (github.event_name != 'pull_request_target' && 'internal') ||
-          (github.event.pull_request.head.repo.full_name == github.repository && 'internal') ||
-          (contains(fromJSON(vars.TRUSTED_FORKS), github.actor) && 'internal') ||
-          'external'
+          (github.event.pull_request.head.repo.full_name == github.repository && 'internal')
       }}
-    name: Require Approval for External PRs
+    name: Save PR ref
+    if: >-
+      ${{
+          (github.event.pull_request.author_association == 'MEMBER' &&
+          github.event_name == 'pull_request_target') ||
+          github.event_name == 'push' ||
+          github.event_name == 'schedule'
+
+      }}
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
@@ -72,7 +75,6 @@ jobs:
       ${{
         github.event_name == 'schedule' ||
         github.event_name == 'push' ||
-        github.event_name == 'workflow_dispatch' ||
         contains(github.event.pull_request.labels.*.name, 'gha:full-build')
       }}
     name: macOS-Bazel
@@ -89,7 +91,6 @@ jobs:
       ${{
         github.event_name == 'schedule' ||
         github.event_name == 'push' ||
-        github.event_name == 'workflow_dispatch' ||
         contains(github.event.pull_request.labels.*.name, 'gha:full-build')
       }}
     name: Windows-Bazel
@@ -111,7 +112,6 @@ jobs:
         ${{
           github.event_name == 'schedule' ||
           github.event_name == 'push' ||
-          github.event_name == 'workflow_dispatch' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
     secrets: inherit
@@ -128,7 +128,6 @@ jobs:
         ${{
           github.event_name == 'schedule' ||
           github.event_name == 'push' ||
-          github.event_name == 'workflow_dispatch' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
     secrets: inherit
@@ -153,8 +152,6 @@ jobs:
             schedule)
               ;;
             push)
-              ;;
-            workflow_dispatch)
               ;;
             *)
               exit 0
