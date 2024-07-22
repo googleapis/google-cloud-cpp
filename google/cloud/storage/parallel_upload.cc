@@ -17,9 +17,11 @@
 #include <nlohmann/json.hpp>
 #include <algorithm>
 #include <memory>
+#include <mutex>
 #include <sstream>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

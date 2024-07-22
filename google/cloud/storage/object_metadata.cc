@@ -19,6 +19,7 @@
 #include "google/cloud/internal/format_time_point.h"
 #include <nlohmann/json.hpp>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

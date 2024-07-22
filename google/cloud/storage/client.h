@@ -40,6 +40,7 @@
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
 #include "absl/strings/string_view.h"
+#include <memory>
 #include <string>
 #include <type_traits>
 #include <vector>

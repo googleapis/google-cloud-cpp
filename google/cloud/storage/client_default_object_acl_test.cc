@@ -20,6 +20,7 @@
 #include "google/cloud/storage/testing/client_unit_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <vector>
 
 namespace google {
 namespace cloud {
