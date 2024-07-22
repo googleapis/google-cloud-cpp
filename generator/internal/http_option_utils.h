@@ -61,11 +61,9 @@ HttpExtensionInfo ParseHttpExtension(
  *   method_http_verb
  *   method_rest_path
  */
-void SetHttpDerivedMethodVars(
-    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-        parsed_http_info,
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars);
+void SetHttpDerivedMethodVars(HttpExtensionInfo const& info,
+                              google::protobuf::MethodDescriptor const& method,
+                              VarsDictionary& method_vars);
 
 struct QueryParameterInfo {
   protobuf::FieldDescriptor::CppType cpp_type;
