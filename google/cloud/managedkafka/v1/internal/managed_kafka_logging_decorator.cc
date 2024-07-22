@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/managedkafka/v1/managed_kafka.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

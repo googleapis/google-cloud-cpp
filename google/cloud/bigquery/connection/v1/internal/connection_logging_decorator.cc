@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

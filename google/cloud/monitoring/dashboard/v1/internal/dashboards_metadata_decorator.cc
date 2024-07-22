@@ -24,7 +24,9 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

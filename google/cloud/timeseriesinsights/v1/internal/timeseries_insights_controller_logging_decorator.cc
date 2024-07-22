@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/timeseriesinsights/v1/timeseries_insights.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

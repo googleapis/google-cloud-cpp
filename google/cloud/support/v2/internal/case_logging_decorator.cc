@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/support/v2/case_service.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

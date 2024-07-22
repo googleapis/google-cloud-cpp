@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/prediction_service.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {
