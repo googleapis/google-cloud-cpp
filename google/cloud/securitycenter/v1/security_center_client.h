@@ -1393,6 +1393,8 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Filters an organization's assets and  groups them by their specified
   /// properties.
   ///
@@ -1428,6 +1430,7 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v1.GroupResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L1808}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::securitycenter::v1::GroupResult> GroupAssets(
       google::cloud::securitycenter::v1::GroupAssetsRequest request,
       Options opts = {});
@@ -1534,6 +1537,8 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Lists an organization's assets.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1568,6 +1573,7 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v1.ListAssetsResponse.ListAssetsResult]: @googleapis_reference_link{google/cloud/securitycenter/v1/securitycenter_service.proto#L2310}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<
       google::cloud::securitycenter::v1::ListAssetsResponse::ListAssetsResult>
   ListAssets(google::cloud::securitycenter::v1::ListAssetsRequest request,
@@ -2104,6 +2110,8 @@ class SecurityCenterClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Runs asset discovery. The discovery is tracked with a long-running
   /// operation.
   ///
@@ -2137,6 +2145,7 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
   RunAssetDiscovery(std::string const& parent, Options opts = {});
 
@@ -2156,6 +2165,8 @@ class SecurityCenterClient {
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Runs asset discovery. The discovery is tracked with a long-running
   /// operation.
@@ -2194,6 +2205,7 @@ class SecurityCenterClient {
   /// [google.cloud.securitycenter.v1.RunAssetDiscoveryResponse]: @googleapis_reference_link{google/cloud/securitycenter/v1/run_asset_discovery_response.proto#L29}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
   RunAssetDiscovery(
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
@@ -2211,6 +2223,7 @@ class SecurityCenterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> RunAssetDiscovery(
       ExperimentalTag, NoAwaitTag,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
@@ -2226,6 +2239,7 @@ class SecurityCenterClient {
   /// of the LRO in the background.
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
   RunAssetDiscovery(ExperimentalTag,
                     google::longrunning::Operation const& operation,

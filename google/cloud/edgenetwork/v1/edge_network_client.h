@@ -151,6 +151,8 @@ class EdgeNetworkClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Deprecated: not implemented.
   /// Lists Zones in a given project and location.
   ///
@@ -181,10 +183,13 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L57}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::edgenetwork::v1::Zone> ListZones(
       std::string const& parent, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deprecated: not implemented.
   /// Lists Zones in a given project and location.
@@ -221,11 +226,14 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L57}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::edgenetwork::v1::Zone> ListZones(
       google::cloud::edgenetwork::v1::ListZonesRequest request,
       Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deprecated: not implemented.
   /// Gets details of a single Zone.
@@ -248,10 +256,13 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L57}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
       std::string const& name, Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deprecated: not implemented.
   /// Gets details of a single Zone.
@@ -279,6 +290,7 @@ class EdgeNetworkClient {
   /// [google.cloud.edgenetwork.v1.Zone]: @googleapis_reference_link{google/cloud/edgenetwork/v1/resources.proto#L57}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
       google::cloud::edgenetwork::v1::GetZoneRequest const& request,
       Options opts = {});

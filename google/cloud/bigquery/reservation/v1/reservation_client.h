@@ -1231,6 +1231,8 @@ class ReservationServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Deprecated: Looks up assignments for a specified resource for a particular
   /// region. If the request is about a project:
   ///
@@ -1291,11 +1293,14 @@ class ReservationServiceClient {
   /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L981}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAssignments(std::string const& parent, std::string const& query,
                     Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Deprecated: Looks up assignments for a specified resource for a particular
   /// region. If the request is about a project:
@@ -1353,6 +1358,7 @@ class ReservationServiceClient {
   /// [google.cloud.bigquery.reservation.v1.SearchAssignmentsRequest]: @googleapis_reference_link{google/cloud/bigquery/reservation/v1/reservation.proto#L981}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
   SearchAssignments(
       google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
