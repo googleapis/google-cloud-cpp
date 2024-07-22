@@ -736,7 +736,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Patches the specified network with the data included in the request. Only
-  /// the following fields can be modified: routingConfig.routingMode.
+  /// routingConfig can be modified.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/patch
   ///
   /// @param project  Project ID for this request.
@@ -790,7 +790,7 @@ class NetworksClient {
   // clang-format off
   ///
   /// Patches the specified network with the data included in the request. Only
-  /// the following fields can be modified: routingConfig.routingMode.
+  /// routingConfig can be modified.
   /// https://cloud.google.com/compute/docs/reference/rest/v1/networks/patch
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
