@@ -22,28 +22,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Only execute this workflow for PR authors that are not members of this repo
-  # organization.
-  author-association-external:
-    name: Identify non-member contributors.
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Membership
-        if: >-
-          ${{
-              github.event_name == 'pull_request' &&
-              github.event.pull_request.author_association == 'MEMBER'
-          }}
-        run: |
-          echo "Workflow only executed for non organization members."
-          exit 0
-
   pre-flight:
     # For external contributors, run the build in the `external` environment.
     # This requires manual approval from a contributor. It also saves the
     # `ref` of the pull request, so downstream jobs know what to checkout.
     environment: 'external'
     name: Require Approval for External PRs
+    if: ${{ github.event.pull_request.author_association != 'MEMBER' }}
     needs: [author-association-external]
     runs-on: ubuntu-latest
     outputs:
@@ -61,6 +46,7 @@ jobs:
   # receive what version to checkout as an input.
   external-account-integration:
     name: External Account Integration
+    if: ${{ github.event.pull_request.author_association != 'MEMBER' }}
     needs: [pre-flight]
     uses: ./.github/workflows/external-account-integration.yml
     with:
@@ -71,10 +57,10 @@ jobs:
     # label already and it gets a new commit.
     if: |-
       ${{
-        github.event_name == 'schedule' ||
-        github.event_name == 'push' ||
+        github.event.pull_request.author_association != 'MEMBER' &&
+        (github.event_name == 'push' ||
         github.event_name == 'workflow_dispatch' ||
-        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+        contains(github.event.pull_request.labels.*.name, 'gha:full-build'))
       }}
     name: macOS-Bazel
     needs: [pre-flight]
@@ -87,10 +73,10 @@ jobs:
     # label already and it gets a new commit.
     if: |-
       ${{
-        github.event_name == 'schedule' ||
-        github.event_name == 'push' ||
+        github.event.pull_request.author_association != 'MEMBER' &&
+        (github.event_name == 'push' ||
         github.event_name == 'workflow_dispatch' ||
-        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+        contains(github.event.pull_request.labels.*.name, 'gha:full-build'))
       }}
     name: Windows-Bazel
     needs: [pre-flight]
@@ -108,10 +94,10 @@ jobs:
       # label already and it gets a new commit.
       full-matrix: |-
         ${{
-          github.event_name == 'schedule' ||
-          github.event_name == 'push' ||
+          github.event.pull_request.author_association != 'MEMBER' &&
+          (github.event_name == 'push' ||
           github.event_name == 'workflow_dispatch' ||
-          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build'))
         }}
   windows-cmake:
     name: Windows-CMake
@@ -124,10 +110,10 @@ jobs:
       # label already and it gets a new commit.
       full-matrix: |-
         ${{
-          github.event_name == 'schedule' ||
-          github.event_name == 'push' ||
+          github.event.pull_request.author_association != 'MEMBER' &&
+          (github.event_name == 'push' ||
           github.event_name == 'workflow_dispatch' ||
-          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build'))
         }}
   notify:
     name: Notify-Google-Chat
