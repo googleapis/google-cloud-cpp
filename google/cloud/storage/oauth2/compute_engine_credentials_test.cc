@@ -25,6 +25,8 @@
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <cstring>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

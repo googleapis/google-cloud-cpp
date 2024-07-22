@@ -19,6 +19,7 @@
 #include "google/cloud/storage/version.h"
 #include <memory>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -22,6 +22,9 @@
 #include "absl/strings/str_split.h"
 #include <cinttypes>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

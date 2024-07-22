@@ -18,6 +18,9 @@
 // [START storage_quickstart]
 #include "google/cloud/storage/client.h"
 #include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
 // [END storage_quickstart]
 
 namespace {

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/hash_function_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -16,6 +16,8 @@
 #include "google/cloud/storage/internal/access_control_common_parser.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include <nlohmann/json.hpp>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

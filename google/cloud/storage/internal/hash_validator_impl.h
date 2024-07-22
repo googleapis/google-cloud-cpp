@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/version.h"
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

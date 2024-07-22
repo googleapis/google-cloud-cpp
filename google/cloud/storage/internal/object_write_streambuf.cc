@@ -17,6 +17,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/make_status.h"
 #include <sstream>
+#include <string>
 #include <utility>
 
 namespace google {

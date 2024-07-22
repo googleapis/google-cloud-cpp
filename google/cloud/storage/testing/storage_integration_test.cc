@@ -23,6 +23,8 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/strings/match.h"
 #include <nlohmann/json.hpp>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

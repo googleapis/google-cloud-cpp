@@ -22,6 +22,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/invocation_id_generator.h"
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

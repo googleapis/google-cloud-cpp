@@ -28,7 +28,10 @@
 #include <google/protobuf/util/json_util.h>
 #include <gmock/gmock.h>
 #include <fstream>
+#include <string>
 #include <type_traits>
+#include <utility>
+#include <vector>
 
 /**
  * @file

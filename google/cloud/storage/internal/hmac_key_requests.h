@@ -22,6 +22,7 @@
 #include "google/cloud/storage/version.h"
 #include <iosfwd>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {

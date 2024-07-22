@@ -17,6 +17,8 @@
 
 #include "google/cloud/storage/internal/generic_stub.h"
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

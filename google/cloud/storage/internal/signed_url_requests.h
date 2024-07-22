@@ -26,6 +26,7 @@
 #include <iosfwd>
 #include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {

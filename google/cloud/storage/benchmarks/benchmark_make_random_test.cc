@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

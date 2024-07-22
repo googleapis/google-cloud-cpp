@@ -18,6 +18,9 @@
 #include "absl/strings/match.h"
 #include <regex>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

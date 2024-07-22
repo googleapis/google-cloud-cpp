@@ -14,6 +14,8 @@
 
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
 #include <nlohmann/json.hpp>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

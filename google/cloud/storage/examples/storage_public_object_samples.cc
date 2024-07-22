@@ -17,6 +17,9 @@
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace {
 

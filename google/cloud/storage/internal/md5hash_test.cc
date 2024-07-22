@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/md5hash.h"
 #include <gmock/gmock.h>
+#include <vector>
 
 namespace google {
 namespace cloud {

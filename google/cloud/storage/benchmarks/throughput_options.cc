@@ -20,6 +20,9 @@
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

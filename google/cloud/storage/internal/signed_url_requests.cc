@@ -22,6 +22,9 @@
 #include <algorithm>
 #include <cctype>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

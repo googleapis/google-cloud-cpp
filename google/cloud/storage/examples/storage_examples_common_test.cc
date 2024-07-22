@@ -15,6 +15,8 @@
 #include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -23,6 +23,9 @@
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <cstring>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

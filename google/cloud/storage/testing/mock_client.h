@@ -19,6 +19,8 @@
 #include "google/cloud/storage/internal/storage_connection.h"
 #include <gmock/gmock.h>
 #include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

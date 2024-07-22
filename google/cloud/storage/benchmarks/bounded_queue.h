@@ -19,6 +19,7 @@
 #include <condition_variable>
 #include <deque>
 #include <mutex>
+#include <utility>
 
 namespace google {
 namespace cloud {

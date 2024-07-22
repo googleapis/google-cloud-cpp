@@ -17,7 +17,10 @@
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
 #include <sstream>
+#include <string>
 #include <thread>
+#include <utility>
+#include <vector>
 
 namespace {
 

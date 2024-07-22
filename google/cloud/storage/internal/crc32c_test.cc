@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/crc32c.h"
 #include <gmock/gmock.h>
+#include <string>
 #include <vector>
 
 namespace google {

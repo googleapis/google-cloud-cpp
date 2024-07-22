@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <vector>
 
 namespace google {
 namespace cloud {

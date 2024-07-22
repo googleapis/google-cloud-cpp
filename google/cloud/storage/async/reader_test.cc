@@ -18,6 +18,7 @@
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <utility>
 
 namespace google {
 namespace cloud {

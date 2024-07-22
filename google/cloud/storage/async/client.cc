@@ -18,7 +18,9 @@
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/grpc/stub.h"
 #include "google/cloud/grpc_options.h"
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,8 @@
 #include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

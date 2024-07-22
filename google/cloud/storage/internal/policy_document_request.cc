@@ -22,6 +22,9 @@
 #include <nlohmann/json.hpp>
 #include <iomanip>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

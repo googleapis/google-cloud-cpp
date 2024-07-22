@@ -17,6 +17,8 @@
 #include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <string>
+#include <utility>
 #include <vector>
 
 namespace google {

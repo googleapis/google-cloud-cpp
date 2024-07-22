@@ -15,7 +15,9 @@
 #include "google/cloud/storage/benchmarks/create_dataset_options.h"
 #include "google/cloud/internal/make_status.h"
 #include <sstream>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -28,6 +28,9 @@
 #include "google/cloud/internal/group_options.h"
 #include "google/cloud/status_or.h"
 #include <google/storage/v2/storage.pb.h>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

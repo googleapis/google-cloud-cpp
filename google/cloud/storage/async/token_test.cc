@@ -15,6 +15,7 @@
 #include "google/cloud/storage/async/token.h"
 #include <gmock/gmock.h>
 #include <type_traits>
+#include <utility>
 
 namespace google {
 namespace cloud {
