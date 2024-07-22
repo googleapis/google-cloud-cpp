@@ -89,11 +89,9 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
  * Sets the "method_http_query_parameters" value in method_vars based on the
  * parsed_http_info.
  */
-void SetHttpQueryParameters(
-    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-        parsed_http_info,
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars);
+void SetHttpQueryParameters(HttpExtensionInfo const& info,
+                            google::protobuf::MethodDescriptor const& method,
+                            VarsDictionary& method_vars);
 
 /**
  * Determines if the method contains a routing header as specified in AIP-4222.

@@ -288,53 +288,24 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
 // for HTTP transcoding we need to turn the request fields into query
 // parameters.
 // TODO(#10176): Consider adding support for repeated simple fields.
-void SetHttpQueryParameters(
-    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-        parsed_http_info,
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars) {
-  struct HttpInfoVisitor {
-    HttpInfoVisitor(google::protobuf::MethodDescriptor const& method,
-                    VarsDictionary& method_vars)
-        : method(method), method_vars(method_vars) {}
-    // This visitor handles the case where the url field contains a token,
-    // or tokens, surrounded by curly braces:
-    //   patch: "/v1/{parent=projects/*/instances/*}/databases"
-    //   patch: "/v1/projects/{project}/instances/{instance}/databases"
-    // In the first case 'parent' is expected to be found as a field in the
-    // protobuf request message and is already included in the url. In the
-    // second case, both 'project' and 'instance' are expected as fields in
-    // the request and are already present in the url. No need to duplicate
-    // these fields as query parameters.
-    std::string operator()(HttpExtensionInfo const& info) {
-      std::vector<std::string> param_field_names;
-      param_field_names.reserve(info.field_substitutions.size());
-      for (auto const& p : info.field_substitutions) {
-        param_field_names.push_back(FormatFieldAccessorCall(method, p.first));
-      }
-      return FormatQueryParameterCode(method, std::move(param_field_names));
-    }
-
-    // This visitor handles the case where no request field is specified in the
-    // url:
-    //   get: "/v1/foo/bar"
-    // In this case, all non-repeated, simple fields should be query parameters.
-    std::string operator()(HttpSimpleInfo const&) {
-      return FormatQueryParameterCode(method, {});
-    }
-
-    // This visitor is an error diagnostic, in case we encounter an url that the
-    // generator does not currently parse. Emitting the method name causes code
-    // generation that does not compile and points to the proto location to be
-    // investigated.
-    std::string operator()(absl::monostate) { return method.full_name(); }
-
-    google::protobuf::MethodDescriptor const& method;
-    VarsDictionary& method_vars;
-  };
-
+void SetHttpQueryParameters(HttpExtensionInfo const& info,
+                            google::protobuf::MethodDescriptor const& method,
+                            VarsDictionary& method_vars) {
+  // The url field contains a token, or tokens, surrounded by curly braces:
+  //   patch: "/v1/{parent=projects/*/instances/*}/databases"
+  //   patch: "/v1/projects/{project}/instances/{instance}/databases"
+  // In the first case 'parent' is expected to be found as a field in the
+  // protobuf request message and is already included in the url. In the
+  // second case, both 'project' and 'instance' are expected as fields in
+  // the request and are already present in the url. No need to duplicate
+  // these fields as query parameters.
+  std::vector<std::string> param_field_names;
+  param_field_names.reserve(info.field_substitutions.size());
+  for (auto const& p : info.field_substitutions) {
+    param_field_names.push_back(FormatFieldAccessorCall(method, p.first));
+  }
   method_vars["method_http_query_parameters"] =
-      absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
+      FormatQueryParameterCode(method, std::move(param_field_names));
 }
 
 HttpExtensionInfo ParseHttpExtension(
