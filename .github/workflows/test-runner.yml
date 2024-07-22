@@ -49,8 +49,12 @@ jobs:
 
   pre-flight:
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
-    environment: 'internal'
-    name: Require Approval for External PRs
+    environment: >-
+      ${{
+          (github.event_name != 'pull_request_target' && 'internal') ||
+          (github.event.pull_request.head.repo.full_name == github.repository && 'internal')
+      }}
+    name: Save PR ref
     needs: [author-association-member]
     runs-on: ubuntu-latest
     outputs:
