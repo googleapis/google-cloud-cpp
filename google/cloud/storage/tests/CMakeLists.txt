@@ -24,12 +24,12 @@ set(storage_client_integration_tests
     decompressive_transcoding_integration_test.cc
     error_injection_integration_test.cc
     error_parsing_integration_test.cc
-    grpc_bucket_acl_integration_test.cc
+    bucket_acl_integration_test.cc
     grpc_bucket_metadata_integration_test.cc
-    grpc_default_object_acl_integration_test.cc
+    default_object_acl_integration_test.cc
     grpc_hmac_key_integration_test.cc
     grpc_integration_test.cc
-    grpc_notification_integration_test.cc
+    notification_integration_test.cc
     grpc_object_acl_integration_test.cc
     grpc_object_media_integration_test.cc
     grpc_object_metadata_integration_test.cc
