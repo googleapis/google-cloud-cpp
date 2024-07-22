@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/redis/cluster/v1/cloud_redis_cluster.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

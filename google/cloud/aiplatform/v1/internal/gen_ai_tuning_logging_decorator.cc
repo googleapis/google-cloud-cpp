@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/genai_tuning_service.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataplex/v1/data_taxonomy.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

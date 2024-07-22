@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

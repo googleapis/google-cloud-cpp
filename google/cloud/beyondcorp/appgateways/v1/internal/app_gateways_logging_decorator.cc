@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/beyondcorp/appgateways/v1/app_gateways_service.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

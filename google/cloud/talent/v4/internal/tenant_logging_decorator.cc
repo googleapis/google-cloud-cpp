@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

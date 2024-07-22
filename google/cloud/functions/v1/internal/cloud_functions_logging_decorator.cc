@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/functions/v1/functions.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

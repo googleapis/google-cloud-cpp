@@ -24,7 +24,9 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/metastore/v1/metastore_federation.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

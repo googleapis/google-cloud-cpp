@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/vmwareengine/v1/vmwareengine.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

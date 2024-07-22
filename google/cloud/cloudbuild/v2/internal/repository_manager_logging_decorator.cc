@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudbuild/v2/repositories.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

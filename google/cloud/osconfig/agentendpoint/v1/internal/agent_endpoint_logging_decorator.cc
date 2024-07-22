@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

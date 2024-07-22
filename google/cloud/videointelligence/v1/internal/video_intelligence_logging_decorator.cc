@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

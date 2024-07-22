@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {

@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>
 #include <memory>
+#include <string>
 #include <utility>
 
 namespace google {
