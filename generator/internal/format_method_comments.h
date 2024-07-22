@@ -40,12 +40,12 @@ bool CheckMethodCommentSubstitutions();
 /**
  * Comments for LRO Start overload.
  */
-std::string FormatStartMethodComments();
+std::string FormatStartMethodComments(bool is_method_deprecated);
 
 /**
  * Comments for LRO Await overload.
  */
-std::string FormatAwaitMethodComments();
+std::string FormatAwaitMethodComments(bool is_method_deprecated);
 
 }  // namespace generator_internal
 }  // namespace cloud

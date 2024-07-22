@@ -131,10 +131,10 @@ class $client_class_name$ {
 )""";
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
+    bool is_method_deprecated =
+        method.options().has_deprecated() && method.options().deprecated();
     std::string const deprecation_macro =
-        (method.options().has_deprecated() && method.options().deprecated())
-            ? deprecation_macro_str
-            : "";
+        is_method_deprecated ? deprecation_macro_str : "";
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
@@ -187,7 +187,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                 // clang-format on
                 {method_string},
                 {"\n"},
-                {FormatStartMethodComments()},
+                {FormatStartMethodComments(is_method_deprecated)},
                 {IsResponseTypeEmpty,
                  // clang-format off
                     "  Status\n",
@@ -283,7 +283,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
    {"  $method_name$($request_type$ const& request, Options opts = {});\n"},
    {"\n"},
-                {FormatStartMethodComments()},
+                {FormatStartMethodComments(is_method_deprecated)},
                 {deprecation_macro},
                  // clang-format on
                  {IsResponseTypeEmpty,
@@ -294,7 +294,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     "NoAwaitTag, "
     "$request_type$ const& request, Options opts = {});\n\n"},
                  // clang-format on
-                 {FormatAwaitMethodComments()},
+                 {FormatAwaitMethodComments(is_method_deprecated)},
                  {deprecation_macro},
                  {IsResponseTypeEmpty,
                   // clang-format off
@@ -334,10 +334,10 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
   for (google::protobuf::MethodDescriptor const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
     if (IsStreamingWrite(method)) continue;
+    bool is_method_deprecated =
+        method.options().has_deprecated() && method.options().deprecated();
     std::string const deprecation_macro =
-        (method.options().has_deprecated() && method.options().deprecated())
-            ? deprecation_macro_str
-            : "";
+        is_method_deprecated ? deprecation_macro_str : "";
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
