@@ -188,7 +188,8 @@ Status MetadataDecoratorGenerator::GenerateCc() {
        HasExplicitRoutingMethod() ? "google/cloud/internal/routing_matcher.h"
                                   : "",
        "google/cloud/status_or.h", "google/cloud/internal/url_encode.h"});
-  CcSystemIncludes({vars("proto_grpc_header_path"), "memory", "utility"});
+  CcSystemIncludes({vars("proto_grpc_header_path"), "memory", "string",
+                    "utility", "vector"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
