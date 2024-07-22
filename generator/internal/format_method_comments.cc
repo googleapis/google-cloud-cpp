@@ -240,7 +240,15 @@ std::string FormatMethodComments(
   // clang-format on
 )""";
 
-  return absl::StrCat(kMethodCommentsPrefix,
+  std::string const deprecation_comment =
+      method.options().has_deprecated() && method.options().deprecated()
+          ?
+          R"""( @deprecated This RPC is deprecated.
+  ///
+  ///)"""
+          : "";
+
+  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment,
                       doxygen_formatted_function_comments, "\n",
                       variable_parameter_comments, options_comment,
                       return_comment_string, trailer, kMethodCommentsSuffix);

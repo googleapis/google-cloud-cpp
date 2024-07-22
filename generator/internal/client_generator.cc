@@ -126,7 +126,15 @@ class $client_class_name$ {
   ///@}
 )""");
 
+  std::string const deprecation_macro_str =
+      R"""(  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
+)""";
+
   for (google::protobuf::MethodDescriptor const& method : methods()) {
+    std::string const deprecation_macro =
+        (method.options().has_deprecated() && method.options().deprecated())
+            ? deprecation_macro_str
+            : "";
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
@@ -134,11 +142,12 @@ class $client_class_name$ {
               "\n",
               FormatMethodComments(method, "", IsDiscoveryDocumentProto()),
               // clang-format off
+              absl::StrCat(deprecation_macro,
 R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$(Options opts = {});
-)"""));
+)""")));
       // clang-format on
       continue;
     }
@@ -157,6 +166,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
           {MethodPattern({{"\n"},
                           {FormatMethodCommentsMethodSignature(
                               method, signature, IsDiscoveryDocumentProto())},
+                          {deprecation_macro},
                           {IsResponseTypeEmpty,
                            // clang-format off
                    "  Status\n",
@@ -169,6 +179,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                {{"\n"},
                 {FormatMethodCommentsMethodSignature(
                     method, signature, IsDiscoveryDocumentProto())},
+                {deprecation_macro},
                 {IsResponseTypeEmpty,
                  // clang-format off
                     "  future<Status>\n",
@@ -189,6 +200,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    {"\n"},
                    {FormatMethodCommentsMethodSignature(
                        method, signature, IsDiscoveryDocumentProto())},
+                   {deprecation_macro},
                    {"  StreamRange<$range_output_type$>\n"},
                    {method_string},
                },
@@ -198,6 +210,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    {"\n"},
                    {FormatMethodCommentsMethodSignature(
                        method, signature, IsDiscoveryDocumentProto())},
+                   {deprecation_macro},
                    {"  StreamRange<$response_type$>\n"},
                    {method_string},
                },
@@ -248,6 +261,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {"\n"},
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
+                 {deprecation_macro},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  Status\n",
@@ -262,6 +276,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {"\n"},
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
+                 {deprecation_macro},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
@@ -269,6 +284,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
    {"  $method_name$($request_type$ const& request, Options opts = {});\n"},
    {"\n"},
                 {FormatStartMethodComments()},
+                {deprecation_macro},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
@@ -279,6 +295,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     "$request_type$ const& request, Options opts = {});\n\n"},
                  // clang-format on
                  {FormatAwaitMethodComments()},
+                 {deprecation_macro},
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  future<Status>\n",
@@ -292,6 +309,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {"\n"},
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
+                 {deprecation_macro},
                  // clang-format off
    {"  StreamRange<$range_output_type$>\n"
     "  $method_name$($request_type$ request, Options opts = {});\n"},
@@ -303,6 +321,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                  {"\n"},
                  {FormatMethodCommentsProtobufRequest(
                      method, IsDiscoveryDocumentProto())},
+                 {deprecation_macro},
                  // clang-format off
    {"  StreamRange<$response_type$>\n"
     "  $method_name$($request_type$ const& request, Options opts = {});\n"},
@@ -315,6 +334,10 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
   for (google::protobuf::MethodDescriptor const& method : async_methods()) {
     if (IsStreamingRead(method)) continue;
     if (IsStreamingWrite(method)) continue;
+    std::string const deprecation_macro =
+        (method.options().has_deprecated() && method.options().deprecated())
+            ? deprecation_macro_str
+            : "";
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
@@ -328,6 +351,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
               {{"\n"},
                {FormatMethodCommentsMethodSignature(
                    method, signature, IsDiscoveryDocumentProto())},
+               {deprecation_macro},
                {IsResponseTypeEmpty,
                 // clang-format off
                    "  future<Status>\n",
@@ -345,6 +369,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                 {"\n"},
                 {FormatMethodCommentsProtobufRequest(
                     method, IsDiscoveryDocumentProto())},
+                {deprecation_macro},
                 {IsResponseTypeEmpty,
                  // clang-format off
     "  future<Status>\n",
