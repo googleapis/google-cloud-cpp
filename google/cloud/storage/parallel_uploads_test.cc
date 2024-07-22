@@ -27,6 +27,8 @@
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <stack>
+#include <string>
+#include <utility>
 #ifdef __linux__
 #include <sys/stat.h>
 #include <unistd.h>

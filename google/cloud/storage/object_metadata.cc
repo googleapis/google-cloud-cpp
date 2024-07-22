@@ -18,6 +18,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace google {
 namespace cloud {

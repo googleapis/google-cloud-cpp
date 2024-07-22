@@ -15,6 +15,7 @@
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/iam_policy.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

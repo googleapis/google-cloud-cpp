@@ -22,6 +22,8 @@
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
