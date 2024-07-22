@@ -30,17 +30,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  debug:
-    name: debug vars
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo
-        id: echo
-        run: |
-            echo "assoc=${{ github.event.pull_request.author_association }}; event=${{ github.event_name }}"
-
   pre-flight:
-    needs: [debug]
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
     environment: >-
       ${{
