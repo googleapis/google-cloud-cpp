@@ -266,9 +266,15 @@ bool CheckMethodCommentSubstitutions() {
   return all_substitutions_used;
 }
 
-std::string FormatStartMethodComments() {
-  return R"""(  // clang-format off
-  ///
+std::string FormatStartMethodComments(bool is_method_deprecated) {
+  auto constexpr kMethodCommentsPrefix = R"""(  // clang-format off
+  ///)""";
+
+  auto constexpr kMethodCommentsSuffix = R"""(  ///
+  // clang-format on
+)""";
+
+  auto constexpr comment_body = R"""(
   /// @copybrief $method_name$
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
@@ -276,22 +282,44 @@ std::string FormatStartMethodComments() {
   /// Operation that has been started. No polling for operation status occurs.
   ///
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
-  ///
-  // clang-format on
 )""";
+
+  std::string const deprecation_comment =
+      is_method_deprecated ?
+                           R"""( @deprecated This RPC is deprecated.
+  ///
+  ///)"""
+                           : "";
+
+  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment, comment_body,
+                      kMethodCommentsSuffix);
 }
 
-std::string FormatAwaitMethodComments() {
-  return R"""(  // clang-format off
-  ///
+std::string FormatAwaitMethodComments(bool is_method_deprecated) {
+  auto constexpr kMethodCommentsPrefix = R"""(  // clang-format off
+  ///)""";
+
+  auto constexpr kMethodCommentsSuffix = R"""(  ///
+  // clang-format on
+)""";
+
+  auto constexpr comment_body = R"""(
   /// @copybrief $method_name$
   ///
   /// This method accepts a `$longrunning_operation_type$` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
   /// of the LRO in the background.
-  ///
-  // clang-format on
 )""";
+
+  std::string const deprecation_comment =
+      is_method_deprecated ?
+                           R"""( @deprecated This RPC is deprecated.
+  ///
+  ///)"""
+                           : "";
+
+  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment, comment_body,
+                      kMethodCommentsSuffix);
 }
 
 }  // namespace generator_internal
