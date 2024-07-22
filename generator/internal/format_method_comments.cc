@@ -274,7 +274,7 @@ std::string FormatStartMethodComments(bool is_method_deprecated) {
   // clang-format on
 )""";
 
-  auto constexpr comment_body = R"""(
+  auto constexpr kCommentBody = R"""(
   /// @copybrief $method_name$
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
@@ -291,7 +291,7 @@ std::string FormatStartMethodComments(bool is_method_deprecated) {
   ///)"""
                            : "";
 
-  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment, comment_body,
+  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment, kCommentBody,
                       kMethodCommentsSuffix);
 }
 
@@ -303,7 +303,7 @@ std::string FormatAwaitMethodComments(bool is_method_deprecated) {
   // clang-format on
 )""";
 
-  auto constexpr comment_body = R"""(
+  auto constexpr kCommentBody = R"""(
   /// @copybrief $method_name$
   ///
   /// This method accepts a `$longrunning_operation_type$` that corresponds
@@ -318,7 +318,7 @@ std::string FormatAwaitMethodComments(bool is_method_deprecated) {
   ///)"""
                            : "";
 
-  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment, comment_body,
+  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment, kCommentBody,
                       kMethodCommentsSuffix);
 }
 
