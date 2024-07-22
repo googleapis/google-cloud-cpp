@@ -58,7 +58,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/token:generate"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "token", ":generate"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("name", request.name()),
         std::make_pair("audience", request.audience()),
         std::make_pair("include_email", (request.include_email() ? "1" : "0"))}));
@@ -71,7 +71,7 @@ DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/entries:write"),
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "entries", ":write"),
       rest_internal::TrimEmptyQueryParameters({std::make_pair("log_name", request.log_name())}));
 }
 
@@ -103,7 +103,7 @@ Status DefaultGoldenKitchenSinkRestStub::DoNothing(
       google::protobuf::Empty const& request) {
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/doNothing"));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "doNothing"));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(

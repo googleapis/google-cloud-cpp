@@ -1262,9 +1262,6 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
                              "protobuf/well_known.proto#L5}"),
-        MethodVarsTestValues("my.service.v1.Service.Method0",
-                             "method_http_query_parameters",
-                             "my.service.v1.Service.Method0"),
         // Method1
         MethodVarsTestValues("my.service.v1.Service.Method1", "method_name",
                              "Method1"),

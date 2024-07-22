@@ -30,8 +30,10 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
+using ::testing::ElementsAre;
 using ::testing::Eq;
-using ::testing::SizeIs;
+using ::testing::IsEmpty;
+using ::testing::Pair;
 
 char const* const kHttpProto =
     "syntax = \"proto3\";\n"
@@ -431,16 +433,12 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithPrefixAndSuffix) {
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(2);
   auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
-  EXPECT_THAT(extension_info.url_path,
+  EXPECT_THAT(info.url_path,
               Eq("/v1/{parent=projects/*/instances/*}/databases"));
-  ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
-  EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("parent"));
-  EXPECT_THAT(extension_info.field_substitutions[0].second,
-              Eq("projects/*/instances/*"));
-  EXPECT_THAT(extension_info.body, Eq("*"));
-  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(info.field_substitutions,
+              ElementsAre(Pair("parent", "projects/*/instances/*")));
+  EXPECT_THAT(info.body, Eq("*"));
+  EXPECT_THAT(info.http_verb, Eq("Post"));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -450,14 +448,11 @@ TEST_F(HttpOptionUtilsTest,
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(6);
   auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
-  EXPECT_THAT(extension_info.url_path, Eq("/v1/projects/{project}/databases"));
-  ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
-  EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("project"));
-  EXPECT_THAT(extension_info.field_substitutions[0].second, Eq("project"));
-  EXPECT_THAT(extension_info.body, Eq("body"));
-  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(info.url_path, Eq("/v1/projects/{project}/databases"));
+  EXPECT_THAT(info.field_substitutions,
+              ElementsAre(Pair("project", "project")));
+  EXPECT_THAT(info.body, Eq("body"));
+  EXPECT_THAT(info.http_verb, Eq("Post"));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -467,17 +462,13 @@ TEST_F(HttpOptionUtilsTest,
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(7);
   auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
-  EXPECT_THAT(extension_info.url_path,
+  EXPECT_THAT(info.url_path,
               Eq("/v1/projects/{project}/instances/{instance}/databases"));
-  ASSERT_THAT(extension_info.field_substitutions, SizeIs(2));
-  EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("project"));
-  EXPECT_THAT(extension_info.field_substitutions[0].second, Eq("project"));
-  EXPECT_THAT(extension_info.field_substitutions[1].first, Eq("instance"));
-  EXPECT_THAT(extension_info.field_substitutions[1].second, Eq("instance"));
-  EXPECT_THAT(extension_info.body, Eq("*"));
-  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(
+      info.field_substitutions,
+      ElementsAre(Pair("project", "project"), Pair("instance", "instance")));
+  EXPECT_THAT(info.body, Eq("*"));
+  EXPECT_THAT(info.http_verb, Eq("Post"));
 }
 
 TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithOnlyPrefix) {
@@ -486,29 +477,23 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionWithOnlyPrefix) {
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(1);
   auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
-  EXPECT_THAT(extension_info.url_path,
-              Eq("/v1/{name=projects/*/instances/*/backups/*}"));
-  ASSERT_THAT(extension_info.field_substitutions, SizeIs(1));
-  EXPECT_THAT(extension_info.field_substitutions[0].first, Eq("name"));
-  EXPECT_THAT(extension_info.field_substitutions[0].second,
-              Eq("projects/*/instances/*/backups/*"));
-  EXPECT_THAT(extension_info.body, Eq(""));
-  EXPECT_THAT(extension_info.http_verb, Eq("Delete"));
+  EXPECT_THAT(info.url_path, Eq("/v1/{name=projects/*/instances/*/backups/*}"));
+  EXPECT_THAT(info.field_substitutions,
+              ElementsAre(Pair("name", "projects/*/instances/*/backups/*")));
+  EXPECT_THAT(info.body, Eq(""));
+  EXPECT_THAT(info.http_verb, Eq("Delete"));
 }
 
-TEST_F(HttpOptionUtilsTest, ParseHttpExtensionSimpleInfo) {
+TEST_F(HttpOptionUtilsTest, ParseHttpExtensionSimple) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(3);
   auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpSimpleInfo>(info));
-  auto extension_info = absl::get<HttpSimpleInfo>(info);
-  EXPECT_THAT(extension_info.url_path, Eq("/v1/foo"));
-  EXPECT_THAT(extension_info.body, Eq("*"));
-  EXPECT_THAT(extension_info.http_verb, Eq("Get"));
+  EXPECT_THAT(info.url_path, Eq("/v1/foo"));
+  EXPECT_THAT(info.field_substitutions, IsEmpty());
+  EXPECT_THAT(info.body, Eq("*"));
+  EXPECT_THAT(info.http_verb, Eq("Get"));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -518,13 +503,11 @@ TEST_F(HttpOptionUtilsTest,
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(5);
   auto info = ParseHttpExtension(*method);
-  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
-  auto extension_info = absl::get<HttpExtensionInfo>(info);
-  EXPECT_THAT(extension_info.url_path,
+  EXPECT_THAT(info.url_path,
               Eq("/v1/projects/{project=project}/instances/{instance=instance}/"
                  "databases"));
-  EXPECT_THAT(extension_info.body, Eq("*"));
-  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(info.body, Eq("*"));
+  EXPECT_THAT(info.http_verb, Eq("Post"));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsSimpleInfo) {
@@ -537,10 +520,10 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsSimpleInfo) {
   EXPECT_THAT(vars.at("method_http_verb"), Eq("Delete"));
   EXPECT_THAT(
       vars.at("method_rest_path"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/simple"))"""));
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "simple"))"""));
   EXPECT_THAT(
       vars.at("method_rest_path_async"),
-      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/simple"))"""));
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", "simple"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
