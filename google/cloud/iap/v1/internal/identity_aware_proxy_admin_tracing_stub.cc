@@ -18,6 +18,7 @@
 
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

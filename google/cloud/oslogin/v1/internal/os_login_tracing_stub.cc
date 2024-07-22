@@ -18,6 +18,7 @@
 
 #include "google/cloud/oslogin/v1/internal/os_login_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

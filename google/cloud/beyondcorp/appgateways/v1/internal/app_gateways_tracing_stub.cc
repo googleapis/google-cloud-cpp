@@ -18,6 +18,7 @@
 
 #include "google/cloud/beyondcorp/appgateways/v1/internal/app_gateways_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

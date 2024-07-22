@@ -17,6 +17,9 @@
 // source: google/storage/v2/storage.proto
 
 #include "google/cloud/storage/internal/storage_round_robin_decorator.h"
+#include <memory>
+#include <mutex>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/documentai/v1/internal/document_processor_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

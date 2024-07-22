@@ -18,6 +18,7 @@
 
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

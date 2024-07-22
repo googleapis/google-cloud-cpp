@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/internal/authorized_certificates_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/conversation_datasets_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {
