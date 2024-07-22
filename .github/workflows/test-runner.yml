@@ -21,7 +21,6 @@ on:
     - reopened
   schedule:
     - cron: '0 5 * * 1,2,3,4,5'
-  workflow_dispatch:
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
 # PR or branch. That reduces billing, but it creates more noise about cancelled
@@ -85,7 +84,6 @@ jobs:
       ${{
         github.event_name == 'schedule' ||
         github.event_name == 'push' ||
-        github.event_name == 'workflow_dispatch' ||
         contains(github.event.pull_request.labels.*.name, 'gha:full-build')
       }}
     name: macOS-Bazel
@@ -102,7 +100,6 @@ jobs:
       ${{
         github.event_name == 'schedule' ||
         github.event_name == 'push' ||
-        github.event_name == 'workflow_dispatch' ||
         contains(github.event.pull_request.labels.*.name, 'gha:full-build')
       }}
     name: Windows-Bazel
@@ -124,7 +121,6 @@ jobs:
         ${{
           github.event_name == 'schedule' ||
           github.event_name == 'push' ||
-          github.event_name == 'workflow_dispatch' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
     secrets: inherit
@@ -141,7 +137,6 @@ jobs:
         ${{
           github.event_name == 'schedule' ||
           github.event_name == 'push' ||
-          github.event_name == 'workflow_dispatch' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
     secrets: inherit
@@ -166,8 +161,6 @@ jobs:
             schedule)
               ;;
             push)
-              ;;
-            workflow_dispatch)
               ;;
             *)
               exit 0
