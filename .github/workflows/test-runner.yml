@@ -30,22 +30,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Require that the PR author be a member of the same organization as this
-  # repository in order to continue execution.
-  author-association-member:
-    name: Require Org Membership
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Membership
-        if: >-
-          ${{
-              github.event_name == 'pull_request_target' &&
-              github.event.pull_request.author_association != 'MEMBER'
-          }}
-        run: |
-          echo "Event not triggered by organization member."
-          exit 0
-
   pre-flight:
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
     environment: >-
@@ -54,7 +38,11 @@ jobs:
           (github.event.pull_request.head.repo.full_name == github.repository && 'internal')
       }}
     name: Save PR ref
-    needs: [author-association-member]
+    if: >-
+      ${{
+          github.event_name == 'pull_request_target' &&
+          github.event.pull_request.author_association == 'MEMBER'
+      }}
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
