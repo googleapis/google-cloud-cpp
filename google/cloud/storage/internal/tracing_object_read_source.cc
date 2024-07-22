@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include <opentelemetry/trace/scope.h>
 #include <chrono>
+#include <memory>
 #include <utility>
 
 namespace google {

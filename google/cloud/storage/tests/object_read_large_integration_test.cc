@@ -18,6 +18,7 @@
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <fstream>
+#include <iostream>
 #include <iterator>
 #include <string>
 #include <utility>

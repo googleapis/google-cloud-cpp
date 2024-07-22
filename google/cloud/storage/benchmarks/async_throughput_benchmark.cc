@@ -29,6 +29,8 @@
 #include <chrono>
 #include <cstdint>
 #include <iostream>
+#include <map>
+#include <memory>
 #include <random>
 #include <stdexcept>
 #include <string>

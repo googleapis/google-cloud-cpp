@@ -23,6 +23,7 @@
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <future>
+#include <memory>
 #include <string>
 #include <thread>
 #include <vector>

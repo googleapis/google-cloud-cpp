@@ -24,6 +24,7 @@
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

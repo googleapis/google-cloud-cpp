@@ -29,6 +29,9 @@
 #include <atomic>
 #include <future>
 #include <iomanip>
+#include <iostream>
+#include <map>
+#include <mutex>
 #include <random>
 #include <sstream>
 #include <string>

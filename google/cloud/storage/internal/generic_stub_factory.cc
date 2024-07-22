@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/rest/stub.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/algorithm.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

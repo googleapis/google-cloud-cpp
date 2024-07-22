@@ -16,6 +16,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <algorithm>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <thread>

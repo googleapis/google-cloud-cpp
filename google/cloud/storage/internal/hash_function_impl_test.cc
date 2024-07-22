@@ -19,6 +19,7 @@
 #include "google/cloud/storage/testing/upload_hash_cases.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <memory>
 #include <string>
 #include <utility>
 

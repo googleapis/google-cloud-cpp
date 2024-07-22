@@ -23,6 +23,8 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "absl/strings/match.h"
 #include <nlohmann/json.hpp>
+#include <memory>
+#include <mutex>
 #include <string>
 #include <utility>
 

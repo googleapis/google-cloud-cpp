@@ -24,6 +24,8 @@
 #include <cstdio>
 #include <future>
 #include <iomanip>
+#include <iostream>
+#include <mutex>
 #include <sstream>
 #include <string>
 #include <utility>

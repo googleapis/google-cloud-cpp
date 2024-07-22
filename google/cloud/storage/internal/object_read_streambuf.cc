@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/internal/make_status.h"
 #include <cstring>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>

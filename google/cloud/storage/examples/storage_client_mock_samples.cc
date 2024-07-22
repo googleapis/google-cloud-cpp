@@ -17,6 +17,7 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
 #include <iostream>
+#include <memory>
 #include <string>
 #include <utility>
 

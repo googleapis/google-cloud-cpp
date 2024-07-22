@@ -25,6 +25,7 @@
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <cstring>
+#include <memory>
 #include <string>
 #include <utility>
 

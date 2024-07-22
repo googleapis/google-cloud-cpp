@@ -29,6 +29,7 @@
 #include "google/cloud/status.h"
 #include <chrono>
 #include <iostream>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <utility>

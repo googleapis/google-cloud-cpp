@@ -31,6 +31,7 @@
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <fstream>
+#include <memory>
 #include <string>
 #include <vector>
 

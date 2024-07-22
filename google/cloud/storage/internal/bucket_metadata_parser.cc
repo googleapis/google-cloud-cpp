@@ -21,6 +21,7 @@
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
 #include <functional>
+#include <map>
 #include <string>
 #include <utility>
 #include <vector>

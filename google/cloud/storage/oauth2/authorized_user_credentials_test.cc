@@ -23,6 +23,7 @@
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <cstring>
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>

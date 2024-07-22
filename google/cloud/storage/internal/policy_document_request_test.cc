@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+#include <map>
 #include <string>
 #include <vector>
 
