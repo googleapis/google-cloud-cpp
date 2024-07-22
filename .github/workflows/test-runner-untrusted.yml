@@ -1,0 +1,61 @@
+name: "gha: macOS & Windows Untrusted"
+
+# Build on pull requests and pushes to `main`. The PR builds will be
+# non-blocking for now, but that is configured elsewhere.
+on:
+  # Start the build in the context of the target branch. This is considered
+  # "safe", as the workflow files are already committed. These types of builds
+  # have access to the secrets in the build, which we need to use the remote
+  # caches (Bazel and sccache).
+  pull_request:
+    types:
+    - opened
+    - synchronize
+    - reopened
+  workflow_dispatch:
+
+# Cancel in-progress runs of the workflow if somebody adds a new commit to the
+# PR or branch. That reduces billing, but it creates more noise about cancelled
+# jobs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.label || github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pre-flight:
+    # For external contributors, run the build in the `external` environment.
+    # This requires manual approval from a contributor. It also saves the
+    # `ref` of the pull request, so downstream jobs know what to checkout.
+    environment: 'external'
+    name: Require Approval for External PRs
+    if: ${{ github.event.pull_request.author_association != 'MEMBER' }}
+    runs-on: ubuntu-latest
+    outputs:
+      checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
+    steps:
+      - name: Save Pull Request
+        id: save-pull-request
+        run: >
+          echo "sha=${{ github.event.pull_request.head.sha || github.ref }}" >> $GITHUB_OUTPUT
+
+  # Run other jobs once the `pre-flight` job passes. When the `pre-flight`
+  # job requires approval, these blocks all the other jobs. The jobs are defined
+  # in separate files to keep the size of this file under control. Note how
+  # the additional jobs inherit any secrets needed to use the remote caches and
+  # receive what version to checkout as an input.
+  windows-cmake:
+    name: Windows-CMake
+    needs: [pre-flight]
+    uses: ./.github/workflows/windows-cmake.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      # Build the full matrix only on push events to the default branch, or
+      # when PR gets the has a `gha:full-build` label, or when it had the
+      # label already and it gets a new commit.
+      full-matrix: |-
+        ${{
+          github.event.pull_request.author_association != 'MEMBER' &&
+          (github.event_name == 'push' ||
+          github.event_name == 'workflow_dispatch' ||
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build'))
+        }}
