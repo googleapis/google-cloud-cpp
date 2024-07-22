@@ -34,10 +34,10 @@ jobs:
     name: debug vars
     runs-on: ubuntu-latest
     steps:
-        -name: echo
-        id: echo
-        run: |
-            echo "assoc=${{ github.event.pull_request.author_association }}; event=${{ github.event_name }}"
+      -name: echo
+      id: echo
+      run: |
+          echo "assoc=${{ github.event.pull_request.author_association }}; event=${{ github.event_name }}"
 
   pre-flight:
     needs: [debug]
