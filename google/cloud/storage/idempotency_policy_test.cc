@@ -16,6 +16,7 @@
 #include "google/cloud/storage/iam_policy.h"
 #include <gmock/gmock.h>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

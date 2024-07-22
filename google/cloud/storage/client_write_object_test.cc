@@ -25,6 +25,7 @@
 #include <gmock/gmock.h>
 #include <fstream>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/object_read_stream.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
+#include <memory>
 #include <utility>
 
 namespace google {

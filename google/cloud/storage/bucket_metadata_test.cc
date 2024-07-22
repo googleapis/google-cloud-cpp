@@ -23,6 +23,7 @@
 #include <nlohmann/json.hpp>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
