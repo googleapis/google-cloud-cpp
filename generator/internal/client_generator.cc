@@ -142,12 +142,12 @@ class $client_class_name$ {
               "\n",
               FormatMethodComments(method, "", IsDiscoveryDocumentProto()),
               // clang-format off
-              absl::StrCat(deprecation_macro,
+              deprecation_macro,
 R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
   Async$method_name$(Options opts = {});
-)""")));
+)"""));
       // clang-format on
       continue;
     }
