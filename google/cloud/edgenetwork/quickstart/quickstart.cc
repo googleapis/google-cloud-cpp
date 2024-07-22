@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
   auto client =
       edgenetwork::EdgeNetworkClient(edgenetwork::MakeEdgeNetworkConnection());
 
-  for (auto r : client.ListZones(location.FullName())) {
+  for (auto r : client.ListNetworks(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
