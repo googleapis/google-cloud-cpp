@@ -17,6 +17,7 @@
 #include "google/cloud/internal/rest_parse_json_error.h"
 #include "google/cloud/internal/rest_response.h"
 #include <iostream>
+#include <utility>
 
 namespace google {
 namespace cloud {

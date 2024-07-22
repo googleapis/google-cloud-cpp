@@ -23,7 +23,9 @@
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <future>
+#include <string>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {

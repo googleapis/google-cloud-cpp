@@ -15,7 +15,9 @@
 #include "google/cloud/storage/internal/logging_stub.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

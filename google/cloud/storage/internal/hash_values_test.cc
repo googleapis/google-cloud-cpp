@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/hash_values.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {

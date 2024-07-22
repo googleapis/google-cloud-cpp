@@ -17,6 +17,7 @@
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <cctype>
+#include <string>
 
 namespace google {
 namespace cloud {

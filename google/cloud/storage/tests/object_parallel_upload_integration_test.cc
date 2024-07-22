@@ -25,6 +25,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

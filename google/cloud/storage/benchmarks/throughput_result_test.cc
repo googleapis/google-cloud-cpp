@@ -20,6 +20,8 @@
 #include "absl/strings/match.h"
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

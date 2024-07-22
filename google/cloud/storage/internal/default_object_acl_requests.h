@@ -23,6 +23,7 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include <iosfwd>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {

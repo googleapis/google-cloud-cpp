@@ -24,7 +24,9 @@
 #include <future>
 #include <iomanip>
 #include <sstream>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace {
 namespace gcs = ::google::cloud::storage;

@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
+#include <string>
 
 namespace google {
 namespace cloud {

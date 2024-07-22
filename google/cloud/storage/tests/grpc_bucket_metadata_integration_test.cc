@@ -18,6 +18,7 @@
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <iterator>
+#include <string>
 #include <vector>
 
 namespace google {

@@ -29,6 +29,9 @@
 #include "absl/time/time.h"
 #include <future>
 #include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -31,6 +31,8 @@
 #include <nlohmann/json.hpp>
 #include <chrono>
 #include <fstream>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -20,6 +20,8 @@
 #include <map>
 #include <string>
 #include <thread>
+#include <utility>
+#include <vector>
 
 namespace {
 std::string StartResumableUpload(google::cloud::storage::Client client,

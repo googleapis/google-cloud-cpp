@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/crc32c.h"
 #include <benchmark/benchmark.h>
 #include <crc32c/crc32c.h>
+#include <string>
 
 namespace google {
 namespace cloud {

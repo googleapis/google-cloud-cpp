@@ -16,6 +16,8 @@
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include <nlohmann/json.hpp>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

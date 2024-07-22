@@ -26,6 +26,9 @@
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

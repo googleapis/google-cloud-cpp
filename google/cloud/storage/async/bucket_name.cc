@@ -18,6 +18,7 @@
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
 #include <ostream>
+#include <string>
 #include <utility>
 
 namespace google {

@@ -19,6 +19,8 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include <iostream>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -15,6 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {

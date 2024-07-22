@@ -22,6 +22,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

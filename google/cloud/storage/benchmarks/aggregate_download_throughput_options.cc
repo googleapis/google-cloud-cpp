@@ -18,7 +18,9 @@
 #include "google/cloud/internal/make_status.h"
 #include <iterator>
 #include <sstream>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

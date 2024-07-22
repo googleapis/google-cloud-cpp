@@ -31,6 +31,7 @@
 #include <iostream>
 #include <mutex>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

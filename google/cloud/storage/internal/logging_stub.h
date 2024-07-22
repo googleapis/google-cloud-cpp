@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/version.h"
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

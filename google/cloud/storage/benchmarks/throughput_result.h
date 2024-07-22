@@ -18,6 +18,7 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include <chrono>
 #include <cstdint>
+#include <string>
 
 namespace google {
 namespace cloud {

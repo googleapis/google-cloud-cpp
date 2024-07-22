@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/async/client.h"
 #include <iostream>
+#include <string>
 
 int main(int argc, char* argv[]) {
   if (argc != 2) {

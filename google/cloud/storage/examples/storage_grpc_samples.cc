@@ -25,6 +25,9 @@
 //! [grpc-includes] [END storage_grpc_quickstart]
 #include <iostream>
 #include <map>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace {
 namespace examples = ::google::cloud::storage::examples;

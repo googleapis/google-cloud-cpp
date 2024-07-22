@@ -33,6 +33,7 @@
 #include <mutex>
 #include <set>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
