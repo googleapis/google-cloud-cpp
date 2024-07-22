@@ -1,26 +1,17 @@
-name: "gha: macOS & Windows"
+name: "gha: macOS & Windows Untrusted"
 
 # Build on pull requests and pushes to `main`. The PR builds will be
 # non-blocking for now, but that is configured elsewhere.
 on:
-  # Start these builds on pushes (think "after the merge") too. Normally there
-  # are no `ci-gha**` branches in our repository. The contributors to the repo
-  # can create such branches when testing or troubleshooting builds. In such
-  # branches we can disable builds (to speed up the testing) or add new ones,
-  # without impacting the rest of the team.
-  push:
-    branches: [ 'v[2-9]**', 'ci-gha**' ]
   # Start the build in the context of the target branch. This is considered
   # "safe", as the workflow files are already committed. These types of builds
   # have access to the secrets in the build, which we need to use the remote
   # caches (Bazel and sccache).
-  pull_request_target:
+  pull_request:
     types:
     - opened
     - synchronize
     - reopened
-  schedule:
-    - cron: '0 5 * * 1,2,3,4,5'
   workflow_dispatch:
 
 # Cancel in-progress runs of the workflow if somebody adds a new commit to the
@@ -31,27 +22,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Require that the PR author be a member of the same organization as this
-  # repository in order to continue execution.
-  author-association-member:
-    name: Require Org Membership
+  # Only execute this workflow for PR authors that are not members of this repo
+  # organization.
+  author-association-external:
+    name: Identify non-member contributors.
     runs-on: ubuntu-latest
     steps:
       - name: Check Membership
         if: >-
           ${{
-              github.event_name == 'pull_request_target' &&
-              github.event.pull_request.author_association != 'MEMBER'
+              github.event_name == 'pull_request' &&
+              github.event.pull_request.author_association == 'MEMBER'
           }}
         run: |
-          echo "Event not triggered by organization member."
+          echo "Workflow only executed for non organization members."
           exit 0
 
   pre-flight:
-    # Save the `ref` of the pull request, so downstream jobs know what to checkout.
-    environment: 'internal'
+    # For external contributors, run the build in the `external` environment.
+    # This requires manual approval from a contributor. It also saves the
+    # `ref` of the pull request, so downstream jobs know what to checkout.
+    environment: 'external'
     name: Require Approval for External PRs
-    needs: [author-association-member]
+    needs: [author-association-external]
     runs-on: ubuntu-latest
     outputs:
       checkout-sha: ${{ steps.save-pull-request.outputs.sha }}
@@ -72,7 +65,6 @@ jobs:
     uses: ./.github/workflows/external-account-integration.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-    secrets: inherit
   macos-bazel:
     # Build the full matrix only on push events to the default branch, or
     # when PR gets the has a `gha:full-build` label, or when it had the
@@ -89,7 +81,6 @@ jobs:
     uses: ./.github/workflows/macos-bazel.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-    secrets: inherit
   windows-bazel:
     # Build the full matrix only on push events to the default branch, or
     # when PR gets the has a `gha:full-build` label, or when it had the
@@ -106,7 +97,6 @@ jobs:
     uses: ./.github/workflows/windows-bazel.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
-    secrets: inherit
   macos-cmake:
     name: macOS-CMake
     needs: [pre-flight]
@@ -123,7 +113,6 @@ jobs:
           github.event_name == 'workflow_dispatch' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
-    secrets: inherit
   windows-cmake:
     name: Windows-CMake
     needs: [pre-flight]
@@ -140,7 +129,6 @@ jobs:
           github.event_name == 'workflow_dispatch' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
-    secrets: inherit
   notify:
     name: Notify-Google-Chat
     # Wait until all the other jobs have completed.
