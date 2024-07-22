@@ -149,9 +149,9 @@ void InsertData(google::cloud::spanner::Client client) {
 
   auto insert_ownerships = spanner::InsertMutationBuilder(
     "PersonOwnAccount", {"id", "account_id", "create_time"})
-    .EmplaceRow(1,7, google::cloud::spanner::Value("2020-01-10T06:22:20.12Z"))
-    .EmplaceRow(2,20, google::cloud::spanner::Value("2020-01-27T17:55:09.12Z"))
-    .EmplaceRow(3,16, google::cloud::spanner::Value("2020-02-18T05:44:20.12Z"))
+    .EmplaceRow(1, 7, google::cloud::spanner::Value("2020-01-10T06:22:20.12Z"))
+    .EmplaceRow(2, 20, google::cloud::spanner::Value("2020-01-27T17:55:09.12Z"))
+    .EmplaceRow(3, 16, google::cloud::spanner::Value("2020-02-18T05:44:20.12Z"))
     .Build();
 
   auto commit_result =
@@ -215,7 +215,7 @@ void UpdateDataWithDml(google::cloud::spanner::Client client) {
         auto update = client.ExecuteDml(
             std::move(txn),
             spanner::SqlStatement(
-                "UPDATE Account SET is_blocked = false WHERE id = 2;"));
+                "UPDATE Account SET is_blocked = false WHERE id = 2"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
@@ -288,7 +288,7 @@ void QueryWithParameter(google::cloud::spanner::Client client) {
   spanner::SqlStatement select(
       "Graph FinGraph "
       "MATCH (a:Person)-[o:Owns]->()-[t:Transfers]->()<-[p:Owns]-(b:Person) "
-      "WHERE t.amount > @min " 
+      "WHERE t.amount >= @min " 
       "RETURN a.name AS sender, b.name AS receiver, t.amount, t.create_time AS transfer_at",
       {{"min", spanner::Value(500)}});
   using RowType = std::tuple<std::string, std::string, double, spanner::Timestamp>;
