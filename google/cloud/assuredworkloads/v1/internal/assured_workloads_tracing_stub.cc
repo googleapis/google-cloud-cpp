@@ -18,6 +18,7 @@
 
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

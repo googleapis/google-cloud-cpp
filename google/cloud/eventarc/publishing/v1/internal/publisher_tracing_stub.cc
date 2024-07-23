@@ -18,6 +18,7 @@
 
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

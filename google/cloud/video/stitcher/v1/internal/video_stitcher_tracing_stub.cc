@@ -18,6 +18,7 @@
 
 #include "google/cloud/video/stitcher/v1/internal/video_stitcher_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

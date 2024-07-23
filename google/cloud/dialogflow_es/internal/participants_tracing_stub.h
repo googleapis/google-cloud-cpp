@@ -23,6 +23,7 @@
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

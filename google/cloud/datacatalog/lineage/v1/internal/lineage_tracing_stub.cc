@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/lineage/v1/internal/lineage_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

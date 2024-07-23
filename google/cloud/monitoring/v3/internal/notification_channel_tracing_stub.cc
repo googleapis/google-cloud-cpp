@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/v3/internal/notification_channel_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/sessions_tracing_stub.h"
 #include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

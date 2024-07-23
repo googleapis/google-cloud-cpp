@@ -18,6 +18,7 @@
 
 #include "google/cloud/networkmanagement/v1/internal/reachability_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

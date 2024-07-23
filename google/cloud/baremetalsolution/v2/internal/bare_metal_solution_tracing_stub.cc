@@ -18,6 +18,7 @@
 
 #include "google/cloud/baremetalsolution/v2/internal/bare_metal_solution_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

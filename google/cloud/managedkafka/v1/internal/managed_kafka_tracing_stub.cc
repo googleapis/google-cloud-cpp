@@ -18,6 +18,7 @@
 
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

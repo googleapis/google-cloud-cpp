@@ -18,6 +18,7 @@
 
 #include "google/cloud/kms/inventory/v1/internal/key_tracking_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

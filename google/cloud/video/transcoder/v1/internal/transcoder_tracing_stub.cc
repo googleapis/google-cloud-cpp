@@ -18,6 +18,7 @@
 
 #include "google/cloud/video/transcoder/v1/internal/transcoder_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

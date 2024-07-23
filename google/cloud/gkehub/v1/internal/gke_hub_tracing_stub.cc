@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkehub/v1/internal/gke_hub_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

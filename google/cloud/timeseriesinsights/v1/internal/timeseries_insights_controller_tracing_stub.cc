@@ -18,6 +18,7 @@
 
 #include "google/cloud/timeseriesinsights/v1/internal/timeseries_insights_controller_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

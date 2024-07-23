@@ -18,6 +18,7 @@
 
 #include "google/cloud/netapp/v1/internal/net_app_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

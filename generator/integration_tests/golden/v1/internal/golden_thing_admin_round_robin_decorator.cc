@@ -17,6 +17,9 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_round_robin_decorator.h"
+#include <memory>
+#include <mutex>
+#include <vector>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

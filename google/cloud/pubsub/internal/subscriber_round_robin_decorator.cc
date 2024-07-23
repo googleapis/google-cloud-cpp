@@ -17,6 +17,9 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/internal/subscriber_round_robin_decorator.h"
+#include <memory>
+#include <mutex>
+#include <vector>
 
 namespace google {
 namespace cloud {
