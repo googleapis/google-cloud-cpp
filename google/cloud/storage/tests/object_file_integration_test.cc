@@ -21,6 +21,7 @@
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <thread>
 #include <vector>

@@ -16,6 +16,9 @@
 #include "google/cloud/storage/internal/tracing_object_read_source.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

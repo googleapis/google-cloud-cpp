@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
+#include <sstream>
 #include <string>
 #include <vector>
 #ifndef _WIN32

@@ -38,6 +38,8 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
