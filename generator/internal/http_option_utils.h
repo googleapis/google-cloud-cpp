@@ -115,10 +115,8 @@ bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method);
  *  [json_name = __json_request_body] that field is returned. Otherwise, the
  *  entire request is used.
  */
-std::string FormatRequestResource(
-    google::protobuf::Descriptor const& request,
-    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
-        parsed_http_info);
+std::string FormatRequestResource(google::protobuf::Descriptor const& request,
+                                  HttpExtensionInfo const& info);
 
 /**
  * Parses the package name of the method and returns its API version.

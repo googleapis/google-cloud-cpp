@@ -717,9 +717,8 @@ TEST_F(HttpOptionUtilsTest, FormatRequestResourceFailedParse) {
       pool_.FindFileByName("google/foo/v1/service.proto");
   MethodDescriptor const* method =
       service_file_descriptor->service(0)->method(2);
-  auto result = FormatRequestResource(
-      *method->input_type(),
-      absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>());
+  auto result =
+      FormatRequestResource(*method->input_type(), HttpExtensionInfo{});
   EXPECT_THAT(result, Eq("request"));
 }
 
