@@ -17,20 +17,12 @@
 
 #include "generator/internal/http_annotation_parser.h"
 #include "generator/internal/printer.h"
-#include "absl/types/variant.h"
 #include <google/protobuf/descriptor.h>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
-
-struct HttpSimpleInfo {
-  std::string http_verb;
-  std::string url_path;
-  std::string body;
-  std::string api_version;
-};
 
 struct HttpExtensionInfo {
   using RestPathPiece = std::function<std::string(
