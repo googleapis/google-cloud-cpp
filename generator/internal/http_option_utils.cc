@@ -145,97 +145,45 @@ std::string FormatQueryParameterCode(
 
 }  // namespace
 
-void SetHttpDerivedMethodVars(
-    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
-        parsed_http_info,
-    google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars) {
-  struct HttpInfoVisitor {
-    HttpInfoVisitor(google::protobuf::MethodDescriptor const& method,
-                    VarsDictionary& method_vars)
-        : method(method), method_vars(method_vars) {}
-
-    // This visitor handles the case where the url field contains a token
-    // surrounded by curly braces:
-    //   patch: "/v1/{parent=projects/*/instances/*}/databases\"
-    // In this case 'parent' is expected to be found as a field in the protobuf
-    // request message whose value matches the pattern 'projects/*/instances/*'.
-    // The request protobuf field can sometimes be nested a la:
-    //   post: "/v1/{instance.name=projects/*/locations/*/instances/*}"
-    // The emitted code needs to access the value via `request.parent()' and
-    // 'request.instance().name()`, respectively.
-    void operator()(HttpExtensionInfo const& info) {
-      method_vars["method_request_params"] = absl::StrJoin(
-          info.field_substitutions, ", \"&\",",
-          [&](std::string* out, std::pair<std::string, std::string> const& p) {
-            out->append(
-                absl::StrFormat("\"%s=\", internal::UrlEncode(request.%s())",
-                                internal::UrlEncode(p.first),
-                                FormatFieldAccessorCall(method, p.first)));
-          });
-      method_vars["method_request_body"] = info.body;
-      method_vars["method_http_verb"] = info.http_verb;
-      // method_rest_path is only used for REST transport.
-      auto trailer = [&info] {
-        if (info.rest_path_verb.empty()) return std::string(")");
-        return absl::StrFormat(R"""(, ":%s"))""", info.rest_path_verb);
-      };
-      auto path_expression = [&info, method = &method](bool is_async) {
-        return absl::StrCat(
-            ", ", absl::StrJoin(info.rest_path, R"""(, "/", )""",
-                                [method, is_async](
-                                    std::string* out,
-                                    HttpExtensionInfo::RestPathPiece const& p) {
-                                  out->append(p(*method, is_async));
-                                }));
-      };
-      method_vars["method_rest_path"] = absl::StrCat(
-          R"""(absl::StrCat("/")""", path_expression(false), trailer());
-      method_vars["method_rest_path_async"] = absl::StrCat(
-          R"""(absl::StrCat("/")""", path_expression(true), trailer());
-    }
-
-    // This visitor handles the case where no request field is specified in the
-    // url:
-    //   get: "/v1/foo/bar"
-    void operator()(HttpSimpleInfo const& info) {
-      method_vars["method_http_verb"] = info.http_verb;
-      if (absl::StrContains(info.url_path, info.api_version)) {
-        std::string needle = absl::StrFormat("/%s/", info.api_version);
-        auto url_path = absl::string_view(info.url_path);
-        auto start = url_path.find(needle);
-        auto pre_needle = url_path.substr(0, start);
-        auto pos_needle = url_path.substr(start + needle.length());
-
-        method_vars["method_rest_path"] = absl::StrFormat(
-            R"""(absl::StrCat("%s/", rest_internal::DetermineApiVersion("%s", options), "/%s"))""",
-            pre_needle, info.api_version, pos_needle);
-        method_vars["method_rest_path_async"] = absl::StrFormat(
-            R"""(absl::StrCat("%s/", rest_internal::DetermineApiVersion("%s", *options), "/%s"))""",
-            pre_needle, info.api_version, pos_needle);
-      } else {
-        method_vars["method_rest_path"] =
-            absl::StrCat("\"", info.url_path, "\"");
-        method_vars["method_rest_path_async"] =
-            absl::StrCat("\"", info.url_path, "\"");
-      }
-    }
-
-    // This visitor is an error diagnostic, in case we encounter an url that the
-    // generator does not currently parse. Emitting the method name causes code
-    // generation that does not compile and points to the proto location to be
-    // investigated.
-    void operator()(absl::monostate) {
-      method_vars["method_http_verb"] = method.full_name();
-      method_vars["method_request_param_value"] = method.full_name();
-      method_vars["method_rest_path"] = method.full_name();
-      method_vars["method_rest_path_async"] = method.full_name();
-    }
-    google::protobuf::MethodDescriptor const& method;
-    VarsDictionary& method_vars;
+void SetHttpDerivedMethodVars(HttpExtensionInfo const& info,
+                              google::protobuf::MethodDescriptor const& method,
+                              VarsDictionary& method_vars) {
+  // The url field contains a token surrounded by curly braces, e.g.:
+  //   patch: "/v1/{parent=projects/*/instances/*}/databases\"
+  // In this case 'parent' is expected to be found as a field in the protobuf
+  // request message whose value matches the pattern 'projects/*/instances/*'.
+  // The request protobuf field can sometimes be nested a la:
+  //   post: "/v1/{instance.name=projects/*/locations/*/instances/*}"
+  // The emitted code needs to access the value via `request.parent()' and
+  // 'request.instance().name()`, respectively.
+  method_vars["method_request_params"] = absl::StrJoin(
+      info.field_substitutions, ", \"&\",",
+      [&](std::string* out, std::pair<std::string, std::string> const& p) {
+        out->append(
+            absl::StrFormat("\"%s=\", internal::UrlEncode(request.%s())",
+                            internal::UrlEncode(p.first),
+                            FormatFieldAccessorCall(method, p.first)));
+      });
+  method_vars["method_request_body"] = info.body;
+  method_vars["method_http_verb"] = info.http_verb;
+  // method_rest_path is only used for REST transport.
+  auto trailer = [&info] {
+    if (info.rest_path_verb.empty()) return std::string(")");
+    return absl::StrFormat(R"""(, ":%s"))""", info.rest_path_verb);
   };
-
-  absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
+  auto path_expression = [&info, method = &method](bool is_async) {
+    return absl::StrCat(
+        ", ", absl::StrJoin(info.rest_path, R"""(, "/", )""",
+                            [method, is_async](
+                                std::string* out,
+                                HttpExtensionInfo::RestPathPiece const& p) {
+                              out->append(p(*method, is_async));
+                            }));
+  };
+  method_vars["method_rest_path"] = absl::StrCat(
+      R"""(absl::StrCat("/")""", path_expression(false), trailer());
+  method_vars["method_rest_path_async"] =
+      absl::StrCat(R"""(absl::StrCat("/")""", path_expression(true), trailer());
 }
 
 absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
