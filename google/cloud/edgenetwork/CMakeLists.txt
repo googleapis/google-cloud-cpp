@@ -29,7 +29,8 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:edgenetwork_quickstart> GOOGLE_CLOUD_PROJECT
-            GOOGLE_CLOUD_CPP_TEST_REGION)
+            GOOGLE_CLOUD_CPP_TEST_REGION GOOGLE_CLOUD_CPP_TEST_ZONE)
     set_tests_properties(edgenetwork_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
+                         PROPERTIES LABELS "integration-test;quickstart"
+                         PASS_REGULAR_EXPRESSION "message of Resource 'zones/.*' was not found")
 endif ()
