@@ -20,7 +20,9 @@
 #include "absl/functional/function_ref.h"
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
+#include <algorithm>
 #include <iomanip>
+#include <iterator>
 #include <map>
 #include <sstream>
 #include <string>

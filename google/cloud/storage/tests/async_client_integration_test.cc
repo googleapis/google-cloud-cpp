@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <iterator>
 #include <numeric>
 #include <string>
 #include <utility>

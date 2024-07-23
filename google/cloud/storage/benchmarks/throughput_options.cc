@@ -19,6 +19,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/time.h"
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <string>

@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cstring>
 #include <iostream>
+#include <iterator>
 #include <memory>
 #include <regex>
 #include <string>
