@@ -27,6 +27,10 @@
 #include "absl/time/time.h"
 #include <functional>
 #include <future>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <mutex>
 #include <set>
 #include <sstream>
 #include <string>

@@ -22,6 +22,8 @@
 #include <cstdio>
 #include <fstream>
 #include <future>
+#include <iostream>
+#include <mutex>
 #include <string>
 #include <thread>
 #include <vector>

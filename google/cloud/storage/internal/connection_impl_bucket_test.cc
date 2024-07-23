@@ -18,6 +18,7 @@
 #include "google/cloud/storage/testing/mock_generic_stub.h"
 #include "google/cloud/storage/testing/retry_tests.h"
 #include <gmock/gmock.h>
+#include <memory>
 #include <utility>
 
 namespace google {

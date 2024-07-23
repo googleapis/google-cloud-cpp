@@ -19,6 +19,7 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
 #include <nlohmann/json.hpp>
+#include <map>
 #include <sstream>
 #include <string>
 #include <utility>

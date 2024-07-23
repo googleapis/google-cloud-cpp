@@ -17,6 +17,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
 #include <chrono>
+#include <memory>
 #include <string>
 #include <thread>
 #include <utility>

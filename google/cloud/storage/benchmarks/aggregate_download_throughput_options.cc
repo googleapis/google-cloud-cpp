@@ -16,6 +16,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include <iostream>
 #include <iterator>
 #include <sstream>
 #include <string>

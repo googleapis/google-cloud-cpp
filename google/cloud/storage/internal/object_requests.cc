@@ -21,6 +21,9 @@
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_split.h"
 #include <cinttypes>
+#include <iomanip>
+#include <map>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <utility>

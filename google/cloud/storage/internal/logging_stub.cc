@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/logging_stub.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>

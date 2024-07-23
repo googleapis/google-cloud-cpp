@@ -22,6 +22,7 @@
 #include "google/cloud/testing_util/integration_test.h"
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <thread>

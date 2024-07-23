@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/client_unit_test.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

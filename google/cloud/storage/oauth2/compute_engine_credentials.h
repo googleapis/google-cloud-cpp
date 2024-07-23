@@ -30,6 +30,7 @@
 #include "google/cloud/status.h"
 #include <chrono>
 #include <ctime>
+#include <memory>
 #include <mutex>
 #include <set>
 #include <string>

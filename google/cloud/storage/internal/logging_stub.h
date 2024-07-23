@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/generic_stub.h"
 #include "google/cloud/storage/version.h"
+#include <memory>
 #include <string>
 #include <vector>
 

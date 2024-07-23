@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/mock_http_request.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace storage {
 namespace testing {
+
 std::shared_ptr<MockHttpRequestBuilder::Impl> MockHttpRequestBuilder::mock_;
 
 }  // namespace testing

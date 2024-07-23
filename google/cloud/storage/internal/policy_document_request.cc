@@ -21,6 +21,7 @@
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
 #include <iomanip>
+#include <map>
 #include <sstream>
 #include <string>
 #include <utility>

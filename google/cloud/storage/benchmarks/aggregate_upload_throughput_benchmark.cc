@@ -27,6 +27,7 @@
 #include "google/cloud/testing_util/timer.h"
 #include "absl/strings/str_format.h"
 #include "absl/time/time.h"
+#include <mutex>
 
 namespace {
 using ::google::cloud::testing_util::FormatSize;

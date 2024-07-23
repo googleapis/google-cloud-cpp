@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/version.h"
+#include <memory>
 #include <string>
 #include <utility>
 

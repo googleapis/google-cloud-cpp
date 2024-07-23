@@ -19,6 +19,7 @@
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/testing_util/mock_async_streaming_read_rpc.h"
 #include <gmock/gmock.h>
+#include <memory>
 
 namespace google {
 namespace cloud {
