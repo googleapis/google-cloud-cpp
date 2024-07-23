@@ -21,6 +21,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/terminate_handler.h"
+#include <algorithm>
 #include <cstdio>
 #include <future>
 #include <iomanip>

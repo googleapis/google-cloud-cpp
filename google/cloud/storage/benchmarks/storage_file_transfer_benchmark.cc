@@ -20,6 +20,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
+#include <algorithm>
 #include <fstream>
 #include <future>
 #include <iomanip>

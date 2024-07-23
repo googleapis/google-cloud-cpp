@@ -19,8 +19,10 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <cstdio>
 #include <fstream>
+#include <iterator>
 #include <string>
 #include <thread>
 #include <vector>

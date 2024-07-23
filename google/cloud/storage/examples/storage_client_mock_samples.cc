@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <iostream>
 #include <memory>
 #include <string>

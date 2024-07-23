@@ -27,8 +27,10 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/protobuf/util/json_util.h>
 #include <gmock/gmock.h>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <string>

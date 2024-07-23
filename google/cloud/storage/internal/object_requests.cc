@@ -20,6 +20,7 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "absl/strings/numbers.h"
 #include "absl/strings/str_split.h"
+#include <algorithm>
 #include <cinttypes>
 #include <iomanip>
 #include <map>
