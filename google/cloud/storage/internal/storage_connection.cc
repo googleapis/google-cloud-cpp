@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/storage_connection.h"
+#include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

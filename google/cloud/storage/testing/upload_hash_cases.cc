@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/upload_hash_cases.h"
+#include <vector>
 
 namespace google {
 namespace cloud {

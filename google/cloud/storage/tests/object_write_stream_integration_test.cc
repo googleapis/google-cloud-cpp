@@ -16,6 +16,7 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

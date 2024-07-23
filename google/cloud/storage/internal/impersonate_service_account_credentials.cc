@@ -17,6 +17,8 @@
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include <memory>
 #include <mutex>
+#include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {

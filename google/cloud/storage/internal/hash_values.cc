@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

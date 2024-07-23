@@ -18,6 +18,7 @@
 #include "google/cloud/storage/notification_payload_format.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
 #include <string>
 
 namespace google {

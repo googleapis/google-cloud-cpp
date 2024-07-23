@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/object_metadata.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
