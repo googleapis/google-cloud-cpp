@@ -18,7 +18,7 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
+  if (argc != 4) {
     std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) try {
   auto client =
       edgenetwork::EdgeNetworkClient(edgenetwork::MakeEdgeNetworkConnection());
 
-  for (auto r : client.ListZones(location.FullName())) {
+  for (auto r : client.ListNetworks(location.FullName() + "/zones/" + argv[3])) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
