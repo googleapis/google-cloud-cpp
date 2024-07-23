@@ -36,8 +36,12 @@ jobs:
     steps:
       - name: debug_steps
         id: debug-steps
-        run: >
-          echo "event=${{ github.event_name }}; assoc=${{ github.event.pull_request.author_association }}"
+        run: |
+          echo "event=${{ github.event_name }}"
+          echo "assoc=${{ github.event.pull_request.author_association }}"
+          echo "org=${{ github.organization }}" || true
+          echo "user=${{ github.event.pull_request.user }}" || true
+          echo "user_orgs=${{ github.event.pull_request.user.organizations_url }}" || true
 
   pre-flight:
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
@@ -50,7 +54,8 @@ jobs:
     needs: [debug]
     if: >-
       ${{
-          (github.event.pull_request.author_association == 'MEMBER' &&
+          ((github.event.pull_request.author_association == 'MEMBER' ||
+           github.event.pull_request.author_association == 'COLLABORATOR') &&
           github.event_name == 'pull_request_target') ||
           github.event_name == 'push' ||
           github.event_name == 'schedule'
