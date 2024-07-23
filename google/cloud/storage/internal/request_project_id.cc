@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/request_project_id.h"
 #include "google/cloud/internal/make_status.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

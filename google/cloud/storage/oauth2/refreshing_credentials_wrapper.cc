@@ -17,6 +17,7 @@
 #include "google/cloud/internal/oauth2_refreshing_credentials_wrapper.h"
 #include "absl/strings/str_split.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

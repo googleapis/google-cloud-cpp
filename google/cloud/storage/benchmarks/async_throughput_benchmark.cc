@@ -32,6 +32,7 @@
 #include <map>
 #include <memory>
 #include <random>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <string_view>

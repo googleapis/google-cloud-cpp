@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/internal/make_status.h"
+#include <vector>
 
 namespace google {
 namespace cloud {
