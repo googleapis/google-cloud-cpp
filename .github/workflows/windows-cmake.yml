@@ -59,12 +59,12 @@ jobs:
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
-      if: ${{ inputs.sccache-mode == 'READ_WRITE' }}
+      if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
     - uses: google-github-actions/auth@v2
-      if: ${{ inputs.sccache-mode == 'READ' }}
+      if: ${{ inputs.sccache-mode == 'READ' || inputs.vcpkg-cache-mode == 'read' }}
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY_READ_ONLY }}
