@@ -246,10 +246,10 @@ void UpdateDataWithGraphQueryInDml(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Account SET is_blocked = true "
-                "WHERE id IN ("
+                "WHERE id IN {"
                 "  GRAPH FinGraph"
                 "  MATCH (a:Account WHERE a.id = 1)-[:TRANSFERS]->{1,2}(b:Account)"
-                "  RETURN b.id)"));
+                "  RETURN b.id}"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
