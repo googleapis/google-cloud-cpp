@@ -30,6 +30,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  debug:
+    name: debug_job
+    runs-on: ubuntu-latest
+    steps:
+      - name: debug_steps
+        id: debug-steps
+        run: >
+          echo "event=${{ github.event_name }}; assoc=${{ github.event.pull_request.author_association }}"
+
   pre-flight:
     # Save the `ref` of the pull request, so downstream jobs know what to checkout.
     environment: >-
@@ -38,6 +47,7 @@ jobs:
           (github.event.pull_request.head.repo.full_name == github.repository && 'internal')
       }}
     name: Save PR ref
+    needs: [debug]
     if: >-
       ${{
           (github.event.pull_request.author_association == 'MEMBER' &&
