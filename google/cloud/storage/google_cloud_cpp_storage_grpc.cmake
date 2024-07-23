@@ -78,6 +78,8 @@ add_library(
     async/object_responses.cc
     async/object_responses.h
     async/options.h
+    async/read_all.cc
+    async/read_all.h
     async/reader.cc
     async/reader.h
     async/reader_connection.h
@@ -388,6 +390,7 @@ set(storage_client_grpc_unit_tests
     async/bucket_name_test.cc
     async/client_test.cc
     async/idempotency_policy_test.cc
+    async/read_all_test.cc
     async/reader_test.cc
     async/resume_policy_test.cc
     async/rewriter_test.cc
