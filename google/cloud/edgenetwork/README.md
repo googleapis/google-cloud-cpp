@@ -23,7 +23,7 @@ this library.
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+    std::cerr << "Usage: " << argv[0] << " project-id location-id zone-id\n";
     return 1;
   }
 
