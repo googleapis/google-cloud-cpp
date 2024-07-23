@@ -59,9 +59,15 @@ jobs:
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
+      if: ${{ inputs.sccache-mode == 'READ_WRITE' }}
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
+    - uses: google-github-actions/auth@v2
+      if: ${{ inputs.sccache-mode == 'READ' }}
+      with:
+        create_credentials_file: true
+        credentials_json: ${{ secrets.BUILD_CACHE_KEY_READ_ONLY }}
     - uses: actions/setup-python@v5
       id: py311
       with:
