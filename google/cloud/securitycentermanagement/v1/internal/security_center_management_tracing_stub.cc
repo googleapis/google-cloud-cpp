@@ -19,6 +19,7 @@
 
 #include "google/cloud/securitycentermanagement/v1/internal/security_center_management_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

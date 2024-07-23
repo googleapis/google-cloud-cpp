@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/v1/internal/data_catalog_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

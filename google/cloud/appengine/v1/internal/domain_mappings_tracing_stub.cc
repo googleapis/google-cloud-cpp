@@ -18,6 +18,7 @@
 
 #include "google/cloud/appengine/v1/internal/domain_mappings_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

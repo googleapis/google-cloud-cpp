@@ -18,6 +18,7 @@
 
 #include "google/cloud/containeranalysis/v1/internal/container_analysis_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

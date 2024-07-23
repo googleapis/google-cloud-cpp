@@ -18,6 +18,7 @@
 
 #include "google/cloud/billing/budgets/v1/internal/budget_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

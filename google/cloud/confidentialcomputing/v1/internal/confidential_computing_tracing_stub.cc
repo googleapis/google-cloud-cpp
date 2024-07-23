@@ -18,6 +18,7 @@
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

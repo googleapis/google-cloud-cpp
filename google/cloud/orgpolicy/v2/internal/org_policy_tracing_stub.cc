@@ -18,6 +18,7 @@
 
 #include "google/cloud/orgpolicy/v2/internal/org_policy_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

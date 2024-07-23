@@ -18,6 +18,7 @@
 
 #include "google/cloud/support/v2/internal/case_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

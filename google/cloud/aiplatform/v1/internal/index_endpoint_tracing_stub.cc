@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/index_endpoint_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

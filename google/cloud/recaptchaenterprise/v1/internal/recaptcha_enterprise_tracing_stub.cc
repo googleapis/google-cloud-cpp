@@ -18,6 +18,7 @@
 
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {

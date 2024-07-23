@@ -18,6 +18,7 @@
 
 #include "google/cloud/channel/v1/internal/cloud_channel_reports_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <memory>
 #include <utility>
 
 namespace google {
