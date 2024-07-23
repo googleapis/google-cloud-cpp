@@ -43,6 +43,57 @@ jobs:
   # in separate files to keep the size of this file under control. Note how
   # the additional jobs inherit any secrets needed to use the remote caches and
   # receive what version to checkout as an input.
+  macos-bazel:
+    # Build the full matrix only on push events to the default branch, or
+    # when PR gets the has a `gha:full-build` label, or when it had the
+    # label already and it gets a new commit.
+    if: |-
+      ${{
+        github.event_name == 'schedule' ||
+        github.event_name == 'push' ||
+        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+      }}
+    name: macOS-Bazel
+    needs: [pre-flight]
+    uses: ./.github/workflows/macos-bazel.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      bazel-cache-mode: 'READ_ONLY'
+      execute-integration-tests: false
+  windows-bazel:
+    # Build the full matrix only on push events to the default branch, or
+    # when PR gets the has a `gha:full-build` label, or when it had the
+    # label already and it gets a new commit.
+    if: |-
+      ${{
+        github.event_name == 'schedule' ||
+        github.event_name == 'push' ||
+        contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+      }}
+    name: Windows-Bazel
+    needs: [pre-flight]
+    uses: ./.github/workflows/windows-bazel.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      bazel-cache-mode: 'READ_ONLY'
+      execute-integration-tests: false
+  macos-cmake:
+    name: macOS-CMake
+    needs: [pre-flight]
+    uses: ./.github/workflows/macos-cmake.yml
+    with:
+      checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      # Build the full matrix only on push events to the default branch, or
+      # when PR gets the has a `gha:full-build` label, or when it had the
+      # label already and it gets a new commit.
+      full-matrix: |-
+        ${{
+          github.event_name == 'schedule' ||
+          github.event_name == 'push' ||
+          contains(github.event.pull_request.labels.*.name, 'gha:full-build')
+        }}
+      sccache-mode: 'DISABLED'
+      vcpkg-cache-mode: 'read'
   windows-cmake:
     name: Windows-CMake
     needs: [pre-flight]
@@ -59,3 +110,5 @@ jobs:
           github.event_name == 'workflow_dispatch' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build'))
         }}
+      sccache-mode: 'DISABLED'
+      vcpkg-cache-mode: 'read'

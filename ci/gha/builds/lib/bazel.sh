@@ -45,7 +45,11 @@ function bazel::test_args() {
   )
   if [[ -n "${BAZEL_REMOTE_CACHE:-}" ]]; then
     args+=("--remote_cache=${BAZEL_REMOTE_CACHE}")
-    args+=("--google_default_credentials")
+    if [[ "${BAZEL_REMOTE_CACHE_RW_MODE}" == "READ_WRITE" ]]; then
+      args+=("--google_default_credentials")
+    else
+      args+=("--remote_upload_local_results=false")
+    fi
     # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues
     # and https://github.com/bazelbuild/bazel/issues/3360
     args+=("--experimental_guard_against_concurrent_changes")
