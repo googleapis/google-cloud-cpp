@@ -49,6 +49,16 @@ struct ReadPayloadImpl {
     return storage_experimental::ReadPayload(std::move(contents));
   }
 
+  /// Append the data from @p rhs to @p lhs.
+  static void Accumulate(storage_experimental::ReadPayload& lhs,
+                         storage_experimental::ReadPayload&& rhs) {
+    if (lhs.impl_.empty()) {
+      lhs = std::move(rhs);
+      return;
+    }
+    lhs.impl_.Append(std::move(rhs.impl_));
+  }
+
   /// Get the object hashes (by move) from the payload.
   static absl::optional<storage::internal::HashValues> GetObjectHashes(
       storage_experimental::ReadPayload& payload) {
