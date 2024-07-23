@@ -19,7 +19,6 @@
 #include "google/cloud/storage/internal/storage_round_robin_decorator.h"
 #include <memory>
 #include <mutex>
-#include <utility>
 #include <vector>
 
 namespace google {
