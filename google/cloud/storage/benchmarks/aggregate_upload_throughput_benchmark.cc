@@ -28,6 +28,10 @@
 #include "absl/strings/str_format.h"
 #include "absl/time/time.h"
 #include <mutex>
+#include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace {
 using ::google::cloud::testing_util::FormatSize;
