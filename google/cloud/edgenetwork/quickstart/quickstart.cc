@@ -29,8 +29,12 @@ int main(int argc, char* argv[]) try {
   auto client =
       edgenetwork::EdgeNetworkClient(edgenetwork::MakeEdgeNetworkConnection());
 
+<<<<<<< HEAD
   for (auto r :
        client.ListNetworks(location.FullName() + "/zones/" + argv[3])) {
+=======
+  for (auto r : client.ListZones(location.FullName())) {
+>>>>>>> 20853a5b75 (move changes to another pr)
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
