@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/async/resume_policy.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

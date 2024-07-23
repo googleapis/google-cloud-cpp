@@ -15,6 +15,7 @@
 #include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/internal/make_status.h"
+#include <memory>
 #include <utility>
 
 namespace google {

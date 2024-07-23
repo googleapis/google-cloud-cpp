@@ -24,6 +24,7 @@
 #include <nlohmann/json.hpp>
 #include <array>
 #include <cstdio>
+#include <memory>
 #include <string>
 #include <utility>
 

@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/make_status.h"
+#include <memory>
 #include <sstream>
 #include <string>
 #include <utility>

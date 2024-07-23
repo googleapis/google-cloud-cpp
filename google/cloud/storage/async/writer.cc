@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/async/writer.h"
 #include "google/cloud/internal/make_status.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

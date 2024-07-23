@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/generic_stub_factory.h"
 #include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include <memory>
 
 namespace google {
 namespace cloud {

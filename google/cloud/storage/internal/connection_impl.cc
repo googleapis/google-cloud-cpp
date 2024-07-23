@@ -19,6 +19,7 @@
 #include "absl/strings/match.h"
 #include <chrono>
 #include <functional>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <thread>

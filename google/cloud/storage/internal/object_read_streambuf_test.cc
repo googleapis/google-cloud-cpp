@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include <gmock/gmock.h>
+#include <memory>
 #include <utility>
 #include <vector>
 
