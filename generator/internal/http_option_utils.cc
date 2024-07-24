@@ -238,6 +238,12 @@ absl::optional<QueryParameterInfo> DetermineQueryParameterInfo(
 void SetHttpQueryParameters(HttpExtensionInfo const& info,
                             google::protobuf::MethodDescriptor const& method,
                             VarsDictionary& method_vars) {
+  if (info.body == "*") {
+    // All request fields are included in the body of the HTTP request. None of
+    // them should be query parameters.
+    method_vars["method_http_query_parameters"] = "";
+    return;
+  }
   // The url field contains a token, or tokens, surrounded by curly braces:
   //   patch: "/v1/{parent=projects/*/instances/*}/databases"
   //   patch: "/v1/projects/{project}/instances/{instance}/databases"

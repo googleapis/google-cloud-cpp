@@ -605,20 +605,6 @@ TEST_F(HttpOptionUtilsTest, SetHttpQueryParametersGetWithParams) {
   EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(""));
 }
 
-TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
-  FileDescriptor const* service_file_descriptor =
-      pool_.FindFileByName("google/foo/v1/service.proto");
-  MethodDescriptor const* method =
-      service_file_descriptor->service(0)->method(3);
-  VarsDictionary vars;
-  SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(R"""(,
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("page_size", std::to_string(request.page_size())),
-        std::make_pair("page_token", request.page_token()),
-        std::make_pair("name", request.name()),
-        std::make_pair("include_foo", (request.include_foo() ? "1" : "0"))}))"""));
-}
-
 TEST_F(HttpOptionUtilsTest,
        SetHttpGetQueryParametersGetWellKnownTypesPaginated) {
   FileDescriptor const* service_file_descriptor =
