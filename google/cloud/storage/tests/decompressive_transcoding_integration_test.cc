@@ -64,10 +64,7 @@ auto constexpr kFirstLine =
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadJson) {
   if (UsingGrpc()) GTEST_SKIP();
 
-  auto client = MakeIntegrationTestClient(
-      Options{}
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
-          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
   auto insert = client.InsertObject(
@@ -93,10 +90,7 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadJson) {
 }
 
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedJson) {
-  auto client = MakeIntegrationTestClient(
-      Options{}
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
-          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
+  auto client = MakeIntegrationTestClient();
 
   auto object_name = MakeRandomObjectName();
   auto insert = client.InsertObject(
@@ -127,9 +121,7 @@ TEST_F(DecompressiveTranscodingIntegrationTest, ResumeGunzippedDownloadJson) {
   auto client = MakeIntegrationTestClient(
       Options{}
           .set<MaximumCurlSocketRecvSizeOption>(16 * 1024)
-          .set<DownloadBufferSizeOption>(1024)
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
-          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
+          .set<DownloadBufferSizeOption>(1024));
 
   auto object_name = MakeRandomObjectName();
   auto insert = client.InsertObject(
