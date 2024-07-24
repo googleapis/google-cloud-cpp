@@ -539,6 +539,8 @@ class GoldenKitchenSinkClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// A deprecated RPC for which we force API generation.
   ///
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -555,10 +557,13 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L969}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   Status
   Deprecated2(Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// A deprecated RPC for which we force API generation.
   ///
@@ -582,6 +587,7 @@ class GoldenKitchenSinkClient {
   /// [google.test.admin.database.v1.GenerateAccessTokenRequest]: @googleapis_reference_link{generator/integration_tests/test.proto#L969}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   Status
   Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options opts = {});
 

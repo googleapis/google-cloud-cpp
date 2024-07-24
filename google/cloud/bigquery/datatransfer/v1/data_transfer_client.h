@@ -547,6 +547,8 @@ class DataTransferServiceClient {
 
   // clang-format off
   ///
+  /// @deprecated This RPC is deprecated.
+  ///
   /// Creates transfer runs for a time range [start_time, end_time].
   /// For each date - or whatever granularity the data source supports - in the
   /// range, one transfer run is created.
@@ -577,6 +579,7 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L847}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<
       google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
   ScheduleTransferRuns(std::string const& parent,
@@ -585,6 +588,8 @@ class DataTransferServiceClient {
                        Options opts = {});
 
   // clang-format off
+  ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// Creates transfer runs for a time range [start_time, end_time].
   /// For each date - or whatever granularity the data source supports - in the
@@ -615,6 +620,7 @@ class DataTransferServiceClient {
   /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]: @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L847}
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<
       google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
   ScheduleTransferRuns(google::cloud::bigquery::datatransfer::v1::

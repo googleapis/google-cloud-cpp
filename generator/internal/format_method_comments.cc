@@ -34,6 +34,23 @@ namespace cloud {
 namespace generator_internal {
 namespace {
 
+// Disable clang-format formatting in the generated comments. Some comments
+// include long lines that should not be broken by newlines. For example,
+// they may start a code span (something in backticks). It is also easier to
+// generate markdown reference-style links (i.e. `[foo]: real link`) if the
+// formatter is not breaking these across multiple lines.
+auto constexpr kMethodCommentsPrefix = R"""(  // clang-format off
+  ///
+  ///)""";
+
+auto constexpr kMethodCommentsSuffix = R"""(  ///
+  // clang-format on
+)""";
+
+auto constexpr kDeprecationComment = R"""( @deprecated This RPC is deprecated.
+  ///
+  ///)""";
+
 ProtoDefinitionLocation Location(google::protobuf::Descriptor const& d) {
   google::protobuf::SourceLocation loc;
   d.GetSourceLocation(&loc);
@@ -228,19 +245,12 @@ std::string FormatMethodComments(
         kv.second.filename, "#L", kv.second.lineno, "}\n");
   }
 
-  // Disable clang-format formatting in the generated comments. Some comments
-  // include long lines that should not be broken by newlines. For example,
-  // they may start a code span (something in backticks). It is also easier to
-  // generate markdown reference-style links (i.e. `[foo]: real link`) if the
-  // formatter is not breaking these across multiple lines.
-  auto constexpr kMethodCommentsPrefix = R"""(  // clang-format off
-  ///
-  ///)""";
-  auto constexpr kMethodCommentsSuffix = R"""(  ///
-  // clang-format on
-)""";
+  std::string const deprecation_comment =
+      method.options().has_deprecated() && method.options().deprecated()
+          ? kDeprecationComment
+          : "";
 
-  return absl::StrCat(kMethodCommentsPrefix,
+  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment,
                       doxygen_formatted_function_comments, "\n",
                       variable_parameter_comments, options_comment,
                       return_comment_string, trailer, kMethodCommentsSuffix);
@@ -258,32 +268,36 @@ bool CheckMethodCommentSubstitutions() {
   return all_substitutions_used;
 }
 
-std::string FormatStartMethodComments() {
-  return R"""(  // clang-format off
-  ///
-  /// @copybrief $method_name$
+std::string FormatStartMethodComments(bool is_method_deprecated) {
+  auto constexpr kCommentBody = R"""( @copybrief $method_name$
   ///
   /// Specifying the [`NoAwaitTag`] immediately returns the
   /// [`$longrunning_operation_type$`] that corresponds to the Long Running
   /// Operation that has been started. No polling for operation status occurs.
   ///
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
-  ///
-  // clang-format on
 )""";
+
+  std::string const deprecation_comment =
+      is_method_deprecated ? kDeprecationComment : "";
+
+  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment, kCommentBody,
+                      kMethodCommentsSuffix);
 }
 
-std::string FormatAwaitMethodComments() {
-  return R"""(  // clang-format off
-  ///
-  /// @copybrief $method_name$
+std::string FormatAwaitMethodComments(bool is_method_deprecated) {
+  auto constexpr kCommentBody = R"""( @copybrief $method_name$
   ///
   /// This method accepts a `$longrunning_operation_type$` that corresponds
   /// to a previously started Long Running Operation (LRO) and polls the status
   /// of the LRO in the background.
-  ///
-  // clang-format on
 )""";
+
+  std::string const deprecation_comment =
+      is_method_deprecated ? kDeprecationComment : "";
+
+  return absl::StrCat(kMethodCommentsPrefix, deprecation_comment, kCommentBody,
+                      kMethodCommentsSuffix);
 }
 
 }  // namespace generator_internal
