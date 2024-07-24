@@ -63,9 +63,7 @@ DefaultProjectsRestStub::AsyncDisableXpnHost(
                 absl::StrCat("/", "compute", "/",
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
-                             "disableXpnHost"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "disableXpnHost")));
       },
       std::move(p),
       service_,
@@ -88,9 +86,7 @@ DefaultProjectsRestStub::DisableXpnHost(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "disableXpnHost"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   "projects", "/", request.project(), "/", "disableXpnHost"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -162,9 +158,7 @@ DefaultProjectsRestStub::AsyncEnableXpnHost(
                 absl::StrCat("/", "compute", "/",
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
-                             "enableXpnHost"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "enableXpnHost")));
       },
       std::move(p),
       service_,
@@ -187,9 +181,7 @@ DefaultProjectsRestStub::EnableXpnHost(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
-                   "projects", "/", request.project(), "/", "enableXpnHost"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   "projects", "/", request.project(), "/", "enableXpnHost"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

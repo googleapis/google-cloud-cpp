@@ -69,9 +69,7 @@ DefaultInstanceGroupManagerResizeRequestsRestStub::AsyncCancel(
                     "projects", "/", request.project(), "/", "zones", "/",
                     request.zone(), "/", "instanceGroupManagers", "/",
                     request.instance_group_manager(), "/", "resizeRequests",
-                    "/", request.resize_request(), "/", "cancel"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                    "/", request.resize_request(), "/", "cancel")));
       },
       std::move(p),
       service_,
@@ -97,9 +95,7 @@ DefaultInstanceGroupManagerResizeRequestsRestStub::Cancel(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "resizeRequests", "/",
-                   request.resize_request(), "/", "cancel"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   request.resize_request(), "/", "cancel"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

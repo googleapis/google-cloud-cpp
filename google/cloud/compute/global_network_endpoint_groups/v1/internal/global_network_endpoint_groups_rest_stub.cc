@@ -317,14 +317,7 @@ DefaultGlobalNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
           "/", "compute", "/",
           rest_internal::DetermineApiVersion("v1", options), "/", "projects",
           "/", request.project(), "/", "global", "/", "networkEndpointGroups",
-          "/", request.network_endpoint_group(), "/", "listNetworkEndpoints"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+          "/", request.network_endpoint_group(), "/", "listNetworkEndpoints"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

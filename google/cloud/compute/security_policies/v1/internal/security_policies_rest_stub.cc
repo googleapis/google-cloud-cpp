@@ -437,9 +437,7 @@ DefaultSecurityPoliciesRestStub::AsyncRemoveRule(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "securityPolicies", "/",
-                             request.security_policy(), "/", "removeRule"),
-                rest_internal::TrimEmptyQueryParameters({std::make_pair(
-                    "priority", std::to_string(request.priority()))})));
+                             request.security_policy(), "/", "removeRule")));
       },
       std::move(p),
       service_,
@@ -464,9 +462,7 @@ DefaultSecurityPoliciesRestStub::RemoveRule(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "securityPolicies", "/", request.security_policy(), "/",
-                   "removeRule"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("priority", std::to_string(request.priority()))}));
+                   "removeRule"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

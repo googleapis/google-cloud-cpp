@@ -68,9 +68,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncAnnounce(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "publicAdvertisedPrefixes", "/",
                              request.public_advertised_prefix(), "/",
-                             "announce"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "announce")));
       },
       std::move(p),
       service_,
@@ -95,9 +93,7 @@ DefaultPublicAdvertisedPrefixesRestStub::Announce(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes", "/",
-                   request.public_advertised_prefix(), "/", "announce"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   request.public_advertised_prefix(), "/", "announce"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -313,9 +309,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncWithdraw(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "publicAdvertisedPrefixes", "/",
                              request.public_advertised_prefix(), "/",
-                             "withdraw"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "withdraw")));
       },
       std::move(p),
       service_,
@@ -340,9 +334,7 @@ DefaultPublicAdvertisedPrefixesRestStub::Withdraw(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes", "/",
-                   request.public_advertised_prefix(), "/", "withdraw"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   request.public_advertised_prefix(), "/", "withdraw"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

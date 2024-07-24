@@ -370,17 +370,7 @@ DefaultSqlInstancesServiceRestStub::VerifyExternalSyncSettings(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "verifyExternalSyncSettings"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("verify_connection_only",
-                          (request.verify_connection_only() ? "1" : "0")),
-           std::make_pair("sync_mode", std::to_string(request.sync_mode())),
-           std::make_pair("verify_replication_only",
-                          (request.verify_replication_only() ? "1" : "0")),
-           std::make_pair("migration_type",
-                          std::to_string(request.migration_type())),
-           std::make_pair("sync_parallel_level",
-                          std::to_string(request.sync_parallel_level()))}));
+                   request.instance(), "/", "verifyExternalSyncSettings"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -393,15 +383,7 @@ DefaultSqlInstancesServiceRestStub::StartExternalSync(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "startExternalSync"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("sync_mode", std::to_string(request.sync_mode())),
-           std::make_pair("skip_verification",
-                          (request.skip_verification() ? "1" : "0")),
-           std::make_pair("sync_parallel_level",
-                          std::to_string(request.sync_parallel_level())),
-           std::make_pair("migration_type",
-                          std::to_string(request.migration_type()))}));
+                   request.instance(), "/", "startExternalSync"));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>

@@ -62,10 +62,7 @@ DefaultSqlConnectServiceRestStub::GenerateEphemeralCert(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), ":generateEphemeralCert"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("public_key", request.public_key()),
-           std::make_pair("access_token", request.access_token())}));
+                   request.instance(), ":generateEphemeralCert"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

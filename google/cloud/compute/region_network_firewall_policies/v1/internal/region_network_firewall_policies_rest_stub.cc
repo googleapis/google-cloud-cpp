@@ -188,11 +188,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncCloneRules(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "firewallPolicies", "/", request.firewall_policy(),
-                             "/", "cloneRules"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("source_firewall_policy",
-                                    request.source_firewall_policy())})));
+                             "/", "cloneRules")));
       },
       std::move(p),
       service_,
@@ -217,11 +213,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::CloneRules(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "firewallPolicies", "/",
-                   request.firewall_policy(), "/", "cloneRules"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("source_firewall_policy",
-                          request.source_firewall_policy())}));
+                   request.firewall_policy(), "/", "cloneRules"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -567,10 +559,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncRemoveAssociation(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "firewallPolicies", "/", request.firewall_policy(),
-                             "/", "removeAssociation"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("name", request.name()),
-                     std::make_pair("request_id", request.request_id())})));
+                             "/", "removeAssociation")));
       },
       std::move(p),
       service_,
@@ -595,10 +584,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::RemoveAssociation(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "firewallPolicies", "/",
-                   request.firewall_policy(), "/", "removeAssociation"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("name", request.name()),
-           std::make_pair("request_id", request.request_id())}));
+                   request.firewall_policy(), "/", "removeAssociation"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -621,11 +607,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::AsyncRemoveRule(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "firewallPolicies", "/", request.firewall_policy(),
-                             "/", "removeRule"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("priority",
-                                    std::to_string(request.priority())),
-                     std::make_pair("request_id", request.request_id())})));
+                             "/", "removeRule")));
       },
       std::move(p),
       service_,
@@ -650,10 +632,7 @@ DefaultRegionNetworkFirewallPoliciesRestStub::RemoveRule(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "firewallPolicies", "/",
-                   request.firewall_policy(), "/", "removeRule"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("priority", std::to_string(request.priority())),
-           std::make_pair("request_id", request.request_id())}));
+                   request.firewall_policy(), "/", "removeRule"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
