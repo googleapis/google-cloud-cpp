@@ -188,6 +188,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                 {method_string},
                 {"\n"},
                 {FormatStartMethodComments(is_method_deprecated)},
+                {deprecation_macro},
                 {IsResponseTypeEmpty,
                  // clang-format off
                     "  Status\n",

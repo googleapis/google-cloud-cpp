@@ -2162,6 +2162,7 @@ class SecurityCenterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
+  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> RunAssetDiscovery(
       ExperimentalTag, NoAwaitTag, std::string const& parent,
       Options opts = {});
