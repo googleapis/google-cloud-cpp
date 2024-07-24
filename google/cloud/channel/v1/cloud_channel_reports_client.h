@@ -173,8 +173,8 @@ class CloudChannelReportsServiceClient {
                Options opts = {});
 
   // clang-format off
-  /// @deprecated This RPC is deprecated.
   ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief RunReportJob
   ///
@@ -192,8 +192,8 @@ class CloudChannelReportsServiceClient {
       Options opts = {});
 
   // clang-format off
-  /// @deprecated This RPC is deprecated.
   ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief RunReportJob
   ///

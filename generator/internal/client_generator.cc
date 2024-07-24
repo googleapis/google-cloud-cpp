@@ -126,7 +126,7 @@ class $client_class_name$ {
   ///@}
 )""");
 
-  std::string const deprecation_macro_str =
+  auto constexpr kDeprecationMacro =
       R"""(  GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
 )""";
 
@@ -134,7 +134,7 @@ class $client_class_name$ {
     bool is_method_deprecated =
         method.options().has_deprecated() && method.options().deprecated();
     std::string const deprecation_macro =
-        is_method_deprecated ? deprecation_macro_str : "";
+        is_method_deprecated ? kDeprecationMacro : "";
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
@@ -337,7 +337,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     bool is_method_deprecated =
         method.options().has_deprecated() && method.options().deprecated();
     std::string const deprecation_macro =
-        is_method_deprecated ? deprecation_macro_str : "";
+        is_method_deprecated ? kDeprecationMacro : "";
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {

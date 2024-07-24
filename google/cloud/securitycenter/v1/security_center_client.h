@@ -2150,8 +2150,8 @@ class SecurityCenterClient {
   RunAssetDiscovery(std::string const& parent, Options opts = {});
 
   // clang-format off
-  /// @deprecated This RPC is deprecated.
   ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief RunAssetDiscovery
   ///
@@ -2215,8 +2215,8 @@ class SecurityCenterClient {
       Options opts = {});
 
   // clang-format off
-  /// @deprecated This RPC is deprecated.
   ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief RunAssetDiscovery
   ///
@@ -2235,8 +2235,8 @@ class SecurityCenterClient {
       Options opts = {});
 
   // clang-format off
-  /// @deprecated This RPC is deprecated.
   ///
+  /// @deprecated This RPC is deprecated.
   ///
   /// @copybrief RunAssetDiscovery
   ///
