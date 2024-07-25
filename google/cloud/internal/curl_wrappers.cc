@@ -187,6 +187,27 @@ std::string CleanupDebugData(char const* data, std::size_t size) {
   return text;
 }
 
+std::string DebugCensored(absl::string_view msg, absl::string_view payload) {
+  // We want to truncate the portion of the payload following this ": Bearer" to
+  // at most 32 characters, skipping everything else until any newline.
+  auto const bearer = absl::string_view{": Bearer "};
+  auto const limit = bearer.size() + 32;
+  auto const bearer_pos = payload.find(bearer);
+  if (bearer_pos == std::string::npos) return absl::StrCat(msg, payload);
+
+  auto const nl_pos = payload.find('\n', bearer_pos);
+  auto const prefix = payload.substr(0, bearer_pos);
+  auto trailer = absl::string_view{};
+  auto body = payload.substr(bearer_pos);
+  if (nl_pos != std::string::npos) {
+    trailer = payload.substr(nl_pos);
+    body = payload.substr(bearer_pos, nl_pos - bearer_pos);
+  }
+  auto const* marker = body.size() > limit ? "...<truncated>..." : "";
+  body = absl::ClippedSubstr(std::move(body), 0, limit);
+  return absl::StrCat(msg, prefix, body, marker, trailer);
+}
+
 }  // namespace
 
 std::string CurlSslLibraryId() {
@@ -261,7 +282,7 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
 }
 
 std::string DebugInfo(char const* data, std::size_t size) {
-  return absl::StrCat("== curl(Info): ", absl::string_view{data, size});
+  return DebugCensored("== curl(Info): ", absl::string_view{data, size});
 }
 
 std::string DebugRecvHeader(char const* data, std::size_t size) {
@@ -270,27 +291,7 @@ std::string DebugRecvHeader(char const* data, std::size_t size) {
 
 std::string DebugSendHeader(char const* data, std::size_t size) {
   // libcurl delivers multiple headers in a single payload, separated by '\n'.
-  auto const payload = absl::string_view{data, size};
-  // We want to truncate the portion of the payload following this ": Bearer" to
-  // at most 32 characters, skipping everything else until any newline.
-  auto const bearer = absl::string_view{": Bearer "};
-  auto const limit = bearer.size() + 32;
-  auto const bearer_pos = payload.find(bearer);
-  if (bearer_pos != std::string::npos) {
-    auto const nl_pos = payload.find('\n', bearer_pos);
-    auto const prefix = payload.substr(0, bearer_pos);
-    auto trailer = absl::string_view{};
-    auto body = payload.substr(bearer_pos);
-    if (nl_pos != std::string::npos) {
-      trailer = payload.substr(nl_pos);
-      body = payload.substr(bearer_pos, nl_pos - bearer_pos);
-    }
-    auto const* marker = body.size() > limit ? "...<truncated>..." : "";
-    body = absl::ClippedSubstr(std::move(body), 0, limit);
-    return absl::StrCat(">> curl(Send Header): ", prefix, body, marker,
-                        trailer);
-  }
-  return absl::StrCat(">> curl(Send Header): ", payload);
+  return DebugCensored(">> curl(Send Header): ", absl::string_view{data, size});
 }
 
 std::string DebugInData(char const* data, std::size_t size) {
