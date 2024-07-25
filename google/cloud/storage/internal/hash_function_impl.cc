@@ -32,6 +32,7 @@ using ::google::cloud::storage_internal::ExtendCrc32c;
 template <typename Buffer>
 bool AlreadyHashed(std::int64_t offset, Buffer const& buffer,
                    std::int64_t minimum_offset) {
+  // TODO(#14566) - maybe this is more forgiving than we want to be
   auto const end = offset + buffer.size();
   return static_cast<std::int64_t>(end) <= minimum_offset;
 }
@@ -96,9 +97,9 @@ HashValues CompositeFunction::Finish() {
 }
 
 Status MD5HashFunction::Update(std::int64_t offset, absl::string_view buffer) {
-  if (offset == minimum_offset_) {
+  if (offset == minimum_offset_ || minimum_offset_ == 0) {
     Update(buffer);
-    minimum_offset_ += buffer.size();
+    minimum_offset_ = offset + buffer.size();
     return {};
   }
   if (AlreadyHashed(offset, buffer, minimum_offset_)) return {};
@@ -112,11 +113,11 @@ Status MD5HashFunction::Update(std::int64_t offset, absl::string_view buffer,
 
 Status MD5HashFunction::Update(std::int64_t offset, absl::Cord const& buffer,
                                std::uint32_t /*buffer_crc*/) {
-  if (offset == minimum_offset_) {
+  if (offset == minimum_offset_ || minimum_offset_ == 0) {
     for (auto i = buffer.chunk_begin(); i != buffer.chunk_end(); ++i) {
       Update(*i);
     }
-    minimum_offset_ += buffer.size();
+    minimum_offset_ = offset + buffer.size();
     return {};
   }
   if (AlreadyHashed(offset, buffer, minimum_offset_)) return {};
@@ -136,9 +137,9 @@ void Crc32cHashFunction::Update(absl::string_view buffer) {
 
 Status Crc32cHashFunction::Update(std::int64_t offset,
                                   absl::string_view buffer) {
-  if (offset == minimum_offset_) {
+  if (offset == minimum_offset_ || minimum_offset_ == 0) {
     Update(buffer);
-    minimum_offset_ += buffer.size();
+    minimum_offset_ = offset + buffer.size();
     return {};
   }
   if (AlreadyHashed(offset, buffer, minimum_offset_)) return {};
@@ -147,9 +148,9 @@ Status Crc32cHashFunction::Update(std::int64_t offset,
 
 Status Crc32cHashFunction::Update(std::int64_t offset, absl::string_view buffer,
                                   std::uint32_t buffer_crc) {
-  if (offset == minimum_offset_) {
+  if (offset == minimum_offset_ || minimum_offset_ == 0) {
     current_ = ExtendCrc32c(current_, buffer, buffer_crc);
-    minimum_offset_ += buffer.size();
+    minimum_offset_ = offset + buffer.size();
     return {};
   }
   if (AlreadyHashed(offset, buffer, minimum_offset_)) return {};
@@ -158,9 +159,9 @@ Status Crc32cHashFunction::Update(std::int64_t offset, absl::string_view buffer,
 
 Status Crc32cHashFunction::Update(std::int64_t offset, absl::Cord const& buffer,
                                   std::uint32_t buffer_crc) {
-  if (offset == minimum_offset_) {
+  if (offset == minimum_offset_ || minimum_offset_ == 0) {
     current_ = ExtendCrc32c(current_, buffer, buffer_crc);
-    minimum_offset_ += buffer.size();
+    minimum_offset_ = offset + buffer.size();
     return {};
   }
   if (AlreadyHashed(offset, buffer, minimum_offset_)) return {};
