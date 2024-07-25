@@ -94,6 +94,7 @@ jobs:
         }}
       sccache-mode: 'DISABLED'
       vcpkg-cache-mode: 'read'
+      execute-integration-tests: false
   windows-cmake:
     name: Windows-CMake
     needs: [pre-flight]
@@ -112,3 +113,4 @@ jobs:
         }}
       sccache-mode: 'DISABLED'
       vcpkg-cache-mode: 'read'
+      execute-integration-tests: false
