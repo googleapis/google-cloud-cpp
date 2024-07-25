@@ -50,10 +50,12 @@ time {
     //google/cloud:status_test "${targets[@]}"
 }
 
-TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
-if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
-  time {
-    io::run bazelisk "${args[@]}" test "${test_args[@]}" "${integration_test_args[@]}" \
-      //google/cloud/storage/tests/...
-  }
+if [[ "${EXECUTE_INTEGRATION_TESTS}" == "true" ]]; then
+  TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
+  if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
+    time {
+      io::run bazelisk "${args[@]}" test "${test_args[@]}" "${integration_test_args[@]}" \
+        //google/cloud/storage/tests/...
+    }
+  fi
 fi

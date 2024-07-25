@@ -11,6 +11,14 @@ on:
         required: true
         description: "Build the full matrix"
         type: boolean
+      sccache-mode:
+        required: true
+        description: "READ_WRITE or DISABLED"
+        type: string
+      vcpkg-cache-mode:
+        required: true
+        description: "read or readwrite"
+        type: string
 
 permissions:
   contents: read
@@ -51,6 +59,7 @@ jobs:
       with:
         ref: ${{ inputs.checkout-ref }}
     - uses: google-github-actions/auth@v2
+      if: ${{ inputs.sccache-mode == 'READ_WRITE' && inputs.vcpkg-cache-mode == 'readwrite' }}
       with:
         create_credentials_file: true
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
@@ -220,6 +229,7 @@ jobs:
         (sleep 60  ; choco install -y cmake --version 3.29.2) || \
         (sleep 120 ; choco install -y cmake --version 3.29.2)
     - name: Download and Install sccache
+      if: ${{ inputs.sccache-mode != 'DISABLED' }}
       working-directory: "${{runner.temp}}"
       shell: bash
       run: |
@@ -259,10 +269,10 @@ jobs:
         export CMAKE_OUT='c:\b'
         ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
     env:
-      SCCACHE_GCS_BUCKET: cloud-cpp-gha-cache
+      SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache
       SCCACHE_GCS_KEY_PREFIX: sccache/${{ matrix.msvc }}/${{ matrix.arch}}/${{ matrix.build_type }}
-      SCCACHE_GCS_RW_MODE: READ_WRITE
+      SCCACHE_GCS_RW_MODE: ${{ inputs.sccache-mode }}
       SCCACHE_IGNORE_SERVER_IO_ERROR: 1
-      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-gha-cache/vcpkg-cache/${{ matrix.msvc }},readwrite
+      VCPKG_BINARY_SOURCES: x-gcs,gs://cloud-cpp-community-gha-cache/vcpkg-cache/${{ matrix.msvc }},${{ inputs.vcpkg-cache-mode }}
       VCPKG_TRIPLET: ${{ matrix.arch }}-windows
       GHA_TEST_BUCKET: "gcs-grpc-team-cloud-cpp-testing-bucket"

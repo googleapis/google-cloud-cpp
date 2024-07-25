@@ -97,6 +97,8 @@ jobs:
     uses: ./.github/workflows/macos-bazel.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      bazel-cache-mode: 'READ_WRITE'
+      execute-integration-tests: true
     secrets: inherit
   windows-bazel:
     # Build the full matrix only on push events to the default branch, or
@@ -113,6 +115,8 @@ jobs:
     uses: ./.github/workflows/windows-bazel.yml
     with:
       checkout-ref: ${{ needs.pre-flight.outputs.checkout-sha }}
+      bazel-cache-mode: 'READ_WRITE'
+      execute-integration-tests: true
     secrets: inherit
   macos-cmake:
     name: macOS-CMake
@@ -129,6 +133,8 @@ jobs:
           github.event_name == 'push' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
+      sccache-mode: 'READ_WRITE'
+      vcpkg-cache-mode: 'readwrite'
     secrets: inherit
   windows-cmake:
     name: Windows-CMake
@@ -145,6 +151,8 @@ jobs:
           github.event_name == 'push' ||
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
+      sccache-mode: 'READ_WRITE'
+      vcpkg-cache-mode: 'readwrite'
     secrets: inherit
   notify:
     name: Notify-Google-Chat

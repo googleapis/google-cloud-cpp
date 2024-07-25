@@ -46,15 +46,17 @@ time {
   io::run bazelisk "${args[@]}" test "${test_args[@]}" --test_tag_filters=-integration-test -- //google/cloud:status_test "$@"
 }
 
-TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
-if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
-  time {
-    # gRPC requires a local roots.pem on Windows
-    #   https://github.com/grpc/grpc/issues/16571
-    curl -fsSL -o "${HOME}/roots.pem" https://pki.google.com/roots.pem
+if [[ "${EXECUTE_INTEGRATION_TESTS}" == "true" ]]; then
+  TIMEFORMAT="==> 🕑 Storage integration tests done in %R seconds"
+  if [[ -n "${GHA_TEST_BUCKET:-}" ]]; then
+    time {
+      # gRPC requires a local roots.pem on Windows
+      #   https://github.com/grpc/grpc/issues/16571
+      curl -fsSL -o "${HOME}/roots.pem" https://pki.google.com/roots.pem
 
-    io::run bazelisk "${args[@]}" test "${test_args[@]}" "${integration_test_args[@]}" \
-      --test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${HOME}/roots.pem" \
-      //google/cloud/storage/tests/...
-  }
+      io::run bazelisk "${args[@]}" test "${test_args[@]}" "${integration_test_args[@]}" \
+        --test_env=GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${HOME}/roots.pem" \
+        //google/cloud/storage/tests/...
+    }
+  fi
 fi
