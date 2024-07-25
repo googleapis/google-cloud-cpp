@@ -373,8 +373,10 @@ AsyncReaderConnectionFactory AsyncConnectionImpl::MakeReaderConnectionFactory(
     auto start = rpc->Start();
     return start.then([rpc = std::move(rpc)](auto f) mutable {
       if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
-      auto r = std::move(rpc);
-      return r->Finish().then([](auto f) {
+      auto pending = rpc->Finish();
+      return pending.then([rpc = std::move(rpc)](auto f) mutable {
+        // Extend the lifetime until Finish() completes, but not any longer.
+        rpc.reset();
         auto status = f.get();
         return StatusOr<std::unique_ptr<StreamingRpc>>(std::move(status));
       });
@@ -575,8 +577,10 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
     auto start = rpc->Start();
     return start.then([rpc = std::move(rpc)](auto f) mutable {
       if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
-      auto r = std::move(rpc);
-      return r->Finish().then([](auto f) {
+      auto pending = rpc->Finish();
+      return pending.then([rpc = std::move(rpc)](auto f) mutable {
+        // Extend the lifetime until Finish() completes, but not any longer.
+        rpc.reset();
         auto status = f.get();
         return StatusOr<std::unique_ptr<StreamingRpc>>(std::move(status));
       });

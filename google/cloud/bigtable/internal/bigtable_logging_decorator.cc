@@ -194,7 +194,9 @@ BigtableLogging::AsyncReadRows(
       google::bigtable::v2::ReadRowsResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
-  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  google::cloud::internal::LogRequest(
+      __func__, request_id,
+      google::cloud::internal::DebugString(request, tracing_options_));
   auto stream = child_->AsyncReadRows(cq, std::move(context),
                                       std::move(options), request);
   if (stream_logging_) {
@@ -215,7 +217,9 @@ BigtableLogging::AsyncSampleRowKeys(
       google::bigtable::v2::SampleRowKeysResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
-  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  google::cloud::internal::LogRequest(
+      __func__, request_id,
+      google::cloud::internal::DebugString(request, tracing_options_));
   auto stream = child_->AsyncSampleRowKeys(cq, std::move(context),
                                            std::move(options), request);
   if (stream_logging_) {
@@ -254,7 +258,9 @@ BigtableLogging::AsyncMutateRows(
       google::bigtable::v2::MutateRowsResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
-  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  google::cloud::internal::LogRequest(
+      __func__, request_id,
+      google::cloud::internal::DebugString(request, tracing_options_));
   auto stream = child_->AsyncMutateRows(cq, std::move(context),
                                         std::move(options), request);
   if (stream_logging_) {

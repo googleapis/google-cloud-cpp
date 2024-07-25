@@ -306,7 +306,9 @@ $logging_class_name$::Async$method_name$(
      ::google::cloud::internal::AsyncStreamingReadRpcLogging<$response_type$>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
-  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  google::cloud::internal::LogRequest(
+      __func__, request_id,
+      google::cloud::internal::DebugString(request, tracing_options_));
   auto stream = child_->Async$method_name$(
       cq, std::move(context), std::move(options), request);
   if (stream_logging_) {

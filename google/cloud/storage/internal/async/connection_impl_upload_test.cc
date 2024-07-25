@@ -368,6 +368,89 @@ TEST_F(AsyncConnectionImplTest, UnbufferedUploadNewUploadWithTimeout) {
   next.first.set_value(true);
 }
 
+class MockAsyncBidiWriteObjectStreamLifetime
+    : public MockAsyncBidiWriteObjectStream {
+ public:
+  explicit MockAsyncBidiWriteObjectStreamLifetime(std::function<void()> dtor)
+      : dtor_(std::move(dtor)) {}
+  ~MockAsyncBidiWriteObjectStreamLifetime() override { dtor_(); }
+
+ private:
+  std::function<void()> dtor_ = []() {};
+};
+
+TEST_F(AsyncConnectionImplTest, BidiStreamLifetime) {
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncStartResumableWrite).WillOnce([&sequencer] {
+    return sequencer.PushBack("StartResumableWrite").then([](auto) {
+      auto response = google::storage::v2::StartResumableWriteResponse{};
+      response.set_upload_id("test-upload-id");
+      return make_status_or(response);
+    });
+  });
+  ::testing::MockFunction<void()> dtor;
+  EXPECT_CALL(dtor, Call).WillRepeatedly([&sequencer]() {
+    sequencer.PushBack("Stream::Dtor");
+  });
+  EXPECT_CALL(*mock, AsyncBidiWriteObject).WillOnce([&]() {
+    auto stream = std::make_unique<MockAsyncBidiWriteObjectStreamLifetime>(
+        dtor.AsStdFunction());
+    EXPECT_CALL(*stream, Start).WillOnce([&sequencer] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([&sequencer] {
+      return sequencer.PushBack("Finish").then(
+          [](auto) { return PermanentError(); });
+    });
+    return std::unique_ptr<AsyncBidiWriteObjectStream>(std::move(stream));
+  });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  // We will configure the connection to use 1 second timeouts.
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(
+                            std::chrono::nanoseconds(std::chrono::seconds(1))))
+      .WillRepeatedly([&sequencer](auto d) {
+        auto deadline =
+            std::chrono::system_clock::now() +
+            std::chrono::duration_cast<std::chrono::system_clock::duration>(d);
+        return sequencer.PushBack("MakeRelativeTimer").then([deadline](auto f) {
+          if (f.get()) return make_status_or(deadline);
+          return StatusOr<std::chrono::system_clock::time_point>(
+              Status(StatusCode::kCancelled, "cancelled"));
+        });
+      });
+  auto connection =
+      MakeTestConnection(CompletionQueue(mock_cq), mock,
+                         Options{}.set<storage::TransferStallTimeoutOption>(
+                             std::chrono::seconds(0)));
+
+  auto pending = connection->StartUnbufferedUpload(
+      {google::storage::v2::StartResumableWriteRequest{},
+       connection->options()});
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "StartResumableWrite");
+  next.first.set_value(true);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);  // simulate a Start() failure (e.g. timeout)
+
+  auto finish = sequencer.PopFrontWithName();
+  EXPECT_EQ(finish.second, "Finish");
+  // The dtor should wait until Finish() completes
+  ASSERT_TRUE(sequencer.empty());
+  finish.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Stream::Dtor");
+  next.first.set_value(false);
+
+  auto r = pending.get();
+  EXPECT_THAT(r, StatusIs(PermanentError().code()));
+}
+
 TEST_F(AsyncConnectionImplTest, ResumeUnbufferedUpload) {
   // The placeholder values in the `common_object_request_params` are just
   // canaries to verify the full request is passed along.

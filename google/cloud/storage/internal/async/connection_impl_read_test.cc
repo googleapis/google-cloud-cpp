@@ -331,6 +331,89 @@ TEST_F(AsyncConnectionImplTest, ReadObjectWithTimeout) {
   EXPECT_THAT(data.get(), VariantWith<Status>(IsOk()));
 }
 
+class MockAsyncObjectMediaStreamLifetime : public MockAsyncObjectMediaStream {
+ public:
+  explicit MockAsyncObjectMediaStreamLifetime(std::function<void()> dtor)
+      : dtor_(std::move(dtor)) {}
+  ~MockAsyncObjectMediaStreamLifetime() override { dtor_(); }
+
+ private:
+  std::function<void()> dtor_ = []() {};
+};
+
+TEST_F(AsyncConnectionImplTest, ReadObjectLifetime) {
+  auto constexpr kExpectedRequest = R"pb(
+    bucket: "test-only-invalid"
+    object: "test-object"
+    generation: 24
+    if_generation_match: 42
+  )pb";
+  AsyncSequencer<bool> sequencer;
+  ::testing::MockFunction<void()> dtor;
+  EXPECT_CALL(dtor, Call).WillRepeatedly([&sequencer]() {
+    sequencer.PushBack("Stream::Dtor");
+  });
+  auto make_stream = [&]() {
+    auto stream = std::make_unique<MockAsyncObjectMediaStreamLifetime>(
+        dtor.AsStdFunction());
+    EXPECT_CALL(*stream, Start).WillOnce([&] {
+      return sequencer.PushBack("Start");
+    });
+    EXPECT_CALL(*stream, Finish).WillOnce([&] {
+      return sequencer.PushBack("Finish").then(
+          [](auto) { return PermanentError(); });
+    });
+    return std::unique_ptr<AsyncReadObjectStream>(std::move(stream));
+  };
+
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncReadObject).WillOnce([&] { return make_stream(); });
+
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer).WillRepeatedly([&sequencer](auto d) {
+    auto deadline =
+        std::chrono::system_clock::now() +
+        std::chrono::duration_cast<std::chrono::system_clock::duration>(d);
+    return sequencer.PushBack("MakeRelativeTimer").then([deadline](auto f) {
+      if (f.get()) return make_status_or(deadline);
+      return StatusOr<std::chrono::system_clock::time_point>(
+          Status(StatusCode::kCancelled, "cancelled"));
+    });
+  });
+
+  auto connection =
+      MakeTestConnection(CompletionQueue(mock_cq), mock,
+                         Options{}.set<storage::DownloadStallTimeoutOption>(
+                             std::chrono::seconds(0)));
+  auto request = google::storage::v2::ReadObjectRequest{};
+  ASSERT_TRUE(TextFormat::ParseFromString(kExpectedRequest, &request));
+  auto pending =
+      connection->ReadObject({std::move(request), connection->options()});
+
+  ASSERT_TRUE(pending.is_ready());
+  auto r = pending.get();
+  ASSERT_STATUS_OK(r);
+  auto reader = *std::move(r);
+  auto data = reader->Read();
+
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Start");
+  next.first.set_value(false);  // simulate a Start() failure (e.g. timeout)
+
+  auto finish = sequencer.PopFrontWithName();
+  EXPECT_EQ(finish.second, "Finish");
+  // The dtor should wait until Finish() completes
+  ASSERT_TRUE(sequencer.empty());
+  finish.first.set_value(false);
+
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "Stream::Dtor");
+  next.first.set_value(false);
+
+  EXPECT_THAT(data.get(),
+              VariantWith<Status>(StatusIs(PermanentError().code())));
+}
+
 TEST_F(AsyncConnectionImplTest, ReadObjectPermanentError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();

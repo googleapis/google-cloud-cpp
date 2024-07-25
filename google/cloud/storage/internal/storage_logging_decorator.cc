@@ -485,7 +485,9 @@ StorageLogging::AsyncReadObject(
       google::storage::v2::ReadObjectResponse>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
-  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  google::cloud::internal::LogRequest(
+      __func__, request_id,
+      google::cloud::internal::DebugString(request, tracing_options_));
   auto stream = child_->AsyncReadObject(cq, std::move(context),
                                         std::move(options), request);
   if (stream_logging_) {

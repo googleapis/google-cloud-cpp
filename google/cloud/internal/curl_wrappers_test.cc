@@ -131,6 +131,31 @@ header2: value2
   }
 }
 
+TEST(CurlWrappers, DebugInfo) {
+  struct TestCasse {
+    std::string input;
+    std::string expected;
+  } cases[] = {
+      {R"""(no-marker-no-nl)""", R"""(== curl(Info): no-marker-no-nl)"""},
+      {R"""(no-marker-w-nl
+)""",
+       R"""(== curl(Info): no-marker-w-nl
+)"""},
+
+      {R"""([HTTP/2] [1] [authorization: Bearer 012345678901234567890123456789)""",
+       R"""(== curl(Info): [HTTP/2] [1] [authorization: Bearer 012345678901234567890123456789)"""},
+      {R"""([HTTP/2] [1] [authorization: Bearer 01234567890123456789012345678912)""",
+       R"""(== curl(Info): [HTTP/2] [1] [authorization: Bearer 01234567890123456789012345678912)"""},
+
+      {R"""([HTTP/2] [1] [authorization: Bearer 012345678901234567890123456789123456)""",
+       R"""(== curl(Info): [HTTP/2] [1] [authorization: Bearer 01234567890123456789012345678912...<truncated>...)"""},
+  };
+
+  for (auto const& test : cases) {
+    EXPECT_EQ(test.expected, DebugInfo(test.input.data(), test.input.size()));
+  }
+}
+
 TEST(CurlWrappers, CurlInitializeOptions) {
   auto defaults = CurlInitializeOptions({});
   EXPECT_TRUE(defaults.get<EnableCurlSslLockingOption>());

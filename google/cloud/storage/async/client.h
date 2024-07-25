@@ -785,12 +785,6 @@ class AsyncClient {
       std::shared_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<AsyncConnection> connection);
 
-  template <typename... RequestOptions>
-  google::cloud::Options SpanOptions(RequestOptions&&... o) const {
-    return google::cloud::internal::GroupOptions(
-        connection_->options(), std::forward<RequestOptions>(o)...);
-  }
-
   std::shared_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<AsyncConnection> connection_;
 };
