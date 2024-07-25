@@ -175,11 +175,6 @@ void ProcessArgForwardingProductPath(
   FormatProductPath(path->second);
 }
 
-void ProcessArgEmitRpc(
-    std::vector<std::pair<std::string, std::string>>& command_line_args) {
-  ProcessRepeated("emit_rpc", "emitted_rpcs", command_line_args);
-}
-
 void ProcessArgIdempotencyOverride(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   ProcessRepeated("idempotency_override", "idempotency_overrides",
@@ -291,7 +286,6 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgRetryGrpcStatusCode(command_line_args);
   ProcessArgAdditionalProtoFiles(command_line_args);
   ProcessArgForwardingProductPath(command_line_args);
-  ProcessArgEmitRpc(command_line_args);
   ProcessArgIdempotencyOverride(command_line_args);
   ProcessArgServiceNameMapping(command_line_args);
   ProcessArgServiceNameToComment(command_line_args);

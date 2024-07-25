@@ -266,10 +266,6 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
       args.emplace_back(absl::StrCat("--cpp_codegen_opt=omit_rpc=",
                                      SafeReplaceAll(omit_rpc, ",", "@")));
     }
-    for (auto const& emit_rpc : service.emitted_rpcs()) {
-      args.emplace_back(absl::StrCat("--cpp_codegen_opt=emit_rpc=",
-                                     SafeReplaceAll(emit_rpc, ",", "@")));
-    }
     if (service.backwards_compatibility_namespace_alias()) {
       args.emplace_back(
           "--cpp_codegen_opt=backwards_compatibility_namespace_alias=true");
