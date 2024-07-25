@@ -571,7 +571,6 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadMessageChecksum) {
 
   EXPECT_THAT(data.get(),
               VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
-
 }
 
 TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
