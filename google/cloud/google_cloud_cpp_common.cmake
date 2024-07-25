@@ -69,6 +69,10 @@ add_library(
     internal/debug_future_status.h
     internal/debug_string.cc
     internal/debug_string.h
+    internal/detect_gcp.cc
+    internal/detect_gcp.h
+    internal/detect_gcp_win32.cc
+    internal/detect_gcp_win32.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
     internal/disable_deprecation_warnings.inc
@@ -366,6 +370,8 @@ if (BUILD_TESTING)
         internal/credentials_impl_test.cc
         internal/debug_future_status_test.cc
         internal/debug_string_test.cc
+        internal/detect_gcp_test.cc
+        internal/detect_gcp_win32_test.cc
         internal/error_context_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
