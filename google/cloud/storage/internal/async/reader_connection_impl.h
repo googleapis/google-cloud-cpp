@@ -52,7 +52,7 @@ class AsyncReaderConnectionImpl
 
  private:
   future<ReadResponse> OnRead(absl::optional<ProtoPayload> r);
-
+  future<ReadResponse> HandleHashError(Status status);
   future<ReadResponse> DoFinish();
 
   google::cloud::internal::ImmutableOptions options_;

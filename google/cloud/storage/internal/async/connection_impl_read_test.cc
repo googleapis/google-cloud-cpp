@@ -520,6 +520,7 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadMessageChecksum) {
         return absl::make_optional(response);
       });
     });
+    EXPECT_CALL(*stream, Cancel).Times(1);
     EXPECT_CALL(*stream, Finish).WillOnce([&] {
       return sequencer.PushBack("Finish").then([](auto) { return Status{}; });
     });
@@ -563,14 +564,14 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadMessageChecksum) {
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Read");
   next.first.set_value(true);
-  auto response = data.get();
-  EXPECT_THAT(response,
-              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
-
-  // The stream Finish() function should be called in the background.
+  // The `Finish()` call must complete before the result is ready.
   next = sequencer.PopFrontWithName();
   EXPECT_EQ(next.second, "Finish");
   next.first.set_value(true);
+
+  EXPECT_THAT(data.get(),
+              VariantWith<Status>(StatusIs(StatusCode::kInvalidArgument)));
+
 }
 
 TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
