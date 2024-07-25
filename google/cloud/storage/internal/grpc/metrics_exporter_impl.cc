@@ -101,30 +101,6 @@ absl::optional<ExporterConfig> MakeMeterProviderConfig(
 void EnableGrpcMetricsImpl(ExporterConfig config) {
   if (!ExporterRegistry::Singleton().Register(config.authority)) return;
 
-  // TODO(#13998) - the service is not ready to receive the monitored resource
-  //   and metrics defined for Google Cloud Storage clients. Erase this code
-  //   when it is.
-  auto monitored_resource =
-      config.exporter_options.get<otel_internal::MonitoredResourceOption>();
-  monitored_resource.set_type("generic_task");
-  auto& labels = *monitored_resource.mutable_labels();
-  // project_id untouched
-  // location untouched
-  labels["namespace"] = "storage_client";
-  labels["job"] = labels["host_id"];
-  labels["task_id"] = labels["instance_id"];
-  labels.erase("cloud_platform");
-  labels.erase("host_id");
-  labels.erase("instance_id");
-  labels.erase("api");
-  config.exporter_options.set<otel_internal::ServiceTimeSeriesOption>(false)
-      .set<otel_internal::MetricNameFormatterOption>([](std::string s) {
-        return "workload.googleapis.com/" + std::move(s);
-      })
-      .set<otel_internal::MonitoredResourceOption>(
-          std::move(monitored_resource));
-  // END TODO(#13998) - end of code to erase.
-
   auto exporter = otel_internal::MakeMonitoringExporter(
       std::move(config.project),
       monitoring_v3::MakeMetricServiceConnection(
@@ -139,9 +115,6 @@ void EnableGrpcMetricsImpl(ExporterConfig config) {
       absl::string_view{"grpc.lb.wrr.endpoint_weight_not_yet_usable"},
       absl::string_view{"grpc.lb.wrr.endpoint_weight_stale"},
       absl::string_view{"grpc.lb.wrr.endpoint_weights"},
-      absl::string_view{"grpc.lb.pick_first.disconnections"},
-      absl::string_view{"grpc.lb.pick_first.connection_attempts_succeeded"},
-      absl::string_view{"grpc.lb.pick_first.connection_attempts_failed"},
       absl::string_view{"grpc.xds_client.connected"},
       absl::string_view{"grpc.xds_client.server_failure"},
       absl::string_view{"grpc.xds_client.resource_updates_valid"},
