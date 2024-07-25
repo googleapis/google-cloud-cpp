@@ -607,6 +607,41 @@ void InstanceTestIamPermissionsCommand(std::vector<std::string> argv) {
   InstanceTestIamPermissions(std::move(client), argv[0], argv[1]);
 }
 
+// [START spanner_create_instance_partition]
+void CreateInstancePartition(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& instance_partition_id) {
+  auto project = google::cloud::Project(project_id);
+  auto in = google::cloud::spanner::Instance(project_id, instance_id);
+  auto config = project.FullName() + "/instanceConfigs/nam3";
+
+  google::spanner::admin::instance::v1::CreateInstancePartitionRequest request;
+  request.set_parent(in.FullName());
+  request.set_instance_partition_id(instance_partition_id);
+  request.mutable_instance_partition()->set_display_name(
+      "Test instance partition");
+  request.mutable_instance_partition()->set_node_count(1);
+  request.mutable_instance_partition()->set_config(config);
+
+  auto instance_partition = client.CreateInstancePartition(request).get();
+  if (!instance_partition) throw std::move(instance_partition).status();
+  std::cout << "Created instance partition [" << instance_partition_id << "]:\n"
+            << instance_partition->DebugString();
+}
+// [END spanner_create_instance_partition]
+
+void CreateInstancePartitionCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "create-instance-partition <project-id> <instance-id>"
+        " <instance-partition-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  CreateInstancePartition(std::move(client), argv[0], argv[1], argv[2]);
+}
+
 google::cloud::spanner::Timestamp DatabaseNow(
     google::cloud::spanner::Client client) {
   auto rows = client.ExecuteQuery(
@@ -4525,7 +4560,6 @@ int RunOneCommand(std::vector<std::string> argv) {
     return CommandMap::value_type(sample_name,
                                   make_command(sample_name, sample));
   };
-
   CommandMap commands = {
       {"get-instance-config", GetInstanceConfigCommand},
       {"list-instance-configs", ListInstanceConfigsCommand},
@@ -4542,6 +4576,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"add-database-reader", AddDatabaseReaderCommand},
       {"remove-database-reader", RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", InstanceTestIamPermissionsCommand},
+      {"create-instance-partition", CreateInstancePartitionCommand},
       make_database_command_entry("create-database", CreateDatabase),
       make_database_command_entry("create-database-with-retention-period",
                                   CreateDatabaseWithVersionRetentionPeriod),
