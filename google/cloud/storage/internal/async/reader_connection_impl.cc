@@ -35,9 +35,12 @@ future<AsyncReaderConnectionImpl::ReadResponse>
 AsyncReaderConnectionImpl::OnRead(absl::optional<ProtoPayload> r) {
   if (!r) return DoFinish();
   auto response = *std::move(r);
-  auto hash =
-      hash_function_->Update(offset_, GetContent(response.checksummed_data()),
-                             response.checksummed_data().crc32c());
+  if (!offset_ && response.has_content_range()) {
+    offset_ = response.content_range().start();
+  }
+  auto hash = hash_function_->Update(offset_.value_or(0),
+                                     GetContent(response.checksummed_data()),
+                                     response.checksummed_data().crc32c());
   if (!hash.ok()) return HandleHashError(std::move(hash));
   auto result = ReadPayloadImpl::Make(
       StealMutableContent(*response.mutable_checksummed_data()));
@@ -61,12 +64,8 @@ AsyncReaderConnectionImpl::OnRead(absl::optional<ProtoPayload> r) {
   if (response.has_metadata()) {
     result.set_metadata(std::move(*response.mutable_metadata()));
   }
-  if (response.has_content_range()) {
-    result.set_offset(response.content_range().start());
-  } else {
-    result.set_offset(offset_);
-  }
-  offset_ = result.offset() + result.size();
+  result.set_offset(offset_.value_or(0));
+  offset_ = offset_.value_or(0) + result.size();
   return make_ready_future(ReadResponse(std::move(result)));
 }
 

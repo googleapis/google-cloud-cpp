@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_streaming_read_rpc.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <google/storage/v2/storage.pb.h>
 #include <cstdint>
 #include <memory>
@@ -59,7 +60,7 @@ class AsyncReaderConnectionImpl
   std::shared_ptr<storage::internal::HashFunction> hash_;
   std::unique_ptr<StreamingRpc> impl_;
   std::shared_ptr<storage::internal::HashFunction> hash_function_;
-  std::int64_t offset_ = 0;
+  absl::optional<std::int64_t> offset_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
