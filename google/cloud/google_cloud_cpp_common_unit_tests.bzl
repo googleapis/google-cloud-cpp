@@ -36,6 +36,8 @@ google_cloud_cpp_common_unit_tests = [
     "internal/credentials_impl_test.cc",
     "internal/debug_future_status_test.cc",
     "internal/debug_string_test.cc",
+    "internal/detect_gcp_test.cc",
+    "internal/detect_gcp_win32_test.cc",
     "internal/error_context_test.cc",
     "internal/filesystem_test.cc",
     "internal/format_time_point_test.cc",
