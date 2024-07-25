@@ -442,7 +442,6 @@ service {
   forwarding_product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["ScheduleTransferRuns"]
 }
 
 service {
@@ -459,7 +458,6 @@ service {
   forwarding_product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["SearchAssignments", "ScheduleTransferRuns"]
 }
 
 service {
@@ -701,7 +699,6 @@ service {
   product_path: "google/cloud/channel/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["RunReportJob", "FetchReportResults", "ListReports"]
 }
 
 # Cloud Controls Partner
@@ -710,7 +707,6 @@ service {
   product_path: "google/cloud/cloudcontrolspartner/v1"
   initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["ListAccessApprovalRequests"]
 }
 
 service {
@@ -1675,7 +1671,6 @@ service {
   forwarding_product_path: "google/cloud/container"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["SetLocations"]
   omitted_rpcs: [
     "CreateCluster(std::string const&, std::string const&, google::container::v1::Cluster const&)",
     "UpdateCluster(std::string const&, std::string const&, std::string const&, google::container::v1::ClusterUpdate const&)",
@@ -2394,7 +2389,6 @@ service {
   product_path: "google/cloud/edgenetwork/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: ["GetZone", "ListZones"]
 }
 
 # Essential Contacts
@@ -3009,9 +3003,6 @@ service {
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
   emulator_endpoint_env_var: "PUBSUB_EMULATOR_HOST"
-  emitted_rpcs: [
-    "DeleteSchemaRevision(std::string const&, std::string const&)"
-  ]
 }
 
 # Pub/Sub Lite
@@ -3073,9 +3064,6 @@ service {
   product_path: "google/cloud/recaptchaenterprise/v1"
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
-  emitted_rpcs: [
-    "SearchRelatedAccountGroupMemberships(std::string const&, std::string const&)"
-  ]
 }
 
 # Recommender
@@ -3308,7 +3296,6 @@ service {
   product_path: "google/cloud/securitycenter/v1"
   forwarding_product_path: "google/cloud/securitycenter"
   initial_copyright_year: "2022"
-  emitted_rpcs: ["GroupAssets", "ListAssets", "RunAssetDiscovery"]
   retryable_status_codes: ["kUnavailable"]
 }
 
