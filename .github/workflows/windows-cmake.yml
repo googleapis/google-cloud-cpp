@@ -19,6 +19,10 @@ on:
         required: true
         description: "read or readwrite"
         type: string
+      execute-integration-tests:
+        required: true
+        description: "Integration tests require credentials."
+        type: boolean
 
 permissions:
   contents: read
@@ -267,6 +271,7 @@ jobs:
         # Put the CMake output in a directory with more space and keep it short
         # to avoid running into the MSVC limits.
         export CMAKE_OUT='c:\b'
+        export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         ci/gha/builds/windows-cmake.sh ${{ matrix.build_type }} ${{ steps.dynamic.outputs.features }}
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache

@@ -135,6 +135,7 @@ jobs:
         }}
       sccache-mode: 'READ_WRITE'
       vcpkg-cache-mode: 'readwrite'
+      execute-integration-tests: true
     secrets: inherit
   windows-cmake:
     name: Windows-CMake
@@ -153,6 +154,7 @@ jobs:
         }}
       sccache-mode: 'READ_WRITE'
       vcpkg-cache-mode: 'readwrite'
+      execute-integration-tests: true
     secrets: inherit
   notify:
     name: Notify-Google-Chat

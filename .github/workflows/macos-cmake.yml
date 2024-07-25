@@ -19,6 +19,10 @@ on:
         required: true
         description: "read or readwrite"
         type: string
+      execute-integration-tests:
+        required: true
+        description: "Integration tests require credentials."
+        type: boolean
 
 permissions:
   contents: read
@@ -138,6 +142,7 @@ jobs:
     - name: Build google-cloud-cpp
       run: |
         export VCPKG_ROOT="${{ runner.temp }}/vcpkg"
+        export EXECUTE_INTEGRATION_TESTS=${{ inputs.execute-integration-tests }}
         /opt/homebrew/bin/bash ci/gha/builds/macos-cmake.sh ${{ steps.dynamic.outputs.features }}
     env:
       SCCACHE_GCS_BUCKET: cloud-cpp-community-gha-cache
