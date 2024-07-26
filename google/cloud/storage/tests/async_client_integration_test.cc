@@ -43,6 +43,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
 using ::testing::Le;
 using ::testing::Not;
+using ::testing::Optional;
 using ::testing::VariantWith;
 
 class AsyncClientIntegrationTest
@@ -178,8 +179,7 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
                                                return a;
                                              });
   EXPECT_EQ(full_contents, LoremIpsum() + LoremIpsum());
-  // TODO(#13910) - disabled until ReadObject also returns protos.
-  // EXPECT_THAT(read->metadata(), Optional(*composed));
+  EXPECT_THAT(read->metadata(), Optional(IsProtoEqual(*composed)));
 }
 
 TEST_F(AsyncClientIntegrationTest, StreamingRead) {
