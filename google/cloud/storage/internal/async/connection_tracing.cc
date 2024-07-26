@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/async/connection_tracing.h"
 #include "google/cloud/storage/async/writer_connection.h"
+#include "google/cloud/storage/internal/async/object_descriptor_connection_tracing.h"
 #include "google/cloud/storage/internal/async/reader_connection_tracing.h"
 #include "google/cloud/storage/internal/async/rewriter_connection_tracing.h"
 #include "google/cloud/storage/internal/async/writer_connection_tracing.h"
@@ -49,10 +50,21 @@ class AsyncConnectionTracing : public storage_experimental::AsyncConnection {
   future<StatusOr<
       std::shared_ptr<storage_experimental::ObjectDescriptorConnection>>>
   Open(OpenParams p) override {
-    // TODO(#18) - decorate the ObjectDescriptor.
     auto span = internal::MakeSpan("storage::AsyncConnection::Open");
     internal::OTelScope scope(span);
-    return internal::EndSpan(std::move(span), impl_->Open(std::move(p)));
+    return impl_->Open(std::move(p))
+        .then([oc = opentelemetry::context::RuntimeContext::GetCurrent(),
+               span = std::move(span)](auto f)
+                  -> StatusOr<std::shared_ptr<
+                      storage_experimental::ObjectDescriptorConnection>> {
+          auto result = f.get();
+          internal::DetachOTelContext(oc);
+          if (!result) {
+            return internal::EndSpan(*span, std::move(result).status());
+          }
+          return MakeTracingObjectDescriptorConnection(std::move(span),
+                                                       *std::move(result));
+        });
   }
 
   future<StatusOr<std::unique_ptr<storage_experimental::AsyncReaderConnection>>>
