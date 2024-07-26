@@ -17,7 +17,9 @@
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/async/idempotency_policy.h"
+#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -68,15 +70,21 @@ class AsyncClientIntegrationTest
   std::string bucket_name_;
 };
 
+auto TestOptions() {
+  // Disable metrics in the test, they just make the logs harder to grok.
+  return Options{}
+      .set<storage_experimental::EnableGrpcMetricsOption>(false)
+      .set<GrpcNumChannelsOption>(1);
+}
+
 auto AlwaysRetry() {
-  return Options{}.set<IdempotencyPolicyOption>(
+  return TestOptions().set<IdempotencyPolicyOption>(
       MakeAlwaysRetryIdempotencyPolicy);
 }
 
 TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
-  auto client = MakeIntegrationTestClient();
+  auto async = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
-  auto async = AsyncClient();
 
   auto insert = async
                     .InsertObject(BucketName(bucket_name()), object_name,
@@ -85,12 +93,16 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
-  auto pending0 = async.ReadObjectRange(BucketName(bucket_name()), object_name,
-                                        0, LoremIpsum().size());
-  auto pending1 = async.ReadObjectRange(BucketName(bucket_name()), object_name,
-                                        0, LoremIpsum().size());
+  auto full0 = async.ReadObjectRange(BucketName(bucket_name()), object_name, 0,
+                                     LoremIpsum().size());
+  auto full1 = async.ReadObjectRange(BucketName(bucket_name()), object_name, 0,
+                                     LoremIpsum().size());
+  auto partial0 = async.ReadObjectRange(BucketName(bucket_name()), object_name,
+                                        2, LoremIpsum().size());
+  auto partial1 = async.ReadObjectRange(BucketName(bucket_name()), object_name,
+                                        2, LoremIpsum().size());
 
-  for (auto* p : {&pending1, &pending0}) {
+  for (auto* p : {&full1, &full0}) {
     auto response = p->get();
     ASSERT_STATUS_OK(response);
     auto contents = response->contents();
@@ -101,22 +113,34 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
                                       });
     EXPECT_EQ(full, LoremIpsum());
   }
+  for (auto* p : {&partial1, &partial0}) {
+    auto response = p->get();
+    ASSERT_STATUS_OK(response);
+    auto contents = response->contents();
+    auto const partial = std::accumulate(contents.begin(), contents.end(),
+                                         std::string{}, [](auto a, auto b) {
+                                           a += std::string(b);
+                                           return a;
+                                         });
+    EXPECT_EQ(partial, LoremIpsum().substr(2));
+  }
+
   auto status = async
                     .DeleteObject(BucketName(bucket_name()), object_name,
                                   insert->generation())
                     .get();
   EXPECT_STATUS_OK(status);
 
+  auto client = MakeIntegrationTestClient();
   auto get = client.GetObjectMetadata(bucket_name(), object_name);
   EXPECT_THAT(get, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(AsyncClientIntegrationTest, ComposeObject) {
-  auto client = MakeIntegrationTestClient();
+  auto async = AsyncClient(TestOptions());
   auto o1 = MakeRandomObjectName();
   auto o2 = MakeRandomObjectName();
   auto destination = MakeRandomObjectName();
-  auto async = AsyncClient();
 
   auto insert1 = async.InsertObject(BucketName(bucket_name()), o1, LoremIpsum(),
                                     AlwaysRetry());
@@ -159,6 +183,7 @@ TEST_F(AsyncClientIntegrationTest, ComposeObject) {
 }
 
 TEST_F(AsyncClientIntegrationTest, StreamingRead) {
+  auto async = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
   // Create a relatively large object so the streaming read makes sense. We
   // aim for something around 5MiB, enough for 3 `Read()` calls.
@@ -173,10 +198,10 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
       insert_data.begin(), insert_data.end(), static_cast<std::size_t>(0),
       [](auto a, auto const& b) { return a + b.size(); });
 
-  auto async = AsyncClient();
-  auto insert =
-      async.InsertObject(BucketName(bucket_name()), object_name, insert_data)
-          .get();
+  auto insert = async
+                    .InsertObject(BucketName(bucket_name()), object_name,
+                                  insert_data, AlwaysRetry())
+                    .get();
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
@@ -206,10 +231,56 @@ TEST_F(AsyncClientIntegrationTest, StreamingRead) {
   EXPECT_EQ(view, absl::string_view{});
 }
 
+TEST_F(AsyncClientIntegrationTest, StreamingReadRange) {
+  auto async = AsyncClient(TestOptions());
+  auto object_name = MakeRandomObjectName();
+  // Create a relatively large object so the streaming read makes sense. We
+  // aim for something around 5MiB, enough for 3 `Read()` calls.
+  auto constexpr kLineSize = 64;
+  auto constexpr kLineCount = 5 * 1024 * 1024 / kLineSize;
+  auto constexpr kReadOffset = kLineCount * kLineSize / 2;
+  auto const block = MakeRandomData(kLineSize - 1) + "\n";
+  std::string contents;
+  for (int i = 0; i != kLineCount; ++i) contents += block;
+  auto const expected_insert_size = contents.size();
+
+  auto insert = async
+                    .InsertObject(BucketName(bucket_name()), object_name,
+                                  contents, AlwaysRetry())
+                    .get();
+  ASSERT_STATUS_OK(insert);
+  ScheduleForDelete(*insert);
+
+  ASSERT_EQ(insert->size(), expected_insert_size);
+
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket(insert->bucket());
+  request.set_object(insert->name());
+  request.set_generation(insert->generation());
+  request.set_read_offset(kReadOffset);
+  auto r = async.ReadObject(request).get();
+  ASSERT_STATUS_OK(r);
+  AsyncReader reader;
+  AsyncToken token;
+  std::tie(reader, token) = *std::move(r);
+
+  std::string actual;
+  while (token.valid()) {
+    auto p = reader.Read(std::move(token)).get();
+    ASSERT_STATUS_OK(p);
+    ReadPayload payload;
+    std::tie(payload, token) = *std::move(p);
+    for (auto v : payload.contents()) actual += std::string(v);
+  }
+
+  EXPECT_EQ(absl::string_view(actual),
+            absl::string_view(contents).substr(kReadOffset));
+}
+
 TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadEmpty) {
+  auto client = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
 
-  auto client = AsyncClient();
   auto w = client.StartUnbufferedUpload(BucketName(bucket_name()), object_name)
                .get();
   ASSERT_STATUS_OK(w);
@@ -227,13 +298,13 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadEmpty) {
 }
 
 TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadMultiple) {
+  auto client = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
   // Create a small block to send over and over.
   auto constexpr kBlockSize = 256 * 1024;
   auto constexpr kBlockCount = 16;
   auto const block = MakeRandomData(kBlockSize);
 
-  auto client = AsyncClient();
   auto w = client.StartUnbufferedUpload(BucketName(bucket_name()), object_name)
                .get();
   ASSERT_STATUS_OK(w);
@@ -256,6 +327,7 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadMultiple) {
 }
 
 TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
+  auto client = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
   // Create a small block to send over and over.
   auto constexpr kBlockSize = 256 * 1024;
@@ -264,7 +336,6 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
   auto constexpr kDesiredSize = kBlockSize * kTotalBlockCount;
   auto const block = MakeRandomData(kBlockSize);
 
-  auto client = AsyncClient();
   auto w = client.StartUnbufferedUpload(BucketName(bucket_name()), object_name)
                .get();
   ASSERT_STATUS_OK(w);
@@ -318,12 +389,12 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResume) {
 }
 
 TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResumeFinalized) {
+  auto client = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
   // Create a small block to send over and over.
   auto constexpr kBlockSize = static_cast<std::int64_t>(256 * 1024);
   auto const block = MakeRandomData(kBlockSize);
 
-  auto client = AsyncClient();
   auto w = client.StartUnbufferedUpload(BucketName(bucket_name()), object_name)
                .get();
   ASSERT_STATUS_OK(w);
@@ -349,9 +420,9 @@ TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadResumeFinalized) {
 }
 
 TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
+  auto client = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
 
-  auto client = AsyncClient();
   auto w =
       client.StartBufferedUpload(BucketName(bucket_name()), object_name).get();
   ASSERT_STATUS_OK(w);
@@ -369,13 +440,13 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadEmpty) {
 }
 
 TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
+  auto client = AsyncClient(TestOptions());
   auto object_name = MakeRandomObjectName();
   // Create a small block to send over and over.
   auto constexpr kBlockSize = 256 * 1024;
   auto constexpr kBlockCount = 16;
   auto const block = MakeRandomData(kBlockSize);
 
-  auto client = AsyncClient();
   auto w =
       client.StartBufferedUpload(BucketName(bucket_name()), object_name).get();
   ASSERT_STATUS_OK(w);
@@ -398,10 +469,10 @@ TEST_F(AsyncClientIntegrationTest, StartBufferedUploadMultiple) {
 }
 
 TEST_F(AsyncClientIntegrationTest, RewriteObject) {
+  auto async = AsyncClient(TestOptions());
   auto o1 = MakeRandomObjectName();
   auto o2 = MakeRandomObjectName();
 
-  auto async = AsyncClient();
   auto constexpr kBlockSize = 4 * 1024 * 1024;
   auto insert = async
                     .InsertObject(BucketName(bucket_name()), o1,
@@ -439,11 +510,11 @@ TEST_F(AsyncClientIntegrationTest, RewriteObject) {
 }
 
 TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
+  auto async = AsyncClient(TestOptions());
   auto destination =
       GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME");
   if (!destination || destination->empty()) GTEST_SKIP();
 
-  auto async = AsyncClient();
   auto constexpr kBlockSize = 4 * 1024 * 1024;
   auto source =
       async

@@ -104,7 +104,12 @@ std::unique_ptr<storage::internal::HashFunction> CreateHashFunction(
 }
 
 std::unique_ptr<storage::internal::HashValidator> CreateHashValidator(
+    google::storage::v2::ReadObjectRequest const& request,
     Options const& options) {
+  auto const is_ranged_read =
+      request.read_limit() != 0 || request.read_offset() != 0;
+  if (is_ranged_read) return storage::internal::CreateNullHashValidator();
+
   auto const enable_crc32c =
       options.get<storage_experimental::EnableCrc32cValidationOption>();
   auto const enable_md5 =
@@ -192,7 +197,7 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
   auto hash_function =
       std::make_shared<storage::internal::Crc32cMessageHashFunction>(
           CreateHashFunction(*current));
-  auto hash_validator = CreateHashValidator(*current);
+  auto hash_validator = CreateHashValidator(p.request, *current);
 
   auto connection_factory = MakeReaderConnectionFactory(
       std::move(current), std::move(p.request), hash_function);
