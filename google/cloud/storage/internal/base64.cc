@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/base64.h"
 #include "google/cloud/internal/base64_transforms.h"
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <utility>

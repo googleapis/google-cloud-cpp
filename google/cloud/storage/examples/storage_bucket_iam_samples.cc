@@ -16,6 +16,7 @@
 #include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
+#include <random>
 #include <string>
 #include <thread>
 #include <utility>

@@ -19,6 +19,7 @@
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <iostream>
+#include <random>
 #include <sstream>
 #include <string>
 #include <thread>

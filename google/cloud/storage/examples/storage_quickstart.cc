@@ -18,6 +18,7 @@
 // [START storage_quickstart]
 #include "google/cloud/storage/client.h"
 #include <iostream>
+#include <random>
 #include <string>
 #include <utility>
 #include <vector>

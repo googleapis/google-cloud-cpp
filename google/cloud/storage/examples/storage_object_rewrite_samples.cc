@@ -18,6 +18,8 @@
 #include <functional>
 #include <iostream>
 #include <map>
+#include <random>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
