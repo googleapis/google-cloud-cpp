@@ -61,8 +61,9 @@ struct ResumePolicyOption {
 /// Returns a factory which resumes up to @p maximum_resumes times.
 ResumePolicyFactory LimitedErrorCountResumePolicy(int maximum_resumes);
 
-/// Returns a factory which resumes forever.
-ResumePolicyFactory UnlimitedErrorCountResumePolicy();
+/// Returns a factory which resumes as long as the previous attempt connected
+/// successfully.
+ResumePolicyFactory StopOnConsecutiveErrorsResumePolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
