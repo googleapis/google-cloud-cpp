@@ -80,6 +80,9 @@ Options StorageIntegrationTest::MakeTestOptions(Options opts) {
   if (auto v = GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_TARGET_API_VERSION")) {
     fallback.set<google::cloud::storage::internal::TargetApiVersionOption>(*v);
   }
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  fallback.set<storage_experimental::EnableGrpcMetricsOption>(false);
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   return google::cloud::internal::MergeOptions(std::move(opts), fallback);
 }
 
