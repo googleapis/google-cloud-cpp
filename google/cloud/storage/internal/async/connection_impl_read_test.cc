@@ -630,7 +630,7 @@ TEST_F(AsyncConnectionImplTest, ReadObjectDetectBadFullChecksum) {
   auto mock_resume_policy_factory =
       []() -> std::unique_ptr<storage_experimental::ResumePolicy> {
     auto policy = std::make_unique<MockResumePolicy>();
-    EXPECT_CALL(*policy, OnStartSuccess).Times(2);  // Per Read() sucess
+    EXPECT_CALL(*policy, OnStartSuccess).Times(2);  // Per Read() success
     EXPECT_CALL(*policy, OnFinish).Times(0);
     return policy;
   };
