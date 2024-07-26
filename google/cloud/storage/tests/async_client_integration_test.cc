@@ -79,7 +79,8 @@ auto TestOptions() {
   return Options{}
       .set<storage_experimental::EnableGrpcMetricsOption>(false)
       .set<GrpcNumChannelsOption>(1)
-      .set<GrpcTracingOptionsOption>(TracingOptions().SetOptions("truncate_string_field_longer_than=2048"));
+      .set<GrpcTracingOptionsOption>(TracingOptions().SetOptions(
+          "truncate_string_field_longer_than=2048"));
 }
 
 auto AlwaysRetry() {
