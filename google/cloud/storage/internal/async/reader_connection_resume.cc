@@ -55,6 +55,7 @@ future<ReadResponse> AsyncReaderConnectionResume::Read(
 
 future<ReadResponse> AsyncReaderConnectionResume::OnRead(ReadResponse r) {
   if (absl::holds_alternative<storage_experimental::ReadPayload>(r)) {
+    resume_policy_->OnStartSuccess();
     auto response = absl::get<storage_experimental::ReadPayload>(std::move(r));
     hash_validator_->ProcessHashValues(
         ReadPayloadImpl::GetObjectHashes(response).value_or(
@@ -97,7 +98,6 @@ future<ReadResponse> AsyncReaderConnectionResume::OnResume(
     return make_ready_future(ReadResponse(std::move(connection).status()));
   }
   received_bytes_ = 0;
-  resume_policy_->OnStartSuccess();
   std::unique_lock<std::mutex> lk(mu_);
   impl_ = *std::move(connection);
   return Read(std::move(lk));
