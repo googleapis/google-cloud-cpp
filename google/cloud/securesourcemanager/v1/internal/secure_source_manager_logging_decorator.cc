@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/securesourcemanager/v1/secure_source_manager.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

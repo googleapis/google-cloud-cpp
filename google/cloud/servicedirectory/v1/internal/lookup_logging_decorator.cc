@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

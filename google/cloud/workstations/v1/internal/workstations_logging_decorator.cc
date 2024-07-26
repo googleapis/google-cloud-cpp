@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/workstations/v1/workstations.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

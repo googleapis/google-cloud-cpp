@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/privacy/dlp/v2/dlp.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataplex/v1/catalog.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

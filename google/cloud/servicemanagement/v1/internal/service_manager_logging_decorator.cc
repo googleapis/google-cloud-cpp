@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

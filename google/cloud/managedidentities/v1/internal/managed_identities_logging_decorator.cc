@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/managedidentities/v1/managed_identities_service.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

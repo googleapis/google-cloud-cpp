@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/networkconnectivity/v1/policy_based_routing.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

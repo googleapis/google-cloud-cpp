@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/datatransfer/v1/datatransfer.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/api/apikeys/v2/apikeys.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

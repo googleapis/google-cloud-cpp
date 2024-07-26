@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/gkemulticloud/v1/aws_service.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 
