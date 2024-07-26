@@ -27,7 +27,6 @@ storage_client_grpc_unit_tests = [
     "async/token_test.cc",
     "async/writer_test.cc",
     "grpc_plugin_test.cc",
-    "internal/async/accumulate_read_object_test.cc",
     "internal/async/connection_impl_insert_test.cc",
     "internal/async/connection_impl_read_hash_test.cc",
     "internal/async/connection_impl_read_test.cc",

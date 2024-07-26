@@ -15,8 +15,9 @@
 #include "google/cloud/storage/internal/async/connection_impl.h"
 #include "google/cloud/storage/async/idempotency_policy.h"
 #include "google/cloud/storage/async/options.h"
+#include "google/cloud/storage/async/read_all.h"
+#include "google/cloud/storage/async/reader.h"
 #include "google/cloud/storage/async/resume_policy.h"
-#include "google/cloud/storage/internal/async/accumulate_read_object.h"
 #include "google/cloud/storage/internal/async/default_options.h"
 #include "google/cloud/storage/internal/async/insert_object.h"
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
@@ -210,15 +211,16 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
 
 future<StatusOr<storage_experimental::ReadPayload>>
 AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
-  auto current = internal::MakeImmutableOptions(std::move(p.options));
-  auto context_factory = []() {
-    return std::make_shared<grpc::ClientContext>();
-  };
-  return storage_internal::AsyncAccumulateReadObjectFull(
-             cq_, stub_, std::move(context_factory), std::move(p.request),
-             std::move(current))
-      .then([](future<storage_internal::AsyncAccumulateReadObjectResult> f) {
-        return ToResponse(f.get());
+  return ReadObject(std::move(p))
+      .then([](auto f) -> future<StatusOr<storage_experimental::ReadPayload>> {
+        auto r = f.get();
+        if (!r) {
+          return make_ready_future(StatusOr<storage_experimental::ReadPayload>(
+              std::move(r).status()));
+        }
+        auto token = storage_internal::MakeAsyncToken(r->get());
+        return storage_experimental::ReadAll(
+            storage_experimental::AsyncReader(*std::move(r)), std::move(token));
       });
 }
 

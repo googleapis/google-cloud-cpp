@@ -473,8 +473,8 @@ TEST_F(AsyncConnectionImplTest, ReadObjectTooManyTransients) {
   EXPECT_THAT(response, VariantWith<Status>(StatusIs(TransientError().code())));
 }
 
-// Only one test for ReadObjectRange(). The tests for
-// `AsyncAccumulateReadObjectFull()` cover most other cases.
+// Only one test for ReadObjectRange(). The tests for `ReadAll()` and
+// `ReadObject()` cover most other cases.
 TEST_F(AsyncConnectionImplTest, ReadObjectRangePermanentError) {
   AsyncSequencer<bool> sequencer;
   auto mock = std::make_shared<storage::testing::MockStorageStub>();
