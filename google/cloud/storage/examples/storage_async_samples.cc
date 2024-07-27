@@ -589,8 +589,8 @@ void ReadObject(google::cloud::storage_experimental::AsyncClient&,
 
 void ReadAll(google::cloud::storage_experimental::AsyncClient&,
              std::vector<std::string> const&) {
-  std::cerr << "google::cloud::storage_experimental::ReadAll()"]
-  << " example requires coroutines\n";
+  std::cerr << "google::cloud::storage_experimental::ReadAll()"
+            << " example requires coroutines\n";
 }
 
 void ReadObjectRange(google::cloud::storage_experimental::AsyncClient&,
