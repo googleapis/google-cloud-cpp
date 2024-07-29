@@ -401,9 +401,6 @@ function (google_cloud_cpp_enable_features)
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
             endif ()
-        elseif ("${feature}" STREQUAL "storage")
-            add_subdirectory(protos/google/cloud/storage/tests)
-            add_subdirectory(google/cloud/storage)
         elseif ("${feature}" STREQUAL "experimental-bigquery_rest")
             if (NOT ("bigquery" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/bigquery)
@@ -430,6 +427,13 @@ function (google_cloud_cpp_enable_features)
                         "${feature} is not a valid feature in google-cloud-cpp, ignored"
                 )
                 continue()
+            endif ()
+            if (IS_DIRECTORY
+                "${PROJECT_SOURCE_DIR}/protos/google/cloud/${feature}"
+                AND EXISTS
+                    "${PROJECT_SOURCE_DIR}/protos/google/cloud/${feature}/CMakeLists.txt"
+            )
+                add_subdirectory(protos/google/cloud/${feature})
             endif ()
             add_subdirectory(google/cloud/${feature})
             if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
