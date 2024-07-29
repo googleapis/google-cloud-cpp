@@ -278,31 +278,29 @@ std::string ConnectionImplGenerator::MethodDeclaration(
 
   if (IsLongrunningOperation(method)) {
     if (IsResponseTypeEmpty(method)) {
-      // TODO(#14344): Remove experimental tag.
       return R"""(
   future<Status>
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(ExperimentalTag, NoAwaitTag,
+  $method_name$(NoAwaitTag,
       $request_type$ const& request) override;
 
   future<Status>
-  $method_name$(ExperimentalTag,
+  $method_name$(
       $longrunning_operation_type$ const& operation) override;
 )""";
     }
-    // TODO(#14344): Remove experimental tag.
     return R"""(
   future<StatusOr<$longrunning_deduced_response_type$>>
   $method_name$($request_type$ const& request) override;
 
   StatusOr<$longrunning_operation_type$>
-  $method_name$(ExperimentalTag, NoAwaitTag,
+  $method_name$(NoAwaitTag,
       $request_type$ const& request) override;
 
   future<StatusOr<$longrunning_deduced_response_type$>>
-  $method_name$(ExperimentalTag,
+  $method_name$(
       $longrunning_operation_type$ const& operation) override;
 )""";
   }
@@ -487,10 +485,9 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
 }
 )""");
 
-    // TODO(#14344): Remove experimental tag.
     std::string start_function =
         absl::StrCat("StatusOr<$longrunning_operation_type$>", R"""(
-$connection_class_name$Impl::$method_name$(ExperimentalTag,
+$connection_class_name$Impl::$method_name$(
       NoAwaitTag, $request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();)""",
                      R"""(
@@ -506,10 +503,9 @@ $connection_class_name$Impl::$method_name$(ExperimentalTag,
 }
 )""");
 
-    // TODO(#14344): Remove experimental tag.
     std::string await_function =
         absl::StrCat(return_fragment, R"""(
-$connection_class_name$Impl::$method_name$(ExperimentalTag,
+$connection_class_name$Impl::$method_name$(
       $longrunning_operation_type$ const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();)""",
                      R"""(

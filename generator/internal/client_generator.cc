@@ -77,8 +77,7 @@ Status ClientGenerator::GenerateHeader() {
       {HasGenerateGrpcTransport() ? vars("connection_header_path")
                                   : vars("connection_rest_header_path"),
        HasLongrunningMethod() ? "google/cloud/no_await_tag.h" : "",
-       // TODO(#14344): Restore conditional experimental tag include.
-       HasLongrunningMethod() ? "google/cloud/experimental_tag.h" : "",
+       IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/future.h", "google/cloud/options.h",
        "google/cloud/polling_policy.h",
        HasIamPolicyExtension() ? "google/cloud/internal/make_status.h" : "",
@@ -158,7 +157,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       std::string const method_string = absl::StrCat(
           "  $method_name$($method_signature", i, "$Options opts = {});\n");
       std::string const start_method_string = absl::StrCat(
-          "  $method_name$(ExperimentalTag, NoAwaitTag, $method_signature", i,
+          "  $method_name$(NoAwaitTag, $method_signature", i,
           "$Options opts = {});\n");
       std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
@@ -291,9 +290,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                   // clang-format off
     "  Status\n",
     "  StatusOr<$longrunning_operation_type$>\n"},
-   {"  $method_name$(ExperimentalTag, "
-    "NoAwaitTag, "
-    "$request_type$ const& request, Options opts = {});\n\n"},
+   {"  $method_name$(NoAwaitTag, $request_type$ const& request, Options opts = {});\n\n"},
                  // clang-format on
                  {FormatAwaitMethodComments(is_method_deprecated)},
                  {deprecation_macro},
@@ -301,7 +298,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                   // clang-format off
     "  future<Status>\n",
     "  future<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"  $method_name$(ExperimentalTag, $longrunning_operation_type$ const& operation, Options opts = {});\n"}
+   {"  $method_name$($longrunning_operation_type$ const& operation, Options opts = {});\n"}
                  // clang-format on
              },
              All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated))),
@@ -459,8 +456,7 @@ $client_class_name$::Async$method_name$(Options opts) {
           absl::StrCat("$client_class_name$::$method_name$($method_signature",
                        i, "$Options opts) {\n");
       std::string start_method_string = absl::StrCat(
-          "$client_class_name$::$method_name$(ExperimentalTag, NoAwaitTag, "
-          "$method_signature",
+          "$client_class_name$::$method_name$(NoAwaitTag, $method_signature",
           i, "$Options opts) {\n");
       std::string method_request_string =
           absl::StrCat("$method_request_setters", i, "$");
@@ -506,7 +502,7 @@ $client_class_name$::Async$method_name$(Options opts) {
                    "std::move(opts), options_));\n"},
                   {"  $request_type$ request;\n"},
                    {method_request_string},
-                  {"  return connection_->$method_name$(ExperimentalTag{}, NoAwaitTag{}, request);\n"
+                  {"  return connection_->$method_name$(NoAwaitTag{}, request);\n"
                   "}\n"}
                    // clang-format on
                },
@@ -635,24 +631,23 @@ $client_class_name$::Async$method_name$(Options opts) {
                   // clang-format off
     "\nStatus\n",
     "\nStatusOr<$longrunning_operation_type$>\n"},
-   {"$client_class_name$::$method_name$(ExperimentalTag"
-    ", NoAwaitTag"
+   {"$client_class_name$::$method_name$(NoAwaitTag"
     ", $request_type$ const& request"
     ", Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
-    "  return connection_->$method_name$(ExperimentalTag{}, NoAwaitTag{}, request);\n"
+    "  return connection_->$method_name$(NoAwaitTag{}, request);\n"
     "}\n"},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
     "\nfuture<Status>\n",
     "\nfuture<StatusOr<$longrunning_deduced_response_type$>>\n"},
-   {"$client_class_name$::$method_name$(ExperimentalTag"
-    ", $longrunning_operation_type$ const& operation, Options opts) {\n"
+   {"$client_class_name$::$method_name$("
+    "$longrunning_operation_type$ const& operation, Options opts) {\n"
     "  internal::OptionsSpan span(internal::MergeOptions("
     "std::move(opts), options_));\n"
-    "  return connection_->$method_name$(ExperimentalTag{}, operation);\n"},
+    "  return connection_->$method_name$(operation);\n"},
    {"}\n"}
                  // clang-format on
              },
