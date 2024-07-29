@@ -606,9 +606,8 @@ DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/", "disks",
-                             "/", request.disk(), "/", "stopAsyncReplication"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "/", request.disk(), "/",
+                             "stopAsyncReplication")));
       },
       std::move(p),
       service_,
@@ -633,9 +632,7 @@ DefaultRegionDisksRestStub::StopAsyncReplication(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "disks", "/", request.disk(), "/",
-                   "stopAsyncReplication"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   "stopAsyncReplication"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

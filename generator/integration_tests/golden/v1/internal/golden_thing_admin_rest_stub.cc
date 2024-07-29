@@ -71,8 +71,7 @@ DefaultGoldenThingAdminRestStub::AsyncCreateDatabase(
       p.set_value(rest_internal::Post<google::longrunning::Operation>(
           *service, *rest_context, request,
           false,
-          absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", request.parent(), "/", "databases"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("create_statement", request.create_statement())})));
+          absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", request.parent(), "/", "databases")));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
@@ -91,8 +90,7 @@ DefaultGoldenThingAdminRestStub::CreateDatabase(
       google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("create_statement", request.create_statement())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases"));
 }
 
 StatusOr<google::test::admin::database::v1::Database>
@@ -118,8 +116,7 @@ DefaultGoldenThingAdminRestStub::AsyncUpdateDatabaseDdl(
       p.set_value(rest_internal::Patch<google::longrunning::Operation>(
           *service, *rest_context, request,
           false,
-          absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", request.database(), "/", "ddl"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("operation_id", request.operation_id())})));
+          absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", request.database(), "/", "ddl")));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
@@ -138,8 +135,7 @@ DefaultGoldenThingAdminRestStub::UpdateDatabaseDdl(
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   return rest_internal::Patch<google::longrunning::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.database(), "/", "ddl"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("operation_id", request.operation_id())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.database(), "/", "ddl"));
 }
 
 Status DefaultGoldenThingAdminRestStub::DropDatabase(
@@ -283,9 +279,7 @@ DefaultGoldenThingAdminRestStub::AsyncRestoreDatabase(
       p.set_value(rest_internal::Post<google::longrunning::Operation>(
           *service, *rest_context, request,
           false,
-          absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", request.parent(), "/", "databases", ":restore"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("database_id", request.database_id()),
-        std::make_pair("backup", request.backup())})));
+          absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", request.parent(), "/", "databases", ":restore")));
     },
     std::move(p), service_, request, std::move(rest_context),
     std::move(options)};
@@ -304,9 +298,7 @@ DefaultGoldenThingAdminRestStub::RestoreDatabase(
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases", ":restore"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("database_id", request.database_id()),
-        std::make_pair("backup", request.backup())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases", ":restore"));
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>

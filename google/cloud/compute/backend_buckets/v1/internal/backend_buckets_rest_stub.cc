@@ -167,10 +167,7 @@ DefaultBackendBucketsRestStub::AsyncDeleteSignedUrlKey(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "backendBuckets", "/",
                              request.backend_bucket(), "/",
-                             "deleteSignedUrlKey"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("key_name", request.key_name()),
-                     std::make_pair("request_id", request.request_id())})));
+                             "deleteSignedUrlKey")));
       },
       std::move(p),
       service_,
@@ -195,10 +192,7 @@ DefaultBackendBucketsRestStub::DeleteSignedUrlKey(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "backendBuckets", "/", request.backend_bucket(), "/",
-                   "deleteSignedUrlKey"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("key_name", request.key_name()),
-           std::make_pair("request_id", request.request_id())}));
+                   "deleteSignedUrlKey"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::BackendBucket>

@@ -89,12 +89,7 @@ DefaultInstanceAdminRestStub::AsyncCreateInstanceConfig(
             *service, *rest_context, request, false,
             absl::StrCat("/",
                          rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "instanceConfigs"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("instance_config_id",
-                                request.instance_config_id()),
-                 std::make_pair("validate_only",
-                                (request.validate_only() ? "1" : "0"))})));
+                         "/", request.parent(), "/", "instanceConfigs")));
       },
       std::move(p),
       service_,
@@ -116,11 +111,7 @@ DefaultInstanceAdminRestStub::CreateInstanceConfig(
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instanceConfigs"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("instance_config_id", request.instance_config_id()),
-           std::make_pair("validate_only",
-                          (request.validate_only() ? "1" : "0"))}));
+                   request.parent(), "/", "instanceConfigs"));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -138,9 +129,7 @@ DefaultInstanceAdminRestStub::AsyncUpdateInstanceConfig(
             *service, *rest_context, request, false,
             absl::StrCat("/",
                          rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.instance_config().name()),
-            rest_internal::TrimEmptyQueryParameters({std::make_pair(
-                "validate_only", (request.validate_only() ? "1" : "0"))})));
+                         "/", request.instance_config().name())));
       },
       std::move(p),
       service_,
@@ -162,9 +151,7 @@ DefaultInstanceAdminRestStub::UpdateInstanceConfig(
   return rest_internal::Patch<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.instance_config().name()),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "validate_only", (request.validate_only() ? "1" : "0"))}));
+                   request.instance_config().name()));
 }
 
 Status DefaultInstanceAdminRestStub::DeleteInstanceConfig(
@@ -258,9 +245,7 @@ DefaultInstanceAdminRestStub::AsyncCreateInstance(
             *service, *rest_context, request, false,
             absl::StrCat("/",
                          rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "instances"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("instance_id", request.instance_id())})));
+                         "/", request.parent(), "/", "instances")));
       },
       std::move(p),
       service_,
@@ -282,9 +267,7 @@ DefaultInstanceAdminRestStub::CreateInstance(
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("instance_id", request.instance_id())}));
+                   request.parent(), "/", "instances"));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -397,9 +380,7 @@ DefaultInstanceAdminRestStub::AsyncCreateInstancePartition(
             *service, *rest_context, request, false,
             absl::StrCat("/",
                          rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "instancePartitions"),
-            rest_internal::TrimEmptyQueryParameters({std::make_pair(
-                "instance_partition_id", request.instance_partition_id())})));
+                         "/", request.parent(), "/", "instancePartitions")));
       },
       std::move(p),
       service_,
@@ -421,9 +402,7 @@ DefaultInstanceAdminRestStub::CreateInstancePartition(
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "instancePartitions"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "instance_partition_id", request.instance_partition_id())}));
+                   request.parent(), "/", "instancePartitions"));
 }
 
 Status DefaultInstanceAdminRestStub::DeleteInstancePartition(

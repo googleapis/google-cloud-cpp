@@ -75,13 +75,7 @@ DefaultDatabaseAdminRestStub::AsyncCreateDatabase(
             *service, *rest_context, request, false,
             absl::StrCat("/",
                          rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "databases"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("create_statement", request.create_statement()),
-                 std::make_pair("database_dialect",
-                                std::to_string(request.database_dialect())),
-                 std::make_pair("proto_descriptors",
-                                request.proto_descriptors())})));
+                         "/", request.parent(), "/", "databases")));
       },
       std::move(p),
       service_,
@@ -103,12 +97,7 @@ DefaultDatabaseAdminRestStub::CreateDatabase(
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "databases"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("create_statement", request.create_statement()),
-           std::make_pair("database_dialect",
-                          std::to_string(request.database_dialect())),
-           std::make_pair("proto_descriptors", request.proto_descriptors())}));
+                   request.parent(), "/", "databases"));
 }
 
 StatusOr<google::spanner::admin::database::v1::Database>
@@ -177,11 +166,7 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
             *service, *rest_context, request, false,
             absl::StrCat("/",
                          rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.database(), "/", "ddl"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("operation_id", request.operation_id()),
-                 std::make_pair("proto_descriptors",
-                                request.proto_descriptors())})));
+                         "/", request.database(), "/", "ddl")));
       },
       std::move(p),
       service_,
@@ -203,10 +188,7 @@ DefaultDatabaseAdminRestStub::UpdateDatabaseDdl(
   return rest_internal::Patch<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.database(), "/", "ddl"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("operation_id", request.operation_id()),
-           std::make_pair("proto_descriptors", request.proto_descriptors())}));
+                   request.database(), "/", "ddl"));
 }
 
 Status DefaultDatabaseAdminRestStub::DropDatabase(
@@ -319,10 +301,7 @@ DefaultDatabaseAdminRestStub::AsyncCopyBackup(
             *service, *rest_context, request, false,
             absl::StrCat("/",
                          rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "backups", ":copy"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("backup_id", request.backup_id()),
-                 std::make_pair("source_backup", request.source_backup())})));
+                         "/", request.parent(), "/", "backups", ":copy")));
       },
       std::move(p),
       service_,
@@ -343,10 +322,7 @@ DefaultDatabaseAdminRestStub::CopyBackup(
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "backups", ":copy"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("backup_id", request.backup_id()),
-           std::make_pair("source_backup", request.source_backup())}));
+                   request.parent(), "/", "backups", ":copy"));
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -412,10 +388,7 @@ DefaultDatabaseAdminRestStub::AsyncRestoreDatabase(
             *service, *rest_context, request, false,
             absl::StrCat("/",
                          rest_internal::DetermineApiVersion("v1", *options),
-                         "/", request.parent(), "/", "databases", ":restore"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("database_id", request.database_id()),
-                 std::make_pair("backup", request.backup())})));
+                         "/", request.parent(), "/", "databases", ":restore")));
       },
       std::move(p),
       service_,
@@ -437,10 +410,7 @@ DefaultDatabaseAdminRestStub::RestoreDatabase(
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
-                   request.parent(), "/", "databases", ":restore"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("database_id", request.database_id()),
-           std::make_pair("backup", request.backup())}));
+                   request.parent(), "/", "databases", ":restore"));
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>

@@ -392,9 +392,7 @@ DefaultNetworksRestStub::AsyncSwitchToCustomMode(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "networks", "/", request.network(),
-                             "/", "switchToCustomMode"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "/", "switchToCustomMode")));
       },
       std::move(p),
       service_,
@@ -419,9 +417,7 @@ DefaultNetworksRestStub::SwitchToCustomMode(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "networks", "/", request.network(), "/",
-                   "switchToCustomMode"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   "switchToCustomMode"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

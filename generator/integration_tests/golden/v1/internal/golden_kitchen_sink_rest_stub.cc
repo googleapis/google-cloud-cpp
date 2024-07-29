@@ -58,10 +58,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "token", ":generate"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("name", request.name()),
-        std::make_pair("audience", request.audience()),
-        std::make_pair("include_email", (request.include_email() ? "1" : "0"))}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "token", ":generate"));
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
@@ -71,8 +68,7 @@ DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "entries", ":write"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("log_name", request.log_name())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "entries", ":write"));
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
@@ -112,9 +108,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting1"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
-        std::make_pair("no_regex_needed", request.no_regex_needed())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting1"));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
@@ -123,9 +117,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting2"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("app_profile_id", request.app_profile_id()),
-        std::make_pair("no_regex_needed", request.no_regex_needed())}));
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting2"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

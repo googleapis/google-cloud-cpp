@@ -357,12 +357,7 @@ DefaultInstancesRestStub::AsyncDeleteAccessConfig(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
-                             "deleteAccessConfig"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("access_config", request.access_config()),
-                     std::make_pair("network_interface",
-                                    request.network_interface()),
-                     std::make_pair("request_id", request.request_id())})));
+                             "deleteAccessConfig")));
       },
       std::move(p),
       service_,
@@ -387,11 +382,7 @@ DefaultInstancesRestStub::DeleteAccessConfig(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "deleteAccessConfig"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("access_config", request.access_config()),
-           std::make_pair("network_interface", request.network_interface()),
-           std::make_pair("request_id", request.request_id())}));
+                   "/", "deleteAccessConfig"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -413,10 +404,7 @@ DefaultInstancesRestStub::AsyncDetachDisk(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
-                             "/", request.instance(), "/", "detachDisk"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("device_name", request.device_name()),
-                     std::make_pair("request_id", request.request_id())})));
+                             "/", request.instance(), "/", "detachDisk")));
       },
       std::move(p),
       service_,
@@ -441,10 +429,7 @@ DefaultInstancesRestStub::DetachDisk(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "detachDisk"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("device_name", request.device_name()),
-           std::make_pair("request_id", request.request_id())}));
+                   "/", "detachDisk"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Instance>
@@ -686,9 +671,7 @@ DefaultInstancesRestStub::AsyncPerformMaintenance(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
-                             "performMaintenance"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "performMaintenance")));
       },
       std::move(p),
       service_,
@@ -713,9 +696,7 @@ DefaultInstancesRestStub::PerformMaintenance(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "performMaintenance"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   "/", "performMaintenance"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -791,9 +772,7 @@ DefaultInstancesRestStub::AsyncReset(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
-                             "/", request.instance(), "/", "reset"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "/", request.instance(), "/", "reset")));
       },
       std::move(p),
       service_,
@@ -817,9 +796,7 @@ DefaultInstancesRestStub::Reset(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "reset"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   "/", "reset"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -840,9 +817,7 @@ DefaultInstancesRestStub::AsyncResume(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
-                             "/", request.instance(), "/", "resume"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "/", request.instance(), "/", "resume")));
       },
       std::move(p),
       service_,
@@ -866,9 +841,7 @@ DefaultInstancesRestStub::Resume(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "resume"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   "/", "resume"));
 }
 
 Status DefaultInstancesRestStub::SendDiagnosticInterrupt(
@@ -905,12 +878,7 @@ DefaultInstancesRestStub::AsyncSetDeletionProtection(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.resource(), "/",
-                             "setDeletionProtection"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair(
-                         "deletion_protection",
-                         (request.deletion_protection() ? "1" : "0")),
-                     std::make_pair("request_id", request.request_id())})));
+                             "setDeletionProtection")));
       },
       std::move(p),
       service_,
@@ -935,11 +903,7 @@ DefaultInstancesRestStub::SetDeletionProtection(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.resource(),
-                   "/", "setDeletionProtection"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("deletion_protection",
-                          (request.deletion_protection() ? "1" : "0")),
-           std::make_pair("request_id", request.request_id())}));
+                   "/", "setDeletionProtection"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -961,12 +925,8 @@ DefaultInstancesRestStub::AsyncSetDiskAutoDelete(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
-                             "/", request.instance(), "/", "setDiskAutoDelete"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("auto_delete",
-                                    (request.auto_delete() ? "1" : "0")),
-                     std::make_pair("device_name", request.device_name()),
-                     std::make_pair("request_id", request.request_id())})));
+                             "/", request.instance(), "/",
+                             "setDiskAutoDelete")));
       },
       std::move(p),
       service_,
@@ -991,11 +951,7 @@ DefaultInstancesRestStub::SetDiskAutoDelete(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "setDiskAutoDelete"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("auto_delete", (request.auto_delete() ? "1" : "0")),
-           std::make_pair("device_name", request.device_name()),
-           std::make_pair("request_id", request.request_id())}));
+                   "/", "setDiskAutoDelete"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -1611,13 +1567,7 @@ DefaultInstancesRestStub::AsyncSimulateMaintenanceEvent(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
                              "/", request.instance(), "/",
-                             "simulateMaintenanceEvent"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair(
-                         "with_extended_notifications",
-                         (request.with_extended_notifications() ? "1"
-                                                                : "0"))})));
+                             "simulateMaintenanceEvent")));
       },
       std::move(p),
       service_,
@@ -1642,12 +1592,7 @@ DefaultInstancesRestStub::SimulateMaintenanceEvent(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "simulateMaintenanceEvent"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair(
-               "with_extended_notifications",
-               (request.with_extended_notifications() ? "1" : "0"))}));
+                   "/", "simulateMaintenanceEvent"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1668,9 +1613,7 @@ DefaultInstancesRestStub::AsyncStart(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
-                             "/", request.instance(), "/", "start"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                             "/", request.instance(), "/", "start")));
       },
       std::move(p),
       service_,
@@ -1694,9 +1637,7 @@ DefaultInstancesRestStub::Start(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "start"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   "/", "start"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1772,11 +1713,7 @@ DefaultInstancesRestStub::AsyncStop(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
-                             "/", request.instance(), "/", "stop"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("discard_local_ssd",
-                                    (request.discard_local_ssd() ? "1" : "0")),
-                     std::make_pair("request_id", request.request_id())})));
+                             "/", request.instance(), "/", "stop")));
       },
       std::move(p),
       service_,
@@ -1800,11 +1737,7 @@ DefaultInstancesRestStub::Stop(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "stop"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("discard_local_ssd",
-                          (request.discard_local_ssd() ? "1" : "0")),
-           std::make_pair("request_id", request.request_id())}));
+                   "/", "stop"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1825,11 +1758,7 @@ DefaultInstancesRestStub::AsyncSuspend(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "instances",
-                             "/", request.instance(), "/", "suspend"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("discard_local_ssd",
-                                    (request.discard_local_ssd() ? "1" : "0")),
-                     std::make_pair("request_id", request.request_id())})));
+                             "/", request.instance(), "/", "suspend")));
       },
       std::move(p),
       service_,
@@ -1853,11 +1782,7 @@ DefaultInstancesRestStub::Suspend(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instances", "/", request.instance(),
-                   "/", "suspend"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("discard_local_ssd",
-                          (request.discard_local_ssd() ? "1" : "0")),
-           std::make_pair("request_id", request.request_id())}));
+                   "/", "suspend"));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

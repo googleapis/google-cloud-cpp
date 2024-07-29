@@ -93,9 +93,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncAnnounce(
                     rest_internal::DetermineApiVersion("v1", *options), "/",
                     "projects", "/", request.project(), "/", "regions", "/",
                     request.region(), "/", "publicDelegatedPrefixes", "/",
-                    request.public_delegated_prefix(), "/", "announce"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                    request.public_delegated_prefix(), "/", "announce")));
       },
       std::move(p),
       service_,
@@ -120,9 +118,7 @@ DefaultPublicDelegatedPrefixesRestStub::Announce(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes", "/",
-                   request.public_delegated_prefix(), "/", "announce"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   request.public_delegated_prefix(), "/", "announce"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -341,9 +337,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncWithdraw(
                     rest_internal::DetermineApiVersion("v1", *options), "/",
                     "projects", "/", request.project(), "/", "regions", "/",
                     request.region(), "/", "publicDelegatedPrefixes", "/",
-                    request.public_delegated_prefix(), "/", "withdraw"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                    request.public_delegated_prefix(), "/", "withdraw")));
       },
       std::move(p),
       service_,
@@ -368,9 +362,7 @@ DefaultPublicDelegatedPrefixesRestStub::Withdraw(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes", "/",
-                   request.public_delegated_prefix(), "/", "withdraw"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+                   request.public_delegated_prefix(), "/", "withdraw"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
