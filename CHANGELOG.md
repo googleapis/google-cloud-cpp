@@ -22,6 +22,19 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   these distros are EOL or in some form of "security only" support period.
   Note that we used CentOS 7 as a proxy for testing RedHat Enterprise Linux 7.
 
+
+### BREAKING TESTING CHANGES
+
+If you don't mock Long Running Operations (LRO) in your tests, then these
+changes will not affect you.
+
+With the promotion from Experimental to GA of the new methods to support
+starting Long Running Operations (LRO) synchronously and awaiting their
+completion separately, the use of `ExperimentalTag` is no longer required. The
+overload set for LRO methods has changed and may require matchers to
+disambiguate invocations of `EXPECT_CALL`
+(https://google.github.io/googletest/gmock_cook_book.html#SelectOverload).
+
 ### New Libraries
 
 We are happy to announce the following GA libraries. Unless specifically noted,
@@ -57,6 +70,11 @@ added to your `.bazelrc` file.
 ```bash
 build --@io_opentelemetry_cpp//api:with_abseil
 ```
+
+### [Common Libraries](/google/cloud/README.md)
+
+- Promoted to GA, functions to start a LRO (longrunning operation) in one
+  function call, and then await the LRO to complete on a separate function.
 
 ## v2.26.0 - 2024-07
 
