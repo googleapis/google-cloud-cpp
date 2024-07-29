@@ -23,6 +23,7 @@
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
+#include <tuple>
 #include <utility>
 
 namespace google {

@@ -18,6 +18,8 @@
 #include "google/cloud/internal/getenv.h"
 #include <iostream>
 #include <map>
+#include <random>
+#include <stdexcept>
 #include <string>
 #include <thread>
 #include <utility>

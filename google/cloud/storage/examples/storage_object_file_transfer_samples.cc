@@ -19,6 +19,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <random>
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>

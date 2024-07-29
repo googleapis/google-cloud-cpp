@@ -18,6 +18,7 @@
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
+#include <random>
 #include <string>
 
 namespace google {

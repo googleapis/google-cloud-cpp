@@ -17,6 +17,7 @@
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <cctype>
+#include <random>
 #include <string>
 
 namespace google {

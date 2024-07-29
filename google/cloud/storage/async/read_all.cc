@@ -16,6 +16,8 @@
 #include "google/cloud/storage/internal/async/read_payload_impl.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <tuple>
+#include <utility>
 
 namespace google {
 namespace cloud {

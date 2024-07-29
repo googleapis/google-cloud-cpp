@@ -25,6 +25,7 @@
 #include <future>
 #include <iterator>
 #include <memory>
+#include <set>
 #include <string>
 #include <thread>
 #include <vector>

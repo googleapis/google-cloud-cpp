@@ -21,6 +21,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <set>
 #include <sstream>
 #include <string>
 #include <thread>
