@@ -17,6 +17,7 @@
 #include "google/cloud/storage/async/bucket_name.h"
 #include "google/cloud/storage/async/client.h"
 #include "google/cloud/storage/async/idempotency_policy.h"
+#include "google/cloud/storage/async/read_all.h"
 #include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/grpc_options.h"
@@ -28,6 +29,7 @@
 #include <iterator>
 #include <numeric>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -38,6 +40,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
+using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::IsEmpty;
@@ -75,7 +78,9 @@ auto TestOptions() {
   // Disable metrics in the test, they just make the logs harder to grok.
   return Options{}
       .set<storage_experimental::EnableGrpcMetricsOption>(false)
-      .set<GrpcNumChannelsOption>(1);
+      .set<GrpcNumChannelsOption>(1)
+      .set<GrpcTracingOptionsOption>(TracingOptions().SetOptions(
+          "truncate_string_field_longer_than=2048"));
 }
 
 auto AlwaysRetry() {
@@ -132,9 +137,12 @@ TEST_F(AsyncClientIntegrationTest, ObjectCRUD) {
                     .get();
   EXPECT_STATUS_OK(status);
 
-  auto client = MakeIntegrationTestClient();
-  auto get = client.GetObjectMetadata(bucket_name(), object_name);
-  EXPECT_THAT(get, StatusIs(StatusCode::kNotFound));
+  auto request = google::storage::v2::ReadObjectRequest{};
+  request.set_bucket(insert->bucket());
+  request.set_object(insert->name());
+  request.set_generation(insert->generation());
+  auto head = async.ReadObjectRange(request, /*offset=*/0, /*limit=*/1).get();
+  EXPECT_THAT(head, StatusIs(StatusCode::kNotFound));
 }
 
 TEST_F(AsyncClientIntegrationTest, ComposeObject) {
@@ -570,6 +578,132 @@ TEST_F(AsyncClientIntegrationTest, RewriteObjectResume) {
     EXPECT_EQ(metadata.size(), source->size());
     EXPECT_FALSE(token.valid());
   }
+}
+
+TEST_F(AsyncClientIntegrationTest, InsertFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto insert = async
+                    .InsertObject(BucketName(MakeRandomBucketName()),
+                                  MakeRandomObjectName(), LoremIpsum())
+                    .get();
+  ASSERT_THAT(insert, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, ReadFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto read = async
+                  .ReadObject(BucketName(MakeRandomBucketName()),
+                              MakeRandomObjectName())
+                  .get();
+  // At the moment, only connectivity errors are detected before the first
+  // `Read()` call. Accept such failures too:
+  if (!read) return;
+  AsyncReader reader;
+  AsyncToken token;
+  std::tie(reader, token) = *std::move(read);
+  auto payload = ReadAll(std::move(reader), std::move(token)).get();
+  ASSERT_THAT(payload, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, ReadRangeFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto payload =
+      async
+          .ReadObjectRange(BucketName(MakeRandomBucketName()),
+                           MakeRandomObjectName(), /*offset=*/0, /*limit=*/1)
+          .get();
+  ASSERT_THAT(payload, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, StartBufferedUploadFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto writer = async
+                    .StartBufferedUpload(BucketName(MakeRandomBucketName()),
+                                         MakeRandomObjectName())
+                    .get();
+  ASSERT_THAT(writer, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, ResumeBufferedUploadFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto writer = async.ResumeBufferedUpload("test-only-invalid-upload-id").get();
+  ASSERT_THAT(writer, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, StartUnbufferedUploadFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto writer = async
+                    .StartUnbufferedUpload(BucketName(MakeRandomBucketName()),
+                                           MakeRandomObjectName())
+                    .get();
+  ASSERT_THAT(writer, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, ResumeUnbufferedUploadFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto writer =
+      async.ResumeUnbufferedUpload("test-only-invalid-upload-id").get();
+  ASSERT_THAT(writer, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, ComposeObjectFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto make_source = [](std::string name) {
+    auto source = google::storage::v2::ComposeObjectRequest::SourceObject{};
+    source.set_name(std::move(name));
+    return source;
+  };
+  auto composed =
+      async
+          .ComposeObject(BucketName(bucket_name()), MakeRandomObjectName(),
+                         {make_source(MakeRandomObjectName()),
+                          make_source(MakeRandomObjectName())})
+          .get();
+  ASSERT_THAT(composed, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, DeleteObjectFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  auto deleted =
+      async.DeleteObject(BucketName(bucket_name()), MakeRandomObjectName())
+          .get();
+  ASSERT_THAT(deleted, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, StartRewriteFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  AsyncRewriter rewriter;
+  AsyncToken token;
+  std::tie(rewriter, token) =
+      async.StartRewrite(BucketName(bucket_name()), MakeRandomObjectName(),
+                         BucketName(bucket_name()), MakeRandomObjectName());
+  ASSERT_TRUE(token.valid());
+  auto iteration = rewriter.Iterate(std::move(token)).get();
+  ASSERT_THAT(iteration, Not(IsOk()));
+}
+
+TEST_F(AsyncClientIntegrationTest, ResumeRewriteFailure) {
+  auto async = AsyncClient(TestOptions());
+
+  AsyncRewriter rewriter;
+  AsyncToken token;
+  std::tie(rewriter, token) =
+      async.ResumeRewrite(BucketName(bucket_name()), MakeRandomObjectName(),
+                          BucketName(bucket_name()), MakeRandomObjectName(),
+                          "test-only-invalid-rewrite-token");
+  ASSERT_TRUE(token.valid());
+  auto iteration = rewriter.Iterate(std::move(token)).get();
+  ASSERT_THAT(iteration, Not(IsOk()));
 }
 
 }  // namespace
