@@ -109,6 +109,22 @@ class MockEnvironmentsConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEnvironment,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
+              CreateEnvironment,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateEnvironment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateEnvironment(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
       UpdateEnvironment,
       (google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
@@ -139,6 +155,19 @@ class MockEnvironmentsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
               UpdateEnvironment,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateEnvironment,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
+              UpdateEnvironment,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       Status, DeleteEnvironment,
@@ -195,6 +224,20 @@ class MockEnvironmentsConnection
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
       RunContinuousTest, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RunContinuousTest,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
+      RunContinuousTest,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

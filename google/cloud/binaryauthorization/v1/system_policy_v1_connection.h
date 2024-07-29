@@ -22,6 +22,7 @@
 #include "google/cloud/binaryauthorization/v1/internal/system_policy_v1_retry_traits.h"
 #include "google/cloud/binaryauthorization/v1/system_policy_v1_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

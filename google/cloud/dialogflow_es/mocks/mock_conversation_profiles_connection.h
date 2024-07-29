@@ -133,6 +133,22 @@ class MockConversationProfilesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SetSuggestionFeatureConfig,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
+      SetSuggestionFeatureConfig,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ClearSuggestionFeatureConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ClearSuggestionFeatureConfig(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
       ClearSuggestionFeatureConfig,
       (google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&

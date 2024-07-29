@@ -253,6 +253,22 @@ class MockNetworkSecurityConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateServerTlsPolicy,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
+      CreateServerTlsPolicy,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateServerTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateServerTlsPolicy(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
       UpdateServerTlsPolicy,
       (google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
@@ -295,6 +311,22 @@ class MockNetworkSecurityConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateServerTlsPolicy,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
+      UpdateServerTlsPolicy,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteServerTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteServerTlsPolicy(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteServerTlsPolicy,
       (google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
@@ -325,6 +357,19 @@ class MockNetworkSecurityConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteServerTlsPolicy, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteServerTlsPolicy,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
+      DeleteServerTlsPolicy,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -393,6 +438,22 @@ class MockNetworkSecurityConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateClientTlsPolicy,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
+      CreateClientTlsPolicy,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateClientTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateClientTlsPolicy(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
       UpdateClientTlsPolicy,
       (google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
@@ -434,6 +495,22 @@ class MockNetworkSecurityConnection
   /// DeleteClientTlsPolicy(Matcher<google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateClientTlsPolicy,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
+      UpdateClientTlsPolicy,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteClientTlsPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteClientTlsPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteClientTlsPolicy,

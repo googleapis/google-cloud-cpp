@@ -91,6 +91,19 @@ class MockConversationDatasetsConnection
       (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateConversationDataset,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>,
+      CreateConversationDataset,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::ConversationDataset>,
       GetConversationDataset,
       (google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
@@ -156,6 +169,23 @@ class MockConversationDatasetsConnection
   /// ImportConversationData(Matcher<google::cloud::dialogflow::v2::ImportConversationDataRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteConversationDataset,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  DeleteConversationDatasetOperationMetadata>>,
+              DeleteConversationDataset,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportConversationData)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportConversationData(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           ImportConversationDataOperationResponse>>,

@@ -101,6 +101,23 @@ class MockInstanceGroupManagerResizeRequestsConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Cancel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+           CancelRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Cancel,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstanceGroupManagerResizeRequest)` is now
+  /// ambiguous. Use `EXPECT_CALL(*mock,
+  /// DeleteInstanceGroupManagerResizeRequest(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteInstanceGroupManagerResizeRequest,
       (google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
@@ -133,6 +150,20 @@ class MockInstanceGroupManagerResizeRequestsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceGroupManagerResizeRequest,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>,
+      DeleteInstanceGroupManagerResizeRequest,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+           DeleteInstanceGroupManagerResizeRequestRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteInstanceGroupManagerResizeRequest,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -185,6 +216,20 @@ class MockInstanceGroupManagerResizeRequestsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceGroupManagerResizeRequest,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>,
+      InsertInstanceGroupManagerResizeRequest,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
+           InsertInstanceGroupManagerResizeRequestRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertInstanceGroupManagerResizeRequest,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

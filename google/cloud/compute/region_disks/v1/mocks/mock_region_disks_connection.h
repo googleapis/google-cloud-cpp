@@ -212,6 +212,19 @@ class MockRegionDisksConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteDisk,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteDisk,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Disk>, GetDisk,
       (google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
            request),
@@ -262,6 +275,19 @@ class MockRegionDisksConnection
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertDisk,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertDisk,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertDisk,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -350,6 +376,19 @@ class MockRegionDisksConnection
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Resize,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

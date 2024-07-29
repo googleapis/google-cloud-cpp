@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
 licenses(["notice"])  # Apache 2.0
 
+<<<<<<<< HEAD:google/cloud/aiplatform/samples/BUILD.bazel
 [cc_test(
     name = sample.replace(".cc", ""),
     srcs = [sample],
@@ -25,5 +24,14 @@ licenses(["notice"])  # Apache 2.0
     deps = [
         "//:aiplatform",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+========
+cc_binary(
+    name = "quickstart",
+    srcs = [
+        "quickstart.cc",
+>>>>>>>> b28576a15e (chore: merge from public circa 2024-07-26 (#63)):google/cloud/bigquerycontrol/quickstart/BUILD.bazel
     ],
-) for sample in glob(["*.cc"])]
+    deps = [
+        "@google_cloud_cpp//:experimental-bigquerycontrol",
+    ],
+)

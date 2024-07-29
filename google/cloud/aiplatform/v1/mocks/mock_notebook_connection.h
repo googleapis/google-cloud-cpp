@@ -195,6 +195,19 @@ class MockNotebookServiceConnection
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, AssignNotebookRuntime,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>,
+              AssignNotebookRuntime,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>,
       GetNotebookRuntime,
       (google::cloud::aiplatform::v1::GetNotebookRuntimeRequest const& request),
@@ -257,6 +270,22 @@ class MockNotebookServiceConnection
   /// UpgradeNotebookRuntime(Matcher<google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteNotebookRuntime,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteNotebookRuntime,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpgradeNotebookRuntime)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpgradeNotebookRuntime(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>,

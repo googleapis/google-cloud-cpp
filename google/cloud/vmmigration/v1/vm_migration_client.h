@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VMMIGRATION_V1_VM_MIGRATION_CLIENT_H
 
 #include "google/cloud/vmmigration/v1/vm_migration_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

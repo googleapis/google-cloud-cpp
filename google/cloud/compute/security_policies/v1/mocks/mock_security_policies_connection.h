@@ -89,6 +89,19 @@ class MockSecurityPoliciesConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddRule,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddRule,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
                                               SecurityPoliciesScopedList>>),
       AggregatedListSecurityPolicies,

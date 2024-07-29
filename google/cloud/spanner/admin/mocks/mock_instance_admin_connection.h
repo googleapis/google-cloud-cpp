@@ -113,6 +113,22 @@ class MockInstanceAdminConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstanceConfig,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
+      CreateInstanceConfig,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInstanceConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInstanceConfig(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       UpdateInstanceConfig,
       (google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
@@ -143,6 +159,19 @@ class MockInstanceAdminConnection
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
       UpdateInstanceConfig, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstanceConfig,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
+      UpdateInstanceConfig,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -227,6 +256,22 @@ class MockInstanceAdminConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::instance::v1::CreateInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
+              CreateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
       UpdateInstance,
       (google::spanner::admin::instance::v1::UpdateInstanceRequest const&
@@ -256,6 +301,19 @@ class MockInstanceAdminConnection
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
               UpdateInstance, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::instance::v1::Instance>>,
+              UpdateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

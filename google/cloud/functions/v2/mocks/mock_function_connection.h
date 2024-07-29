@@ -104,6 +104,21 @@ class MockFunctionServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateFunction,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::functions::v2::CreateFunctionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::functions::v2::Function>>,
+              CreateFunction,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFunction)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFunction(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::functions::v2::Function>>, UpdateFunction,
       (google::cloud::functions::v2::UpdateFunctionRequest const& request),
       (override));
@@ -142,6 +157,21 @@ class MockFunctionServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateFunction,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::functions::v2::UpdateFunctionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::functions::v2::Function>>,
+              UpdateFunction,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFunction)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFunction(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::functions::v2::OperationMetadata>>,
       DeleteFunction,
       (google::cloud::functions::v2::DeleteFunctionRequest const& request),
@@ -169,6 +199,18 @@ class MockFunctionServiceConnection
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::functions::v2::OperationMetadata>>,
               DeleteFunction, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteFunction,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::functions::v2::DeleteFunctionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::functions::v2::OperationMetadata>>,
+              DeleteFunction,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

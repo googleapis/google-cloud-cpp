@@ -113,6 +113,22 @@ class MockAccessContextManagerConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAccessPolicy,
+      (ExperimentalTag, NoAwaitTag,
+       google::identity::accesscontextmanager::v1::AccessPolicy const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
+      CreateAccessPolicy,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAccessPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAccessPolicy(::testing::_))` instead.
+  MOCK_METHOD(
       future<
           StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>,
       UpdateAccessPolicy,

@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_THING_ADMIN_CLIENT_H
 
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"

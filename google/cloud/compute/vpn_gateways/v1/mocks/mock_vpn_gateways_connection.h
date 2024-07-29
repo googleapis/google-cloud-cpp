@@ -200,6 +200,19 @@ class MockVpnGatewaysConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetLabels,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
       TestIamPermissions,
       (google::cloud::cpp::compute::vpn_gateways::v1::

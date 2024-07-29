@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_EDGE_CONTAINER_CLIENT_H
 
 #include "google/cloud/edgecontainer/v1/edge_container_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

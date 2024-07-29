@@ -105,6 +105,21 @@ class MockDomainMappingsConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDomainMapping,
+      (ExperimentalTag, NoAwaitTag,
+       google::appengine::v1::CreateDomainMappingRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
+              CreateDomainMapping,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDomainMapping)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDomainMapping(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::appengine::v1::DomainMapping>>,
       UpdateDomainMapping,
       (google::appengine::v1::UpdateDomainMappingRequest const& request),
@@ -143,6 +158,21 @@ class MockDomainMappingsConnection
   /// DeleteDomainMapping(Matcher<google::appengine::v1::DeleteDomainMappingRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDomainMapping,
+      (ExperimentalTag, NoAwaitTag,
+       google::appengine::v1::UpdateDomainMappingRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
+              UpdateDomainMapping,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDomainMapping)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDomainMapping(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
       DeleteDomainMapping,

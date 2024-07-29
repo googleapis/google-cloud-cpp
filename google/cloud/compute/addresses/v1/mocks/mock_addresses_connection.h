@@ -99,6 +99,19 @@ class MockAddressesConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteAddress,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::addresses::v1::DeleteAddressRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteAddress,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Address>, GetAddress,
       (google::cloud::cpp::compute::addresses::v1::GetAddressRequest const&
            request),
@@ -201,6 +214,21 @@ class MockAddressesConnection
   /// SetLabels(Matcher<google::cloud::cpp::compute::addresses::v1::SetLabelsRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Move,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::addresses::v1::MoveRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Move,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetLabels)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetLabels(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetLabels,
       (google::cloud::cpp::compute::addresses::v1::SetLabelsRequest const&

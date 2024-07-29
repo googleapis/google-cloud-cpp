@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_SERVICE_USAGE_CLIENT_H
 
 #include "google/cloud/serviceusage/v1/service_usage_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

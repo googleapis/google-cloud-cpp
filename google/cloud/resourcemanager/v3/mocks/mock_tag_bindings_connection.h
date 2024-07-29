@@ -104,6 +104,22 @@ class MockTagBindingsConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateTagBinding,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>,
+              CreateTagBinding,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTagBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTagBinding(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,
       DeleteTagBinding,
@@ -136,6 +152,20 @@ class MockTagBindingsConnection
       future<StatusOr<
           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,
       DeleteTagBinding, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteTagBinding,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,
+      DeleteTagBinding,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

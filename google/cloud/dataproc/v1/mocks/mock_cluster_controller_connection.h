@@ -95,6 +95,21 @@ class MockClusterControllerConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dataproc::v1::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              CreateCluster,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCluster(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::Cluster>>, UpdateCluster,
       (google::cloud::dataproc::v1::UpdateClusterRequest const& request),
       (override));

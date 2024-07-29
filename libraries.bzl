@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES = [
+    "bigquerycontrol",
     "pubsublite",
 ]
 

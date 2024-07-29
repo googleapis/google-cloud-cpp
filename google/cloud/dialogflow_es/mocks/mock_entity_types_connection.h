@@ -125,6 +125,23 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchUpdateEntityTypes,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>,
+      BatchUpdateEntityTypes,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchDeleteEntityTypes)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchDeleteEntityTypes(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntityTypes,
       (google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
            request),

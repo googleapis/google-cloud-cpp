@@ -212,6 +212,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 ```
@@ -314,6 +315,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -396,6 +398,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -620,7 +623,7 @@ recommend installing this library because:
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
-curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.tar.gz | \
+curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.16.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -630,6 +633,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.15.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -646,6 +650,7 @@ cmake -S . -B cmake-out \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DBUILD_TESTING=OFF \
+  -DGOOGLE_CLOUD_CPP_WITH_MOCKS=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,opentelemetry
 cmake --build cmake-out -- -j "$(nproc)"
@@ -796,6 +801,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -982,6 +988,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1092,6 +1099,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1266,6 +1274,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1487,6 +1496,7 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.20.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -DWITH_DEPRECATED_SDK_FACTORY=OFF \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig

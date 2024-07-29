@@ -469,6 +469,22 @@ class MockCertificateAuthorityServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCaPool,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::security::privateca::v1::CreateCaPoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
+              CreateCaPool,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCaPool)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCaPool(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
       UpdateCaPool,
       (google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
@@ -498,6 +514,19 @@ class MockCertificateAuthorityServiceConnection
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
               UpdateCaPool, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCaPool,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
+              UpdateCaPool,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -553,6 +582,20 @@ class MockCertificateAuthorityServiceConnection
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
       DeleteCaPool, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCaPool,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
+      DeleteCaPool,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

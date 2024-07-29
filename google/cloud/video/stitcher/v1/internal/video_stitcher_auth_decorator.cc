@@ -603,6 +603,16 @@ VideoStitcherServiceAuth::AsyncUpdateLiveConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceAuth::UpdateLiveConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateLiveConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceAuth::AsyncCreateVodConfig(
     google::cloud::CompletionQueue& cq,
@@ -621,6 +631,15 @@ VideoStitcherServiceAuth::AsyncCreateVodConfig(
         return child->AsyncCreateVodConfig(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceAuth::CreateVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateVodConfig(context, options, request);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListVodConfigsResponse>
@@ -661,6 +680,15 @@ VideoStitcherServiceAuth::AsyncDeleteVodConfig(
       });
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceAuth::DeleteVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteVodConfig(context, options, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceAuth::AsyncUpdateVodConfig(
     google::cloud::CompletionQueue& cq,
@@ -679,6 +707,15 @@ VideoStitcherServiceAuth::AsyncUpdateVodConfig(
         return child->AsyncUpdateVodConfig(cq, *std::move(context),
                                            std::move(options), request);
       });
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceAuth::UpdateVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateVodConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

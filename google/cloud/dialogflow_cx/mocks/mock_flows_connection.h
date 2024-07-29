@@ -108,6 +108,17 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, TrainFlow,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainFlow,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>,
       ValidateFlow,
       (google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request),
@@ -169,6 +180,21 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
   /// ExportFlow(Matcher<google::cloud::dialogflow::cx::v3::ExportFlowRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportFlow,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>,
+      ImportFlow,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportFlow)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportFlow(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>,
       ExportFlow,

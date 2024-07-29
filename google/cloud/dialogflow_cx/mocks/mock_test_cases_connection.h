@@ -122,6 +122,21 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RunTestCase,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
+      RunTestCase,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchRunTestCases)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchRunTestCases(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
       BatchRunTestCases,
@@ -154,6 +169,20 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
       BatchRunTestCases, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchRunTestCases,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
+      BatchRunTestCases,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

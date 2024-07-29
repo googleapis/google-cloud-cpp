@@ -98,6 +98,18 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RegisterDomain,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::domains::v1::RegisterDomainRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              RegisterDomain,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>,
       RetrieveTransferParameters,
       (google::cloud::domains::v1::RetrieveTransferParametersRequest const&
@@ -202,6 +214,21 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateRegistration,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::domains::v1::UpdateRegistrationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              UpdateRegistration,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ConfigureManagementSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ConfigureManagementSettings(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ConfigureManagementSettings,
       (google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
@@ -244,6 +271,22 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ConfigureManagementSettings,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              ConfigureManagementSettings,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ConfigureDnsSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ConfigureDnsSettings(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ConfigureDnsSettings,
       (google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request),
@@ -282,6 +325,21 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// ConfigureContactSettings(Matcher<google::cloud::domains::v1::ConfigureContactSettingsRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ConfigureDnsSettings,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              ConfigureDnsSettings,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ConfigureContactSettings)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ConfigureContactSettings(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ConfigureContactSettings,
@@ -325,6 +383,22 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ConfigureContactSettings,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              ConfigureContactSettings,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportRegistration)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportRegistration(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ExportRegistration,
       (google::cloud::domains::v1::ExportRegistrationRequest const& request),
@@ -364,6 +438,21 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportRegistration,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::domains::v1::ExportRegistrationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              ExportRegistration,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRegistration)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRegistration(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
       DeleteRegistration,
       (google::cloud::domains::v1::DeleteRegistrationRequest const& request),
@@ -392,6 +481,18 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
               DeleteRegistration,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteRegistration,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::domains::v1::DeleteRegistrationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
+              DeleteRegistration,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::domains::v1::AuthorizationCode>,

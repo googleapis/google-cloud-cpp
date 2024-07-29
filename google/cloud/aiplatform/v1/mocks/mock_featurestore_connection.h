@@ -87,6 +87,18 @@ class MockFeaturestoreServiceConnection
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateFeaturestore,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>,
+              CreateFeaturestore,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Featurestore>, GetFeaturestore,
       (google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request),
       (override));
@@ -145,6 +157,21 @@ class MockFeaturestoreServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateFeaturestore,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>,
+              UpdateFeaturestore,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFeaturestore)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFeaturestore(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeaturestore,
       (google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request),
@@ -185,6 +212,21 @@ class MockFeaturestoreServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteFeaturestore,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeaturestore,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateEntityType)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateEntityType(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::EntityType>>,
       CreateEntityType,
       (google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request),
@@ -213,6 +255,18 @@ class MockFeaturestoreServiceConnection
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::EntityType>>,
               CreateEntityType,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEntityType,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::EntityType>>,
+              CreateEntityType,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::EntityType>, GetEntityType,
@@ -279,6 +333,21 @@ class MockFeaturestoreServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteEntityType,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteEntityType,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateFeature)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateFeature(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Feature>>, CreateFeature,
       (google::cloud::aiplatform::v1::CreateFeatureRequest const& request),
       (override));
@@ -316,6 +385,21 @@ class MockFeaturestoreServiceConnection
   /// BatchCreateFeatures(Matcher<google::cloud::aiplatform::v1::BatchCreateFeaturesRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateFeature,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateFeatureRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Feature>>,
+              CreateFeature,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchCreateFeatures)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchCreateFeatures(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>,
@@ -414,6 +498,21 @@ class MockFeaturestoreServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteFeature,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeature,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportFeatureValues)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportFeatureValues(::testing::_))` instead.
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>,
       ImportFeatureValues,
@@ -500,6 +599,23 @@ class MockFeaturestoreServiceConnection
   /// ExportFeatureValues(Matcher<google::cloud::aiplatform::v1::ExportFeatureValuesRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchReadFeatureValues,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>,
+      BatchReadFeatureValues,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportFeatureValues)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportFeatureValues(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>,

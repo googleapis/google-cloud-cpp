@@ -149,6 +149,21 @@ class MockDatasetServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteDataset,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteDatasetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteDataset,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportData)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportData(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>,
       ImportData,
       (google::cloud::aiplatform::v1::ImportDataRequest const& request),
@@ -409,6 +424,18 @@ class MockDatasetServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteSavedQuery, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSavedQuery,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteSavedQuery,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

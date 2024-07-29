@@ -173,6 +173,23 @@ class MockTranslationServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchTranslateDocument,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
+      BatchTranslateDocument,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateGlossary)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateGlossary(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::Glossary>>,
       CreateGlossary,
       (google::cloud::translation::v3::CreateGlossaryRequest const& request),
@@ -405,6 +422,18 @@ class MockTranslationServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::DeleteDatasetMetadata>>,
       DeleteDataset, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteGlossary,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::translation::v3::DeleteGlossaryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
+      DeleteGlossary,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

@@ -111,6 +111,22 @@ class MockSecureSourceManagerConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>,
+      CreateInstance,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
       DeleteInstance,
@@ -143,6 +159,20 @@ class MockSecureSourceManagerConnection
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
       DeleteInstance, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      DeleteInstance,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -209,6 +239,22 @@ class MockSecureSourceManagerConnection
   /// DeleteRepository(Matcher<google::cloud::securesourcemanager::v1::DeleteRepositoryRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateRepository,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>,
+      CreateRepository,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRepository)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRepository(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,

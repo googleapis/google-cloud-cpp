@@ -89,6 +89,19 @@ class MockNodeGroupsConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddNodes,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddNodes,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<
           std::pair<std::string,
                     google::cloud::cpp::compute::v1::NodeGroupsScopedList>>),
@@ -178,6 +191,19 @@ class MockNodeGroupsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNodes,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteNodes,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteNodes,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

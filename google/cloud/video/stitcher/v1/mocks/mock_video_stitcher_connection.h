@@ -146,6 +146,21 @@ class MockVideoStitcherServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCdnKey,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+      DeleteCdnKey,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCdnKey)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCdnKey(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
       UpdateCdnKey,
       (google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request),
@@ -173,6 +188,18 @@ class MockVideoStitcherServiceConnection
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
               UpdateCdnKey, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCdnKey,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
+              UpdateCdnKey,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -322,6 +349,21 @@ class MockVideoStitcherServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateSlate,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::Slate>>,
+              UpdateSlate,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSlate)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSlate(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
       DeleteSlate,
       (google::cloud::video::stitcher::v1::DeleteSlateRequest const& request),
@@ -350,6 +392,18 @@ class MockVideoStitcherServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
       DeleteSlate, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSlate,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+      DeleteSlate,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -405,6 +459,19 @@ class MockVideoStitcherServiceConnection
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
               CreateLiveConfig,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateLiveConfig,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
+              CreateLiveConfig,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::video::stitcher::v1::LiveConfig>),
@@ -468,6 +535,22 @@ class MockVideoStitcherServiceConnection
   /// UpdateLiveConfig(Matcher<google::cloud::video::stitcher::v1::UpdateLiveConfigRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteLiveConfig,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
+      DeleteLiveConfig,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateLiveConfig)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateLiveConfig(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
       UpdateLiveConfig,

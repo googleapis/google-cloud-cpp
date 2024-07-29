@@ -167,6 +167,23 @@ class MockModelServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateExplanationDataset,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
+      UpdateExplanationDataset,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteModel(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteModel,
       (google::cloud::aiplatform::v1::DeleteModelRequest const& request),
@@ -206,6 +223,21 @@ class MockModelServiceConnection
   /// DeleteModelVersion(Matcher<google::cloud::aiplatform::v1::DeleteModelVersionRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteModelVersion)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteModelVersion(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteModelVersion,
@@ -292,6 +324,21 @@ class MockModelServiceConnection
   /// CopyModel(Matcher<google::cloud::aiplatform::v1::CopyModelRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::ExportModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
+      ExportModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CopyModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CopyModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
       CopyModel,

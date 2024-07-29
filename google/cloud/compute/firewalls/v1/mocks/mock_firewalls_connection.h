@@ -91,6 +91,19 @@ class MockFirewallsConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteFirewall,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteFirewall,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Firewall>, GetFirewall,
       (google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
            request),
@@ -197,6 +210,22 @@ class MockFirewallsConnection
   /// UpdateFirewall(Matcher<google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchFirewall,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchFirewall,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFirewall)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFirewall(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdateFirewall,

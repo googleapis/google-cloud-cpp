@@ -90,6 +90,19 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddResourcePolicies,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddResourcePolicies,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<std::pair<
            std::string, google::cloud::cpp::compute::v1::DisksScopedList>>),
       AggregatedListDisks,
@@ -354,6 +367,18 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::disks::v1::ResizeRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Resize,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

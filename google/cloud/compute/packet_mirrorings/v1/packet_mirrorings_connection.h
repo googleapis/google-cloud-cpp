@@ -22,6 +22,7 @@
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_retry_traits.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

@@ -177,6 +177,21 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportProductSets,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::vision::v1::ImportProductSetsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
+      ImportProductSets,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PurgeProducts)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PurgeProducts(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
       PurgeProducts,
       (google::cloud::vision::v1::PurgeProductsRequest const& request),

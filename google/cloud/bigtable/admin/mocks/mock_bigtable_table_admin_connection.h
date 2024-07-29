@@ -146,6 +146,21 @@ class MockBigtableTableAdminConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UndeleteTable,
+      (ExperimentalTag, NoAwaitTag,
+       google::bigtable::admin::v2::UndeleteTableRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>,
+              UndeleteTable,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateAuthorizedView)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateAuthorizedView(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
       CreateAuthorizedView,
       (google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request),
@@ -223,6 +238,18 @@ class MockBigtableTableAdminConnection
   MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
               UpdateAuthorizedView,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAuthorizedView,
+      (ExperimentalTag, NoAwaitTag,
+       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>,
+              UpdateAuthorizedView,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       Status, DeleteAuthorizedView,

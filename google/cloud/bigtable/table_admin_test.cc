@@ -79,6 +79,7 @@ using ::google::cloud::internal::ToChronoTimePoint;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using std::chrono::hours;
+using ::testing::_;
 using ::testing::An;
 using ::testing::ElementsAre;
 using ::testing::ElementsAreArray;
