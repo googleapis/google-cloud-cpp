@@ -89,8 +89,7 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
   disk.set_name(CreateRandomName("int-test-disk-"));
   disk.set_size_gb("10");
   (*disk.mutable_labels())["test"] = "test";
-  auto start_result = client.InsertDisk(ExperimentalTag{}, NoAwaitTag{},
-                                        project_id_, zone_, disk);
+  auto start_result = client.InsertDisk(NoAwaitTag{}, project_id_, zone_, disk);
   ASSERT_THAT(start_result, IsOk());
 
   // Exercise serialization and deserialization to mimic the use case where the
@@ -102,7 +101,7 @@ TEST_F(ComputeIntegrationTest, CreateDisks) {
   google::cloud::cpp::compute::v1::Operation operation;
   EXPECT_TRUE(operation.ParseFromString(operation_string));
 
-  auto await_result = client.InsertDisk(ExperimentalTag{}, operation).get();
+  auto await_result = client.InsertDisk(operation).get();
   ASSERT_THAT(await_result, IsOk());
 
   auto get_disk = client.GetDisk(project_id_, zone_, disk.name());
