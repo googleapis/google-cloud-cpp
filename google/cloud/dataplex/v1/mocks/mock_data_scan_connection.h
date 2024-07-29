@@ -95,6 +95,21 @@ class MockDataScanServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDataScan,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dataplex::v1::CreateDataScanRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
+              CreateDataScan,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDataScan)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDataScan(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::DataScan>>, UpdateDataScan,
       (google::cloud::dataplex::v1::UpdateDataScanRequest const& request),
       (override));
@@ -132,6 +147,21 @@ class MockDataScanServiceConnection
   /// DeleteDataScan(Matcher<google::cloud::dataplex::v1::DeleteDataScanRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDataScan,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dataplex::v1::UpdateDataScanRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
+              UpdateDataScan,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDataScan)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDataScan(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteDataScan,

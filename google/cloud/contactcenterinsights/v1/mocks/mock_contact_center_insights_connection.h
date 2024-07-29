@@ -161,6 +161,19 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAnalysis,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>,
+      CreateAnalysis,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::Analysis>, GetAnalysis,
       (google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
            request),
@@ -384,6 +397,19 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateIssueModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>,
+      CreateIssueModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>,
       UpdateIssueModel,
       (google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
@@ -458,6 +484,23 @@ class MockContactCenterInsightsConnection
   /// DeployIssueModel(Matcher<google::cloud::contactcenterinsights::v1::DeployIssueModelRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteIssueModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>,
+      DeleteIssueModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeployIssueModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeployIssueModel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>,

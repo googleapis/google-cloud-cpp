@@ -738,6 +738,20 @@ VideoStitcherServiceLogging::AsyncUpdateLiveConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceLogging::UpdateLiveConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
+                 request) {
+        return child_->UpdateLiveConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncCreateVodConfig(
     google::cloud::CompletionQueue& cq,
@@ -755,6 +769,19 @@ VideoStitcherServiceLogging::AsyncCreateVodConfig(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceLogging::CreateVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
+                 request) {
+        return child_->CreateVodConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::stitcher::v1::ListVodConfigsResponse>
@@ -802,6 +829,19 @@ VideoStitcherServiceLogging::AsyncDeleteVodConfig(
       tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceLogging::DeleteVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
+                 request) {
+        return child_->DeleteVodConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VideoStitcherServiceLogging::AsyncUpdateVodConfig(
     google::cloud::CompletionQueue& cq,
@@ -819,6 +859,19 @@ VideoStitcherServiceLogging::AsyncUpdateVodConfig(
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
+}
+
+StatusOr<google::longrunning::Operation>
+VideoStitcherServiceLogging::UpdateVodConfig(
+    grpc::ClientContext& context, Options options,
+    google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
+                 request) {
+        return child_->UpdateVodConfig(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -262,6 +262,20 @@ class MockRepositoryManagerConnection
       (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchCreateRepositories,
+      (ExperimentalTag, NoAwaitTag,
+       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
+      BatchCreateRepositories,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::devtools::cloudbuild::v2::Repository>, GetRepository,
       (google::devtools::cloudbuild::v2::GetRepositoryRequest const& request),
       (override));

@@ -97,6 +97,21 @@ class MockDatastoreAdminConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ExportEntities,
+      (ExperimentalTag, NoAwaitTag,
+       google::datastore::admin::v1::ExportEntitiesRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>,
+      ExportEntities,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportEntities)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportEntities(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>,
       ImportEntities,
       (google::datastore::admin::v1::ImportEntitiesRequest const& request),

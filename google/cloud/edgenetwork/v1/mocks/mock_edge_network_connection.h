@@ -124,6 +124,21 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateNetwork,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::edgenetwork::v1::CreateNetworkRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Network>>,
+              CreateNetwork,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNetwork(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteNetwork,
       (google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request),
@@ -211,6 +226,21 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateSubnet,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::edgenetwork::v1::CreateSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
+              CreateSubnet,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSubnet)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSubnet(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>, UpdateSubnet,
       (google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
       (override));
@@ -249,6 +279,21 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateSubnet,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
+              UpdateSubnet,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSubnet)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSubnet(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteSubnet,
       (google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request),
@@ -277,6 +322,18 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteSubnet, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteSubnet,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      DeleteSubnet,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -460,6 +517,21 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateRouter,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::edgenetwork::v1::CreateRouterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
+              CreateRouter,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateRouter)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateRouter(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::Router>>, UpdateRouter,
       (google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
       (override));
@@ -497,6 +569,21 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
   /// DeleteRouter(Matcher<google::cloud::edgenetwork::v1::DeleteRouterRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateRouter,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
+              UpdateRouter,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteRouter)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteRouter(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteRouter,

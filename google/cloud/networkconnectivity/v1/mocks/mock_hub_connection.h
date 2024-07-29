@@ -105,6 +105,21 @@ class MockHubServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateHub,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::CreateHubRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>,
+              CreateHub,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateHub)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateHub(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>, UpdateHub,
       (google::cloud::networkconnectivity::v1::UpdateHubRequest const& request),
       (override));
@@ -143,10 +158,38 @@ class MockHubServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateHub,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>,
+              UpdateHub,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteHub)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteHub(::testing::_))` instead.
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
       DeleteHub,
       (google::cloud::networkconnectivity::v1::DeleteHubRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteHub,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      DeleteHub,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   /// To disambiguate calls, use:
@@ -328,6 +371,23 @@ class MockHubServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RejectHubSpoke,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>,
+      RejectHubSpoke,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, AcceptHubSpoke)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, AcceptHubSpoke(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
       AcceptHubSpoke,
@@ -459,6 +519,23 @@ class MockHubServiceConnection
   /// DeleteSpoke(Matcher<google::cloud::networkconnectivity::v1::DeleteSpokeRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, AcceptHubSpoke,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>,
+      AcceptHubSpoke,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSpoke)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSpoke(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,

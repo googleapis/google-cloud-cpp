@@ -106,6 +106,21 @@ class MockUserEventServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, PurgeUserEvents,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::retail::v2::PurgeUserEventsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>,
+      PurgeUserEvents,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ImportUserEvents)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ImportUserEvents(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
       ImportUserEvents,
       (google::cloud::retail::v2::ImportUserEventsRequest const& request),
@@ -145,6 +160,21 @@ class MockUserEventServiceConnection
   /// RejoinUserEvents(Matcher<google::cloud::retail::v2::RejoinUserEventsRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportUserEvents,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::retail::v2::ImportUserEventsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>,
+      ImportUserEvents,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RejoinUserEvents)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RejoinUserEvents(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>,
       RejoinUserEvents,

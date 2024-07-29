@@ -199,6 +199,19 @@ class MockReservationsConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::reservations::v1::ResizeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              Resize,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
       (google::cloud::cpp::compute::reservations::v1::SetIamPolicyRequest const&
            request),

@@ -106,6 +106,21 @@ class MockSchemaServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateSchema,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Schema>>,
+              CreateSchema,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateSchema)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateSchema(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::Schema>>,
       UpdateSchema,
       (google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request),
@@ -144,6 +159,21 @@ class MockSchemaServiceConnection
   /// DeleteSchema(Matcher<google::cloud::discoveryengine::v1::DeleteSchemaRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateSchema,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Schema>>,
+              UpdateSchema,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteSchema)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteSchema(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>,

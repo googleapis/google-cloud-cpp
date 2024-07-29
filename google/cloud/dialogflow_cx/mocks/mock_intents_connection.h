@@ -123,6 +123,22 @@ class MockIntentsConnection : public dialogflow_cx::IntentsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ImportIntents,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>,
+      ImportIntents,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ExportIntents)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ExportIntents(::testing::_))` instead.
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportIntentsResponse>>,
       ExportIntents,

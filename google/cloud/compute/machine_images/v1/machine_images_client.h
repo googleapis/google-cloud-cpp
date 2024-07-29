@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_MACHINE_IMAGES_V1_MACHINE_IMAGES_CLIENT_H
 
 #include "google/cloud/compute/machine_images/v1/machine_images_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

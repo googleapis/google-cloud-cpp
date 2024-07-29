@@ -106,6 +106,21 @@ class MockCloudRedisClusterConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+              UpdateCluster,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCluster(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::protobuf::Any>>, DeleteCluster,
       (google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
       (override));
@@ -142,6 +157,20 @@ class MockCloudRedisClusterConnection
   /// CreateCluster(Matcher<google::cloud::redis::cluster::v1::CreateClusterRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteCluster,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Any>>, DeleteCluster,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateCluster(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
       CreateCluster,

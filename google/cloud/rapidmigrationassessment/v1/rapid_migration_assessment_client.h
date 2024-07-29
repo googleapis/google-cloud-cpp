@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RAPIDMIGRATIONASSESSMENT_V1_RAPID_MIGRATION_ASSESSMENT_CLIENT_H
 
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

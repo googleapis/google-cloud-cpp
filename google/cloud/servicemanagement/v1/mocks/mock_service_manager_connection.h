@@ -107,6 +107,21 @@ class MockServiceManagerConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateService,
+      (ExperimentalTag, NoAwaitTag,
+       google::api::servicemanagement::v1::CreateServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::api::servicemanagement::v1::ManagedService>>,
+      CreateService,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteService)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteService(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>,
       DeleteService,
       (google::api::servicemanagement::v1::DeleteServiceRequest const& request),
@@ -240,6 +255,20 @@ class MockServiceManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, SubmitConfigSource,
+      (ExperimentalTag, NoAwaitTag,
+       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::api::servicemanagement::v1::SubmitConfigSourceResponse>>,
+      SubmitConfigSource,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::api::servicemanagement::v1::Rollout>),
       ListServiceRollouts,
       (google::api::servicemanagement::v1::ListServiceRolloutsRequest request),
@@ -291,6 +320,19 @@ class MockServiceManagerConnection
   MOCK_METHOD(future<StatusOr<google::api::servicemanagement::v1::Rollout>>,
               CreateServiceRollout,
               (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateServiceRollout,
+      (ExperimentalTag, NoAwaitTag,
+       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::api::servicemanagement::v1::Rollout>>,
+              CreateServiceRollout,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<

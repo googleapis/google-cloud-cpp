@@ -587,6 +587,21 @@ class MockDataplexServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEnvironment,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Environment>>,
+              CreateEnvironment,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateEnvironment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateEnvironment(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::Environment>>,
       UpdateEnvironment,
       (google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request),
@@ -625,6 +640,21 @@ class MockDataplexServiceConnection
   /// DeleteEnvironment(Matcher<google::cloud::dataplex::v1::DeleteEnvironmentRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateEnvironment,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::Environment>>,
+              UpdateEnvironment,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteEnvironment)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteEnvironment(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
       DeleteEnvironment,

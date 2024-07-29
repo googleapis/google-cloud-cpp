@@ -104,6 +104,21 @@ class MockNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::notebooks::v2::CreateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+              CreateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInstance(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>, UpdateInstance,
       (google::cloud::notebooks::v2::UpdateInstanceRequest const& request),
       (override));
@@ -141,6 +156,21 @@ class MockNotebookServiceConnection
   /// DeleteInstance(Matcher<google::cloud::notebooks::v2::DeleteInstanceRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::notebooks::v2::UpdateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+              UpdateInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>,
       DeleteInstance,
@@ -181,6 +211,21 @@ class MockNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::notebooks::v2::DeleteInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>,
+              DeleteInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StartInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StartInstance(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>, StartInstance,
       (google::cloud::notebooks::v2::StartInstanceRequest const& request),
       (override));
@@ -218,6 +263,21 @@ class MockNotebookServiceConnection
   /// StopInstance(Matcher<google::cloud::notebooks::v2::StopInstanceRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::notebooks::v2::StartInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+              StartInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, StopInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, StopInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>, StopInstance,
       (google::cloud::notebooks::v2::StopInstanceRequest const& request),
@@ -257,6 +317,21 @@ class MockNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StopInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::notebooks::v2::StopInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+              StopInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, ResetInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, ResetInstance(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>, ResetInstance,
       (google::cloud::notebooks::v2::ResetInstanceRequest const& request),
       (override));
@@ -283,6 +358,18 @@ class MockNotebookServiceConnection
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
               ResetInstance, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, ResetInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::notebooks::v2::ResetInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+              ResetInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -341,6 +428,21 @@ class MockNotebookServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpgradeInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::notebooks::v2::UpgradeInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+              UpgradeInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RollbackInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RollbackInstance(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>,
       RollbackInstance,
       (google::cloud::notebooks::v2::RollbackInstanceRequest const& request),
@@ -379,6 +481,21 @@ class MockNotebookServiceConnection
   /// DiagnoseInstance(Matcher<google::cloud::notebooks::v2::DiagnoseInstanceRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, RollbackInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::notebooks::v2::RollbackInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::notebooks::v2::Instance>>,
+              RollbackInstance,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DiagnoseInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DiagnoseInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v2::Instance>>,
       DiagnoseInstance,

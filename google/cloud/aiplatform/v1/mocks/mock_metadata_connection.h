@@ -210,6 +210,21 @@ class MockMetadataServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteArtifact,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteArtifact,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PurgeArtifacts)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PurgeArtifacts(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
       PurgeArtifacts,
       (google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request),
@@ -238,6 +253,18 @@ class MockMetadataServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
       PurgeArtifacts, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, PurgeArtifacts,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
+      PurgeArtifacts,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -308,6 +335,21 @@ class MockMetadataServiceConnection
   /// PurgeContexts(Matcher<google::cloud::aiplatform::v1::PurgeContextsRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteContext,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteContextRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteContext,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PurgeContexts)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PurgeContexts(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>,
       PurgeContexts,
@@ -436,6 +478,21 @@ class MockMetadataServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteExecution,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteExecution,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PurgeExecutions)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PurgeExecutions(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
       PurgeExecutions,
       (google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request),
@@ -464,6 +521,18 @@ class MockMetadataServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
       PurgeExecutions, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, PurgeExecutions,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
+      PurgeExecutions,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

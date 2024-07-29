@@ -190,6 +190,22 @@ class MockInstancesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AttachDisk,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AttachDisk,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BulkInsert)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BulkInsert(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, BulkInsert,
       (google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
            request),
@@ -230,6 +246,22 @@ class MockInstancesConnection
   /// DeleteInstance(Matcher<google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkInsert,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              BulkInsert,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteInstance(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteInstance,
@@ -344,6 +376,19 @@ class MockInstancesConnection
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DetachDisk,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DetachDisk,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DetachDisk,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -874,6 +919,22 @@ class MockInstancesConnection
   /// SetMetadata(Matcher<google::cloud::cpp::compute::instances::v1::SetMetadataRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetMachineType,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetMachineType,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, SetMetadata)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, SetMetadata(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, SetMetadata,
       (google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&

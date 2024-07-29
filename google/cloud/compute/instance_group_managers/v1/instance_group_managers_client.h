@@ -21,6 +21,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUP_MANAGERS_V1_INSTANCE_GROUP_MANAGERS_CLIENT_H
 
 #include "google/cloud/compute/instance_group_managers/v1/instance_group_managers_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"

@@ -22,6 +22,7 @@
 #include "google/cloud/notebooks/v1/internal/notebook_retry_traits.h"
 #include "google/cloud/notebooks/v1/notebook_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

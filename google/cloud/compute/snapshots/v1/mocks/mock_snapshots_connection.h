@@ -91,6 +91,19 @@ class MockSnapshotsConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteSnapshot,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteSnapshot,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Snapshot>, GetSnapshot,
       (google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
            request),
@@ -196,6 +209,19 @@ class MockSnapshotsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              SetLabels,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

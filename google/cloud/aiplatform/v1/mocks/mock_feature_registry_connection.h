@@ -87,6 +87,18 @@ class MockFeatureRegistryServiceConnection
               (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateFeatureGroup,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>,
+              CreateFeatureGroup,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::FeatureGroup>, GetFeatureGroup,
       (google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request),
       (override));
@@ -145,6 +157,21 @@ class MockFeatureRegistryServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateFeatureGroup,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>,
+              UpdateFeatureGroup,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFeatureGroup)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFeatureGroup(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeatureGroup,
       (google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request),
@@ -184,6 +211,21 @@ class MockFeatureRegistryServiceConnection
   /// CreateFeature(Matcher<google::cloud::aiplatform::v1::CreateFeatureRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteFeatureGroup,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteFeatureGroup,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateFeature)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateFeature(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Feature>>, CreateFeature,
       (google::cloud::aiplatform::v1::CreateFeatureRequest const& request),
@@ -312,6 +354,21 @@ class MockFeatureRegistryServiceConnection
   /// DeleteFeature(Matcher<google::cloud::aiplatform::v1::DeleteFeatureRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateFeature,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Feature>>,
+              UpdateFeature,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFeature)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFeature(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeature,

@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+<<<<<<<< HEAD:google/cloud/parallelstore/BUILD.bazel
 load("//bazel:gapic.bzl", "cc_gapic_library")
 
 package(default_visibility = ["//visibility:private"])
@@ -29,3 +30,17 @@ cc_gapic_library(
     googleapis_deps = googleapis_deps,
     service_dirs = service_dirs,
 )
+========
+"""Load dependencies needed to use the google-cloud-cpp libraries."""
+
+def gl_cpp_bzlmod0(name = None):
+    """Loads dependencies need to compile the google-cloud-cpp libraries.
+
+    This is a workaround until all dependencies of `google-cloud-cpp` can
+    be managed via bzlmod.
+
+    Args:
+        name: Unused. It is conventional to provide a `name` argument to all
+            workspace functions.
+    """
+>>>>>>>> b28576a15e (chore: merge from public circa 2024-07-26 (#63)):bazel/bzlmod0.bzl
