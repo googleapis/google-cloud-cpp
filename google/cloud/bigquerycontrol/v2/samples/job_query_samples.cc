@@ -79,7 +79,7 @@ void ExecuteQueryJob(std::vector<std::string> const& argv) {
           job_complete = true;
           break;
         }
-        std::this_thread::sleep_for(std::chrono::seconds(b));
+        std::this_thread::sleep_for(b);
       }
       if (!job_complete)
         throw std::runtime_error("Query execution timed out after 5 retries.");
