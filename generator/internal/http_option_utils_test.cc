@@ -30,8 +30,11 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
+using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::Pair;
 
@@ -240,7 +243,6 @@ char const* const kServiceProto =
     "  rpc Method3(PaginatedInput) returns (PaginatedOutput) {\n"
     "    option (google.api.http) = {\n"
     "       get: \"/v1/foo\"\n"
-    "       body: \"*\"\n"
     "    };\n"
     "  }\n"
     "  // Leading comments about rpc $Method4.\n"
@@ -492,7 +494,7 @@ TEST_F(HttpOptionUtilsTest, ParseHttpExtensionSimple) {
   auto info = ParseHttpExtension(*method);
   EXPECT_THAT(info.url_path, Eq("/v1/foo"));
   EXPECT_THAT(info.field_substitutions, IsEmpty());
-  EXPECT_THAT(info.body, Eq("*"));
+  EXPECT_THAT(info.body, Eq(""));
   EXPECT_THAT(info.http_verb, Eq("Get"));
 }
 
@@ -603,6 +605,19 @@ TEST_F(HttpOptionUtilsTest, SetHttpQueryParametersGetWithParams) {
   VarsDictionary vars;
   SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(""));
+}
+
+TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(3);
+  VarsDictionary vars;
+  SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
+  EXPECT_THAT(vars,
+              Contains(Pair("method_http_query_parameters",
+                            AllOf(HasSubstr("page_token"), HasSubstr("name"),
+                                  HasSubstr("include_foo")))));
 }
 
 TEST_F(HttpOptionUtilsTest,
