@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/datafusion/v1/datafusion.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

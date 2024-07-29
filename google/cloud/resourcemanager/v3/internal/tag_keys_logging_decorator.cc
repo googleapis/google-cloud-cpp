@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/resourcemanager/v3/tag_keys.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

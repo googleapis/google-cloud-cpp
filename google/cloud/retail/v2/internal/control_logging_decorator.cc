@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/retail/v2/control_service.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

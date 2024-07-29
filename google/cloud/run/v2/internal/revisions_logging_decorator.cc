@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/run/v2/revision.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

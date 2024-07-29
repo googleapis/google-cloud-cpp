@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataproc/v1/workflow_templates.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

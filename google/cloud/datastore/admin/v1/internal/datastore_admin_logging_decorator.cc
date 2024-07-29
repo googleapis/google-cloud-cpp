@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/datastore/admin/v1/datastore_admin.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

@@ -123,7 +123,7 @@ Status LoggingDecoratorGenerator::GenerateCc() {
            : "",
        "google/cloud/status_or.h"});
   CcSystemIncludes(
-      {vars("proto_grpc_header_path"), "memory", "string", "utility"});
+      {vars("proto_grpc_header_path"), "memory", "set", "string", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

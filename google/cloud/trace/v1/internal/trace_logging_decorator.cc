@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudtrace/v1/trace.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

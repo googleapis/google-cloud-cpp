@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/asset/v1/asset_service.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

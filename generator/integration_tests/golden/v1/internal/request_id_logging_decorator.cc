@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test_request_id.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

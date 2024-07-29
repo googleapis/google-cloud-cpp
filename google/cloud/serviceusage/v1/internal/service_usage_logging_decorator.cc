@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/api/serviceusage/v1/serviceusage.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

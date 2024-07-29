@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

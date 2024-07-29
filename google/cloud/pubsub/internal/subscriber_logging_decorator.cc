@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 

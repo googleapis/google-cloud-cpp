@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
 #include <memory>
+#include <set>
 #include <string>
 #include <utility>
 
