@@ -13,14 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/bigquerycontrol/v2/job_client.h"
-#include "google/cloud/bigquerycontrol/v2/job_connection_idempotency_policy.h"
-#include "google/cloud/bigquerycontrol/v2/job_options.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
-#include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <thread>
 #include <vector>
@@ -38,15 +34,15 @@ auto constexpr kDefaultQuery =
 void ExecuteQueryJob(std::vector<std::string> const& argv) {
   if (argv.size() != 2 || argv[0] == "--help") {
     throw google::cloud::testing_util::Usage{
-        "execute-query-job <billing_project> <query> [<retry_delay>]"};
+        "execute-query-job <billing_project> <query> [<backoff>]"};
   }
-  int retry_delay = 2;
-  if (argv.size() == 3) retry_delay = std::stoi(argv[2]);
 
+  auto const backoff =
+      std::chrono::seconds(argv.size() == 3 ? std::stoi(argv[2]) : 2);
   //! [execute-query-job]
   namespace bigquery_v2_proto = google::cloud::bigquery::v2;
   [](std::string const& billing_project, std::string const& query,
-     int retry_delay) {
+     std::chrono::seconds backoff) {
     auto client = google::cloud::bigquerycontrol_v2::JobServiceClient(
         google::cloud::bigquerycontrol_v2::MakeJobServiceConnectionRest());
 
@@ -67,7 +63,7 @@ void ExecuteQueryJob(std::vector<std::string> const& argv) {
 
     // Submit the Query Job.
     auto insert_result = client.InsertJob(job_request);
-    if (!insert_result) throw insert_result.status();
+    if (!insert_result) throw std::move(insert_result).status();
 
     auto job_id = insert_result->job_reference().job_id();
     // If not immediately finished, poll job status until DONE.
@@ -77,17 +73,16 @@ void ExecuteQueryJob(std::vector<std::string> const& argv) {
       get_request.set_job_id(job_id);
 
       bool job_complete = false;
-      std::vector<int> retries{retry_delay, retry_delay, retry_delay,
-                               retry_delay, retry_delay};
-      for (auto delay : retries) {
+      for (auto b : {backoff, backoff, backoff, backoff, backoff}) {
         auto get_result = client.GetJob(get_request);
         if (get_result->status().state() == "DONE") {
           job_complete = true;
           break;
         }
-        std::this_thread::sleep_for(std::chrono::seconds(delay));
+        std::this_thread::sleep_for(std::chrono::seconds(b));
       }
-      if (!job_complete) throw "Query execution timed out after 5 retries.";
+      if (!job_complete)
+        throw std::runtime_error("Query execution timed out after 5 retries.");
     }
 
     // Read query results using this library. This rpc returns the result rows
@@ -103,13 +98,11 @@ void ExecuteQueryJob(std::vector<std::string> const& argv) {
     // value so that we can demonstrate paging.
     query_results_request.mutable_max_results()->set_value(5);
 
-    google::cloud::StatusOr<bigquery_v2_proto::GetQueryResultsResponse>
-        query_results;
     int num_pages = 0;
     bool finished = false;
     while (!finished) {
-      query_results = client.GetQueryResults(query_results_request);
-      if (!query_results) throw query_results.status();
+      auto query_results = client.GetQueryResults(query_results_request);
+      if (!query_results) throw std::move(query_results).status();
 
       // Only print summary once.
       if (num_pages == 0) {
@@ -128,14 +121,14 @@ void ExecuteQueryJob(std::vector<std::string> const& argv) {
       if (!query_results->page_token().empty()) {
         query_results_request.set_page_token(query_results->page_token());
         query_results = client.GetQueryResults(query_results_request);
-        if (!query_results) throw query_results.status();
+        if (!query_results) throw std::move(query_results).status();
       } else {
         finished = true;
       }
     }
   }
   //! [execute-query-job]
-  (argv.at(0), argv.at(1), retry_delay);
+  (argv.at(0), argv.at(1), backoff);
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
