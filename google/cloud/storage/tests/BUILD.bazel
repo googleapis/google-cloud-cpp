@@ -21,19 +21,6 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-proto_library(
-    name = "storage_conformance_tests_proto",
-    srcs = [
-        "conformance_tests.proto",
-    ],
-    deps = ["@com_google_protobuf//:timestamp_proto"],
-)
-
-cc_proto_library(
-    name = "storage_conformance_tests_cc_proto",
-    deps = [":storage_conformance_tests_proto"],
-)
-
 VARIATIONS = {
     "default": {"GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG": "none"},
     "grpc-metadata": {"GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG": "metadata"},
@@ -56,12 +43,13 @@ VARIATIONS = {
         "integration-test-" + v_label,
     ] + (["integration-test-gha"] if test.startswith("smoke_test") else []),
     deps = [
-        ":storage_conformance_tests_cc_proto",
         "//:common",
         "//:storage",
         "//google/cloud/storage:storage_client_testing",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//protos:system_includes",
+        "//protos/google/cloud/storage/tests:storage_conformance_tests_cc_proto",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],

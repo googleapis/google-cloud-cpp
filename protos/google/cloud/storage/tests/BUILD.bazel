@@ -1,4 +1,4 @@
-# Copyright 2023 Google LLC
+# Copyright 2024 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,11 +16,18 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-cc_library(
-    name = "system_includes",
-    includes = ["."],
+proto_library(
+    name = "storage_conformance_tests_proto",
+    srcs = [
+        "conformance_tests.proto",
+    ],
+    deps = ["@com_google_protobuf//:timestamp_proto"],
+)
+
+cc_proto_library(
+    name = "storage_conformance_tests_cc_proto",
     visibility = [
-        "//google/cloud/compute:__pkg__",
         "//google/cloud/storage/tests:__pkg__",
     ],
+    deps = [":storage_conformance_tests_proto"],
 )
