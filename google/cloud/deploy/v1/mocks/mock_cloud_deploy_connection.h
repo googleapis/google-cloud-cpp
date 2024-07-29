@@ -106,6 +106,21 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateDeliveryPipeline,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>,
+              CreateDeliveryPipeline,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateDeliveryPipeline)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateDeliveryPipeline(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>,
       UpdateDeliveryPipeline,
       (google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request),
@@ -144,6 +159,21 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// DeleteDeliveryPipeline(Matcher<google::cloud::deploy::v1::DeleteDeliveryPipelineRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateDeliveryPipeline,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>,
+              UpdateDeliveryPipeline,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteDeliveryPipeline)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteDeliveryPipeline(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
       DeleteDeliveryPipeline,
@@ -354,6 +384,21 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateCustomTargetType,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>,
+              CreateCustomTargetType,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateCustomTargetType)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateCustomTargetType(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>,
       UpdateCustomTargetType,
       (google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request),
@@ -392,6 +437,21 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// DeleteCustomTargetType(Matcher<google::cloud::deploy::v1::DeleteCustomTargetTypeRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateCustomTargetType,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>,
+              UpdateCustomTargetType,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteCustomTargetType)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteCustomTargetType(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
       DeleteCustomTargetType,
@@ -733,6 +793,21 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAutomation,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::deploy::v1::CreateAutomationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::Automation>>,
+              CreateAutomation,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateAutomation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateAutomation(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::Automation>>, UpdateAutomation,
       (google::cloud::deploy::v1::UpdateAutomationRequest const& request),
       (override));
@@ -770,6 +845,21 @@ class MockCloudDeployConnection : public deploy_v1::CloudDeployConnection {
   /// DeleteAutomation(Matcher<google::cloud::deploy::v1::DeleteAutomationRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateAutomation,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::deploy::v1::UpdateAutomationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::deploy::v1::Automation>>,
+              UpdateAutomation,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAutomation)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAutomation(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>,
       DeleteAutomation,

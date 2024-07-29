@@ -131,6 +131,19 @@ class MockTargetPoolsConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddInstance,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddInstance,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<
           std::pair<std::string,
                     google::cloud::cpp::compute::v1::TargetPoolsScopedList>>),

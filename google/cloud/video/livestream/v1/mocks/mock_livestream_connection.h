@@ -272,6 +272,22 @@ class MockLivestreamServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StopChannel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::livestream::v1::StopChannelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::video::livestream::v1::ChannelOperationResponse>>,
+      StopChannel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateInput)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateInput(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Input>>,
       CreateInput,
       (google::cloud::video::livestream::v1::CreateInputRequest const& request),
@@ -361,6 +377,21 @@ class MockLivestreamServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteInput,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::livestream::v1::DeleteInputRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteInput,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateInput)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateInput(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::Input>>,
       UpdateInput,
       (google::cloud::video::livestream::v1::UpdateInputRequest const& request),
@@ -388,6 +419,18 @@ class MockLivestreamServiceConnection
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Input>>,
               UpdateInput, (google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateInput,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::livestream::v1::UpdateInputRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Input>>,
+              UpdateInput,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -547,6 +590,21 @@ class MockLivestreamServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateAsset,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::livestream::v1::CreateAssetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::video::livestream::v1::Asset>>,
+              CreateAsset,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteAsset)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteAsset(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
       DeleteAsset,
       (google::cloud::video::livestream::v1::DeleteAssetRequest const& request),
@@ -575,6 +633,18 @@ class MockLivestreamServiceConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
       DeleteAsset, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteAsset,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::video::livestream::v1::DeleteAssetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>,
+      DeleteAsset,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

@@ -86,6 +86,18 @@ class MockEndpointServiceConnection
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEndpoint,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateEndpointRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>,
+              CreateEndpoint,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Endpoint>, GetEndpoint,
       (google::cloud::aiplatform::v1::GetEndpointRequest const& request),
       (override));
@@ -192,6 +204,21 @@ class MockEndpointServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteEndpoint,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteEndpoint,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeployModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeployModel(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
       DeployModel,
       (google::cloud::aiplatform::v1::DeployModelRequest const& request),
@@ -232,6 +259,21 @@ class MockEndpointServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeployModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeployModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
+      DeployModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeployModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeployModel(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
       UndeployModel,
       (google::cloud::aiplatform::v1::UndeployModelRequest const& request),
@@ -271,6 +313,21 @@ class MockEndpointServiceConnection
   /// MutateDeployedModel(Matcher<google::cloud::aiplatform::v1::MutateDeployedModelRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UndeployModel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::UndeployModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
+      UndeployModel,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MutateDeployedModel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MutateDeployedModel(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,

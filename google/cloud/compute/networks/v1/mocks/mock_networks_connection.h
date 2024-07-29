@@ -97,6 +97,22 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, AddPeering,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AddPeering,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNetwork)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNetwork(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       DeleteNetwork,
       (google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
@@ -128,6 +144,19 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteNetwork,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteNetwork,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              DeleteNetwork,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -184,6 +213,19 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertNetwork,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertNetwork,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertNetwork,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -250,6 +292,22 @@ class MockNetworksConnection : public compute_networks_v1::NetworksConnection {
   /// RemovePeering(Matcher<google::cloud::cpp::compute::networks::v1::RemovePeeringRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchNetwork,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchNetwork,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, RemovePeering)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, RemovePeering(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       RemovePeering,

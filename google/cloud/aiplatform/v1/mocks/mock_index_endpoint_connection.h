@@ -194,6 +194,21 @@ class MockIndexEndpointServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeployIndex,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeployIndexRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
+      DeployIndex,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UndeployIndex)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UndeployIndex(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
       UndeployIndex,
       (google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
@@ -233,6 +248,21 @@ class MockIndexEndpointServiceConnection
   /// MutateDeployedIndex(Matcher<google::cloud::aiplatform::v1::MutateDeployedIndexRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UndeployIndex,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
+      UndeployIndex,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MutateDeployedIndex)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MutateDeployedIndex(::testing::_))` instead.
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,

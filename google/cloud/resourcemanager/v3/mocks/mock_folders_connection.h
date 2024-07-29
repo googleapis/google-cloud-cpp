@@ -110,6 +110,21 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateFolder,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::CreateFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+              CreateFolder,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateFolder(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       UpdateFolder,
       (google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
@@ -149,6 +164,21 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateFolder,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+              UpdateFolder,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, MoveFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, MoveFolder(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>, MoveFolder,
       (google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
       (override));
@@ -186,6 +216,21 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
   /// DeleteFolder(Matcher<google::cloud::resourcemanager::v3::DeleteFolderRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, MoveFolder,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+              MoveFolder,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteFolder)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteFolder(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       DeleteFolder,

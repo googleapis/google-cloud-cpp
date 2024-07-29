@@ -109,6 +109,19 @@ class MockPipelineServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteTrainingPipeline,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteTrainingPipeline,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       Status, CancelTrainingPipeline,
       (google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
            request),
@@ -179,6 +192,21 @@ class MockPipelineServiceConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeletePipelineJob,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeletePipelineJob,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchDeletePipelineJobs)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchDeletePipelineJobs(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
       BatchDeletePipelineJobs,
@@ -213,6 +241,20 @@ class MockPipelineServiceConnection
           google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
       BatchDeletePipelineJobs,
       (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchDeletePipelineJobs,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
+      BatchDeletePipelineJobs,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
 
   MOCK_METHOD(
       Status, CancelPipelineJob,

@@ -102,6 +102,21 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateTrigger,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::eventarc::v1::CreateTriggerRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Trigger>>,
+              CreateTrigger,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateTrigger)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateTrigger(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::eventarc::v1::Trigger>>, UpdateTrigger,
       (google::cloud::eventarc::v1::UpdateTriggerRequest const& request),
       (override));
@@ -139,6 +154,21 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// DeleteTrigger(Matcher<google::cloud::eventarc::v1::DeleteTriggerRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateTrigger,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::eventarc::v1::UpdateTriggerRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Trigger>>,
+              UpdateTrigger,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteTrigger)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteTrigger(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::eventarc::v1::Trigger>>, DeleteTrigger,
       (google::cloud::eventarc::v1::DeleteTriggerRequest const& request),
@@ -224,6 +254,21 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateChannel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::eventarc::v1::CreateChannelRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Channel>>,
+              CreateChannel,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateChannel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateChannel(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::eventarc::v1::Channel>>, UpdateChannel,
       (google::cloud::eventarc::v1::UpdateChannelRequest const& request),
       (override));
@@ -261,6 +306,21 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// DeleteChannel(Matcher<google::cloud::eventarc::v1::DeleteChannelRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateChannel,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::eventarc::v1::UpdateChannelRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::Channel>>,
+              UpdateChannel,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteChannel)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteChannel(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::eventarc::v1::Channel>>, DeleteChannel,
       (google::cloud::eventarc::v1::DeleteChannelRequest const& request),
@@ -362,6 +422,22 @@ class MockEventarcConnection : public eventarc_v1::EventarcConnection {
   /// DeleteChannelConnection(Matcher<google::cloud::eventarc::v1::DeleteChannelConnectionRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateChannelConnection,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>,
+              CreateChannelConnection,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteChannelConnection)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteChannelConnection(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>,
       DeleteChannelConnection,

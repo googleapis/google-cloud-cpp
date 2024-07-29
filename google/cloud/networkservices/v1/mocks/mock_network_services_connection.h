@@ -112,6 +112,22 @@ class MockNetworkServicesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateEndpointPolicy,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>,
+      CreateEndpointPolicy,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateEndpointPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateEndpointPolicy(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>,
       UpdateEndpointPolicy,
       (google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
@@ -153,6 +169,22 @@ class MockNetworkServicesConnection
   /// DeleteEndpointPolicy(Matcher<google::cloud::networkservices::v1::DeleteEndpointPolicyRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateEndpointPolicy,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>,
+      UpdateEndpointPolicy,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteEndpointPolicy)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteEndpointPolicy(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteEndpointPolicy,
@@ -245,6 +277,21 @@ class MockNetworkServicesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateGateway,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkservices::v1::CreateGatewayRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::Gateway>>,
+              CreateGateway,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateGateway(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::Gateway>>,
       UpdateGateway,
       (google::cloud::networkservices::v1::UpdateGatewayRequest const& request),
@@ -284,6 +331,21 @@ class MockNetworkServicesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateGateway,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateGatewayRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::Gateway>>,
+              UpdateGateway,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteGateway)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteGateway(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteGateway,
       (google::cloud::networkservices::v1::DeleteGatewayRequest const& request),
@@ -312,6 +374,18 @@ class MockNetworkServicesConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteGateway, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteGateway,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkservices::v1::DeleteGatewayRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      DeleteGateway,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -899,6 +973,22 @@ class MockNetworkServicesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateServiceBinding,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>,
+      CreateServiceBinding,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteServiceBinding)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteServiceBinding(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteServiceBinding,
       (google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
@@ -989,6 +1079,21 @@ class MockNetworkServicesConnection
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateMesh,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkservices::v1::CreateMeshRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::Mesh>>,
+              CreateMesh,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, UpdateMesh)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, UpdateMesh(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::Mesh>>, UpdateMesh,
       (google::cloud::networkservices::v1::UpdateMeshRequest const& request),
       (override));
@@ -1026,6 +1131,21 @@ class MockNetworkServicesConnection
   /// DeleteMesh(Matcher<google::cloud::networkservices::v1::DeleteMeshRequest
   /// const&>(_)))
   /// @endcode
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, UpdateMesh,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::networkservices::v1::UpdateMeshRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::Mesh>>,
+              UpdateMesh,
+              (ExperimentalTag,
+               google::longrunning::Operation const& operation),
+              (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteMesh)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteMesh(::testing::_))` instead.
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteMesh,

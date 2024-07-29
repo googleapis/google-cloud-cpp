@@ -22,6 +22,7 @@
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection_idempotency_policy.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"

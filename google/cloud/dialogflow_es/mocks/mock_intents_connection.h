@@ -121,6 +121,22 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
   /// const&>(_)))
   /// @endcode
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, BatchUpdateIntents,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
+      BatchUpdateIntents,
+      (ExperimentalTag, google::longrunning::Operation const& operation),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, BatchDeleteIntents)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, BatchDeleteIntents(::testing::_))` instead.
+  MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, BatchDeleteIntents,
       (google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request),
       (override));

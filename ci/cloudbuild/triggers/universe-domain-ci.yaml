@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+<<<<<<<< HEAD:ci/cloudbuild/triggers/universe-domain-ci.yaml
 filename: ci/cloudbuild/cloudbuild.yaml
 github:
   name: google-cloud-cpp
@@ -26,3 +27,14 @@ substitutions:
 includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci
+========
+workspace(name = "google_cloud_cpp")
+
+load("//bazel:bzlmod0.bzl", "gl_cpp_bzlmod0")
+
+gl_cpp_bzlmod0()
+
+load("//bazel:bzlmod1.bzl", "gl_cpp_bzlmod1")
+
+gl_cpp_bzlmod1()
+>>>>>>>> b28576a15e (chore: merge from public circa 2024-07-26 (#63)):WORKSPACE.bzlmod

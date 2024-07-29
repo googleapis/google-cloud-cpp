@@ -217,10 +217,26 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
               (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertRouter,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              InsertRouter,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::Router>), ListRouters,
       (google::cloud::cpp::compute::routers::v1::ListRoutersRequest request),
       (override));
 
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, PatchRouter)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, PatchRouter(::testing::_))` instead.
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::RoutersListBgpRoutes>,
       ListBgpRoutes,
@@ -318,6 +334,19 @@ class MockRoutersConnection : public compute_routers_v1::RoutersConnection {
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchRoutePolicy,
               (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchRouter,
+      (ExperimentalTag, NoAwaitTag,
+       google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              PatchRouter,
+              (ExperimentalTag,
+               google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
