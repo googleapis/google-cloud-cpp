@@ -46,7 +46,7 @@ SessionControllerClient::CreateSession(
 }
 
 StatusOr<google::longrunning::Operation> SessionControllerClient::CreateSession(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::dataproc::v1::Session const& session,
     std::string const& session_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -54,7 +54,7 @@ StatusOr<google::longrunning::Operation> SessionControllerClient::CreateSession(
   request.set_parent(parent);
   *request.mutable_session() = session;
   request.set_session_id(session_id);
-  return connection_->CreateSession(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateSession(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
@@ -66,19 +66,18 @@ SessionControllerClient::CreateSession(
 }
 
 StatusOr<google::longrunning::Operation> SessionControllerClient::CreateSession(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::CreateSessionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSession(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateSession(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerClient::CreateSession(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSession(ExperimentalTag{}, operation);
+  return connection_->CreateSession(operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::Session>
@@ -122,14 +121,12 @@ SessionControllerClient::TerminateSession(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-SessionControllerClient::TerminateSession(ExperimentalTag, NoAwaitTag,
-                                          std::string const& name,
+SessionControllerClient::TerminateSession(NoAwaitTag, std::string const& name,
                                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::TerminateSessionRequest request;
   request.set_name(name);
-  return connection_->TerminateSession(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->TerminateSession(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
@@ -142,20 +139,18 @@ SessionControllerClient::TerminateSession(
 
 StatusOr<google::longrunning::Operation>
 SessionControllerClient::TerminateSession(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::TerminateSessionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TerminateSession(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->TerminateSession(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerClient::TerminateSession(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TerminateSession(ExperimentalTag{}, operation);
+  return connection_->TerminateSession(operation);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
@@ -167,11 +162,11 @@ SessionControllerClient::DeleteSession(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> SessionControllerClient::DeleteSession(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::DeleteSessionRequest request;
   request.set_name(name);
-  return connection_->DeleteSession(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteSession(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
@@ -183,19 +178,18 @@ SessionControllerClient::DeleteSession(
 }
 
 StatusOr<google::longrunning::Operation> SessionControllerClient::DeleteSession(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::DeleteSessionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSession(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteSession(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Session>>
 SessionControllerClient::DeleteSession(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSession(ExperimentalTag{}, operation);
+  return connection_->DeleteSession(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

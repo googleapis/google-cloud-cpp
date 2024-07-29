@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_ANALYTICS_CLIENT_H
 
 #include "google/cloud/retail/v2/analytics_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -144,7 +143,7 @@ class AnalyticsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
       Options opts = {});
 
@@ -158,8 +157,7 @@ class AnalyticsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
-  ExportAnalyticsMetrics(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  ExportAnalyticsMetrics(google::longrunning::Operation const& operation,
                          Options opts = {});
 
  private:

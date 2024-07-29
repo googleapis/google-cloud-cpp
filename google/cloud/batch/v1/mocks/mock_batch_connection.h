@@ -63,14 +63,12 @@ class MockBatchServiceConnection : public batch_v1::BatchServiceConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteJob,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::batch::v1::DeleteJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::batch::v1::OperationMetadata>>,
-              DeleteJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteJob, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::batch::v1::Job>), ListJobs,

@@ -54,14 +54,12 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateJob,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::run::v2::CreateJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, CreateJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::run::v2::Job>, GetJob,
               (google::cloud::run::v2::GetJobRequest const& request),
@@ -78,14 +76,12 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateJob,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::run::v2::UpdateJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, UpdateJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteJob)` is now ambiguous. Use
@@ -95,14 +91,12 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteJob,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::run::v2::DeleteJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, DeleteJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, RunJob)` is now ambiguous. Use
@@ -112,14 +106,12 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RunJob,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::run::v2::RunJobRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_STORAGE_CONTROL_CLIENT_H
 
 #include "google/cloud/storagecontrol/v2/storage_control_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -396,7 +395,7 @@ class StorageControlClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RenameFolder(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
+      NoAwaitTag, std::string const& name,
       std::string const& destination_folder_id, Options opts = {});
 
   // clang-format off
@@ -452,7 +451,7 @@ class StorageControlClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RenameFolder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::storage::control::v2::RenameFolderRequest const& request,
       Options opts = {});
 
@@ -466,8 +465,7 @@ class StorageControlClient {
   ///
   // clang-format on
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

@@ -57,8 +57,8 @@ RegionInstanceGroupManagersClient::AbandonInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::AbandonInstances(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagersAbandonInstancesRequest const&
             region_instance_group_managers_abandon_instances_request_resource,
@@ -72,8 +72,7 @@ RegionInstanceGroupManagersClient::AbandonInstances(
   *request
        .mutable_region_instance_group_managers_abandon_instances_request_resource() =
       region_instance_group_managers_abandon_instances_request_resource;
-  return connection_->AbandonInstances(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->AbandonInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -87,21 +86,19 @@ RegionInstanceGroupManagersClient::AbandonInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::AbandonInstances(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         AbandonInstancesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AbandonInstances(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->AbandonInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::AbandonInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AbandonInstances(ExperimentalTag{}, operation);
+  return connection_->AbandonInstances(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -126,8 +123,8 @@ RegionInstanceGroupManagersClient::ApplyUpdatesToInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::ApplyUpdatesToInstances(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagersApplyUpdatesRequest const&
             region_instance_group_managers_apply_updates_request_resource,
@@ -141,8 +138,7 @@ RegionInstanceGroupManagersClient::ApplyUpdatesToInstances(
   *request
        .mutable_region_instance_group_managers_apply_updates_request_resource() =
       region_instance_group_managers_apply_updates_request_resource;
-  return connection_->ApplyUpdatesToInstances(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->ApplyUpdatesToInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -156,21 +152,19 @@ RegionInstanceGroupManagersClient::ApplyUpdatesToInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::ApplyUpdatesToInstances(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ApplyUpdatesToInstancesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ApplyUpdatesToInstances(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->ApplyUpdatesToInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::ApplyUpdatesToInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ApplyUpdatesToInstances(ExperimentalTag{}, operation);
+  return connection_->ApplyUpdatesToInstances(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -195,8 +189,8 @@ RegionInstanceGroupManagersClient::CreateInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::CreateInstances(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagersCreateInstancesRequest const&
             region_instance_group_managers_create_instances_request_resource,
@@ -210,7 +204,7 @@ RegionInstanceGroupManagersClient::CreateInstances(
   *request
        .mutable_region_instance_group_managers_create_instances_request_resource() =
       region_instance_group_managers_create_instances_request_resource;
-  return connection_->CreateInstances(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -224,20 +218,19 @@ RegionInstanceGroupManagersClient::CreateInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::CreateInstances(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         CreateInstancesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInstances(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::CreateInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInstances(ExperimentalTag{}, operation);
+  return connection_->CreateInstances(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -255,17 +248,15 @@ RegionInstanceGroupManagersClient::DeleteInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::DeleteInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
-    Options opts) {
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_instance_group_managers::v1::
       DeleteInstanceGroupManagerRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_instance_group_manager(instance_group_manager);
-  return connection_->DeleteInstanceGroupManager(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->DeleteInstanceGroupManager(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -279,21 +270,19 @@ RegionInstanceGroupManagersClient::DeleteInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::DeleteInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         DeleteInstanceGroupManagerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstanceGroupManager(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->DeleteInstanceGroupManager(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::DeleteInstanceGroupManager(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstanceGroupManager(ExperimentalTag{}, operation);
+  return connection_->DeleteInstanceGroupManager(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -318,8 +307,8 @@ RegionInstanceGroupManagersClient::DeleteInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::DeleteInstances(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagersDeleteInstancesRequest const&
             region_instance_group_managers_delete_instances_request_resource,
@@ -333,7 +322,7 @@ RegionInstanceGroupManagersClient::DeleteInstances(
   *request
        .mutable_region_instance_group_managers_delete_instances_request_resource() =
       region_instance_group_managers_delete_instances_request_resource;
-  return connection_->DeleteInstances(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -347,20 +336,19 @@ RegionInstanceGroupManagersClient::DeleteInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::DeleteInstances(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         DeleteInstancesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstances(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::DeleteInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstances(ExperimentalTag{}, operation);
+  return connection_->DeleteInstances(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -385,8 +373,8 @@ RegionInstanceGroupManagersClient::DeletePerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::DeletePerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagerDeleteInstanceConfigReq const&
             region_instance_group_manager_delete_instance_config_req_resource,
@@ -400,8 +388,7 @@ RegionInstanceGroupManagersClient::DeletePerInstanceConfigs(
   *request
        .mutable_region_instance_group_manager_delete_instance_config_req_resource() =
       region_instance_group_manager_delete_instance_config_req_resource;
-  return connection_->DeletePerInstanceConfigs(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->DeletePerInstanceConfigs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -415,21 +402,19 @@ RegionInstanceGroupManagersClient::DeletePerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::DeletePerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         DeletePerInstanceConfigsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePerInstanceConfigs(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->DeletePerInstanceConfigs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::DeletePerInstanceConfigs(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePerInstanceConfigs(ExperimentalTag{}, operation);
+  return connection_->DeletePerInstanceConfigs(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -472,8 +457,7 @@ RegionInstanceGroupManagersClient::InsertInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::InsertInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::InstanceGroupManager const&
         instance_group_manager_resource,
     Options opts) {
@@ -484,8 +468,7 @@ RegionInstanceGroupManagersClient::InsertInstanceGroupManager(
   request.set_region(region);
   *request.mutable_instance_group_manager_resource() =
       instance_group_manager_resource;
-  return connection_->InsertInstanceGroupManager(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->InsertInstanceGroupManager(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -499,21 +482,19 @@ RegionInstanceGroupManagersClient::InsertInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::InsertInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         InsertInstanceGroupManagerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInstanceGroupManager(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->InsertInstanceGroupManager(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::InsertInstanceGroupManager(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInstanceGroupManager(ExperimentalTag{}, operation);
+  return connection_->InsertInstanceGroupManager(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -624,8 +605,8 @@ RegionInstanceGroupManagersClient::PatchInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::PatchInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::InstanceGroupManager const&
         instance_group_manager_resource,
     Options opts) {
@@ -637,8 +618,7 @@ RegionInstanceGroupManagersClient::PatchInstanceGroupManager(
   request.set_instance_group_manager(instance_group_manager);
   *request.mutable_instance_group_manager_resource() =
       instance_group_manager_resource;
-  return connection_->PatchInstanceGroupManager(ExperimentalTag{}, NoAwaitTag{},
-                                                request);
+  return connection_->PatchInstanceGroupManager(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -652,21 +632,19 @@ RegionInstanceGroupManagersClient::PatchInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::PatchInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         PatchInstanceGroupManagerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInstanceGroupManager(ExperimentalTag{}, NoAwaitTag{},
-                                                request);
+  return connection_->PatchInstanceGroupManager(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::PatchInstanceGroupManager(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInstanceGroupManager(ExperimentalTag{}, operation);
+  return connection_->PatchInstanceGroupManager(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -691,8 +669,8 @@ RegionInstanceGroupManagersClient::PatchPerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::PatchPerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagerPatchInstanceConfigReq const&
             region_instance_group_manager_patch_instance_config_req_resource,
@@ -706,8 +684,7 @@ RegionInstanceGroupManagersClient::PatchPerInstanceConfigs(
   *request
        .mutable_region_instance_group_manager_patch_instance_config_req_resource() =
       region_instance_group_manager_patch_instance_config_req_resource;
-  return connection_->PatchPerInstanceConfigs(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->PatchPerInstanceConfigs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -721,21 +698,19 @@ RegionInstanceGroupManagersClient::PatchPerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::PatchPerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         PatchPerInstanceConfigsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchPerInstanceConfigs(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->PatchPerInstanceConfigs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::PatchPerInstanceConfigs(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchPerInstanceConfigs(ExperimentalTag{}, operation);
+  return connection_->PatchPerInstanceConfigs(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -759,8 +734,8 @@ RegionInstanceGroupManagersClient::RecreateInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::RecreateInstances(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagersRecreateRequest const&
             region_instance_group_managers_recreate_request_resource,
@@ -773,8 +748,7 @@ RegionInstanceGroupManagersClient::RecreateInstances(
   request.set_instance_group_manager(instance_group_manager);
   *request.mutable_region_instance_group_managers_recreate_request_resource() =
       region_instance_group_managers_recreate_request_resource;
-  return connection_->RecreateInstances(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->RecreateInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -788,21 +762,19 @@ RegionInstanceGroupManagersClient::RecreateInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::RecreateInstances(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         RecreateInstancesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RecreateInstances(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->RecreateInstances(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::RecreateInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RecreateInstances(ExperimentalTag{}, operation);
+  return connection_->RecreateInstances(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -822,9 +794,9 @@ RegionInstanceGroupManagersClient::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::Resize(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
-    std::int32_t size, Options opts) {
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager, std::int32_t size,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_instance_group_managers::v1::ResizeRequest
       request;
@@ -832,7 +804,7 @@ RegionInstanceGroupManagersClient::Resize(
   request.set_region(region);
   request.set_instance_group_manager(instance_group_manager);
   request.set_size(size);
-  return connection_->Resize(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Resize(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -846,20 +818,19 @@ RegionInstanceGroupManagersClient::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::Resize(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ResizeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Resize(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Resize(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::Resize(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Resize(ExperimentalTag{}, operation);
+  return connection_->Resize(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -884,8 +855,8 @@ RegionInstanceGroupManagersClient::SetInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::SetInstanceTemplate(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagersSetTemplateRequest const&
             region_instance_group_managers_set_template_request_resource,
@@ -899,8 +870,7 @@ RegionInstanceGroupManagersClient::SetInstanceTemplate(
   *request
        .mutable_region_instance_group_managers_set_template_request_resource() =
       region_instance_group_managers_set_template_request_resource;
-  return connection_->SetInstanceTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->SetInstanceTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -914,21 +884,19 @@ RegionInstanceGroupManagersClient::SetInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::SetInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         SetInstanceTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetInstanceTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->SetInstanceTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::SetInstanceTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetInstanceTemplate(ExperimentalTag{}, operation);
+  return connection_->SetInstanceTemplate(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -953,8 +921,8 @@ RegionInstanceGroupManagersClient::SetTargetPools(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::SetTargetPools(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagersSetTargetPoolsRequest const&
             region_instance_group_managers_set_target_pools_request_resource,
@@ -968,7 +936,7 @@ RegionInstanceGroupManagersClient::SetTargetPools(
   *request
        .mutable_region_instance_group_managers_set_target_pools_request_resource() =
       region_instance_group_managers_set_target_pools_request_resource;
-  return connection_->SetTargetPools(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetTargetPools(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -982,20 +950,19 @@ RegionInstanceGroupManagersClient::SetTargetPools(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::SetTargetPools(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         SetTargetPoolsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetTargetPools(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetTargetPools(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::SetTargetPools(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetTargetPools(ExperimentalTag{}, operation);
+  return connection_->SetTargetPools(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1020,8 +987,8 @@ RegionInstanceGroupManagersClient::UpdatePerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::UpdatePerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_group_manager,
     google::cloud::cpp::compute::v1::
         RegionInstanceGroupManagerUpdateInstanceConfigReq const&
             region_instance_group_manager_update_instance_config_req_resource,
@@ -1035,8 +1002,7 @@ RegionInstanceGroupManagersClient::UpdatePerInstanceConfigs(
   *request
        .mutable_region_instance_group_manager_update_instance_config_req_resource() =
       region_instance_group_manager_update_instance_config_req_resource;
-  return connection_->UpdatePerInstanceConfigs(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->UpdatePerInstanceConfigs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -1050,21 +1016,19 @@ RegionInstanceGroupManagersClient::UpdatePerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceGroupManagersClient::UpdatePerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         UpdatePerInstanceConfigsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdatePerInstanceConfigs(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->UpdatePerInstanceConfigs(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceGroupManagersClient::UpdatePerInstanceConfigs(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdatePerInstanceConfigs(ExperimentalTag{}, operation);
+  return connection_->UpdatePerInstanceConfigs(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

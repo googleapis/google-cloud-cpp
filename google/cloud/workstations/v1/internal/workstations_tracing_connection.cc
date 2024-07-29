@@ -68,25 +68,24 @@ WorkstationsTracingConnection::CreateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::CreateWorkstationCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstationCluster");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateWorkstationCluster(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->CreateWorkstationCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsTracingConnection::CreateWorkstationCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstationCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateWorkstationCluster(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateWorkstationCluster(operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -102,25 +101,24 @@ WorkstationsTracingConnection::UpdateWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::UpdateWorkstationCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstationCluster");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateWorkstationCluster(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->UpdateWorkstationCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsTracingConnection::UpdateWorkstationCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstationCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateWorkstationCluster(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateWorkstationCluster(operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -136,25 +134,24 @@ WorkstationsTracingConnection::DeleteWorkstationCluster(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::DeleteWorkstationCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstationCluster");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteWorkstationCluster(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->DeleteWorkstationCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
 WorkstationsTracingConnection::DeleteWorkstationCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstationCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteWorkstationCluster(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteWorkstationCluster(operation));
 }
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -205,25 +202,24 @@ WorkstationsTracingConnection::CreateWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::CreateWorkstationConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstationConfig");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateWorkstationConfig(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->CreateWorkstationConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsTracingConnection::CreateWorkstationConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstationConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateWorkstationConfig(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateWorkstationConfig(operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -239,25 +235,24 @@ WorkstationsTracingConnection::UpdateWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::UpdateWorkstationConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstationConfig");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateWorkstationConfig(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->UpdateWorkstationConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsTracingConnection::UpdateWorkstationConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstationConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateWorkstationConfig(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateWorkstationConfig(operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -273,25 +268,24 @@ WorkstationsTracingConnection::DeleteWorkstationConfig(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::DeleteWorkstationConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
         request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstationConfig");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteWorkstationConfig(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->DeleteWorkstationConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
 WorkstationsTracingConnection::DeleteWorkstationConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstationConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteWorkstationConfig(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteWorkstationConfig(operation));
 }
 
 StatusOr<google::cloud::workstations::v1::Workstation>
@@ -338,24 +332,23 @@ WorkstationsTracingConnection::CreateWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::CreateWorkstation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateWorkstation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateWorkstation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsTracingConnection::CreateWorkstation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::CreateWorkstation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateWorkstation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateWorkstation(operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -369,24 +362,23 @@ WorkstationsTracingConnection::UpdateWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::UpdateWorkstation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateWorkstation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateWorkstation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsTracingConnection::UpdateWorkstation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::UpdateWorkstation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateWorkstation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateWorkstation(operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -400,24 +392,23 @@ WorkstationsTracingConnection::DeleteWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::DeleteWorkstation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteWorkstation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteWorkstation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsTracingConnection::DeleteWorkstation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::DeleteWorkstation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteWorkstation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteWorkstation(operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -431,24 +422,23 @@ WorkstationsTracingConnection::StartWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::StartWorkstation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::StartWorkstation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->StartWorkstation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->StartWorkstation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsTracingConnection::StartWorkstation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::StartWorkstation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->StartWorkstation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->StartWorkstation(operation));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
@@ -462,23 +452,22 @@ WorkstationsTracingConnection::StopWorkstation(
 
 StatusOr<google::longrunning::Operation>
 WorkstationsTracingConnection::StopWorkstation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::StopWorkstation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->StopWorkstation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->StopWorkstation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::workstations::v1::Workstation>>
 WorkstationsTracingConnection::StopWorkstation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "workstations_v1::WorkstationsConnection::StopWorkstation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->StopWorkstation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->StopWorkstation(operation));
 }
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>

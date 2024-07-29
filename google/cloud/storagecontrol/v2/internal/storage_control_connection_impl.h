@@ -71,12 +71,11 @@ class StorageControlConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RenameFolder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::storage::control::v2::RenameFolderRequest const& request)
       override;
 
   future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(

@@ -49,26 +49,23 @@ class RapidMigrationAssessmentTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  CreateCollector(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  CreateCollector(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
   CreateAnnotation(google::cloud::rapidmigrationassessment::v1::
                        CreateAnnotationRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAnnotation(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::rapidmigrationassessment::v1::
-          CreateAnnotationRequest const& request) override;
+      NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
+                      CreateAnnotationRequest const& request) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
-  CreateAnnotation(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  CreateAnnotation(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
   GetAnnotation(
@@ -90,13 +87,12 @@ class RapidMigrationAssessmentTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  UpdateCollector(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  UpdateCollector(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   DeleteCollector(
@@ -104,13 +100,12 @@ class RapidMigrationAssessmentTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  DeleteCollector(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  DeleteCollector(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   ResumeCollector(
@@ -118,26 +113,23 @@ class RapidMigrationAssessmentTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> ResumeCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  ResumeCollector(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  ResumeCollector(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   RegisterCollector(google::cloud::rapidmigrationassessment::v1::
                         RegisterCollectorRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RegisterCollector(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::rapidmigrationassessment::v1::
-          RegisterCollectorRequest const& request) override;
+      NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
+                      RegisterCollectorRequest const& request) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  RegisterCollector(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  RegisterCollector(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
   PauseCollector(
@@ -145,13 +137,12 @@ class RapidMigrationAssessmentTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> PauseCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request) override;
 
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  PauseCollector(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  PauseCollector(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<

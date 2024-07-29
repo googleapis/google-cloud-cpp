@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ENTITY_TYPES_CLIENT_H
 
 #include "google/cloud/dialogflow_es/entity_types_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -626,7 +625,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
           request,
       Options opts = {});
@@ -642,8 +641,7 @@ class EntityTypesClient {
   // clang-format on
   future<
       StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
-  BatchUpdateEntityTypes(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  BatchUpdateEntityTypes(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -707,7 +705,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& entity_type_names, Options opts = {});
 
   // clang-format off
@@ -774,7 +772,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
           request,
       Options opts = {});
@@ -789,8 +787,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -854,7 +851,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
           entities,
       Options opts = {});
@@ -926,7 +923,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
           entities,
       std::string const& language_code, Options opts = {});
@@ -994,7 +991,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateEntities(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
       Options opts = {});
 
@@ -1008,8 +1005,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1076,7 +1072,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
           entities,
       Options opts = {});
@@ -1151,7 +1147,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
           entities,
       std::string const& language_code, Options opts = {});
@@ -1222,7 +1218,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateEntities(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
       Options opts = {});
 
@@ -1236,8 +1232,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1301,7 +1296,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& entity_values, Options opts = {});
 
   // clang-format off
@@ -1371,7 +1366,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& entity_values,
       std::string const& language_code, Options opts = {});
 
@@ -1438,7 +1433,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteEntities(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
       Options opts = {});
 
@@ -1452,8 +1447,7 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<EntityTypesConnection> connection_;

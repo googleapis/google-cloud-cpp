@@ -111,7 +111,7 @@ ConversationDatasetsConnectionImpl::CreateConversationDataset(
 
 StatusOr<google::longrunning::Operation>
 ConversationDatasetsConnectionImpl::CreateConversationDataset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -129,7 +129,7 @@ ConversationDatasetsConnectionImpl::CreateConversationDataset(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
 ConversationDatasetsConnectionImpl::CreateConversationDataset(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -263,7 +263,7 @@ ConversationDatasetsConnectionImpl::DeleteConversationDataset(
 
 StatusOr<google::longrunning::Operation>
 ConversationDatasetsConnectionImpl::DeleteConversationDataset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -282,7 +282,7 @@ ConversationDatasetsConnectionImpl::DeleteConversationDataset(
 future<StatusOr<
     google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
 ConversationDatasetsConnectionImpl::DeleteConversationDataset(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -366,7 +366,7 @@ ConversationDatasetsConnectionImpl::ImportConversationData(
 
 StatusOr<google::longrunning::Operation>
 ConversationDatasetsConnectionImpl::ImportConversationData(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -384,7 +384,7 @@ ConversationDatasetsConnectionImpl::ImportConversationData(
 future<StatusOr<
     google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
 ConversationDatasetsConnectionImpl::ImportConversationData(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::

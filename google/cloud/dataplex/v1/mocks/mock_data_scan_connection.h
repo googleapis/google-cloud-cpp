@@ -57,14 +57,12 @@ class MockDataScanServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDataScan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::CreateDataScanRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
-              CreateDataScan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateDataScan, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -77,14 +75,12 @@ class MockDataScanServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDataScan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::UpdateDataScanRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::DataScan>>,
-              UpdateDataScan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateDataScan, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -98,14 +94,12 @@ class MockDataScanServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDataScan,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::DeleteDataScanRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
-              DeleteDataScan,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteDataScan, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataplex::v1::DataScan>, GetDataScan,

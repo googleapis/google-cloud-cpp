@@ -54,14 +54,12 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::api::apikeys::v2::CreateKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, CreateKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::api::apikeys::v2::Key>), ListKeys,
               (google::api::apikeys::v2::ListKeysRequest request), (override));
@@ -83,14 +81,12 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::api::apikeys::v2::UpdateKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UpdateKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteKey)` is now ambiguous. Use
@@ -100,14 +96,12 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::api::apikeys::v2::DeleteKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, DeleteKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UndeleteKey)` is now ambiguous. Use
@@ -117,14 +111,12 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UndeleteKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::api::apikeys::v2::UndeleteKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UndeleteKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::api::apikeys::v2::LookupKeyResponse>, LookupKey,
               (google::api::apikeys::v2::LookupKeyRequest const& request),

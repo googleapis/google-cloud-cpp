@@ -101,28 +101,25 @@ CertificateAuthorityServiceTracingConnection::ActivateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::ActivateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        ActivateCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    ActivateCertificateAuthorityRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "ActivateCertificateAuthority");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ActivateCertificateAuthority(ExperimentalTag{},
-                                                  NoAwaitTag{}, request));
+      *span, child_->ActivateCertificateAuthority(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceTracingConnection::ActivateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "ActivateCertificateAuthority");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->ActivateCertificateAuthority(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ActivateCertificateAuthority(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -139,27 +136,25 @@ CertificateAuthorityServiceTracingConnection::CreateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::CreateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        CreateCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    CreateCertificateAuthorityRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "CreateCertificateAuthority");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateCertificateAuthority(ExperimentalTag{}, NoAwaitTag{},
-                                                request));
+      *span, child_->CreateCertificateAuthority(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceTracingConnection::CreateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "CreateCertificateAuthority");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateCertificateAuthority(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificateAuthority(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -176,27 +171,25 @@ CertificateAuthorityServiceTracingConnection::DisableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::DisableCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DisableCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DisableCertificateAuthorityRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DisableCertificateAuthority");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DisableCertificateAuthority(ExperimentalTag{},
-                                                 NoAwaitTag{}, request));
+      *span, child_->DisableCertificateAuthority(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceTracingConnection::DisableCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DisableCertificateAuthority");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DisableCertificateAuthority(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DisableCertificateAuthority(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -213,27 +206,25 @@ CertificateAuthorityServiceTracingConnection::EnableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::EnableCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        EnableCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    EnableCertificateAuthorityRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "EnableCertificateAuthority");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->EnableCertificateAuthority(ExperimentalTag{}, NoAwaitTag{},
-                                                request));
+      *span, child_->EnableCertificateAuthority(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceTracingConnection::EnableCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "EnableCertificateAuthority");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->EnableCertificateAuthority(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->EnableCertificateAuthority(operation));
 }
 
 StatusOr<google::cloud::security::privateca::v1::
@@ -288,28 +279,25 @@ CertificateAuthorityServiceTracingConnection::UndeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::UndeleteCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UndeleteCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UndeleteCertificateAuthorityRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UndeleteCertificateAuthority");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UndeleteCertificateAuthority(ExperimentalTag{},
-                                                  NoAwaitTag{}, request));
+      *span, child_->UndeleteCertificateAuthority(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceTracingConnection::UndeleteCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UndeleteCertificateAuthority");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UndeleteCertificateAuthority(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UndeleteCertificateAuthority(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -326,27 +314,25 @@ CertificateAuthorityServiceTracingConnection::DeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::DeleteCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DeleteCertificateAuthorityRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DeleteCertificateAuthority");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteCertificateAuthority(ExperimentalTag{}, NoAwaitTag{},
-                                                request));
+      *span, child_->DeleteCertificateAuthority(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceTracingConnection::DeleteCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DeleteCertificateAuthority");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteCertificateAuthority(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificateAuthority(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -363,27 +349,25 @@ CertificateAuthorityServiceTracingConnection::UpdateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::UpdateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateAuthorityRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateAuthority");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateCertificateAuthority(ExperimentalTag{}, NoAwaitTag{},
-                                                request));
+      *span, child_->UpdateCertificateAuthority(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceTracingConnection::UpdateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateAuthority");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateCertificateAuthority(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateAuthority(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
@@ -398,24 +382,22 @@ CertificateAuthorityServiceTracingConnection::CreateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::CreateCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::CreateCaPool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateCaPool(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateCaPool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceTracingConnection::CreateCaPool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::CreateCaPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateCaPool(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateCaPool(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
@@ -430,24 +412,22 @@ CertificateAuthorityServiceTracingConnection::UpdateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::UpdateCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::UpdateCaPool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateCaPool(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateCaPool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceTracingConnection::UpdateCaPool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::UpdateCaPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateCaPool(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateCaPool(operation));
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
@@ -483,24 +463,22 @@ CertificateAuthorityServiceTracingConnection::DeleteCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::DeleteCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::DeleteCaPool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteCaPool(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteCaPool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceTracingConnection::DeleteCaPool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::DeleteCaPool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteCaPool(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteCaPool(operation));
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
@@ -554,29 +532,26 @@ CertificateAuthorityServiceTracingConnection::UpdateCertificateRevocationList(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::UpdateCertificateRevocationList(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateRevocationListRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateRevocationListRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateRevocationList");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateCertificateRevocationList(ExperimentalTag{},
-                                                     NoAwaitTag{}, request));
+      *span, child_->UpdateCertificateRevocationList(NoAwaitTag{}, request));
 }
 
 future<
     StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
 CertificateAuthorityServiceTracingConnection::UpdateCertificateRevocationList(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateRevocationList");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateCertificateRevocationList(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateRevocationList(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
@@ -593,27 +568,25 @@ CertificateAuthorityServiceTracingConnection::CreateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::CreateCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        CreateCertificateTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    CreateCertificateTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "CreateCertificateTemplate");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->CreateCertificateTemplate(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceTracingConnection::CreateCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "CreateCertificateTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateCertificateTemplate(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCertificateTemplate(operation));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
@@ -630,27 +603,25 @@ CertificateAuthorityServiceTracingConnection::DeleteCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::DeleteCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DeleteCertificateTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DeleteCertificateTemplate");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->DeleteCertificateTemplate(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceTracingConnection::DeleteCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "DeleteCertificateTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteCertificateTemplate(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCertificateTemplate(operation));
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -692,27 +663,25 @@ CertificateAuthorityServiceTracingConnection::UpdateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceTracingConnection::UpdateCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateTemplateRequest const& request) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateTemplate");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateCertificateTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->UpdateCertificateTemplate(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceTracingConnection::UpdateCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "privateca_v1::CertificateAuthorityServiceConnection::"
       "UpdateCertificateTemplate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateCertificateTemplate(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCertificateTemplate(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

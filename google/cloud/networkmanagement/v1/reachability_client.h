@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKMANAGEMENT_V1_REACHABILITY_CLIENT_H
 
 #include "google/cloud/networkmanagement/v1/reachability_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -303,8 +302,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& test_id,
+      NoAwaitTag, std::string const& parent, std::string const& test_id,
       google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
       Options opts = {});
 
@@ -372,7 +370,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
           request,
       Options opts = {});
@@ -387,8 +385,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  CreateConnectivityTest(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  CreateConnectivityTest(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -453,8 +450,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
-      google::protobuf::FieldMask const& update_mask,
+      NoAwaitTag, google::protobuf::FieldMask const& update_mask,
       google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
       Options opts = {});
 
@@ -523,7 +519,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
           request,
       Options opts = {});
@@ -538,8 +534,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  UpdateConnectivityTest(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  UpdateConnectivityTest(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -605,7 +600,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RerunConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
           request,
       Options opts = {});
@@ -620,8 +615,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
-  RerunConnectivityTest(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  RerunConnectivityTest(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -669,7 +663,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -723,7 +717,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectivityTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
           request,
       Options opts = {});
@@ -738,8 +732,7 @@ class ReachabilityServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
-  DeleteConnectivityTest(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  DeleteConnectivityTest(google::longrunning::Operation const& operation,
                          Options opts = {});
 
  private:

@@ -46,13 +46,12 @@ class MetadataServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateMetadataStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
-  CreateMetadataStore(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  CreateMetadataStore(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::MetadataStore> GetMetadataStore(
       google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request)
@@ -69,14 +68,13 @@ class MetadataServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteMetadataStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request)
       override;
 
   future<StatusOr<
       google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
-  DeleteMetadataStore(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  DeleteMetadataStore(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::Artifact> CreateArtifact(
       google::cloud::aiplatform::v1::CreateArtifactRequest const& request)
@@ -98,26 +96,24 @@ class MetadataServiceTracingConnection
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteArtifact(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteArtifact(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  DeleteArtifact(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
   PurgeArtifacts(google::cloud::aiplatform::v1::PurgeArtifactsRequest const&
                      request) override;
 
   StatusOr<google::longrunning::Operation> PurgeArtifacts(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
-  PurgeArtifacts(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  PurgeArtifacts(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::Context> CreateContext(
       google::cloud::aiplatform::v1::CreateContextRequest const& request)
@@ -138,26 +134,24 @@ class MetadataServiceTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteContext(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteContextRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteContext(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  DeleteContext(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
   PurgeContexts(google::cloud::aiplatform::v1::PurgeContextsRequest const&
                     request) override;
 
   StatusOr<google::longrunning::Operation> PurgeContexts(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeContextsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
-  PurgeContexts(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  PurgeContexts(google::longrunning::Operation const& operation) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
@@ -200,26 +194,24 @@ class MetadataServiceTracingConnection
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteExecution(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteExecution(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  DeleteExecution(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
   PurgeExecutions(google::cloud::aiplatform::v1::PurgeExecutionsRequest const&
                       request) override;
 
   StatusOr<google::longrunning::Operation> PurgeExecutions(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
-  PurgeExecutions(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  PurgeExecutions(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
   AddExecutionEvents(

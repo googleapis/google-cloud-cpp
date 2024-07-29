@@ -104,9 +104,8 @@ InterconnectsRestConnectionImpl::DeleteInterconnect(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestConnectionImpl::DeleteInterconnect(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::interconnects::v1::
-        DeleteInterconnectRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                    DeleteInterconnectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -121,7 +120,6 @@ InterconnectsRestConnectionImpl::DeleteInterconnect(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestConnectionImpl::DeleteInterconnect(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -281,9 +279,8 @@ InterconnectsRestConnectionImpl::InsertInterconnect(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestConnectionImpl::InsertInterconnect(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::interconnects::v1::
-        InsertInterconnectRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                    InsertInterconnectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -298,7 +295,6 @@ InterconnectsRestConnectionImpl::InsertInterconnect(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestConnectionImpl::InsertInterconnect(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -447,9 +443,8 @@ InterconnectsRestConnectionImpl::PatchInterconnect(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestConnectionImpl::PatchInterconnect(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::interconnects::v1::
-        PatchInterconnectRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::interconnects::v1::
+                    PatchInterconnectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -464,7 +459,6 @@ InterconnectsRestConnectionImpl::PatchInterconnect(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestConnectionImpl::PatchInterconnect(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -576,7 +570,7 @@ InterconnectsRestConnectionImpl::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectsRestConnectionImpl::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -593,7 +587,6 @@ InterconnectsRestConnectionImpl::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestConnectionImpl::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

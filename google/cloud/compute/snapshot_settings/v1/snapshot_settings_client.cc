@@ -68,8 +68,7 @@ SnapshotSettingsClient::PatchSnapshotSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotSettingsClient::PatchSnapshotSettings(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& update_mask,
+    NoAwaitTag, std::string const& project, std::string const& update_mask,
     google::cloud::cpp::compute::v1::SnapshotSettings const&
         snapshot_settings_resource,
     Options opts) {
@@ -79,8 +78,7 @@ SnapshotSettingsClient::PatchSnapshotSettings(
   request.set_project(project);
   request.set_update_mask(update_mask);
   *request.mutable_snapshot_settings_resource() = snapshot_settings_resource;
-  return connection_->PatchSnapshotSettings(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->PatchSnapshotSettings(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,21 +92,19 @@ SnapshotSettingsClient::PatchSnapshotSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotSettingsClient::PatchSnapshotSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::snapshot_settings::v1::
         PatchSnapshotSettingsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchSnapshotSettings(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->PatchSnapshotSettings(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsClient::PatchSnapshotSettings(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchSnapshotSettings(ExperimentalTag{}, operation);
+  return connection_->PatchSnapshotSettings(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

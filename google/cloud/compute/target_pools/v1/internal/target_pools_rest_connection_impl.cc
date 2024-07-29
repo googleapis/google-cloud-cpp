@@ -105,7 +105,7 @@ TargetPoolsRestConnectionImpl::AddHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestConnectionImpl::AddHealthCheck(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::AddHealthCheckRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -122,7 +122,6 @@ TargetPoolsRestConnectionImpl::AddHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestConnectionImpl::AddHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -238,7 +237,7 @@ TargetPoolsRestConnectionImpl::AddInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestConnectionImpl::AddInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -255,7 +254,6 @@ TargetPoolsRestConnectionImpl::AddInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestConnectionImpl::AddInstance(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -413,9 +411,8 @@ TargetPoolsRestConnectionImpl::DeleteTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestConnectionImpl::DeleteTargetPool(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::
-        DeleteTargetPoolRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                    DeleteTargetPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -430,7 +427,6 @@ TargetPoolsRestConnectionImpl::DeleteTargetPool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestConnectionImpl::DeleteTargetPool(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -579,9 +575,8 @@ TargetPoolsRestConnectionImpl::InsertTargetPool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestConnectionImpl::InsertTargetPool(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::
-        InsertTargetPoolRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                    InsertTargetPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -596,7 +591,6 @@ TargetPoolsRestConnectionImpl::InsertTargetPool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestConnectionImpl::InsertTargetPool(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -748,9 +742,8 @@ TargetPoolsRestConnectionImpl::RemoveHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestConnectionImpl::RemoveHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::
-        RemoveHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                    RemoveHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -765,7 +758,6 @@ TargetPoolsRestConnectionImpl::RemoveHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestConnectionImpl::RemoveHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -881,7 +873,7 @@ TargetPoolsRestConnectionImpl::RemoveInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestConnectionImpl::RemoveInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::RemoveInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -898,7 +890,6 @@ TargetPoolsRestConnectionImpl::RemoveInstance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestConnectionImpl::RemoveInstance(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1015,7 +1006,7 @@ TargetPoolsRestConnectionImpl::SetBackup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestConnectionImpl::SetBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1033,7 +1024,6 @@ TargetPoolsRestConnectionImpl::SetBackup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestConnectionImpl::SetBackup(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1149,9 +1139,8 @@ TargetPoolsRestConnectionImpl::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetPoolsRestConnectionImpl::SetSecurityPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_pools::v1::
-        SetSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_pools::v1::
+                    SetSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1166,7 +1155,6 @@ TargetPoolsRestConnectionImpl::SetSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetPoolsRestConnectionImpl::SetSecurityPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

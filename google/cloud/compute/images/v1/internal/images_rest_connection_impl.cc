@@ -104,7 +104,7 @@ ImagesRestConnectionImpl::DeleteImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestConnectionImpl::DeleteImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -121,7 +121,6 @@ ImagesRestConnectionImpl::DeleteImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestConnectionImpl::DeleteImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -233,7 +232,7 @@ ImagesRestConnectionImpl::Deprecate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestConnectionImpl::Deprecate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -249,7 +248,6 @@ ImagesRestConnectionImpl::Deprecate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestConnectionImpl::Deprecate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -410,7 +408,7 @@ ImagesRestConnectionImpl::InsertImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestConnectionImpl::InsertImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::InsertImageRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -427,7 +425,6 @@ ImagesRestConnectionImpl::InsertImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestConnectionImpl::InsertImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -574,7 +571,7 @@ ImagesRestConnectionImpl::PatchImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestConnectionImpl::PatchImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -590,7 +587,6 @@ ImagesRestConnectionImpl::PatchImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestConnectionImpl::PatchImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -718,7 +714,7 @@ ImagesRestConnectionImpl::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesRestConnectionImpl::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -734,7 +730,6 @@ ImagesRestConnectionImpl::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesRestConnectionImpl::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

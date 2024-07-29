@@ -63,14 +63,12 @@ class MockIDSConnection : public ids_v1::IDSConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateEndpoint,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::ids::v1::CreateEndpointRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::Endpoint>>,
-              CreateEndpoint,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateEndpoint, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -82,14 +80,12 @@ class MockIDSConnection : public ids_v1::IDSConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteEndpoint,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::ids::v1::DeleteEndpointRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::OperationMetadata>>,
-              DeleteEndpoint,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteEndpoint, (google::longrunning::Operation const& operation),
               (override));
 };
 

@@ -44,23 +44,22 @@ CatalogServiceTracingConnection::CreateEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::CreateEntryType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateEntryType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateEntryType(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateEntryType(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceTracingConnection::CreateEntryType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateEntryType");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateEntryType(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateEntryType(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
@@ -74,23 +73,22 @@ CatalogServiceTracingConnection::UpdateEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::UpdateEntryType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateEntryType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateEntryType(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateEntryType(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceTracingConnection::UpdateEntryType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateEntryType");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateEntryType(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateEntryType(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -104,23 +102,22 @@ CatalogServiceTracingConnection::DeleteEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::DeleteEntryType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteEntryType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteEntryType(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteEntryType(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceTracingConnection::DeleteEntryType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteEntryType");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteEntryType(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteEntryType(operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::EntryType>
@@ -154,24 +151,23 @@ CatalogServiceTracingConnection::CreateAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::CreateAspectType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateAspectType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateAspectType(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateAspectType(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceTracingConnection::CreateAspectType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateAspectType");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateAspectType(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAspectType(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
@@ -185,24 +181,23 @@ CatalogServiceTracingConnection::UpdateAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::UpdateAspectType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateAspectType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateAspectType(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateAspectType(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceTracingConnection::UpdateAspectType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateAspectType");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateAspectType(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAspectType(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -216,24 +211,23 @@ CatalogServiceTracingConnection::DeleteAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::DeleteAspectType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteAspectType");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteAspectType(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteAspectType(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceTracingConnection::DeleteAspectType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteAspectType");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteAspectType(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAspectType(operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::AspectType>
@@ -267,24 +261,23 @@ CatalogServiceTracingConnection::CreateEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::CreateEntryGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateEntryGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateEntryGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateEntryGroup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceTracingConnection::CreateEntryGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::CreateEntryGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateEntryGroup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateEntryGroup(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
@@ -298,24 +291,23 @@ CatalogServiceTracingConnection::UpdateEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::UpdateEntryGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateEntryGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateEntryGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateEntryGroup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceTracingConnection::UpdateEntryGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::UpdateEntryGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateEntryGroup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateEntryGroup(operation));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
@@ -329,24 +321,23 @@ CatalogServiceTracingConnection::DeleteEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceTracingConnection::DeleteEntryGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteEntryGroup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteEntryGroup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteEntryGroup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceTracingConnection::DeleteEntryGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dataplex_v1::CatalogServiceConnection::DeleteEntryGroup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteEntryGroup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteEntryGroup(operation));
 }
 
 StreamRange<google::cloud::dataplex::v1::EntryGroup>

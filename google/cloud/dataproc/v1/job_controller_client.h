@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_JOB_CONTROLLER_CLIENT_H
 
 #include "google/cloud/dataproc/v1/job_controller_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -197,9 +196,8 @@ class JobControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
-      ExperimentalTag, NoAwaitTag, std::string const& project_id,
-      std::string const& region, google::cloud::dataproc::v1::Job const& job,
-      Options opts = {});
+      NoAwaitTag, std::string const& project_id, std::string const& region,
+      google::cloud::dataproc::v1::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -251,8 +249,7 @@ class JobControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SubmitJobAsOperation(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataproc::v1::SubmitJobRequest const& request,
+      NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -265,8 +262,7 @@ class JobControllerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

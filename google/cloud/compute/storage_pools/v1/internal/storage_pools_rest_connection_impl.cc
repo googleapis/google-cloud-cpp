@@ -149,9 +149,8 @@ StoragePoolsRestConnectionImpl::DeleteStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsRestConnectionImpl::DeleteStoragePool(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::
-        DeleteStoragePoolRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                    DeleteStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -166,7 +165,6 @@ StoragePoolsRestConnectionImpl::DeleteStoragePool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsRestConnectionImpl::DeleteStoragePool(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -314,9 +312,8 @@ StoragePoolsRestConnectionImpl::InsertStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsRestConnectionImpl::InsertStoragePool(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::
-        InsertStoragePoolRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                    InsertStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -331,7 +328,6 @@ StoragePoolsRestConnectionImpl::InsertStoragePool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsRestConnectionImpl::InsertStoragePool(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -552,9 +548,8 @@ StoragePoolsRestConnectionImpl::UpdateStoragePool(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 StoragePoolsRestConnectionImpl::UpdateStoragePool(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::storage_pools::v1::
-        UpdateStoragePoolRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::storage_pools::v1::
+                    UpdateStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -569,7 +564,6 @@ StoragePoolsRestConnectionImpl::UpdateStoragePool(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 StoragePoolsRestConnectionImpl::UpdateStoragePool(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

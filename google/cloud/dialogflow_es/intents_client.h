@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/intents_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -639,7 +638,7 @@ class IntentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateIntents(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::string const& intent_batch_uri, Options opts = {});
 
   // clang-format off
@@ -704,7 +703,7 @@ class IntentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateIntents(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline,
       Options opts = {});
 
@@ -772,7 +771,7 @@ class IntentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateIntents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
       Options opts = {});
 
@@ -786,8 +785,7 @@ class IntentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-  BatchUpdateIntents(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  BatchUpdateIntents(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -852,7 +850,7 @@ class IntentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteIntents(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::Intent> const& intents,
       Options opts = {});
 
@@ -919,7 +917,7 @@ class IntentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteIntents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
       Options opts = {});
 
@@ -933,8 +931,7 @@ class IntentsClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<IntentsConnection> connection_;

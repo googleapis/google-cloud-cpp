@@ -46,15 +46,14 @@ TensorboardServiceClient::CreateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceClient::CreateTensorboard(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateTensorboardRequest request;
   request.set_parent(parent);
   *request.mutable_tensorboard() = tensorboard;
-  return connection_->CreateTensorboard(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->CreateTensorboard(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
@@ -67,20 +66,18 @@ TensorboardServiceClient::CreateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceClient::CreateTensorboard(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTensorboard(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->CreateTensorboard(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceClient::CreateTensorboard(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateTensorboard(ExperimentalTag{}, operation);
+  return connection_->CreateTensorboard(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
@@ -113,15 +110,13 @@ TensorboardServiceClient::UpdateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceClient::UpdateTensorboard(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
+    NoAwaitTag, google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateTensorboardRequest request;
   *request.mutable_tensorboard() = tensorboard;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateTensorboard(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->UpdateTensorboard(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
@@ -134,20 +129,18 @@ TensorboardServiceClient::UpdateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceClient::UpdateTensorboard(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTensorboard(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->UpdateTensorboard(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceClient::UpdateTensorboard(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateTensorboard(ExperimentalTag{}, operation);
+  return connection_->UpdateTensorboard(operation);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Tensorboard>
@@ -177,14 +170,12 @@ TensorboardServiceClient::DeleteTensorboard(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-TensorboardServiceClient::DeleteTensorboard(ExperimentalTag, NoAwaitTag,
-                                            std::string const& name,
+TensorboardServiceClient::DeleteTensorboard(NoAwaitTag, std::string const& name,
                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTensorboardRequest request;
   request.set_name(name);
-  return connection_->DeleteTensorboard(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->DeleteTensorboard(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -197,20 +188,18 @@ TensorboardServiceClient::DeleteTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceClient::DeleteTensorboard(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTensorboard(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->DeleteTensorboard(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceClient::DeleteTensorboard(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTensorboard(ExperimentalTag{}, operation);
+  return connection_->DeleteTensorboard(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
@@ -336,15 +325,13 @@ TensorboardServiceClient::DeleteTensorboardExperiment(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-TensorboardServiceClient::DeleteTensorboardExperiment(ExperimentalTag,
-                                                      NoAwaitTag,
+TensorboardServiceClient::DeleteTensorboardExperiment(NoAwaitTag,
                                                       std::string const& name,
                                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest request;
   request.set_name(name);
-  return connection_->DeleteTensorboardExperiment(ExperimentalTag{},
-                                                  NoAwaitTag{}, request);
+  return connection_->DeleteTensorboardExperiment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -358,21 +345,19 @@ TensorboardServiceClient::DeleteTensorboardExperiment(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceClient::DeleteTensorboardExperiment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTensorboardExperiment(ExperimentalTag{},
-                                                  NoAwaitTag{}, request);
+  return connection_->DeleteTensorboardExperiment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceClient::DeleteTensorboardExperiment(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTensorboardExperiment(ExperimentalTag{}, operation);
+  return connection_->DeleteTensorboardExperiment(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
@@ -482,14 +467,13 @@ TensorboardServiceClient::DeleteTensorboardRun(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-TensorboardServiceClient::DeleteTensorboardRun(ExperimentalTag, NoAwaitTag,
+TensorboardServiceClient::DeleteTensorboardRun(NoAwaitTag,
                                                std::string const& name,
                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTensorboardRunRequest request;
   request.set_name(name);
-  return connection_->DeleteTensorboardRun(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->DeleteTensorboardRun(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -502,20 +486,18 @@ TensorboardServiceClient::DeleteTensorboardRun(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceClient::DeleteTensorboardRun(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTensorboardRun(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->DeleteTensorboardRun(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceClient::DeleteTensorboardRun(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTensorboardRun(ExperimentalTag{}, operation);
+  return connection_->DeleteTensorboardRun(operation);
 }
 
 StatusOr<
@@ -631,15 +613,13 @@ TensorboardServiceClient::DeleteTensorboardTimeSeries(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-TensorboardServiceClient::DeleteTensorboardTimeSeries(ExperimentalTag,
-                                                      NoAwaitTag,
+TensorboardServiceClient::DeleteTensorboardTimeSeries(NoAwaitTag,
                                                       std::string const& name,
                                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest request;
   request.set_name(name);
-  return connection_->DeleteTensorboardTimeSeries(ExperimentalTag{},
-                                                  NoAwaitTag{}, request);
+  return connection_->DeleteTensorboardTimeSeries(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -653,21 +633,19 @@ TensorboardServiceClient::DeleteTensorboardTimeSeries(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceClient::DeleteTensorboardTimeSeries(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTensorboardTimeSeries(ExperimentalTag{},
-                                                  NoAwaitTag{}, request);
+  return connection_->DeleteTensorboardTimeSeries(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceClient::DeleteTensorboardTimeSeries(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTensorboardTimeSeries(ExperimentalTag{}, operation);
+  return connection_->DeleteTensorboardTimeSeries(operation);
 }
 
 StatusOr<

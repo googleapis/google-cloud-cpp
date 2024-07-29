@@ -73,15 +73,13 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateMembership,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkehub::v1::CreateMembershipRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Membership>>,
               CreateMembership,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, CreateFeature)` is now ambiguous. Use
@@ -92,14 +90,12 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateFeature,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::gkehub::v1::CreateFeatureRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
-              CreateFeature,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateFeature, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -113,15 +109,13 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteMembership,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkehub::v1::DeleteMembershipRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
               DeleteMembership,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteFeature)` is now ambiguous. Use
@@ -132,14 +126,12 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteFeature,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::gkehub::v1::DeleteFeatureRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
-              DeleteFeature,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteFeature, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -152,15 +144,13 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateMembership,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::gkehub::v1::UpdateMembershipRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Membership>>,
               UpdateMembership,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateFeature)` is now ambiguous. Use
@@ -171,14 +161,12 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateFeature,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::gkehub::v1::UpdateFeatureRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
-              UpdateFeature,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateFeature, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

@@ -160,7 +160,7 @@ ServiceManagerConnectionImpl::CreateService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::CreateService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -176,7 +176,7 @@ ServiceManagerConnectionImpl::CreateService(
 
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
 ServiceManagerConnectionImpl::CreateService(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::api::servicemanagement::v1::
@@ -254,7 +254,7 @@ ServiceManagerConnectionImpl::DeleteService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::DeleteService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -270,7 +270,7 @@ ServiceManagerConnectionImpl::DeleteService(
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
 ServiceManagerConnectionImpl::DeleteService(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::api::servicemanagement::v1::
@@ -348,7 +348,7 @@ ServiceManagerConnectionImpl::UndeleteService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::UndeleteService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -364,7 +364,7 @@ ServiceManagerConnectionImpl::UndeleteService(
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerConnectionImpl::UndeleteService(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::api::servicemanagement::v1::
@@ -509,7 +509,7 @@ ServiceManagerConnectionImpl::SubmitConfigSource(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::SubmitConfigSource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -527,7 +527,7 @@ ServiceManagerConnectionImpl::SubmitConfigSource(
 
 future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerConnectionImpl::SubmitConfigSource(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::api::servicemanagement::v1::
@@ -657,7 +657,7 @@ ServiceManagerConnectionImpl::CreateServiceRollout(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnectionImpl::CreateServiceRollout(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -675,7 +675,7 @@ ServiceManagerConnectionImpl::CreateServiceRollout(
 
 future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerConnectionImpl::CreateServiceRollout(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::api::servicemanagement::v1::

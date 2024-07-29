@@ -63,12 +63,11 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::memcache::v1::CreateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> CreateInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
@@ -76,12 +75,11 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::memcache::v1::UpdateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
@@ -89,12 +87,11 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateParameters(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::memcache::v1::UpdateParametersRequest const& request)
       override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
@@ -102,25 +99,23 @@ class CloudMemcacheConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::memcache::v1::DeleteInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
-  DeleteInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  DeleteInstance(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> ApplyParameters(
       google::cloud::memcache::v1::ApplyParametersRequest const& request)
       override;
 
   StatusOr<google::longrunning::Operation> ApplyParameters(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::memcache::v1::ApplyParametersRequest const& request)
       override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> ApplyParameters(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
@@ -128,12 +123,11 @@ class CloudMemcacheConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

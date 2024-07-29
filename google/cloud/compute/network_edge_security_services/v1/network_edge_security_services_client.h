@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORK_EDGE_SECURITY_SERVICES_V1_NETWORK_EDGE_SECURITY_SERVICES_CLIENT_H
 
 #include "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -229,8 +228,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       std::string const& network_edge_security_service, Options opts = {});
 
   // clang-format off
@@ -286,7 +284,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
@@ -302,7 +300,6 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEdgeSecurityService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -422,8 +419,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
           network_edge_security_service_resource,
       Options opts = {});
@@ -482,7 +478,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
@@ -498,7 +494,6 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkEdgeSecurityService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -557,8 +552,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       std::string const& network_edge_security_service,
       std::string const& update_mask,
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService const&
@@ -618,7 +612,7 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request,
       Options opts = {});
@@ -634,7 +628,6 @@ class NetworkEdgeSecurityServicesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkEdgeSecurityService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

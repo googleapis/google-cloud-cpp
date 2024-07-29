@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_MIGRATION_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/migration_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -225,7 +224,7 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::aiplatform::v1::MigrateResourceRequest> const&
           migrate_resource_requests,
       Options opts = {});
@@ -283,7 +282,7 @@ class MigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchMigrateResources(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
           request,
       Options opts = {});
@@ -298,8 +297,7 @@ class MigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
-  BatchMigrateResources(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  BatchMigrateResources(google::longrunning::Operation const& operation,
                         Options opts = {});
 
  private:

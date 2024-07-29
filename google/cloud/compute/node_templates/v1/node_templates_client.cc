@@ -68,8 +68,7 @@ NodeTemplatesClient::DeleteNodeTemplate(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-NodeTemplatesClient::DeleteNodeTemplate(ExperimentalTag, NoAwaitTag,
-                                        std::string const& project,
+NodeTemplatesClient::DeleteNodeTemplate(NoAwaitTag, std::string const& project,
                                         std::string const& region,
                                         std::string const& node_template,
                                         Options opts) {
@@ -79,8 +78,7 @@ NodeTemplatesClient::DeleteNodeTemplate(ExperimentalTag, NoAwaitTag,
   request.set_project(project);
   request.set_region(region);
   request.set_node_template(node_template);
-  return connection_->DeleteNodeTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DeleteNodeTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,21 +92,19 @@ NodeTemplatesClient::DeleteNodeTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesClient::DeleteNodeTemplate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::node_templates::v1::
         DeleteNodeTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNodeTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DeleteNodeTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesClient::DeleteNodeTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteNodeTemplate(ExperimentalTag{}, operation);
+  return connection_->DeleteNodeTemplate(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeTemplate>
@@ -171,8 +167,7 @@ NodeTemplatesClient::InsertNodeTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesClient::InsertNodeTemplate(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::NodeTemplate const& node_template_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -181,8 +176,7 @@ NodeTemplatesClient::InsertNodeTemplate(
   request.set_project(project);
   request.set_region(region);
   *request.mutable_node_template_resource() = node_template_resource;
-  return connection_->InsertNodeTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->InsertNodeTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -196,21 +190,19 @@ NodeTemplatesClient::InsertNodeTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesClient::InsertNodeTemplate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::node_templates::v1::
         InsertNodeTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertNodeTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->InsertNodeTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesClient::InsertNodeTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertNodeTemplate(ExperimentalTag{}, operation);
+  return connection_->InsertNodeTemplate(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NodeTemplate>

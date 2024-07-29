@@ -22,7 +22,6 @@
 #include "google/cloud/bigquerycontrol/v2/internal/row_access_policy_retry_traits.h"
 #include "google/cloud/bigquerycontrol/v2/row_access_policy_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"

@@ -66,24 +66,23 @@ VmwareEngineTracingConnection::CreatePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreatePrivateCloud(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreatePrivateCloud");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreatePrivateCloud(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreatePrivateCloud(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::CreatePrivateCloud(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreatePrivateCloud");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreatePrivateCloud(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePrivateCloud(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -98,24 +97,23 @@ VmwareEngineTracingConnection::UpdatePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdatePrivateCloud(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateCloud");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdatePrivateCloud(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdatePrivateCloud(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::UpdatePrivateCloud(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateCloud");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdatePrivateCloud(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePrivateCloud(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -130,24 +128,23 @@ VmwareEngineTracingConnection::DeletePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeletePrivateCloud(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeletePrivateCloud");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeletePrivateCloud(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeletePrivateCloud(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::DeletePrivateCloud(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeletePrivateCloud");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeletePrivateCloud(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePrivateCloud(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -163,25 +160,24 @@ VmwareEngineTracingConnection::UndeletePrivateCloud(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UndeletePrivateCloud(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UndeletePrivateCloud");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UndeletePrivateCloud(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UndeletePrivateCloud(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::UndeletePrivateCloud(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UndeletePrivateCloud");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UndeletePrivateCloud(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UndeletePrivateCloud(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Cluster>
@@ -215,23 +211,21 @@ VmwareEngineTracingConnection::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineTracingConnection::CreateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateCluster(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
@@ -245,23 +239,21 @@ VmwareEngineTracingConnection::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineTracingConnection::UpdateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateCluster(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -275,23 +267,21 @@ VmwareEngineTracingConnection::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeleteCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteCluster(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Node>
@@ -362,25 +352,24 @@ VmwareEngineTracingConnection::CreateExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateExternalAddress(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateExternalAddress");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->CreateExternalAddress(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->CreateExternalAddress(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
 VmwareEngineTracingConnection::CreateExternalAddress(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateExternalAddress");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateExternalAddress(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExternalAddress(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
@@ -396,25 +385,24 @@ VmwareEngineTracingConnection::UpdateExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateExternalAddress(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAddress");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->UpdateExternalAddress(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->UpdateExternalAddress(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
 VmwareEngineTracingConnection::UpdateExternalAddress(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAddress");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateExternalAddress(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExternalAddress(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -430,25 +418,24 @@ VmwareEngineTracingConnection::DeleteExternalAddress(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeleteExternalAddress(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAddress");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->DeleteExternalAddress(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->DeleteExternalAddress(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteExternalAddress(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAddress");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteExternalAddress(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExternalAddress(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::Subnet>
@@ -482,23 +469,21 @@ VmwareEngineTracingConnection::UpdateSubnet(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateSubnet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateSubnet(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateSubnet(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
 VmwareEngineTracingConnection::UpdateSubnet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateSubnet");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateSubnet(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateSubnet(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>
@@ -536,25 +521,24 @@ VmwareEngineTracingConnection::CreateExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateExternalAccessRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateExternalAccessRule");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateExternalAccessRule(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->CreateExternalAccessRule(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
 VmwareEngineTracingConnection::CreateExternalAccessRule(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateExternalAccessRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateExternalAccessRule(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateExternalAccessRule(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
@@ -570,25 +554,24 @@ VmwareEngineTracingConnection::UpdateExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateExternalAccessRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAccessRule");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateExternalAccessRule(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->UpdateExternalAccessRule(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
 VmwareEngineTracingConnection::UpdateExternalAccessRule(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateExternalAccessRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateExternalAccessRule(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateExternalAccessRule(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -604,25 +587,24 @@ VmwareEngineTracingConnection::DeleteExternalAccessRule(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeleteExternalAccessRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAccessRule");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteExternalAccessRule(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->DeleteExternalAccessRule(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteExternalAccessRule(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteExternalAccessRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteExternalAccessRule(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteExternalAccessRule(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::LoggingServer>
@@ -659,25 +641,24 @@ VmwareEngineTracingConnection::CreateLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateLoggingServer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateLoggingServer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateLoggingServer(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateLoggingServer(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
 VmwareEngineTracingConnection::CreateLoggingServer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateLoggingServer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateLoggingServer(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateLoggingServer(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
@@ -693,25 +674,24 @@ VmwareEngineTracingConnection::UpdateLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateLoggingServer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateLoggingServer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateLoggingServer(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateLoggingServer(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
 VmwareEngineTracingConnection::UpdateLoggingServer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateLoggingServer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateLoggingServer(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateLoggingServer(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -727,25 +707,24 @@ VmwareEngineTracingConnection::DeleteLoggingServer(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeleteLoggingServer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteLoggingServer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteLoggingServer(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteLoggingServer(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteLoggingServer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteLoggingServer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteLoggingServer(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteLoggingServer(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NodeType>
@@ -801,25 +780,24 @@ VmwareEngineTracingConnection::ResetNsxCredentials(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::ResetNsxCredentials(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ResetNsxCredentials");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ResetNsxCredentials(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ResetNsxCredentials(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::ResetNsxCredentials(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ResetNsxCredentials");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ResetNsxCredentials(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ResetNsxCredentials(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -835,25 +813,24 @@ VmwareEngineTracingConnection::ResetVcenterCredentials(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::ResetVcenterCredentials(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ResetVcenterCredentials");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ResetVcenterCredentials(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->ResetVcenterCredentials(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineTracingConnection::ResetVcenterCredentials(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::ResetVcenterCredentials");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ResetVcenterCredentials(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ResetVcenterCredentials(operation));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
@@ -878,25 +855,24 @@ VmwareEngineTracingConnection::UpdateDnsForwarding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateDnsForwarding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateDnsForwarding");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateDnsForwarding(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateDnsForwarding(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
 VmwareEngineTracingConnection::UpdateDnsForwarding(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateDnsForwarding");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateDnsForwarding(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDnsForwarding(operation));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
@@ -933,25 +909,24 @@ VmwareEngineTracingConnection::CreateNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateNetworkPeering(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPeering");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateNetworkPeering(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateNetworkPeering(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
 VmwareEngineTracingConnection::CreateNetworkPeering(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPeering");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateNetworkPeering(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateNetworkPeering(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -967,25 +942,24 @@ VmwareEngineTracingConnection::DeleteNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeleteNetworkPeering(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPeering");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteNetworkPeering(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteNetworkPeering(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteNetworkPeering(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPeering");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteNetworkPeering(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkPeering(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
@@ -1001,25 +975,24 @@ VmwareEngineTracingConnection::UpdateNetworkPeering(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateNetworkPeering(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPeering");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateNetworkPeering(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateNetworkPeering(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>
 VmwareEngineTracingConnection::UpdateNetworkPeering(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPeering");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateNetworkPeering(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateNetworkPeering(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
@@ -1047,25 +1020,24 @@ VmwareEngineTracingConnection::CreateHcxActivationKey(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateHcxActivationKey(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateHcxActivationKey");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->CreateHcxActivationKey(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->CreateHcxActivationKey(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
 VmwareEngineTracingConnection::CreateHcxActivationKey(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateHcxActivationKey");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateHcxActivationKey(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateHcxActivationKey(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
@@ -1124,25 +1096,24 @@ VmwareEngineTracingConnection::CreateNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateNetworkPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateNetworkPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateNetworkPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineTracingConnection::CreateNetworkPolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateNetworkPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateNetworkPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateNetworkPolicy(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
@@ -1158,25 +1129,24 @@ VmwareEngineTracingConnection::UpdateNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateNetworkPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateNetworkPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateNetworkPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
 VmwareEngineTracingConnection::UpdateNetworkPolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateNetworkPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateNetworkPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateNetworkPolicy(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -1192,25 +1162,24 @@ VmwareEngineTracingConnection::DeleteNetworkPolicy(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeleteNetworkPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteNetworkPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteNetworkPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteNetworkPolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteNetworkPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteNetworkPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNetworkPolicy(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
@@ -1250,28 +1219,25 @@ VmwareEngineTracingConnection::CreateManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateManagementDnsZoneBinding(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::vmwareengine::v1::
-        CreateManagementDnsZoneBindingRequest const& request) {
+    NoAwaitTag, google::cloud::vmwareengine::v1::
+                    CreateManagementDnsZoneBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "CreateManagementDnsZoneBinding");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateManagementDnsZoneBinding(ExperimentalTag{},
-                                                    NoAwaitTag{}, request));
+      *span, child_->CreateManagementDnsZoneBinding(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineTracingConnection::CreateManagementDnsZoneBinding(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "CreateManagementDnsZoneBinding");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->CreateManagementDnsZoneBinding(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateManagementDnsZoneBinding(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
@@ -1288,28 +1254,25 @@ VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::vmwareengine::v1::
-        UpdateManagementDnsZoneBindingRequest const& request) {
+    NoAwaitTag, google::cloud::vmwareengine::v1::
+                    UpdateManagementDnsZoneBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "UpdateManagementDnsZoneBinding");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateManagementDnsZoneBinding(ExperimentalTag{},
-                                                    NoAwaitTag{}, request));
+      *span, child_->UpdateManagementDnsZoneBinding(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineTracingConnection::UpdateManagementDnsZoneBinding(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "UpdateManagementDnsZoneBinding");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->UpdateManagementDnsZoneBinding(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateManagementDnsZoneBinding(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -1326,28 +1289,25 @@ VmwareEngineTracingConnection::DeleteManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeleteManagementDnsZoneBinding(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::vmwareengine::v1::
-        DeleteManagementDnsZoneBindingRequest const& request) {
+    NoAwaitTag, google::cloud::vmwareengine::v1::
+                    DeleteManagementDnsZoneBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "DeleteManagementDnsZoneBinding");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteManagementDnsZoneBinding(ExperimentalTag{},
-                                                    NoAwaitTag{}, request));
+      *span, child_->DeleteManagementDnsZoneBinding(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteManagementDnsZoneBinding(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "DeleteManagementDnsZoneBinding");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->DeleteManagementDnsZoneBinding(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteManagementDnsZoneBinding(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
@@ -1364,28 +1324,25 @@ VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::vmwareengine::v1::
-        RepairManagementDnsZoneBindingRequest const& request) {
+    NoAwaitTag, google::cloud::vmwareengine::v1::
+                    RepairManagementDnsZoneBindingRequest const& request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "RepairManagementDnsZoneBinding");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RepairManagementDnsZoneBinding(ExperimentalTag{},
-                                                    NoAwaitTag{}, request));
+      *span, child_->RepairManagementDnsZoneBinding(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
 VmwareEngineTracingConnection::RepairManagementDnsZoneBinding(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::"
       "RepairManagementDnsZoneBinding");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span),
-      child_->RepairManagementDnsZoneBinding(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RepairManagementDnsZoneBinding(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -1401,25 +1358,24 @@ VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateVmwareEngineNetwork");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateVmwareEngineNetwork(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->CreateVmwareEngineNetwork(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineTracingConnection::CreateVmwareEngineNetwork(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreateVmwareEngineNetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateVmwareEngineNetwork(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateVmwareEngineNetwork(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
@@ -1435,25 +1391,24 @@ VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateVmwareEngineNetwork");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateVmwareEngineNetwork(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->UpdateVmwareEngineNetwork(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
 VmwareEngineTracingConnection::UpdateVmwareEngineNetwork(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdateVmwareEngineNetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateVmwareEngineNetwork(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateVmwareEngineNetwork(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -1469,25 +1424,24 @@ VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteVmwareEngineNetwork");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteVmwareEngineNetwork(ExperimentalTag{}, NoAwaitTag{},
-                                               request));
+      *span, child_->DeleteVmwareEngineNetwork(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeleteVmwareEngineNetwork(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeleteVmwareEngineNetwork");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteVmwareEngineNetwork(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteVmwareEngineNetwork(operation));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -1525,25 +1479,24 @@ VmwareEngineTracingConnection::CreatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::CreatePrivateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreatePrivateConnection");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreatePrivateConnection(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->CreatePrivateConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
 VmwareEngineTracingConnection::CreatePrivateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::CreatePrivateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreatePrivateConnection(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreatePrivateConnection(operation));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -1581,25 +1534,24 @@ VmwareEngineTracingConnection::UpdatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::UpdatePrivateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateConnection");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdatePrivateConnection(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->UpdatePrivateConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>
 VmwareEngineTracingConnection::UpdatePrivateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::UpdatePrivateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdatePrivateConnection(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdatePrivateConnection(operation));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
@@ -1615,25 +1567,24 @@ VmwareEngineTracingConnection::DeletePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::DeletePrivateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeletePrivateConnection");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeletePrivateConnection(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->DeletePrivateConnection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineTracingConnection::DeletePrivateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::DeletePrivateConnection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeletePrivateConnection(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePrivateConnection(operation));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>
@@ -1663,25 +1614,24 @@ VmwareEngineTracingConnection::GrantDnsBindPermission(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::GrantDnsBindPermission(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::GrantDnsBindPermission");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->GrantDnsBindPermission(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->GrantDnsBindPermission(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
 VmwareEngineTracingConnection::GrantDnsBindPermission(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::GrantDnsBindPermission");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->GrantDnsBindPermission(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->GrantDnsBindPermission(operation));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
@@ -1707,25 +1657,24 @@ VmwareEngineTracingConnection::RevokeDnsBindPermission(
 
 StatusOr<google::longrunning::Operation>
 VmwareEngineTracingConnection::RevokeDnsBindPermission(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::RevokeDnsBindPermission");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RevokeDnsBindPermission(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->RevokeDnsBindPermission(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>
 VmwareEngineTracingConnection::RevokeDnsBindPermission(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vmwareengine_v1::VmwareEngineConnection::RevokeDnsBindPermission");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RevokeDnsBindPermission(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RevokeDnsBindPermission(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

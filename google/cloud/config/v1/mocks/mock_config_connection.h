@@ -65,15 +65,13 @@ class MockConfigConnection : public config_v1::ConfigConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDeployment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::config::v1::CreateDeploymentRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
               CreateDeployment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateDeployment)` is now ambiguous. Use
@@ -85,15 +83,13 @@ class MockConfigConnection : public config_v1::ConfigConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDeployment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::config::v1::UpdateDeploymentRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
               UpdateDeployment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteDeployment)` is now ambiguous. Use
@@ -105,15 +101,13 @@ class MockConfigConnection : public config_v1::ConfigConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDeployment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::config::v1::DeleteDeploymentRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
               DeleteDeployment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::config::v1::Revision>), ListRevisions,
               (google::cloud::config::v1::ListRevisionsRequest request),
@@ -162,14 +156,12 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, LockDeployment,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::config::v1::LockDeploymentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
-              LockDeployment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              LockDeployment, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -182,15 +174,13 @@ class MockConfigConnection : public config_v1::ConfigConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UnlockDeployment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::config::v1::UnlockDeploymentRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Deployment>>,
               UnlockDeployment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::config::v1::LockInfo>, ExportLockInfo,
               (google::cloud::config::v1::ExportLockInfoRequest const& request),
@@ -205,14 +195,12 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePreview,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::config::v1::CreatePreviewRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Preview>>,
-              CreatePreview,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreatePreview, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::config::v1::Preview>, GetPreview,
@@ -232,14 +220,12 @@ class MockConfigConnection : public config_v1::ConfigConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePreview,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::config::v1::DeletePreviewRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::config::v1::Preview>>,
-              DeletePreview,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeletePreview, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

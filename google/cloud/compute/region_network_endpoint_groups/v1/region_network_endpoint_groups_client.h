@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_NETWORK_ENDPOINT_GROUPS_V1_REGION_NETWORK_ENDPOINT_GROUPS_CLIENT_H
 
 #include "google/cloud/compute/region_network_endpoint_groups/v1/region_network_endpoint_groups_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -150,8 +149,8 @@ class RegionNetworkEndpointGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachNetworkEndpoints(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& network_endpoint_group,
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& network_endpoint_group,
       google::cloud::cpp::compute::v1::
           RegionNetworkEndpointGroupsAttachEndpointsRequest const&
               region_network_endpoint_groups_attach_endpoints_request_resource,
@@ -209,7 +208,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachNetworkEndpoints(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request,
       Options opts = {});
@@ -225,7 +224,6 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AttachNetworkEndpoints(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -281,8 +279,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteNetworkEndpointGroup(ExperimentalTag, NoAwaitTag,
-                             std::string const& project,
+  DeleteNetworkEndpointGroup(NoAwaitTag, std::string const& project,
                              std::string const& region,
                              std::string const& network_endpoint_group,
                              Options opts = {});
@@ -341,7 +338,7 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEndpointGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request,
       Options opts = {});
@@ -357,7 +354,6 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEndpointGroup(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -416,8 +412,8 @@ class RegionNetworkEndpointGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachNetworkEndpoints(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& network_endpoint_group,
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& network_endpoint_group,
       google::cloud::cpp::compute::v1::
           RegionNetworkEndpointGroupsDetachEndpointsRequest const&
               region_network_endpoint_groups_detach_endpoints_request_resource,
@@ -475,7 +471,7 @@ class RegionNetworkEndpointGroupsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachNetworkEndpoints(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request,
       Options opts = {});
@@ -491,7 +487,6 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DetachNetworkEndpoints(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -613,8 +608,7 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEndpointGroup(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::NetworkEndpointGroup const&
           network_endpoint_group_resource,
       Options opts = {});
@@ -673,7 +667,7 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEndpointGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request,
       Options opts = {});
@@ -689,7 +683,6 @@ class RegionNetworkEndpointGroupsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkEndpointGroup(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

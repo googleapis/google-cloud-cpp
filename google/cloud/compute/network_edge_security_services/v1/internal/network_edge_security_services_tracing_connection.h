@@ -57,13 +57,12 @@ class NetworkEdgeSecurityServicesTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEdgeSecurityService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>
@@ -78,13 +77,12 @@ class NetworkEdgeSecurityServicesTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkEdgeSecurityService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -94,13 +92,12 @@ class NetworkEdgeSecurityServicesTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchNetworkEdgeSecurityService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchNetworkEdgeSecurityService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

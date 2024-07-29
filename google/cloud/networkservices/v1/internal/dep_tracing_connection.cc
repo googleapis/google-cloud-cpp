@@ -69,25 +69,24 @@ DepServiceTracingConnection::CreateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceTracingConnection::CreateLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::CreateLbTrafficExtension");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->CreateLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->CreateLbTrafficExtension(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceTracingConnection::CreateLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::CreateLbTrafficExtension");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateLbTrafficExtension(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateLbTrafficExtension(operation));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -103,25 +102,24 @@ DepServiceTracingConnection::UpdateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceTracingConnection::UpdateLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::UpdateLbTrafficExtension");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->UpdateLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->UpdateLbTrafficExtension(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceTracingConnection::UpdateLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::UpdateLbTrafficExtension");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateLbTrafficExtension(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateLbTrafficExtension(operation));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -137,25 +135,24 @@ DepServiceTracingConnection::DeleteLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceTracingConnection::DeleteLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::DeleteLbTrafficExtension");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->DeleteLbTrafficExtension(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceTracingConnection::DeleteLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::DeleteLbTrafficExtension");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteLbTrafficExtension(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteLbTrafficExtension(operation));
 }
 
 StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -193,25 +190,24 @@ DepServiceTracingConnection::CreateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceTracingConnection::CreateLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::CreateLbRouteExtension");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->CreateLbRouteExtension(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->CreateLbRouteExtension(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceTracingConnection::CreateLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::CreateLbRouteExtension");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateLbRouteExtension(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateLbRouteExtension(operation));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -227,25 +223,24 @@ DepServiceTracingConnection::UpdateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceTracingConnection::UpdateLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::UpdateLbRouteExtension");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->UpdateLbRouteExtension(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->UpdateLbRouteExtension(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceTracingConnection::UpdateLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::UpdateLbRouteExtension");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateLbRouteExtension(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateLbRouteExtension(operation));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -261,25 +256,24 @@ DepServiceTracingConnection::DeleteLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceTracingConnection::DeleteLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::DeleteLbRouteExtension");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->DeleteLbRouteExtension(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->DeleteLbRouteExtension(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceTracingConnection::DeleteLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkservices_v1::DepServiceConnection::DeleteLbRouteExtension");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteLbRouteExtension(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteLbRouteExtension(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

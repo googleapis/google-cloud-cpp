@@ -22,7 +22,6 @@
 #include "google/cloud/automl/v1/internal/prediction_retry_traits.h"
 #include "google/cloud/automl/v1/prediction_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -195,12 +194,11 @@ class PredictionServiceConnection {
   BatchPredict(google::cloud::automl::v1::BatchPredictRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> BatchPredict(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::automl::v1::BatchPredictRequest const& request);
 
   virtual future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
-  BatchPredict(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  BatchPredict(google::longrunning::Operation const& operation);
 };
 
 /**

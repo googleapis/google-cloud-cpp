@@ -58,28 +58,25 @@ SnapshotSettingsTracingConnection::PatchSnapshotSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotSettingsTracingConnection::PatchSnapshotSettings(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::snapshot_settings::v1::
-        PatchSnapshotSettingsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::
+                    PatchSnapshotSettingsRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
       "PatchSnapshotSettings");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->PatchSnapshotSettings(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->PatchSnapshotSettings(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotSettingsTracingConnection::PatchSnapshotSettings(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_snapshot_settings_v1::SnapshotSettingsConnection::"
       "PatchSnapshotSettings");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchSnapshotSettings(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchSnapshotSettings(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

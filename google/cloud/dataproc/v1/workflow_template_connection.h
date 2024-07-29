@@ -22,7 +22,6 @@
 #include "google/cloud/dataproc/v1/internal/workflow_template_retry_traits.h"
 #include "google/cloud/dataproc/v1/workflow_template_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -210,13 +209,12 @@ class WorkflowTemplateServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
-  InstantiateWorkflowTemplate(ExperimentalTag,
-                              google::longrunning::Operation const& operation);
+  InstantiateWorkflowTemplate(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
@@ -225,13 +223,12 @@ class WorkflowTemplateServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   InstantiateInlineWorkflowTemplate(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataproc::v1::
-          InstantiateInlineWorkflowTemplateRequest const& request);
+      NoAwaitTag, google::cloud::dataproc::v1::
+                      InstantiateInlineWorkflowTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateInlineWorkflowTemplate(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   UpdateWorkflowTemplate(

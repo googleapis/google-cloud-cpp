@@ -65,21 +65,19 @@ ContactCenterInsightsClient::UploadConversation(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::UploadConversation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UploadConversation(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->UploadConversation(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
 ContactCenterInsightsClient::UploadConversation(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UploadConversation(ExperimentalTag{}, operation);
+  return connection_->UploadConversation(operation);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -167,14 +165,14 @@ ContactCenterInsightsClient::CreateAnalysis(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::CreateAnalysis(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::contactcenterinsights::v1::Analysis const& analysis,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contactcenterinsights::v1::CreateAnalysisRequest request;
   request.set_parent(parent);
   *request.mutable_analysis() = analysis;
-  return connection_->CreateAnalysis(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateAnalysis(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
@@ -188,20 +186,19 @@ ContactCenterInsightsClient::CreateAnalysis(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::CreateAnalysis(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAnalysis(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateAnalysis(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
 ContactCenterInsightsClient::CreateAnalysis(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAnalysis(ExperimentalTag{}, operation);
+  return connection_->CreateAnalysis(operation);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
@@ -270,17 +267,18 @@ ContactCenterInsightsClient::BulkAnalyzeConversations(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation>
-ContactCenterInsightsClient::BulkAnalyzeConversations(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
-    std::string const& filter, float analysis_percentage, Options opts) {
+ContactCenterInsightsClient::BulkAnalyzeConversations(NoAwaitTag,
+                                                      std::string const& parent,
+                                                      std::string const& filter,
+                                                      float analysis_percentage,
+                                                      Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest
       request;
   request.set_parent(parent);
   request.set_filter(filter);
   request.set_analysis_percentage(analysis_percentage);
-  return connection_->BulkAnalyzeConversations(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->BulkAnalyzeConversations(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -295,22 +293,20 @@ ContactCenterInsightsClient::BulkAnalyzeConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::BulkAnalyzeConversations(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::
         BulkAnalyzeConversationsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BulkAnalyzeConversations(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->BulkAnalyzeConversations(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
 ContactCenterInsightsClient::BulkAnalyzeConversations(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BulkAnalyzeConversations(ExperimentalTag{}, operation);
+  return connection_->BulkAnalyzeConversations(operation);
 }
 
 future<StatusOr<
@@ -327,8 +323,7 @@ ContactCenterInsightsClient::BulkDeleteConversations(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation>
-ContactCenterInsightsClient::BulkDeleteConversations(ExperimentalTag,
-                                                     NoAwaitTag,
+ContactCenterInsightsClient::BulkDeleteConversations(NoAwaitTag,
                                                      std::string const& parent,
                                                      std::string const& filter,
                                                      Options opts) {
@@ -337,8 +332,7 @@ ContactCenterInsightsClient::BulkDeleteConversations(ExperimentalTag,
       request;
   request.set_parent(parent);
   request.set_filter(filter);
-  return connection_->BulkDeleteConversations(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->BulkDeleteConversations(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -353,22 +347,20 @@ ContactCenterInsightsClient::BulkDeleteConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::BulkDeleteConversations(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::
         BulkDeleteConversationsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BulkDeleteConversations(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->BulkDeleteConversations(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
 ContactCenterInsightsClient::BulkDeleteConversations(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BulkDeleteConversations(ExperimentalTag{}, operation);
+  return connection_->BulkDeleteConversations(operation);
 }
 
 future<StatusOr<
@@ -382,14 +374,13 @@ ContactCenterInsightsClient::IngestConversations(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation>
-ContactCenterInsightsClient::IngestConversations(ExperimentalTag, NoAwaitTag,
+ContactCenterInsightsClient::IngestConversations(NoAwaitTag,
                                                  std::string const& parent,
                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contactcenterinsights::v1::IngestConversationsRequest request;
   request.set_parent(parent);
-  return connection_->IngestConversations(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->IngestConversations(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -404,22 +395,20 @@ ContactCenterInsightsClient::IngestConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::IngestConversations(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->IngestConversations(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->IngestConversations(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsClient::IngestConversations(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->IngestConversations(ExperimentalTag{}, operation);
+  return connection_->IngestConversations(operation);
 }
 
 future<StatusOr<
@@ -433,14 +422,13 @@ ContactCenterInsightsClient::ExportInsightsData(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation>
-ContactCenterInsightsClient::ExportInsightsData(ExperimentalTag, NoAwaitTag,
+ContactCenterInsightsClient::ExportInsightsData(NoAwaitTag,
                                                 std::string const& parent,
                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest request;
   request.set_parent(parent);
-  return connection_->ExportInsightsData(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->ExportInsightsData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -455,22 +443,20 @@ ContactCenterInsightsClient::ExportInsightsData(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::ExportInsightsData(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportInsightsData(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->ExportInsightsData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsClient::ExportInsightsData(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportInsightsData(ExperimentalTag{}, operation);
+  return connection_->ExportInsightsData(operation);
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
@@ -487,15 +473,14 @@ ContactCenterInsightsClient::CreateIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::CreateIssueModel(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::contactcenterinsights::v1::IssueModel const& issue_model,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contactcenterinsights::v1::CreateIssueModelRequest request;
   request.set_parent(parent);
   *request.mutable_issue_model() = issue_model;
-  return connection_->CreateIssueModel(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateIssueModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
@@ -509,21 +494,19 @@ ContactCenterInsightsClient::CreateIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::CreateIssueModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateIssueModel(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateIssueModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsClient::CreateIssueModel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateIssueModel(ExperimentalTag{}, operation);
+  return connection_->CreateIssueModel(operation);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -593,14 +576,13 @@ ContactCenterInsightsClient::DeleteIssueModel(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ContactCenterInsightsClient::DeleteIssueModel(ExperimentalTag, NoAwaitTag,
+ContactCenterInsightsClient::DeleteIssueModel(NoAwaitTag,
                                               std::string const& name,
                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest request;
   request.set_name(name);
-  return connection_->DeleteIssueModel(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteIssueModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -615,22 +597,20 @@ ContactCenterInsightsClient::DeleteIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::DeleteIssueModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteIssueModel(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteIssueModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
 ContactCenterInsightsClient::DeleteIssueModel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteIssueModel(ExperimentalTag{}, operation);
+  return connection_->DeleteIssueModel(operation);
 }
 
 future<StatusOr<
@@ -644,14 +624,13 @@ ContactCenterInsightsClient::DeployIssueModel(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ContactCenterInsightsClient::DeployIssueModel(ExperimentalTag, NoAwaitTag,
+ContactCenterInsightsClient::DeployIssueModel(NoAwaitTag,
                                               std::string const& name,
                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contactcenterinsights::v1::DeployIssueModelRequest request;
   request.set_name(name);
-  return connection_->DeployIssueModel(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeployIssueModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -666,22 +645,20 @@ ContactCenterInsightsClient::DeployIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::DeployIssueModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployIssueModel(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeployIssueModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
 ContactCenterInsightsClient::DeployIssueModel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployIssueModel(ExperimentalTag{}, operation);
+  return connection_->DeployIssueModel(operation);
 }
 
 future<StatusOr<
@@ -695,14 +672,13 @@ ContactCenterInsightsClient::UndeployIssueModel(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ContactCenterInsightsClient::UndeployIssueModel(ExperimentalTag, NoAwaitTag,
+ContactCenterInsightsClient::UndeployIssueModel(NoAwaitTag,
                                                 std::string const& name,
                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest request;
   request.set_name(name);
-  return connection_->UndeployIssueModel(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->UndeployIssueModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -717,22 +693,20 @@ ContactCenterInsightsClient::UndeployIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsClient::UndeployIssueModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployIssueModel(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->UndeployIssueModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
 ContactCenterInsightsClient::UndeployIssueModel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployIssueModel(ExperimentalTag{}, operation);
+  return connection_->UndeployIssueModel(operation);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>

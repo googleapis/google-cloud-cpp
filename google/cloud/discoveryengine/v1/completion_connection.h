@@ -22,7 +22,6 @@
 #include "google/cloud/discoveryengine/v1/completion_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/completion_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -199,14 +198,13 @@ class CompletionServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   ImportSuggestionDenyListEntries(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          ImportSuggestionDenyListEntriesRequest const& request);
+      NoAwaitTag, google::cloud::discoveryengine::v1::
+                      ImportSuggestionDenyListEntriesRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::
                               ImportSuggestionDenyListEntriesResponse>>
   ImportSuggestionDenyListEntries(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::
                               PurgeSuggestionDenyListEntriesResponse>>
@@ -216,14 +214,13 @@ class CompletionServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   PurgeSuggestionDenyListEntries(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          PurgeSuggestionDenyListEntriesRequest const& request);
+      NoAwaitTag, google::cloud::discoveryengine::v1::
+                      PurgeSuggestionDenyListEntriesRequest const& request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::
                               PurgeSuggestionDenyListEntriesResponse>>
   PurgeSuggestionDenyListEntries(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
@@ -232,14 +229,12 @@ class CompletionServiceConnection {
           ImportCompletionSuggestionsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ImportCompletionSuggestions(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          ImportCompletionSuggestionsRequest const& request);
+      NoAwaitTag, google::cloud::discoveryengine::v1::
+                      ImportCompletionSuggestionsRequest const& request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::ImportCompletionSuggestionsResponse>>
-  ImportCompletionSuggestions(ExperimentalTag,
-                              google::longrunning::Operation const& operation);
+  ImportCompletionSuggestions(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
@@ -248,14 +243,12 @@ class CompletionServiceConnection {
           PurgeCompletionSuggestionsRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> PurgeCompletionSuggestions(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          PurgeCompletionSuggestionsRequest const& request);
+      NoAwaitTag, google::cloud::discoveryengine::v1::
+                      PurgeCompletionSuggestionsRequest const& request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::PurgeCompletionSuggestionsResponse>>
-  PurgeCompletionSuggestions(ExperimentalTag,
-                             google::longrunning::Operation const& operation);
+  PurgeCompletionSuggestions(google::longrunning::Operation const& operation);
 };
 
 /**

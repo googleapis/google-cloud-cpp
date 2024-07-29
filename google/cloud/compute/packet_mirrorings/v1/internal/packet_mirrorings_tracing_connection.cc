@@ -64,28 +64,25 @@ PacketMirroringsTracingConnection::DeletePacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsTracingConnection::DeletePacketMirroring(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        DeletePacketMirroringRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                    DeletePacketMirroringRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "DeletePacketMirroring");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->DeletePacketMirroring(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->DeletePacketMirroring(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsTracingConnection::DeletePacketMirroring(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "DeletePacketMirroring");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeletePacketMirroring(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePacketMirroring(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -113,28 +110,25 @@ PacketMirroringsTracingConnection::InsertPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsTracingConnection::InsertPacketMirroring(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        InsertPacketMirroringRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                    InsertPacketMirroringRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "InsertPacketMirroring");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->InsertPacketMirroring(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->InsertPacketMirroring(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsTracingConnection::InsertPacketMirroring(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "InsertPacketMirroring");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertPacketMirroring(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertPacketMirroring(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -165,28 +159,25 @@ PacketMirroringsTracingConnection::PatchPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsTracingConnection::PatchPacketMirroring(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::packet_mirrorings::v1::
-        PatchPacketMirroringRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                    PatchPacketMirroringRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "PatchPacketMirroring");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->PatchPacketMirroring(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->PatchPacketMirroring(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsTracingConnection::PatchPacketMirroring(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_packet_mirrorings_v1::PacketMirroringsConnection::"
       "PatchPacketMirroring");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchPacketMirroring(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchPacketMirroring(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

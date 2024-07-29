@@ -54,13 +54,12 @@ class BackupDRTracingConnection : public backupdr_v1::BackupDRConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateManagementServer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::backupdr::v1::CreateManagementServerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
   CreateManagementServer(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
@@ -69,13 +68,12 @@ class BackupDRTracingConnection : public backupdr_v1::BackupDRConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteManagementServer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::backupdr::v1::DeleteManagementServerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
   DeleteManagementServer(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

@@ -119,8 +119,7 @@ JobControllerConnectionImpl::SubmitJobAsOperation(
 
 StatusOr<google::longrunning::Operation>
 JobControllerConnectionImpl::SubmitJobAsOperation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataproc::v1::SubmitJobRequest const& request) {
+    NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -134,7 +133,7 @@ JobControllerConnectionImpl::SubmitJobAsOperation(
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerConnectionImpl::SubmitJobAsOperation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::JobMetadata>()) {

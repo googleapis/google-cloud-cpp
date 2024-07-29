@@ -48,15 +48,14 @@ DataTaxonomyServiceConnection::CreateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::CreateDataTaxonomy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::CreateDataTaxonomyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceConnection::CreateDataTaxonomy(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -72,15 +71,14 @@ DataTaxonomyServiceConnection::UpdateDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::UpdateDataTaxonomy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
 DataTaxonomyServiceConnection::UpdateDataTaxonomy(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -96,15 +94,14 @@ DataTaxonomyServiceConnection::DeleteDataTaxonomy(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::DeleteDataTaxonomy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&) {
+    NoAwaitTag, google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataTaxonomy(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,7 +131,7 @@ DataTaxonomyServiceConnection::CreateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::CreateDataAttributeBinding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,7 +139,7 @@ DataTaxonomyServiceConnection::CreateDataAttributeBinding(
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceConnection::CreateDataAttributeBinding(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -158,7 +155,7 @@ DataTaxonomyServiceConnection::UpdateDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::UpdateDataAttributeBinding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -166,7 +163,7 @@ DataTaxonomyServiceConnection::UpdateDataAttributeBinding(
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
 DataTaxonomyServiceConnection::UpdateDataAttributeBinding(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -182,7 +179,7 @@ DataTaxonomyServiceConnection::DeleteDataAttributeBinding(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::DeleteDataAttributeBinding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -190,7 +187,7 @@ DataTaxonomyServiceConnection::DeleteDataAttributeBinding(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataAttributeBinding(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -220,7 +217,7 @@ DataTaxonomyServiceConnection::CreateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::CreateDataAttribute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateDataAttributeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -228,7 +225,7 @@ DataTaxonomyServiceConnection::CreateDataAttribute(
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceConnection::CreateDataAttribute(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,7 +241,7 @@ DataTaxonomyServiceConnection::UpdateDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::UpdateDataAttribute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateDataAttributeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -252,7 +249,7 @@ DataTaxonomyServiceConnection::UpdateDataAttribute(
 
 future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
 DataTaxonomyServiceConnection::UpdateDataAttribute(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::DataAttribute>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -268,7 +265,7 @@ DataTaxonomyServiceConnection::DeleteDataAttribute(
 
 StatusOr<google::longrunning::Operation>
 DataTaxonomyServiceConnection::DeleteDataAttribute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteDataAttributeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -276,7 +273,7 @@ DataTaxonomyServiceConnection::DeleteDataAttribute(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 DataTaxonomyServiceConnection::DeleteDataAttribute(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataplex::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

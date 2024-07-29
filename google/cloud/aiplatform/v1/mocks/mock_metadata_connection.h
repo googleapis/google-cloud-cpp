@@ -57,16 +57,14 @@ class MockMetadataServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMetadataStore,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>,
               CreateMetadataStore,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::MetadataStore>, GetMetadataStore,
@@ -91,7 +89,7 @@ class MockMetadataServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteMetadataStore,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
                    request),
               (override));
@@ -99,8 +97,7 @@ class MockMetadataServiceConnection
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>,
-      DeleteMetadataStore,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteMetadataStore, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -134,14 +131,13 @@ class MockMetadataServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteArtifact,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteArtifactRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteArtifact,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteArtifact, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -155,14 +151,13 @@ class MockMetadataServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PurgeArtifacts,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
-      PurgeArtifacts,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PurgeArtifacts, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -195,14 +190,13 @@ class MockMetadataServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteContext,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteContextRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteContext,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteContext, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -216,14 +210,13 @@ class MockMetadataServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PurgeContexts,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::PurgeContextsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>,
-      PurgeContexts,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PurgeContexts, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
@@ -284,14 +277,13 @@ class MockMetadataServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteExecution,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteExecutionRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteExecution,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteExecution, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -305,14 +297,13 @@ class MockMetadataServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PurgeExecutions,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
-      PurgeExecutions,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PurgeExecutions, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

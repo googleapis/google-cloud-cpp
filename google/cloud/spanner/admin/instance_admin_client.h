@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CLIENT_H
 
 #include "google/cloud/spanner/admin/instance_admin_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
@@ -351,7 +350,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstanceConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::spanner::admin::instance::v1::InstanceConfig const&
           instance_config,
       std::string const& instance_config_id, Options opts = {});
@@ -454,7 +453,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstanceConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request,
       Options opts = {});
@@ -469,8 +468,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  CreateInstanceConfig(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateInstanceConfig(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -582,7 +580,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::InstanceConfig const&
           instance_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -689,7 +687,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request,
       Options opts = {});
@@ -704,8 +702,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  UpdateInstanceConfig(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  UpdateInstanceConfig(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1172,8 +1169,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& instance_id,
+      NoAwaitTag, std::string const& parent, std::string const& instance_id,
       google::spanner::admin::instance::v1::Instance const& instance,
       Options opts = {});
 
@@ -1266,7 +1262,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request,
       Options opts = {});
@@ -1281,8 +1277,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  CreateInstance(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -1385,7 +1380,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::Instance const& instance,
       google::protobuf::FieldMask const& field_mask, Options opts = {});
 
@@ -1486,7 +1481,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request,
       Options opts = {});
@@ -1501,8 +1496,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  UpdateInstance(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -1965,7 +1959,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstancePartition(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::spanner::admin::instance::v1::InstancePartition const&
           instance_partition,
       std::string const& instance_partition_id, Options opts = {});
@@ -2061,7 +2055,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstancePartition(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::
           CreateInstancePartitionRequest const& request,
       Options opts = {});
@@ -2076,8 +2070,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  CreateInstancePartition(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  CreateInstancePartition(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -2252,7 +2245,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstancePartition(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::InstancePartition const&
           instance_partition,
       google::protobuf::FieldMask const& field_mask, Options opts = {});
@@ -2357,7 +2350,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstancePartition(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::instance::v1::
           UpdateInstancePartitionRequest const& request,
       Options opts = {});
@@ -2372,8 +2365,7 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  UpdateInstancePartition(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  UpdateInstancePartition(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off

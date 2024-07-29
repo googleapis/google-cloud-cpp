@@ -58,15 +58,13 @@ class MockRegionAutoscalersConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteAutoscaler,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_autoscalers::v1::
-                   DeleteAutoscalerRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                               DeleteAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteAutoscaler,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Autoscaler>,
@@ -86,15 +84,13 @@ class MockRegionAutoscalersConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertAutoscaler,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_autoscalers::v1::
-                   InsertAutoscalerRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                               InsertAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertAutoscaler,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Autoscaler>),
@@ -114,15 +110,13 @@ class MockRegionAutoscalersConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchAutoscaler,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_autoscalers::v1::
-                   PatchAutoscalerRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                               PatchAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchAutoscaler,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -136,15 +130,13 @@ class MockRegionAutoscalersConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdateAutoscaler,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_autoscalers::v1::
-                   UpdateAutoscalerRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                               UpdateAutoscalerRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateAutoscaler,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

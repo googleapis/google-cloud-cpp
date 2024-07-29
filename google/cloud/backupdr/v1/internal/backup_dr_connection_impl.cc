@@ -155,7 +155,7 @@ BackupDRConnectionImpl::CreateManagementServer(
 
 StatusOr<google::longrunning::Operation>
 BackupDRConnectionImpl::CreateManagementServer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::backupdr::v1::CreateManagementServerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -171,7 +171,7 @@ BackupDRConnectionImpl::CreateManagementServer(
 
 future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>
 BackupDRConnectionImpl::CreateManagementServer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::backupdr::v1::OperationMetadata>()) {
@@ -248,7 +248,7 @@ BackupDRConnectionImpl::DeleteManagementServer(
 
 StatusOr<google::longrunning::Operation>
 BackupDRConnectionImpl::DeleteManagementServer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::backupdr::v1::DeleteManagementServerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,7 +264,7 @@ BackupDRConnectionImpl::DeleteManagementServer(
 
 future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>
 BackupDRConnectionImpl::DeleteManagementServer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::backupdr::v1::OperationMetadata>()) {

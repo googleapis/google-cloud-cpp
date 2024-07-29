@@ -71,16 +71,14 @@ class MockWorkflowTemplateServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, InstantiateWorkflowTemplate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
               InstantiateWorkflowTemplate,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, InstantiateInlineWorkflowTemplate)` is now ambiguous.
@@ -94,16 +92,14 @@ class MockWorkflowTemplateServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               InstantiateInlineWorkflowTemplate,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::dataproc::v1::
                    InstantiateInlineWorkflowTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
               InstantiateInlineWorkflowTemplate,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
               UpdateWorkflowTemplate,

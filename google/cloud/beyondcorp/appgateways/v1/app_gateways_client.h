@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_APP_GATEWAYS_CLIENT_H
 
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -293,7 +292,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppGateway(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
       std::string const& app_gateway_id, Options opts = {});
 
@@ -349,7 +348,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppGateway(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
           request,
       Options opts = {});
@@ -364,8 +363,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
-  CreateAppGateway(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  CreateAppGateway(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -414,7 +412,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppGateway(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -469,7 +467,7 @@ class AppGatewaysServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppGateway(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
           request,
       Options opts = {});
@@ -485,8 +483,7 @@ class AppGatewaysServiceClient {
   // clang-format on
   future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
-  DeleteAppGateway(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteAppGateway(google::longrunning::Operation const& operation,
                    Options opts = {});
 
  private:

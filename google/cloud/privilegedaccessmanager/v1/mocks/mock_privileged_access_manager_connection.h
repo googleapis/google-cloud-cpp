@@ -86,15 +86,13 @@ class MockPrivilegedAccessManagerConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateEntitlement,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::privilegedaccessmanager::v1::
-                   CreateEntitlementRequest const& request),
+              (NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                               CreateEntitlementRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
-      CreateEntitlement,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateEntitlement, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -108,15 +106,13 @@ class MockPrivilegedAccessManagerConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteEntitlement,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::privilegedaccessmanager::v1::
-                   DeleteEntitlementRequest const& request),
+              (NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                               DeleteEntitlementRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
-      DeleteEntitlement,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteEntitlement, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -130,15 +126,13 @@ class MockPrivilegedAccessManagerConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateEntitlement,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::privilegedaccessmanager::v1::
-                   UpdateEntitlementRequest const& request),
+              (NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                               UpdateEntitlementRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>,
-      UpdateEntitlement,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateEntitlement, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -189,15 +183,14 @@ class MockPrivilegedAccessManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RevokeGrant,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>,
-      RevokeGrant,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RevokeGrant, (google::longrunning::Operation const& operation),
       (override));
 };
 

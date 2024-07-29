@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_BACKEND_BUCKETS_V1_BACKEND_BUCKETS_CLIENT_H
 
 #include "google/cloud/compute/backend_buckets/v1/backend_buckets_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -139,8 +138,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& backend_bucket,
+      NoAwaitTag, std::string const& project, std::string const& backend_bucket,
       google::cloud::cpp::compute::v1::SignedUrlKey const&
           signed_url_key_resource,
       Options opts = {});
@@ -197,7 +195,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::backend_buckets::v1::
           AddSignedUrlKeyRequest const& request,
       Options opts = {});
@@ -212,7 +210,6 @@ class BackendBucketsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -262,8 +259,8 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendBucket(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& backend_bucket, Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& backend_bucket,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -316,7 +313,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendBucket(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::backend_buckets::v1::
           DeleteBackendBucketRequest const& request,
       Options opts = {});
@@ -332,7 +329,6 @@ class BackendBucketsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteBackendBucket(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -386,9 +382,8 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& backend_bucket, std::string const& key_name,
-      Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& backend_bucket,
+      std::string const& key_name, Options opts = {});
 
   // clang-format off
   ///
@@ -442,7 +437,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::backend_buckets::v1::
           DeleteSignedUrlKeyRequest const& request,
       Options opts = {});
@@ -458,7 +453,6 @@ class BackendBucketsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSignedUrlKey(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -635,7 +629,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendBucket(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::BackendBucket const&
           backend_bucket_resource,
       Options opts = {});
@@ -692,7 +686,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendBucket(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::backend_buckets::v1::
           InsertBackendBucketRequest const& request,
       Options opts = {});
@@ -708,7 +702,6 @@ class BackendBucketsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertBackendBucket(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -843,8 +836,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendBucket(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& backend_bucket,
+      NoAwaitTag, std::string const& project, std::string const& backend_bucket,
       google::cloud::cpp::compute::v1::BackendBucket const&
           backend_bucket_resource,
       Options opts = {});
@@ -902,7 +894,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendBucket(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::backend_buckets::v1::
           PatchBackendBucketRequest const& request,
       Options opts = {});
@@ -918,7 +910,6 @@ class BackendBucketsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendBucket(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -973,8 +964,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& backend_bucket,
+      NoAwaitTag, std::string const& project, std::string const& backend_bucket,
       google::cloud::cpp::compute::v1::SecurityPolicyReference const&
           security_policy_reference_resource,
       Options opts = {});
@@ -1030,7 +1020,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::backend_buckets::v1::
           SetEdgeSecurityPolicyRequest const& request,
       Options opts = {});
@@ -1046,7 +1036,6 @@ class BackendBucketsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1232,8 +1221,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendBucket(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& backend_bucket,
+      NoAwaitTag, std::string const& project, std::string const& backend_bucket,
       google::cloud::cpp::compute::v1::BackendBucket const&
           backend_bucket_resource,
       Options opts = {});
@@ -1290,7 +1278,7 @@ class BackendBucketsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendBucket(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::backend_buckets::v1::
           UpdateBackendBucketRequest const& request,
       Options opts = {});
@@ -1306,7 +1294,6 @@ class BackendBucketsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateBackendBucket(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

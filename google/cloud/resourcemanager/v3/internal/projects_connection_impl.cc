@@ -192,7 +192,7 @@ ProjectsConnectionImpl::CreateProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::CreateProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -208,7 +208,7 @@ StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::CreateProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::CreateProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -285,7 +285,7 @@ ProjectsConnectionImpl::UpdateProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::UpdateProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -301,7 +301,7 @@ StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::UpdateProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::UpdateProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -378,7 +378,7 @@ ProjectsConnectionImpl::MoveProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::MoveProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -394,7 +394,7 @@ StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::MoveProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::MoveProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -471,7 +471,7 @@ ProjectsConnectionImpl::DeleteProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::DeleteProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -487,7 +487,7 @@ StatusOr<google::longrunning::Operation> ProjectsConnectionImpl::DeleteProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::DeleteProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -565,7 +565,7 @@ ProjectsConnectionImpl::UndeleteProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectsConnectionImpl::UndeleteProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -581,7 +581,7 @@ ProjectsConnectionImpl::UndeleteProject(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::UndeleteProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::

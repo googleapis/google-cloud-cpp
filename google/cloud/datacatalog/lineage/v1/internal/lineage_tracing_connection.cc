@@ -97,24 +97,22 @@ LineageTracingConnection::DeleteProcess(
 
 StatusOr<google::longrunning::Operation>
 LineageTracingConnection::DeleteProcess(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::DeleteProcess");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteProcess(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteProcess(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageTracingConnection::DeleteProcess(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::DeleteProcess");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteProcess(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteProcess(operation));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
@@ -166,23 +164,21 @@ LineageTracingConnection::DeleteRun(
 }
 
 StatusOr<google::longrunning::Operation> LineageTracingConnection::DeleteRun(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::DeleteRun");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteRun(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteRun(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageTracingConnection::DeleteRun(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "datacatalog_lineage_v1::LineageConnection::DeleteRun");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteRun(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteRun(operation));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>

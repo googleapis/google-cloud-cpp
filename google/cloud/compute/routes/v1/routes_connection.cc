@@ -46,7 +46,7 @@ RoutesConnection::DeleteRoute(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutesConnection::DeleteRoute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routes::v1::DeleteRouteRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,7 +54,7 @@ RoutesConnection::DeleteRoute(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesConnection::DeleteRoute(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -75,7 +75,7 @@ RoutesConnection::InsertRoute(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutesConnection::InsertRoute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routes::v1::InsertRouteRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,7 +83,7 @@ RoutesConnection::InsertRoute(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutesConnection::InsertRoute(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

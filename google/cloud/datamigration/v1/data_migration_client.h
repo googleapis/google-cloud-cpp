@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAMIGRATION_V1_DATA_MIGRATION_CLIENT_H
 
 #include "google/cloud/datamigration/v1/data_migration_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -272,7 +271,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMigrationJob(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::clouddms::v1::MigrationJob const& migration_job,
       std::string const& migration_job_id, Options opts = {});
 
@@ -327,7 +326,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::CreateMigrationJobRequest const& request,
       Options opts = {});
 
@@ -341,8 +340,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  CreateMigrationJob(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  CreateMigrationJob(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -393,7 +391,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::MigrationJob const& migration_job,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -448,7 +446,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request,
       Options opts = {});
 
@@ -462,8 +460,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  UpdateMigrationJob(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  UpdateMigrationJob(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -510,7 +507,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMigrationJob(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -563,7 +560,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request,
       Options opts = {});
 
@@ -577,8 +574,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteMigrationJob(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  DeleteMigrationJob(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -631,7 +627,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> StartMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::StartMigrationJobRequest const& request,
       Options opts = {});
 
@@ -645,8 +641,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StartMigrationJob(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -698,7 +693,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> StopMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::StopMigrationJobRequest const& request,
       Options opts = {});
 
@@ -712,8 +707,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>> StopMigrationJob(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -767,7 +761,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ResumeMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request,
       Options opts = {});
 
@@ -781,8 +775,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  ResumeMigrationJob(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  ResumeMigrationJob(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -837,7 +830,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PromoteMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request,
       Options opts = {});
 
@@ -851,8 +844,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  PromoteMigrationJob(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  PromoteMigrationJob(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -907,7 +899,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> VerifyMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request,
       Options opts = {});
 
@@ -921,8 +913,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  VerifyMigrationJob(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  VerifyMigrationJob(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -978,7 +969,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestartMigrationJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::RestartMigrationJobRequest const& request,
       Options opts = {});
 
@@ -992,8 +983,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
-  RestartMigrationJob(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  RestartMigrationJob(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -1242,7 +1232,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectionProfile(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
       std::string const& connection_profile_id, Options opts = {});
 
@@ -1298,7 +1288,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnectionProfile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
           request,
       Options opts = {});
@@ -1313,8 +1303,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  CreateConnectionProfile(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  CreateConnectionProfile(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -1365,7 +1354,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::ConnectionProfile const& connection_profile,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1421,7 +1410,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnectionProfile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
           request,
       Options opts = {});
@@ -1436,8 +1425,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
-  UpdateConnectionProfile(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  UpdateConnectionProfile(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -1486,7 +1474,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1542,7 +1530,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnectionProfile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
           request,
       Options opts = {});
@@ -1557,8 +1545,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConnectionProfile(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  DeleteConnectionProfile(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -1610,7 +1597,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::clouddms::v1::PrivateConnection const& private_connection,
       std::string const& private_connection_id, Options opts = {});
 
@@ -1666,7 +1653,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreatePrivateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
           request,
       Options opts = {});
@@ -1681,8 +1668,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>
-  CreatePrivateConnection(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  CreatePrivateConnection(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -1860,7 +1846,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1914,7 +1900,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeletePrivateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
           request,
       Options opts = {});
@@ -1929,8 +1915,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeletePrivateConnection(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  DeletePrivateConnection(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -2115,7 +2100,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::clouddms::v1::ConversionWorkspace const&
           conversion_workspace,
       std::string const& conversion_workspace_id, Options opts = {});
@@ -2172,7 +2157,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
           request,
       Options opts = {});
@@ -2187,8 +2172,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CreateConversionWorkspace(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  CreateConversionWorkspace(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -2240,7 +2224,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::ConversionWorkspace const&
           conversion_workspace,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -2297,7 +2281,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
           request,
       Options opts = {});
@@ -2312,8 +2296,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  UpdateConversionWorkspace(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  UpdateConversionWorkspace(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -2360,7 +2343,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2414,7 +2397,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
           request,
       Options opts = {});
@@ -2429,8 +2412,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
-  DeleteConversionWorkspace(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  DeleteConversionWorkspace(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -2735,7 +2717,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SeedConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
           request,
       Options opts = {});
@@ -2750,8 +2732,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  SeedConversionWorkspace(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  SeedConversionWorkspace(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -2806,7 +2787,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportMappingRules(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::ImportMappingRulesRequest const& request,
       Options opts = {});
 
@@ -2820,8 +2801,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ImportMappingRules(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  ImportMappingRules(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -2876,7 +2856,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ConvertConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
           request,
       Options opts = {});
@@ -2891,8 +2871,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ConvertConversionWorkspace(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  ConvertConversionWorkspace(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -2947,7 +2926,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CommitConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
           request,
       Options opts = {});
@@ -2962,8 +2941,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  CommitConversionWorkspace(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  CommitConversionWorkspace(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -3018,7 +2996,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RollbackConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
           request,
       Options opts = {});
@@ -3033,8 +3011,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  RollbackConversionWorkspace(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+  RollbackConversionWorkspace(google::longrunning::Operation const& operation,
                               Options opts = {});
 
   // clang-format off
@@ -3089,7 +3066,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ApplyConversionWorkspace(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
           request,
       Options opts = {});
@@ -3104,8 +3081,7 @@ class DataMigrationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
-  ApplyConversionWorkspace(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  ApplyConversionWorkspace(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off

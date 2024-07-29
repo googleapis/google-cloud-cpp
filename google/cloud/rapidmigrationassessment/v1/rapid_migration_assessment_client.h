@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RAPIDMIGRATIONASSESSMENT_V1_RAPID_MIGRATION_ASSESSMENT_CLIENT_H
 
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -144,7 +143,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCollector(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::rapidmigrationassessment::v1::Collector const& collector,
       std::string const& collector_id, Options opts = {});
 
@@ -201,7 +200,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
           request,
       Options opts = {});
@@ -216,8 +215,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  CreateCollector(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  CreateCollector(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -268,7 +266,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAnnotation(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::rapidmigrationassessment::v1::Annotation const& annotation,
       Options opts = {});
 
@@ -323,7 +321,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAnnotation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           CreateAnnotationRequest const& request,
       Options opts = {});
@@ -338,8 +336,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>
-  CreateAnnotation(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  CreateAnnotation(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -584,7 +581,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::Collector const& collector,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -640,7 +637,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
           request,
       Options opts = {});
@@ -655,8 +652,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  UpdateCollector(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  UpdateCollector(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -704,7 +700,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCollector(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -759,7 +755,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
           request,
       Options opts = {});
@@ -774,8 +770,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  DeleteCollector(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteCollector(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -822,7 +817,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ResumeCollector(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -876,7 +871,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ResumeCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
           request,
       Options opts = {});
@@ -891,8 +886,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  ResumeCollector(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  ResumeCollector(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -939,7 +933,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RegisterCollector(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -992,7 +986,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RegisterCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::
           RegisterCollectorRequest const& request,
       Options opts = {});
@@ -1007,8 +1001,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  RegisterCollector(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  RegisterCollector(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1055,7 +1048,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PauseCollector(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1109,7 +1102,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PauseCollector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
           request,
       Options opts = {});
@@ -1124,8 +1117,7 @@ class RapidMigrationAssessmentClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>
-  PauseCollector(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  PauseCollector(google::longrunning::Operation const& operation,
                  Options opts = {});
 
  private:

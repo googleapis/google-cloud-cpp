@@ -45,25 +45,23 @@ SnapshotsTracingConnection::DeleteSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsTracingConnection::DeleteSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::DeleteSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsTracingConnection::DeleteSnapshot(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::DeleteSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSnapshot(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Snapshot>
@@ -98,25 +96,23 @@ SnapshotsTracingConnection::InsertSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsTracingConnection::InsertSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::InsertSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->InsertSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsTracingConnection::InsertSnapshot(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::InsertSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->InsertSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertSnapshot(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Snapshot>
@@ -153,25 +149,22 @@ SnapshotsTracingConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SnapshotsTracingConnection::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SnapshotsTracingConnection::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_snapshots_v1::SnapshotsConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetLabels(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

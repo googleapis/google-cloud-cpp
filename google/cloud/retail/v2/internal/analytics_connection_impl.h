@@ -57,13 +57,12 @@ class AnalyticsServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ExportAnalyticsMetrics(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
   ExportAnalyticsMetrics(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

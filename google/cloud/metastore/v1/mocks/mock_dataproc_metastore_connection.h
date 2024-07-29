@@ -66,14 +66,12 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateService,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::CreateServiceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Service>>,
-              CreateService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateService, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -86,14 +84,12 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateService,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::UpdateServiceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Service>>,
-              UpdateService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateService, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -107,14 +103,12 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteService,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::DeleteServiceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
-              DeleteService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteService, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -138,16 +132,14 @@ class MockDataprocMetastoreConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMetadataImport,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::metastore::v1::CreateMetadataImportRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
               CreateMetadataImport,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateMetadataImport)` is now ambiguous. Use
@@ -159,16 +151,14 @@ class MockDataprocMetastoreConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateMetadataImport,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::metastore::v1::UpdateMetadataImportRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
               UpdateMetadataImport,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, ExportMetadata)` is now ambiguous. Use
@@ -181,14 +171,12 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportMetadata,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::ExportMetadataRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataExport>>,
-              ExportMetadata,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ExportMetadata, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -201,14 +189,12 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreService,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::RestoreServiceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Restore>>,
-              RestoreService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              RestoreService, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::metastore::v1::Backup>), ListBackups,
@@ -229,14 +215,12 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateBackup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::CreateBackupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Backup>>,
-              CreateBackup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateBackup, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -250,14 +234,12 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteBackup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::DeleteBackupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
-              DeleteBackup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteBackup, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -271,14 +253,13 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, QueryMetadata,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::QueryMetadataRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>,
-      QueryMetadata,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      QueryMetadata, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -293,15 +274,14 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, MoveTableToDatabase,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>,
-      MoveTableToDatabase,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      MoveTableToDatabase, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -317,7 +297,7 @@ class MockDataprocMetastoreConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AlterMetadataResourceLocation,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
            request),
       (override));
@@ -326,8 +306,7 @@ class MockDataprocMetastoreConnection
       future<StatusOr<
           google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>,
       AlterMetadataResourceLocation,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

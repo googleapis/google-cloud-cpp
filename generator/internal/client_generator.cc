@@ -156,9 +156,9 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       if (OmitMethodSignature(method, i)) continue;
       std::string const method_string = absl::StrCat(
           "  $method_name$($method_signature", i, "$Options opts = {});\n");
-      std::string const start_method_string = absl::StrCat(
-          "  $method_name$(NoAwaitTag, $method_signature", i,
-          "$Options opts = {});\n");
+      std::string const start_method_string =
+          absl::StrCat("  $method_name$(NoAwaitTag, $method_signature", i,
+                       "$Options opts = {});\n");
       std::string const signature = method_signature_extension[i];
       HeaderPrintMethod(
           method,
@@ -456,8 +456,8 @@ $client_class_name$::Async$method_name$(Options opts) {
           absl::StrCat("$client_class_name$::$method_name$($method_signature",
                        i, "$Options opts) {\n");
       std::string start_method_string = absl::StrCat(
-          "$client_class_name$::$method_name$(NoAwaitTag, $method_signature",
-          i, "$Options opts) {\n");
+          "$client_class_name$::$method_name$(NoAwaitTag, $method_signature", i,
+          "$Options opts) {\n");
       std::string method_request_string =
           absl::StrCat("$method_request_setters", i, "$");
       CcPrintMethod(

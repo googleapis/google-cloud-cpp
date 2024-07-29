@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURITYCENTER_V2_SECURITY_CENTER_CLIENT_H
 
 #include "google/cloud/securitycenter/v2/security_center_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
@@ -216,8 +215,7 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      Options opts = {});
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -273,7 +271,7 @@ class SecurityCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request,
       Options opts = {});
 
@@ -287,8 +285,7 @@ class SecurityCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
-  BulkMuteFindings(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  BulkMuteFindings(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off

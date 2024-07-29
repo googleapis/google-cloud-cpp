@@ -54,11 +54,10 @@ class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> CreateKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::api::apikeys::v2::Key> ListKeys(
@@ -74,33 +73,30 @@ class ApiKeysConnectionImpl : public apikeys_v2::ApiKeysConnection {
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::apikeys::v2::UpdateKeyRequest const& request) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> UpdateKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::apikeys::v2::DeleteKeyRequest const& request) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> DeleteKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UndeleteKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   future<StatusOr<google::api::apikeys::v2::Key>> UndeleteKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(

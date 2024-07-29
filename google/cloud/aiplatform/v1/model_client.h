@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_MODEL_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/model_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -137,7 +136,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UploadModel(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Model const& model, Options opts = {});
 
   // clang-format off
@@ -190,7 +189,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UploadModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UploadModelRequest const& request,
       Options opts = {});
 
@@ -204,7 +203,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-  UploadModel(ExperimentalTag, google::longrunning::Operation const& operation,
+  UploadModel(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -547,7 +546,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
-      ExperimentalTag, NoAwaitTag, std::string const& model, Options opts = {});
+      NoAwaitTag, std::string const& model, Options opts = {});
 
   // clang-format off
   ///
@@ -602,7 +601,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
           request,
       Options opts = {});
@@ -618,8 +617,7 @@ class ModelServiceClient {
   // clang-format on
   future<
       StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-  UpdateExplanationDataset(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  UpdateExplanationDataset(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off
@@ -673,8 +671,7 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteModel(ExperimentalTag,
-                                                       NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteModel(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts = {});
 
@@ -735,7 +732,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteModelRequest const& request,
       Options opts = {});
 
@@ -749,7 +746,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModel(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteModel(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -806,7 +803,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteModelVersion(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -866,7 +863,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteModelVersion(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
       Options opts = {});
 
@@ -880,8 +877,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelVersion(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  DeleteModelVersion(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -1011,7 +1007,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportModel(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
+      NoAwaitTag, std::string const& name,
       google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const&
           output_config,
       Options opts = {});
@@ -1070,7 +1066,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::ExportModelRequest const& request,
       Options opts = {});
 
@@ -1084,7 +1080,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-  ExportModel(ExperimentalTag, google::longrunning::Operation const& operation,
+  ExportModel(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -1142,8 +1138,8 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CopyModel(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& source_model, Options opts = {});
+      NoAwaitTag, std::string const& parent, std::string const& source_model,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1201,7 +1197,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CopyModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CopyModelRequest const& request,
       Options opts = {});
 
@@ -1215,8 +1211,7 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

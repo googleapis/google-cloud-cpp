@@ -44,13 +44,13 @@ CloudBuildClient::CreateBuild(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::CreateBuild(
-    ExperimentalTag, NoAwaitTag, std::string const& project_id,
+    NoAwaitTag, std::string const& project_id,
     google::devtools::cloudbuild::v1::Build const& build, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::CreateBuildRequest request;
   request.set_project_id(project_id);
   *request.mutable_build() = build;
-  return connection_->CreateBuild(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateBuild(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
@@ -62,19 +62,18 @@ CloudBuildClient::CreateBuild(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::CreateBuild(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBuild(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateBuild(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-CloudBuildClient::CreateBuild(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+CloudBuildClient::CreateBuild(google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBuild(ExperimentalTag{}, operation);
+  return connection_->CreateBuild(operation);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildClient::GetBuild(
@@ -137,13 +136,13 @@ CloudBuildClient::RetryBuild(std::string const& project_id,
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::RetryBuild(
-    ExperimentalTag, NoAwaitTag, std::string const& project_id,
-    std::string const& id, Options opts) {
+    NoAwaitTag, std::string const& project_id, std::string const& id,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::RetryBuildRequest request;
   request.set_project_id(project_id);
   request.set_id(id);
-  return connection_->RetryBuild(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->RetryBuild(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
@@ -155,19 +154,18 @@ CloudBuildClient::RetryBuild(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::RetryBuild(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RetryBuild(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->RetryBuild(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-CloudBuildClient::RetryBuild(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+CloudBuildClient::RetryBuild(google::longrunning::Operation const& operation,
                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RetryBuild(ExperimentalTag{}, operation);
+  return connection_->RetryBuild(operation);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
@@ -183,14 +181,14 @@ CloudBuildClient::ApproveBuild(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::ApproveBuild(
-    ExperimentalTag, NoAwaitTag, std::string const& name,
+    NoAwaitTag, std::string const& name,
     google::devtools::cloudbuild::v1::ApprovalResult const& approval_result,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::ApproveBuildRequest request;
   request.set_name(name);
   *request.mutable_approval_result() = approval_result;
-  return connection_->ApproveBuild(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ApproveBuild(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
@@ -202,19 +200,18 @@ CloudBuildClient::ApproveBuild(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::ApproveBuild(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ApproveBuild(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ApproveBuild(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
-CloudBuildClient::ApproveBuild(ExperimentalTag,
-                               google::longrunning::Operation const& operation,
+CloudBuildClient::ApproveBuild(google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ApproveBuild(ExperimentalTag{}, operation);
+  return connection_->ApproveBuild(operation);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -323,15 +320,14 @@ CloudBuildClient::RunBuildTrigger(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::RunBuildTrigger(
-    ExperimentalTag, NoAwaitTag, std::string const& project_id,
-    std::string const& trigger_id,
+    NoAwaitTag, std::string const& project_id, std::string const& trigger_id,
     google::devtools::cloudbuild::v1::RepoSource const& source, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::RunBuildTriggerRequest request;
   request.set_project_id(project_id);
   request.set_trigger_id(trigger_id);
   *request.mutable_source() = source;
-  return connection_->RunBuildTrigger(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->RunBuildTrigger(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
@@ -343,19 +339,18 @@ CloudBuildClient::RunBuildTrigger(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::RunBuildTrigger(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunBuildTrigger(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->RunBuildTrigger(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildClient::RunBuildTrigger(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunBuildTrigger(ExperimentalTag{}, operation);
+  return connection_->RunBuildTrigger(operation);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
@@ -381,7 +376,7 @@ CloudBuildClient::CreateWorkerPool(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::CreateWorkerPool(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
     std::string const& worker_pool_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -389,8 +384,7 @@ StatusOr<google::longrunning::Operation> CloudBuildClient::CreateWorkerPool(
   request.set_parent(parent);
   *request.mutable_worker_pool() = worker_pool;
   request.set_worker_pool_id(worker_pool_id);
-  return connection_->CreateWorkerPool(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateWorkerPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
@@ -402,20 +396,18 @@ CloudBuildClient::CreateWorkerPool(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::CreateWorkerPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateWorkerPool(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateWorkerPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildClient::CreateWorkerPool(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateWorkerPool(ExperimentalTag{}, operation);
+  return connection_->CreateWorkerPool(operation);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
@@ -444,12 +436,11 @@ CloudBuildClient::DeleteWorkerPool(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::DeleteWorkerPool(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest request;
   request.set_name(name);
-  return connection_->DeleteWorkerPool(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteWorkerPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -462,21 +453,19 @@ CloudBuildClient::DeleteWorkerPool(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::DeleteWorkerPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteWorkerPool(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteWorkerPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
 CloudBuildClient::DeleteWorkerPool(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteWorkerPool(ExperimentalTag{}, operation);
+  return connection_->DeleteWorkerPool(operation);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
@@ -491,15 +480,13 @@ CloudBuildClient::UpdateWorkerPool(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::UpdateWorkerPool(
-    ExperimentalTag, NoAwaitTag,
-    google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
+    NoAwaitTag, google::devtools::cloudbuild::v1::WorkerPool const& worker_pool,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest request;
   *request.mutable_worker_pool() = worker_pool;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateWorkerPool(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->UpdateWorkerPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
@@ -511,20 +498,18 @@ CloudBuildClient::UpdateWorkerPool(
 }
 
 StatusOr<google::longrunning::Operation> CloudBuildClient::UpdateWorkerPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateWorkerPool(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->UpdateWorkerPool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildClient::UpdateWorkerPool(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateWorkerPool(ExperimentalTag{}, operation);
+  return connection_->UpdateWorkerPool(operation);
 }
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_IMAGES_V1_IMAGES_CLIENT_H
 
 #include "google/cloud/compute/images/v1/images_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -132,8 +131,8 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteImage(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& image, Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& image,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -186,7 +185,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteImage(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request,
       Options opts = {});
@@ -201,7 +200,6 @@ class ImagesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteImage(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -255,8 +253,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Deprecate(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& image,
+      NoAwaitTag, std::string const& project, std::string const& image,
       google::cloud::cpp::compute::v1::DeprecationStatus const&
           deprecation_status_resource,
       Options opts = {});
@@ -312,7 +309,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Deprecate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request,
       Options opts = {});
 
@@ -326,7 +323,6 @@ class ImagesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Deprecate(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -565,7 +561,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertImage(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::Image const& image_resource,
       Options opts = {});
 
@@ -621,7 +617,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertImage(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request,
       Options opts = {});
@@ -636,7 +632,6 @@ class ImagesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertImage(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -775,8 +770,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchImage(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& image,
+      NoAwaitTag, std::string const& project, std::string const& image,
       google::cloud::cpp::compute::v1::Image const& image_resource,
       Options opts = {});
 
@@ -831,7 +825,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchImage(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::images::v1::PatchImageRequest const& request,
       Options opts = {});
 
@@ -845,7 +839,6 @@ class ImagesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchImage(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -965,8 +958,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& resource,
+      NoAwaitTag, std::string const& project, std::string const& resource,
       google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
           global_set_labels_request_resource,
       Options opts = {});
@@ -1022,7 +1014,7 @@ class ImagesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request,
       Options opts = {});
 
@@ -1036,7 +1028,6 @@ class ImagesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

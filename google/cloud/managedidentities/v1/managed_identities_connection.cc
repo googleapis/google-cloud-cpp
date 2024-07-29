@@ -50,16 +50,15 @@ ManagedIdentitiesServiceConnection::CreateMicrosoftAdDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnection::CreateMicrosoftAdDomain(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::managedidentities::v1::
-        CreateMicrosoftAdDomainRequest const&) {
+    NoAwaitTag, google::cloud::managedidentities::v1::
+                    CreateMicrosoftAdDomainRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::CreateMicrosoftAdDomain(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedidentities::v1::Domain>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -95,7 +94,7 @@ ManagedIdentitiesServiceConnection::UpdateDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnection::UpdateDomain(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedidentities::v1::UpdateDomainRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,7 +102,7 @@ ManagedIdentitiesServiceConnection::UpdateDomain(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::UpdateDomain(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedidentities::v1::Domain>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -119,7 +118,7 @@ ManagedIdentitiesServiceConnection::DeleteDomain(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnection::DeleteDomain(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedidentities::v1::DeleteDomainRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -127,7 +126,7 @@ ManagedIdentitiesServiceConnection::DeleteDomain(
 
 future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceConnection::DeleteDomain(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedidentities::v1::OpMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -143,7 +142,7 @@ ManagedIdentitiesServiceConnection::AttachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnection::AttachTrust(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedidentities::v1::AttachTrustRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -151,7 +150,7 @@ ManagedIdentitiesServiceConnection::AttachTrust(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::AttachTrust(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedidentities::v1::Domain>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -167,7 +166,7 @@ ManagedIdentitiesServiceConnection::ReconfigureTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnection::ReconfigureTrust(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -175,7 +174,7 @@ ManagedIdentitiesServiceConnection::ReconfigureTrust(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::ReconfigureTrust(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedidentities::v1::Domain>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -191,7 +190,7 @@ ManagedIdentitiesServiceConnection::DetachTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnection::DetachTrust(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedidentities::v1::DetachTrustRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -199,7 +198,7 @@ ManagedIdentitiesServiceConnection::DetachTrust(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::DetachTrust(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedidentities::v1::Domain>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -215,7 +214,7 @@ ManagedIdentitiesServiceConnection::ValidateTrust(
 
 StatusOr<google::longrunning::Operation>
 ManagedIdentitiesServiceConnection::ValidateTrust(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedidentities::v1::ValidateTrustRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -223,7 +222,7 @@ ManagedIdentitiesServiceConnection::ValidateTrust(
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnection::ValidateTrust(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::managedidentities::v1::Domain>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

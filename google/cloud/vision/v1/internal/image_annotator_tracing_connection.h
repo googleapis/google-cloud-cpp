@@ -55,13 +55,12 @@ class ImageAnnotatorTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
   AsyncBatchAnnotateImages(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
@@ -70,13 +69,12 @@ class ImageAnnotatorTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
   AsyncBatchAnnotateFiles(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

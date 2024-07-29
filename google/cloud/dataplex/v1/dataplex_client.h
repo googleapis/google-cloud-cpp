@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATAPLEX_CLIENT_H
 
 #include "google/cloud/dataplex/v1/dataplex_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -149,7 +148,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateLake(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Lake const& lake, std::string const& lake_id,
       Options opts = {});
 
@@ -203,8 +202,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateLake(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::CreateLakeRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::CreateLakeRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -217,8 +215,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -267,8 +264,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLake(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::Lake const& lake,
+      NoAwaitTag, google::cloud::dataplex::v1::Lake const& lake,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -321,8 +317,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateLake(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateLakeRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::UpdateLakeRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -335,8 +330,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -383,8 +377,7 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteLake(ExperimentalTag,
-                                                      NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteLake(NoAwaitTag,
                                                       std::string const& name,
                                                       Options opts = {});
 
@@ -439,8 +432,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLake(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteLakeRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::DeleteLakeRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -453,8 +445,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -719,7 +710,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateZone(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Zone const& zone, std::string const& zone_id,
       Options opts = {});
 
@@ -773,8 +764,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateZone(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::CreateZoneRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::CreateZoneRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -787,8 +777,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -837,8 +826,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateZone(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::Zone const& zone,
+      NoAwaitTag, google::cloud::dataplex::v1::Zone const& zone,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -891,8 +879,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateZone(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateZoneRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::UpdateZoneRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -905,8 +892,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -953,8 +939,7 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteZone(ExperimentalTag,
-                                                      NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteZone(NoAwaitTag,
                                                       std::string const& name,
                                                       Options opts = {});
 
@@ -1009,8 +994,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteZone(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteZoneRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::DeleteZoneRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1023,8 +1007,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1288,7 +1271,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAsset(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Asset const& asset,
       std::string const& asset_id, Options opts = {});
 
@@ -1342,7 +1325,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAsset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateAssetRequest const& request,
       Options opts = {});
 
@@ -1356,8 +1339,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1406,8 +1388,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAsset(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::Asset const& asset,
+      NoAwaitTag, google::cloud::dataplex::v1::Asset const& asset,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1460,7 +1441,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAsset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateAssetRequest const& request,
       Options opts = {});
 
@@ -1474,8 +1455,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1522,8 +1502,7 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAsset(ExperimentalTag,
-                                                       NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteAsset(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts = {});
 
@@ -1578,7 +1557,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAsset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteAssetRequest const& request,
       Options opts = {});
 
@@ -1592,8 +1571,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1850,7 +1828,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTask(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Task const& task, std::string const& task_id,
       Options opts = {});
 
@@ -1904,8 +1882,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTask(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::CreateTaskRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::CreateTaskRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1918,8 +1895,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1968,8 +1944,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTask(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::Task const& task,
+      NoAwaitTag, google::cloud::dataplex::v1::Task const& task,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -2022,8 +1997,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTask(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateTaskRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::UpdateTaskRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -2036,8 +2010,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2083,8 +2056,7 @@ class DataplexServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTask(ExperimentalTag,
-                                                      NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteTask(NoAwaitTag,
                                                       std::string const& name,
                                                       Options opts = {});
 
@@ -2138,8 +2110,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTask(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteTaskRequest const& request,
+      NoAwaitTag, google::cloud::dataplex::v1::DeleteTaskRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -2152,8 +2123,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2577,7 +2547,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::Environment const& environment,
       std::string const& environment_id, Options opts = {});
 
@@ -2631,7 +2601,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
       Options opts = {});
 
@@ -2645,8 +2615,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2695,8 +2664,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::Environment const& environment,
+      NoAwaitTag, google::cloud::dataplex::v1::Environment const& environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -2749,7 +2717,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
       Options opts = {});
 
@@ -2763,8 +2731,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2812,7 +2779,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2866,7 +2833,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
       Options opts = {});
 
@@ -2880,8 +2847,7 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEnvironment(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteEnvironment(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off

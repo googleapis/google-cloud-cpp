@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_DATABASE_ADMIN_CLIENT_H
 
 #include "google/cloud/spanner/admin/database_admin_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
@@ -233,7 +232,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDatabase(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::string const& create_statement, Options opts = {});
 
   // clang-format off
@@ -299,7 +298,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDatabase(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request,
       Options opts = {});
@@ -314,8 +313,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  CreateDatabase(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -466,7 +464,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDatabase(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::database::v1::Database const& database,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -563,7 +561,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDatabase(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::database::v1::UpdateDatabaseRequest const&
           request,
       Options opts = {});
@@ -578,8 +576,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  UpdateDatabase(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  UpdateDatabase(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -639,7 +636,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-      ExperimentalTag, NoAwaitTag, std::string const& database,
+      NoAwaitTag, std::string const& database,
       std::vector<std::string> const& statements, Options opts = {});
 
   // clang-format off
@@ -704,7 +701,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request,
       Options opts = {});
@@ -720,8 +717,7 @@ class DatabaseAdminClient {
   // clang-format on
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateDatabaseDdl(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1168,7 +1164,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::spanner::admin::database::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
@@ -1237,7 +1233,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::database::v1::CreateBackupRequest const& request,
       Options opts = {});
 
@@ -1251,8 +1247,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1331,8 +1326,8 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CopyBackup(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& backup_id, std::string const& source_backup,
+      NoAwaitTag, std::string const& parent, std::string const& backup_id,
+      std::string const& source_backup,
       google::protobuf::Timestamp const& expire_time, Options opts = {});
 
   // clang-format off
@@ -1401,7 +1396,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CopyBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::database::v1::CopyBackupRequest const& request,
       Options opts = {});
 
@@ -1415,8 +1410,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1754,9 +1748,8 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestoreDatabase(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& database_id, std::string const& backup,
-      Options opts = {});
+      NoAwaitTag, std::string const& parent, std::string const& database_id,
+      std::string const& backup, Options opts = {});
 
   // clang-format off
   ///
@@ -1830,7 +1823,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestoreDatabase(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::spanner::admin::database::v1::RestoreDatabaseRequest const&
           request,
       Options opts = {});
@@ -1845,8 +1838,7 @@ class DatabaseAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  RestoreDatabase(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  RestoreDatabase(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off

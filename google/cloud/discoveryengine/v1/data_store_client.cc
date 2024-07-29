@@ -47,7 +47,7 @@ DataStoreServiceClient::CreateDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceClient::CreateDataStore(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::discoveryengine::v1::DataStore const& data_store,
     std::string const& data_store_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -55,7 +55,7 @@ DataStoreServiceClient::CreateDataStore(
   request.set_parent(parent);
   *request.mutable_data_store() = data_store;
   request.set_data_store_id(data_store_id);
-  return connection_->CreateDataStore(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateDataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
@@ -68,19 +68,18 @@ DataStoreServiceClient::CreateDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceClient::CreateDataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataStore(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateDataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
 DataStoreServiceClient::CreateDataStore(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDataStore(ExperimentalTag{}, operation);
+  return connection_->CreateDataStore(operation);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>
@@ -125,12 +124,12 @@ DataStoreServiceClient::DeleteDataStore(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation>
-DataStoreServiceClient::DeleteDataStore(ExperimentalTag, NoAwaitTag,
-                                        std::string const& name, Options opts) {
+DataStoreServiceClient::DeleteDataStore(NoAwaitTag, std::string const& name,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::discoveryengine::v1::DeleteDataStoreRequest request;
   request.set_name(name);
-  return connection_->DeleteDataStore(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteDataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
@@ -143,19 +142,18 @@ DataStoreServiceClient::DeleteDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceClient::DeleteDataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataStore(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteDataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
 DataStoreServiceClient::DeleteDataStore(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDataStore(ExperimentalTag{}, operation);
+  return connection_->DeleteDataStore(operation);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::DataStore>

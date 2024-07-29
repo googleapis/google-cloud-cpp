@@ -22,7 +22,6 @@
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_connection_idempotency_policy.h"
 #include "google/cloud/compute/firewall_policies/v1/internal/firewall_policies_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -193,25 +192,22 @@ class FirewallPoliciesConnection {
                      AddAssociationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddAssociation(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::firewall_policies::v1::
-          AddAssociationRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                      AddAssociationRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAssociation(ExperimentalTag,
-                 google::cloud::cpp::compute::v1::Operation const& operation);
+  AddAssociation(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
       google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -219,26 +215,23 @@ class FirewallPoliciesConnection {
                  CloneRulesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> CloneRules(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::firewall_policies::v1::
-          CloneRulesRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                      CloneRulesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CloneRules(ExperimentalTag,
-             google::cloud::cpp::compute::v1::Operation const& operation);
+  CloneRules(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteFirewallPolicy(google::cloud::cpp::compute::firewall_policies::v1::
                            DeleteFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteFirewallPolicy(ExperimentalTag, NoAwaitTag,
+  DeleteFirewallPolicy(NoAwaitTag,
                        google::cloud::cpp::compute::firewall_policies::v1::
                            DeleteFirewallPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteFirewallPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -262,13 +255,12 @@ class FirewallPoliciesConnection {
                            InsertFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertFirewallPolicy(ExperimentalTag, NoAwaitTag,
+  InsertFirewallPolicy(NoAwaitTag,
                        google::cloud::cpp::compute::firewall_policies::v1::
                            InsertFirewallPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertFirewallPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -285,12 +277,11 @@ class FirewallPoliciesConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -298,13 +289,12 @@ class FirewallPoliciesConnection {
                           PatchFirewallPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchFirewallPolicy(ExperimentalTag, NoAwaitTag,
+  PatchFirewallPolicy(NoAwaitTag,
                       google::cloud::cpp::compute::firewall_policies::v1::
                           PatchFirewallPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchFirewallPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -312,26 +302,23 @@ class FirewallPoliciesConnection {
                 PatchRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::firewall_policies::v1::
-          PatchRuleRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                      PatchRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRule(ExperimentalTag,
-            google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchRule(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveAssociation(google::cloud::cpp::compute::firewall_policies::v1::
                         RemoveAssociationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveAssociation(ExperimentalTag, NoAwaitTag,
+  RemoveAssociation(NoAwaitTag,
                     google::cloud::cpp::compute::firewall_policies::v1::
                         RemoveAssociationRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveAssociation(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -339,13 +326,11 @@ class FirewallPoliciesConnection {
                  RemoveRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::firewall_policies::v1::
-          RemoveRuleRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                      RemoveRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveRule(ExperimentalTag,
-             google::cloud::cpp::compute::v1::Operation const& operation);
+  RemoveRule(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
       google::cloud::cpp::compute::firewall_policies::v1::

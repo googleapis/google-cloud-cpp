@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_POLICY_BASED_ROUTING_CLIENT_H
 
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -278,7 +277,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkconnectivity::v1::PolicyBasedRoute const&
           policy_based_route,
       std::string const& policy_based_route_id, Options opts = {});
@@ -334,7 +333,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::
           CreatePolicyBasedRouteRequest const& request,
       Options opts = {});
@@ -349,8 +348,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  CreatePolicyBasedRoute(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -397,7 +395,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -450,7 +448,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::
           DeletePolicyBasedRouteRequest const& request,
       Options opts = {});
@@ -465,8 +463,7 @@ class PolicyBasedRoutingServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  DeletePolicyBasedRoute(google::longrunning::Operation const& operation,
                          Options opts = {});
 
  private:

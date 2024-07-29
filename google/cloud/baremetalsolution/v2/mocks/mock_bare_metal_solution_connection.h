@@ -70,15 +70,13 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::baremetalsolution::v2::UpdateInstanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>,
-              UpdateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateInstance, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -98,16 +96,14 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ResetInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::baremetalsolution::v2::ResetInstanceRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<
                   google::cloud::baremetalsolution::v2::ResetInstanceResponse>>,
-              ResetInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ResetInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -121,16 +117,14 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::baremetalsolution::v2::StartInstanceRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<
                   google::cloud::baremetalsolution::v2::StartInstanceResponse>>,
-              StartInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              StartInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -145,7 +139,7 @@ class MockBareMetalSolutionConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, StopInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::baremetalsolution::v2::StopInstanceRequest const&
                    request),
               (override));
@@ -153,8 +147,7 @@ class MockBareMetalSolutionConnection
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::baremetalsolution::v2::StopInstanceResponse>>,
-      StopInstance,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      StopInstance, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -170,7 +163,7 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               EnableInteractiveSerialConsole,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::baremetalsolution::v2::
                    EnableInteractiveSerialConsoleRequest const& request),
               (override));
@@ -178,9 +171,7 @@ class MockBareMetalSolutionConnection
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::
                                   EnableInteractiveSerialConsoleResponse>>,
               EnableInteractiveSerialConsole,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DisableInteractiveSerialConsole)` is now ambiguous.
@@ -195,7 +186,7 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DisableInteractiveSerialConsole,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::baremetalsolution::v2::
                    DisableInteractiveSerialConsoleRequest const& request),
               (override));
@@ -203,9 +194,7 @@ class MockBareMetalSolutionConnection
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::
                                   DisableInteractiveSerialConsoleResponse>>,
               DisableInteractiveSerialConsole,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DetachLun)` is now ambiguous. Use
@@ -218,14 +207,12 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DetachLun,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::baremetalsolution::v2::DetachLunRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Instance>>,
-              DetachLun,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DetachLun, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -264,15 +251,13 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateVolume,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::baremetalsolution::v2::UpdateVolumeRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>,
-              UpdateVolume,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateVolume, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::baremetalsolution::v2::Volume>,
@@ -292,14 +277,13 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, EvictVolume,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::baremetalsolution::v2::EvictVolumeRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
-      EvictVolume,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      EvictVolume, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -312,15 +296,13 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ResizeVolume,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::baremetalsolution::v2::ResizeVolumeRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Volume>>,
-              ResizeVolume,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ResizeVolume, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -351,15 +333,13 @@ class MockBareMetalSolutionConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateNetwork,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::baremetalsolution::v2::UpdateNetworkRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::Network>>,
-              UpdateNetwork,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateNetwork, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -381,15 +361,14 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreVolumeSnapshot,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::baremetalsolution::v2::RestoreVolumeSnapshotRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>>,
-      RestoreVolumeSnapshot,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RestoreVolumeSnapshot, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -433,15 +412,13 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, EvictLun,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::baremetalsolution::v2::EvictLunRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
-      EvictLun,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      EvictLun, (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::baremetalsolution::v2::NfsShare>, GetNfsShare,
@@ -466,15 +443,13 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateNfsShare,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::baremetalsolution::v2::UpdateNfsShareRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
-              UpdateNfsShare,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateNfsShare, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -489,15 +464,13 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateNfsShare,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::baremetalsolution::v2::CreateNfsShareRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::baremetalsolution::v2::NfsShare>>,
-              CreateNfsShare,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateNfsShare, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -518,15 +491,14 @@ class MockBareMetalSolutionConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteNfsShare,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::baremetalsolution::v2::DeleteNfsShareRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::baremetalsolution::v2::OperationMetadata>>,
-      DeleteNfsShare,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteNfsShare, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

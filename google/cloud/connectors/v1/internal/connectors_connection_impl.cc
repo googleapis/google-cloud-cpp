@@ -155,7 +155,7 @@ ConnectorsConnectionImpl::CreateConnection(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnectionImpl::CreateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -171,7 +171,7 @@ ConnectorsConnectionImpl::CreateConnection(
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsConnectionImpl::CreateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::connectors::v1::OperationMetadata>()) {
@@ -248,7 +248,7 @@ ConnectorsConnectionImpl::UpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnectionImpl::UpdateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,7 +264,7 @@ ConnectorsConnectionImpl::UpdateConnection(
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsConnectionImpl::UpdateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::connectors::v1::OperationMetadata>()) {
@@ -341,7 +341,7 @@ ConnectorsConnectionImpl::DeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnectionImpl::DeleteConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -357,7 +357,7 @@ ConnectorsConnectionImpl::DeleteConnection(
 
 future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
 ConnectorsConnectionImpl::DeleteConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::connectors::v1::OperationMetadata>()) {
@@ -600,7 +600,7 @@ ConnectorsConnectionImpl::RefreshConnectionSchemaMetadata(
 
 StatusOr<google::longrunning::Operation>
 ConnectorsConnectionImpl::RefreshConnectionSchemaMetadata(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -618,7 +618,7 @@ ConnectorsConnectionImpl::RefreshConnectionSchemaMetadata(
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
 ConnectorsConnectionImpl::RefreshConnectionSchemaMetadata(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::connectors::v1::OperationMetadata>()) {

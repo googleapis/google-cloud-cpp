@@ -105,7 +105,7 @@ DisksRestConnectionImpl::AddResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::AddResourcePolicies(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -122,7 +122,6 @@ DisksRestConnectionImpl::AddResourcePolicies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::AddResourcePolicies(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -276,7 +275,7 @@ DisksRestConnectionImpl::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::BulkInsert(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::BulkInsertRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -292,7 +291,6 @@ DisksRestConnectionImpl::BulkInsert(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::BulkInsert(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -409,7 +407,7 @@ DisksRestConnectionImpl::CreateSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::CreateSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -427,7 +425,6 @@ DisksRestConnectionImpl::CreateSnapshot(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::CreateSnapshot(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -543,7 +540,7 @@ DisksRestConnectionImpl::DeleteDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::DeleteDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -559,7 +556,6 @@ DisksRestConnectionImpl::DeleteDisk(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::DeleteDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -706,7 +702,7 @@ DisksRestConnectionImpl::InsertDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::InsertDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::InsertDiskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -722,7 +718,6 @@ DisksRestConnectionImpl::InsertDisk(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::InsertDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -874,7 +869,7 @@ DisksRestConnectionImpl::RemoveResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::RemoveResourcePolicies(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::RemoveResourcePoliciesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -891,7 +886,6 @@ DisksRestConnectionImpl::RemoveResourcePolicies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::RemoveResourcePolicies(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1007,7 +1001,7 @@ DisksRestConnectionImpl::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::Resize(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::ResizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -1023,7 +1017,6 @@ DisksRestConnectionImpl::Resize(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::Resize(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1155,7 +1148,7 @@ DisksRestConnectionImpl::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -1171,7 +1164,6 @@ DisksRestConnectionImpl::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1287,7 +1279,7 @@ DisksRestConnectionImpl::StartAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::StartAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::StartAsyncReplicationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1304,7 +1296,6 @@ DisksRestConnectionImpl::StartAsyncReplication(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::StartAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1420,7 +1411,7 @@ DisksRestConnectionImpl::StopAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::StopAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::StopAsyncReplicationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1437,7 +1428,6 @@ DisksRestConnectionImpl::StopAsyncReplication(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::StopAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1553,9 +1543,8 @@ DisksRestConnectionImpl::StopGroupAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::StopGroupAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::disks::v1::
-        StopGroupAsyncReplicationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                    StopGroupAsyncReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1570,7 +1559,6 @@ DisksRestConnectionImpl::StopGroupAsyncReplication(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::StopGroupAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1702,7 +1690,7 @@ DisksRestConnectionImpl::UpdateDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksRestConnectionImpl::UpdateDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -1718,7 +1706,6 @@ DisksRestConnectionImpl::UpdateDisk(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksRestConnectionImpl::UpdateDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

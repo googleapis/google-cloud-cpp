@@ -45,12 +45,11 @@ class VpcAccessServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateConnector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
@@ -65,13 +64,12 @@ class VpcAccessServiceTracingConnection
                       request) override;
 
   StatusOr<google::longrunning::Operation> DeleteConnector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
       override;
 
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  DeleteConnector(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<vpcaccess_v1::VpcAccessServiceConnection> child_;

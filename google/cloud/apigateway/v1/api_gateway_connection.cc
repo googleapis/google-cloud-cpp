@@ -62,15 +62,14 @@ ApiGatewayServiceConnection::CreateGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnection::CreateGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::CreateGatewayRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::CreateGatewayRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnection::CreateGateway(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::Gateway>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,15 +85,14 @@ ApiGatewayServiceConnection::UpdateGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnection::UpdateGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::UpdateGatewayRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::UpdateGatewayRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnection::UpdateGateway(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::Gateway>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,15 +108,14 @@ ApiGatewayServiceConnection::DeleteGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnection::DeleteGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::DeleteGatewayRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::DeleteGatewayRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnection::DeleteGateway(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -147,15 +144,13 @@ ApiGatewayServiceConnection::CreateApi(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceConnection::CreateApi(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::CreateApiRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::CreateApiRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
-ApiGatewayServiceConnection::CreateApi(ExperimentalTag,
-                                       google::longrunning::Operation const&) {
+ApiGatewayServiceConnection::CreateApi(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::Api>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -170,15 +165,13 @@ ApiGatewayServiceConnection::UpdateApi(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceConnection::UpdateApi(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::UpdateApiRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::UpdateApiRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
-ApiGatewayServiceConnection::UpdateApi(ExperimentalTag,
-                                       google::longrunning::Operation const&) {
+ApiGatewayServiceConnection::UpdateApi(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::Api>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -193,15 +186,13 @@ ApiGatewayServiceConnection::DeleteApi(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceConnection::DeleteApi(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::DeleteApiRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::DeleteApiRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
-ApiGatewayServiceConnection::DeleteApi(ExperimentalTag,
-                                       google::longrunning::Operation const&) {
+ApiGatewayServiceConnection::DeleteApi(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -231,15 +222,14 @@ ApiGatewayServiceConnection::CreateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnection::CreateApiConfig(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::CreateApiConfigRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::CreateApiConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnection::CreateApiConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::ApiConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -255,15 +245,14 @@ ApiGatewayServiceConnection::UpdateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnection::UpdateApiConfig(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::UpdateApiConfigRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::UpdateApiConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnection::UpdateApiConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::ApiConfig>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -279,15 +268,14 @@ ApiGatewayServiceConnection::DeleteApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceConnection::DeleteApiConfig(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::DeleteApiConfigRequest const&) {
+    NoAwaitTag, google::cloud::apigateway::v1::DeleteApiConfigRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnection::DeleteApiConfig(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apigateway::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_GRPC_PROXIES_V1_TARGET_GRPC_PROXIES_CLIENT_H
 
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -136,7 +135,7 @@ class TargetGrpcProxiesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxy(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       std::string const& target_grpc_proxy, Options opts = {});
 
   // clang-format off
@@ -190,7 +189,7 @@ class TargetGrpcProxiesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetGrpcProxy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           DeleteTargetGrpcProxyRequest const& request,
       Options opts = {});
@@ -206,7 +205,6 @@ class TargetGrpcProxiesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetGrpcProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -320,7 +318,7 @@ class TargetGrpcProxiesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxy(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::TargetGrpcProxy const&
           target_grpc_proxy_resource,
       Options opts = {});
@@ -377,7 +375,7 @@ class TargetGrpcProxiesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetGrpcProxy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           InsertTargetGrpcProxyRequest const& request,
       Options opts = {});
@@ -393,7 +391,6 @@ class TargetGrpcProxiesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetGrpcProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -526,7 +523,7 @@ class TargetGrpcProxiesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxy(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       std::string const& target_grpc_proxy,
       google::cloud::cpp::compute::v1::TargetGrpcProxy const&
           target_grpc_proxy_resource,
@@ -585,7 +582,7 @@ class TargetGrpcProxiesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetGrpcProxy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::target_grpc_proxies::v1::
           PatchTargetGrpcProxyRequest const& request,
       Options opts = {});
@@ -601,7 +598,6 @@ class TargetGrpcProxiesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetGrpcProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

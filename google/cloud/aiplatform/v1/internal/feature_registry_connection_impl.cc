@@ -113,7 +113,7 @@ FeatureRegistryServiceConnectionImpl::CreateFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceConnectionImpl::CreateFeatureGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -129,7 +129,7 @@ FeatureRegistryServiceConnectionImpl::CreateFeatureGroup(
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
 FeatureRegistryServiceConnectionImpl::CreateFeatureGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -258,7 +258,7 @@ FeatureRegistryServiceConnectionImpl::UpdateFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceConnectionImpl::UpdateFeatureGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -274,7 +274,7 @@ FeatureRegistryServiceConnectionImpl::UpdateFeatureGroup(
 
 future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
 FeatureRegistryServiceConnectionImpl::UpdateFeatureGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -352,7 +352,7 @@ FeatureRegistryServiceConnectionImpl::DeleteFeatureGroup(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceConnectionImpl::DeleteFeatureGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -368,7 +368,7 @@ FeatureRegistryServiceConnectionImpl::DeleteFeatureGroup(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureRegistryServiceConnectionImpl::DeleteFeatureGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -445,7 +445,7 @@ FeatureRegistryServiceConnectionImpl::CreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceConnectionImpl::CreateFeature(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -461,7 +461,7 @@ FeatureRegistryServiceConnectionImpl::CreateFeature(
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
 FeatureRegistryServiceConnectionImpl::CreateFeature(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -586,7 +586,7 @@ FeatureRegistryServiceConnectionImpl::UpdateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceConnectionImpl::UpdateFeature(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -602,7 +602,7 @@ FeatureRegistryServiceConnectionImpl::UpdateFeature(
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
 FeatureRegistryServiceConnectionImpl::UpdateFeature(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -678,7 +678,7 @@ FeatureRegistryServiceConnectionImpl::DeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 FeatureRegistryServiceConnectionImpl::DeleteFeature(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -694,7 +694,7 @@ FeatureRegistryServiceConnectionImpl::DeleteFeature(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureRegistryServiceConnectionImpl::DeleteFeature(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

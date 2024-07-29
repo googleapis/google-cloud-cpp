@@ -71,27 +71,26 @@ AppGatewaysServiceTracingConnection::CreateAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceTracingConnection::CreateAppGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
         request) {
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "CreateAppGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateAppGateway(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateAppGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
 AppGatewaysServiceTracingConnection::CreateAppGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "CreateAppGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateAppGateway(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAppGateway(operation));
 }
 
 future<StatusOr<
@@ -108,28 +107,27 @@ AppGatewaysServiceTracingConnection::DeleteAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceTracingConnection::DeleteAppGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
         request) {
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "DeleteAppGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteAppGateway(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteAppGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceTracingConnection::DeleteAppGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "beyondcorp_appgateways_v1::AppGatewaysServiceConnection::"
       "DeleteAppGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteAppGateway(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteAppGateway(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -73,14 +73,12 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateTagKey,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
-              CreateTagKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateTagKey, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -94,14 +92,12 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTagKey,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
-              UpdateTagKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateTagKey, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -115,14 +111,12 @@ class MockTagKeysConnection : public resourcemanager_v3::TagKeysConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTagKey,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>,
-              DeleteTagKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteTagKey, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,

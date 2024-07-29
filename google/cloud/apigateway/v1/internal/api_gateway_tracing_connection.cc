@@ -64,23 +64,21 @@ ApiGatewayServiceTracingConnection::CreateGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::CreateGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateGateway(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceTracingConnection::CreateGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateGateway(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateGateway(operation));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
@@ -94,23 +92,21 @@ ApiGatewayServiceTracingConnection::UpdateGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::UpdateGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateGateway(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceTracingConnection::UpdateGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateGateway(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateGateway(operation));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -124,23 +120,21 @@ ApiGatewayServiceTracingConnection::DeleteGateway(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::DeleteGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteGateway(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceTracingConnection::DeleteGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteGateway(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteGateway(operation));
 }
 
 StreamRange<google::cloud::apigateway::v1::Api>
@@ -174,23 +168,21 @@ ApiGatewayServiceTracingConnection::CreateApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::CreateApi(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateApi");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateApi(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateApi(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceTracingConnection::CreateApi(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateApi");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateApi(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateApi(operation));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
@@ -204,23 +196,21 @@ ApiGatewayServiceTracingConnection::UpdateApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::UpdateApi(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateApi");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateApi(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateApi(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceTracingConnection::UpdateApi(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateApi");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateApi(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateApi(operation));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -234,23 +224,21 @@ ApiGatewayServiceTracingConnection::DeleteApi(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::DeleteApi(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteApi");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteApi(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteApi(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceTracingConnection::DeleteApi(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteApi");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteApi(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteApi(operation));
 }
 
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
@@ -284,23 +272,22 @@ ApiGatewayServiceTracingConnection::CreateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::CreateApiConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateApiConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateApiConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateApiConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceTracingConnection::CreateApiConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::CreateApiConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateApiConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateApiConfig(operation));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
@@ -314,23 +301,22 @@ ApiGatewayServiceTracingConnection::UpdateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::UpdateApiConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateApiConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateApiConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateApiConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceTracingConnection::UpdateApiConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::UpdateApiConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateApiConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateApiConfig(operation));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -344,23 +330,22 @@ ApiGatewayServiceTracingConnection::DeleteApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceTracingConnection::DeleteApiConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteApiConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteApiConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteApiConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceTracingConnection::DeleteApiConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "apigateway_v1::ApiGatewayServiceConnection::DeleteApiConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteApiConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteApiConfig(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -49,12 +49,10 @@ class PublicAdvertisedPrefixesTracingConnection
           AnnounceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          AnnounceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                      AnnounceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -64,13 +62,12 @@ class PublicAdvertisedPrefixesTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicAdvertisedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           DeletePublicAdvertisedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicAdvertisedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -85,13 +82,12 @@ class PublicAdvertisedPrefixesTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicAdvertisedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           InsertPublicAdvertisedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPublicAdvertisedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -106,13 +102,12 @@ class PublicAdvertisedPrefixesTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicAdvertisedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           PatchPublicAdvertisedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPublicAdvertisedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
@@ -120,12 +115,10 @@ class PublicAdvertisedPrefixesTracingConnection
           WithdrawRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_advertised_prefixes::v1::
-          WithdrawRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                      WithdrawRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

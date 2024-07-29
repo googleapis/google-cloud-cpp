@@ -22,7 +22,6 @@
 #include "google/cloud/appengine/v1/internal/versions_retry_traits.h"
 #include "google/cloud/appengine/v1/versions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -195,32 +194,28 @@ class VersionsConnection {
       google::appengine::v1::CreateVersionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateVersion(
-      ExperimentalTag, NoAwaitTag,
-      google::appengine::v1::CreateVersionRequest const& request);
+      NoAwaitTag, google::appengine::v1::CreateVersionRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::Version>> CreateVersion(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
       google::appengine::v1::UpdateVersionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateVersion(
-      ExperimentalTag, NoAwaitTag,
-      google::appengine::v1::UpdateVersionRequest const& request);
+      NoAwaitTag, google::appengine::v1::UpdateVersionRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteVersion(
-      ExperimentalTag, NoAwaitTag,
-      google::appengine::v1::DeleteVersionRequest const& request);
+      NoAwaitTag, google::appengine::v1::DeleteVersionRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteVersion(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  DeleteVersion(google::longrunning::Operation const& operation);
 };
 
 /**

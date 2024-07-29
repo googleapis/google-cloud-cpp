@@ -72,7 +72,7 @@ ReachabilityServiceTracingConnection::CreateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceTracingConnection::CreateConnectivityTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -80,19 +80,18 @@ ReachabilityServiceTracingConnection::CreateConnectivityTest(
       "CreateConnectivityTest");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->CreateConnectivityTest(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->CreateConnectivityTest(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::CreateConnectivityTest(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "CreateConnectivityTest");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateConnectivityTest(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateConnectivityTest(operation));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -109,7 +108,7 @@ ReachabilityServiceTracingConnection::UpdateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceTracingConnection::UpdateConnectivityTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -117,19 +116,18 @@ ReachabilityServiceTracingConnection::UpdateConnectivityTest(
       "UpdateConnectivityTest");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->UpdateConnectivityTest(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->UpdateConnectivityTest(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::UpdateConnectivityTest(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "UpdateConnectivityTest");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateConnectivityTest(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateConnectivityTest(operation));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -146,7 +144,7 @@ ReachabilityServiceTracingConnection::RerunConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceTracingConnection::RerunConnectivityTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -154,19 +152,18 @@ ReachabilityServiceTracingConnection::RerunConnectivityTest(
       "RerunConnectivityTest");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->RerunConnectivityTest(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->RerunConnectivityTest(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceTracingConnection::RerunConnectivityTest(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "RerunConnectivityTest");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RerunConnectivityTest(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RerunConnectivityTest(operation));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
@@ -183,7 +180,7 @@ ReachabilityServiceTracingConnection::DeleteConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceTracingConnection::DeleteConnectivityTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpan(
@@ -191,19 +188,18 @@ ReachabilityServiceTracingConnection::DeleteConnectivityTest(
       "DeleteConnectivityTest");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->DeleteConnectivityTest(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->DeleteConnectivityTest(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceTracingConnection::DeleteConnectivityTest(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkmanagement_v1::ReachabilityServiceConnection::"
       "DeleteConnectivityTest");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteConnectivityTest(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteConnectivityTest(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

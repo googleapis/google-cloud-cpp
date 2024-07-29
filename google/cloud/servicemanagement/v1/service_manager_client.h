@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEMANAGEMENT_V1_SERVICE_MANAGER_CLIENT_H
 
 #include "google/cloud/servicemanagement/v1/service_manager_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -248,7 +247,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::servicemanagement::v1::ManagedService const& service,
       Options opts = {});
 
@@ -313,7 +312,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::servicemanagement::v1::CreateServiceRequest const& request,
       Options opts = {});
 
@@ -327,8 +326,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-  CreateService(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  CreateService(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -385,8 +383,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag, std::string const& service_name,
-      Options opts = {});
+      NoAwaitTag, std::string const& service_name, Options opts = {});
 
   // clang-format off
   ///
@@ -447,7 +444,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::servicemanagement::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
@@ -461,8 +458,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-  DeleteService(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteService(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -516,8 +512,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteService(
-      ExperimentalTag, NoAwaitTag, std::string const& service_name,
-      Options opts = {});
+      NoAwaitTag, std::string const& service_name, Options opts = {});
 
   // clang-format off
   ///
@@ -575,7 +570,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
       Options opts = {});
 
@@ -589,8 +584,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  UndeleteService(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -884,7 +878,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      ExperimentalTag, NoAwaitTag, std::string const& service_name,
+      NoAwaitTag, std::string const& service_name,
       google::api::servicemanagement::v1::ConfigSource const& config_source,
       bool validate_only, Options opts = {});
 
@@ -955,7 +949,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SubmitConfigSource(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
           request,
       Options opts = {});
@@ -971,8 +965,7 @@ class ServiceManagerClient {
   // clang-format on
   future<
       StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
-  SubmitConfigSource(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  SubmitConfigSource(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -1190,7 +1183,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      ExperimentalTag, NoAwaitTag, std::string const& service_name,
+      NoAwaitTag, std::string const& service_name,
       google::api::servicemanagement::v1::Rollout const& rollout,
       Options opts = {});
 
@@ -1259,7 +1252,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceRollout(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
           request,
       Options opts = {});
@@ -1274,8 +1267,7 @@ class ServiceManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
-  CreateServiceRollout(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateServiceRollout(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off

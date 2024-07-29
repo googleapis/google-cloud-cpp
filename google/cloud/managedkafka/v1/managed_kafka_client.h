@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MANAGEDKAFKA_V1_MANAGED_KAFKA_CLIENT_H
 
 #include "google/cloud/managedkafka/v1/managed_kafka_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -276,7 +275,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::managedkafka::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
@@ -330,7 +329,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::CreateClusterRequest const& request,
       Options opts = {});
 
@@ -344,8 +343,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -397,8 +395,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::managedkafka::v1::Cluster const& cluster,
+      NoAwaitTag, google::cloud::managedkafka::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -451,7 +448,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
@@ -465,8 +462,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -512,7 +508,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -565,7 +561,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
@@ -579,8 +575,7 @@ class ManagedKafkaClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteCluster(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off

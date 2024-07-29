@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_HUB_CLIENT_H
 
 #include "google/cloud/networkconnectivity/v1/hub_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -267,7 +266,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateHub(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkconnectivity::v1::Hub const& hub,
       std::string const& hub_id, Options opts = {});
 
@@ -321,7 +320,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateHub(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
       Options opts = {});
 
@@ -335,8 +334,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -389,8 +387,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateHub(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networkconnectivity::v1::Hub const& hub,
+      NoAwaitTag, google::cloud::networkconnectivity::v1::Hub const& hub,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -444,7 +441,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateHub(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
       Options opts = {});
 
@@ -458,8 +455,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -504,8 +500,7 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteHub(ExperimentalTag,
-                                                     NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteHub(NoAwaitTag,
                                                      std::string const& name,
                                                      Options opts = {});
 
@@ -560,7 +555,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteHub(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
       Options opts = {});
 
@@ -574,8 +569,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(ExperimentalTag, google::longrunning::Operation const& operation,
-            Options opts = {});
+  DeleteHub(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -835,7 +829,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSpoke(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
       std::string const& spoke_id, Options opts = {});
 
@@ -889,7 +883,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
       Options opts = {});
 
@@ -903,8 +897,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -956,8 +949,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSpoke(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networkconnectivity::v1::Spoke const& spoke,
+      NoAwaitTag, google::cloud::networkconnectivity::v1::Spoke const& spoke,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1010,7 +1002,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
       Options opts = {});
 
@@ -1024,8 +1016,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1077,8 +1068,8 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
-      std::string const& spoke_uri, Options opts = {});
+      NoAwaitTag, std::string const& name, std::string const& spoke_uri,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1136,7 +1127,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request,
       Options opts = {});
@@ -1152,8 +1143,7 @@ class HubServiceClient {
   // clang-format on
   future<
       StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  RejectHubSpoke(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -1204,8 +1194,8 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
-      std::string const& spoke_uri, Options opts = {});
+      NoAwaitTag, std::string const& name, std::string const& spoke_uri,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1261,7 +1251,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request,
       Options opts = {});
@@ -1277,8 +1267,7 @@ class HubServiceClient {
   // clang-format on
   future<
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  AcceptHubSpoke(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -1324,8 +1313,7 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSpoke(ExperimentalTag,
-                                                       NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteSpoke(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts = {});
 
@@ -1380,7 +1368,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
       Options opts = {});
 
@@ -1394,7 +1382,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteSpoke(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off

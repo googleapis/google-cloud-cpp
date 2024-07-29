@@ -150,9 +150,8 @@ TargetVpnGatewaysRestConnectionImpl::DeleteTargetVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysRestConnectionImpl::DeleteTargetVpnGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        DeleteTargetVpnGatewayRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
+                    DeleteTargetVpnGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -167,7 +166,6 @@ TargetVpnGatewaysRestConnectionImpl::DeleteTargetVpnGateway(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetVpnGatewaysRestConnectionImpl::DeleteTargetVpnGateway(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -299,9 +297,8 @@ TargetVpnGatewaysRestConnectionImpl::InsertTargetVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysRestConnectionImpl::InsertTargetVpnGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        InsertTargetVpnGatewayRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
+                    InsertTargetVpnGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -316,7 +313,6 @@ TargetVpnGatewaysRestConnectionImpl::InsertTargetVpnGateway(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetVpnGatewaysRestConnectionImpl::InsertTargetVpnGateway(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -472,9 +468,8 @@ TargetVpnGatewaysRestConnectionImpl::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetVpnGatewaysRestConnectionImpl::SetLabels(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_vpn_gateways::v1::
-        SetLabelsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_vpn_gateways::v1::
+                    SetLabelsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -489,7 +484,6 @@ TargetVpnGatewaysRestConnectionImpl::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetVpnGatewaysRestConnectionImpl::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

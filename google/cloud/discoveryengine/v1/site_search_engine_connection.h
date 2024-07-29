@@ -22,7 +22,6 @@
 #include "google/cloud/discoveryengine/v1/internal/site_search_engine_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/site_search_engine_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -206,13 +205,12 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateTargetSite(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  CreateTargetSite(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
@@ -221,14 +219,13 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-  BatchCreateTargetSites(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  BatchCreateTargetSites(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::discoveryengine::v1::TargetSite>
   GetTargetSite(
@@ -240,13 +237,12 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  UpdateTargetSite(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
@@ -255,14 +251,13 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-  DeleteTargetSite(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteTargetSite(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::discoveryengine::v1::TargetSite>
   ListTargetSites(
@@ -275,14 +270,13 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-  EnableAdvancedSiteSearch(ExperimentalTag,
-                           google::longrunning::Operation const& operation);
+  EnableAdvancedSiteSearch(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
@@ -291,14 +285,12 @@ class SiteSearchEngineServiceConnection {
           DisableAdvancedSiteSearchRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          DisableAdvancedSiteSearchRequest const& request);
+      NoAwaitTag, google::cloud::discoveryengine::v1::
+                      DisableAdvancedSiteSearchRequest const& request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-  DisableAdvancedSiteSearch(ExperimentalTag,
-                            google::longrunning::Operation const& operation);
+  DisableAdvancedSiteSearch(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
@@ -306,12 +298,12 @@ class SiteSearchEngineServiceConnection {
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RecrawlUris(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(ExperimentalTag, google::longrunning::Operation const& operation);
+  RecrawlUris(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
@@ -320,14 +312,13 @@ class SiteSearchEngineServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
           request);
 
   virtual future<StatusOr<
       google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-  BatchVerifyTargetSites(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  BatchVerifyTargetSites(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::discoveryengine::v1::TargetSite>
   FetchDomainVerificationStatus(

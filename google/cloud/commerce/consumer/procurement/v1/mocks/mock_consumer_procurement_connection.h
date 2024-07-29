@@ -61,16 +61,14 @@ class MockConsumerProcurementServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, PlaceOrder,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::commerce::consumer::procurement::v1::
-                   PlaceOrderRequest const& request),
+              (NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                               PlaceOrderRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>,
-      PlaceOrder,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PlaceOrder, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

@@ -155,7 +155,7 @@ CloudDeployConnectionImpl::CreateDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateDeliveryPipeline(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -171,7 +171,7 @@ CloudDeployConnectionImpl::CreateDeliveryPipeline(
 
 future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
 CloudDeployConnectionImpl::CreateDeliveryPipeline(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -248,7 +248,7 @@ CloudDeployConnectionImpl::UpdateDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::UpdateDeliveryPipeline(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,7 +264,7 @@ CloudDeployConnectionImpl::UpdateDeliveryPipeline(
 
 future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
 CloudDeployConnectionImpl::UpdateDeliveryPipeline(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -341,7 +341,7 @@ CloudDeployConnectionImpl::DeleteDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::DeleteDeliveryPipeline(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -357,7 +357,7 @@ CloudDeployConnectionImpl::DeleteDeliveryPipeline(
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnectionImpl::DeleteDeliveryPipeline(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -495,8 +495,7 @@ CloudDeployConnectionImpl::CreateTarget(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateTarget(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::CreateTargetRequest const& request) {
+    NoAwaitTag, google::cloud::deploy::v1::CreateTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -510,7 +509,7 @@ CloudDeployConnectionImpl::CreateTarget(
 
 future<StatusOr<google::cloud::deploy::v1::Target>>
 CloudDeployConnectionImpl::CreateTarget(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -585,8 +584,7 @@ CloudDeployConnectionImpl::UpdateTarget(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::UpdateTarget(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::UpdateTargetRequest const& request) {
+    NoAwaitTag, google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -600,7 +598,7 @@ CloudDeployConnectionImpl::UpdateTarget(
 
 future<StatusOr<google::cloud::deploy::v1::Target>>
 CloudDeployConnectionImpl::UpdateTarget(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -675,8 +673,7 @@ CloudDeployConnectionImpl::DeleteTarget(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::DeleteTarget(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::DeleteTargetRequest const& request) {
+    NoAwaitTag, google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -690,7 +687,7 @@ CloudDeployConnectionImpl::DeleteTarget(
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnectionImpl::DeleteTarget(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -818,7 +815,7 @@ CloudDeployConnectionImpl::CreateCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateCustomTargetType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -834,7 +831,7 @@ CloudDeployConnectionImpl::CreateCustomTargetType(
 
 future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
 CloudDeployConnectionImpl::CreateCustomTargetType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -911,7 +908,7 @@ CloudDeployConnectionImpl::UpdateCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::UpdateCustomTargetType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -927,7 +924,7 @@ CloudDeployConnectionImpl::UpdateCustomTargetType(
 
 future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
 CloudDeployConnectionImpl::UpdateCustomTargetType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -1004,7 +1001,7 @@ CloudDeployConnectionImpl::DeleteCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::DeleteCustomTargetType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1020,7 +1017,7 @@ CloudDeployConnectionImpl::DeleteCustomTargetType(
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnectionImpl::DeleteCustomTargetType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -1144,7 +1141,7 @@ CloudDeployConnectionImpl::CreateRelease(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateRelease(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1159,7 +1156,7 @@ CloudDeployConnectionImpl::CreateRelease(
 
 future<StatusOr<google::cloud::deploy::v1::Release>>
 CloudDeployConnectionImpl::CreateRelease(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -1338,7 +1335,7 @@ CloudDeployConnectionImpl::CreateRollout(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateRollout(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1353,7 +1350,7 @@ CloudDeployConnectionImpl::CreateRollout(
 
 future<StatusOr<google::cloud::deploy::v1::Rollout>>
 CloudDeployConnectionImpl::CreateRollout(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -1532,7 +1529,7 @@ CloudDeployConnectionImpl::CreateAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::CreateAutomation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::CreateAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1548,7 +1545,7 @@ CloudDeployConnectionImpl::CreateAutomation(
 
 future<StatusOr<google::cloud::deploy::v1::Automation>>
 CloudDeployConnectionImpl::CreateAutomation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -1623,7 +1620,7 @@ CloudDeployConnectionImpl::UpdateAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::UpdateAutomation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1639,7 +1636,7 @@ CloudDeployConnectionImpl::UpdateAutomation(
 
 future<StatusOr<google::cloud::deploy::v1::Automation>>
 CloudDeployConnectionImpl::UpdateAutomation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {
@@ -1714,7 +1711,7 @@ CloudDeployConnectionImpl::DeleteAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnectionImpl::DeleteAutomation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1730,7 +1727,7 @@ CloudDeployConnectionImpl::DeleteAutomation(
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnectionImpl::DeleteAutomation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::deploy::v1::OperationMetadata>()) {

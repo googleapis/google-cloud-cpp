@@ -57,14 +57,12 @@ class MockSessionControllerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateSession,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataproc::v1::CreateSessionRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
-              CreateSession,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateSession, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Session>, GetSession,
@@ -85,15 +83,13 @@ class MockSessionControllerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, TerminateSession,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataproc::v1::TerminateSessionRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
               TerminateSession,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteSession)` is now ambiguous. Use
@@ -105,14 +101,12 @@ class MockSessionControllerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSession,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataproc::v1::DeleteSessionRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Session>>,
-              DeleteSession,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteSession, (google::longrunning::Operation const& operation),
               (override));
 };
 

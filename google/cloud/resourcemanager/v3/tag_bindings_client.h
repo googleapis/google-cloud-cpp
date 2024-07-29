@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_BINDINGS_CLIENT_H
 
 #include "google/cloud/resourcemanager/v3/tag_bindings_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -219,7 +218,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::TagBinding const& tag_binding,
       Options opts = {});
 
@@ -275,7 +274,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
           request,
       Options opts = {});
@@ -290,8 +289,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-  CreateTagBinding(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  CreateTagBinding(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -340,7 +338,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -394,7 +392,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
           request,
       Options opts = {});
@@ -409,8 +407,7 @@ class TagBindingsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-  DeleteTagBinding(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteTagBinding(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off

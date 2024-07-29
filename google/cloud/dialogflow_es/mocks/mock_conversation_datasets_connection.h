@@ -59,7 +59,7 @@ class MockConversationDatasetsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateConversationDataset,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
            request),
       (override));
@@ -67,8 +67,7 @@ class MockConversationDatasetsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>,
       CreateConversationDataset,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::ConversationDataset>,
@@ -96,7 +95,7 @@ class MockConversationDatasetsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConversationDataset,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
            request),
       (override));
@@ -104,9 +103,7 @@ class MockConversationDatasetsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
                                   DeleteConversationDatasetOperationMetadata>>,
               DeleteConversationDataset,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, ImportConversationData)` is now ambiguous. Use
@@ -121,7 +118,7 @@ class MockConversationDatasetsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportConversationData,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::ImportConversationDataRequest const&
            request),
       (override));
@@ -129,9 +126,7 @@ class MockConversationDatasetsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
                                   ImportConversationDataOperationResponse>>,
               ImportConversationData,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

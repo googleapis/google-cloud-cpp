@@ -146,7 +146,7 @@ RoutersRestConnectionImpl::DeleteRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestConnectionImpl::DeleteRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -164,7 +164,6 @@ RoutersRestConnectionImpl::DeleteRouter(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestConnectionImpl::DeleteRouter(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -345,7 +344,7 @@ RoutersRestConnectionImpl::InsertRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestConnectionImpl::InsertRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -363,7 +362,6 @@ RoutersRestConnectionImpl::InsertRouter(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestConnectionImpl::InsertRouter(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -516,7 +514,7 @@ RoutersRestConnectionImpl::PatchRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestConnectionImpl::PatchRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -533,7 +531,6 @@ RoutersRestConnectionImpl::PatchRouter(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestConnectionImpl::PatchRouter(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -665,7 +662,7 @@ RoutersRestConnectionImpl::UpdateRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersRestConnectionImpl::UpdateRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -683,7 +680,6 @@ RoutersRestConnectionImpl::UpdateRouter(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersRestConnectionImpl::UpdateRouter(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

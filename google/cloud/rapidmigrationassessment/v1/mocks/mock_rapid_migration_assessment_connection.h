@@ -59,15 +59,13 @@ class MockRapidMigrationAssessmentConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateCollector,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::rapidmigrationassessment::v1::
-                   CreateCollectorRequest const& request),
+              (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
+                               CreateCollectorRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
-      CreateCollector,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateCollector, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -81,15 +79,13 @@ class MockRapidMigrationAssessmentConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateAnnotation,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::rapidmigrationassessment::v1::
-                   CreateAnnotationRequest const& request),
+              (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
+                               CreateAnnotationRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>,
-      CreateAnnotation,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateAnnotation, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -124,15 +120,13 @@ class MockRapidMigrationAssessmentConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateCollector,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::rapidmigrationassessment::v1::
-                   UpdateCollectorRequest const& request),
+              (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
+                               UpdateCollectorRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
-      UpdateCollector,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateCollector, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -146,15 +140,13 @@ class MockRapidMigrationAssessmentConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteCollector,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::rapidmigrationassessment::v1::
-                   DeleteCollectorRequest const& request),
+              (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
+                               DeleteCollectorRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
-      DeleteCollector,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteCollector, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -168,15 +160,13 @@ class MockRapidMigrationAssessmentConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ResumeCollector,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::rapidmigrationassessment::v1::
-                   ResumeCollectorRequest const& request),
+              (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
+                               ResumeCollectorRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
-      ResumeCollector,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ResumeCollector, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -190,15 +180,13 @@ class MockRapidMigrationAssessmentConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RegisterCollector,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::rapidmigrationassessment::v1::
-                   RegisterCollectorRequest const& request),
+              (NoAwaitTag, google::cloud::rapidmigrationassessment::v1::
+                               RegisterCollectorRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
-      RegisterCollector,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RegisterCollector, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -213,15 +201,14 @@ class MockRapidMigrationAssessmentConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PauseCollector,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
-      PauseCollector,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PauseCollector, (google::longrunning::Operation const& operation),
       (override));
 };
 

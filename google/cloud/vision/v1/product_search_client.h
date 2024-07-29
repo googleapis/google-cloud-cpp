@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_PRODUCT_SEARCH_CLIENT_H
 
 #include "google/cloud/vision/v1/product_search_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -1464,7 +1463,7 @@ class ProductSearchClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportProductSets(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::vision::v1::ImportProductSetsInputConfig const&
           input_config,
       Options opts = {});
@@ -1532,7 +1531,7 @@ class ProductSearchClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportProductSets(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vision::v1::ImportProductSetsRequest const& request,
       Options opts = {});
 
@@ -1546,8 +1545,7 @@ class ProductSearchClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
-  ImportProductSets(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  ImportProductSets(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1620,8 +1618,7 @@ class ProductSearchClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      Options opts = {});
+      NoAwaitTag, std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1697,7 +1694,7 @@ class ProductSearchClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeProducts(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vision::v1::PurgeProductsRequest const& request,
       Options opts = {});
 
@@ -1711,8 +1708,7 @@ class ProductSearchClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-  PurgeProducts(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  PurgeProducts(google::longrunning::Operation const& operation,
                 Options opts = {});
 
  private:

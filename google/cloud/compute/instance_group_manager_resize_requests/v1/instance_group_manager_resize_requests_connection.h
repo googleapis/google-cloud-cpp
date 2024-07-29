@@ -23,7 +23,6 @@
 #include "google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests_connection_idempotency_policy.h"
 #include "google/cloud/compute/instance_group_manager_resize_requests/v1/internal/instance_group_manager_resize_requests_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -214,12 +213,11 @@ class InstanceGroupManagerResizeRequestsConnection {
           CancelRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Cancel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           CancelRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -229,13 +227,12 @@ class InstanceGroupManagerResizeRequestsConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManagerResizeRequest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           DeleteInstanceGroupManagerResizeRequestRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroupManagerResizeRequest(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<
@@ -251,13 +248,12 @@ class InstanceGroupManagerResizeRequestsConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManagerResizeRequest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           InsertInstanceGroupManagerResizeRequestRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroupManagerResizeRequest(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<

@@ -54,14 +54,12 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateModel,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::retail::v2::CreateModelRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::Model>>, CreateModel,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::retail::v2::Model>, GetModel,
               (google::cloud::retail::v2::GetModelRequest const& request),
@@ -96,14 +94,12 @@ class MockModelServiceConnection : public retail_v2::ModelServiceConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, TuneModel,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::retail::v2::TuneModelRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>,
-              TuneModel,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              TuneModel, (google::longrunning::Operation const& operation),
               (override));
 };
 

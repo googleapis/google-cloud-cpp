@@ -57,24 +57,23 @@ SecurityCenterTracingConnection::BulkMuteFindings(
 
 StatusOr<google::longrunning::Operation>
 SecurityCenterTracingConnection::BulkMuteFindings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::securitycenter::v2::BulkMuteFindingsRequest const& request) {
   auto span = internal::MakeSpan(
       "securitycenter_v2::SecurityCenterConnection::BulkMuteFindings");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->BulkMuteFindings(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BulkMuteFindings(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>
 SecurityCenterTracingConnection::BulkMuteFindings(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "securitycenter_v2::SecurityCenterConnection::BulkMuteFindings");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->BulkMuteFindings(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BulkMuteFindings(operation));
 }
 
 StatusOr<google::cloud::securitycenter::v2::BigQueryExport>

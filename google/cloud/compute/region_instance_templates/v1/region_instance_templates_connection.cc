@@ -49,16 +49,15 @@ RegionInstanceTemplatesConnection::DeleteInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesConnection::DeleteInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_instance_templates::v1::
-        DeleteInstanceTemplateRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_instance_templates::v1::
+                    DeleteInstanceTemplateRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceTemplatesConnection::DeleteInstanceTemplate(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,16 +81,15 @@ RegionInstanceTemplatesConnection::InsertInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesConnection::InsertInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_instance_templates::v1::
-        InsertInstanceTemplateRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_instance_templates::v1::
+                    InsertInstanceTemplateRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceTemplatesConnection::InsertInstanceTemplate(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

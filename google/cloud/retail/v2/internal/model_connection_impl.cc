@@ -104,8 +104,7 @@ ModelServiceConnectionImpl::CreateModel(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceConnectionImpl::CreateModel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::CreateModelRequest const& request) {
+    NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -119,7 +118,7 @@ ModelServiceConnectionImpl::CreateModel(
 
 future<StatusOr<google::cloud::retail::v2::Model>>
 ModelServiceConnectionImpl::CreateModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::CreateModelMetadata>()) {
@@ -293,8 +292,7 @@ ModelServiceConnectionImpl::TuneModel(
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceConnectionImpl::TuneModel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::TuneModelRequest const& request) {
+    NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -308,7 +306,7 @@ StatusOr<google::longrunning::Operation> ModelServiceConnectionImpl::TuneModel(
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
 ModelServiceConnectionImpl::TuneModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::TuneModelMetadata>()) {

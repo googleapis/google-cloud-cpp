@@ -57,16 +57,14 @@ class MockSpecialistPoolServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSpecialistPool,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               CreateSpecialistPool,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::SpecialistPool>,
@@ -91,15 +89,14 @@ class MockSpecialistPoolServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteSpecialistPool,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteSpecialistPool,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteSpecialistPool, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -112,16 +109,14 @@ class MockSpecialistPoolServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateSpecialistPool,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               UpdateSpecialistPool,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

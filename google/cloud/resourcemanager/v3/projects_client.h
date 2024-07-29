@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_PROJECTS_CLIENT_H
 
 #include "google/cloud/resourcemanager/v3/projects_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -396,8 +395,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateProject(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::resourcemanager::v3::Project const& project,
+      NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project,
       Options opts = {});
 
   // clang-format off
@@ -454,7 +452,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateProjectRequest const& request,
       Options opts = {});
 
@@ -468,8 +466,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> CreateProject(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -522,8 +519,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateProject(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::resourcemanager::v3::Project const& project,
+      NoAwaitTag, google::cloud::resourcemanager::v3::Project const& project,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -581,7 +577,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateProjectRequest const& request,
       Options opts = {});
 
@@ -595,8 +591,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UpdateProject(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -659,7 +654,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> MoveProject(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
+      NoAwaitTag, std::string const& name,
       std::string const& destination_parent, Options opts = {});
 
   // clang-format off
@@ -727,7 +722,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> MoveProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::MoveProjectRequest const& request,
       Options opts = {});
 
@@ -741,8 +736,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> MoveProject(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -823,7 +817,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProject(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -910,7 +904,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteProjectRequest const& request,
       Options opts = {});
 
@@ -924,8 +918,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> DeleteProject(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -981,7 +974,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteProject(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1041,7 +1034,7 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request,
       Options opts = {});
 
@@ -1055,8 +1048,7 @@ class ProjectsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::Project>> UndeleteProject(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

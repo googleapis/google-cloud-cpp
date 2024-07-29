@@ -77,14 +77,13 @@ class MockProductServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeProducts,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::retail::v2::PurgeProductsRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>,
-      PurgeProducts,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PurgeProducts, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -97,14 +96,13 @@ class MockProductServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportProducts,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::retail::v2::ImportProductsRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
-      ImportProducts,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportProducts, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -116,14 +114,12 @@ class MockProductServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, SetInventory,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::retail::v2::SetInventoryRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>,
-              SetInventory,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              SetInventory, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -137,14 +133,13 @@ class MockProductServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddFulfillmentPlaces,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>,
-      AddFulfillmentPlaces,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      AddFulfillmentPlaces, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -159,7 +154,7 @@ class MockProductServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RemoveFulfillmentPlaces,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
                    request),
               (override));
@@ -168,8 +163,7 @@ class MockProductServiceConnection
       future<
           StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>,
       RemoveFulfillmentPlaces,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, AddLocalInventories)` is now ambiguous. Use
@@ -182,14 +176,13 @@ class MockProductServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AddLocalInventories,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::retail::v2::AddLocalInventoriesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>,
-      AddLocalInventories,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      AddLocalInventories, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -204,15 +197,14 @@ class MockProductServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RemoveLocalInventories,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>,
-      RemoveLocalInventories,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RemoveLocalInventories, (google::longrunning::Operation const& operation),
       (override));
 };
 

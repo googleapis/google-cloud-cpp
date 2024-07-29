@@ -22,7 +22,6 @@
 #include "google/cloud/dataplex/v1/catalog_connection_idempotency_policy.h"
 #include "google/cloud/dataplex/v1/internal/catalog_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -192,36 +191,33 @@ class CatalogServiceConnection {
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateEntryType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  CreateEntryType(ExperimentalTag,
-                  google::longrunning::Operation const& operation);
+  CreateEntryType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
   UpdateEntryType(
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateEntryType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::EntryType>>
-  UpdateEntryType(ExperimentalTag,
-                  google::longrunning::Operation const& operation);
+  UpdateEntryType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEntryType(
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteEntryType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryType(ExperimentalTag,
-                  google::longrunning::Operation const& operation);
+  DeleteEntryType(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::EntryType> ListEntryTypes(
       google::cloud::dataplex::v1::ListEntryTypesRequest request);
@@ -234,36 +230,33 @@ class CatalogServiceConnection {
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAspectType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateAspectTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  CreateAspectType(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  CreateAspectType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
   UpdateAspectType(
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAspectType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::AspectType>>
-  UpdateAspectType(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  UpdateAspectType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteAspectType(
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAspectType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteAspectType(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteAspectType(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::AspectType> ListAspectTypes(
       google::cloud::dataplex::v1::ListAspectTypesRequest request);
@@ -276,36 +269,33 @@ class CatalogServiceConnection {
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateEntryGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateEntryGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  CreateEntryGroup(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  CreateEntryGroup(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
   UpdateEntryGroup(
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateEntryGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
-  UpdateEntryGroup(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  UpdateEntryGroup(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEntryGroup(
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteEntryGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteEntryGroup(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteEntryGroup(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::dataplex::v1::EntryGroup> ListEntryGroups(
       google::cloud::dataplex::v1::ListEntryGroupsRequest request);

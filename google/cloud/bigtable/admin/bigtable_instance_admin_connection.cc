@@ -48,15 +48,14 @@ BigtableInstanceAdminConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::CreateInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::bigtable::admin::v2::CreateInstanceRequest const&) {
+    NoAwaitTag, google::bigtable::admin::v2::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnection::CreateInstance(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -90,7 +89,7 @@ BigtableInstanceAdminConnection::PartialUpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::PartialUpdateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -98,7 +97,7 @@ BigtableInstanceAdminConnection::PartialUpdateInstance(
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnection::PartialUpdateInstance(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -119,15 +118,14 @@ BigtableInstanceAdminConnection::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::CreateCluster(
-    ExperimentalTag, NoAwaitTag,
-    google::bigtable::admin::v2::CreateClusterRequest const&) {
+    NoAwaitTag, google::bigtable::admin::v2::CreateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::CreateCluster(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::Cluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -155,14 +153,14 @@ BigtableInstanceAdminConnection::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::UpdateCluster(
-    ExperimentalTag, NoAwaitTag, google::bigtable::admin::v2::Cluster const&) {
+    NoAwaitTag, google::bigtable::admin::v2::Cluster const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::UpdateCluster(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::Cluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -178,7 +176,7 @@ BigtableInstanceAdminConnection::PartialUpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::PartialUpdateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::PartialUpdateClusterRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -186,7 +184,7 @@ BigtableInstanceAdminConnection::PartialUpdateCluster(
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnection::PartialUpdateCluster(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::Cluster>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -227,15 +225,14 @@ BigtableInstanceAdminConnection::UpdateAppProfile(
 
 StatusOr<google::longrunning::Operation>
 BigtableInstanceAdminConnection::UpdateAppProfile(
-    ExperimentalTag, NoAwaitTag,
-    google::bigtable::admin::v2::UpdateAppProfileRequest const&) {
+    NoAwaitTag, google::bigtable::admin::v2::UpdateAppProfileRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminConnection::UpdateAppProfile(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::bigtable::admin::v2::AppProfile>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

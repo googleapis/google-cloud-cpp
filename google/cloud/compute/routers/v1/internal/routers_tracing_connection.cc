@@ -59,25 +59,22 @@ RoutersTracingConnection::DeleteRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersTracingConnection::DeleteRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::DeleteRouter");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteRouter(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteRouter(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersTracingConnection::DeleteRouter(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::DeleteRouter");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteRouter(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteRouter(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Router>
@@ -131,25 +128,22 @@ RoutersTracingConnection::InsertRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersTracingConnection::InsertRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::InsertRouter");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->InsertRouter(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertRouter(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersTracingConnection::InsertRouter(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::InsertRouter");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertRouter(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertRouter(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Router>
@@ -175,25 +169,22 @@ RoutersTracingConnection::PatchRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersTracingConnection::PatchRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::PatchRouter");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PatchRouter(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchRouter(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersTracingConnection::PatchRouter(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::PatchRouter");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchRouter(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PatchRouter(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
@@ -217,25 +208,22 @@ RoutersTracingConnection::UpdateRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersTracingConnection::UpdateRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
         request) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::UpdateRouter");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateRouter(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateRouter(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersTracingConnection::UpdateRouter(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_routers_v1::RoutersConnection::UpdateRouter");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateRouter(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateRouter(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

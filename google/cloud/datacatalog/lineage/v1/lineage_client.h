@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_LINEAGE_V1_LINEAGE_CLIENT_H
 
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -464,7 +463,7 @@ class LineageClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProcess(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -518,7 +517,7 @@ class LineageClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteProcess(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request,
       Options opts = {});
@@ -533,8 +532,7 @@ class LineageClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteProcess(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteProcess(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -835,8 +833,7 @@ class LineageClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteRun(ExperimentalTag,
-                                                     NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteRun(NoAwaitTag,
                                                      std::string const& name,
                                                      Options opts = {});
 
@@ -891,7 +888,7 @@ class LineageClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRun(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
       Options opts = {});
 
@@ -905,8 +902,7 @@ class LineageClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
-  DeleteRun(ExperimentalTag, google::longrunning::Operation const& operation,
-            Options opts = {});
+  DeleteRun(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

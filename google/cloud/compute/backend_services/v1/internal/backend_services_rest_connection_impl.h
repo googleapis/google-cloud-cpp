@@ -57,12 +57,10 @@ class BackendServicesRestConnectionImpl
           AddSignedUrlKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddSignedUrlKey(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::backend_services::v1::
-          AddSignedUrlKeyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                      AddSignedUrlKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddSignedUrlKey(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<std::pair<
@@ -76,13 +74,11 @@ class BackendServicesRestConnectionImpl
                            DeleteBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteBackendService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::backend_services::v1::
-          DeleteBackendServiceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                      DeleteBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteBackendService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -90,13 +86,11 @@ class BackendServicesRestConnectionImpl
                          DeleteSignedUrlKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSignedUrlKey(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::backend_services::v1::
-          DeleteSignedUrlKeyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                      DeleteSignedUrlKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSignedUrlKey(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::BackendService> GetBackendService(
@@ -117,13 +111,11 @@ class BackendServicesRestConnectionImpl
                            InsertBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertBackendService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::backend_services::v1::
-          InsertBackendServiceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                      InsertBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertBackendService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::BackendService>
@@ -139,13 +131,11 @@ class BackendServicesRestConnectionImpl
                           PatchBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchBackendService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::backend_services::v1::
-          PatchBackendServiceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                      PatchBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchBackendService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -154,13 +144,11 @@ class BackendServicesRestConnectionImpl
           SetEdgeSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetEdgeSecurityPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::backend_services::v1::
-          SetEdgeSecurityPolicyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                      SetEdgeSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetEdgeSecurityPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -172,13 +160,11 @@ class BackendServicesRestConnectionImpl
                         SetSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::backend_services::v1::
-          SetSecurityPolicyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                      SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -190,13 +176,11 @@ class BackendServicesRestConnectionImpl
                            UpdateBackendServiceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateBackendService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::backend_services::v1::
-          UpdateBackendServiceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                      UpdateBackendServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateBackendService(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

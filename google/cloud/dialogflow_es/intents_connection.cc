@@ -75,15 +75,14 @@ IntentsConnection::BatchUpdateIntents(
 }
 
 StatusOr<google::longrunning::Operation> IntentsConnection::BatchUpdateIntents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-IntentsConnection::BatchUpdateIntents(ExperimentalTag,
-                                      google::longrunning::Operation const&) {
+IntentsConnection::BatchUpdateIntents(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,15 +96,14 @@ IntentsConnection::BatchDeleteIntents(
 }
 
 StatusOr<google::longrunning::Operation> IntentsConnection::BatchDeleteIntents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::protobuf::Struct>>
-IntentsConnection::BatchDeleteIntents(ExperimentalTag,
-                                      google::longrunning::Operation const&) {
+IntentsConnection::BatchDeleteIntents(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<google::protobuf::Struct>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }

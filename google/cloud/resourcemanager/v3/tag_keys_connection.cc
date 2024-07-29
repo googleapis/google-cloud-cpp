@@ -67,15 +67,14 @@ TagKeysConnection::CreateTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnection::CreateTagKey(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-TagKeysConnection::CreateTagKey(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+TagKeysConnection::CreateTagKey(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -90,15 +89,14 @@ TagKeysConnection::UpdateTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnection::UpdateTagKey(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-TagKeysConnection::UpdateTagKey(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+TagKeysConnection::UpdateTagKey(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -113,15 +111,14 @@ TagKeysConnection::DeleteTagKey(
 }
 
 StatusOr<google::longrunning::Operation> TagKeysConnection::DeleteTagKey(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
-TagKeysConnection::DeleteTagKey(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+TagKeysConnection::DeleteTagKey(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::TagKey>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

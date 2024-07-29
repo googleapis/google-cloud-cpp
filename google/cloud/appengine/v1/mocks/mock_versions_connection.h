@@ -61,14 +61,12 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateVersion,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::CreateVersionRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, CreateVersion,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateVersion)` is now ambiguous. Use
@@ -78,14 +76,12 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateVersion,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::UpdateVersionRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, UpdateVersion,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteVersion)` is now ambiguous. Use
@@ -96,14 +92,12 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteVersion,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::DeleteVersionRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-              DeleteVersion,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteVersion, (google::longrunning::Operation const& operation),
               (override));
 };
 

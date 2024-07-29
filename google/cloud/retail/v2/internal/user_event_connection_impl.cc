@@ -133,7 +133,7 @@ UserEventServiceConnectionImpl::PurgeUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnectionImpl::PurgeUserEvents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -148,7 +148,7 @@ UserEventServiceConnectionImpl::PurgeUserEvents(
 
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
 UserEventServiceConnectionImpl::PurgeUserEvents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::PurgeMetadata>()) {
@@ -224,7 +224,7 @@ UserEventServiceConnectionImpl::ImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnectionImpl::ImportUserEvents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -240,7 +240,7 @@ UserEventServiceConnectionImpl::ImportUserEvents(
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceConnectionImpl::ImportUserEvents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::ImportMetadata>()) {
@@ -316,7 +316,7 @@ UserEventServiceConnectionImpl::RejoinUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnectionImpl::RejoinUserEvents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -332,7 +332,7 @@ UserEventServiceConnectionImpl::RejoinUserEvents(
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceConnectionImpl::RejoinUserEvents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::retail::v2::

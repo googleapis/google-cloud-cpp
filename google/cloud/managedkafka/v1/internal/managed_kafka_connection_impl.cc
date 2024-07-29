@@ -157,7 +157,7 @@ ManagedKafkaConnectionImpl::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::CreateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -173,7 +173,7 @@ ManagedKafkaConnectionImpl::CreateCluster(
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaConnectionImpl::CreateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {
@@ -250,7 +250,7 @@ ManagedKafkaConnectionImpl::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::UpdateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -266,7 +266,7 @@ ManagedKafkaConnectionImpl::UpdateCluster(
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaConnectionImpl::UpdateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {
@@ -343,7 +343,7 @@ ManagedKafkaConnectionImpl::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaConnectionImpl::DeleteCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -359,7 +359,7 @@ ManagedKafkaConnectionImpl::DeleteCluster(
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
 ManagedKafkaConnectionImpl::DeleteCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::managedkafka::v1::OperationMetadata>()) {

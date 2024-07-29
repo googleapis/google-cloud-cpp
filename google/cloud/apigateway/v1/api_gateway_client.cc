@@ -77,7 +77,7 @@ ApiGatewayServiceClient::CreateGateway(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::CreateGateway(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::apigateway::v1::Gateway const& gateway,
     std::string const& gateway_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -85,7 +85,7 @@ StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::CreateGateway(
   request.set_parent(parent);
   *request.mutable_gateway() = gateway;
   request.set_gateway_id(gateway_id);
-  return connection_->CreateGateway(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
@@ -97,19 +97,18 @@ ApiGatewayServiceClient::CreateGateway(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::CreateGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::CreateGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGateway(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceClient::CreateGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGateway(ExperimentalTag{}, operation);
+  return connection_->CreateGateway(operation);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
@@ -124,14 +123,13 @@ ApiGatewayServiceClient::UpdateGateway(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::UpdateGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::Gateway const& gateway,
+    NoAwaitTag, google::cloud::apigateway::v1::Gateway const& gateway,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::UpdateGatewayRequest request;
   *request.mutable_gateway() = gateway;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateGateway(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
@@ -143,19 +141,18 @@ ApiGatewayServiceClient::UpdateGateway(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::UpdateGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGateway(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceClient::UpdateGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateGateway(ExperimentalTag{}, operation);
+  return connection_->UpdateGateway(operation);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -167,11 +164,11 @@ ApiGatewayServiceClient::DeleteGateway(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::DeleteGateway(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::DeleteGatewayRequest request;
   request.set_name(name);
-  return connection_->DeleteGateway(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -183,19 +180,18 @@ ApiGatewayServiceClient::DeleteGateway(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::DeleteGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGateway(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceClient::DeleteGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGateway(ExperimentalTag{}, operation);
+  return connection_->DeleteGateway(operation);
 }
 
 StreamRange<google::cloud::apigateway::v1::Api>
@@ -240,7 +236,7 @@ ApiGatewayServiceClient::CreateApi(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::CreateApi(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::apigateway::v1::Api const& api, std::string const& api_id,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -248,7 +244,7 @@ StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::CreateApi(
   request.set_parent(parent);
   *request.mutable_api() = api;
   request.set_api_id(api_id);
-  return connection_->CreateApi(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateApi(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
@@ -260,19 +256,17 @@ ApiGatewayServiceClient::CreateApi(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::CreateApi(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::CreateApiRequest const& request,
+    NoAwaitTag, google::cloud::apigateway::v1::CreateApiRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateApi(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateApi(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceClient::CreateApi(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateApi(ExperimentalTag{}, operation);
+  return connection_->CreateApi(operation);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
@@ -287,13 +281,13 @@ ApiGatewayServiceClient::UpdateApi(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::UpdateApi(
-    ExperimentalTag, NoAwaitTag, google::cloud::apigateway::v1::Api const& api,
+    NoAwaitTag, google::cloud::apigateway::v1::Api const& api,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::UpdateApiRequest request;
   *request.mutable_api() = api;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateApi(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateApi(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
@@ -305,19 +299,17 @@ ApiGatewayServiceClient::UpdateApi(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::UpdateApi(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::UpdateApiRequest const& request,
+    NoAwaitTag, google::cloud::apigateway::v1::UpdateApiRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateApi(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateApi(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceClient::UpdateApi(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateApi(ExperimentalTag{}, operation);
+  return connection_->UpdateApi(operation);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -329,11 +321,11 @@ ApiGatewayServiceClient::DeleteApi(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::DeleteApi(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::DeleteApiRequest request;
   request.set_name(name);
-  return connection_->DeleteApi(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteApi(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -345,19 +337,17 @@ ApiGatewayServiceClient::DeleteApi(
 }
 
 StatusOr<google::longrunning::Operation> ApiGatewayServiceClient::DeleteApi(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::DeleteApiRequest const& request,
+    NoAwaitTag, google::cloud::apigateway::v1::DeleteApiRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteApi(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteApi(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceClient::DeleteApi(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteApi(ExperimentalTag{}, operation);
+  return connection_->DeleteApi(operation);
 }
 
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
@@ -408,7 +398,7 @@ ApiGatewayServiceClient::CreateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceClient::CreateApiConfig(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::apigateway::v1::ApiConfig const& api_config,
     std::string const& api_config_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -416,7 +406,7 @@ ApiGatewayServiceClient::CreateApiConfig(
   request.set_parent(parent);
   *request.mutable_api_config() = api_config;
   request.set_api_config_id(api_config_id);
-  return connection_->CreateApiConfig(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateApiConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
@@ -429,19 +419,18 @@ ApiGatewayServiceClient::CreateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceClient::CreateApiConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateApiConfig(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateApiConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceClient::CreateApiConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateApiConfig(ExperimentalTag{}, operation);
+  return connection_->CreateApiConfig(operation);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
@@ -457,14 +446,13 @@ ApiGatewayServiceClient::UpdateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceClient::UpdateApiConfig(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apigateway::v1::ApiConfig const& api_config,
+    NoAwaitTag, google::cloud::apigateway::v1::ApiConfig const& api_config,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::UpdateApiConfigRequest request;
   *request.mutable_api_config() = api_config;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateApiConfig(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateApiConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
@@ -477,19 +465,18 @@ ApiGatewayServiceClient::UpdateApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceClient::UpdateApiConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateApiConfig(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateApiConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceClient::UpdateApiConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateApiConfig(ExperimentalTag{}, operation);
+  return connection_->UpdateApiConfig(operation);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -502,13 +489,12 @@ ApiGatewayServiceClient::DeleteApiConfig(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ApiGatewayServiceClient::DeleteApiConfig(ExperimentalTag, NoAwaitTag,
-                                         std::string const& name,
+ApiGatewayServiceClient::DeleteApiConfig(NoAwaitTag, std::string const& name,
                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apigateway::v1::DeleteApiConfigRequest request;
   request.set_name(name);
-  return connection_->DeleteApiConfig(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteApiConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
@@ -521,19 +507,18 @@ ApiGatewayServiceClient::DeleteApiConfig(
 
 StatusOr<google::longrunning::Operation>
 ApiGatewayServiceClient::DeleteApiConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteApiConfig(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteApiConfig(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceClient::DeleteApiConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteApiConfig(ExperimentalTag{}, operation);
+  return connection_->DeleteApiConfig(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

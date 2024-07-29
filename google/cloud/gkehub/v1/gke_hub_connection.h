@@ -22,7 +22,6 @@
 #include "google/cloud/gkehub/v1/gke_hub_connection_idempotency_policy.h"
 #include "google/cloud/gkehub/v1/internal/gke_hub_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -200,67 +199,63 @@ class GkeHubConnection {
       google::cloud::gkehub::v1::CreateMembershipRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateMembership(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::CreateMembershipRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  CreateMembership(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  CreateMembership(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
       google::cloud::gkehub::v1::CreateFeatureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFeature(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::CreateFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteMembership(
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteMembership(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteMembership(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
   DeleteFeature(google::cloud::gkehub::v1::DeleteFeatureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeature(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteFeature(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  DeleteFeature(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Membership>>
   UpdateMembership(
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateMembership(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Membership>>
-  UpdateMembership(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  UpdateMembership(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateFeature(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(

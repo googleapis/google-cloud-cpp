@@ -62,15 +62,14 @@ ServiceManagerConnection::CreateService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnection::CreateService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
-ServiceManagerConnection::CreateService(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+ServiceManagerConnection::CreateService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::servicemanagement::v1::ManagedService>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,15 +85,14 @@ ServiceManagerConnection::DeleteService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnection::DeleteService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::DeleteServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
-ServiceManagerConnection::DeleteService(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+ServiceManagerConnection::DeleteService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::servicemanagement::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +108,7 @@ ServiceManagerConnection::UndeleteService(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnection::UndeleteService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::UndeleteServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +116,7 @@ ServiceManagerConnection::UndeleteService(
 
 future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
 ServiceManagerConnection::UndeleteService(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -151,7 +149,7 @@ ServiceManagerConnection::SubmitConfigSource(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnection::SubmitConfigSource(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -159,7 +157,7 @@ ServiceManagerConnection::SubmitConfigSource(
 
 future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
 ServiceManagerConnection::SubmitConfigSource(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -189,7 +187,7 @@ ServiceManagerConnection::CreateServiceRollout(
 
 StatusOr<google::longrunning::Operation>
 ServiceManagerConnection::CreateServiceRollout(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -197,7 +195,7 @@ ServiceManagerConnection::CreateServiceRollout(
 
 future<StatusOr<google::api::servicemanagement::v1::Rollout>>
 ServiceManagerConnection::CreateServiceRollout(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::servicemanagement::v1::Rollout>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

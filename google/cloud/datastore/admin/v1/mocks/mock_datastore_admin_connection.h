@@ -58,14 +58,13 @@ class MockDatastoreAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportEntities,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::datastore::admin::v1::ExportEntitiesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>,
-      ExportEntities,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ExportEntities, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -79,14 +78,13 @@ class MockDatastoreAdminConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportEntities,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::datastore::admin::v1::ImportEntitiesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>,
-      ImportEntities,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportEntities, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -98,14 +96,12 @@ class MockDatastoreAdminConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateIndex,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::datastore::admin::v1::CreateIndexRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
-              CreateIndex,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateIndex, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -117,14 +113,12 @@ class MockDatastoreAdminConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteIndex,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::datastore::admin::v1::DeleteIndexRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::datastore::admin::v1::Index>>,
-              DeleteIndex,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteIndex, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::datastore::admin::v1::Index>, GetIndex,

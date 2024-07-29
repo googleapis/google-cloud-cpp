@@ -22,7 +22,6 @@
 #include "google/cloud/deploy/v1/cloud_deploy_connection_idempotency_policy.h"
 #include "google/cloud/deploy/v1/internal/cloud_deploy_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -199,36 +198,33 @@ class CloudDeployConnection {
       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  CreateDeliveryPipeline(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  CreateDeliveryPipeline(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   UpdateDeliveryPipeline(
       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  UpdateDeliveryPipeline(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  UpdateDeliveryPipeline(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteDeliveryPipeline(
       google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeliveryPipeline(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  DeleteDeliveryPipeline(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::deploy::v1::Target> ListTargets(
       google::cloud::deploy::v1::ListTargetsRequest request);
@@ -244,32 +240,31 @@ class CloudDeployConnection {
       google::cloud::deploy::v1::CreateTargetRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateTarget(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateTargetRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
       google::cloud::deploy::v1::UpdateTargetRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateTarget(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateTargetRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteTarget(google::cloud::deploy::v1::DeleteTargetRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteTarget(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteTargetRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteTarget(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  DeleteTarget(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::deploy::v1::CustomTargetType>
   ListCustomTargetTypes(
@@ -284,36 +279,33 @@ class CloudDeployConnection {
       google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  CreateCustomTargetType(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  CreateCustomTargetType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
   UpdateCustomTargetType(
       google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  UpdateCustomTargetType(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  UpdateCustomTargetType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteCustomTargetType(
       google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteCustomTargetType(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  DeleteCustomTargetType(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::deploy::v1::Release> ListReleases(
       google::cloud::deploy::v1::ListReleasesRequest request);
@@ -325,11 +317,11 @@ class CloudDeployConnection {
       google::cloud::deploy::v1::CreateReleaseRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateRelease(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateReleaseRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
   AbandonRelease(
@@ -356,11 +348,11 @@ class CloudDeployConnection {
       google::cloud::deploy::v1::CreateRolloutRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateRollout(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateRolloutRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
       google::cloud::deploy::v1::IgnoreJobRequest const& request);
@@ -386,36 +378,33 @@ class CloudDeployConnection {
       google::cloud::deploy::v1::CreateAutomationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateAutomationRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::Automation>>
-  CreateAutomation(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  CreateAutomation(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::deploy::v1::Automation>>
   UpdateAutomation(
       google::cloud::deploy::v1::UpdateAutomationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateAutomationRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::Automation>>
-  UpdateAutomation(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  UpdateAutomation(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteAutomation(
       google::cloud::deploy::v1::DeleteAutomationRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteAutomationRequest const& request);
 
   virtual future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteAutomation(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteAutomation(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
       google::cloud::deploy::v1::GetAutomationRequest const& request);

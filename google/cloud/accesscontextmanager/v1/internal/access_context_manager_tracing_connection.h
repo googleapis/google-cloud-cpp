@@ -57,26 +57,23 @@ class AccessContextManagerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateAccessPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::AccessPolicy const& request)
       override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  CreateAccessPolicy(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  CreateAccessPolicy(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
   UpdateAccessPolicy(google::identity::accesscontextmanager::v1::
                          UpdateAccessPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessPolicyRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      UpdateAccessPolicyRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  UpdateAccessPolicy(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
@@ -84,14 +81,12 @@ class AccessContextManagerTracingConnection
                          DeleteAccessPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessPolicyRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      DeleteAccessPolicyRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  DeleteAccessPolicy(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
   ListAccessLevels(
@@ -108,26 +103,22 @@ class AccessContextManagerTracingConnection
                         CreateAccessLevelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAccessLevel(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          CreateAccessLevelRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      CreateAccessLevelRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  CreateAccessLevel(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
   UpdateAccessLevel(google::identity::accesscontextmanager::v1::
                         UpdateAccessLevelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAccessLevel(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          UpdateAccessLevelRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      UpdateAccessLevelRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  UpdateAccessLevel(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
@@ -135,14 +126,12 @@ class AccessContextManagerTracingConnection
                         DeleteAccessLevelRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAccessLevel(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          DeleteAccessLevelRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      DeleteAccessLevelRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  DeleteAccessLevel(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
@@ -150,14 +139,12 @@ class AccessContextManagerTracingConnection
                           ReplaceAccessLevelsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReplaceAccessLevels(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          ReplaceAccessLevelsRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      ReplaceAccessLevelsRequest const& request) override;
 
   future<StatusOr<
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-  ReplaceAccessLevels(ExperimentalTag,
-                      google::longrunning::Operation const& operation) override;
+  ReplaceAccessLevels(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
   ListServicePerimeters(
@@ -174,13 +161,11 @@ class AccessContextManagerTracingConnection
           CreateServicePerimeterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateServicePerimeter(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          CreateServicePerimeterRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      CreateServicePerimeterRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   CreateServicePerimeter(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
@@ -189,13 +174,11 @@ class AccessContextManagerTracingConnection
           UpdateServicePerimeterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          UpdateServicePerimeterRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      UpdateServicePerimeterRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
   UpdateServicePerimeter(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -205,14 +188,12 @@ class AccessContextManagerTracingConnection
           DeleteServicePerimeterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          DeleteServicePerimeterRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      DeleteServicePerimeterRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
   DeleteServicePerimeter(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -222,14 +203,12 @@ class AccessContextManagerTracingConnection
           ReplaceServicePerimetersRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ReplaceServicePerimeters(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          ReplaceServicePerimetersRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      ReplaceServicePerimetersRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       ReplaceServicePerimetersResponse>>
   ReplaceServicePerimeters(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -239,14 +218,12 @@ class AccessContextManagerTracingConnection
           CommitServicePerimetersRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CommitServicePerimeters(
-      ExperimentalTag, NoAwaitTag,
-      google::identity::accesscontextmanager::v1::
-          CommitServicePerimetersRequest const& request) override;
+      NoAwaitTag, google::identity::accesscontextmanager::v1::
+                      CommitServicePerimetersRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       CommitServicePerimetersResponse>>
   CommitServicePerimeters(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
@@ -266,14 +243,13 @@ class AccessContextManagerTracingConnection
           CreateGcpUserAccessBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateGcpUserAccessBindingRequest const& request) override;
 
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
   CreateGcpUserAccessBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
@@ -283,14 +259,13 @@ class AccessContextManagerTracingConnection
           UpdateGcpUserAccessBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateGcpUserAccessBindingRequest const& request) override;
 
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
   UpdateGcpUserAccessBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
@@ -300,14 +275,13 @@ class AccessContextManagerTracingConnection
           DeleteGcpUserAccessBindingRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request) override;
 
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       GcpUserAccessBindingOperationMetadata>>
   DeleteGcpUserAccessBinding(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(

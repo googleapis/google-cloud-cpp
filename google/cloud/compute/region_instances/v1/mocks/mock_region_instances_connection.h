@@ -57,15 +57,13 @@ class MockRegionInstancesConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkInsert,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_instances::v1::
-                   BulkInsertRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_instances::v1::
+                               BulkInsertRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               BulkInsert,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

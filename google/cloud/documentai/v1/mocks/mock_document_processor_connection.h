@@ -63,14 +63,13 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchProcessDocuments,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::BatchProcessRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>,
-      BatchProcessDocuments,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchProcessDocuments, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -114,7 +113,7 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, TrainProcessorVersion,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::TrainProcessorVersionRequest const&
            request),
       (override));
@@ -122,8 +121,7 @@ class MockDocumentProcessorServiceConnection
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::TrainProcessorVersionResponse>>,
-      TrainProcessorVersion,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      TrainProcessorVersion, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::documentai::v1::ProcessorVersion>,
@@ -151,7 +149,7 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteProcessorVersion,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
            request),
       (override));
@@ -159,8 +157,7 @@ class MockDocumentProcessorServiceConnection
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>,
-      DeleteProcessorVersion,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteProcessorVersion, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -176,7 +173,7 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeployProcessorVersion,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::DeployProcessorVersionRequest const&
            request),
       (override));
@@ -184,8 +181,7 @@ class MockDocumentProcessorServiceConnection
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::documentai::v1::DeployProcessorVersionResponse>>,
-      DeployProcessorVersion,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeployProcessorVersion, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -201,7 +197,7 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeployProcessorVersion,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
            request),
       (override));
@@ -210,8 +206,7 @@ class MockDocumentProcessorServiceConnection
       future<StatusOr<
           google::cloud::documentai::v1::UndeployProcessorVersionResponse>>,
       UndeployProcessorVersion,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::documentai::v1::Processor>, CreateProcessor,
@@ -229,14 +224,13 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteProcessor,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::DeleteProcessorRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>,
-      DeleteProcessor,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteProcessor, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -250,14 +244,13 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, EnableProcessor,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::EnableProcessorRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>,
-      EnableProcessor,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      EnableProcessor, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -271,14 +264,13 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DisableProcessor,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::DisableProcessorRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>,
-      DisableProcessor,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DisableProcessor, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -294,7 +286,7 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SetDefaultProcessorVersion,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
            request),
       (override));
@@ -303,8 +295,7 @@ class MockDocumentProcessorServiceConnection
       future<StatusOr<
           google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>,
       SetDefaultProcessorVersion,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, ReviewDocument)` is now ambiguous. Use
@@ -317,14 +308,13 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReviewDocument,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::ReviewDocumentRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>,
-      ReviewDocument,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ReviewDocument, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -340,7 +330,7 @@ class MockDocumentProcessorServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, EvaluateProcessorVersion,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
            request),
       (override));
@@ -349,8 +339,7 @@ class MockDocumentProcessorServiceConnection
       future<StatusOr<
           google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>,
       EvaluateProcessorVersion,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::documentai::v1::Evaluation>, GetEvaluation,

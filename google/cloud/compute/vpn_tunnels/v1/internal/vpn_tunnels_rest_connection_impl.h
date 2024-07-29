@@ -61,12 +61,10 @@ class VpnTunnelsRestConnectionImpl
           DeleteVpnTunnelRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnTunnel(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::vpn_tunnels::v1::
-          DeleteVpnTunnelRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::vpn_tunnels::v1::
+                      DeleteVpnTunnelRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnTunnel(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnTunnel> GetVpnTunnel(
@@ -78,12 +76,10 @@ class VpnTunnelsRestConnectionImpl
           InsertVpnTunnelRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnTunnel(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::vpn_tunnels::v1::
-          InsertVpnTunnelRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::vpn_tunnels::v1::
+                      InsertVpnTunnelRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnTunnel(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::VpnTunnel> ListVpnTunnels(
@@ -95,12 +91,11 @@ class VpnTunnelsRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

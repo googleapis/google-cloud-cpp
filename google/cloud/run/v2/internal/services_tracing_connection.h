@@ -43,11 +43,10 @@ class ServicesTracingConnection : public run_v2::ServicesConnection {
       google::cloud::run::v2::CreateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::run::v2::CreateServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::run::v2::Service> GetService(
@@ -60,22 +59,20 @@ class ServicesTracingConnection : public run_v2::ServicesConnection {
       google::cloud::run::v2::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::run::v2::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
       google::cloud::run::v2::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::run::v2::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

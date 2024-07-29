@@ -156,24 +156,23 @@ AdminServiceTracingConnection::SeekSubscription(
 
 StatusOr<google::longrunning::Operation>
 AdminServiceTracingConnection::SeekSubscription(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   auto span = internal::MakeSpan(
       "pubsublite::AdminServiceConnection::SeekSubscription");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->SeekSubscription(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->SeekSubscription(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
 AdminServiceTracingConnection::SeekSubscription(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "pubsublite::AdminServiceConnection::SeekSubscription");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->SeekSubscription(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->SeekSubscription(operation));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>

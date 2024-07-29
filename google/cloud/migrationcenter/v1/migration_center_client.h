@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MIGRATIONCENTER_V1_MIGRATION_CENTER_CLIENT_H
 
 #include "google/cloud/migrationcenter/v1/migration_center_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -565,7 +564,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateImportJob(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::migrationcenter::v1::ImportJob const& import_job,
       std::string const& import_job_id, Options opts = {});
 
@@ -620,7 +619,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateImportJobRequest const& request,
       Options opts = {});
 
@@ -634,8 +633,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
-  CreateImportJob(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  CreateImportJob(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -812,7 +810,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteImportJob(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -865,7 +863,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request,
       Options opts = {});
 
@@ -879,8 +877,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteImportJob(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteImportJob(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -935,7 +932,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::ImportJob const& import_job,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -990,7 +987,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request,
       Options opts = {});
 
@@ -1004,8 +1001,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::ImportJob>>
-  UpdateImportJob(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  UpdateImportJob(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -1052,7 +1048,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ValidateImportJob(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1106,7 +1102,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ValidateImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
           request,
       Options opts = {});
@@ -1121,8 +1117,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  ValidateImportJob(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  ValidateImportJob(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1168,8 +1163,7 @@ class MigrationCenterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunImportJob(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> RunImportJob(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -1224,7 +1218,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RunImportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::RunImportJobRequest const& request,
       Options opts = {});
 
@@ -1238,7 +1232,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  RunImportJob(ExperimentalTag, google::longrunning::Operation const& operation,
+  RunImportJob(google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -1424,7 +1418,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateImportDataFile(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::migrationcenter::v1::ImportDataFile const&
           import_data_file,
       std::string const& import_data_file_id, Options opts = {});
@@ -1481,7 +1475,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateImportDataFile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
           request,
       Options opts = {});
@@ -1496,8 +1490,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>>
-  CreateImportDataFile(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateImportDataFile(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1544,7 +1537,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteImportDataFile(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1598,7 +1591,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteImportDataFile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
           request,
       Options opts = {});
@@ -1613,8 +1606,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteImportDataFile(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  DeleteImportDataFile(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1799,7 +1791,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGroup(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::migrationcenter::v1::Group const& group,
       std::string const& group_id, Options opts = {});
 
@@ -1853,7 +1845,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateGroupRequest const& request,
       Options opts = {});
 
@@ -1867,8 +1859,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::Group>> CreateGroup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1920,8 +1911,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGroup(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::migrationcenter::v1::Group const& group,
+      NoAwaitTag, google::cloud::migrationcenter::v1::Group const& group,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1974,7 +1964,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateGroupRequest const& request,
       Options opts = {});
 
@@ -1988,8 +1978,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::Group>> UpdateGroup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2034,8 +2023,7 @@ class MigrationCenterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteGroup(ExperimentalTag,
-                                                       NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteGroup(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts = {});
 
@@ -2090,7 +2078,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteGroupRequest const& request,
       Options opts = {});
 
@@ -2104,7 +2092,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteGroup(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteGroup(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -2151,7 +2139,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AddAssetsToGroup(
-      ExperimentalTag, NoAwaitTag, std::string const& group, Options opts = {});
+      NoAwaitTag, std::string const& group, Options opts = {});
 
   // clang-format off
   ///
@@ -2204,7 +2192,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AddAssetsToGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
           request,
       Options opts = {});
@@ -2219,8 +2207,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::Group>> AddAssetsToGroup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2266,7 +2253,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RemoveAssetsFromGroup(
-      ExperimentalTag, NoAwaitTag, std::string const& group, Options opts = {});
+      NoAwaitTag, std::string const& group, Options opts = {});
 
   // clang-format off
   ///
@@ -2320,7 +2307,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RemoveAssetsFromGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
           request,
       Options opts = {});
@@ -2335,8 +2322,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::Group>>
-  RemoveAssetsFromGroup(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  RemoveAssetsFromGroup(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -2653,7 +2639,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSource(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::migrationcenter::v1::Source const& source,
       std::string const& source_id, Options opts = {});
 
@@ -2707,7 +2693,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSource(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateSourceRequest const& request,
       Options opts = {});
 
@@ -2721,8 +2707,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::Source>> CreateSource(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2775,8 +2760,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSource(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::migrationcenter::v1::Source const& source,
+      NoAwaitTag, google::cloud::migrationcenter::v1::Source const& source,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -2829,7 +2813,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSource(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateSourceRequest const& request,
       Options opts = {});
 
@@ -2843,8 +2827,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::Source>> UpdateSource(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2889,8 +2872,7 @@ class MigrationCenterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSource(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteSource(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -2945,7 +2927,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSource(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteSourceRequest const& request,
       Options opts = {});
 
@@ -2959,7 +2941,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteSource(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteSource(google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -3148,7 +3130,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreatePreferenceSet(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::migrationcenter::v1::PreferenceSet const& preference_set,
       std::string const& preference_set_id, Options opts = {});
 
@@ -3204,7 +3186,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreatePreferenceSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
           request,
       Options opts = {});
@@ -3219,8 +3201,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
-  CreatePreferenceSet(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  CreatePreferenceSet(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -3275,7 +3256,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePreferenceSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::PreferenceSet const& preference_set,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -3331,7 +3312,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdatePreferenceSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
           request,
       Options opts = {});
@@ -3346,8 +3327,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>>
-  UpdatePreferenceSet(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  UpdatePreferenceSet(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -3394,7 +3374,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeletePreferenceSet(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3448,7 +3428,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeletePreferenceSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
           request,
       Options opts = {});
@@ -3463,8 +3443,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeletePreferenceSet(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  DeletePreferenceSet(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -3574,8 +3553,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSettings(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::migrationcenter::v1::Settings const& settings,
+      NoAwaitTag, google::cloud::migrationcenter::v1::Settings const& settings,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -3628,7 +3606,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSettings(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request,
       Options opts = {});
 
@@ -3642,8 +3620,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::Settings>> UpdateSettings(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3698,7 +3675,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateReportConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::migrationcenter::v1::ReportConfig const& report_config,
       std::string const& report_config_id, Options opts = {});
 
@@ -3754,7 +3731,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateReportConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
           request,
       Options opts = {});
@@ -3769,8 +3746,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::ReportConfig>>
-  CreateReportConfig(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  CreateReportConfig(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -3948,7 +3924,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteReportConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4002,7 +3978,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteReportConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
           request,
       Options opts = {});
@@ -4017,8 +3993,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteReportConfig(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  DeleteReportConfig(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -4073,7 +4048,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateReport(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::migrationcenter::v1::Report const& report,
       std::string const& report_id, Options opts = {});
 
@@ -4127,7 +4102,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateReport(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::CreateReportRequest const& request,
       Options opts = {});
 
@@ -4141,8 +4116,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::Report>> CreateReport(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4317,8 +4291,7 @@ class MigrationCenterClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteReport(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteReport(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -4373,7 +4346,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteReport(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::migrationcenter::v1::DeleteReportRequest const& request,
       Options opts = {});
 
@@ -4387,7 +4360,7 @@ class MigrationCenterClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::migrationcenter::v1::OperationMetadata>>
-  DeleteReport(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteReport(google::longrunning::Operation const& operation,
                Options opts = {});
 
  private:

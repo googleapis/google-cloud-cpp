@@ -45,12 +45,11 @@ class BigtableInstanceAdminTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::bigtable::admin::v2::Instance>> CreateInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
@@ -68,12 +67,11 @@ class BigtableInstanceAdminTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> PartialUpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::bigtable::admin::v2::Instance>> PartialUpdateInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   Status DeleteInstance(
@@ -85,12 +83,11 @@ class BigtableInstanceAdminTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateClusterRequest const& request)
       override;
 
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
@@ -103,11 +100,9 @@ class BigtableInstanceAdminTracingConnection
       google::bigtable::admin::v2::Cluster const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
-      google::bigtable::admin::v2::Cluster const& request) override;
+      NoAwaitTag, google::bigtable::admin::v2::Cluster const& request) override;
 
   future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
@@ -115,12 +110,11 @@ class BigtableInstanceAdminTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> PartialUpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
       override;
 
   future<StatusOr<google::bigtable::admin::v2::Cluster>> PartialUpdateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   Status DeleteCluster(google::bigtable::admin::v2::DeleteClusterRequest const&
@@ -142,12 +136,11 @@ class BigtableInstanceAdminTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateAppProfile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request)
       override;
 
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   Status DeleteAppProfile(

@@ -74,7 +74,7 @@ class MockTelcoAutomationConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateOrchestrationCluster,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::telcoautomation::v1::
                    CreateOrchestrationClusterRequest const& request),
               (override));
@@ -83,8 +83,7 @@ class MockTelcoAutomationConnection
       future<
           StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>,
       CreateOrchestrationCluster,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteOrchestrationCluster)` is now ambiguous. Use
@@ -98,7 +97,7 @@ class MockTelcoAutomationConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteOrchestrationCluster,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::telcoautomation::v1::
                    DeleteOrchestrationClusterRequest const& request),
               (override));
@@ -106,8 +105,7 @@ class MockTelcoAutomationConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteOrchestrationCluster,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>),
               ListEdgeSlms,
@@ -130,14 +128,12 @@ class MockTelcoAutomationConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEdgeSlm,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>,
-              CreateEdgeSlm,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateEdgeSlm, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -151,14 +147,13 @@ class MockTelcoAutomationConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteEdgeSlm,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
-      DeleteEdgeSlm,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteEdgeSlm, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::telcoautomation::v1::Blueprint>,

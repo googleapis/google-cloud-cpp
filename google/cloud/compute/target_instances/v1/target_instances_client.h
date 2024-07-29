@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_INSTANCES_V1_TARGET_INSTANCES_CLIENT_H
 
 #include "google/cloud/compute/target_instances/v1/target_instances_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -220,9 +219,8 @@ class TargetInstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& target_instance,
-      Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& target_instance, Options opts = {});
 
   // clang-format off
   ///
@@ -275,7 +273,7 @@ class TargetInstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::target_instances::v1::
           DeleteTargetInstanceRequest const& request,
       Options opts = {});
@@ -291,7 +289,6 @@ class TargetInstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetInstance(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -407,8 +404,7 @@ class TargetInstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone,
+      NoAwaitTag, std::string const& project, std::string const& zone,
       google::cloud::cpp::compute::v1::TargetInstance const&
           target_instance_resource,
       Options opts = {});
@@ -465,7 +461,7 @@ class TargetInstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::target_instances::v1::
           InsertTargetInstanceRequest const& request,
       Options opts = {});
@@ -481,7 +477,6 @@ class TargetInstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetInstance(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -620,8 +615,8 @@ class TargetInstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& target_instance,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& target_instance,
       google::cloud::cpp::compute::v1::SecurityPolicyReference const&
           security_policy_reference_resource,
       Options opts = {});
@@ -678,7 +673,7 @@ class TargetInstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::target_instances::v1::
           SetSecurityPolicyRequest const& request,
       Options opts = {});
@@ -693,8 +688,7 @@ class TargetInstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(ExperimentalTag,
-                    google::cloud::cpp::compute::v1::Operation const& operation,
+  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
  private:

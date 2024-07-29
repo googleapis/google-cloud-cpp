@@ -210,7 +210,7 @@ LineageConnectionImpl::DeleteProcess(
 }
 
 StatusOr<google::longrunning::Operation> LineageConnectionImpl::DeleteProcess(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -228,7 +228,7 @@ StatusOr<google::longrunning::Operation> LineageConnectionImpl::DeleteProcess(
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageConnectionImpl::DeleteProcess(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datacatalog::lineage::v1::
@@ -382,7 +382,7 @@ LineageConnectionImpl::DeleteRun(
 }
 
 StatusOr<google::longrunning::Operation> LineageConnectionImpl::DeleteRun(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -398,7 +398,7 @@ StatusOr<google::longrunning::Operation> LineageConnectionImpl::DeleteRun(
 
 future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageConnectionImpl::DeleteRun(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datacatalog::lineage::v1::

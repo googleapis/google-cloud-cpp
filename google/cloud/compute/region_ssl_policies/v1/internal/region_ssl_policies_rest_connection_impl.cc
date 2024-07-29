@@ -107,9 +107,8 @@ RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        DeleteSslPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
+                    DeleteSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -124,7 +123,6 @@ RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestConnectionImpl::DeleteSslPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -256,9 +254,8 @@ RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        InsertSslPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
+                    InsertSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -273,7 +270,6 @@ RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestConnectionImpl::InsertSslPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -446,9 +442,8 @@ RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_ssl_policies::v1::
-        PatchSslPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_ssl_policies::v1::
+                    PatchSslPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -463,7 +458,6 @@ RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionSslPoliciesRestConnectionImpl::PatchSslPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

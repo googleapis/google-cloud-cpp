@@ -67,13 +67,12 @@ class InterconnectAttachmentsRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInterconnectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           DeleteInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInterconnectAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -88,13 +87,12 @@ class InterconnectAttachmentsRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInterconnectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           InsertInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInterconnectAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -109,13 +107,12 @@ class InterconnectAttachmentsRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchInterconnectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::interconnect_attachments::v1::
           PatchInterconnectAttachmentRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInterconnectAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -123,12 +120,10 @@ class InterconnectAttachmentsRestConnectionImpl
           SetLabelsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::interconnect_attachments::v1::
-          SetLabelsRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::interconnect_attachments::v1::
+                      SetLabelsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

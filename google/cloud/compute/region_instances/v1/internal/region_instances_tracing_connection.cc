@@ -45,25 +45,22 @@ RegionInstancesTracingConnection::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstancesTracingConnection::BulkInsert(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_region_instances_v1::RegionInstancesConnection::BulkInsert");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->BulkInsert(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->BulkInsert(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstancesTracingConnection::BulkInsert(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_instances_v1::RegionInstancesConnection::BulkInsert");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->BulkInsert(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->BulkInsert(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

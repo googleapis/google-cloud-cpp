@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_CLIENT_H
 
 #include "google/cloud/metastore/v1/dataproc_metastore_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -301,7 +300,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::metastore::v1::Service const& service,
       std::string const& service_id, Options opts = {});
 
@@ -355,7 +354,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::CreateServiceRequest const& request,
       Options opts = {});
 
@@ -369,8 +368,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> CreateService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +423,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::metastore::v1::Service const& service,
+      NoAwaitTag, google::cloud::metastore::v1::Service const& service,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -479,7 +476,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
@@ -493,8 +490,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Service>> UpdateService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -543,7 +539,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -596,7 +592,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
@@ -610,8 +606,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteService(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteService(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -809,7 +804,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMetadataImport(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::metastore::v1::MetadataImport const& metadata_import,
       std::string const& metadata_import_id, Options opts = {});
 
@@ -864,7 +859,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMetadataImport(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::CreateMetadataImportRequest const& request,
       Options opts = {});
 
@@ -878,8 +873,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
-  CreateMetadataImport(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateMetadataImport(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -937,7 +931,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMetadataImport(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::MetadataImport const& metadata_import,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -993,7 +987,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMetadataImport(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::UpdateMetadataImportRequest const& request,
       Options opts = {});
 
@@ -1007,8 +1001,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
-  UpdateMetadataImport(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  UpdateMetadataImport(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1061,7 +1054,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportMetadata(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::ExportMetadataRequest const& request,
       Options opts = {});
 
@@ -1075,8 +1068,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MetadataExport>> ExportMetadata(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1129,8 +1121,8 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestoreService(
-      ExperimentalTag, NoAwaitTag, std::string const& service,
-      std::string const& backup, Options opts = {});
+      NoAwaitTag, std::string const& service, std::string const& backup,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1182,7 +1174,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestoreService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::RestoreServiceRequest const& request,
       Options opts = {});
 
@@ -1196,8 +1188,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Restore>> RestoreService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1392,7 +1383,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::metastore::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
@@ -1446,7 +1437,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::CreateBackupRequest const& request,
       Options opts = {});
 
@@ -1460,8 +1451,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::Backup>> CreateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1509,8 +1499,7 @@ class DataprocMetastoreClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteBackup(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -1564,7 +1553,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
@@ -1578,7 +1567,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteBackup(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteBackup(google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off
@@ -1632,7 +1621,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> QueryMetadata(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::QueryMetadataRequest const& request,
       Options opts = {});
 
@@ -1646,8 +1635,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
-  QueryMetadata(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  QueryMetadata(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -1701,7 +1689,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> MoveTableToDatabase(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request,
       Options opts = {});
 
@@ -1715,8 +1703,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
-  MoveTableToDatabase(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  MoveTableToDatabase(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -1775,7 +1762,7 @@ class DataprocMetastoreClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AlterMetadataResourceLocation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
           request,
       Options opts = {});
@@ -1791,8 +1778,7 @@ class DataprocMetastoreClient {
   // clang-format on
   future<StatusOr<
       google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>
-  AlterMetadataResourceLocation(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+  AlterMetadataResourceLocation(google::longrunning::Operation const& operation,
                                 Options opts = {});
 
  private:

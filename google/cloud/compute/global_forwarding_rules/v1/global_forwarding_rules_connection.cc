@@ -48,16 +48,15 @@ GlobalForwardingRulesConnection::DeleteForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalForwardingRulesConnection::DeleteForwardingRule(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_forwarding_rules::v1::
-        DeleteForwardingRuleRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::global_forwarding_rules::v1::
+                    DeleteForwardingRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesConnection::DeleteForwardingRule(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,16 +80,15 @@ GlobalForwardingRulesConnection::InsertForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalForwardingRulesConnection::InsertForwardingRule(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_forwarding_rules::v1::
-        InsertForwardingRuleRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::global_forwarding_rules::v1::
+                    InsertForwardingRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesConnection::InsertForwardingRule(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -115,16 +113,15 @@ GlobalForwardingRulesConnection::PatchForwardingRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalForwardingRulesConnection::PatchForwardingRule(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_forwarding_rules::v1::
-        PatchForwardingRuleRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::global_forwarding_rules::v1::
+                    PatchForwardingRuleRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesConnection::PatchForwardingRule(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -141,16 +138,15 @@ GlobalForwardingRulesConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalForwardingRulesConnection::SetLabels(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_forwarding_rules::v1::
-        SetLabelsRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::global_forwarding_rules::v1::
+                    SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesConnection::SetLabels(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -167,16 +163,15 @@ GlobalForwardingRulesConnection::SetTarget(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalForwardingRulesConnection::SetTarget(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_forwarding_rules::v1::
-        SetTargetRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::global_forwarding_rules::v1::
+                    SetTargetRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalForwardingRulesConnection::SetTarget(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

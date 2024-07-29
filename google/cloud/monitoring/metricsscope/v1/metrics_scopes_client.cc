@@ -73,7 +73,7 @@ MetricsScopesClient::CreateMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesClient::CreateMonitoredProject(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::monitoring::metricsscope::v1::MonitoredProject const&
         monitored_project,
     Options opts) {
@@ -81,8 +81,7 @@ MetricsScopesClient::CreateMonitoredProject(
   google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest request;
   request.set_parent(parent);
   *request.mutable_monitored_project() = monitored_project;
-  return connection_->CreateMonitoredProject(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->CreateMonitoredProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
@@ -96,21 +95,19 @@ MetricsScopesClient::CreateMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesClient::CreateMonitoredProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMonitoredProject(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->CreateMonitoredProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesClient::CreateMonitoredProject(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMonitoredProject(ExperimentalTag{}, operation);
+  return connection_->CreateMonitoredProject(operation);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
@@ -123,14 +120,12 @@ MetricsScopesClient::DeleteMonitoredProject(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-MetricsScopesClient::DeleteMonitoredProject(ExperimentalTag, NoAwaitTag,
-                                            std::string const& name,
+MetricsScopesClient::DeleteMonitoredProject(NoAwaitTag, std::string const& name,
                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest request;
   request.set_name(name);
-  return connection_->DeleteMonitoredProject(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteMonitoredProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
@@ -144,21 +139,19 @@ MetricsScopesClient::DeleteMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesClient::DeleteMonitoredProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMonitoredProject(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteMonitoredProject(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesClient::DeleteMonitoredProject(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMonitoredProject(ExperimentalTag{}, operation);
+  return connection_->DeleteMonitoredProject(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

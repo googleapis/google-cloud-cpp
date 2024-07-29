@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INSTANCES_CLIENT_H
 
 #include "google/cloud/appengine/v1/instances_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -220,8 +219,7 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
-      google::appengine::v1::DeleteInstanceRequest const& request,
+      NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -234,8 +232,7 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -294,8 +291,7 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DebugInstance(
-      ExperimentalTag, NoAwaitTag,
-      google::appengine::v1::DebugInstanceRequest const& request,
+      NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -308,8 +304,7 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::appengine::v1::Instance>> DebugInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<InstancesConnection> connection_;

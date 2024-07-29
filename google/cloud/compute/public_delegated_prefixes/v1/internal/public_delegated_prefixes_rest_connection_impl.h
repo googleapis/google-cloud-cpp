@@ -65,12 +65,10 @@ class PublicDelegatedPrefixesRestConnectionImpl
           AnnounceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          AnnounceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                      AnnounceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -80,13 +78,12 @@ class PublicDelegatedPrefixesRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           DeletePublicDelegatedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -101,13 +98,12 @@ class PublicDelegatedPrefixesRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           InsertPublicDelegatedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -122,13 +118,12 @@ class PublicDelegatedPrefixesRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_delegated_prefixes::v1::
           PatchPublicDelegatedPrefixRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
@@ -136,12 +131,10 @@ class PublicDelegatedPrefixesRestConnectionImpl
           WithdrawRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          WithdrawRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                      WithdrawRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

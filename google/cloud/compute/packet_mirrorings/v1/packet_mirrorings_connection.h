@@ -22,7 +22,6 @@
 #include "google/cloud/compute/packet_mirrorings/v1/internal/packet_mirrorings_retry_traits.h"
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -199,13 +198,12 @@ class PacketMirroringsConnection {
                             DeletePacketMirroringRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePacketMirroring(ExperimentalTag, NoAwaitTag,
+  DeletePacketMirroring(NoAwaitTag,
                         google::cloud::cpp::compute::packet_mirrorings::v1::
                             DeletePacketMirroringRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePacketMirroring(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -217,13 +215,12 @@ class PacketMirroringsConnection {
                             InsertPacketMirroringRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertPacketMirroring(ExperimentalTag, NoAwaitTag,
+  InsertPacketMirroring(NoAwaitTag,
                         google::cloud::cpp::compute::packet_mirrorings::v1::
                             InsertPacketMirroringRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPacketMirroring(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -235,13 +232,12 @@ class PacketMirroringsConnection {
                            PatchPacketMirroringRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchPacketMirroring(ExperimentalTag, NoAwaitTag,
+  PatchPacketMirroring(NoAwaitTag,
                        google::cloud::cpp::compute::packet_mirrorings::v1::
                            PatchPacketMirroringRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPacketMirroring(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

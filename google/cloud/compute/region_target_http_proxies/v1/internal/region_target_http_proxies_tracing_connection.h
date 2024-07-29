@@ -50,13 +50,11 @@ class RegionTargetHttpProxiesTracingConnection
           DeleteTargetHttpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_target_http_proxies::v1::
-          DeleteTargetHttpProxyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::region_target_http_proxies::v1::
+                      DeleteTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy> GetTargetHttpProxy(
@@ -69,13 +67,11 @@ class RegionTargetHttpProxiesTracingConnection
           InsertTargetHttpProxyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_target_http_proxies::v1::
-          InsertTargetHttpProxyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::region_target_http_proxies::v1::
+                      InsertTargetHttpProxyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetHttpProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -88,12 +84,10 @@ class RegionTargetHttpProxiesTracingConnection
           SetUrlMapRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_target_http_proxies::v1::
-          SetUrlMapRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::region_target_http_proxies::v1::
+                      SetUrlMapRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

@@ -66,15 +66,13 @@ class MockTargetInstancesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteTargetInstance,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_instances::v1::
-                   DeleteTargetInstanceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                               DeleteTargetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetInstance,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetInstance>,
@@ -94,15 +92,13 @@ class MockTargetInstancesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertTargetInstance,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_instances::v1::
-                   InsertTargetInstanceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                               InsertTargetInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetInstance,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetInstance>),
@@ -122,15 +118,13 @@ class MockTargetInstancesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetSecurityPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_instances::v1::
-                   SetSecurityPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                               SetSecurityPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSecurityPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

@@ -58,16 +58,14 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateEnvironment,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::orchestration::airflow::service::v1::
-                   CreateEnvironmentRequest const& request),
+              (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                               CreateEnvironmentRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,
-      CreateEnvironment,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateEnvironment, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -97,16 +95,14 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateEnvironment,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::orchestration::airflow::service::v1::
-                   UpdateEnvironmentRequest const& request),
+              (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                               UpdateEnvironmentRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::orchestration::airflow::service::v1::Environment>>,
-      UpdateEnvironment,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateEnvironment, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -120,17 +116,14 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteEnvironment,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::orchestration::airflow::service::v1::
-                   DeleteEnvironmentRequest const& request),
+              (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                               DeleteEnvironmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::OperationMetadata>>,
               DeleteEnvironment,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
                            ExecuteAirflowCommandResponse>,
@@ -238,16 +231,13 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, SaveSnapshot,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::orchestration::airflow::service::v1::
-                   SaveSnapshotRequest const& request),
+              (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                               SaveSnapshotRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::SaveSnapshotResponse>>,
-              SaveSnapshot,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              SaveSnapshot, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -261,16 +251,13 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, LoadSnapshot,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::orchestration::airflow::service::v1::
-                   LoadSnapshotRequest const& request),
+              (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                               LoadSnapshotRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::LoadSnapshotResponse>>,
-              LoadSnapshot,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              LoadSnapshot, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -284,17 +271,14 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DatabaseFailover,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::orchestration::airflow::service::v1::
-                   DatabaseFailoverRequest const& request),
+              (NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                               DatabaseFailoverRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::DatabaseFailoverResponse>>,
               DatabaseFailover,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
                            FetchDatabasePropertiesResponse>,

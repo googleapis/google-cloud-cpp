@@ -153,7 +153,7 @@ DocumentsConnectionImpl::CreateDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::CreateDocument(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -169,7 +169,7 @@ DocumentsConnectionImpl::CreateDocument(
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::CreateDocument(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -246,7 +246,7 @@ DocumentsConnectionImpl::ImportDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::ImportDocuments(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -262,7 +262,7 @@ DocumentsConnectionImpl::ImportDocuments(
 
 future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
 DocumentsConnectionImpl::ImportDocuments(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -339,7 +339,7 @@ DocumentsConnectionImpl::DeleteDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::DeleteDocument(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -355,7 +355,7 @@ DocumentsConnectionImpl::DeleteDocument(
 
 future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
 DocumentsConnectionImpl::DeleteDocument(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -432,7 +432,7 @@ DocumentsConnectionImpl::UpdateDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::UpdateDocument(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -448,7 +448,7 @@ DocumentsConnectionImpl::UpdateDocument(
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::UpdateDocument(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -524,7 +524,7 @@ DocumentsConnectionImpl::ReloadDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::ReloadDocument(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -540,7 +540,7 @@ DocumentsConnectionImpl::ReloadDocument(
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::ReloadDocument(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::
@@ -616,7 +616,7 @@ DocumentsConnectionImpl::ExportDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentsConnectionImpl::ExportDocument(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -632,7 +632,7 @@ DocumentsConnectionImpl::ExportDocument(
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::ExportDocument(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::v2::

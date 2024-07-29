@@ -67,15 +67,13 @@ class MockDomainMappingsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateDomainMapping,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::appengine::v1::CreateDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
               CreateDomainMapping,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateDomainMapping)` is now ambiguous. Use
@@ -88,15 +86,13 @@ class MockDomainMappingsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateDomainMapping,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::appengine::v1::UpdateDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
               UpdateDomainMapping,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteDomainMapping)` is now ambiguous. Use
@@ -109,15 +105,13 @@ class MockDomainMappingsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteDomainMapping,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::appengine::v1::DeleteDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
               DeleteDomainMapping,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
