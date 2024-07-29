@@ -15,6 +15,7 @@
 #include "google/cloud/storage/async/read_all.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/version.h"
@@ -60,6 +61,81 @@ TEST(ReadAll, Basic) {
   EXPECT_THAT(payload->metadata(), Optional(IsProtoEqual(expected_object)));
   EXPECT_THAT(payload->contents(),
               ElementsAre("test-message-1", "test-message-2"));
+}
+
+TEST(ReadAll, BasicFromStatusOr) {
+  auto mock = std::make_unique<MockAsyncReaderConnection>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([] {
+        auto object = google::storage::v2::Object{};
+        object.set_name("test-only-name");
+        return make_ready_future(ReadResponse(
+            ReadPayload("test-message-1").set_metadata(std::move(object))));
+      })
+      .WillOnce([] {
+        return make_ready_future(ReadResponse(ReadPayload("test-message-2")));
+      })
+      .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+
+  auto token = storage_internal::MakeAsyncToken(mock.get());
+  auto payload = ReadAll(make_status_or(std::make_pair(
+                             AsyncReader(std::move(mock)), std::move(token))))
+                     .get();
+  ASSERT_STATUS_OK(payload);
+  auto expected_object = google::storage::v2::Object{};
+  expected_object.set_name("test-only-name");
+  EXPECT_THAT(payload->metadata(), Optional(IsProtoEqual(expected_object)));
+  EXPECT_THAT(payload->contents(),
+              ElementsAre("test-message-1", "test-message-2"));
+}
+
+TEST(ReadAll, BasicFromStatusOrWithError) {
+  auto payload =
+      ReadAll(StatusOr<std::pair<AsyncReader, AsyncToken>>(PermanentError()))
+          .get();
+  EXPECT_THAT(payload, StatusIs(PermanentError().code()));
+}
+
+TEST(ReadAll, BasicFromFuture) {
+  auto mock = std::make_unique<MockAsyncReaderConnection>();
+  EXPECT_CALL(*mock, Read)
+      .WillOnce([] {
+        auto object = google::storage::v2::Object{};
+        object.set_name("test-only-name");
+        return make_ready_future(ReadResponse(
+            ReadPayload("test-message-1").set_metadata(std::move(object))));
+      })
+      .WillOnce([] {
+        return make_ready_future(ReadResponse(ReadPayload("test-message-2")));
+      })
+      .WillOnce([] { return make_ready_future(ReadResponse(Status{})); });
+
+  promise<void> p;
+  auto pending =
+      ReadAll(p.get_future().then([m = std::move(mock)](auto) mutable {
+        auto token = storage_internal::MakeAsyncToken(m.get());
+        return make_status_or(
+            std::make_pair(AsyncReader(std::move(m)), std::move(token)));
+      }));
+  ASSERT_FALSE(pending.is_ready());
+  p.set_value();
+  auto payload = pending.get();
+  ASSERT_STATUS_OK(payload);
+  auto expected_object = google::storage::v2::Object{};
+  expected_object.set_name("test-only-name");
+  EXPECT_THAT(payload->metadata(), Optional(IsProtoEqual(expected_object)));
+  EXPECT_THAT(payload->contents(),
+              ElementsAre("test-message-1", "test-message-2"));
+}
+
+TEST(ReadAll, BasicFromFutureWithError) {
+  promise<void> p;
+  auto payload = ReadAll(p.get_future().then([](auto) {
+    return StatusOr<std::pair<AsyncReader, AsyncToken>>(PermanentError());
+  }));
+  EXPECT_FALSE(payload.is_ready());
+  p.set_value();
+  EXPECT_THAT(payload.get(), StatusIs(PermanentError().code()));
 }
 
 TEST(ReadAll, Empty) {

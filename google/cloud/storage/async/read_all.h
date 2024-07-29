@@ -32,6 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 future<StatusOr<ReadPayload>> ReadAll(AsyncReader reader, AsyncToken token);
 
+/**
+ * Accumulate all the responses in @p read or return the corresponding error.
+ */
+future<StatusOr<ReadPayload>> ReadAll(
+    StatusOr<std::pair<AsyncReader, AsyncToken>> read);
+
+/**
+ * Wait until @p pending_read is satisfied and then accumulate all the
+ * responses, or return the corresponding error.
+ *
+ * @par Example
+ * @snippet storage_async_samples.cc read-all
+ *
+ */
+future<StatusOr<ReadPayload>> ReadAll(
+    future<StatusOr<std::pair<AsyncReader, AsyncToken>>> pending_read);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud

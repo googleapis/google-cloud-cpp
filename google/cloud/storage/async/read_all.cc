@@ -69,6 +69,22 @@ future<StatusOr<ReadPayload>> ReadAll(AsyncReader reader, AsyncToken token) {
   });
 }
 
+future<StatusOr<ReadPayload>> ReadAll(
+    StatusOr<std::pair<AsyncReader, AsyncToken>> read) {
+  if (!read) {
+    return make_ready_future(StatusOr<ReadPayload>(std::move(read).status()));
+  }
+  AsyncReader reader;
+  AsyncToken token;
+  std::tie(reader, token) = *std::move(read);
+  return ReadAll(std::move(reader), std::move(token));
+}
+
+future<StatusOr<ReadPayload>> ReadAll(
+    future<StatusOr<std::pair<AsyncReader, AsyncToken>>> pending_read) {
+  return pending_read.then([](auto f) { return ReadAll(f.get()); });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 }  // namespace cloud
