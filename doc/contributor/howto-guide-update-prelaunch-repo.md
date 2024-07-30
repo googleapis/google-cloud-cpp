@@ -15,8 +15,8 @@ git remote add prelaunch git@github.com:googleapis/cpp-storage-prelaunch.git
 Update your clone to the latest versions:
 
 ```shell
-git remote fetch prelaunch
-git remote fetch origin
+git fetch prelaunch
+git fetch origin
 ```
 
 Find out the latest commit from the public repo already present in the
@@ -29,13 +29,13 @@ A=$(git rev-parse prelaunch/upstream)
 Find out the latest commit from the public repo main branch:
 
 ```shell
-B=$(git rev-parse origin/upstream)
+B=$(git rev-parse origin/main)
 ```
 
 Update the `upstream` branch on the `*-prelaunch` repository:
 
 ```shell
-git push prelaunch main:upstream
+git push prelaunch origin/main:upstream
 ```
 
 I use a separate workspace for the next steps:
