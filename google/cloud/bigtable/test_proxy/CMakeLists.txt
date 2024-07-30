@@ -12,7 +12,6 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-
 add_library(cbt_test_proxy cbt_test_proxy.cc cbt_test_proxy.h)
 target_link_libraries(
     cbt_test_proxy

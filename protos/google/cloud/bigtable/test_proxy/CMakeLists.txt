@@ -22,7 +22,6 @@ if (NOT Protobuf_FOUND)
     find_package(Protobuf REQUIRED)
 endif ()
 
-
 include(CompileProtos)
 google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 
@@ -40,7 +39,8 @@ target_link_libraries(
            google-cloud-cpp::bigtable_protos
            google-cloud-cpp::rpc_status_protos)
 target_include_directories(google_cloud_cpp_bigtable_test_proxy_protos SYSTEM
-           PUBLIC "${PROJECT_BINARY_DIR}/protos")
-google_cloud_cpp_add_common_options(google_cloud_cpp_bigtable_test_proxy_protos NO_WARNINGS)
+                           PUBLIC "${PROJECT_BINARY_DIR}/protos")
+google_cloud_cpp_add_common_options(google_cloud_cpp_bigtable_test_proxy_protos
+                                    NO_WARNINGS)
 set_target_properties(google_cloud_cpp_bigtable_test_proxy_protos
                       PROPERTIES CXX_CLANG_TIDY "")

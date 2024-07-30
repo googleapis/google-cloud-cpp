@@ -23,10 +23,10 @@ cc_library(
     srcs = ["cbt_test_proxy.cc"],
     hdrs = ["cbt_test_proxy.h"],
     deps = [
+        "//:bigtable",
+        "//protos:system_includes",
         "//protos/google/cloud/bigtable/test_proxy:test_proxy_cc_grpc",
         "//protos/google/cloud/bigtable/test_proxy:test_proxy_cc_proto",
-        "//protos:system_includes",
-        "//:bigtable",
     ],
 )
 
