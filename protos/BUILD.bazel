@@ -20,6 +20,7 @@ cc_library(
     name = "system_includes",
     includes = ["."],
     visibility = [
+        "//google/cloud/bigtable/test_proxy:__pkg__",
         "//google/cloud/compute:__pkg__",
         "//google/cloud/spanner:__subpackages__",
         "//google/cloud/storage/tests:__pkg__",
