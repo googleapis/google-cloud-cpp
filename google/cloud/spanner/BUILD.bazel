@@ -91,23 +91,6 @@ cc_library(
     ],
 )
 
-proto_library(
-    name = "singer_proto",
-    srcs = [
-        "testing/singer.proto",
-    ],
-    visibility = ["//:__pkg__"],
-)
-
-cc_proto_library(
-    name = "singer_cc_proto",
-    visibility = [
-        ":__subpackages__",
-        "//:__pkg__",
-    ],
-    deps = [":singer_proto"],
-)
-
 cc_library(
     name = "spanner_client_testing_private",
     testonly = True,
@@ -119,9 +102,10 @@ cc_library(
     deps = [
         ":google_cloud_cpp_spanner",
         ":google_cloud_cpp_spanner_mocks",
-        ":singer_cc_proto",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//protos:system_includes",
+        "//protos/google/cloud/spanner/testing:singer_cc_proto",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest_main",
     ],
@@ -146,12 +130,13 @@ cc_library(
     deps = [
         ":google_cloud_cpp_spanner",
         ":google_cloud_cpp_spanner_mocks",
-        ":singer_cc_proto",
         ":spanner_client_testing_private",
         "//:common",
         "//google/cloud:google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//protos:system_includes",
+        "//protos/google/cloud/spanner/testing:singer_cc_proto",
         "@com_google_absl//absl/numeric:int128",
         "@com_google_googletest//:gtest_main",
     ],
