@@ -109,7 +109,7 @@ jobs:
         # run something like this and create shards:
         #
         # git grep -l 'class.*Client' 'google/cloud/**_client.h' |
-        #    egrep -v "(bigtable/|internal/|pubsub/|spanner/|storage/)" |
+        #    egrep -v "(bigtable/|internal/|pubsub/|pubsublite/|spanner/|storage/)" |
         #    cut -f -3 -d/| sort | uniq -c | sort -n |
         #    awk '{ s += $1; print s, $0}'
         #
@@ -125,16 +125,6 @@ jobs:
           aiplatform
         )
         shard2_features=(
-          policytroubleshooter
-          profiler
-          pubsublite
-          redis
-          securitycenter
-          servicedirectory
-          tpu
-          trace
-          vision
-          workflows
           beyondcorp
           billing
           binaryauthorization
@@ -154,6 +144,7 @@ jobs:
           contentwarehouse
           dataplex
           bigquery
+          bigquerycontrol
           resourcemanager
         )
         shard3_features=(
@@ -191,6 +182,15 @@ jobs:
           metastore
           networkconnectivity
           networkservices
+          policytroubleshooter
+          profiler
+          redis
+          securitycenter
+          servicedirectory
+          tpu
+          trace
+          vision
+          workflows
         )
         if [[ "${{ matrix.shard }}" == "Core1" ]]; then
           features="$(printf ",%s" "${core1_features[@]}")"
