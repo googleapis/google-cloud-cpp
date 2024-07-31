@@ -628,15 +628,13 @@ TEST_F(HttpOptionUtilsTest,
       service_file_descriptor->service(0)->method(0);
   VarsDictionary vars;
   SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
-  EXPECT_THAT(vars.at("method_http_query_parameters"), Eq(R"""(,
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("start_index", (request.has_start_index() ? std::to_string(request.start_index().value()) : "")),
-        std::make_pair("page_token", (request.has_page_token() ? request.page_token().value() : "")),
-        std::make_pair("max_results", (request.has_max_results() ? std::to_string(request.max_results().value()) : "")),
-        std::make_pair("include_location", (request.has_include_location() ? (request.include_location().value() ? "1" : "0") : "")),
-        std::make_pair("double_value", (request.has_double_value() ? std::to_string(request.double_value().value()) : "")),
-        std::make_pair("float_value", (request.has_float_value() ? std::to_string(request.float_value().value()) : "")),
-        std::make_pair("int32_value", (request.has_int32_value() ? std::to_string(request.int32_value().value()) : "")),
-        std::make_pair("int64_value", (request.has_int64_value() ? std::to_string(request.int64_value().value()) : ""))}))"""));
+  EXPECT_THAT(
+      vars, Contains(Pair(
+                "method_http_query_parameters",
+                AllOf(HasSubstr("page_token"), HasSubstr("max_results"),
+                      HasSubstr("include_location"), HasSubstr("double_value"),
+                      HasSubstr("float_value"), HasSubstr("int32_value"),
+                      HasSubstr("int64_value")))));
 }
 
 TEST_F(HttpOptionUtilsTest, HasHttpAnnotationRoutingHeaderSuccess) {

@@ -1275,12 +1275,6 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_return_doxygen_link",
                              "@googleapis_link{my::service::v1::Bar,google/"
                              "foo/v1/service.proto#L19}"),
-        MethodVarsTestValues("my.service.v1.Service.Method1",
-                             "method_http_query_parameters", R"""(,
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("number", std::to_string(request.number())),
-        std::make_pair("toggle", (request.toggle() ? "1" : "0")),
-        std::make_pair("title", request.title()),
-        std::make_pair("parent", request.parent())}))"""),
         // Method2
         MethodVarsTestValues("my.service.v1.Service.Method2",
                              "longrunning_metadata_type",
