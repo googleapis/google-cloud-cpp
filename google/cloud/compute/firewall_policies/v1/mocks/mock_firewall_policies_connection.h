@@ -58,15 +58,13 @@ class MockFirewallPoliciesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               AddAssociation,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::firewall_policies::v1::
-                   AddAssociationRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                               AddAssociationRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddAssociation,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -80,15 +78,14 @@ class MockFirewallPoliciesConnection
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, AddRule,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddRule,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -101,15 +98,13 @@ class MockFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, CloneRules,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::firewall_policies::v1::
-                   CloneRulesRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                               CloneRulesRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CloneRules,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -123,15 +118,13 @@ class MockFirewallPoliciesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteFirewallPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::firewall_policies::v1::
-                   DeleteFirewallPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                               DeleteFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteFirewallPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>,
@@ -169,15 +162,13 @@ class MockFirewallPoliciesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertFirewallPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::firewall_policies::v1::
-                   InsertFirewallPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                               InsertFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertFirewallPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>),
@@ -204,15 +195,14 @@ class MockFirewallPoliciesConnection
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, Move,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Move,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -226,15 +216,13 @@ class MockFirewallPoliciesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchFirewallPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::firewall_policies::v1::
-                   PatchFirewallPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                               PatchFirewallPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchFirewallPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -247,15 +235,13 @@ class MockFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, PatchRule,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::firewall_policies::v1::
-                   PatchRuleRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                               PatchRuleRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchRule,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -269,15 +255,13 @@ class MockFirewallPoliciesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               RemoveAssociation,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::firewall_policies::v1::
-                   RemoveAssociationRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                               RemoveAssociationRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveAssociation,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -290,15 +274,13 @@ class MockFirewallPoliciesConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, RemoveRule,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::firewall_policies::v1::
-                   RemoveRuleRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                               RemoveRuleRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveRule,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,

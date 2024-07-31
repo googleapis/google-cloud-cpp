@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_SCHEMA_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/schema_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -280,7 +279,7 @@ class SchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSchema(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::discoveryengine::v1::Schema const& schema,
       std::string const& schema_id, Options opts = {});
 
@@ -334,7 +333,7 @@ class SchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request,
       Options opts = {});
 
@@ -348,8 +347,7 @@ class SchemaServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -401,7 +399,7 @@ class SchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request,
       Options opts = {});
 
@@ -415,8 +413,7 @@ class SchemaServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -463,8 +460,7 @@ class SchemaServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSchema(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteSchema(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -520,7 +516,7 @@ class SchemaServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request,
       Options opts = {});
 
@@ -534,7 +530,7 @@ class SchemaServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteSchema(google::longrunning::Operation const& operation,
                Options opts = {});
 
  private:

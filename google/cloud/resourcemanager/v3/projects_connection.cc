@@ -69,15 +69,14 @@ ProjectsConnection::CreateProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnection::CreateProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::CreateProject(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+ProjectsConnection::CreateProject(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Project>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -92,15 +91,14 @@ ProjectsConnection::UpdateProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnection::UpdateProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::UpdateProject(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+ProjectsConnection::UpdateProject(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Project>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -115,15 +113,13 @@ ProjectsConnection::MoveProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnection::MoveProject(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
+    NoAwaitTag, google::cloud::resourcemanager::v3::MoveProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::MoveProject(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+ProjectsConnection::MoveProject(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Project>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -138,15 +134,14 @@ ProjectsConnection::DeleteProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnection::DeleteProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::DeleteProject(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+ProjectsConnection::DeleteProject(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Project>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -161,15 +156,14 @@ ProjectsConnection::UndeleteProject(
 }
 
 StatusOr<google::longrunning::Operation> ProjectsConnection::UndeleteProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
-ProjectsConnection::UndeleteProject(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+ProjectsConnection::UndeleteProject(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::Project>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

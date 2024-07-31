@@ -72,7 +72,7 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateWorkstationCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
            request),
       (override));
@@ -80,8 +80,7 @@ class MockWorkstationsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       CreateWorkstationCluster,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateWorkstationCluster)` is now ambiguous. Use
@@ -95,7 +94,7 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateWorkstationCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
            request),
       (override));
@@ -103,8 +102,7 @@ class MockWorkstationsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       UpdateWorkstationCluster,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteWorkstationCluster)` is now ambiguous. Use
@@ -118,7 +116,7 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteWorkstationCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
            request),
       (override));
@@ -126,8 +124,7 @@ class MockWorkstationsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>,
       DeleteWorkstationCluster,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::workstations::v1::WorkstationConfig>,
@@ -161,7 +158,7 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateWorkstationConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
            request),
       (override));
@@ -169,8 +166,7 @@ class MockWorkstationsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       CreateWorkstationConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateWorkstationConfig)` is now ambiguous. Use
@@ -184,7 +180,7 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateWorkstationConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
            request),
       (override));
@@ -192,8 +188,7 @@ class MockWorkstationsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       UpdateWorkstationConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteWorkstationConfig)` is now ambiguous. Use
@@ -207,7 +202,7 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteWorkstationConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
            request),
       (override));
@@ -215,8 +210,7 @@ class MockWorkstationsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>,
       DeleteWorkstationConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::workstations::v1::Workstation>, GetWorkstation,
@@ -245,16 +239,14 @@ class MockWorkstationsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateWorkstation,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::workstations::v1::CreateWorkstationRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               CreateWorkstation,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateWorkstation)` is now ambiguous. Use
@@ -266,16 +258,14 @@ class MockWorkstationsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateWorkstation,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::workstations::v1::UpdateWorkstationRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               UpdateWorkstation,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteWorkstation)` is now ambiguous. Use
@@ -287,16 +277,14 @@ class MockWorkstationsConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteWorkstation,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::workstations::v1::DeleteWorkstationRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               DeleteWorkstation,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, StartWorkstation)` is now ambiguous. Use
@@ -309,15 +297,13 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartWorkstation,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::StartWorkstationRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               StartWorkstation,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, StopWorkstation)` is now ambiguous. Use
@@ -330,15 +316,13 @@ class MockWorkstationsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StopWorkstation,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workstations::v1::StopWorkstationRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::workstations::v1::Workstation>>,
               StopWorkstation,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>,

@@ -82,8 +82,7 @@ ReachabilityServiceClient::CreateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceClient::CreateConnectivityTest(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
-    std::string const& test_id,
+    NoAwaitTag, std::string const& parent, std::string const& test_id,
     google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -91,8 +90,7 @@ ReachabilityServiceClient::CreateConnectivityTest(
   request.set_parent(parent);
   request.set_test_id(test_id);
   *request.mutable_resource() = resource;
-  return connection_->CreateConnectivityTest(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->CreateConnectivityTest(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -106,21 +104,19 @@ ReachabilityServiceClient::CreateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceClient::CreateConnectivityTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateConnectivityTest(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->CreateConnectivityTest(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceClient::CreateConnectivityTest(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateConnectivityTest(ExperimentalTag{}, operation);
+  return connection_->CreateConnectivityTest(operation);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -137,15 +133,14 @@ ReachabilityServiceClient::UpdateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceClient::UpdateConnectivityTest(
-    ExperimentalTag, NoAwaitTag, google::protobuf::FieldMask const& update_mask,
+    NoAwaitTag, google::protobuf::FieldMask const& update_mask,
     google::cloud::networkmanagement::v1::ConnectivityTest const& resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest request;
   *request.mutable_update_mask() = update_mask;
   *request.mutable_resource() = resource;
-  return connection_->UpdateConnectivityTest(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->UpdateConnectivityTest(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -159,21 +154,19 @@ ReachabilityServiceClient::UpdateConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceClient::UpdateConnectivityTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateConnectivityTest(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->UpdateConnectivityTest(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceClient::UpdateConnectivityTest(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateConnectivityTest(ExperimentalTag{}, operation);
+  return connection_->UpdateConnectivityTest(operation);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
@@ -187,21 +180,19 @@ ReachabilityServiceClient::RerunConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceClient::RerunConnectivityTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RerunConnectivityTest(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->RerunConnectivityTest(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>
 ReachabilityServiceClient::RerunConnectivityTest(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RerunConnectivityTest(ExperimentalTag{}, operation);
+  return connection_->RerunConnectivityTest(operation);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
@@ -214,14 +205,13 @@ ReachabilityServiceClient::DeleteConnectivityTest(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-ReachabilityServiceClient::DeleteConnectivityTest(ExperimentalTag, NoAwaitTag,
+ReachabilityServiceClient::DeleteConnectivityTest(NoAwaitTag,
                                                   std::string const& name,
                                                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest request;
   request.set_name(name);
-  return connection_->DeleteConnectivityTest(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteConnectivityTest(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
@@ -235,21 +225,19 @@ ReachabilityServiceClient::DeleteConnectivityTest(
 
 StatusOr<google::longrunning::Operation>
 ReachabilityServiceClient::DeleteConnectivityTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteConnectivityTest(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteConnectivityTest(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>
 ReachabilityServiceClient::DeleteConnectivityTest(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteConnectivityTest(ExperimentalTag{}, operation);
+  return connection_->DeleteConnectivityTest(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

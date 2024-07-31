@@ -47,7 +47,7 @@ ProjectServiceConnection::ProvisionProject(
 
 StatusOr<google::longrunning::Operation>
 ProjectServiceConnection::ProvisionProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::ProvisionProjectRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -55,7 +55,7 @@ ProjectServiceConnection::ProvisionProject(
 
 future<StatusOr<google::cloud::discoveryengine::v1::Project>>
 ProjectServiceConnection::ProvisionProject(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::Project>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

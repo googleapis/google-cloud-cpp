@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_V1_DATA_CATALOG_CLIENT_H
 
 #include "google/cloud/datacatalog/v1/data_catalog_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
@@ -2251,7 +2250,7 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ReconcileTags(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
       Options opts = {});
 
@@ -2265,8 +2264,7 @@ class DataCatalogClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-  ReconcileTags(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  ReconcileTags(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -2716,7 +2714,7 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportEntries(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
       Options opts = {});
 
@@ -2730,8 +2728,7 @@ class DataCatalogClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-  ImportEntries(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  ImportEntries(google::longrunning::Operation const& operation,
                 Options opts = {});
 
  private:

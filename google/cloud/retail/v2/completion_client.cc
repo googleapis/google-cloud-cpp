@@ -50,20 +50,18 @@ CompletionServiceClient::ImportCompletionData(
 
 StatusOr<google::longrunning::Operation>
 CompletionServiceClient::ImportCompletionData(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::ImportCompletionDataRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportCompletionData(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->ImportCompletionData(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceClient::ImportCompletionData(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportCompletionData(ExperimentalTag{}, operation);
+  return connection_->ImportCompletionData(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

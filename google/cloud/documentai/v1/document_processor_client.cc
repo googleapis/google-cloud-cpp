@@ -60,15 +60,13 @@ DocumentProcessorServiceClient::BatchProcessDocuments(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentProcessorServiceClient::BatchProcessDocuments(ExperimentalTag,
-                                                      NoAwaitTag,
+DocumentProcessorServiceClient::BatchProcessDocuments(NoAwaitTag,
                                                       std::string const& name,
                                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::documentai::v1::BatchProcessRequest request;
   request.set_name(name);
-  return connection_->BatchProcessDocuments(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->BatchProcessDocuments(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
@@ -81,20 +79,18 @@ DocumentProcessorServiceClient::BatchProcessDocuments(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::BatchProcessDocuments(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::BatchProcessRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchProcessDocuments(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->BatchProcessDocuments(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
 DocumentProcessorServiceClient::BatchProcessDocuments(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchProcessDocuments(ExperimentalTag{}, operation);
+  return connection_->BatchProcessDocuments(operation);
 }
 
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
@@ -196,15 +192,14 @@ DocumentProcessorServiceClient::TrainProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::TrainProcessorVersion(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::documentai::v1::ProcessorVersion const& processor_version,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::documentai::v1::TrainProcessorVersionRequest request;
   request.set_parent(parent);
   *request.mutable_processor_version() = processor_version;
-  return connection_->TrainProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->TrainProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
@@ -217,20 +212,18 @@ DocumentProcessorServiceClient::TrainProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::TrainProcessorVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::TrainProcessorVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TrainProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->TrainProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
 DocumentProcessorServiceClient::TrainProcessorVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TrainProcessorVersion(ExperimentalTag{}, operation);
+  return connection_->TrainProcessorVersion(operation);
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
@@ -277,15 +270,13 @@ DocumentProcessorServiceClient::DeleteProcessorVersion(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentProcessorServiceClient::DeleteProcessorVersion(ExperimentalTag,
-                                                       NoAwaitTag,
+DocumentProcessorServiceClient::DeleteProcessorVersion(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::documentai::v1::DeleteProcessorVersionRequest request;
   request.set_name(name);
-  return connection_->DeleteProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
@@ -298,20 +289,18 @@ DocumentProcessorServiceClient::DeleteProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::DeleteProcessorVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
 DocumentProcessorServiceClient::DeleteProcessorVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteProcessorVersion(ExperimentalTag{}, operation);
+  return connection_->DeleteProcessorVersion(operation);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
@@ -324,15 +313,13 @@ DocumentProcessorServiceClient::DeployProcessorVersion(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentProcessorServiceClient::DeployProcessorVersion(ExperimentalTag,
-                                                       NoAwaitTag,
+DocumentProcessorServiceClient::DeployProcessorVersion(NoAwaitTag,
                                                        std::string const& name,
                                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::documentai::v1::DeployProcessorVersionRequest request;
   request.set_name(name);
-  return connection_->DeployProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeployProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
@@ -345,20 +332,18 @@ DocumentProcessorServiceClient::DeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::DeployProcessorVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::DeployProcessorVersionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeployProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
 DocumentProcessorServiceClient::DeployProcessorVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployProcessorVersion(ExperimentalTag{}, operation);
+  return connection_->DeployProcessorVersion(operation);
 }
 
 future<
@@ -373,12 +358,11 @@ DocumentProcessorServiceClient::UndeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::UndeployProcessorVersion(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::documentai::v1::UndeployProcessorVersionRequest request;
   request.set_name(name);
-  return connection_->UndeployProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->UndeployProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<
@@ -393,22 +377,20 @@ DocumentProcessorServiceClient::UndeployProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::UndeployProcessorVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->UndeployProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<
     StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
 DocumentProcessorServiceClient::UndeployProcessorVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeployProcessorVersion(ExperimentalTag{}, operation);
+  return connection_->UndeployProcessorVersion(operation);
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
@@ -440,13 +422,13 @@ DocumentProcessorServiceClient::DeleteProcessor(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DocumentProcessorServiceClient::DeleteProcessor(ExperimentalTag, NoAwaitTag,
+DocumentProcessorServiceClient::DeleteProcessor(NoAwaitTag,
                                                 std::string const& name,
                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::documentai::v1::DeleteProcessorRequest request;
   request.set_name(name);
-  return connection_->DeleteProcessor(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteProcessor(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
@@ -459,19 +441,18 @@ DocumentProcessorServiceClient::DeleteProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::DeleteProcessor(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::DeleteProcessorRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteProcessor(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteProcessor(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
 DocumentProcessorServiceClient::DeleteProcessor(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteProcessor(ExperimentalTag{}, operation);
+  return connection_->DeleteProcessor(operation);
 }
 
 future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
@@ -484,19 +465,18 @@ DocumentProcessorServiceClient::EnableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::EnableProcessor(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::EnableProcessorRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableProcessor(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->EnableProcessor(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
 DocumentProcessorServiceClient::EnableProcessor(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableProcessor(ExperimentalTag{}, operation);
+  return connection_->EnableProcessor(operation);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
@@ -509,20 +489,18 @@ DocumentProcessorServiceClient::DisableProcessor(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::DisableProcessor(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::DisableProcessorRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableProcessor(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DisableProcessor(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
 DocumentProcessorServiceClient::DisableProcessor(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableProcessor(ExperimentalTag{}, operation);
+  return connection_->DisableProcessor(operation);
 }
 
 future<
@@ -537,22 +515,20 @@ DocumentProcessorServiceClient::SetDefaultProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::SetDefaultProcessorVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetDefaultProcessorVersion(ExperimentalTag{},
-                                                 NoAwaitTag{}, request);
+  return connection_->SetDefaultProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<
     StatusOr<google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
 DocumentProcessorServiceClient::SetDefaultProcessorVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetDefaultProcessorVersion(ExperimentalTag{}, operation);
+  return connection_->SetDefaultProcessorVersion(operation);
 }
 
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
@@ -566,12 +542,11 @@ DocumentProcessorServiceClient::ReviewDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::ReviewDocument(
-    ExperimentalTag, NoAwaitTag, std::string const& human_review_config,
-    Options opts) {
+    NoAwaitTag, std::string const& human_review_config, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::documentai::v1::ReviewDocumentRequest request;
   request.set_human_review_config(human_review_config);
-  return connection_->ReviewDocument(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ReviewDocument(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
@@ -584,19 +559,18 @@ DocumentProcessorServiceClient::ReviewDocument(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::ReviewDocument(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::ReviewDocumentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReviewDocument(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ReviewDocument(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
 DocumentProcessorServiceClient::ReviewDocument(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ReviewDocument(ExperimentalTag{}, operation);
+  return connection_->ReviewDocument(operation);
 }
 
 future<
@@ -611,13 +585,11 @@ DocumentProcessorServiceClient::EvaluateProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::EvaluateProcessorVersion(
-    ExperimentalTag, NoAwaitTag, std::string const& processor_version,
-    Options opts) {
+    NoAwaitTag, std::string const& processor_version, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::documentai::v1::EvaluateProcessorVersionRequest request;
   request.set_processor_version(processor_version);
-  return connection_->EvaluateProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->EvaluateProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<
@@ -632,22 +604,20 @@ DocumentProcessorServiceClient::EvaluateProcessorVersion(
 
 StatusOr<google::longrunning::Operation>
 DocumentProcessorServiceClient::EvaluateProcessorVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EvaluateProcessorVersion(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->EvaluateProcessorVersion(NoAwaitTag{}, request);
 }
 
 future<
     StatusOr<google::cloud::documentai::v1::EvaluateProcessorVersionResponse>>
 DocumentProcessorServiceClient::EvaluateProcessorVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EvaluateProcessorVersion(ExperimentalTag{}, operation);
+  return connection_->EvaluateProcessorVersion(operation);
 }
 
 StatusOr<google::cloud::documentai::v1::Evaluation>

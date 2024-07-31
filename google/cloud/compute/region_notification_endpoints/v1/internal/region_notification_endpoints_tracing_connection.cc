@@ -51,28 +51,25 @@ RegionNotificationEndpointsTracingConnection::DeleteNotificationEndpoint(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNotificationEndpointsTracingConnection::DeleteNotificationEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_notification_endpoints::v1::
-        DeleteNotificationEndpointRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_notification_endpoints::v1::
+                    DeleteNotificationEndpointRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::DeleteNotificationEndpoint");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeleteNotificationEndpoint(ExperimentalTag{}, NoAwaitTag{},
-                                                request));
+      *span, child_->DeleteNotificationEndpoint(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsTracingConnection::DeleteNotificationEndpoint(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::DeleteNotificationEndpoint");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteNotificationEndpoint(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteNotificationEndpoint(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NotificationEndpoint>
@@ -100,28 +97,25 @@ RegionNotificationEndpointsTracingConnection::InsertNotificationEndpoint(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNotificationEndpointsTracingConnection::InsertNotificationEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_notification_endpoints::v1::
-        InsertNotificationEndpointRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_notification_endpoints::v1::
+                    InsertNotificationEndpointRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::InsertNotificationEndpoint");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->InsertNotificationEndpoint(ExperimentalTag{}, NoAwaitTag{},
-                                                request));
+      *span, child_->InsertNotificationEndpoint(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsTracingConnection::InsertNotificationEndpoint(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_region_notification_endpoints_v1::"
       "RegionNotificationEndpointsConnection::InsertNotificationEndpoint");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertNotificationEndpoint(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertNotificationEndpoint(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NotificationEndpoint>

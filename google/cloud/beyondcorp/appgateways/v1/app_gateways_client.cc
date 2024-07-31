@@ -81,7 +81,7 @@ AppGatewaysServiceClient::CreateAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceClient::CreateAppGateway(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
     std::string const& app_gateway_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -89,8 +89,7 @@ AppGatewaysServiceClient::CreateAppGateway(
   request.set_parent(parent);
   *request.mutable_app_gateway() = app_gateway;
   request.set_app_gateway_id(app_gateway_id);
-  return connection_->CreateAppGateway(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateAppGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
@@ -104,21 +103,19 @@ AppGatewaysServiceClient::CreateAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceClient::CreateAppGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAppGateway(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateAppGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
 AppGatewaysServiceClient::CreateAppGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAppGateway(ExperimentalTag{}, operation);
+  return connection_->CreateAppGateway(operation);
 }
 
 future<StatusOr<
@@ -132,14 +129,12 @@ AppGatewaysServiceClient::DeleteAppGateway(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-AppGatewaysServiceClient::DeleteAppGateway(ExperimentalTag, NoAwaitTag,
-                                           std::string const& name,
+AppGatewaysServiceClient::DeleteAppGateway(NoAwaitTag, std::string const& name,
                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest request;
   request.set_name(name);
-  return connection_->DeleteAppGateway(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteAppGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -154,22 +149,20 @@ AppGatewaysServiceClient::DeleteAppGateway(
 
 StatusOr<google::longrunning::Operation>
 AppGatewaysServiceClient::DeleteAppGateway(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAppGateway(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteAppGateway(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
 AppGatewaysServiceClient::DeleteAppGateway(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAppGateway(ExperimentalTag{}, operation);
+  return connection_->DeleteAppGateway(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -48,15 +48,14 @@ VpcAccessServiceConnection::CreateConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceConnection::CreateConnector(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::vpcaccess::v1::CreateConnectorRequest const&) {
+    NoAwaitTag, google::cloud::vpcaccess::v1::CreateConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceConnection::CreateConnector(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vpcaccess::v1::Connector>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,15 +85,14 @@ VpcAccessServiceConnection::DeleteConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceConnection::DeleteConnector(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) {
+    NoAwaitTag, google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceConnection::DeleteConnector(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

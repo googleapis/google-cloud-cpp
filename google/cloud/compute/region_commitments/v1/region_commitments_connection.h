@@ -22,7 +22,6 @@
 #include "google/cloud/compute/region_commitments/v1/internal/region_commitments_retry_traits.h"
 #include "google/cloud/compute/region_commitments/v1/region_commitments_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -203,13 +202,11 @@ class RegionCommitmentsConnection {
                        InsertCommitmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertCommitment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_commitments::v1::
-          InsertCommitmentRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                      InsertCommitmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertCommitment(ExperimentalTag,
-                   google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertCommitment(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Commitment>
   ListRegionCommitments(google::cloud::cpp::compute::region_commitments::v1::
@@ -220,13 +217,11 @@ class RegionCommitmentsConnection {
                        UpdateCommitmentRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateCommitment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_commitments::v1::
-          UpdateCommitmentRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                      UpdateCommitmentRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateCommitment(ExperimentalTag,
-                   google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateCommitment(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

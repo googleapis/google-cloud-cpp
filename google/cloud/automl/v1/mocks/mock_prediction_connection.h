@@ -60,14 +60,12 @@ class MockPredictionServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchPredict,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::automl::v1::BatchPredictRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>,
-              BatchPredict,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              BatchPredict, (google::longrunning::Operation const& operation),
               (override));
 };
 

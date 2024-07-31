@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_JOB_CLIENT_H
 
 #include "google/cloud/talent/v4/job_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -206,7 +205,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::talent::v4::Job> const& jobs,
       Options opts = {});
 
@@ -261,7 +260,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateJobs(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::talent::v4::BatchCreateJobsRequest const& request,
       Options opts = {});
 
@@ -275,8 +274,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
-  BatchCreateJobs(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  BatchCreateJobs(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -466,7 +464,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<google::cloud::talent::v4::Job> const& jobs,
       Options opts = {});
 
@@ -521,7 +519,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchUpdateJobs(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request,
       Options opts = {});
 
@@ -535,8 +533,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
-  BatchUpdateJobs(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  BatchUpdateJobs(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -653,7 +650,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<std::string> const& names, Options opts = {});
 
   // clang-format off
@@ -707,7 +704,7 @@ class JobServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchDeleteJobs(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request,
       Options opts = {});
 
@@ -721,8 +718,7 @@ class JobServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
-  BatchDeleteJobs(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  BatchDeleteJobs(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off

@@ -23,7 +23,6 @@
 #include "google/cloud/beyondcorp/appconnections/v1/app_connections_connection_idempotency_policy.h"
 #include "google/cloud/beyondcorp/appconnections/v1/internal/app_connections_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -211,14 +210,12 @@ class AppConnectionsServiceConnection {
                           CreateAppConnectionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAppConnection(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::beyondcorp::appconnections::v1::
-          CreateAppConnectionRequest const& request);
+      NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                      CreateAppConnectionRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
-  CreateAppConnection(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  CreateAppConnection(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
@@ -226,14 +223,12 @@ class AppConnectionsServiceConnection {
                           UpdateAppConnectionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAppConnection(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::beyondcorp::appconnections::v1::
-          UpdateAppConnectionRequest const& request);
+      NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                      UpdateAppConnectionRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
-  UpdateAppConnection(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  UpdateAppConnection(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                               AppConnectionOperationMetadata>>
@@ -241,14 +236,12 @@ class AppConnectionsServiceConnection {
                           DeleteAppConnectionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAppConnection(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::beyondcorp::appconnections::v1::
-          DeleteAppConnectionRequest const& request);
+      NoAwaitTag, google::cloud::beyondcorp::appconnections::v1::
+                      DeleteAppConnectionRequest const& request);
 
   virtual future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                               AppConnectionOperationMetadata>>
-  DeleteAppConnection(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  DeleteAppConnection(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::beyondcorp::appconnections::v1::
                           ResolveAppConnectionsResponse::AppConnectionDetails>

@@ -135,26 +135,25 @@ ArtifactRegistryTracingConnection::ImportAptArtifacts(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::ImportAptArtifacts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ImportAptArtifacts(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ImportAptArtifacts(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
 ArtifactRegistryTracingConnection::ImportAptArtifacts(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportAptArtifacts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ImportAptArtifacts(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ImportAptArtifacts(operation));
 }
 
 future<StatusOr<
@@ -171,26 +170,25 @@ ArtifactRegistryTracingConnection::ImportYumArtifacts(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::ImportYumArtifacts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ImportYumArtifacts(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ImportYumArtifacts(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
 ArtifactRegistryTracingConnection::ImportYumArtifacts(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::ImportYumArtifacts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ImportYumArtifacts(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ImportYumArtifacts(operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Repository>
@@ -227,25 +225,24 @@ ArtifactRegistryTracingConnection::CreateRepository(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::CreateRepository(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateRepository(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateRepository(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
 ArtifactRegistryTracingConnection::CreateRepository(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::CreateRepository");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateRepository(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateRepository(operation));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
@@ -270,25 +267,24 @@ ArtifactRegistryTracingConnection::DeleteRepository(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::DeleteRepository(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteRepository(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteRepository(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeleteRepository(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteRepository");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteRepository(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRepository(operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Package>
@@ -324,24 +320,22 @@ ArtifactRegistryTracingConnection::DeletePackage(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::DeletePackage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeletePackage(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeletePackage(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeletePackage(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeletePackage");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeletePackage(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeletePackage(operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Version>
@@ -377,24 +371,22 @@ ArtifactRegistryTracingConnection::DeleteVersion(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::DeleteVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteVersion(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteVersion(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
 ArtifactRegistryTracingConnection::DeleteVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::DeleteVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteVersion(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteVersion(operation));
 }
 
 future<StatusOr<
@@ -411,26 +403,25 @@ ArtifactRegistryTracingConnection::BatchDeleteVersions(
 
 StatusOr<google::longrunning::Operation>
 ArtifactRegistryTracingConnection::BatchDeleteVersions(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::BatchDeleteVersions");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->BatchDeleteVersions(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchDeleteVersions(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>>
 ArtifactRegistryTracingConnection::BatchDeleteVersions(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "artifactregistry_v1::ArtifactRegistryConnection::BatchDeleteVersions");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchDeleteVersions(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteVersions(operation));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::File>

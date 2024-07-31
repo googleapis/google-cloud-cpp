@@ -58,15 +58,13 @@ class MockTargetSslProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteTargetSslProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   DeleteTargetSslProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
+                               DeleteTargetSslProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetSslProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetSslProxy>,
@@ -86,15 +84,13 @@ class MockTargetSslProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertTargetSslProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   InsertTargetSslProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
+                               InsertTargetSslProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetSslProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetSslProxy>),
@@ -114,15 +110,13 @@ class MockTargetSslProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetBackendService,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetBackendServiceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
+                               SetBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetBackendService,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -136,15 +130,13 @@ class MockTargetSslProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetCertificateMap,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetCertificateMapRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
+                               SetCertificateMapRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCertificateMap,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -158,15 +150,13 @@ class MockTargetSslProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetProxyHeader,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetProxyHeaderRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
+                               SetProxyHeaderRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetProxyHeader,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -180,15 +170,13 @@ class MockTargetSslProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetSslCertificates,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetSslCertificatesRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
+                               SetSslCertificatesRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSslCertificates,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -202,15 +190,13 @@ class MockTargetSslProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetSslPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_ssl_proxies::v1::
-                   SetSslPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_ssl_proxies::v1::
+                               SetSslPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSslPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

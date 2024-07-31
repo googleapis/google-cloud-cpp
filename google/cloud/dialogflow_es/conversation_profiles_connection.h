@@ -22,7 +22,6 @@
 #include "google/cloud/dialogflow_es/conversation_profiles_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -221,13 +220,12 @@ class ConversationProfilesConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(ExperimentalTag,
-                             google::longrunning::Operation const& operation);
+  SetSuggestionFeatureConfig(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
   ClearSuggestionFeatureConfig(
@@ -235,13 +233,12 @@ class ConversationProfilesConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(ExperimentalTag,
-                               google::longrunning::Operation const& operation);
+  ClearSuggestionFeatureConfig(google::longrunning::Operation const& operation);
 };
 
 /**

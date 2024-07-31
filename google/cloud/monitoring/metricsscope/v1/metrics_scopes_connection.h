@@ -22,7 +22,6 @@
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_retry_traits.h"
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -205,14 +204,13 @@ class MetricsScopesConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request);
 
   virtual future<
       StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-  CreateMonitoredProject(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  CreateMonitoredProject(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
@@ -221,14 +219,13 @@ class MetricsScopesConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request);
 
   virtual future<
       StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  DeleteMonitoredProject(google::longrunning::Operation const& operation);
 };
 
 /**

@@ -58,15 +58,13 @@ class MockFeatureRegistryServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateFeatureGroup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>,
               CreateFeatureGroup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::FeatureGroup>, GetFeatureGroup,
@@ -89,15 +87,13 @@ class MockFeatureRegistryServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateFeatureGroup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>,
               UpdateFeatureGroup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteFeatureGroup)` is now ambiguous. Use
@@ -110,14 +106,13 @@ class MockFeatureRegistryServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteFeatureGroup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteFeatureGroup,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteFeatureGroup, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -130,14 +125,12 @@ class MockFeatureRegistryServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateFeature,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::CreateFeatureRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Feature>>,
-              CreateFeature,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateFeature, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Feature>, GetFeature,
@@ -159,14 +152,12 @@ class MockFeatureRegistryServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateFeature,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::UpdateFeatureRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Feature>>,
-              UpdateFeature,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateFeature, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -180,14 +171,13 @@ class MockFeatureRegistryServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteFeature,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteFeatureRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteFeature,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteFeature, (google::longrunning::Operation const& operation),
       (override));
 };
 

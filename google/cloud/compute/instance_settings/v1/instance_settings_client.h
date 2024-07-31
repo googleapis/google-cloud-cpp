@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_SETTINGS_V1_INSTANCE_SETTINGS_CLIENT_H
 
 #include "google/cloud/compute/instance_settings/v1/instance_settings_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -201,8 +200,8 @@ class InstanceSettingsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& update_mask,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& update_mask,
       google::cloud::cpp::compute::v1::InstanceSettings const&
           instance_settings_resource,
       Options opts = {});
@@ -258,7 +257,7 @@ class InstanceSettingsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchInstanceSettings(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_settings::v1::
           PatchInstanceSettingsRequest const& request,
       Options opts = {});
@@ -274,7 +273,6 @@ class InstanceSettingsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchInstanceSettings(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

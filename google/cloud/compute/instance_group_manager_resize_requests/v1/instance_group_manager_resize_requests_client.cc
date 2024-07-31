@@ -54,8 +54,8 @@ InstanceGroupManagerResizeRequestsClient::Cancel(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsClient::Cancel(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& zone, std::string const& instance_group_manager,
+    NoAwaitTag, std::string const& project, std::string const& zone,
+    std::string const& instance_group_manager,
     std::string const& resize_request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
@@ -64,7 +64,7 @@ InstanceGroupManagerResizeRequestsClient::Cancel(
   request.set_zone(zone);
   request.set_instance_group_manager(instance_group_manager);
   request.set_resize_request(resize_request);
-  return connection_->Cancel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Cancel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -78,20 +78,19 @@ InstanceGroupManagerResizeRequestsClient::Cancel(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsClient::Cancel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
         CancelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Cancel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Cancel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsClient::Cancel(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Cancel(ExperimentalTag{}, operation);
+  return connection_->Cancel(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -113,8 +112,8 @@ InstanceGroupManagerResizeRequestsClient::
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsClient::
     DeleteInstanceGroupManagerResizeRequest(
-        ExperimentalTag, NoAwaitTag, std::string const& project,
-        std::string const& zone, std::string const& instance_group_manager,
+        NoAwaitTag, std::string const& project, std::string const& zone,
+        std::string const& instance_group_manager,
         std::string const& resize_request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
@@ -123,8 +122,8 @@ InstanceGroupManagerResizeRequestsClient::
   request.set_zone(zone);
   request.set_instance_group_manager(instance_group_manager);
   request.set_resize_request(resize_request);
-  return connection_->DeleteInstanceGroupManagerResizeRequest(
-      ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteInstanceGroupManagerResizeRequest(NoAwaitTag{},
+                                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -140,24 +139,22 @@ InstanceGroupManagerResizeRequestsClient::
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsClient::
     DeleteInstanceGroupManagerResizeRequest(
-        ExperimentalTag, NoAwaitTag,
+        NoAwaitTag,
         google::cloud::cpp::compute::instance_group_manager_resize_requests::
             v1::DeleteInstanceGroupManagerResizeRequestRequest const& request,
         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstanceGroupManagerResizeRequest(
-      ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteInstanceGroupManagerResizeRequest(NoAwaitTag{},
+                                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsClient::
     DeleteInstanceGroupManagerResizeRequest(
-        ExperimentalTag,
         google::cloud::cpp::compute::v1::Operation const& operation,
         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstanceGroupManagerResizeRequest(ExperimentalTag{},
-                                                              operation);
+  return connection_->DeleteInstanceGroupManagerResizeRequest(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>
@@ -207,8 +204,8 @@ InstanceGroupManagerResizeRequestsClient::
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsClient::
     InsertInstanceGroupManagerResizeRequest(
-        ExperimentalTag, NoAwaitTag, std::string const& project,
-        std::string const& zone, std::string const& instance_group_manager,
+        NoAwaitTag, std::string const& project, std::string const& zone,
+        std::string const& instance_group_manager,
         google::cloud::cpp::compute::v1::
             InstanceGroupManagerResizeRequest const&
                 instance_group_manager_resize_request_resource,
@@ -221,8 +218,8 @@ InstanceGroupManagerResizeRequestsClient::
   request.set_instance_group_manager(instance_group_manager);
   *request.mutable_instance_group_manager_resize_request_resource() =
       instance_group_manager_resize_request_resource;
-  return connection_->InsertInstanceGroupManagerResizeRequest(
-      ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->InsertInstanceGroupManagerResizeRequest(NoAwaitTag{},
+                                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -238,24 +235,22 @@ InstanceGroupManagerResizeRequestsClient::
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagerResizeRequestsClient::
     InsertInstanceGroupManagerResizeRequest(
-        ExperimentalTag, NoAwaitTag,
+        NoAwaitTag,
         google::cloud::cpp::compute::instance_group_manager_resize_requests::
             v1::InsertInstanceGroupManagerResizeRequestRequest const& request,
         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInstanceGroupManagerResizeRequest(
-      ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->InsertInstanceGroupManagerResizeRequest(NoAwaitTag{},
+                                                              request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagerResizeRequestsClient::
     InsertInstanceGroupManagerResizeRequest(
-        ExperimentalTag,
         google::cloud::cpp::compute::v1::Operation const& operation,
         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInstanceGroupManagerResizeRequest(ExperimentalTag{},
-                                                              operation);
+  return connection_->InsertInstanceGroupManagerResizeRequest(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest>

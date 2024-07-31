@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPCONNECTORS_V1_APP_CONNECTORS_CLIENT_H
 
 #include "google/cloud/beyondcorp/appconnectors/v1/app_connectors_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -294,7 +293,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppConnector(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
           app_connector,
       std::string const& app_connector_id, Options opts = {});
@@ -350,7 +349,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAppConnector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           CreateAppConnectorRequest const& request,
       Options opts = {});
@@ -365,8 +364,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  CreateAppConnector(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  CreateAppConnector(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -422,7 +420,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppConnector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::AppConnector const&
           app_connector,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -478,7 +476,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAppConnector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           UpdateAppConnectorRequest const& request,
       Options opts = {});
@@ -493,8 +491,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  UpdateAppConnector(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  UpdateAppConnector(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -543,7 +540,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppConnector(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -597,7 +594,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAppConnector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::
           DeleteAppConnectorRequest const& request,
       Options opts = {});
@@ -613,8 +610,7 @@ class AppConnectorsServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::
                       AppConnectorOperationMetadata>>
-  DeleteAppConnector(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  DeleteAppConnector(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -666,7 +662,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ReportStatus(
-      ExperimentalTag, NoAwaitTag, std::string const& app_connector,
+      NoAwaitTag, std::string const& app_connector,
       google::cloud::beyondcorp::appconnectors::v1::ResourceInfo const&
           resource_info,
       Options opts = {});
@@ -723,7 +719,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ReportStatus(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
           request,
       Options opts = {});
@@ -738,7 +734,7 @@ class AppConnectorsServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>
-  ReportStatus(ExperimentalTag, google::longrunning::Operation const& operation,
+  ReportStatus(google::longrunning::Operation const& operation,
                Options opts = {});
 
  private:

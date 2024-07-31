@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_FIREWALL_POLICIES_V1_FIREWALL_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -137,7 +136,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAssociation(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
+      NoAwaitTag, std::string const& firewall_policy,
       google::cloud::cpp::compute::v1::FirewallPolicyAssociation const&
           firewall_policy_association_resource,
       Options opts = {});
@@ -193,7 +192,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAssociation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           AddAssociationRequest const& request,
       Options opts = {});
@@ -208,7 +207,6 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAssociation(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -260,7 +258,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
+      NoAwaitTag, std::string const& firewall_policy,
       google::cloud::cpp::compute::v1::FirewallPolicyRule const&
           firewall_policy_rule_resource,
       Options opts = {});
@@ -316,7 +314,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
           request,
       Options opts = {});
@@ -331,7 +329,6 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -379,8 +376,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CloneRules(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
-      Options opts = {});
+      NoAwaitTag, std::string const& firewall_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -433,7 +429,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> CloneRules(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           CloneRulesRequest const& request,
       Options opts = {});
@@ -448,7 +444,6 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> CloneRules(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -496,8 +491,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewallPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
-      Options opts = {});
+      NoAwaitTag, std::string const& firewall_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -550,7 +544,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteFirewallPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           DeleteFirewallPolicyRequest const& request,
       Options opts = {});
@@ -566,7 +560,6 @@ class FirewallPoliciesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteFirewallPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -860,7 +853,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertFirewallPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           InsertFirewallPolicyRequest const& request,
       Options opts = {});
@@ -876,7 +869,6 @@ class FirewallPoliciesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertFirewallPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1001,8 +993,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
-      Options opts = {});
+      NoAwaitTag, std::string const& firewall_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -1055,7 +1046,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
           request,
       Options opts = {});
@@ -1070,7 +1061,6 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1122,7 +1112,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewallPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
+      NoAwaitTag, std::string const& firewall_policy,
       google::cloud::cpp::compute::v1::FirewallPolicy const&
           firewall_policy_resource,
       Options opts = {});
@@ -1178,7 +1168,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchFirewallPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           PatchFirewallPolicyRequest const& request,
       Options opts = {});
@@ -1194,7 +1184,6 @@ class FirewallPoliciesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchFirewallPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1246,7 +1235,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
+      NoAwaitTag, std::string const& firewall_policy,
       google::cloud::cpp::compute::v1::FirewallPolicyRule const&
           firewall_policy_rule_resource,
       Options opts = {});
@@ -1302,7 +1291,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           PatchRuleRequest const& request,
       Options opts = {});
@@ -1317,7 +1306,6 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1365,8 +1353,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveAssociation(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
-      Options opts = {});
+      NoAwaitTag, std::string const& firewall_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -1419,7 +1406,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveAssociation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           RemoveAssociationRequest const& request,
       Options opts = {});
@@ -1434,8 +1421,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveAssociation(ExperimentalTag,
-                    google::cloud::cpp::compute::v1::Operation const& operation,
+  RemoveAssociation(google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1482,8 +1468,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
-      ExperimentalTag, NoAwaitTag, std::string const& firewall_policy,
-      Options opts = {});
+      NoAwaitTag, std::string const& firewall_policy, Options opts = {});
 
   // clang-format off
   ///
@@ -1536,7 +1521,7 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::firewall_policies::v1::
           RemoveRuleRequest const& request,
       Options opts = {});
@@ -1551,7 +1536,6 @@ class FirewallPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

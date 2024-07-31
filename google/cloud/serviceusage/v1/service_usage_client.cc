@@ -41,19 +41,18 @@ ServiceUsageClient::EnableService(
 }
 
 StatusOr<google::longrunning::Operation> ServiceUsageClient::EnableService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::serviceusage::v1::EnableServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableService(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->EnableService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
 ServiceUsageClient::EnableService(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableService(ExperimentalTag{}, operation);
+  return connection_->EnableService(operation);
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
@@ -65,19 +64,18 @@ ServiceUsageClient::DisableService(
 }
 
 StatusOr<google::longrunning::Operation> ServiceUsageClient::DisableService(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::serviceusage::v1::DisableServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableService(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DisableService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
 ServiceUsageClient::DisableService(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableService(ExperimentalTag{}, operation);
+  return connection_->DisableService(operation);
 }
 
 StatusOr<google::api::serviceusage::v1::Service> ServiceUsageClient::GetService(
@@ -104,20 +102,18 @@ ServiceUsageClient::BatchEnableServices(
 
 StatusOr<google::longrunning::Operation>
 ServiceUsageClient::BatchEnableServices(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchEnableServices(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchEnableServices(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
 ServiceUsageClient::BatchEnableServices(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchEnableServices(ExperimentalTag{}, operation);
+  return connection_->BatchEnableServices(operation);
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>

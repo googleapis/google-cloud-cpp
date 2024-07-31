@@ -148,9 +148,8 @@ InstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_templates::v1::
-        DeleteInstanceTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
+                    DeleteInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -165,7 +164,6 @@ InstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -309,9 +307,8 @@ InstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_templates::v1::
-        InsertInstanceTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_templates::v1::
+                    InsertInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -326,7 +323,6 @@ InstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

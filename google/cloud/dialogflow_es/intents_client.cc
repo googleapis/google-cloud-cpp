@@ -163,14 +163,13 @@ IntentsClient::BatchUpdateIntents(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation> IntentsClient::BatchUpdateIntents(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
-    std::string const& intent_batch_uri, Options opts) {
+    NoAwaitTag, std::string const& parent, std::string const& intent_batch_uri,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchUpdateIntentsRequest request;
   request.set_parent(parent);
   request.set_intent_batch_uri(intent_batch_uri);
-  return connection_->BatchUpdateIntents(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->BatchUpdateIntents(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
@@ -186,15 +185,14 @@ IntentsClient::BatchUpdateIntents(
 }
 
 StatusOr<google::longrunning::Operation> IntentsClient::BatchUpdateIntents(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::dialogflow::v2::IntentBatch const& intent_batch_inline,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchUpdateIntentsRequest request;
   request.set_parent(parent);
   *request.mutable_intent_batch_inline() = intent_batch_inline;
-  return connection_->BatchUpdateIntents(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->BatchUpdateIntents(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
@@ -206,20 +204,18 @@ IntentsClient::BatchUpdateIntents(
 }
 
 StatusOr<google::longrunning::Operation> IntentsClient::BatchUpdateIntents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchUpdateIntents(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->BatchUpdateIntents(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
 IntentsClient::BatchUpdateIntents(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchUpdateIntents(ExperimentalTag{}, operation);
+  return connection_->BatchUpdateIntents(operation);
 }
 
 future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
@@ -234,15 +230,14 @@ future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
 }
 
 StatusOr<google::longrunning::Operation> IntentsClient::BatchDeleteIntents(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<google::cloud::dialogflow::v2::Intent> const& intents,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchDeleteIntentsRequest request;
   request.set_parent(parent);
   *request.mutable_intents() = {intents.begin(), intents.end()};
-  return connection_->BatchDeleteIntents(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->BatchDeleteIntents(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
@@ -253,19 +248,17 @@ future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
 }
 
 StatusOr<google::longrunning::Operation> IntentsClient::BatchDeleteIntents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeleteIntents(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->BatchDeleteIntents(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeleteIntents(ExperimentalTag{}, operation);
+  return connection_->BatchDeleteIntents(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

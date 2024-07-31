@@ -22,7 +22,6 @@
 #include "google/cloud/storagecontrol/v2/internal/storage_control_retry_traits.h"
 #include "google/cloud/storagecontrol/v2/storage_control_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -211,11 +210,11 @@ class StorageControlConnection {
       google::storage::control::v2::RenameFolderRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RenameFolder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::storage::control::v2::RenameFolderRequest const& request);
 
   virtual future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::storage::control::v2::StorageLayout>
   GetStorageLayout(

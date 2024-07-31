@@ -57,16 +57,15 @@ ServiceAttachmentsConnection::DeleteServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsConnection::DeleteServiceAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::service_attachments::v1::
-        DeleteServiceAttachmentRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
+                    DeleteServiceAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::DeleteServiceAttachment(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,16 +96,15 @@ ServiceAttachmentsConnection::InsertServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsConnection::InsertServiceAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::service_attachments::v1::
-        InsertServiceAttachmentRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
+                    InsertServiceAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::InsertServiceAttachment(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -131,16 +129,15 @@ ServiceAttachmentsConnection::PatchServiceAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ServiceAttachmentsConnection::PatchServiceAttachment(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::service_attachments::v1::
-        PatchServiceAttachmentRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::service_attachments::v1::
+                    PatchServiceAttachmentRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ServiceAttachmentsConnection::PatchServiceAttachment(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

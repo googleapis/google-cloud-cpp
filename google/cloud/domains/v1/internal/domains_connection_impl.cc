@@ -133,7 +133,7 @@ DomainsConnectionImpl::RegisterDomain(
 }
 
 StatusOr<google::longrunning::Operation> DomainsConnectionImpl::RegisterDomain(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -148,7 +148,7 @@ StatusOr<google::longrunning::Operation> DomainsConnectionImpl::RegisterDomain(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::RegisterDomain(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
@@ -240,7 +240,7 @@ DomainsConnectionImpl::TransferDomain(
 }
 
 StatusOr<google::longrunning::Operation> DomainsConnectionImpl::TransferDomain(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::TransferDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -255,7 +255,7 @@ StatusOr<google::longrunning::Operation> DomainsConnectionImpl::TransferDomain(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::TransferDomain(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
@@ -381,7 +381,7 @@ DomainsConnectionImpl::UpdateRegistration(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnectionImpl::UpdateRegistration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -397,7 +397,7 @@ DomainsConnectionImpl::UpdateRegistration(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::UpdateRegistration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
@@ -475,7 +475,7 @@ DomainsConnectionImpl::ConfigureManagementSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnectionImpl::ConfigureManagementSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -493,7 +493,7 @@ DomainsConnectionImpl::ConfigureManagementSettings(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ConfigureManagementSettings(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
@@ -570,7 +570,7 @@ DomainsConnectionImpl::ConfigureDnsSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnectionImpl::ConfigureDnsSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -586,7 +586,7 @@ DomainsConnectionImpl::ConfigureDnsSettings(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ConfigureDnsSettings(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
@@ -664,7 +664,7 @@ DomainsConnectionImpl::ConfigureContactSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnectionImpl::ConfigureContactSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureContactSettingsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -681,7 +681,7 @@ DomainsConnectionImpl::ConfigureContactSettings(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ConfigureContactSettings(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
@@ -758,7 +758,7 @@ DomainsConnectionImpl::ExportRegistration(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnectionImpl::ExportRegistration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -774,7 +774,7 @@ DomainsConnectionImpl::ExportRegistration(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ExportRegistration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::domains::v1::OperationMetadata>()) {
@@ -851,7 +851,7 @@ DomainsConnectionImpl::DeleteRegistration(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnectionImpl::DeleteRegistration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -867,7 +867,7 @@ DomainsConnectionImpl::DeleteRegistration(
 
 future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
 DomainsConnectionImpl::DeleteRegistration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::domains::v1::OperationMetadata>()) {

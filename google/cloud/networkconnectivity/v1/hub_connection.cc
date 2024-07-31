@@ -61,15 +61,14 @@ HubServiceConnection::CreateHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnection::CreateHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateHubRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-HubServiceConnection::CreateHub(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+HubServiceConnection::CreateHub(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::Hub>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -84,15 +83,14 @@ HubServiceConnection::UpdateHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnection::UpdateHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
-HubServiceConnection::UpdateHub(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+HubServiceConnection::UpdateHub(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::Hub>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -107,15 +105,14 @@ HubServiceConnection::DeleteHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnection::DeleteHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-HubServiceConnection::DeleteHub(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+HubServiceConnection::DeleteHub(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -152,15 +149,14 @@ HubServiceConnection::CreateSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnection::CreateSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-HubServiceConnection::CreateSpoke(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+HubServiceConnection::CreateSpoke(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::Spoke>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -175,15 +171,14 @@ HubServiceConnection::UpdateSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnection::UpdateSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
-HubServiceConnection::UpdateSpoke(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+HubServiceConnection::UpdateSpoke(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::Spoke>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -198,15 +193,14 @@ HubServiceConnection::RejectHubSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnection::RejectHubSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-HubServiceConnection::RejectHubSpoke(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+HubServiceConnection::RejectHubSpoke(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -221,15 +215,14 @@ HubServiceConnection::AcceptHubSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnection::AcceptHubSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-HubServiceConnection::AcceptHubSpoke(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+HubServiceConnection::AcceptHubSpoke(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,15 +237,14 @@ HubServiceConnection::DeleteSpoke(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceConnection::DeleteSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-HubServiceConnection::DeleteSpoke(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+HubServiceConnection::DeleteSpoke(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

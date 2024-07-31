@@ -44,12 +44,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateRecognizer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::CreateRecognizerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::speech::v2::Recognizer> ListRecognizers(
@@ -63,12 +62,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateRecognizer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::UpdateRecognizerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
@@ -76,12 +74,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteRecognizer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::DeleteRecognizerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
@@ -89,12 +86,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteRecognizer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::UndeleteRecognizerRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
@@ -110,12 +106,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       google::cloud::speech::v2::BatchRecognizeRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> BatchRecognize(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::BatchRecognizeRequest const& request) override;
 
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
-  BatchRecognize(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  BatchRecognize(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::speech::v2::Config> GetConfig(
       google::cloud::speech::v2::GetConfigRequest const& request) override;
@@ -128,12 +123,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateCustomClass(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::CreateCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
@@ -147,12 +141,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCustomClass(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::UpdateCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
@@ -160,12 +153,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteCustomClass(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::DeleteCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
@@ -173,12 +165,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UndeleteCustomClass(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::UndeleteCustomClassRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
@@ -186,12 +177,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreatePhraseSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::CreatePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
@@ -205,12 +195,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdatePhraseSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::UpdatePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
@@ -218,12 +207,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeletePhraseSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::DeletePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
@@ -231,12 +219,11 @@ class SpeechTracingConnection : public speech_v2::SpeechConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UndeletePhraseSet(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::speech::v2::UndeletePhraseSetRequest const& request)
       override;
 
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

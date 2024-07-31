@@ -105,7 +105,7 @@ CatalogServiceConnectionImpl::CreateEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::CreateEntryType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateEntryTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -121,7 +121,7 @@ CatalogServiceConnectionImpl::CreateEntryType(
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceConnectionImpl::CreateEntryType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -196,7 +196,7 @@ CatalogServiceConnectionImpl::UpdateEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::UpdateEntryType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -212,7 +212,7 @@ CatalogServiceConnectionImpl::UpdateEntryType(
 
 future<StatusOr<google::cloud::dataplex::v1::EntryType>>
 CatalogServiceConnectionImpl::UpdateEntryType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -287,7 +287,7 @@ CatalogServiceConnectionImpl::DeleteEntryType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::DeleteEntryType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -303,7 +303,7 @@ CatalogServiceConnectionImpl::DeleteEntryType(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnectionImpl::DeleteEntryType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -427,7 +427,7 @@ CatalogServiceConnectionImpl::CreateAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::CreateAspectType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateAspectTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -443,7 +443,7 @@ CatalogServiceConnectionImpl::CreateAspectType(
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceConnectionImpl::CreateAspectType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -518,7 +518,7 @@ CatalogServiceConnectionImpl::UpdateAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::UpdateAspectType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -534,7 +534,7 @@ CatalogServiceConnectionImpl::UpdateAspectType(
 
 future<StatusOr<google::cloud::dataplex::v1::AspectType>>
 CatalogServiceConnectionImpl::UpdateAspectType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -609,7 +609,7 @@ CatalogServiceConnectionImpl::DeleteAspectType(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::DeleteAspectType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -625,7 +625,7 @@ CatalogServiceConnectionImpl::DeleteAspectType(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnectionImpl::DeleteAspectType(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -749,7 +749,7 @@ CatalogServiceConnectionImpl::CreateEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::CreateEntryGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::CreateEntryGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -765,7 +765,7 @@ CatalogServiceConnectionImpl::CreateEntryGroup(
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceConnectionImpl::CreateEntryGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -840,7 +840,7 @@ CatalogServiceConnectionImpl::UpdateEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::UpdateEntryGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -856,7 +856,7 @@ CatalogServiceConnectionImpl::UpdateEntryGroup(
 
 future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>
 CatalogServiceConnectionImpl::UpdateEntryGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {
@@ -931,7 +931,7 @@ CatalogServiceConnectionImpl::DeleteEntryGroup(
 
 StatusOr<google::longrunning::Operation>
 CatalogServiceConnectionImpl::DeleteEntryGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -947,7 +947,7 @@ CatalogServiceConnectionImpl::DeleteEntryGroup(
 
 future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
 CatalogServiceConnectionImpl::DeleteEntryGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataplex::v1::OperationMetadata>()) {

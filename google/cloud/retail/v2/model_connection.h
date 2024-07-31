@@ -22,7 +22,6 @@
 #include "google/cloud/retail/v2/internal/model_retry_traits.h"
 #include "google/cloud/retail/v2/model_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -191,11 +190,10 @@ class ModelServiceConnection {
       google::cloud::retail::v2::CreateModelRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateModel(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::retail::v2::CreateModelRequest const& request);
+      NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::retail::v2::Model>> CreateModel(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::retail::v2::Model> GetModel(
       google::cloud::retail::v2::GetModelRequest const& request);
@@ -219,11 +217,10 @@ class ModelServiceConnection {
   TuneModel(google::cloud::retail::v2::TuneModelRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> TuneModel(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::retail::v2::TuneModelRequest const& request);
+      NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request);
 
   virtual future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
-  TuneModel(ExperimentalTag, google::longrunning::Operation const& operation);
+  TuneModel(google::longrunning::Operation const& operation);
 };
 
 /**

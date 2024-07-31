@@ -60,12 +60,11 @@ class SimulatorConnectionImpl : public policysimulator_v1::SimulatorConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateReplay(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::policysimulator::v1::CreateReplayRequest const& request)
       override;
 
   future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::policysimulator::v1::ReplayResult>

@@ -82,7 +82,7 @@ DepServiceClient::CreateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::CreateLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::networkservices::v1::LbTrafficExtension const&
         lb_traffic_extension,
     std::string const& lb_traffic_extension_id, Options opts) {
@@ -91,8 +91,7 @@ DepServiceClient::CreateLbTrafficExtension(
   request.set_parent(parent);
   *request.mutable_lb_traffic_extension() = lb_traffic_extension;
   request.set_lb_traffic_extension_id(lb_traffic_extension_id);
-  return connection_->CreateLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->CreateLbTrafficExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -106,21 +105,19 @@ DepServiceClient::CreateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::CreateLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->CreateLbTrafficExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceClient::CreateLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateLbTrafficExtension(ExperimentalTag{}, operation);
+  return connection_->CreateLbTrafficExtension(operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -137,7 +134,7 @@ DepServiceClient::UpdateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::UpdateLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::LbTrafficExtension const&
         lb_traffic_extension,
     google::protobuf::FieldMask const& update_mask, Options opts) {
@@ -145,8 +142,7 @@ DepServiceClient::UpdateLbTrafficExtension(
   google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest request;
   *request.mutable_lb_traffic_extension() = lb_traffic_extension;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->UpdateLbTrafficExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
@@ -160,21 +156,19 @@ DepServiceClient::UpdateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::UpdateLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->UpdateLbTrafficExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>>
 DepServiceClient::UpdateLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateLbTrafficExtension(ExperimentalTag{}, operation);
+  return connection_->UpdateLbTrafficExtension(operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -187,14 +181,12 @@ DepServiceClient::DeleteLbTrafficExtension(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DepServiceClient::DeleteLbTrafficExtension(ExperimentalTag, NoAwaitTag,
-                                           std::string const& name,
+DepServiceClient::DeleteLbTrafficExtension(NoAwaitTag, std::string const& name,
                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest request;
   request.set_name(name);
-  return connection_->DeleteLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->DeleteLbTrafficExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -208,21 +200,19 @@ DepServiceClient::DeleteLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::DeleteLbTrafficExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteLbTrafficExtension(ExperimentalTag{}, NoAwaitTag{},
-                                               request);
+  return connection_->DeleteLbTrafficExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceClient::DeleteLbTrafficExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteLbTrafficExtension(ExperimentalTag{}, operation);
+  return connection_->DeleteLbTrafficExtension(operation);
 }
 
 StreamRange<google::cloud::networkservices::v1::LbRouteExtension>
@@ -275,7 +265,7 @@ DepServiceClient::CreateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::CreateLbRouteExtension(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::networkservices::v1::LbRouteExtension const&
         lb_route_extension,
     std::string const& lb_route_extension_id, Options opts) {
@@ -284,8 +274,7 @@ DepServiceClient::CreateLbRouteExtension(
   request.set_parent(parent);
   *request.mutable_lb_route_extension() = lb_route_extension;
   request.set_lb_route_extension_id(lb_route_extension_id);
-  return connection_->CreateLbRouteExtension(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->CreateLbRouteExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -299,21 +288,19 @@ DepServiceClient::CreateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::CreateLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateLbRouteExtension(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->CreateLbRouteExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceClient::CreateLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateLbRouteExtension(ExperimentalTag{}, operation);
+  return connection_->CreateLbRouteExtension(operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -330,7 +317,7 @@ DepServiceClient::UpdateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::UpdateLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::LbRouteExtension const&
         lb_route_extension,
     google::protobuf::FieldMask const& update_mask, Options opts) {
@@ -338,8 +325,7 @@ DepServiceClient::UpdateLbRouteExtension(
   google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest request;
   *request.mutable_lb_route_extension() = lb_route_extension;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateLbRouteExtension(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->UpdateLbRouteExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
@@ -353,21 +339,19 @@ DepServiceClient::UpdateLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::UpdateLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateLbRouteExtension(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->UpdateLbRouteExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::LbRouteExtension>>
 DepServiceClient::UpdateLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateLbRouteExtension(ExperimentalTag{}, operation);
+  return connection_->UpdateLbRouteExtension(operation);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -380,14 +364,12 @@ DepServiceClient::DeleteLbRouteExtension(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DepServiceClient::DeleteLbRouteExtension(ExperimentalTag, NoAwaitTag,
-                                         std::string const& name,
+DepServiceClient::DeleteLbRouteExtension(NoAwaitTag, std::string const& name,
                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest request;
   request.set_name(name);
-  return connection_->DeleteLbRouteExtension(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteLbRouteExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
@@ -401,21 +383,19 @@ DepServiceClient::DeleteLbRouteExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceClient::DeleteLbRouteExtension(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteLbRouteExtension(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteLbRouteExtension(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 DepServiceClient::DeleteLbRouteExtension(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteLbRouteExtension(ExperimentalTag{}, operation);
+  return connection_->DeleteLbRouteExtension(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

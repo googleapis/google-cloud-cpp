@@ -127,20 +127,18 @@ EntityTypesClient::ExportEntityTypes(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::ExportEntityTypes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportEntityTypes(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->ExportEntityTypes(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
 EntityTypesClient::ExportEntityTypes(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportEntityTypes(ExperimentalTag{}, operation);
+  return connection_->ExportEntityTypes(operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
@@ -152,20 +150,18 @@ EntityTypesClient::ImportEntityTypes(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::ImportEntityTypes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportEntityTypes(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->ImportEntityTypes(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
 EntityTypesClient::ImportEntityTypes(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportEntityTypes(ExperimentalTag{}, operation);
+  return connection_->ImportEntityTypes(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

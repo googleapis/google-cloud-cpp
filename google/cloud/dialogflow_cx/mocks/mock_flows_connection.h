@@ -80,14 +80,12 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, TrainFlow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, TrainFlow,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>,
@@ -113,14 +111,13 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportFlow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>,
-      ImportFlow,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportFlow, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -134,14 +131,13 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportFlow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>,
-      ExportFlow,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ExportFlow, (google::longrunning::Operation const& operation),
       (override));
 };
 

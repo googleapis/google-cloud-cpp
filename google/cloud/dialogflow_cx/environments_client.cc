@@ -77,15 +77,14 @@ EnvironmentsClient::CreateEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::CreateEnvironment(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::dialogflow::cx::v3::Environment const& environment,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest request;
   request.set_parent(parent);
   *request.mutable_environment() = environment;
-  return connection_->CreateEnvironment(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->CreateEnvironment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -97,20 +96,18 @@ EnvironmentsClient::CreateEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::CreateEnvironment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEnvironment(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->CreateEnvironment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsClient::CreateEnvironment(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEnvironment(ExperimentalTag{}, operation);
+  return connection_->CreateEnvironment(operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -125,15 +122,14 @@ EnvironmentsClient::UpdateEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::UpdateEnvironment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::Environment const& environment,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest request;
   *request.mutable_environment() = environment;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateEnvironment(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->UpdateEnvironment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -145,20 +141,18 @@ EnvironmentsClient::UpdateEnvironment(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::UpdateEnvironment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEnvironment(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->UpdateEnvironment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsClient::UpdateEnvironment(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEnvironment(ExperimentalTag{}, operation);
+  return connection_->UpdateEnvironment(operation);
 }
 
 Status EnvironmentsClient::DeleteEnvironment(std::string const& name,
@@ -202,20 +196,18 @@ EnvironmentsClient::RunContinuousTest(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::RunContinuousTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunContinuousTest(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->RunContinuousTest(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
 EnvironmentsClient::RunContinuousTest(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RunContinuousTest(ExperimentalTag{}, operation);
+  return connection_->RunContinuousTest(operation);
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
@@ -244,19 +236,18 @@ EnvironmentsClient::DeployFlow(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsClient::DeployFlow(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployFlow(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeployFlow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-EnvironmentsClient::DeployFlow(ExperimentalTag,
-                               google::longrunning::Operation const& operation,
+EnvironmentsClient::DeployFlow(google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeployFlow(ExperimentalTag{}, operation);
+  return connection_->DeployFlow(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

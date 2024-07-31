@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_MODELS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/conversation_models_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -150,7 +149,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationModel(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::ConversationModel const&
           conversation_model,
       Options opts = {});
@@ -217,7 +216,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::CreateConversationModelRequest const&
           request,
       Options opts = {});
@@ -232,8 +231,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  CreateConversationModel(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -425,7 +423,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -489,7 +487,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
           request,
       Options opts = {});
@@ -505,8 +503,7 @@ class ConversationModelsClient {
   // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  DeleteConversationModel(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -574,7 +571,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeployConversationModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::DeployConversationModelRequest const&
           request,
       Options opts = {});
@@ -590,8 +587,7 @@ class ConversationModelsClient {
   // clang-format on
   future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  DeployConversationModel(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -659,7 +655,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeployConversationModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
           request,
       Options opts = {});
@@ -675,8 +671,7 @@ class ConversationModelsClient {
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::
                       UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+  UndeployConversationModel(google::longrunning::Operation const& operation,
                             Options opts = {});
 
   // clang-format off
@@ -866,7 +861,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::v2::ConversationModelEvaluation const&
           conversation_model_evaluation,
       Options opts = {});
@@ -923,7 +918,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::
           CreateConversationModelEvaluationRequest const& request,
       Options opts = {});
@@ -939,8 +934,7 @@ class ConversationModelsClient {
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ConversationModelsConnection> connection_;

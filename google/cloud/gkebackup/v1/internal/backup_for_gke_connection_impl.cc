@@ -106,7 +106,7 @@ BackupForGKEConnectionImpl::CreateBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::CreateBackupPlan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -122,7 +122,7 @@ BackupForGKEConnectionImpl::CreateBackupPlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKEConnectionImpl::CreateBackupPlan(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -248,7 +248,7 @@ BackupForGKEConnectionImpl::UpdateBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::UpdateBackupPlan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -264,7 +264,7 @@ BackupForGKEConnectionImpl::UpdateBackupPlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKEConnectionImpl::UpdateBackupPlan(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -341,7 +341,7 @@ BackupForGKEConnectionImpl::DeleteBackupPlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::DeleteBackupPlan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -357,7 +357,7 @@ BackupForGKEConnectionImpl::DeleteBackupPlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteBackupPlan(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -433,7 +433,7 @@ BackupForGKEConnectionImpl::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::CreateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -448,7 +448,7 @@ BackupForGKEConnectionImpl::CreateBackup(
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKEConnectionImpl::CreateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -571,7 +571,7 @@ BackupForGKEConnectionImpl::UpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::UpdateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -586,7 +586,7 @@ BackupForGKEConnectionImpl::UpdateBackup(
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKEConnectionImpl::UpdateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -661,7 +661,7 @@ BackupForGKEConnectionImpl::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::DeleteBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -676,7 +676,7 @@ BackupForGKEConnectionImpl::DeleteBackup(
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -802,7 +802,7 @@ BackupForGKEConnectionImpl::CreateRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::CreateRestorePlan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -818,7 +818,7 @@ BackupForGKEConnectionImpl::CreateRestorePlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKEConnectionImpl::CreateRestorePlan(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -944,7 +944,7 @@ BackupForGKEConnectionImpl::UpdateRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::UpdateRestorePlan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -960,7 +960,7 @@ BackupForGKEConnectionImpl::UpdateRestorePlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKEConnectionImpl::UpdateRestorePlan(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -1037,7 +1037,7 @@ BackupForGKEConnectionImpl::DeleteRestorePlan(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::DeleteRestorePlan(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1053,7 +1053,7 @@ BackupForGKEConnectionImpl::DeleteRestorePlan(
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteRestorePlan(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -1129,7 +1129,7 @@ BackupForGKEConnectionImpl::CreateRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::CreateRestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1145,7 +1145,7 @@ BackupForGKEConnectionImpl::CreateRestore(
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKEConnectionImpl::CreateRestore(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -1268,7 +1268,7 @@ BackupForGKEConnectionImpl::UpdateRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::UpdateRestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1284,7 +1284,7 @@ BackupForGKEConnectionImpl::UpdateRestore(
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKEConnectionImpl::UpdateRestore(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {
@@ -1359,7 +1359,7 @@ BackupForGKEConnectionImpl::DeleteRestore(
 
 StatusOr<google::longrunning::Operation>
 BackupForGKEConnectionImpl::DeleteRestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1375,7 +1375,7 @@ BackupForGKEConnectionImpl::DeleteRestore(
 
 future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteRestore(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkebackup::v1::OperationMetadata>()) {

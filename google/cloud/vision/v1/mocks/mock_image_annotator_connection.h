@@ -71,7 +71,7 @@ class MockImageAnnotatorConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               AsyncBatchAnnotateImages,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
                    request),
               (override));
@@ -79,9 +79,7 @@ class MockImageAnnotatorConnection
   MOCK_METHOD(future<StatusOr<
                   google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
               AsyncBatchAnnotateImages,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, AsyncBatchAnnotateFiles)` is now ambiguous. Use
@@ -95,7 +93,7 @@ class MockImageAnnotatorConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, AsyncBatchAnnotateFiles,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
                    request),
               (override));
@@ -104,8 +102,7 @@ class MockImageAnnotatorConnection
       future<
           StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
       AsyncBatchAnnotateFiles,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -62,7 +62,7 @@ AppHubConnection::CreateServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnection::CreateServiceProjectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ AppHubConnection::CreateServiceProjectAttachment(
 
 future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
 AppHubConnection::CreateServiceProjectAttachment(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -92,7 +92,7 @@ AppHubConnection::DeleteServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubConnection::DeleteServiceProjectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -100,7 +100,7 @@ AppHubConnection::DeleteServiceProjectAttachment(
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubConnection::DeleteServiceProjectAttachment(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -148,15 +148,13 @@ AppHubConnection::CreateService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::CreateService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::CreateServiceRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::CreateServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubConnection::CreateService(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+AppHubConnection::CreateService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::Service>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -176,15 +174,13 @@ AppHubConnection::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::UpdateService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::UpdateServiceRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::UpdateServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubConnection::UpdateService(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+AppHubConnection::UpdateService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::Service>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -199,15 +195,13 @@ AppHubConnection::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::DeleteService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::DeleteServiceRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::DeleteServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubConnection::DeleteService(ExperimentalTag,
-                                google::longrunning::Operation const&) {
+AppHubConnection::DeleteService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -250,15 +244,13 @@ AppHubConnection::CreateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::CreateWorkload(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::CreateWorkloadRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::CreateWorkloadRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubConnection::CreateWorkload(ExperimentalTag,
-                                 google::longrunning::Operation const&) {
+AppHubConnection::CreateWorkload(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::Workload>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -278,15 +270,13 @@ AppHubConnection::UpdateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::UpdateWorkload(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::UpdateWorkloadRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::UpdateWorkloadRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubConnection::UpdateWorkload(ExperimentalTag,
-                                 google::longrunning::Operation const&) {
+AppHubConnection::UpdateWorkload(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::Workload>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -301,15 +291,13 @@ AppHubConnection::DeleteWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::DeleteWorkload(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::DeleteWorkloadRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::DeleteWorkloadRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubConnection::DeleteWorkload(ExperimentalTag,
-                                 google::longrunning::Operation const&) {
+AppHubConnection::DeleteWorkload(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -332,15 +320,13 @@ AppHubConnection::CreateApplication(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::CreateApplication(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::CreateApplicationRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::CreateApplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubConnection::CreateApplication(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+AppHubConnection::CreateApplication(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::Application>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -361,15 +347,13 @@ AppHubConnection::UpdateApplication(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::UpdateApplication(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::UpdateApplicationRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::UpdateApplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubConnection::UpdateApplication(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+AppHubConnection::UpdateApplication(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::Application>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -384,15 +368,13 @@ AppHubConnection::DeleteApplication(
 }
 
 StatusOr<google::longrunning::Operation> AppHubConnection::DeleteApplication(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::DeleteApplicationRequest const&) {
+    NoAwaitTag, google::cloud::apphub::v1::DeleteApplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubConnection::DeleteApplication(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+AppHubConnection::DeleteApplication(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::apphub::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

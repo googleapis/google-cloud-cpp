@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKSERVICES_V1_NETWORK_SERVICES_CLIENT_H
 
 #include "google/cloud/networkservices/v1/network_services_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -275,7 +274,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpointPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy,
       std::string const& endpoint_policy_id, Options opts = {});
 
@@ -331,7 +330,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpointPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
           request,
       Options opts = {});
@@ -346,8 +345,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
-  CreateEndpointPolicy(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateEndpointPolicy(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -401,7 +399,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEndpointPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::EndpointPolicy const& endpoint_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -457,7 +455,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEndpointPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
           request,
       Options opts = {});
@@ -472,8 +470,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
-  UpdateEndpointPolicy(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  UpdateEndpointPolicy(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -521,7 +518,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpointPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -575,7 +572,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpointPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
           request,
       Options opts = {});
@@ -590,8 +587,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteEndpointPolicy(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  DeleteEndpointPolicy(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -775,7 +771,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGateway(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkservices::v1::Gateway const& gateway,
       std::string const& gateway_id, Options opts = {});
 
@@ -829,7 +825,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGateway(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::CreateGatewayRequest const& request,
       Options opts = {});
 
@@ -843,8 +839,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> CreateGateway(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -896,8 +891,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGateway(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networkservices::v1::Gateway const& gateway,
+      NoAwaitTag, google::cloud::networkservices::v1::Gateway const& gateway,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -950,7 +944,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGateway(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::UpdateGatewayRequest const& request,
       Options opts = {});
 
@@ -964,8 +958,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Gateway>> UpdateGateway(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1012,7 +1005,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGateway(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1065,7 +1058,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGateway(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::DeleteGatewayRequest const& request,
       Options opts = {});
 
@@ -1079,8 +1072,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteGateway(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteGateway(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -1265,7 +1257,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGrpcRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkservices::v1::GrpcRoute const& grpc_route,
       std::string const& grpc_route_id, Options opts = {});
 
@@ -1320,7 +1312,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGrpcRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request,
       Options opts = {});
 
@@ -1334,8 +1326,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
-  CreateGrpcRoute(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  CreateGrpcRoute(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -1389,7 +1380,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGrpcRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::GrpcRoute const& grpc_route,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1444,7 +1435,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGrpcRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request,
       Options opts = {});
 
@@ -1458,8 +1449,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
-  UpdateGrpcRoute(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  UpdateGrpcRoute(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -1507,7 +1497,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGrpcRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1560,7 +1550,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGrpcRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request,
       Options opts = {});
 
@@ -1574,8 +1564,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteGrpcRoute(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteGrpcRoute(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -1760,7 +1749,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateHttpRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkservices::v1::HttpRoute const& http_route,
       std::string const& http_route_id, Options opts = {});
 
@@ -1815,7 +1804,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateHttpRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::CreateHttpRouteRequest const& request,
       Options opts = {});
 
@@ -1829,8 +1818,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
-  CreateHttpRoute(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  CreateHttpRoute(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -1884,7 +1872,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateHttpRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::HttpRoute const& http_route,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1939,7 +1927,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateHttpRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request,
       Options opts = {});
 
@@ -1953,8 +1941,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
-  UpdateHttpRoute(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  UpdateHttpRoute(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -2002,7 +1989,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteHttpRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2055,7 +2042,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteHttpRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request,
       Options opts = {});
 
@@ -2069,8 +2056,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteHttpRoute(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteHttpRoute(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -2254,7 +2240,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTcpRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkservices::v1::TcpRoute const& tcp_route,
       std::string const& tcp_route_id, Options opts = {});
 
@@ -2308,7 +2294,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTcpRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::CreateTcpRouteRequest const& request,
       Options opts = {});
 
@@ -2322,8 +2308,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> CreateTcpRoute(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2375,8 +2360,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTcpRoute(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networkservices::v1::TcpRoute const& tcp_route,
+      NoAwaitTag, google::cloud::networkservices::v1::TcpRoute const& tcp_route,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -2429,7 +2413,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTcpRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request,
       Options opts = {});
 
@@ -2443,8 +2427,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TcpRoute>> UpdateTcpRoute(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2491,7 +2474,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTcpRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2544,7 +2527,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTcpRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request,
       Options opts = {});
 
@@ -2558,8 +2541,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteTcpRoute(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteTcpRoute(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -2743,7 +2725,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTlsRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkservices::v1::TlsRoute const& tls_route,
       std::string const& tls_route_id, Options opts = {});
 
@@ -2797,7 +2779,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTlsRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::CreateTlsRouteRequest const& request,
       Options opts = {});
 
@@ -2811,8 +2793,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> CreateTlsRoute(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2864,8 +2845,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTlsRoute(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networkservices::v1::TlsRoute const& tls_route,
+      NoAwaitTag, google::cloud::networkservices::v1::TlsRoute const& tls_route,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -2918,7 +2898,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTlsRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request,
       Options opts = {});
 
@@ -2932,8 +2912,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::TlsRoute>> UpdateTlsRoute(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2980,7 +2959,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTlsRoute(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3033,7 +3012,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTlsRoute(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request,
       Options opts = {});
 
@@ -3047,8 +3026,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteTlsRoute(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteTlsRoute(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -3236,7 +3214,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceBinding(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkservices::v1::ServiceBinding const& service_binding,
       std::string const& service_binding_id, Options opts = {});
 
@@ -3292,7 +3270,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::CreateServiceBindingRequest const&
           request,
       Options opts = {});
@@ -3307,8 +3285,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
-  CreateServiceBinding(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateServiceBinding(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -3356,7 +3333,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServiceBinding(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3410,7 +3387,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServiceBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
           request,
       Options opts = {});
@@ -3425,8 +3402,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteServiceBinding(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  DeleteServiceBinding(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -3610,7 +3586,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMesh(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::networkservices::v1::Mesh const& mesh,
       std::string const& mesh_id, Options opts = {});
 
@@ -3664,7 +3640,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMesh(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::CreateMeshRequest const& request,
       Options opts = {});
 
@@ -3678,8 +3654,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Mesh>> CreateMesh(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3731,8 +3706,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMesh(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networkservices::v1::Mesh const& mesh,
+      NoAwaitTag, google::cloud::networkservices::v1::Mesh const& mesh,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -3785,7 +3759,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMesh(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::UpdateMeshRequest const& request,
       Options opts = {});
 
@@ -3799,8 +3773,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::Mesh>> UpdateMesh(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3846,8 +3819,7 @@ class NetworkServicesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteMesh(ExperimentalTag,
-                                                      NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteMesh(NoAwaitTag,
                                                       std::string const& name,
                                                       Options opts = {});
 
@@ -3902,7 +3874,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMesh(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkservices::v1::DeleteMeshRequest const& request,
       Options opts = {});
 
@@ -3916,7 +3888,7 @@ class NetworkServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
-  DeleteMesh(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeleteMesh(google::longrunning::Operation const& operation,
              Options opts = {});
 
  private:

@@ -63,14 +63,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateCluster,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::CreateClusterRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-              CreateCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateCluster, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -82,14 +80,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateCluster,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::UpdateClusterRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-              UpdateCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateCluster, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -101,14 +97,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteCluster,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::DeleteClusterRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-              DeleteCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteCluster, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -121,14 +115,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, PromoteCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::PromoteClusterRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-              PromoteCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              PromoteCluster, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -141,14 +133,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestoreCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::RestoreClusterRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
-              RestoreCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              RestoreCluster, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -161,16 +151,14 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSecondaryCluster,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::CreateSecondaryClusterRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Cluster>>,
               CreateSecondaryCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Instance>),
               ListInstances,
@@ -191,14 +179,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::CreateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-              CreateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -211,16 +197,14 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateSecondaryInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
               CreateSecondaryInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, BatchCreateInstances)` is now ambiguous. Use
@@ -234,15 +218,14 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchCreateInstances,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>,
-      BatchCreateInstances,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchCreateInstances, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -255,14 +238,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-              UpdateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -276,14 +257,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::DeleteInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-              DeleteInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -296,15 +275,13 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, FailoverInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::FailoverInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
               FailoverInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, InjectFault)` is now ambiguous. Use
@@ -315,14 +292,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, InjectFault,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::InjectFaultRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
-              InjectFault,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              InjectFault, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -335,15 +310,13 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RestartInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::alloydb::v1::RestartInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Instance>>,
               RestartInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::alloydb::v1::Backup>), ListBackups,
               (google::cloud::alloydb::v1::ListBackupsRequest request),
@@ -362,14 +335,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBackup,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::CreateBackupRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
-              CreateBackup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateBackup, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -381,14 +352,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateBackup,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::UpdateBackupRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::Backup>>,
-              UpdateBackup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateBackup, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -400,14 +369,12 @@ class MockAlloyDBAdminConnection : public alloydb_v1::AlloyDBAdminConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteBackup,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::alloydb::v1::DeleteBackupRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>,
-              DeleteBackup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteBackup, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

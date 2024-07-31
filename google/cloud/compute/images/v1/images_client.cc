@@ -43,13 +43,13 @@ ImagesClient::DeleteImage(std::string const& project, std::string const& image,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::DeleteImage(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& image, Options opts) {
+    NoAwaitTag, std::string const& project, std::string const& image,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::images::v1::DeleteImageRequest request;
   request.set_project(project);
   request.set_image(image);
-  return connection_->DeleteImage(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -61,19 +61,18 @@ ImagesClient::DeleteImage(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::DeleteImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::DeleteImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteImage(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesClient::DeleteImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteImage(ExperimentalTag{}, operation);
+  return connection_->DeleteImage(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -91,8 +90,7 @@ ImagesClient::Deprecate(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::Deprecate(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& image,
+    NoAwaitTag, std::string const& project, std::string const& image,
     google::cloud::cpp::compute::v1::DeprecationStatus const&
         deprecation_status_resource,
     Options opts) {
@@ -101,7 +99,7 @@ StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::Deprecate(
   request.set_project(project);
   request.set_image(image);
   *request.mutable_deprecation_status_resource() = deprecation_status_resource;
-  return connection_->Deprecate(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Deprecate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -113,19 +111,18 @@ ImagesClient::Deprecate(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::Deprecate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::DeprecateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Deprecate(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Deprecate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesClient::Deprecate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Deprecate(ExperimentalTag{}, operation);
+  return connection_->Deprecate(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image> ImagesClient::GetImage(
@@ -190,14 +187,14 @@ ImagesClient::InsertImage(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::InsertImage(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::Image const& image_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::images::v1::InsertImageRequest request;
   request.set_project(project);
   *request.mutable_image_resource() = image_resource;
-  return connection_->InsertImage(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->InsertImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -209,19 +206,18 @@ ImagesClient::InsertImage(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::InsertImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::InsertImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertImage(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->InsertImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesClient::InsertImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertImage(ExperimentalTag{}, operation);
+  return connection_->InsertImage(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Image> ImagesClient::ListImages(
@@ -253,8 +249,7 @@ ImagesClient::PatchImage(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::PatchImage(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& image,
+    NoAwaitTag, std::string const& project, std::string const& image,
     google::cloud::cpp::compute::v1::Image const& image_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -262,7 +257,7 @@ StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::PatchImage(
   request.set_project(project);
   request.set_image(image);
   *request.mutable_image_resource() = image_resource;
-  return connection_->PatchImage(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PatchImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -274,19 +269,18 @@ ImagesClient::PatchImage(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::PatchImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::PatchImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchImage(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PatchImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesClient::PatchImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchImage(ExperimentalTag{}, operation);
+  return connection_->PatchImage(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy> ImagesClient::SetIamPolicy(
@@ -326,8 +320,7 @@ ImagesClient::SetLabels(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::SetLabels(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& resource,
+    NoAwaitTag, std::string const& project, std::string const& resource,
     google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
         global_set_labels_request_resource,
     Options opts) {
@@ -337,7 +330,7 @@ StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::SetLabels(
   request.set_resource(resource);
   *request.mutable_global_set_labels_request_resource() =
       global_set_labels_request_resource;
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -349,19 +342,18 @@ ImagesClient::SetLabels(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> ImagesClient::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesClient::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, operation);
+  return connection_->SetLabels(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

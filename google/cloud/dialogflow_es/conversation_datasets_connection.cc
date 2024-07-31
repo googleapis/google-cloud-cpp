@@ -48,7 +48,7 @@ ConversationDatasetsConnection::CreateConversationDataset(
 
 StatusOr<google::longrunning::Operation>
 ConversationDatasetsConnection::CreateConversationDataset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ ConversationDatasetsConnection::CreateConversationDataset(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
 ConversationDatasetsConnection::CreateConversationDataset(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -88,7 +88,7 @@ ConversationDatasetsConnection::DeleteConversationDataset(
 
 StatusOr<google::longrunning::Operation>
 ConversationDatasetsConnection::DeleteConversationDataset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,7 +97,7 @@ ConversationDatasetsConnection::DeleteConversationDataset(
 future<StatusOr<
     google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata>>
 ConversationDatasetsConnection::DeleteConversationDataset(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::
                    DeleteConversationDatasetOperationMetadata>>(
@@ -115,7 +115,7 @@ ConversationDatasetsConnection::ImportConversationData(
 
 StatusOr<google::longrunning::Operation>
 ConversationDatasetsConnection::ImportConversationData(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -124,7 +124,7 @@ ConversationDatasetsConnection::ImportConversationData(
 future<StatusOr<
     google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>
 ConversationDatasetsConnection::ImportConversationData(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

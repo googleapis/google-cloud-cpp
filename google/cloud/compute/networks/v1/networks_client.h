@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NETWORKS_V1_NETWORKS_CLIENT_H
 
 #include "google/cloud/compute/networks/v1/networks_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -135,8 +134,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& network,
+      NoAwaitTag, std::string const& project, std::string const& network,
       google::cloud::cpp::compute::v1::NetworksAddPeeringRequest const&
           networks_add_peering_request_resource,
       Options opts = {});
@@ -192,7 +190,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
           request,
       Options opts = {});
@@ -207,7 +205,6 @@ class NetworksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -257,8 +254,8 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetwork(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& network, Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& network,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -311,7 +308,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request,
       Options opts = {});
@@ -326,7 +323,6 @@ class NetworksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -502,7 +498,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetwork(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::Network const& network_resource,
       Options opts = {});
 
@@ -558,7 +554,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request,
       Options opts = {});
@@ -573,7 +569,6 @@ class NetworksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -782,8 +777,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetwork(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& network,
+      NoAwaitTag, std::string const& project, std::string const& network,
       google::cloud::cpp::compute::v1::Network const& network_resource,
       Options opts = {});
 
@@ -839,7 +833,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request,
       Options opts = {});
@@ -854,7 +848,6 @@ class NetworksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -907,8 +900,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& network,
+      NoAwaitTag, std::string const& project, std::string const& network,
       google::cloud::cpp::compute::v1::NetworksRemovePeeringRequest const&
           networks_remove_peering_request_resource,
       Options opts = {});
@@ -964,7 +956,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
           request,
       Options opts = {});
@@ -979,7 +971,6 @@ class NetworksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1029,8 +1020,8 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& network, Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& network,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1083,7 +1074,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::
           SwitchToCustomModeRequest const& request,
       Options opts = {});
@@ -1099,7 +1090,6 @@ class NetworksClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SwitchToCustomMode(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -1154,8 +1144,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& network,
+      NoAwaitTag, std::string const& project, std::string const& network,
       google::cloud::cpp::compute::v1::NetworksUpdatePeeringRequest const&
           networks_update_peering_request_resource,
       Options opts = {});
@@ -1213,7 +1202,7 @@ class NetworksClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
           request,
       Options opts = {});
@@ -1228,7 +1217,6 @@ class NetworksClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

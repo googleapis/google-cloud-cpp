@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_JOBS_CLIENT_H
 
 #include "google/cloud/run/v2/jobs_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -137,7 +136,7 @@ class JobsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateJob(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::run::v2::Job const& job, std::string const& job_id,
       Options opts = {});
 
@@ -191,8 +190,7 @@ class JobsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateJob(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::CreateJobRequest const& request,
+      NoAwaitTag, google::cloud::run::v2::CreateJobRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -205,8 +203,7 @@ class JobsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -384,8 +381,7 @@ class JobsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateJob(
-      ExperimentalTag, NoAwaitTag, google::cloud::run::v2::Job const& job,
-      Options opts = {});
+      NoAwaitTag, google::cloud::run::v2::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -437,8 +433,7 @@ class JobsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateJob(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::UpdateJobRequest const& request,
+      NoAwaitTag, google::cloud::run::v2::UpdateJobRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -451,8 +446,7 @@ class JobsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -499,8 +493,7 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteJob(ExperimentalTag,
-                                                     NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteJob(NoAwaitTag,
                                                      std::string const& name,
                                                      Options opts = {});
 
@@ -554,8 +547,7 @@ class JobsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteJob(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::DeleteJobRequest const& request,
+      NoAwaitTag, google::cloud::run::v2::DeleteJobRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -568,8 +560,7 @@ class JobsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -616,7 +607,7 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunJob(ExperimentalTag, NoAwaitTag,
+  StatusOr<google::longrunning::Operation> RunJob(NoAwaitTag,
                                                   std::string const& name,
                                                   Options opts = {});
 
@@ -669,8 +660,8 @@ class JobsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RunJob(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
+      NoAwaitTag, google::cloud::run::v2::RunJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -682,8 +673,7 @@ class JobsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

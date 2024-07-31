@@ -22,7 +22,6 @@
 #include "google/cloud/networkconnectivity/v1/internal/policy_based_routing_retry_traits.h"
 #include "google/cloud/networkconnectivity/v1/policy_based_routing_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -217,14 +216,12 @@ class PolicyBasedRoutingServiceConnection {
                              CreatePolicyBasedRouteRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreatePolicyBasedRoute(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networkconnectivity::v1::
-          CreatePolicyBasedRouteRequest const& request);
+      NoAwaitTag, google::cloud::networkconnectivity::v1::
+                      CreatePolicyBasedRouteRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
-  CreatePolicyBasedRoute(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  CreatePolicyBasedRoute(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -232,14 +229,12 @@ class PolicyBasedRoutingServiceConnection {
                              DeletePolicyBasedRouteRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeletePolicyBasedRoute(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networkconnectivity::v1::
-          DeletePolicyBasedRouteRequest const& request);
+      NoAwaitTag, google::cloud::networkconnectivity::v1::
+                      DeletePolicyBasedRouteRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeletePolicyBasedRoute(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  DeletePolicyBasedRoute(google::longrunning::Operation const& operation);
 };
 
 /**

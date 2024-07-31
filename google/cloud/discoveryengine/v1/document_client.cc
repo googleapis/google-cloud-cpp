@@ -128,19 +128,18 @@ DocumentServiceClient::ImportDocuments(
 }
 
 StatusOr<google::longrunning::Operation> DocumentServiceClient::ImportDocuments(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportDocuments(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ImportDocuments(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
 DocumentServiceClient::ImportDocuments(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportDocuments(ExperimentalTag{}, operation);
+  return connection_->ImportDocuments(operation);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
@@ -152,19 +151,18 @@ DocumentServiceClient::PurgeDocuments(
 }
 
 StatusOr<google::longrunning::Operation> DocumentServiceClient::PurgeDocuments(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeDocuments(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PurgeDocuments(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
 DocumentServiceClient::PurgeDocuments(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeDocuments(ExperimentalTag{}, operation);
+  return connection_->PurgeDocuments(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

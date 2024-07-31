@@ -65,23 +65,21 @@ SchemaServiceTracingConnection::CreateSchema(
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceTracingConnection::CreateSchema(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::CreateSchema");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateSchema(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateSchema(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceTracingConnection::CreateSchema(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::CreateSchema");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateSchema(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateSchema(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
@@ -95,23 +93,21 @@ SchemaServiceTracingConnection::UpdateSchema(
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceTracingConnection::UpdateSchema(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::UpdateSchema");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateSchema(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateSchema(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceTracingConnection::UpdateSchema(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::UpdateSchema");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateSchema(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateSchema(operation));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
@@ -125,23 +121,21 @@ SchemaServiceTracingConnection::DeleteSchema(
 
 StatusOr<google::longrunning::Operation>
 SchemaServiceTracingConnection::DeleteSchema(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::DeleteSchema");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteSchema(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSchema(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
 SchemaServiceTracingConnection::DeleteSchema(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "discoveryengine_v1::SchemaServiceConnection::DeleteSchema");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteSchema(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSchema(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

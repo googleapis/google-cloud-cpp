@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_CONFIG_SERVICE_V2_CLIENT_H
 
 #include "google/cloud/logging/v2/config_service_v2_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -252,8 +251,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBucketAsync(
-      ExperimentalTag, NoAwaitTag,
-      google::logging::v2::CreateBucketRequest const& request,
+      NoAwaitTag, google::logging::v2::CreateBucketRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -266,8 +264,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   future<StatusOr<google::logging::v2::LogBucket>> CreateBucketAsync(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -324,8 +321,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBucketAsync(
-      ExperimentalTag, NoAwaitTag,
-      google::logging::v2::UpdateBucketRequest const& request,
+      NoAwaitTag, google::logging::v2::UpdateBucketRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -338,8 +334,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   future<StatusOr<google::logging::v2::LogBucket>> UpdateBucketAsync(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1135,7 +1130,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateLink(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::logging::v2::Link const& link, std::string const& link_id,
       Options opts = {});
 
@@ -1190,8 +1185,8 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateLink(
-      ExperimentalTag, NoAwaitTag,
-      google::logging::v2::CreateLinkRequest const& request, Options opts = {});
+      NoAwaitTag, google::logging::v2::CreateLinkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1203,8 +1198,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   future<StatusOr<google::logging::v2::Link>> CreateLink(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1255,8 +1249,7 @@ class ConfigServiceV2Client {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteLink(ExperimentalTag,
-                                                      NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteLink(NoAwaitTag,
                                                       std::string const& name,
                                                       Options opts = {});
 
@@ -1310,8 +1303,8 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteLink(
-      ExperimentalTag, NoAwaitTag,
-      google::logging::v2::DeleteLinkRequest const& request, Options opts = {});
+      NoAwaitTag, google::logging::v2::DeleteLinkRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1323,8 +1316,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   future<StatusOr<google::logging::v2::LinkMetadata>> DeleteLink(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2142,8 +2134,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CopyLogEntries(
-      ExperimentalTag, NoAwaitTag,
-      google::logging::v2::CopyLogEntriesRequest const& request,
+      NoAwaitTag, google::logging::v2::CopyLogEntriesRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -2156,8 +2147,7 @@ class ConfigServiceV2Client {
   ///
   // clang-format on
   future<StatusOr<google::logging::v2::CopyLogEntriesResponse>> CopyLogEntries(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ConfigServiceV2Connection> connection_;

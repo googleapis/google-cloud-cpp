@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_SPECIALIST_POOL_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/specialist_pool_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -145,7 +144,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
       Options opts = {});
 
@@ -200,7 +199,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSpecialistPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request,
       Options opts = {});
 
@@ -214,8 +213,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  CreateSpecialistPool(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateSpecialistPool(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -397,7 +395,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -450,7 +448,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSpecialistPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request,
       Options opts = {});
 
@@ -464,8 +462,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSpecialistPool(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  DeleteSpecialistPool(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -515,7 +512,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::SpecialistPool const& specialist_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -570,7 +567,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSpecialistPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request,
       Options opts = {});
 
@@ -584,8 +581,7 @@ class SpecialistPoolServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
-  UpdateSpecialistPool(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  UpdateSpecialistPool(google::longrunning::Operation const& operation,
                        Options opts = {});
 
  private:

@@ -92,7 +92,7 @@ class MockConversationProfilesConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, SetSuggestionFeatureConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
            request),
       (override));
@@ -100,8 +100,7 @@ class MockConversationProfilesConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
       SetSuggestionFeatureConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, ClearSuggestionFeatureConfig)` is now ambiguous. Use
@@ -115,7 +114,7 @@ class MockConversationProfilesConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ClearSuggestionFeatureConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
            request),
       (override));
@@ -123,8 +122,7 @@ class MockConversationProfilesConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>,
       ClearSuggestionFeatureConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

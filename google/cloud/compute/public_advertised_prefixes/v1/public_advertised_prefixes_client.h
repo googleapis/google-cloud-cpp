@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_PUBLIC_ADVERTISED_PREFIXES_V1_PUBLIC_ADVERTISED_PREFIXES_CLIENT_H
 
 #include "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -139,7 +138,7 @@ class PublicAdvertisedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       std::string const& public_advertised_prefix, Options opts = {});
 
   // clang-format off
@@ -193,7 +192,7 @@ class PublicAdvertisedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           AnnounceRequest const& request,
       Options opts = {});
@@ -208,7 +207,6 @@ class PublicAdvertisedPrefixesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -259,8 +257,7 @@ class PublicAdvertisedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeletePublicAdvertisedPrefix(ExperimentalTag, NoAwaitTag,
-                               std::string const& project,
+  DeletePublicAdvertisedPrefix(NoAwaitTag, std::string const& project,
                                std::string const& public_advertised_prefix,
                                Options opts = {});
 
@@ -317,7 +314,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicAdvertisedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           DeletePublicAdvertisedPrefixRequest const& request,
       Options opts = {});
@@ -333,7 +330,6 @@ class PublicAdvertisedPrefixesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicAdvertisedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -451,7 +447,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicAdvertisedPrefix(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix const&
           public_advertised_prefix_resource,
       Options opts = {});
@@ -510,7 +506,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicAdvertisedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           InsertPublicAdvertisedPrefixRequest const& request,
       Options opts = {});
@@ -526,7 +522,6 @@ class PublicAdvertisedPrefixesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPublicAdvertisedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -661,7 +656,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicAdvertisedPrefix(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       std::string const& public_advertised_prefix,
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix const&
           public_advertised_prefix_resource,
@@ -722,7 +717,7 @@ class PublicAdvertisedPrefixesClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicAdvertisedPrefix(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           PatchPublicAdvertisedPrefixRequest const& request,
       Options opts = {});
@@ -738,7 +733,6 @@ class PublicAdvertisedPrefixesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPublicAdvertisedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -788,7 +782,7 @@ class PublicAdvertisedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       std::string const& public_advertised_prefix, Options opts = {});
 
   // clang-format off
@@ -842,7 +836,7 @@ class PublicAdvertisedPrefixesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::public_advertised_prefixes::v1::
           WithdrawRequest const& request,
       Options opts = {});
@@ -857,7 +851,6 @@ class PublicAdvertisedPrefixesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

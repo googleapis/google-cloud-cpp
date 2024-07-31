@@ -46,7 +46,7 @@ AutokeyClient::CreateKeyHandle(
 }
 
 StatusOr<google::longrunning::Operation> AutokeyClient::CreateKeyHandle(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::kms::v1::KeyHandle const& key_handle,
     std::string const& key_handle_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -54,7 +54,7 @@ StatusOr<google::longrunning::Operation> AutokeyClient::CreateKeyHandle(
   request.set_parent(parent);
   *request.mutable_key_handle() = key_handle;
   request.set_key_handle_id(key_handle_id);
-  return connection_->CreateKeyHandle(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateKeyHandle(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
@@ -66,19 +66,17 @@ AutokeyClient::CreateKeyHandle(
 }
 
 StatusOr<google::longrunning::Operation> AutokeyClient::CreateKeyHandle(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::kms::v1::CreateKeyHandleRequest const& request,
+    NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateKeyHandle(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateKeyHandle(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-AutokeyClient::CreateKeyHandle(ExperimentalTag,
-                               google::longrunning::Operation const& operation,
+AutokeyClient::CreateKeyHandle(google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateKeyHandle(ExperimentalTag{}, operation);
+  return connection_->CreateKeyHandle(operation);
 }
 
 StatusOr<google::cloud::kms::v1::KeyHandle> AutokeyClient::GetKeyHandle(

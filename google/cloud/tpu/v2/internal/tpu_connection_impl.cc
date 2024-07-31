@@ -141,8 +141,7 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::CreateNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::CreateNode(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::tpu::v2::CreateNodeRequest const& request) {
+    NoAwaitTag, google::cloud::tpu::v2::CreateNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -155,7 +154,7 @@ StatusOr<google::longrunning::Operation> TpuConnectionImpl::CreateNode(
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::CreateNode(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::tpu::v2::OperationMetadata>()) {
@@ -228,8 +227,7 @@ TpuConnectionImpl::DeleteNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::DeleteNode(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::tpu::v2::DeleteNodeRequest const& request) {
+    NoAwaitTag, google::cloud::tpu::v2::DeleteNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -242,8 +240,7 @@ StatusOr<google::longrunning::Operation> TpuConnectionImpl::DeleteNode(
 }
 
 future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
-TpuConnectionImpl::DeleteNode(ExperimentalTag,
-                              google::longrunning::Operation const& operation) {
+TpuConnectionImpl::DeleteNode(google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::tpu::v2::OperationMetadata>()) {
@@ -315,8 +312,7 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::StopNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::StopNode(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::tpu::v2::StopNodeRequest const& request) {
+    NoAwaitTag, google::cloud::tpu::v2::StopNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -329,7 +325,7 @@ StatusOr<google::longrunning::Operation> TpuConnectionImpl::StopNode(
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::StopNode(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::tpu::v2::OperationMetadata>()) {
@@ -400,8 +396,7 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::StartNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::StartNode(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::tpu::v2::StartNodeRequest const& request) {
+    NoAwaitTag, google::cloud::tpu::v2::StartNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -414,7 +409,7 @@ StatusOr<google::longrunning::Operation> TpuConnectionImpl::StartNode(
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::StartNode(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::tpu::v2::OperationMetadata>()) {
@@ -486,8 +481,7 @@ future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::UpdateNode(
 }
 
 StatusOr<google::longrunning::Operation> TpuConnectionImpl::UpdateNode(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::tpu::v2::UpdateNodeRequest const& request) {
+    NoAwaitTag, google::cloud::tpu::v2::UpdateNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -500,7 +494,7 @@ StatusOr<google::longrunning::Operation> TpuConnectionImpl::UpdateNode(
 }
 
 future<StatusOr<google::cloud::tpu::v2::Node>> TpuConnectionImpl::UpdateNode(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::tpu::v2::OperationMetadata>()) {

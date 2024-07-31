@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_SERVICES_CLIENT_H
 
 #include "google/cloud/run/v2/services_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -138,7 +137,7 @@ class ServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::run::v2::Service const& service,
       std::string const& service_id, Options opts = {});
 
@@ -192,8 +191,7 @@ class ServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::CreateServiceRequest const& request,
+      NoAwaitTag, google::cloud::run::v2::CreateServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -206,8 +204,7 @@ class ServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> CreateService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -387,8 +384,8 @@ class ServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::Service const& service, Options opts = {});
+      NoAwaitTag, google::cloud::run::v2::Service const& service,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -436,8 +433,7 @@ class ServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::Service const& service,
+      NoAwaitTag, google::cloud::run::v2::Service const& service,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -490,8 +486,7 @@ class ServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::UpdateServiceRequest const& request,
+      NoAwaitTag, google::cloud::run::v2::UpdateServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -504,8 +499,7 @@ class ServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> UpdateService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -555,7 +549,7 @@ class ServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -609,8 +603,7 @@ class ServicesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::DeleteServiceRequest const& request,
+      NoAwaitTag, google::cloud::run::v2::DeleteServiceRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -623,8 +616,7 @@ class ServicesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Service>> DeleteService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

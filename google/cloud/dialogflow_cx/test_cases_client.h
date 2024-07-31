@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_TEST_CASES_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/test_cases_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -459,7 +458,7 @@ class TestCasesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RunTestCase(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request,
       Options opts = {});
 
@@ -473,7 +472,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(ExperimentalTag, google::longrunning::Operation const& operation,
+  RunTestCase(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -538,7 +537,7 @@ class TestCasesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchRunTestCases(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request,
       Options opts = {});
@@ -553,8 +552,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-  BatchRunTestCases(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  BatchRunTestCases(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -653,7 +651,7 @@ class TestCasesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportTestCases(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request,
       Options opts = {});
 
@@ -667,8 +665,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-  ImportTestCases(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  ImportTestCases(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -733,7 +730,7 @@ class TestCasesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportTestCases(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request,
       Options opts = {});
 
@@ -747,8 +744,7 @@ class TestCasesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-  ExportTestCases(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  ExportTestCases(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off

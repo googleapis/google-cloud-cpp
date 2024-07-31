@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WEBRISK_V1_WEB_RISK_CLIENT_H
 
 #include "google/cloud/webrisk/v1/web_risk_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -439,8 +438,7 @@ class WebRiskServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SubmitUri(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::webrisk::v1::SubmitUriRequest const& request,
+      NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -453,8 +451,7 @@ class WebRiskServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<WebRiskServiceConnection> connection_;

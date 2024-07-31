@@ -94,7 +94,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               ActivateCertificateAuthority,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::security::privateca::v1::
                    ActivateCertificateAuthorityRequest const& request),
               (override));
@@ -103,8 +103,7 @@ class MockCertificateAuthorityServiceConnection
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       ActivateCertificateAuthority,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, CreateCertificateAuthority)` is now ambiguous. Use
@@ -119,7 +118,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateCertificateAuthority,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::security::privateca::v1::
                    CreateCertificateAuthorityRequest const& request),
               (override));
@@ -128,8 +127,7 @@ class MockCertificateAuthorityServiceConnection
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       CreateCertificateAuthority,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DisableCertificateAuthority)` is now ambiguous. Use
@@ -144,7 +142,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DisableCertificateAuthority,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::security::privateca::v1::
                    DisableCertificateAuthorityRequest const& request),
               (override));
@@ -153,8 +151,7 @@ class MockCertificateAuthorityServiceConnection
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       DisableCertificateAuthority,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, EnableCertificateAuthority)` is now ambiguous. Use
@@ -169,7 +166,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               EnableCertificateAuthority,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::security::privateca::v1::
                    EnableCertificateAuthorityRequest const& request),
               (override));
@@ -178,8 +175,7 @@ class MockCertificateAuthorityServiceConnection
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       EnableCertificateAuthority,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::security::privateca::v1::
                            FetchCertificateAuthorityCsrResponse>,
@@ -216,7 +212,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UndeleteCertificateAuthority,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::security::privateca::v1::
                    UndeleteCertificateAuthorityRequest const& request),
               (override));
@@ -225,8 +221,7 @@ class MockCertificateAuthorityServiceConnection
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       UndeleteCertificateAuthority,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteCertificateAuthority)` is now ambiguous. Use
@@ -241,7 +236,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteCertificateAuthority,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::security::privateca::v1::
                    DeleteCertificateAuthorityRequest const& request),
               (override));
@@ -250,8 +245,7 @@ class MockCertificateAuthorityServiceConnection
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       DeleteCertificateAuthority,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateCertificateAuthority)` is now ambiguous. Use
@@ -266,7 +260,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateCertificateAuthority,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::security::privateca::v1::
                    UpdateCertificateAuthorityRequest const& request),
               (override));
@@ -275,8 +269,7 @@ class MockCertificateAuthorityServiceConnection
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateAuthority>>,
       UpdateCertificateAuthority,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, CreateCaPool)` is now ambiguous. Use
@@ -290,15 +283,13 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCaPool,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::security::privateca::v1::CreateCaPoolRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
-              CreateCaPool,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateCaPool, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -313,15 +304,13 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCaPool,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::security::privateca::v1::CaPool>>,
-              UpdateCaPool,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateCaPool, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -348,7 +337,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCaPool,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
            request),
       (override));
@@ -356,8 +345,7 @@ class MockCertificateAuthorityServiceConnection
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
-      DeleteCaPool,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteCaPool, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -397,7 +385,7 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateCertificateRevocationList,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::security::privateca::v1::
                    UpdateCertificateRevocationListRequest const& request),
               (override));
@@ -406,8 +394,7 @@ class MockCertificateAuthorityServiceConnection
       future<StatusOr<
           google::cloud::security::privateca::v1::CertificateRevocationList>>,
       UpdateCertificateRevocationList,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, CreateCertificateTemplate)` is now ambiguous. Use
@@ -421,17 +408,14 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateCertificateTemplate,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::security::privateca::v1::
-                   CreateCertificateTemplateRequest const& request),
+              (NoAwaitTag, google::cloud::security::privateca::v1::
+                               CreateCertificateTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               CreateCertificateTemplate,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteCertificateTemplate)` is now ambiguous. Use
@@ -446,17 +430,15 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteCertificateTemplate,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::security::privateca::v1::
-                   DeleteCertificateTemplateRequest const& request),
+              (NoAwaitTag, google::cloud::security::privateca::v1::
+                               DeleteCertificateTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>,
       DeleteCertificateTemplate,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>,
@@ -485,17 +467,14 @@ class MockCertificateAuthorityServiceConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateCertificateTemplate,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::security::privateca::v1::
-                   UpdateCertificateTemplateRequest const& request),
+              (NoAwaitTag, google::cloud::security::privateca::v1::
+                               UpdateCertificateTemplateRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<
                   google::cloud::security::privateca::v1::CertificateTemplate>>,
               UpdateCertificateTemplate,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

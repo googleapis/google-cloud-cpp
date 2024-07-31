@@ -105,9 +105,8 @@ GlobalAddressesRestConnectionImpl::DeleteAddress(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestConnectionImpl::DeleteAddress(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_addresses::v1::
-        DeleteAddressRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                    DeleteAddressRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -122,7 +121,6 @@ GlobalAddressesRestConnectionImpl::DeleteAddress(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestConnectionImpl::DeleteAddress(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -250,9 +248,8 @@ GlobalAddressesRestConnectionImpl::InsertAddress(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestConnectionImpl::InsertAddress(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_addresses::v1::
-        InsertAddressRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                    InsertAddressRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -267,7 +264,6 @@ GlobalAddressesRestConnectionImpl::InsertAddress(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestConnectionImpl::InsertAddress(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -418,7 +414,7 @@ GlobalAddressesRestConnectionImpl::Move(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestConnectionImpl::Move(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -434,7 +430,6 @@ GlobalAddressesRestConnectionImpl::Move(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestConnectionImpl::Move(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -546,7 +541,7 @@ GlobalAddressesRestConnectionImpl::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalAddressesRestConnectionImpl::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -563,7 +558,6 @@ GlobalAddressesRestConnectionImpl::SetLabels(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalAddressesRestConnectionImpl::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_ENVIRONMENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/environments_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -288,7 +287,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dialogflow::cx::v3::Environment const& environment,
       Options opts = {});
 
@@ -353,7 +352,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
           request,
       Options opts = {});
@@ -368,8 +367,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  CreateEnvironment(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  CreateEnvironment(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -428,7 +426,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::Environment const& environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -493,7 +491,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
           request,
       Options opts = {});
@@ -508,8 +506,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  UpdateEnvironment(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateEnvironment(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -711,7 +708,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RunContinuousTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
           request,
       Options opts = {});
@@ -726,8 +723,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
-  RunContinuousTest(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  RunContinuousTest(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -870,7 +866,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeployFlow(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request,
       Options opts = {});
 
@@ -884,7 +880,7 @@ class EnvironmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-  DeployFlow(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeployFlow(google::longrunning::Operation const& operation,
              Options opts = {});
 
  private:

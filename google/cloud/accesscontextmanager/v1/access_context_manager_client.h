@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSCONTEXTMANAGER_V1_ACCESS_CONTEXT_MANAGER_CLIENT_H
 
 #include "google/cloud/accesscontextmanager/v1/access_context_manager_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -260,7 +259,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAccessPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::AccessPolicy const& request,
       Options opts = {});
 
@@ -274,8 +273,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  CreateAccessPolicy(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  CreateAccessPolicy(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -330,7 +328,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::AccessPolicy const& policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -390,7 +388,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAccessPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateAccessPolicyRequest const& request,
       Options opts = {});
@@ -405,8 +403,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
-  UpdateAccessPolicy(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  UpdateAccessPolicy(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -460,7 +457,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -518,7 +515,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAccessPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteAccessPolicyRequest const& request,
       Options opts = {});
@@ -534,8 +531,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
-  DeleteAccessPolicy(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  DeleteAccessPolicy(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -750,7 +746,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAccessLevel(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::identity::accesscontextmanager::v1::AccessLevel const&
           access_level,
       Options opts = {});
@@ -812,7 +808,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAccessLevel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateAccessLevelRequest const& request,
       Options opts = {});
@@ -827,8 +823,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  CreateAccessLevel(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  CreateAccessLevel(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -890,7 +885,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAccessLevel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::AccessLevel const&
           access_level,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -953,7 +948,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAccessLevel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateAccessLevelRequest const& request,
       Options opts = {});
@@ -968,8 +963,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
-  UpdateAccessLevel(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateAccessLevel(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1026,7 +1020,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAccessLevel(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1085,7 +1079,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAccessLevel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteAccessLevelRequest const& request,
       Options opts = {});
@@ -1101,8 +1095,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
-  DeleteAccessLevel(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteAccessLevel(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1173,7 +1166,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ReplaceAccessLevels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           ReplaceAccessLevelsRequest const& request,
       Options opts = {});
@@ -1189,8 +1182,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>>
-  ReplaceAccessLevels(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  ReplaceAccessLevels(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -1405,7 +1397,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServicePerimeter(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::identity::accesscontextmanager::v1::ServicePerimeter const&
           service_perimeter,
       Options opts = {});
@@ -1468,7 +1460,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServicePerimeter(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateServicePerimeterRequest const& request,
       Options opts = {});
@@ -1483,8 +1475,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  CreateServicePerimeter(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  CreateServicePerimeter(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -1543,7 +1534,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::ServicePerimeter const&
           service_perimeter,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -1606,7 +1597,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateServicePerimeter(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateServicePerimeterRequest const& request,
       Options opts = {});
@@ -1621,8 +1612,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
-  UpdateServicePerimeter(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  UpdateServicePerimeter(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -1679,7 +1669,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1738,7 +1728,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServicePerimeter(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteServicePerimeterRequest const& request,
       Options opts = {});
@@ -1754,8 +1744,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       AccessContextManagerOperationMetadata>>
-  DeleteServicePerimeter(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  DeleteServicePerimeter(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -1822,7 +1811,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ReplaceServicePerimeters(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           ReplaceServicePerimetersRequest const& request,
       Options opts = {});
@@ -1838,8 +1827,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       ReplaceServicePerimetersResponse>>
-  ReplaceServicePerimeters(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  ReplaceServicePerimeters(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off
@@ -1909,7 +1897,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CommitServicePerimeters(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CommitServicePerimetersRequest const& request,
       Options opts = {});
@@ -1925,8 +1913,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       CommitServicePerimetersResponse>>
-  CommitServicePerimeters(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  CommitServicePerimeters(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -2129,7 +2116,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
           gcp_user_access_binding,
       Options opts = {});
@@ -2196,7 +2183,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           CreateGcpUserAccessBindingRequest const& request,
       Options opts = {});
@@ -2212,8 +2199,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  CreateGcpUserAccessBinding(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  CreateGcpUserAccessBinding(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -2275,7 +2261,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding const&
           gcp_user_access_binding,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -2337,7 +2323,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           UpdateGcpUserAccessBindingRequest const& request,
       Options opts = {});
@@ -2353,8 +2339,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>
-  UpdateGcpUserAccessBinding(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  UpdateGcpUserAccessBinding(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -2406,7 +2391,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2465,7 +2450,7 @@ class AccessContextManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGcpUserAccessBinding(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request,
       Options opts = {});
@@ -2481,8 +2466,7 @@ class AccessContextManagerClient {
   // clang-format on
   future<StatusOr<google::identity::accesscontextmanager::v1::
                       GcpUserAccessBindingOperationMetadata>>
-  DeleteGcpUserAccessBinding(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  DeleteGcpUserAccessBinding(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off

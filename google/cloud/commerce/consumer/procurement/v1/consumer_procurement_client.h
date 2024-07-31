@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMMERCE_CONSUMER_PROCUREMENT_V1_CONSUMER_PROCUREMENT_CLIENT_H
 
 #include "google/cloud/commerce/consumer/procurement/v1/consumer_procurement_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -166,7 +165,7 @@ class ConsumerProcurementServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PlaceOrder(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::commerce::consumer::procurement::v1::
           PlaceOrderRequest const& request,
       Options opts = {});
@@ -181,7 +180,7 @@ class ConsumerProcurementServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
-  PlaceOrder(ExperimentalTag, google::longrunning::Operation const& operation,
+  PlaceOrder(google::longrunning::Operation const& operation,
              Options opts = {});
 
   // clang-format off

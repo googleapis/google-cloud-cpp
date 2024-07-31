@@ -83,7 +83,7 @@ AppHubClient::CreateServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubClient::CreateServiceProjectAttachment(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::apphub::v1::ServiceProjectAttachment const&
         service_project_attachment,
     std::string const& service_project_attachment_id, Options opts) {
@@ -92,8 +92,7 @@ AppHubClient::CreateServiceProjectAttachment(
   request.set_parent(parent);
   *request.mutable_service_project_attachment() = service_project_attachment;
   request.set_service_project_attachment_id(service_project_attachment_id);
-  return connection_->CreateServiceProjectAttachment(ExperimentalTag{},
-                                                     NoAwaitTag{}, request);
+  return connection_->CreateServiceProjectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
@@ -107,22 +106,19 @@ AppHubClient::CreateServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubClient::CreateServiceProjectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateServiceProjectAttachment(ExperimentalTag{},
-                                                     NoAwaitTag{}, request);
+  return connection_->CreateServiceProjectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
 AppHubClient::CreateServiceProjectAttachment(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateServiceProjectAttachment(ExperimentalTag{},
-                                                     operation);
+  return connection_->CreateServiceProjectAttachment(operation);
 }
 
 StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
@@ -153,14 +149,13 @@ AppHubClient::DeleteServiceProjectAttachment(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-AppHubClient::DeleteServiceProjectAttachment(ExperimentalTag, NoAwaitTag,
+AppHubClient::DeleteServiceProjectAttachment(NoAwaitTag,
                                              std::string const& name,
                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest request;
   request.set_name(name);
-  return connection_->DeleteServiceProjectAttachment(ExperimentalTag{},
-                                                     NoAwaitTag{}, request);
+  return connection_->DeleteServiceProjectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -174,22 +169,19 @@ AppHubClient::DeleteServiceProjectAttachment(
 
 StatusOr<google::longrunning::Operation>
 AppHubClient::DeleteServiceProjectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServiceProjectAttachment(ExperimentalTag{},
-                                                     NoAwaitTag{}, request);
+  return connection_->DeleteServiceProjectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
 AppHubClient::DeleteServiceProjectAttachment(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteServiceProjectAttachment(ExperimentalTag{},
-                                                     operation);
+  return connection_->DeleteServiceProjectAttachment(operation);
 }
 
 StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -287,7 +279,7 @@ AppHubClient::CreateService(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::CreateService(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::apphub::v1::Service const& service,
     std::string const& service_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -295,7 +287,7 @@ StatusOr<google::longrunning::Operation> AppHubClient::CreateService(
   request.set_parent(parent);
   *request.mutable_service() = service;
   request.set_service_id(service_id);
-  return connection_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
@@ -307,19 +299,17 @@ AppHubClient::CreateService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::CreateService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::CreateServiceRequest const& request,
+    NoAwaitTag, google::cloud::apphub::v1::CreateServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateService(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubClient::CreateService(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+AppHubClient::CreateService(google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateService(ExperimentalTag{}, operation);
+  return connection_->CreateService(operation);
 }
 
 StatusOr<google::cloud::apphub::v1::Service> AppHubClient::GetService(
@@ -348,14 +338,13 @@ AppHubClient::UpdateService(google::cloud::apphub::v1::Service const& service,
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::UpdateService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::Service const& service,
+    NoAwaitTag, google::cloud::apphub::v1::Service const& service,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::UpdateServiceRequest request;
   *request.mutable_service() = service;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
@@ -367,19 +356,17 @@ AppHubClient::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::UpdateService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::UpdateServiceRequest const& request,
+    NoAwaitTag, google::cloud::apphub::v1::UpdateServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateService(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Service>>
-AppHubClient::UpdateService(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+AppHubClient::UpdateService(google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateService(ExperimentalTag{}, operation);
+  return connection_->UpdateService(operation);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -391,11 +378,11 @@ AppHubClient::DeleteService(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::DeleteService(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::DeleteServiceRequest request;
   request.set_name(name);
-  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -407,19 +394,17 @@ AppHubClient::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::DeleteService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::DeleteServiceRequest const& request,
+    NoAwaitTag, google::cloud::apphub::v1::DeleteServiceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteService(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteService(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubClient::DeleteService(ExperimentalTag,
-                            google::longrunning::Operation const& operation,
+AppHubClient::DeleteService(google::longrunning::Operation const& operation,
                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteService(ExperimentalTag{}, operation);
+  return connection_->DeleteService(operation);
 }
 
 StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
@@ -500,7 +485,7 @@ AppHubClient::CreateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::CreateWorkload(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::apphub::v1::Workload const& workload,
     std::string const& workload_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -508,7 +493,7 @@ StatusOr<google::longrunning::Operation> AppHubClient::CreateWorkload(
   request.set_parent(parent);
   *request.mutable_workload() = workload;
   request.set_workload_id(workload_id);
-  return connection_->CreateWorkload(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateWorkload(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
@@ -520,19 +505,17 @@ AppHubClient::CreateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::CreateWorkload(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::CreateWorkloadRequest const& request,
+    NoAwaitTag, google::cloud::apphub::v1::CreateWorkloadRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateWorkload(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateWorkload(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubClient::CreateWorkload(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+AppHubClient::CreateWorkload(google::longrunning::Operation const& operation,
                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateWorkload(ExperimentalTag{}, operation);
+  return connection_->CreateWorkload(operation);
 }
 
 StatusOr<google::cloud::apphub::v1::Workload> AppHubClient::GetWorkload(
@@ -562,14 +545,13 @@ AppHubClient::UpdateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::UpdateWorkload(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::Workload const& workload,
+    NoAwaitTag, google::cloud::apphub::v1::Workload const& workload,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::UpdateWorkloadRequest request;
   *request.mutable_workload() = workload;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateWorkload(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateWorkload(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
@@ -581,19 +563,17 @@ AppHubClient::UpdateWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::UpdateWorkload(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::UpdateWorkloadRequest const& request,
+    NoAwaitTag, google::cloud::apphub::v1::UpdateWorkloadRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateWorkload(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateWorkload(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Workload>>
-AppHubClient::UpdateWorkload(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+AppHubClient::UpdateWorkload(google::longrunning::Operation const& operation,
                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateWorkload(ExperimentalTag{}, operation);
+  return connection_->UpdateWorkload(operation);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -605,11 +585,11 @@ AppHubClient::DeleteWorkload(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::DeleteWorkload(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::DeleteWorkloadRequest request;
   request.set_name(name);
-  return connection_->DeleteWorkload(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteWorkload(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -621,19 +601,17 @@ AppHubClient::DeleteWorkload(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::DeleteWorkload(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::DeleteWorkloadRequest const& request,
+    NoAwaitTag, google::cloud::apphub::v1::DeleteWorkloadRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteWorkload(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteWorkload(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubClient::DeleteWorkload(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+AppHubClient::DeleteWorkload(google::longrunning::Operation const& operation,
                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteWorkload(ExperimentalTag{}, operation);
+  return connection_->DeleteWorkload(operation);
 }
 
 StreamRange<google::cloud::apphub::v1::Application>
@@ -665,7 +643,7 @@ AppHubClient::CreateApplication(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::CreateApplication(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::apphub::v1::Application const& application,
     std::string const& application_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -673,8 +651,7 @@ StatusOr<google::longrunning::Operation> AppHubClient::CreateApplication(
   request.set_parent(parent);
   *request.mutable_application() = application;
   request.set_application_id(application_id);
-  return connection_->CreateApplication(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->CreateApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
@@ -686,20 +663,18 @@ AppHubClient::CreateApplication(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::CreateApplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::CreateApplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateApplication(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->CreateApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubClient::CreateApplication(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+AppHubClient::CreateApplication(google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateApplication(ExperimentalTag{}, operation);
+  return connection_->CreateApplication(operation);
 }
 
 StatusOr<google::cloud::apphub::v1::Application> AppHubClient::GetApplication(
@@ -729,15 +704,13 @@ AppHubClient::UpdateApplication(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::UpdateApplication(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::apphub::v1::Application const& application,
+    NoAwaitTag, google::cloud::apphub::v1::Application const& application,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::UpdateApplicationRequest request;
   *request.mutable_application() = application;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateApplication(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->UpdateApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
@@ -749,20 +722,18 @@ AppHubClient::UpdateApplication(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::UpdateApplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::UpdateApplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateApplication(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->UpdateApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::Application>>
-AppHubClient::UpdateApplication(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+AppHubClient::UpdateApplication(google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateApplication(ExperimentalTag{}, operation);
+  return connection_->UpdateApplication(operation);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -774,12 +745,11 @@ AppHubClient::DeleteApplication(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::DeleteApplication(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::apphub::v1::DeleteApplicationRequest request;
   request.set_name(name);
-  return connection_->DeleteApplication(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->DeleteApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -791,20 +761,18 @@ AppHubClient::DeleteApplication(
 }
 
 StatusOr<google::longrunning::Operation> AppHubClient::DeleteApplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::apphub::v1::DeleteApplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteApplication(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->DeleteApplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-AppHubClient::DeleteApplication(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+AppHubClient::DeleteApplication(google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteApplication(ExperimentalTag{}, operation);
+  return connection_->DeleteApplication(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -59,15 +59,13 @@ DomainsConnection::RegisterDomain(
 }
 
 StatusOr<google::longrunning::Operation> DomainsConnection::RegisterDomain(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::domains::v1::RegisterDomainRequest const&) {
+    NoAwaitTag, google::cloud::domains::v1::RegisterDomainRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
-DomainsConnection::RegisterDomain(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+DomainsConnection::RegisterDomain(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::domains::v1::Registration>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -88,15 +86,13 @@ DomainsConnection::TransferDomain(
 }
 
 StatusOr<google::longrunning::Operation> DomainsConnection::TransferDomain(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::domains::v1::TransferDomainRequest const&) {
+    NoAwaitTag, google::cloud::domains::v1::TransferDomainRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
-DomainsConnection::TransferDomain(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+DomainsConnection::TransferDomain(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::domains::v1::Registration>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -125,15 +121,13 @@ DomainsConnection::UpdateRegistration(
 }
 
 StatusOr<google::longrunning::Operation> DomainsConnection::UpdateRegistration(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::domains::v1::UpdateRegistrationRequest const&) {
+    NoAwaitTag, google::cloud::domains::v1::UpdateRegistrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
-DomainsConnection::UpdateRegistration(ExperimentalTag,
-                                      google::longrunning::Operation const&) {
+DomainsConnection::UpdateRegistration(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::domains::v1::Registration>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -149,7 +143,7 @@ DomainsConnection::ConfigureManagementSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnection::ConfigureManagementSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -157,7 +151,7 @@ DomainsConnection::ConfigureManagementSettings(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnection::ConfigureManagementSettings(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::domains::v1::Registration>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -173,15 +167,14 @@ DomainsConnection::ConfigureDnsSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnection::ConfigureDnsSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
-DomainsConnection::ConfigureDnsSettings(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+DomainsConnection::ConfigureDnsSettings(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::domains::v1::Registration>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -197,7 +190,7 @@ DomainsConnection::ConfigureContactSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsConnection::ConfigureContactSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureContactSettingsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -205,7 +198,7 @@ DomainsConnection::ConfigureContactSettings(
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnection::ConfigureContactSettings(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::domains::v1::Registration>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -220,15 +213,13 @@ DomainsConnection::ExportRegistration(
 }
 
 StatusOr<google::longrunning::Operation> DomainsConnection::ExportRegistration(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::domains::v1::ExportRegistrationRequest const&) {
+    NoAwaitTag, google::cloud::domains::v1::ExportRegistrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
-DomainsConnection::ExportRegistration(ExperimentalTag,
-                                      google::longrunning::Operation const&) {
+DomainsConnection::ExportRegistration(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::domains::v1::Registration>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -243,15 +234,13 @@ DomainsConnection::DeleteRegistration(
 }
 
 StatusOr<google::longrunning::Operation> DomainsConnection::DeleteRegistration(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::domains::v1::DeleteRegistrationRequest const&) {
+    NoAwaitTag, google::cloud::domains::v1::DeleteRegistrationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
-DomainsConnection::DeleteRegistration(ExperimentalTag,
-                                      google::longrunning::Operation const&) {
+DomainsConnection::DeleteRegistration(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::domains::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

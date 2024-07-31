@@ -52,18 +52,17 @@ InstancesClient::DeleteInstance(
 }
 
 StatusOr<google::longrunning::Operation> InstancesClient::DeleteInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::DeleteInstanceRequest const& request, Options opts) {
+    NoAwaitTag, google::appengine::v1::DeleteInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-InstancesClient::DeleteInstance(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+InstancesClient::DeleteInstance(google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstance(ExperimentalTag{}, operation);
+  return connection_->DeleteInstance(operation);
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
@@ -74,18 +73,17 @@ InstancesClient::DebugInstance(
 }
 
 StatusOr<google::longrunning::Operation> InstancesClient::DebugInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::DebugInstanceRequest const& request, Options opts) {
+    NoAwaitTag, google::appengine::v1::DebugInstanceRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DebugInstance(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DebugInstance(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::appengine::v1::Instance>>
-InstancesClient::DebugInstance(ExperimentalTag,
-                               google::longrunning::Operation const& operation,
+InstancesClient::DebugInstance(google::longrunning::Operation const& operation,
                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DebugInstance(ExperimentalTag{}, operation);
+  return connection_->DebugInstance(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

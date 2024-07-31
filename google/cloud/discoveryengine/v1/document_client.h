@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_DOCUMENT_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/document_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -506,7 +505,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportDocuments(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
       Options opts = {});
 
@@ -520,8 +519,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  ImportDocuments(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -594,7 +592,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> PurgeDocuments(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
       Options opts = {});
 
@@ -608,8 +606,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  PurgeDocuments(google::longrunning::Operation const& operation,
                  Options opts = {});
 
  private:

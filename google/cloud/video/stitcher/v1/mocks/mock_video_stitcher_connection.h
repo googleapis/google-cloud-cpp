@@ -58,14 +58,12 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCdnKey,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
-              CreateCdnKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateCdnKey, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::CdnKey>),
@@ -89,14 +87,13 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCdnKey,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteCdnKey,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteCdnKey, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -110,14 +107,12 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCdnKey,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>>,
-              UpdateCdnKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateCdnKey, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -181,14 +176,12 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateSlate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::CreateSlateRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::Slate>>,
-              CreateSlate,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateSlate, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::video::stitcher::v1::Slate>),
@@ -211,14 +204,12 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateSlate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::UpdateSlateRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::Slate>>,
-              UpdateSlate,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateSlate, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -232,14 +223,13 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSlate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::DeleteSlateRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteSlate,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteSlate, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -267,16 +257,14 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateLiveConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
               CreateLiveConfig,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::video::stitcher::v1::LiveConfig>),
@@ -301,15 +289,14 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteLiveConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteLiveConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteLiveConfig, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -324,16 +311,14 @@ class MockVideoStitcherServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateLiveConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>,
               UpdateLiveConfig,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, CreateVodConfig)` is now ambiguous. Use
@@ -345,16 +330,14 @@ class MockVideoStitcherServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateVodConfig,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::video::stitcher::v1::CreateVodConfigRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
               CreateVodConfig,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::video::stitcher::v1::VodConfig>),
@@ -378,15 +361,14 @@ class MockVideoStitcherServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteVodConfig,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::video::stitcher::v1::DeleteVodConfigRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>,
-      DeleteVodConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteVodConfig, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -399,16 +381,14 @@ class MockVideoStitcherServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateVodConfig,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::video::stitcher::v1::UpdateVodConfigRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>,
               UpdateVodConfig,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

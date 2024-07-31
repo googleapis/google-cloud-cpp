@@ -66,15 +66,13 @@ class MockTargetHttpProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteTargetHttpProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_http_proxies::v1::
-                   DeleteTargetHttpProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::
+                               v1::DeleteTargetHttpProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetHttpProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>,
@@ -94,15 +92,13 @@ class MockTargetHttpProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertTargetHttpProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_http_proxies::v1::
-                   InsertTargetHttpProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::
+                               v1::InsertTargetHttpProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetHttpProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>),
@@ -122,15 +118,13 @@ class MockTargetHttpProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchTargetHttpProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_http_proxies::v1::
-                   PatchTargetHttpProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::
+                               v1::PatchTargetHttpProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchTargetHttpProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -143,15 +137,13 @@ class MockTargetHttpProxiesConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, SetUrlMap,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_http_proxies::v1::
-                   SetUrlMapRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_http_proxies::
+                               v1::SetUrlMapRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUrlMap,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

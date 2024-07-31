@@ -62,7 +62,7 @@ CloudDeployConnection::CreateDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::CreateDeliveryPipeline(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -70,7 +70,7 @@ CloudDeployConnection::CreateDeliveryPipeline(
 
 future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
 CloudDeployConnection::CreateDeliveryPipeline(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ CloudDeployConnection::UpdateDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::UpdateDeliveryPipeline(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ CloudDeployConnection::UpdateDeliveryPipeline(
 
 future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
 CloudDeployConnection::UpdateDeliveryPipeline(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ CloudDeployConnection::DeleteDeliveryPipeline(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::DeleteDeliveryPipeline(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ CloudDeployConnection::DeleteDeliveryPipeline(
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnection::DeleteDeliveryPipeline(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -152,15 +152,13 @@ CloudDeployConnection::CreateTarget(
 }
 
 StatusOr<google::longrunning::Operation> CloudDeployConnection::CreateTarget(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::CreateTargetRequest const&) {
+    NoAwaitTag, google::cloud::deploy::v1::CreateTargetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Target>>
-CloudDeployConnection::CreateTarget(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+CloudDeployConnection::CreateTarget(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::Target>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -175,15 +173,13 @@ CloudDeployConnection::UpdateTarget(
 }
 
 StatusOr<google::longrunning::Operation> CloudDeployConnection::UpdateTarget(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::UpdateTargetRequest const&) {
+    NoAwaitTag, google::cloud::deploy::v1::UpdateTargetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Target>>
-CloudDeployConnection::UpdateTarget(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+CloudDeployConnection::UpdateTarget(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::Target>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -198,15 +194,13 @@ CloudDeployConnection::DeleteTarget(
 }
 
 StatusOr<google::longrunning::Operation> CloudDeployConnection::DeleteTarget(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::DeleteTargetRequest const&) {
+    NoAwaitTag, google::cloud::deploy::v1::DeleteTargetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-CloudDeployConnection::DeleteTarget(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+CloudDeployConnection::DeleteTarget(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -236,7 +230,7 @@ CloudDeployConnection::CreateCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::CreateCustomTargetType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::CreateCustomTargetTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,7 +238,7 @@ CloudDeployConnection::CreateCustomTargetType(
 
 future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
 CloudDeployConnection::CreateCustomTargetType(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::CustomTargetType>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -260,7 +254,7 @@ CloudDeployConnection::UpdateCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::UpdateCustomTargetType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -268,7 +262,7 @@ CloudDeployConnection::UpdateCustomTargetType(
 
 future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
 CloudDeployConnection::UpdateCustomTargetType(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::CustomTargetType>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -284,7 +278,7 @@ CloudDeployConnection::DeleteCustomTargetType(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::DeleteCustomTargetType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -292,7 +286,7 @@ CloudDeployConnection::DeleteCustomTargetType(
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnection::DeleteCustomTargetType(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -320,15 +314,13 @@ CloudDeployConnection::CreateRelease(
 }
 
 StatusOr<google::longrunning::Operation> CloudDeployConnection::CreateRelease(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::CreateReleaseRequest const&) {
+    NoAwaitTag, google::cloud::deploy::v1::CreateReleaseRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Release>>
-CloudDeployConnection::CreateRelease(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+CloudDeployConnection::CreateRelease(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::Release>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -380,15 +372,13 @@ CloudDeployConnection::CreateRollout(
 }
 
 StatusOr<google::longrunning::Operation> CloudDeployConnection::CreateRollout(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::CreateRolloutRequest const&) {
+    NoAwaitTag, google::cloud::deploy::v1::CreateRolloutRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Rollout>>
-CloudDeployConnection::CreateRollout(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+CloudDeployConnection::CreateRollout(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::Rollout>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -440,15 +430,13 @@ CloudDeployConnection::CreateAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::CreateAutomation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::CreateAutomationRequest const&) {
+    NoAwaitTag, google::cloud::deploy::v1::CreateAutomationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Automation>>
-CloudDeployConnection::CreateAutomation(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+CloudDeployConnection::CreateAutomation(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::Automation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -464,15 +452,13 @@ CloudDeployConnection::UpdateAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::UpdateAutomation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::UpdateAutomationRequest const&) {
+    NoAwaitTag, google::cloud::deploy::v1::UpdateAutomationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Automation>>
-CloudDeployConnection::UpdateAutomation(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+CloudDeployConnection::UpdateAutomation(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::Automation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -488,15 +474,13 @@ CloudDeployConnection::DeleteAutomation(
 
 StatusOr<google::longrunning::Operation>
 CloudDeployConnection::DeleteAutomation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::deploy::v1::DeleteAutomationRequest const&) {
+    NoAwaitTag, google::cloud::deploy::v1::DeleteAutomationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-CloudDeployConnection::DeleteAutomation(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+CloudDeployConnection::DeleteAutomation(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::deploy::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

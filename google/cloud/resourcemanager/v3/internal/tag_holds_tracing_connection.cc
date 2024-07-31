@@ -44,23 +44,21 @@ TagHoldsTracingConnection::CreateTagHold(
 
 StatusOr<google::longrunning::Operation>
 TagHoldsTracingConnection::CreateTagHold(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::CreateTagHold");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateTagHold(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateTagHold(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
 TagHoldsTracingConnection::CreateTagHold(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::CreateTagHold");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateTagHold(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateTagHold(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
@@ -74,23 +72,21 @@ TagHoldsTracingConnection::DeleteTagHold(
 
 StatusOr<google::longrunning::Operation>
 TagHoldsTracingConnection::DeleteTagHold(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::DeleteTagHold");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteTagHold(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteTagHold(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
 TagHoldsTracingConnection::DeleteTagHold(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::TagHoldsConnection::DeleteTagHold");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteTagHold(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteTagHold(operation));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::TagHold>

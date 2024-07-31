@@ -63,13 +63,12 @@ class TestCasesTracingConnection : public dialogflow_cx::TestCasesConnection {
                   request) override;
 
   StatusOr<google::longrunning::Operation> RunTestCase(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
-  RunTestCase(ExperimentalTag,
-              google::longrunning::Operation const& operation) override;
+  RunTestCase(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
   BatchRunTestCases(
@@ -77,13 +76,12 @@ class TestCasesTracingConnection : public dialogflow_cx::TestCasesConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> BatchRunTestCases(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
-  BatchRunTestCases(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  BatchRunTestCases(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
   CalculateCoverage(
@@ -96,13 +94,12 @@ class TestCasesTracingConnection : public dialogflow_cx::TestCasesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ImportTestCases(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
-  ImportTestCases(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  ImportTestCases(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
   ExportTestCases(
@@ -110,13 +107,12 @@ class TestCasesTracingConnection : public dialogflow_cx::TestCasesConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ExportTestCases(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
-  ExportTestCases(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  ExportTestCases(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
   ListTestCaseResults(

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_ADMIN_V1_DATASTORE_ADMIN_CLIENT_H
 
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -211,7 +210,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportEntities(
-      ExperimentalTag, NoAwaitTag, std::string const& project_id,
+      NoAwaitTag, std::string const& project_id,
       std::map<std::string, std::string> const& labels,
       google::datastore::admin::v1::EntityFilter const& entity_filter,
       std::string const& output_url_prefix, Options opts = {});
@@ -274,7 +273,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportEntities(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::datastore::admin::v1::ExportEntitiesRequest const& request,
       Options opts = {});
 
@@ -288,8 +287,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  ExportEntities(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -365,7 +363,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportEntities(
-      ExperimentalTag, NoAwaitTag, std::string const& project_id,
+      NoAwaitTag, std::string const& project_id,
       std::map<std::string, std::string> const& labels,
       std::string const& input_url,
       google::datastore::admin::v1::EntityFilter const& entity_filter,
@@ -426,7 +424,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ImportEntities(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::datastore::admin::v1::ImportEntitiesRequest const& request,
       Options opts = {});
 
@@ -440,8 +438,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  ImportEntities(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -509,7 +506,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::datastore::admin::v1::CreateIndexRequest const& request,
       Options opts = {});
 
@@ -523,8 +520,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -589,7 +585,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::datastore::admin::v1::DeleteIndexRequest const& request,
       Options opts = {});
 
@@ -603,8 +599,7 @@ class DatastoreAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

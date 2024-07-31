@@ -45,12 +45,11 @@ class VideoStitcherServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateCdnKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> CreateCdnKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::video::stitcher::v1::CdnKey> ListCdnKeys(
@@ -65,25 +64,23 @@ class VideoStitcherServiceTracingConnection
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCdnKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-  DeleteCdnKey(ExperimentalTag,
-               google::longrunning::Operation const& operation) override;
+  DeleteCdnKey(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request)
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCdnKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::CdnKey>> UpdateCdnKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::video::stitcher::v1::VodSession> CreateVodSession(
@@ -129,12 +126,11 @@ class VideoStitcherServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateSlate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateSlateRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> CreateSlate(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::video::stitcher::v1::Slate> ListSlates(
@@ -149,12 +145,11 @@ class VideoStitcherServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSlate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateSlateRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::Slate>> UpdateSlate(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
@@ -162,13 +157,12 @@ class VideoStitcherServiceTracingConnection
                   request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSlate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteSlateRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-  DeleteSlate(ExperimentalTag,
-              google::longrunning::Operation const& operation) override;
+  DeleteSlate(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::video::stitcher::v1::LiveSession> CreateLiveSession(
       google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
@@ -184,13 +178,12 @@ class VideoStitcherServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateLiveConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateLiveConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-  CreateLiveConfig(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  CreateLiveConfig(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::video::stitcher::v1::LiveConfig> ListLiveConfigs(
       google::cloud::video::stitcher::v1::ListLiveConfigsRequest request)
@@ -206,13 +199,12 @@ class VideoStitcherServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteLiveConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteLiveConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-  DeleteLiveConfig(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  DeleteLiveConfig(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
   UpdateLiveConfig(
@@ -220,13 +212,12 @@ class VideoStitcherServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateLiveConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateLiveConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::LiveConfig>>
-  UpdateLiveConfig(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  UpdateLiveConfig(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
   CreateVodConfig(
@@ -234,13 +225,12 @@ class VideoStitcherServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateVodConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::CreateVodConfigRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-  CreateVodConfig(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  CreateVodConfig(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::video::stitcher::v1::VodConfig> ListVodConfigs(
       google::cloud::video::stitcher::v1::ListVodConfigsRequest request)
@@ -256,13 +246,12 @@ class VideoStitcherServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteVodConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::DeleteVodConfigRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::OperationMetadata>>
-  DeleteVodConfig(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  DeleteVodConfig(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
   UpdateVodConfig(
@@ -270,13 +259,12 @@ class VideoStitcherServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateVodConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::video::stitcher::v1::UpdateVodConfigRequest const& request)
       override;
 
   future<StatusOr<google::cloud::video::stitcher::v1::VodConfig>>
-  UpdateVodConfig(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  UpdateVodConfig(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<video_stitcher_v1::VideoStitcherServiceConnection> child_;

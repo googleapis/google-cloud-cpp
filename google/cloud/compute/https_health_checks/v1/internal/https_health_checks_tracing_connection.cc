@@ -48,28 +48,25 @@ HttpsHealthChecksTracingConnection::DeleteHttpsHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpsHealthChecksTracingConnection::DeleteHttpsHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::https_health_checks::v1::
-        DeleteHttpsHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::
+                    DeleteHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "DeleteHttpsHealthCheck");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->DeleteHttpsHealthCheck(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->DeleteHttpsHealthCheck(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksTracingConnection::DeleteHttpsHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "DeleteHttpsHealthCheck");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteHttpsHealthCheck(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteHttpsHealthCheck(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HttpsHealthCheck>
@@ -97,28 +94,25 @@ HttpsHealthChecksTracingConnection::InsertHttpsHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpsHealthChecksTracingConnection::InsertHttpsHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::https_health_checks::v1::
-        InsertHttpsHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::
+                    InsertHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "InsertHttpsHealthCheck");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->InsertHttpsHealthCheck(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->InsertHttpsHealthCheck(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksTracingConnection::InsertHttpsHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "InsertHttpsHealthCheck");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertHttpsHealthCheck(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertHttpsHealthCheck(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::HttpsHealthCheck>
@@ -149,28 +143,25 @@ HttpsHealthChecksTracingConnection::PatchHttpsHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpsHealthChecksTracingConnection::PatchHttpsHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::https_health_checks::v1::
-        PatchHttpsHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::
+                    PatchHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "PatchHttpsHealthCheck");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->PatchHttpsHealthCheck(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->PatchHttpsHealthCheck(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksTracingConnection::PatchHttpsHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "PatchHttpsHealthCheck");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchHttpsHealthCheck(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchHttpsHealthCheck(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -187,28 +178,25 @@ HttpsHealthChecksTracingConnection::UpdateHttpsHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HttpsHealthChecksTracingConnection::UpdateHttpsHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::https_health_checks::v1::
-        UpdateHttpsHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::https_health_checks::v1::
+                    UpdateHttpsHealthCheckRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "UpdateHttpsHealthCheck");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->UpdateHttpsHealthCheck(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->UpdateHttpsHealthCheck(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HttpsHealthChecksTracingConnection::UpdateHttpsHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_https_health_checks_v1::HttpsHealthChecksConnection::"
       "UpdateHttpsHealthCheck");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateHttpsHealthCheck(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateHttpsHealthCheck(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

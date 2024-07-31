@@ -55,13 +55,12 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
           request) override;
 
   future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
   CreateServiceProjectAttachment(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
@@ -75,13 +74,12 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
           request) override;
 
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteServiceProjectAttachment(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
@@ -110,11 +108,10 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
       google::cloud::apphub::v1::CreateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::apphub::v1::Service> GetService(
@@ -124,22 +121,20 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
       google::cloud::apphub::v1::UpdateServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
       google::cloud::apphub::v1::DeleteServiceRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteServiceRequest const& request) override;
 
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
@@ -163,11 +158,10 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
       google::cloud::apphub::v1::CreateWorkloadRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateWorkloadRequest const& request) override;
 
   future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
@@ -177,22 +171,20 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request) override;
 
   future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request) override;
 
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::apphub::v1::Application> ListApplications(
@@ -203,12 +195,11 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateApplicationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::apphub::v1::Application>> CreateApplication(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::apphub::v1::Application> GetApplication(
@@ -219,12 +210,11 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateApplicationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::apphub::v1::Application>> UpdateApplication(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
@@ -232,13 +222,12 @@ class AppHubTracingConnection : public apphub_v1::AppHubConnection {
                         request) override;
 
   StatusOr<google::longrunning::Operation> DeleteApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteApplicationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteApplication(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  DeleteApplication(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<apphub_v1::AppHubConnection> child_;

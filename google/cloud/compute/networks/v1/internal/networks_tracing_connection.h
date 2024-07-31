@@ -45,12 +45,11 @@ class NetworksTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddPeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddPeering(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
@@ -58,12 +57,11 @@ class NetworksTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteNetwork(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Network> GetNetwork(
@@ -81,12 +79,11 @@ class NetworksTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertNetwork(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Network> ListNetworks(
@@ -103,12 +100,11 @@ class NetworksTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNetwork(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchNetwork(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
@@ -116,12 +112,11 @@ class NetworksTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemovePeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemovePeering(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -129,13 +124,11 @@ class NetworksTracingConnection
                          SwitchToCustomModeRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SwitchToCustomMode(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::networks::v1::
-          SwitchToCustomModeRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::networks::v1::
+                      SwitchToCustomModeRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SwitchToCustomMode(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
@@ -143,12 +136,11 @@ class NetworksTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdatePeering(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdatePeering(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

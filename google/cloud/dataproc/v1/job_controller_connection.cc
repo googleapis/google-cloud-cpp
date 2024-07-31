@@ -53,15 +53,14 @@ JobControllerConnection::SubmitJobAsOperation(
 
 StatusOr<google::longrunning::Operation>
 JobControllerConnection::SubmitJobAsOperation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataproc::v1::SubmitJobRequest const&) {
+    NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerConnection::SubmitJobAsOperation(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dataproc::v1::Job>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

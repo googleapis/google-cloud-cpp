@@ -42,20 +42,18 @@ AnalyticsServiceClient::ExportAnalyticsMetrics(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsServiceClient::ExportAnalyticsMetrics(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportAnalyticsMetrics(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->ExportAnalyticsMetrics(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
 AnalyticsServiceClient::ExportAnalyticsMetrics(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportAnalyticsMetrics(ExperimentalTag{}, operation);
+  return connection_->ExportAnalyticsMetrics(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

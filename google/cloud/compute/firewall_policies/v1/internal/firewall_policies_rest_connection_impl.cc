@@ -102,9 +102,8 @@ FirewallPoliciesRestConnectionImpl::AddAssociation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::AddAssociation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::firewall_policies::v1::
-        AddAssociationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                    AddAssociationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -119,7 +118,6 @@ FirewallPoliciesRestConnectionImpl::AddAssociation(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::AddAssociation(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -229,7 +227,7 @@ FirewallPoliciesRestConnectionImpl::AddRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::AddRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::firewall_policies::v1::AddRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -246,7 +244,6 @@ FirewallPoliciesRestConnectionImpl::AddRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::AddRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -356,7 +353,7 @@ FirewallPoliciesRestConnectionImpl::CloneRules(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::CloneRules(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::firewall_policies::v1::CloneRulesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -373,7 +370,6 @@ FirewallPoliciesRestConnectionImpl::CloneRules(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::CloneRules(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -483,9 +479,8 @@ FirewallPoliciesRestConnectionImpl::DeleteFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::DeleteFirewallPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::firewall_policies::v1::
-        DeleteFirewallPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                    DeleteFirewallPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -500,7 +495,6 @@ FirewallPoliciesRestConnectionImpl::DeleteFirewallPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::DeleteFirewallPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -674,9 +668,8 @@ FirewallPoliciesRestConnectionImpl::InsertFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::InsertFirewallPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::firewall_policies::v1::
-        InsertFirewallPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                    InsertFirewallPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -691,7 +684,6 @@ FirewallPoliciesRestConnectionImpl::InsertFirewallPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::InsertFirewallPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -858,7 +850,7 @@ FirewallPoliciesRestConnectionImpl::Move(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::Move(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::firewall_policies::v1::MoveRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -874,7 +866,6 @@ FirewallPoliciesRestConnectionImpl::Move(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::Move(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -984,9 +975,8 @@ FirewallPoliciesRestConnectionImpl::PatchFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::PatchFirewallPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::firewall_policies::v1::
-        PatchFirewallPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                    PatchFirewallPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1001,7 +991,6 @@ FirewallPoliciesRestConnectionImpl::PatchFirewallPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::PatchFirewallPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1111,7 +1100,7 @@ FirewallPoliciesRestConnectionImpl::PatchRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::PatchRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::firewall_policies::v1::PatchRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1128,7 +1117,6 @@ FirewallPoliciesRestConnectionImpl::PatchRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::PatchRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1238,9 +1226,8 @@ FirewallPoliciesRestConnectionImpl::RemoveAssociation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::RemoveAssociation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::firewall_policies::v1::
-        RemoveAssociationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::firewall_policies::v1::
+                    RemoveAssociationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1255,7 +1242,6 @@ FirewallPoliciesRestConnectionImpl::RemoveAssociation(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::RemoveAssociation(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1365,7 +1351,7 @@ FirewallPoliciesRestConnectionImpl::RemoveRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 FirewallPoliciesRestConnectionImpl::RemoveRule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::firewall_policies::v1::RemoveRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1382,7 +1368,6 @@ FirewallPoliciesRestConnectionImpl::RemoveRule(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 FirewallPoliciesRestConnectionImpl::RemoveRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

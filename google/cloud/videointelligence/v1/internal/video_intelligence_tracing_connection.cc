@@ -47,25 +47,23 @@ VideoIntelligenceServiceTracingConnection::AnnotateVideo(
 
 StatusOr<google::longrunning::Operation>
 VideoIntelligenceServiceTracingConnection::AnnotateVideo(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   auto span = internal::MakeSpan(
       "videointelligence_v1::VideoIntelligenceServiceConnection::"
       "AnnotateVideo");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->AnnotateVideo(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->AnnotateVideo(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceTracingConnection::AnnotateVideo(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "videointelligence_v1::VideoIntelligenceServiceConnection::"
       "AnnotateVideo");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AnnotateVideo(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->AnnotateVideo(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

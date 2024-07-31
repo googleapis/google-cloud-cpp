@@ -70,15 +70,13 @@ WebRiskServiceConnection::SubmitUri(
 }
 
 StatusOr<google::longrunning::Operation> WebRiskServiceConnection::SubmitUri(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::webrisk::v1::SubmitUriRequest const&) {
+    NoAwaitTag, google::cloud::webrisk::v1::SubmitUriRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
-WebRiskServiceConnection::SubmitUri(ExperimentalTag,
-                                    google::longrunning::Operation const&) {
+WebRiskServiceConnection::SubmitUri(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::webrisk::v1::Submission>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

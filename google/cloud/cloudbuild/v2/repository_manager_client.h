@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDBUILD_V2_REPOSITORY_MANAGER_CLIENT_H
 
 #include "google/cloud/cloudbuild/v2/repository_manager_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -143,7 +142,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnection(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::devtools::cloudbuild::v2::Connection const& connection,
       std::string const& connection_id, Options opts = {});
 
@@ -198,7 +197,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request,
       Options opts = {});
 
@@ -212,8 +211,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  CreateConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  CreateConnection(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -395,7 +393,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::Connection const& connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -450,7 +448,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request,
       Options opts = {});
 
@@ -464,8 +462,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
-  UpdateConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  UpdateConnection(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -513,7 +510,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -566,7 +563,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request,
       Options opts = {});
 
@@ -580,8 +577,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteConnection(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -638,7 +634,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateRepository(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::devtools::cloudbuild::v2::Repository const& repository,
       std::string const& repository_id, Options opts = {});
 
@@ -693,7 +689,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateRepository(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request,
       Options opts = {});
 
@@ -707,8 +703,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
-  CreateRepository(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  CreateRepository(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -765,7 +760,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::vector<
           google::devtools::cloudbuild::v2::CreateRepositoryRequest> const&
           requests,
@@ -824,7 +819,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchCreateRepositories(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request,
       Options opts = {});
@@ -840,8 +835,7 @@ class RepositoryManagerClient {
   // clang-format on
   future<StatusOr<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>
-  BatchCreateRepositories(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  BatchCreateRepositories(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -1021,7 +1015,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1074,7 +1068,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRepository(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request,
       Options opts = {});
 
@@ -1088,8 +1082,7 @@ class RepositoryManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
-  DeleteRepository(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteRepository(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off

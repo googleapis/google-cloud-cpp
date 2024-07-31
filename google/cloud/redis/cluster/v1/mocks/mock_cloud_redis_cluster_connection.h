@@ -68,14 +68,12 @@ class MockCloudRedisClusterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::redis::cluster::v1::UpdateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
-              UpdateCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateCluster, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -88,14 +86,12 @@ class MockCloudRedisClusterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::protobuf::Any>>, DeleteCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, CreateCluster)` is now ambiguous. Use
@@ -108,14 +104,12 @@ class MockCloudRedisClusterConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCluster,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::redis::cluster::v1::CreateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
-              CreateCluster,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateCluster, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>,

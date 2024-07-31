@@ -22,7 +22,6 @@
 #include "google/cloud/aiplatform/v1/internal/schedule_retry_traits.h"
 #include "google/cloud/aiplatform/v1/schedule_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -198,13 +197,12 @@ class ScheduleServiceConnection {
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteSchedule(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSchedule(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  DeleteSchedule(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
       google::cloud::aiplatform::v1::GetScheduleRequest const& request);

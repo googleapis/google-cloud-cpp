@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_WORKFLOWS_V1_WORKFLOWS_CLIENT_H
 
 #include "google/cloud/workflows/v1/workflows_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -281,7 +280,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkflow(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::workflows::v1::Workflow const& workflow,
       std::string const& workflow_id, Options opts = {});
 
@@ -337,7 +336,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkflow(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workflows::v1::CreateWorkflowRequest const& request,
       Options opts = {});
 
@@ -351,8 +350,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> CreateWorkflow(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -401,7 +399,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -456,7 +454,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request,
       Options opts = {});
 
@@ -470,8 +468,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteWorkflow(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -525,8 +522,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::workflows::v1::Workflow const& workflow,
+      NoAwaitTag, google::cloud::workflows::v1::Workflow const& workflow,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -583,7 +579,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request,
       Options opts = {});
 
@@ -597,8 +593,7 @@ class WorkflowsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::workflows::v1::Workflow>> UpdateWorkflow(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<WorkflowsConnection> connection_;

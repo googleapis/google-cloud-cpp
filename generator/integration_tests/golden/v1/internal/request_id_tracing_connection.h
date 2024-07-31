@@ -47,11 +47,11 @@ class RequestIdServiceTracingConnection
   RenameFoo(google::test::requestid::v1::RenameFooRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  RenameFoo(ExperimentalTag, NoAwaitTag,
+  RenameFoo(NoAwaitTag,
       google::test::requestid::v1::RenameFooRequest const& request) override;
 
   future<StatusOr<google::test::requestid::v1::Foo>>
-  RenameFoo(ExperimentalTag,
+  RenameFoo(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::test::requestid::v1::Foo>

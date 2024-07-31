@@ -119,16 +119,14 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
                   // clang-format off
     "  MOCK_METHOD(Status,\n",
     "  MOCK_METHOD(StatusOr<$longrunning_operation_type$>,\n"},
-                 // TODO(#14344): Remove experimental tag.
-   {"  $method_name$, (ExperimentalTag, NoAwaitTag,\n"
+   {"  $method_name$, (NoAwaitTag,\n"
     "    $request_type$ const& request), (override));\n\n"},
                  // clang-format on
                  {IsResponseTypeEmpty,
                   // clang-format off
     "  MOCK_METHOD(future<Status>,\n",
     "  MOCK_METHOD(future<StatusOr<$longrunning_deduced_response_type$>>,\n"},
-                 // TODO(#14344): Remove experimental tag.
-   {"  $method_name$, (ExperimentalTag,\n"
+   {"  $method_name$, (\n"
     "    $longrunning_operation_type$ const& operation), (override));\n"}
                  // clang-format on
              },

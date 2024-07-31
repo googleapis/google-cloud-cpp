@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_SESSION_CONTROLLER_CLIENT_H
 
 #include "google/cloud/dataproc/v1/session_controller_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -142,7 +141,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSession(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dataproc::v1::Session const& session,
       std::string const& session_id, Options opts = {});
 
@@ -196,7 +195,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSession(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::CreateSessionRequest const& request,
       Options opts = {});
 
@@ -210,8 +209,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> CreateSession(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -387,7 +385,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> TerminateSession(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -439,7 +437,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> TerminateSession(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::TerminateSessionRequest const& request,
       Options opts = {});
 
@@ -453,8 +451,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> TerminateSession(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -501,7 +498,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSession(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -554,7 +551,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSession(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::DeleteSessionRequest const& request,
       Options opts = {});
 
@@ -568,8 +565,7 @@ class SessionControllerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Session>> DeleteSession(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<SessionControllerConnection> connection_;

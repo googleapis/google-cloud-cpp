@@ -165,7 +165,7 @@ DeveloperConnectConnectionImpl::CreateConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::CreateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::CreateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -182,7 +182,7 @@ DeveloperConnectConnectionImpl::CreateConnection(
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
 DeveloperConnectConnectionImpl::CreateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::developerconnect::v1::
@@ -261,7 +261,7 @@ DeveloperConnectConnectionImpl::UpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::UpdateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::UpdateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -278,7 +278,7 @@ DeveloperConnectConnectionImpl::UpdateConnection(
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
 DeveloperConnectConnectionImpl::UpdateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::developerconnect::v1::
@@ -357,7 +357,7 @@ DeveloperConnectConnectionImpl::DeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::DeleteConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::DeleteConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -374,7 +374,7 @@ DeveloperConnectConnectionImpl::DeleteConnection(
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectConnectionImpl::DeleteConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::developerconnect::v1::
@@ -452,7 +452,7 @@ DeveloperConnectConnectionImpl::CreateGitRepositoryLink(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::CreateGitRepositoryLink(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -469,7 +469,7 @@ DeveloperConnectConnectionImpl::CreateGitRepositoryLink(
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
 DeveloperConnectConnectionImpl::CreateGitRepositoryLink(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::developerconnect::v1::
@@ -547,7 +547,7 @@ DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -564,7 +564,7 @@ DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectConnectionImpl::DeleteGitRepositoryLink(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::developerconnect::v1::

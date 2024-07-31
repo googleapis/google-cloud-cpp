@@ -22,7 +22,6 @@
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_connection_idempotency_policy.h"
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -200,12 +199,11 @@ class BigtableInstanceAdminConnection {
       google::bigtable::admin::v2::CreateInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Instance>>
-  CreateInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  CreateInstance(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
       google::bigtable::admin::v2::GetInstanceRequest const& request);
@@ -222,12 +220,11 @@ class BigtableInstanceAdminConnection {
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> PartialUpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Instance>>
-  PartialUpdateInstance(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  PartialUpdateInstance(google::longrunning::Operation const& operation);
 
   virtual Status DeleteInstance(
       google::bigtable::admin::v2::DeleteInstanceRequest const& request);
@@ -236,11 +233,11 @@ class BigtableInstanceAdminConnection {
       google::bigtable::admin::v2::CreateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateClusterRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
       google::bigtable::admin::v2::GetClusterRequest const& request);
@@ -252,23 +249,21 @@ class BigtableInstanceAdminConnection {
       google::bigtable::admin::v2::Cluster const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
-      google::bigtable::admin::v2::Cluster const& request);
+      NoAwaitTag, google::bigtable::admin::v2::Cluster const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Cluster>> UpdateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Cluster>>
   PartialUpdateCluster(
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> PartialUpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::Cluster>>
-  PartialUpdateCluster(ExperimentalTag,
-                       google::longrunning::Operation const& operation);
+  PartialUpdateCluster(google::longrunning::Operation const& operation);
 
   virtual Status DeleteCluster(
       google::bigtable::admin::v2::DeleteClusterRequest const& request);
@@ -287,12 +282,11 @@ class BigtableInstanceAdminConnection {
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAppProfile(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request);
 
   virtual future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  UpdateAppProfile(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  UpdateAppProfile(google::longrunning::Operation const& operation);
 
   virtual Status DeleteAppProfile(
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request);

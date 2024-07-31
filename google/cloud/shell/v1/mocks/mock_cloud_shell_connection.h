@@ -62,14 +62,13 @@ class MockCloudShellServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, StartEnvironment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::shell::v1::StartEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
-      StartEnvironment,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      StartEnvironment, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -83,14 +82,13 @@ class MockCloudShellServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AuthorizeEnvironment,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
-      AuthorizeEnvironment,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      AuthorizeEnvironment, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -102,14 +100,12 @@ class MockCloudShellServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, AddPublicKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::shell::v1::AddPublicKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>,
-              AddPublicKey,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              AddPublicKey, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -122,14 +118,13 @@ class MockCloudShellServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RemovePublicKey,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::shell::v1::RemovePublicKeyRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
-      RemovePublicKey,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RemovePublicKey, (google::longrunning::Operation const& operation),
       (override));
 };
 

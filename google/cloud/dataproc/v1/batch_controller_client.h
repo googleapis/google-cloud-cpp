@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_BATCH_CONTROLLER_CLIENT_H
 
 #include "google/cloud/dataproc/v1/batch_controller_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -140,7 +139,7 @@ class BatchControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBatch(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dataproc::v1::Batch const& batch,
       std::string const& batch_id, Options opts = {});
 
@@ -194,7 +193,7 @@ class BatchControllerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBatch(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::CreateBatchRequest const& request,
       Options opts = {});
 
@@ -208,8 +207,7 @@ class BatchControllerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::Batch>> CreateBatch(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

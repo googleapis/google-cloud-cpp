@@ -174,7 +174,7 @@ TagValuesConnectionImpl::CreateTagValue(
 
 StatusOr<google::longrunning::Operation>
 TagValuesConnectionImpl::CreateTagValue(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -190,7 +190,7 @@ TagValuesConnectionImpl::CreateTagValue(
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
 TagValuesConnectionImpl::CreateTagValue(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -268,7 +268,7 @@ TagValuesConnectionImpl::UpdateTagValue(
 
 StatusOr<google::longrunning::Operation>
 TagValuesConnectionImpl::UpdateTagValue(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -284,7 +284,7 @@ TagValuesConnectionImpl::UpdateTagValue(
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
 TagValuesConnectionImpl::UpdateTagValue(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -362,7 +362,7 @@ TagValuesConnectionImpl::DeleteTagValue(
 
 StatusOr<google::longrunning::Operation>
 TagValuesConnectionImpl::DeleteTagValue(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -378,7 +378,7 @@ TagValuesConnectionImpl::DeleteTagValue(
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
 TagValuesConnectionImpl::DeleteTagValue(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::

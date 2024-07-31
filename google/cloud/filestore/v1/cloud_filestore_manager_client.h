@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FILESTORE_V1_CLOUD_FILESTORE_MANAGER_CLIENT_H
 
 #include "google/cloud/filestore/v1/cloud_filestore_manager_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -304,7 +303,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::filestore::v1::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
@@ -361,7 +360,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
@@ -375,8 +374,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> CreateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -430,8 +428,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::filestore::v1::Instance const& instance,
+      NoAwaitTag, google::cloud::filestore::v1::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -484,7 +481,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
@@ -498,8 +495,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> UpdateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -555,7 +551,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestoreInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::RestoreInstanceRequest const& request,
       Options opts = {});
 
@@ -569,8 +565,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> RestoreInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -622,7 +617,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RevertInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::RevertInstanceRequest const& request,
       Options opts = {});
 
@@ -636,8 +631,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Instance>> RevertInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -684,7 +678,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -736,7 +730,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
@@ -750,8 +744,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -941,7 +934,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::filestore::v1::Snapshot const& snapshot,
       std::string const& snapshot_id, Options opts = {});
 
@@ -995,7 +988,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::CreateSnapshotRequest const& request,
       Options opts = {});
 
@@ -1009,8 +1002,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> CreateSnapshot(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1057,7 +1049,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1109,7 +1101,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::DeleteSnapshotRequest const& request,
       Options opts = {});
 
@@ -1123,8 +1115,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteSnapshot(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1173,8 +1164,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::filestore::v1::Snapshot const& snapshot,
+      NoAwaitTag, google::cloud::filestore::v1::Snapshot const& snapshot,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1227,7 +1217,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::UpdateSnapshotRequest const& request,
       Options opts = {});
 
@@ -1241,8 +1231,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Snapshot>> UpdateSnapshot(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1438,7 +1427,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::filestore::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
@@ -1492,7 +1481,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::CreateBackupRequest const& request,
       Options opts = {});
 
@@ -1506,8 +1495,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> CreateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1553,8 +1541,7 @@ class CloudFilestoreManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteBackup(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -1608,7 +1595,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
@@ -1622,8 +1609,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::common::OperationMetadata>> DeleteBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1672,8 +1658,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::filestore::v1::Backup const& backup,
+      NoAwaitTag, google::cloud::filestore::v1::Backup const& backup,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1726,7 +1711,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::filestore::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
@@ -1740,8 +1725,7 @@ class CloudFilestoreManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::filestore::v1::Backup>> UpdateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<CloudFilestoreManagerConnection> connection_;

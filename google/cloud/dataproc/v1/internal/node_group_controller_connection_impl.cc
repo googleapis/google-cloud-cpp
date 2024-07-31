@@ -107,7 +107,7 @@ NodeGroupControllerConnectionImpl::CreateNodeGroup(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerConnectionImpl::CreateNodeGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -123,7 +123,7 @@ NodeGroupControllerConnectionImpl::CreateNodeGroup(
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnectionImpl::CreateNodeGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::
@@ -199,7 +199,7 @@ NodeGroupControllerConnectionImpl::ResizeNodeGroup(
 
 StatusOr<google::longrunning::Operation>
 NodeGroupControllerConnectionImpl::ResizeNodeGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -215,7 +215,7 @@ NodeGroupControllerConnectionImpl::ResizeNodeGroup(
 
 future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnectionImpl::ResizeNodeGroup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dataproc::v1::

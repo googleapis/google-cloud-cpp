@@ -54,7 +54,7 @@ RequestIdServiceConnection::RenameFoo(
 
 StatusOr<google::longrunning::Operation>
 RequestIdServiceConnection::RenameFoo(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::test::requestid::v1::RenameFooRequest const&) {
   return StatusOr<google::longrunning::Operation>(
     Status(StatusCode::kUnimplemented, "not implemented"));
@@ -62,7 +62,7 @@ RequestIdServiceConnection::RenameFoo(
 
 future<StatusOr<google::test::requestid::v1::Foo>>
 RequestIdServiceConnection::RenameFoo(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
     StatusOr<google::test::requestid::v1::Foo>>(
     Status(StatusCode::kUnimplemented, "not implemented"));

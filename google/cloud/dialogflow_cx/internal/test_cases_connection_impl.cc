@@ -201,7 +201,7 @@ TestCasesConnectionImpl::RunTestCase(
 }
 
 StatusOr<google::longrunning::Operation> TestCasesConnectionImpl::RunTestCase(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -217,7 +217,7 @@ StatusOr<google::longrunning::Operation> TestCasesConnectionImpl::RunTestCase(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
 TestCasesConnectionImpl::RunTestCase(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::
@@ -296,7 +296,7 @@ TestCasesConnectionImpl::BatchRunTestCases(
 
 StatusOr<google::longrunning::Operation>
 TestCasesConnectionImpl::BatchRunTestCases(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -313,7 +313,7 @@ TestCasesConnectionImpl::BatchRunTestCases(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
 TestCasesConnectionImpl::BatchRunTestCases(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::
@@ -407,7 +407,7 @@ TestCasesConnectionImpl::ImportTestCases(
 
 StatusOr<google::longrunning::Operation>
 TestCasesConnectionImpl::ImportTestCases(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -423,7 +423,7 @@ TestCasesConnectionImpl::ImportTestCases(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
 TestCasesConnectionImpl::ImportTestCases(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::
@@ -501,7 +501,7 @@ TestCasesConnectionImpl::ExportTestCases(
 
 StatusOr<google::longrunning::Operation>
 TestCasesConnectionImpl::ExportTestCases(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -517,7 +517,7 @@ TestCasesConnectionImpl::ExportTestCases(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
 TestCasesConnectionImpl::ExportTestCases(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::

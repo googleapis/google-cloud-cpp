@@ -46,7 +46,7 @@ DisksConnection::AddResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::AddResourcePolicies(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -54,7 +54,7 @@ DisksConnection::AddResourcePolicies(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::AddResourcePolicies(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,15 +80,14 @@ DisksConnection::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::BulkInsert(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::BulkInsert(ExperimentalTag,
-                            google::cloud::cpp::compute::v1::Operation const&) {
+DisksConnection::BulkInsert(google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -104,7 +103,7 @@ DisksConnection::CreateSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::CreateSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -112,7 +111,7 @@ DisksConnection::CreateSnapshot(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::CreateSnapshot(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -128,15 +127,14 @@ DisksConnection::DeleteDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::DeleteDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::DeleteDisk(ExperimentalTag,
-                            google::cloud::cpp::compute::v1::Operation const&) {
+DisksConnection::DeleteDisk(google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -162,15 +160,14 @@ DisksConnection::InsertDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::InsertDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::InsertDiskRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::InsertDisk(ExperimentalTag,
-                            google::cloud::cpp::compute::v1::Operation const&) {
+DisksConnection::InsertDisk(google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -194,16 +191,15 @@ DisksConnection::RemoveResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::RemoveResourcePolicies(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::disks::v1::
-        RemoveResourcePoliciesRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                    RemoveResourcePoliciesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::RemoveResourcePolicies(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -218,15 +214,13 @@ DisksConnection::Resize(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> DisksConnection::Resize(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::disks::v1::ResizeRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::disks::v1::ResizeRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::Resize(ExperimentalTag,
-                        google::cloud::cpp::compute::v1::Operation const&) {
+DisksConnection::Resize(google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -246,15 +240,14 @@ DisksConnection::SetLabels(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> DisksConnection::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::SetLabelsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::SetLabels(ExperimentalTag,
-                           google::cloud::cpp::compute::v1::Operation const&) {
+DisksConnection::SetLabels(google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -271,16 +264,15 @@ DisksConnection::StartAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::StartAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::disks::v1::
-        StartAsyncReplicationRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                    StartAsyncReplicationRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::StartAsyncReplication(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -295,7 +287,7 @@ DisksConnection::StopAsyncReplication(google::cloud::cpp::compute::disks::v1::
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-DisksConnection::StopAsyncReplication(ExperimentalTag, NoAwaitTag,
+DisksConnection::StopAsyncReplication(NoAwaitTag,
                                       google::cloud::cpp::compute::disks::v1::
                                           StopAsyncReplicationRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
@@ -304,7 +296,7 @@ DisksConnection::StopAsyncReplication(ExperimentalTag, NoAwaitTag,
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::StopAsyncReplication(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -321,16 +313,15 @@ DisksConnection::StopGroupAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::StopGroupAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::disks::v1::
-        StopGroupAsyncReplicationRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                    StopGroupAsyncReplicationRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DisksConnection::StopGroupAsyncReplication(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -352,15 +343,14 @@ DisksConnection::UpdateDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 DisksConnection::UpdateDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-DisksConnection::UpdateDisk(ExperimentalTag,
-                            google::cloud::cpp::compute::v1::Operation const&) {
+DisksConnection::UpdateDisk(google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

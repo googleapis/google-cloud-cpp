@@ -73,23 +73,21 @@ BigtableTableAdminTracingConnection::UpdateTable(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminTracingConnection::UpdateTable(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UpdateTable");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateTable(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateTable(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminTracingConnection::UpdateTable(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UpdateTable");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateTable(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateTable(operation));
 }
 
 Status BigtableTableAdminTracingConnection::DeleteTable(
@@ -111,23 +109,21 @@ BigtableTableAdminTracingConnection::UndeleteTable(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminTracingConnection::UndeleteTable(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UndeleteTable");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UndeleteTable(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UndeleteTable(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminTracingConnection::UndeleteTable(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UndeleteTable");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UndeleteTable(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UndeleteTable(operation));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
@@ -142,24 +138,23 @@ BigtableTableAdminTracingConnection::CreateAuthorizedView(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminTracingConnection::CreateAuthorizedView(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CreateAuthorizedView");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateAuthorizedView(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateAuthorizedView(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminTracingConnection::CreateAuthorizedView(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CreateAuthorizedView");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateAuthorizedView(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAuthorizedView(operation));
 }
 
 StreamRange<google::bigtable::admin::v2::AuthorizedView>
@@ -195,24 +190,23 @@ BigtableTableAdminTracingConnection::UpdateAuthorizedView(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminTracingConnection::UpdateAuthorizedView(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UpdateAuthorizedView");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateAuthorizedView(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateAuthorizedView(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
 BigtableTableAdminTracingConnection::UpdateAuthorizedView(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::UpdateAuthorizedView");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateAuthorizedView(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAuthorizedView(operation));
 }
 
 Status BigtableTableAdminTracingConnection::DeleteAuthorizedView(
@@ -270,23 +264,21 @@ BigtableTableAdminTracingConnection::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminTracingConnection::CreateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CreateBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminTracingConnection::CreateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CreateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateBackup(operation));
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
@@ -337,23 +329,21 @@ BigtableTableAdminTracingConnection::RestoreTable(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminTracingConnection::RestoreTable(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::RestoreTable");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RestoreTable(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RestoreTable(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminTracingConnection::RestoreTable(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::RestoreTable");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RestoreTable(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RestoreTable(operation));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
@@ -367,23 +357,20 @@ BigtableTableAdminTracingConnection::CopyBackup(
 
 StatusOr<google::longrunning::Operation>
 BigtableTableAdminTracingConnection::CopyBackup(
-    ExperimentalTag, NoAwaitTag,
-    google::bigtable::admin::v2::CopyBackupRequest const& request) {
+    NoAwaitTag, google::bigtable::admin::v2::CopyBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CopyBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CopyBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CopyBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminTracingConnection::CopyBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "bigtable_admin::BigtableTableAdminConnection::CopyBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CopyBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CopyBackup(operation));
 }
 
 StatusOr<google::iam::v1::Policy>

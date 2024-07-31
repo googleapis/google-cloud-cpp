@@ -69,14 +69,12 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::redis::v1::CreateInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              CreateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -88,14 +86,12 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::redis::v1::UpdateInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              UpdateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -107,15 +103,13 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpgradeInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::redis::v1::UpgradeInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               UpgradeInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, ImportInstance)` is now ambiguous. Use
@@ -126,14 +120,12 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::redis::v1::ImportInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              ImportInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ImportInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -145,14 +137,12 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::redis::v1::ExportInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
-              ExportInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ExportInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -165,15 +155,13 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, FailoverInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::redis::v1::FailoverInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               FailoverInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
@@ -184,14 +172,12 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::redis::v1::DeleteInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::OperationMetadata>>,
-              DeleteInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -205,15 +191,13 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RescheduleMaintenance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::redis::v1::RescheduleMaintenanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               RescheduleMaintenance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

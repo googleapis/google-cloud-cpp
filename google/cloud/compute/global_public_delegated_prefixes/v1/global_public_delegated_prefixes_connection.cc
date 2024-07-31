@@ -49,16 +49,15 @@ GlobalPublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalPublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        DeletePublicDelegatedPrefixRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::global_public_delegated_prefixes::
+                    v1::DeletePublicDelegatedPrefixRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesConnection::DeletePublicDelegatedPrefix(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,16 +81,15 @@ GlobalPublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalPublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        InsertPublicDelegatedPrefixRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::global_public_delegated_prefixes::
+                    v1::InsertPublicDelegatedPrefixRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesConnection::InsertPublicDelegatedPrefix(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,16 +114,15 @@ GlobalPublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalPublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        PatchPublicDelegatedPrefixRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::global_public_delegated_prefixes::
+                    v1::PatchPublicDelegatedPrefixRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesConnection::PatchPublicDelegatedPrefix(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEVELOPERCONNECT_V1_DEVELOPER_CONNECT_CLIENT_H
 
 #include "google/cloud/developerconnect/v1/developer_connect_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -271,7 +270,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnection(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::developerconnect::v1::Connection const& connection,
       std::string const& connection_id, Options opts = {});
 
@@ -327,7 +326,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::developerconnect::v1::CreateConnectionRequest const&
           request,
       Options opts = {});
@@ -342,8 +341,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  CreateConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  CreateConnection(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -397,7 +395,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::developerconnect::v1::Connection const& connection,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -453,7 +451,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::developerconnect::v1::UpdateConnectionRequest const&
           request,
       Options opts = {});
@@ -468,8 +466,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-  UpdateConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  UpdateConnection(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -516,7 +513,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -570,7 +567,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::developerconnect::v1::DeleteConnectionRequest const&
           request,
       Options opts = {});
@@ -585,8 +582,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteConnection(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteConnection(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -646,7 +642,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::developerconnect::v1::GitRepositoryLink const&
           git_repository_link,
       std::string const& git_repository_link_id, Options opts = {});
@@ -707,7 +703,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGitRepositoryLink(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
           request,
       Options opts = {});
@@ -722,8 +718,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-  CreateGitRepositoryLink(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  CreateGitRepositoryLink(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off
@@ -770,7 +765,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -824,7 +819,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGitRepositoryLink(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
           request,
       Options opts = {});
@@ -839,8 +834,7 @@ class DeveloperConnectClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-  DeleteGitRepositoryLink(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  DeleteGitRepositoryLink(google::longrunning::Operation const& operation,
                           Options opts = {});
 
   // clang-format off

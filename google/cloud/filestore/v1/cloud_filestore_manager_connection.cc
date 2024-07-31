@@ -62,15 +62,14 @@ CloudFilestoreManagerConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::CreateInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::CreateInstanceRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::CreateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnection::CreateInstance(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::filestore::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,15 +85,14 @@ CloudFilestoreManagerConnection::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::UpdateInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::UpdateInstanceRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::UpdateInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnection::UpdateInstance(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::filestore::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,15 +108,14 @@ CloudFilestoreManagerConnection::RestoreInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::RestoreInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::RestoreInstanceRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::RestoreInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnection::RestoreInstance(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::filestore::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,15 +131,14 @@ CloudFilestoreManagerConnection::RevertInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::RevertInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::RevertInstanceRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::RevertInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnection::RevertInstance(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::filestore::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -158,15 +154,14 @@ CloudFilestoreManagerConnection::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::DeleteInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::DeleteInstanceRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::DeleteInstanceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnection::DeleteInstance(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::common::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -196,15 +191,14 @@ CloudFilestoreManagerConnection::CreateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::CreateSnapshot(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::CreateSnapshotRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::CreateSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
 CloudFilestoreManagerConnection::CreateSnapshot(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::filestore::v1::Snapshot>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -220,15 +214,14 @@ CloudFilestoreManagerConnection::DeleteSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::DeleteSnapshot(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::DeleteSnapshotRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::DeleteSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnection::DeleteSnapshot(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::common::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,15 +237,14 @@ CloudFilestoreManagerConnection::UpdateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::UpdateSnapshot(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::UpdateSnapshotRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::UpdateSnapshotRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
 CloudFilestoreManagerConnection::UpdateSnapshot(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::filestore::v1::Snapshot>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -282,15 +274,14 @@ CloudFilestoreManagerConnection::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::CreateBackup(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::CreateBackupRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::CreateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerConnection::CreateBackup(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::filestore::v1::Backup>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -306,15 +297,14 @@ CloudFilestoreManagerConnection::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::DeleteBackup(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::DeleteBackupRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::DeleteBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnection::DeleteBackup(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::common::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -330,15 +320,14 @@ CloudFilestoreManagerConnection::UpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerConnection::UpdateBackup(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::filestore::v1::UpdateBackupRequest const&) {
+    NoAwaitTag, google::cloud::filestore::v1::UpdateBackupRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerConnection::UpdateBackup(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::filestore::v1::Backup>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

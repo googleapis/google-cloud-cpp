@@ -66,15 +66,13 @@ class MockResourcePoliciesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteResourcePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::resource_policies::v1::
-                   DeleteResourcePolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                               DeleteResourcePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteResourcePolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>,
@@ -99,15 +97,13 @@ class MockResourcePoliciesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertResourcePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::resource_policies::v1::
-                   InsertResourcePolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                               InsertResourcePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertResourcePolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::ResourcePolicy>),
@@ -127,15 +123,13 @@ class MockResourcePoliciesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchResourcePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::resource_policies::v1::
-                   PatchResourcePolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::resource_policies::v1::
+                               PatchResourcePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchResourcePolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,

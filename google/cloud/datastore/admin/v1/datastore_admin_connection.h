@@ -22,7 +22,6 @@
 #include "google/cloud/datastore/admin/v1/datastore_admin_connection_idempotency_policy.h"
 #include "google/cloud/datastore/admin/v1/internal/datastore_admin_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -192,44 +191,42 @@ class DatastoreAdminConnection {
       google::datastore::admin::v1::ExportEntitiesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ExportEntities(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::datastore::admin::v1::ExportEntitiesRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
-  ExportEntities(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  ExportEntities(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
   ImportEntities(
       google::datastore::admin::v1::ImportEntitiesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ImportEntities(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::datastore::admin::v1::ImportEntitiesRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
-  ImportEntities(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  ImportEntities(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
       google::datastore::admin::v1::CreateIndexRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::datastore::admin::v1::CreateIndexRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::Index>> CreateIndex(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
       google::datastore::admin::v1::DeleteIndexRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::datastore::admin::v1::DeleteIndexRequest const& request);
 
   virtual future<StatusOr<google::datastore::admin::v1::Index>> DeleteIndex(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::datastore::admin::v1::Index> GetIndex(
       google::datastore::admin::v1::GetIndexRequest const& request);

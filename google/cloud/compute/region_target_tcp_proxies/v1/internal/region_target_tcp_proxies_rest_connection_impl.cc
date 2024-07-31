@@ -109,9 +109,8 @@ RegionTargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        DeleteTargetTcpProxyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+                    DeleteTargetTcpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -126,7 +125,6 @@ RegionTargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetTcpProxiesRestConnectionImpl::DeleteTargetTcpProxy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -258,9 +256,8 @@ RegionTargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_target_tcp_proxies::v1::
-        InsertTargetTcpProxyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_target_tcp_proxies::v1::
+                    InsertTargetTcpProxyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -275,7 +272,6 @@ RegionTargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetTcpProxiesRestConnectionImpl::InsertTargetTcpProxy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

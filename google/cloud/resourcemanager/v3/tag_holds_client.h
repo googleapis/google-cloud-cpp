@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_HOLDS_CLIENT_H
 
 #include "google/cloud/resourcemanager/v3/tag_holds_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -139,7 +138,7 @@ class TagHoldsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagHold(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::resourcemanager::v3::TagHold const& tag_hold,
       Options opts = {});
 
@@ -194,7 +193,7 @@ class TagHoldsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagHold(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
       Options opts = {});
 
@@ -208,8 +207,7 @@ class TagHoldsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -256,7 +254,7 @@ class TagHoldsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagHold(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -309,7 +307,7 @@ class TagHoldsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagHold(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
       Options opts = {});
 
@@ -323,8 +321,7 @@ class TagHoldsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteTagHold(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off

@@ -54,13 +54,12 @@ class EnvironmentsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  CreateEnvironment(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  CreateEnvironment(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
   UpdateEnvironment(
@@ -68,13 +67,12 @@ class EnvironmentsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
-  UpdateEnvironment(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  UpdateEnvironment(google::longrunning::Operation const& operation) override;
 
   Status DeleteEnvironment(
       google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
@@ -91,13 +89,12 @@ class EnvironmentsTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> RunContinuousTest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
           request) override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
-  RunContinuousTest(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  RunContinuousTest(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>
   ListContinuousTestResults(
@@ -109,13 +106,12 @@ class EnvironmentsTracingConnection
                  request) override;
 
   StatusOr<google::longrunning::Operation> DeployFlow(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
-  DeployFlow(ExperimentalTag,
-             google::longrunning::Operation const& operation) override;
+  DeployFlow(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<dialogflow_cx::EnvironmentsConnection> child_;

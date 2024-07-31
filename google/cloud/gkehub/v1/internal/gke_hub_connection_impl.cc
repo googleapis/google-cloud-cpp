@@ -197,7 +197,7 @@ GkeHubConnectionImpl::CreateMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::CreateMembership(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -213,7 +213,7 @@ StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::CreateMembership(
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubConnectionImpl::CreateMembership(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
@@ -287,7 +287,7 @@ GkeHubConnectionImpl::CreateFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::CreateFeature(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -302,7 +302,7 @@ StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::CreateFeature(
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnectionImpl::CreateFeature(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
@@ -376,7 +376,7 @@ GkeHubConnectionImpl::DeleteMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::DeleteMembership(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -392,7 +392,7 @@ StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::DeleteMembership(
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubConnectionImpl::DeleteMembership(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
@@ -467,7 +467,7 @@ GkeHubConnectionImpl::DeleteFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::DeleteFeature(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -482,7 +482,7 @@ StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::DeleteFeature(
 
 future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubConnectionImpl::DeleteFeature(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
@@ -557,7 +557,7 @@ GkeHubConnectionImpl::UpdateMembership(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::UpdateMembership(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -573,7 +573,7 @@ StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::UpdateMembership(
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubConnectionImpl::UpdateMembership(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {
@@ -647,7 +647,7 @@ GkeHubConnectionImpl::UpdateFeature(
 }
 
 StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::UpdateFeature(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -662,7 +662,7 @@ StatusOr<google::longrunning::Operation> GkeHubConnectionImpl::UpdateFeature(
 
 future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnectionImpl::UpdateFeature(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::gkehub::v1::OperationMetadata>()) {

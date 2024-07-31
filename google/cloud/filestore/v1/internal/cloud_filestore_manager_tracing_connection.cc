@@ -64,23 +64,22 @@ CloudFilestoreManagerTracingConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::CreateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerTracingConnection::CreateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateInstance(operation));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
@@ -94,23 +93,22 @@ CloudFilestoreManagerTracingConnection::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::UpdateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerTracingConnection::UpdateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(operation));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
@@ -124,23 +122,22 @@ CloudFilestoreManagerTracingConnection::RestoreInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::RestoreInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::RestoreInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RestoreInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RestoreInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerTracingConnection::RestoreInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::RestoreInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RestoreInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RestoreInstance(operation));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
@@ -154,23 +151,22 @@ CloudFilestoreManagerTracingConnection::RevertInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::RevertInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::RevertInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::RevertInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RevertInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RevertInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerTracingConnection::RevertInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::RevertInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RevertInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RevertInstance(operation));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
@@ -184,23 +180,22 @@ CloudFilestoreManagerTracingConnection::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::DeleteInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerTracingConnection::DeleteInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(operation));
 }
 
 StreamRange<google::cloud::filestore::v1::Snapshot>
@@ -234,23 +229,22 @@ CloudFilestoreManagerTracingConnection::CreateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::CreateSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::CreateSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
 CloudFilestoreManagerTracingConnection::CreateSnapshot(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateSnapshot(operation));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
@@ -264,23 +258,22 @@ CloudFilestoreManagerTracingConnection::DeleteSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::DeleteSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::DeleteSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerTracingConnection::DeleteSnapshot(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSnapshot(operation));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
@@ -294,23 +287,22 @@ CloudFilestoreManagerTracingConnection::UpdateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::UpdateSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::UpdateSnapshotRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
 CloudFilestoreManagerTracingConnection::UpdateSnapshot(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateSnapshot(operation));
 }
 
 StreamRange<google::cloud::filestore::v1::Backup>
@@ -344,23 +336,21 @@ CloudFilestoreManagerTracingConnection::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::CreateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerTracingConnection::CreateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::CreateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateBackup(operation));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
@@ -374,23 +364,21 @@ CloudFilestoreManagerTracingConnection::DeleteBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::DeleteBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerTracingConnection::DeleteBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::DeleteBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteBackup(operation));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
@@ -404,23 +392,21 @@ CloudFilestoreManagerTracingConnection::UpdateBackup(
 
 StatusOr<google::longrunning::Operation>
 CloudFilestoreManagerTracingConnection::UpdateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::filestore::v1::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerTracingConnection::UpdateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "filestore_v1::CloudFilestoreManagerConnection::UpdateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateBackup(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

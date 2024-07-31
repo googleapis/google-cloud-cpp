@@ -63,23 +63,22 @@ DomainsTracingConnection::RegisterDomain(
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingConnection::RegisterDomain(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::RegisterDomain");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RegisterDomain(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RegisterDomain(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsTracingConnection::RegisterDomain(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::RegisterDomain");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RegisterDomain(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RegisterDomain(operation));
 }
 
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
@@ -103,23 +102,22 @@ DomainsTracingConnection::TransferDomain(
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingConnection::TransferDomain(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::TransferDomainRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::TransferDomain");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->TransferDomain(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->TransferDomain(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsTracingConnection::TransferDomain(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::TransferDomain");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->TransferDomain(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->TransferDomain(operation));
 }
 
 StreamRange<google::cloud::domains::v1::Registration>
@@ -154,24 +152,23 @@ DomainsTracingConnection::UpdateRegistration(
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingConnection::UpdateRegistration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::UpdateRegistration");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateRegistration(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateRegistration(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsTracingConnection::UpdateRegistration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::UpdateRegistration");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateRegistration(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateRegistration(operation));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -187,25 +184,24 @@ DomainsTracingConnection::ConfigureManagementSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingConnection::ConfigureManagementSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "domains_v1::DomainsConnection::ConfigureManagementSettings");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ConfigureManagementSettings(ExperimentalTag{},
-                                                 NoAwaitTag{}, request));
+      *span, child_->ConfigureManagementSettings(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsTracingConnection::ConfigureManagementSettings(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "domains_v1::DomainsConnection::ConfigureManagementSettings");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ConfigureManagementSettings(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ConfigureManagementSettings(operation));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -220,24 +216,23 @@ DomainsTracingConnection::ConfigureDnsSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingConnection::ConfigureDnsSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ConfigureDnsSettings");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ConfigureDnsSettings(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ConfigureDnsSettings(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsTracingConnection::ConfigureDnsSettings(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ConfigureDnsSettings");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ConfigureDnsSettings(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ConfigureDnsSettings(operation));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -253,25 +248,24 @@ DomainsTracingConnection::ConfigureContactSettings(
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingConnection::ConfigureContactSettings(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ConfigureContactSettingsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "domains_v1::DomainsConnection::ConfigureContactSettings");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ConfigureContactSettings(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->ConfigureContactSettings(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsTracingConnection::ConfigureContactSettings(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "domains_v1::DomainsConnection::ConfigureContactSettings");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ConfigureContactSettings(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ConfigureContactSettings(operation));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -286,24 +280,23 @@ DomainsTracingConnection::ExportRegistration(
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingConnection::ExportRegistration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ExportRegistration");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ExportRegistration(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ExportRegistration(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsTracingConnection::ExportRegistration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::ExportRegistration");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportRegistration(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportRegistration(operation));
 }
 
 future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
@@ -318,24 +311,23 @@ DomainsTracingConnection::DeleteRegistration(
 
 StatusOr<google::longrunning::Operation>
 DomainsTracingConnection::DeleteRegistration(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::DeleteRegistration");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteRegistration(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteRegistration(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
 DomainsTracingConnection::DeleteRegistration(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("domains_v1::DomainsConnection::DeleteRegistration");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteRegistration(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRegistration(operation));
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>

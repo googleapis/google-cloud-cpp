@@ -80,16 +80,15 @@ PrivilegedAccessManagerConnection::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnection::CreateEntitlement(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::privilegedaccessmanager::v1::
-        CreateEntitlementRequest const&) {
+    NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                    CreateEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::CreateEntitlement(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -106,16 +105,15 @@ PrivilegedAccessManagerConnection::DeleteEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnection::DeleteEntitlement(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::privilegedaccessmanager::v1::
-        DeleteEntitlementRequest const&) {
+    NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                    DeleteEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::DeleteEntitlement(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -132,16 +130,15 @@ PrivilegedAccessManagerConnection::UpdateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnection::UpdateEntitlement(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::privilegedaccessmanager::v1::
-        UpdateEntitlementRequest const&) {
+    NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                    UpdateEntitlementRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerConnection::UpdateEntitlement(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -197,7 +194,7 @@ PrivilegedAccessManagerConnection::RevokeGrant(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerConnection::RevokeGrant(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -205,7 +202,7 @@ PrivilegedAccessManagerConnection::RevokeGrant(
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
 PrivilegedAccessManagerConnection::RevokeGrant(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

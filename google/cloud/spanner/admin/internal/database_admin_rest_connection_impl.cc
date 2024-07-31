@@ -118,7 +118,7 @@ DatabaseAdminRestConnectionImpl::CreateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestConnectionImpl::CreateDatabase(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -135,7 +135,7 @@ DatabaseAdminRestConnectionImpl::CreateDatabase(
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminRestConnectionImpl::CreateDatabase(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::database::v1::
@@ -226,7 +226,7 @@ DatabaseAdminRestConnectionImpl::UpdateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestConnectionImpl::UpdateDatabase(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -243,7 +243,7 @@ DatabaseAdminRestConnectionImpl::UpdateDatabase(
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminRestConnectionImpl::UpdateDatabase(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::database::v1::
@@ -320,7 +320,7 @@ DatabaseAdminRestConnectionImpl::UpdateDatabaseDdl(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestConnectionImpl::UpdateDatabaseDdl(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -339,7 +339,7 @@ DatabaseAdminRestConnectionImpl::UpdateDatabaseDdl(
 future<
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminRestConnectionImpl::UpdateDatabaseDdl(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::database::v1::
@@ -484,7 +484,7 @@ DatabaseAdminRestConnectionImpl::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestConnectionImpl::CreateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -500,7 +500,7 @@ DatabaseAdminRestConnectionImpl::CreateBackup(
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 DatabaseAdminRestConnectionImpl::CreateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::database::v1::
@@ -575,7 +575,7 @@ DatabaseAdminRestConnectionImpl::CopyBackup(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestConnectionImpl::CopyBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
@@ -591,7 +591,7 @@ DatabaseAdminRestConnectionImpl::CopyBackup(
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 DatabaseAdminRestConnectionImpl::CopyBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::database::v1::
@@ -747,7 +747,7 @@ DatabaseAdminRestConnectionImpl::RestoreDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminRestConnectionImpl::RestoreDatabase(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -764,7 +764,7 @@ DatabaseAdminRestConnectionImpl::RestoreDatabase(
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminRestConnectionImpl::RestoreDatabase(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::database::v1::

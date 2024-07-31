@@ -59,11 +59,10 @@ class WebRiskServiceTracingConnection
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SubmitUri(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
   future<StatusOr<google::cloud::webrisk::v1::Submission>> SubmitUri(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

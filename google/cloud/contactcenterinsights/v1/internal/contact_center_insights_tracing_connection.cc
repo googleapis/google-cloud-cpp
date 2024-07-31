@@ -59,27 +59,26 @@ ContactCenterInsightsTracingConnection::UploadConversation(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::UploadConversation(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
         request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "UploadConversation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UploadConversation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UploadConversation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>
 ContactCenterInsightsTracingConnection::UploadConversation(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "UploadConversation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UploadConversation(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UploadConversation(operation));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -141,26 +140,25 @@ ContactCenterInsightsTracingConnection::CreateAnalysis(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::CreateAnalysis(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "CreateAnalysis");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateAnalysis(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateAnalysis(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>
 ContactCenterInsightsTracingConnection::CreateAnalysis(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "CreateAnalysis");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateAnalysis(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateAnalysis(operation));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
@@ -211,28 +209,26 @@ ContactCenterInsightsTracingConnection::BulkAnalyzeConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::BulkAnalyzeConversations(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::
-        BulkAnalyzeConversationsRequest const& request) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    BulkAnalyzeConversationsRequest const& request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "BulkAnalyzeConversations");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->BulkAnalyzeConversations(ExperimentalTag{}, NoAwaitTag{},
-                                              request));
+      *span, child_->BulkAnalyzeConversations(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
 ContactCenterInsightsTracingConnection::BulkAnalyzeConversations(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "BulkAnalyzeConversations");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BulkAnalyzeConversations(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BulkAnalyzeConversations(operation));
 }
 
 future<StatusOr<
@@ -250,28 +246,26 @@ ContactCenterInsightsTracingConnection::BulkDeleteConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::BulkDeleteConversations(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::contactcenterinsights::v1::
-        BulkDeleteConversationsRequest const& request) {
+    NoAwaitTag, google::cloud::contactcenterinsights::v1::
+                    BulkDeleteConversationsRequest const& request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "BulkDeleteConversations");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->BulkDeleteConversations(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->BulkDeleteConversations(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::BulkDeleteConversationsResponse>>
 ContactCenterInsightsTracingConnection::BulkDeleteConversations(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "BulkDeleteConversations");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BulkDeleteConversations(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BulkDeleteConversations(operation));
 }
 
 future<StatusOr<
@@ -289,28 +283,27 @@ ContactCenterInsightsTracingConnection::IngestConversations(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::IngestConversations(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "IngestConversations");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->IngestConversations(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->IngestConversations(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
 ContactCenterInsightsTracingConnection::IngestConversations(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "IngestConversations");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->IngestConversations(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->IngestConversations(operation));
 }
 
 future<StatusOr<
@@ -328,28 +321,27 @@ ContactCenterInsightsTracingConnection::ExportInsightsData(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::ExportInsightsData(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "ExportInsightsData");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ExportInsightsData(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ExportInsightsData(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsTracingConnection::ExportInsightsData(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "ExportInsightsData");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ExportInsightsData(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ExportInsightsData(operation));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
@@ -365,27 +357,26 @@ ContactCenterInsightsTracingConnection::CreateIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::CreateIssueModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "CreateIssueModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateIssueModel(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateIssueModel(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>
 ContactCenterInsightsTracingConnection::CreateIssueModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "CreateIssueModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateIssueModel(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateIssueModel(operation));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
@@ -435,28 +426,27 @@ ContactCenterInsightsTracingConnection::DeleteIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::DeleteIssueModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "DeleteIssueModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteIssueModel(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteIssueModel(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>
 ContactCenterInsightsTracingConnection::DeleteIssueModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "DeleteIssueModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteIssueModel(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteIssueModel(operation));
 }
 
 future<StatusOr<
@@ -473,28 +463,27 @@ ContactCenterInsightsTracingConnection::DeployIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::DeployIssueModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "DeployIssueModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeployIssueModel(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeployIssueModel(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>
 ContactCenterInsightsTracingConnection::DeployIssueModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "DeployIssueModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeployIssueModel(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeployIssueModel(operation));
 }
 
 future<StatusOr<
@@ -512,28 +501,27 @@ ContactCenterInsightsTracingConnection::UndeployIssueModel(
 
 StatusOr<google::longrunning::Operation>
 ContactCenterInsightsTracingConnection::UndeployIssueModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "UndeployIssueModel");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UndeployIssueModel(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UndeployIssueModel(NoAwaitTag{}, request));
 }
 
 future<StatusOr<
     google::cloud::contactcenterinsights::v1::UndeployIssueModelResponse>>
 ContactCenterInsightsTracingConnection::UndeployIssueModel(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contactcenterinsights_v1::ContactCenterInsightsConnection::"
       "UndeployIssueModel");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UndeployIssueModel(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UndeployIssueModel(operation));
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>

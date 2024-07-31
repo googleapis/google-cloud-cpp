@@ -66,15 +66,13 @@ class MockPacketMirroringsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeletePacketMirroring,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::packet_mirrorings::v1::
-                   DeletePacketMirroringRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                               DeletePacketMirroringRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePacketMirroring,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>,
@@ -94,15 +92,13 @@ class MockPacketMirroringsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertPacketMirroring,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::packet_mirrorings::v1::
-                   InsertPacketMirroringRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                               InsertPacketMirroringRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertPacketMirroring,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>),
@@ -122,15 +118,13 @@ class MockPacketMirroringsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchPacketMirroring,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::packet_mirrorings::v1::
-                   PatchPacketMirroringRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::packet_mirrorings::v1::
+                               PatchPacketMirroringRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPacketMirroring,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

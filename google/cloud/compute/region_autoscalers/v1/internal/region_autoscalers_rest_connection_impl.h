@@ -57,12 +57,10 @@ class RegionAutoscalersRestConnectionImpl
           DeleteAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAutoscaler(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          DeleteAutoscalerRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                      DeleteAutoscalerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAutoscaler(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Autoscaler> GetAutoscaler(
@@ -74,12 +72,10 @@ class RegionAutoscalersRestConnectionImpl
           InsertAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAutoscaler(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          InsertAutoscalerRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                      InsertAutoscalerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAutoscaler(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Autoscaler>
@@ -91,12 +87,10 @@ class RegionAutoscalersRestConnectionImpl
           PatchAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchAutoscaler(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          PatchAutoscalerRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                      PatchAutoscalerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchAutoscaler(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
@@ -104,12 +98,10 @@ class RegionAutoscalersRestConnectionImpl
           UpdateAutoscalerRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAutoscaler(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_autoscalers::v1::
-          UpdateAutoscalerRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                      UpdateAutoscalerRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateAutoscaler(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

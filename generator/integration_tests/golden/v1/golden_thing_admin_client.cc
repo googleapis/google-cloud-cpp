@@ -58,12 +58,12 @@ GoldenThingAdminClient::CreateDatabase(std::string const& parent, std::string co
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::CreateDatabase(ExperimentalTag, NoAwaitTag, std::string const& parent, std::string const& create_statement, Options opts) {
+GoldenThingAdminClient::CreateDatabase(NoAwaitTag, std::string const& parent, std::string const& create_statement, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent(parent);
   request.set_create_statement(create_statement);
-  return connection_->CreateDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -73,15 +73,15 @@ GoldenThingAdminClient::CreateDatabase(google::test::admin::database::v1::Create
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::CreateDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request, Options opts) {
+GoldenThingAdminClient::CreateDatabase(NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::CreateDatabase(ExperimentalTag, google::longrunning::Operation const& operation, Options opts) {
+GoldenThingAdminClient::CreateDatabase(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateDatabase(ExperimentalTag{}, operation);
+  return connection_->CreateDatabase(operation);
 }
 
 StatusOr<google::test::admin::database::v1::Database>
@@ -108,12 +108,12 @@ GoldenThingAdminClient::UpdateDatabaseDdl(std::string const& database, std::vect
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag, std::string const& database, std::vector<std::string> const& statements, Options opts) {
+GoldenThingAdminClient::UpdateDatabaseDdl(NoAwaitTag, std::string const& database, std::vector<std::string> const& statements, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(database);
   *request.mutable_statements() = {statements.begin(), statements.end()};
-  return connection_->UpdateDatabaseDdl(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateDatabaseDdl(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
@@ -123,15 +123,15 @@ GoldenThingAdminClient::UpdateDatabaseDdl(google::test::admin::database::v1::Upd
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options opts) {
+GoldenThingAdminClient::UpdateDatabaseDdl(NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDatabaseDdl(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateDatabaseDdl(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-GoldenThingAdminClient::UpdateDatabaseDdl(ExperimentalTag, google::longrunning::Operation const& operation, Options opts) {
+GoldenThingAdminClient::UpdateDatabaseDdl(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDatabaseDdl(ExperimentalTag{}, operation);
+  return connection_->UpdateDatabaseDdl(operation);
 }
 
 Status
@@ -251,13 +251,13 @@ GoldenThingAdminClient::CreateBackup(std::string const& parent, google::test::ad
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::CreateBackup(ExperimentalTag, NoAwaitTag, std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options opts) {
+GoldenThingAdminClient::CreateBackup(NoAwaitTag, std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent(parent);
   *request.mutable_backup() = backup;
   request.set_backup_id(backup_id);
-  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateBackup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Backup>>
@@ -267,15 +267,15 @@ GoldenThingAdminClient::CreateBackup(google::test::admin::database::v1::CreateBa
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::CreateBackup(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request, Options opts) {
+GoldenThingAdminClient::CreateBackup(NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateBackup(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Backup>>
-GoldenThingAdminClient::CreateBackup(ExperimentalTag, google::longrunning::Operation const& operation, Options opts) {
+GoldenThingAdminClient::CreateBackup(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateBackup(ExperimentalTag{}, operation);
+  return connection_->CreateBackup(operation);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
@@ -346,13 +346,13 @@ GoldenThingAdminClient::RestoreDatabase(std::string const& parent, std::string c
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::RestoreDatabase(ExperimentalTag, NoAwaitTag, std::string const& parent, std::string const& database_id, std::string const& backup, Options opts) {
+GoldenThingAdminClient::RestoreDatabase(NoAwaitTag, std::string const& parent, std::string const& database_id, std::string const& backup, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent(parent);
   request.set_database_id(database_id);
   request.set_backup(backup);
-  return connection_->RestoreDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->RestoreDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
@@ -362,15 +362,15 @@ GoldenThingAdminClient::RestoreDatabase(google::test::admin::database::v1::Resto
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::RestoreDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts) {
+GoldenThingAdminClient::RestoreDatabase(NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->RestoreDatabase(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::RestoreDatabase(ExperimentalTag, google::longrunning::Operation const& operation, Options opts) {
+GoldenThingAdminClient::RestoreDatabase(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RestoreDatabase(ExperimentalTag{}, operation);
+  return connection_->RestoreDatabase(operation);
 }
 
 StreamRange<google::longrunning::Operation>
@@ -408,15 +408,15 @@ GoldenThingAdminClient::LongRunningWithoutRouting(google::test::admin::database:
 }
 
 StatusOr<google::longrunning::Operation>
-GoldenThingAdminClient::LongRunningWithoutRouting(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts) {
+GoldenThingAdminClient::LongRunningWithoutRouting(NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->LongRunningWithoutRouting(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->LongRunningWithoutRouting(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>
-GoldenThingAdminClient::LongRunningWithoutRouting(ExperimentalTag, google::longrunning::Operation const& operation, Options opts) {
+GoldenThingAdminClient::LongRunningWithoutRouting(google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->LongRunningWithoutRouting(ExperimentalTag{}, operation);
+  return connection_->LongRunningWithoutRouting(operation);
 }
 
 future<StatusOr<google::test::admin::database::v1::Database>>

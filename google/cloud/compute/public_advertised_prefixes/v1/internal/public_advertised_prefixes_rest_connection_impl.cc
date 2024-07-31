@@ -107,9 +107,8 @@ PublicAdvertisedPrefixesRestConnectionImpl::Announce(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesRestConnectionImpl::Announce(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        AnnounceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                    AnnounceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -124,7 +123,6 @@ PublicAdvertisedPrefixesRestConnectionImpl::Announce(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestConnectionImpl::Announce(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -237,9 +235,8 @@ PublicAdvertisedPrefixesRestConnectionImpl::DeletePublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesRestConnectionImpl::DeletePublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        DeletePublicAdvertisedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                    DeletePublicAdvertisedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -255,7 +252,6 @@ PublicAdvertisedPrefixesRestConnectionImpl::DeletePublicAdvertisedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestConnectionImpl::DeletePublicAdvertisedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -384,9 +380,8 @@ PublicAdvertisedPrefixesRestConnectionImpl::InsertPublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesRestConnectionImpl::InsertPublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        InsertPublicAdvertisedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                    InsertPublicAdvertisedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -402,7 +397,6 @@ PublicAdvertisedPrefixesRestConnectionImpl::InsertPublicAdvertisedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestConnectionImpl::InsertPublicAdvertisedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -555,9 +549,8 @@ PublicAdvertisedPrefixesRestConnectionImpl::PatchPublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesRestConnectionImpl::PatchPublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        PatchPublicAdvertisedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                    PatchPublicAdvertisedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -573,7 +566,6 @@ PublicAdvertisedPrefixesRestConnectionImpl::PatchPublicAdvertisedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestConnectionImpl::PatchPublicAdvertisedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -685,9 +677,8 @@ PublicAdvertisedPrefixesRestConnectionImpl::Withdraw(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesRestConnectionImpl::Withdraw(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_advertised_prefixes::v1::
-        WithdrawRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_advertised_prefixes::v1::
+                    WithdrawRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -702,7 +693,6 @@ PublicAdvertisedPrefixesRestConnectionImpl::Withdraw(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesRestConnectionImpl::Withdraw(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

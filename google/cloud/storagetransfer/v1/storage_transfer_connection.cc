@@ -90,15 +90,14 @@ StorageTransferServiceConnection::RunTransferJob(
 
 StatusOr<google::longrunning::Operation>
 StorageTransferServiceConnection::RunTransferJob(
-    ExperimentalTag, NoAwaitTag,
-    google::storagetransfer::v1::RunTransferJobRequest const&) {
+    NoAwaitTag, google::storagetransfer::v1::RunTransferJobRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceConnection::RunTransferJob(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::storagetransfer::v1::TransferOperation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

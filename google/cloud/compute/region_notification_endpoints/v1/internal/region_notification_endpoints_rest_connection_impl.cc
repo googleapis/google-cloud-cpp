@@ -111,9 +111,8 @@ RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_notification_endpoints::v1::
-        DeleteNotificationEndpointRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_notification_endpoints::v1::
+                    DeleteNotificationEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -129,7 +128,6 @@ RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestConnectionImpl::DeleteNotificationEndpoint(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -262,9 +260,8 @@ RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_notification_endpoints::v1::
-        InsertNotificationEndpointRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_notification_endpoints::v1::
+                    InsertNotificationEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -280,7 +277,6 @@ RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionNotificationEndpointsRestConnectionImpl::InsertNotificationEndpoint(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

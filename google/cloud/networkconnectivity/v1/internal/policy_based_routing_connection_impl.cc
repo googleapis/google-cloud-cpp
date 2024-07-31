@@ -174,7 +174,7 @@ PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreatePolicyBasedRouteRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -191,7 +191,7 @@ PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>
 PolicyBasedRoutingServiceConnectionImpl::CreatePolicyBasedRoute(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::
@@ -269,7 +269,7 @@ PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(
 
 StatusOr<google::longrunning::Operation>
 PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeletePolicyBasedRouteRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -286,7 +286,7 @@ PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 PolicyBasedRoutingServiceConnectionImpl::DeletePolicyBasedRoute(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::networkconnectivity::v1::

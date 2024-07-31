@@ -202,24 +202,23 @@ ProductSearchTracingConnection::ImportProductSets(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchTracingConnection::ImportProductSets(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   auto span = internal::MakeSpan(
       "vision_v1::ProductSearchConnection::ImportProductSets");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ImportProductSets(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ImportProductSets(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchTracingConnection::ImportProductSets(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "vision_v1::ProductSearchConnection::ImportProductSets");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->ImportProductSets(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ImportProductSets(operation));
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
@@ -233,23 +232,21 @@ ProductSearchTracingConnection::PurgeProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchTracingConnection::PurgeProducts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   auto span =
       internal::MakeSpan("vision_v1::ProductSearchConnection::PurgeProducts");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PurgeProducts(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PurgeProducts(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchTracingConnection::PurgeProducts(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("vision_v1::ProductSearchConnection::PurgeProducts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PurgeProducts(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PurgeProducts(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

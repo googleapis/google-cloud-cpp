@@ -149,7 +149,7 @@ MetricsScopesConnectionImpl::CreateMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesConnectionImpl::CreateMonitoredProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -166,7 +166,7 @@ MetricsScopesConnectionImpl::CreateMonitoredProject(
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
 MetricsScopesConnectionImpl::CreateMonitoredProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::monitoring::metricsscope::v1::
@@ -244,7 +244,7 @@ MetricsScopesConnectionImpl::DeleteMonitoredProject(
 
 StatusOr<google::longrunning::Operation>
 MetricsScopesConnectionImpl::DeleteMonitoredProject(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -261,7 +261,7 @@ MetricsScopesConnectionImpl::DeleteMonitoredProject(
 
 future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
 MetricsScopesConnectionImpl::DeleteMonitoredProject(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::monitoring::metricsscope::v1::

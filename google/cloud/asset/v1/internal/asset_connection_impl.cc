@@ -103,8 +103,7 @@ AssetServiceConnectionImpl::ExportAssets(
 
 StatusOr<google::longrunning::Operation>
 AssetServiceConnectionImpl::ExportAssets(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::asset::v1::ExportAssetsRequest const& request) {
+    NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -118,7 +117,7 @@ AssetServiceConnectionImpl::ExportAssets(
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceConnectionImpl::ExportAssets(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::asset::v1::ExportAssetsRequest>()) {
@@ -392,7 +391,7 @@ AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
 
 StatusOr<google::longrunning::Operation>
 AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -409,7 +408,7 @@ AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
 
 future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::asset::v1::

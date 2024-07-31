@@ -48,14 +48,14 @@ PublicAdvertisedPrefixesClient::Announce(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::Announce(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     std::string const& public_advertised_prefix, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::public_advertised_prefixes::v1::AnnounceRequest
       request;
   request.set_project(project);
   request.set_public_advertised_prefix(public_advertised_prefix);
-  return connection_->Announce(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Announce(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -69,20 +69,19 @@ PublicAdvertisedPrefixesClient::Announce(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::Announce(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         AnnounceRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Announce(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Announce(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesClient::Announce(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Announce(ExperimentalTag{}, operation);
+  return connection_->Announce(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -99,15 +98,14 @@ PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     std::string const& public_advertised_prefix, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::public_advertised_prefixes::v1::
       DeletePublicAdvertisedPrefixRequest request;
   request.set_project(project);
   request.set_public_advertised_prefix(public_advertised_prefix);
-  return connection_->DeletePublicAdvertisedPrefix(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->DeletePublicAdvertisedPrefix(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -121,22 +119,19 @@ PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         DeletePublicAdvertisedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePublicAdvertisedPrefix(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->DeletePublicAdvertisedPrefix(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesClient::DeletePublicAdvertisedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePublicAdvertisedPrefix(ExperimentalTag{},
-                                                   operation);
+  return connection_->DeletePublicAdvertisedPrefix(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -177,7 +172,7 @@ PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::PublicAdvertisedPrefix const&
         public_advertised_prefix_resource,
     Options opts) {
@@ -187,8 +182,7 @@ PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefix(
   request.set_project(project);
   *request.mutable_public_advertised_prefix_resource() =
       public_advertised_prefix_resource;
-  return connection_->InsertPublicAdvertisedPrefix(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->InsertPublicAdvertisedPrefix(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -202,22 +196,19 @@ PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         InsertPublicAdvertisedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertPublicAdvertisedPrefix(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->InsertPublicAdvertisedPrefix(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesClient::InsertPublicAdvertisedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertPublicAdvertisedPrefix(ExperimentalTag{},
-                                                   operation);
+  return connection_->InsertPublicAdvertisedPrefix(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -257,7 +248,7 @@ PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     std::string const& public_advertised_prefix,
     google::cloud::cpp::compute::v1::PublicAdvertisedPrefix const&
         public_advertised_prefix_resource,
@@ -269,8 +260,7 @@ PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
   request.set_public_advertised_prefix(public_advertised_prefix);
   *request.mutable_public_advertised_prefix_resource() =
       public_advertised_prefix_resource;
-  return connection_->PatchPublicAdvertisedPrefix(ExperimentalTag{},
-                                                  NoAwaitTag{}, request);
+  return connection_->PatchPublicAdvertisedPrefix(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -284,21 +274,19 @@ PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         PatchPublicAdvertisedPrefixRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchPublicAdvertisedPrefix(ExperimentalTag{},
-                                                  NoAwaitTag{}, request);
+  return connection_->PatchPublicAdvertisedPrefix(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesClient::PatchPublicAdvertisedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchPublicAdvertisedPrefix(ExperimentalTag{}, operation);
+  return connection_->PatchPublicAdvertisedPrefix(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -315,14 +303,14 @@ PublicAdvertisedPrefixesClient::Withdraw(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::Withdraw(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     std::string const& public_advertised_prefix, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::public_advertised_prefixes::v1::WithdrawRequest
       request;
   request.set_project(project);
   request.set_public_advertised_prefix(public_advertised_prefix);
-  return connection_->Withdraw(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Withdraw(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -336,20 +324,19 @@ PublicAdvertisedPrefixesClient::Withdraw(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicAdvertisedPrefixesClient::Withdraw(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         WithdrawRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Withdraw(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Withdraw(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicAdvertisedPrefixesClient::Withdraw(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Withdraw(ExperimentalTag{}, operation);
+  return connection_->Withdraw(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

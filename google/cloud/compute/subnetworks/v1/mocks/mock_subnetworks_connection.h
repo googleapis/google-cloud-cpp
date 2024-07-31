@@ -67,15 +67,13 @@ class MockSubnetworksConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteSubnetwork,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::subnetworks::v1::
-                   DeleteSubnetworkRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                               DeleteSubnetworkRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSubnetwork,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -89,15 +87,13 @@ class MockSubnetworksConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               ExpandIpCidrRange,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::subnetworks::v1::
-                   ExpandIpCidrRangeRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                               ExpandIpCidrRangeRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               ExpandIpCidrRange,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -123,15 +119,13 @@ class MockSubnetworksConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertSubnetwork,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::subnetworks::v1::
-                   InsertSubnetworkRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                               InsertSubnetworkRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertSubnetwork,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -158,15 +152,13 @@ class MockSubnetworksConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchSubnetwork,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::subnetworks::v1::
-                   PatchSubnetworkRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                               PatchSubnetworkRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSubnetwork,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -186,15 +178,13 @@ class MockSubnetworksConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetPrivateIpGoogleAccess,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::subnetworks::v1::
-                   SetPrivateIpGoogleAccessRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::subnetworks::v1::
+                               SetPrivateIpGoogleAccessRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetPrivateIpGoogleAccess,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

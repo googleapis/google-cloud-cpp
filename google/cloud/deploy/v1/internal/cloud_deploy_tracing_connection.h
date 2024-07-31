@@ -53,13 +53,12 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   CreateDeliveryPipeline(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
@@ -68,13 +67,12 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
   UpdateDeliveryPipeline(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
@@ -83,13 +81,12 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteDeliveryPipeline(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::deploy::v1::Target> ListTargets(
@@ -105,33 +102,30 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       google::cloud::deploy::v1::CreateTargetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateTarget(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateTargetRequest const& request) override;
 
   future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
       google::cloud::deploy::v1::UpdateTargetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateTarget(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateTargetRequest const& request) override;
 
   future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
       google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTarget(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteTargetRequest const& request) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::deploy::v1::CustomTargetType>
@@ -148,13 +142,12 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
   CreateCustomTargetType(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
@@ -163,13 +156,12 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
   UpdateCustomTargetType(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
@@ -178,13 +170,12 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
   DeleteCustomTargetType(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::deploy::v1::Release> ListReleases(
@@ -197,11 +188,10 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       google::cloud::deploy::v1::CreateReleaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateRelease(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateReleaseRequest const& request) override;
 
   future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
@@ -226,11 +216,10 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateRollout(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateRolloutRequest const& request) override;
 
   future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
@@ -257,12 +246,11 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateAutomationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
@@ -270,12 +258,11 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateAutomationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
@@ -283,13 +270,12 @@ class CloudDeployTracingConnection : public deploy_v1::CloudDeployConnection {
                        request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteAutomationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteAutomation(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  DeleteAutomation(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
       google::cloud::deploy::v1::GetAutomationRequest const& request) override;

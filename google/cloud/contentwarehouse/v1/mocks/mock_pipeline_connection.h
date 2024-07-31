@@ -59,15 +59,14 @@ class MockPipelineServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunPipeline,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::contentwarehouse::v1::RunPipelineRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>,
-      RunPipeline,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RunPipeline, (google::longrunning::Operation const& operation),
       (override));
 };
 

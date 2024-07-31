@@ -53,16 +53,15 @@ InstanceSettingsConnection::PatchInstanceSettings(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceSettingsConnection::PatchInstanceSettings(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_settings::v1::
-        PatchInstanceSettingsRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_settings::v1::
+                    PatchInstanceSettingsRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceSettingsConnection::PatchInstanceSettings(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

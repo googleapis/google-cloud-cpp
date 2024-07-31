@@ -58,15 +58,14 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, DisableXpnHost,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DisableXpnHost,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -80,15 +79,13 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DisableXpnResource,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::projects::v1::
-                   DisableXpnResourceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                               DisableXpnResourceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DisableXpnResource,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -103,15 +100,14 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, EnableXpnHost,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               EnableXpnHost,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -125,15 +121,13 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               EnableXpnResource,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::projects::v1::
-                   EnableXpnResourceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                               EnableXpnResourceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               EnableXpnResource,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -170,15 +164,14 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, MoveDisk,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               MoveDisk,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -193,15 +186,14 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, MoveInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               MoveInstance,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -215,15 +207,13 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetCloudArmorTier,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::projects::v1::
-                   SetCloudArmorTierRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                               SetCloudArmorTierRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCloudArmorTier,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -237,15 +227,13 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetCommonInstanceMetadata,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::projects::v1::
-                   SetCommonInstanceMetadataRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                               SetCommonInstanceMetadataRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCommonInstanceMetadata,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -259,15 +247,13 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetDefaultNetworkTier,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::projects::v1::
-                   SetDefaultNetworkTierRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                               SetDefaultNetworkTierRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetDefaultNetworkTier,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -281,15 +267,13 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetUsageExportBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::projects::v1::
-                   SetUsageExportBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::projects::v1::
+                               SetUsageExportBucketRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUsageExportBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

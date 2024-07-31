@@ -159,7 +159,7 @@ InstanceAdminConnectionImpl::CreateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::CreateInstanceConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -176,7 +176,7 @@ InstanceAdminConnectionImpl::CreateInstanceConfig(
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminConnectionImpl::CreateInstanceConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::instance::v1::
@@ -254,7 +254,7 @@ InstanceAdminConnectionImpl::UpdateInstanceConfig(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::UpdateInstanceConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -271,7 +271,7 @@ InstanceAdminConnectionImpl::UpdateInstanceConfig(
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
 InstanceAdminConnectionImpl::UpdateInstanceConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::instance::v1::
@@ -490,7 +490,7 @@ InstanceAdminConnectionImpl::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::CreateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -507,7 +507,7 @@ InstanceAdminConnectionImpl::CreateInstance(
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminConnectionImpl::CreateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::instance::v1::
@@ -586,7 +586,7 @@ InstanceAdminConnectionImpl::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::UpdateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -603,7 +603,7 @@ InstanceAdminConnectionImpl::UpdateInstance(
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminConnectionImpl::UpdateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::instance::v1::
@@ -752,7 +752,7 @@ InstanceAdminConnectionImpl::CreateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::CreateInstancePartition(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -769,7 +769,7 @@ InstanceAdminConnectionImpl::CreateInstancePartition(
 
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminConnectionImpl::CreateInstancePartition(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::instance::v1::
@@ -862,7 +862,7 @@ InstanceAdminConnectionImpl::UpdateInstancePartition(
 
 StatusOr<google::longrunning::Operation>
 InstanceAdminConnectionImpl::UpdateInstancePartition(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -879,7 +879,7 @@ InstanceAdminConnectionImpl::UpdateInstancePartition(
 
 future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
 InstanceAdminConnectionImpl::UpdateInstancePartition(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::spanner::admin::instance::v1::

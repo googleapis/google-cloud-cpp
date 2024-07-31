@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYSIMULATOR_V1_SIMULATOR_CLIENT_H
 
 #include "google/cloud/policysimulator/v1/simulator_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -220,7 +219,7 @@ class SimulatorClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateReplay(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::policysimulator::v1::Replay const& replay,
       Options opts = {});
 
@@ -276,7 +275,7 @@ class SimulatorClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateReplay(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::policysimulator::v1::CreateReplayRequest const& request,
       Options opts = {});
 
@@ -290,8 +289,7 @@ class SimulatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::policysimulator::v1::Replay>> CreateReplay(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

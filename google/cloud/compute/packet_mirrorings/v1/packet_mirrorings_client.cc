@@ -68,17 +68,15 @@ PacketMirroringsClient::DeletePacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsClient::DeletePacketMirroring(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& packet_mirroring,
-    Options opts) {
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& packet_mirroring, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::packet_mirrorings::v1::
       DeletePacketMirroringRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_packet_mirroring(packet_mirroring);
-  return connection_->DeletePacketMirroring(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->DeletePacketMirroring(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -92,21 +90,19 @@ PacketMirroringsClient::DeletePacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsClient::DeletePacketMirroring(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         DeletePacketMirroringRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePacketMirroring(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->DeletePacketMirroring(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsClient::DeletePacketMirroring(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeletePacketMirroring(ExperimentalTag{}, operation);
+  return connection_->DeletePacketMirroring(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -149,8 +145,7 @@ PacketMirroringsClient::InsertPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsClient::InsertPacketMirroring(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::PacketMirroring const&
         packet_mirroring_resource,
     Options opts) {
@@ -160,8 +155,7 @@ PacketMirroringsClient::InsertPacketMirroring(
   request.set_project(project);
   request.set_region(region);
   *request.mutable_packet_mirroring_resource() = packet_mirroring_resource;
-  return connection_->InsertPacketMirroring(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->InsertPacketMirroring(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -175,21 +169,19 @@ PacketMirroringsClient::InsertPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsClient::InsertPacketMirroring(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         InsertPacketMirroringRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertPacketMirroring(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->InsertPacketMirroring(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsClient::InsertPacketMirroring(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertPacketMirroring(ExperimentalTag{}, operation);
+  return connection_->InsertPacketMirroring(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PacketMirroring>
@@ -232,8 +224,8 @@ PacketMirroringsClient::PatchPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsClient::PatchPacketMirroring(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& packet_mirroring,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& packet_mirroring,
     google::cloud::cpp::compute::v1::PacketMirroring const&
         packet_mirroring_resource,
     Options opts) {
@@ -244,8 +236,7 @@ PacketMirroringsClient::PatchPacketMirroring(
   request.set_region(region);
   request.set_packet_mirroring(packet_mirroring);
   *request.mutable_packet_mirroring_resource() = packet_mirroring_resource;
-  return connection_->PatchPacketMirroring(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->PatchPacketMirroring(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -259,21 +250,19 @@ PacketMirroringsClient::PatchPacketMirroring(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PacketMirroringsClient::PatchPacketMirroring(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::packet_mirrorings::v1::
         PatchPacketMirroringRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchPacketMirroring(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->PatchPacketMirroring(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PacketMirroringsClient::PatchPacketMirroring(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchPacketMirroring(ExperimentalTag{}, operation);
+  return connection_->PatchPacketMirroring(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

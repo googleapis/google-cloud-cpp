@@ -56,12 +56,11 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateBuild(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
@@ -80,12 +79,11 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RetryBuild(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
@@ -93,12 +91,11 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> ApproveBuild(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
@@ -126,12 +123,11 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> RunBuildTrigger(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
@@ -145,13 +141,12 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateWorkerPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  CreateWorkerPool(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  CreateWorkerPool(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
       google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request)
@@ -164,14 +159,13 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkerPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request)
       override;
 
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
-  DeleteWorkerPool(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  DeleteWorkerPool(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(
@@ -179,13 +173,12 @@ class CloudBuildConnectionImpl : public cloudbuild_v1::CloudBuildConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkerPool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request)
       override;
 
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
-  UpdateWorkerPool(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  UpdateWorkerPool(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request)

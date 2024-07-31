@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_SCAN_CLIENT_H
 
 #include "google/cloud/dataplex/v1/data_scan_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -148,7 +147,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataScan(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::dataplex::v1::DataScan const& data_scan,
       std::string const& data_scan_id, Options opts = {});
 
@@ -202,7 +201,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataScan(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::CreateDataScanRequest const& request,
       Options opts = {});
 
@@ -216,8 +215,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> CreateDataScan(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -267,8 +265,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataScan(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::dataplex::v1::DataScan const& data_scan,
+      NoAwaitTag, google::cloud::dataplex::v1::DataScan const& data_scan,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -321,7 +318,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDataScan(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::UpdateDataScanRequest const& request,
       Options opts = {});
 
@@ -335,8 +332,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataScan>> UpdateDataScan(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -385,7 +381,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataScan(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -438,7 +434,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataScan(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataplex::v1::DeleteDataScanRequest const& request,
       Options opts = {});
 
@@ -452,8 +448,7 @@ class DataScanServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataScan(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteDataScan(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off

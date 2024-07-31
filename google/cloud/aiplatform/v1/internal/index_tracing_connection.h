@@ -45,12 +45,11 @@ class IndexServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateIndexRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::Index>> CreateIndex(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
@@ -64,12 +63,11 @@ class IndexServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateIndexRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::Index>> UpdateIndex(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -77,13 +75,12 @@ class IndexServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> DeleteIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteIndexRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndex(ExperimentalTag,
-              google::longrunning::Operation const& operation) override;
+  DeleteIndex(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
   UpsertDatapoints(google::cloud::aiplatform::v1::UpsertDatapointsRequest const&

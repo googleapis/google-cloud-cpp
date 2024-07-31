@@ -74,25 +74,23 @@ class IntentsConnectionImpl : public dialogflow_es::IntentsConnection {
       override;
 
   StatusOr<google::longrunning::Operation> BatchUpdateIntents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
-  BatchUpdateIntents(ExperimentalTag,
-                     google::longrunning::Operation const& operation) override;
+  BatchUpdateIntents(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request)
       override;
 
   StatusOr<google::longrunning::Operation> BatchDeleteIntents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request)
       override;
 
   future<StatusOr<google::protobuf::Struct>> BatchDeleteIntents(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

@@ -49,16 +49,15 @@ RegionTargetHttpsProxiesConnection::DeleteTargetHttpsProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetHttpsProxiesConnection::DeleteTargetHttpsProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_target_https_proxies::v1::
-        DeleteTargetHttpsProxyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                    DeleteTargetHttpsProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesConnection::DeleteTargetHttpsProxy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,16 +81,15 @@ RegionTargetHttpsProxiesConnection::InsertTargetHttpsProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetHttpsProxiesConnection::InsertTargetHttpsProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_target_https_proxies::v1::
-        InsertTargetHttpsProxyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                    InsertTargetHttpsProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesConnection::InsertTargetHttpsProxy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -116,16 +114,15 @@ RegionTargetHttpsProxiesConnection::PatchTargetHttpsProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetHttpsProxiesConnection::PatchTargetHttpsProxy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_target_https_proxies::v1::
-        PatchTargetHttpsProxyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                    PatchTargetHttpsProxyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesConnection::PatchTargetHttpsProxy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,16 +139,15 @@ RegionTargetHttpsProxiesConnection::SetSslCertificates(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetHttpsProxiesConnection::SetSslCertificates(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_target_https_proxies::v1::
-        SetSslCertificatesRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                    SetSslCertificatesRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesConnection::SetSslCertificates(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -168,16 +164,15 @@ RegionTargetHttpsProxiesConnection::SetUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionTargetHttpsProxiesConnection::SetUrlMap(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_target_https_proxies::v1::
-        SetUrlMapRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                    SetUrlMapRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionTargetHttpsProxiesConnection::SetUrlMap(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

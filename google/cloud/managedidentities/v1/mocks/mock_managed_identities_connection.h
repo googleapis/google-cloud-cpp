@@ -57,16 +57,13 @@ class MockManagedIdentitiesServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateMicrosoftAdDomain,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::managedidentities::v1::
-                   CreateMicrosoftAdDomainRequest const& request),
+              (NoAwaitTag, google::cloud::managedidentities::v1::
+                               CreateMicrosoftAdDomainRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               CreateMicrosoftAdDomain,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<
@@ -96,15 +93,13 @@ class MockManagedIdentitiesServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateDomain,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::managedidentities::v1::UpdateDomainRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              UpdateDomain,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateDomain, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -118,15 +113,14 @@ class MockManagedIdentitiesServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDomain,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::managedidentities::v1::DeleteDomainRequest const&
                    request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>,
-      DeleteDomain,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteDomain, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -140,14 +134,12 @@ class MockManagedIdentitiesServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, AttachTrust,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::managedidentities::v1::AttachTrustRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              AttachTrust,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              AttachTrust, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -162,16 +154,14 @@ class MockManagedIdentitiesServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ReconfigureTrust,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               ReconfigureTrust,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DetachTrust)` is now ambiguous. Use
@@ -184,14 +174,12 @@ class MockManagedIdentitiesServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DetachTrust,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::managedidentities::v1::DetachTrustRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              DetachTrust,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DetachTrust, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -204,15 +192,13 @@ class MockManagedIdentitiesServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ValidateTrust,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::managedidentities::v1::ValidateTrustRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
-              ValidateTrust,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              ValidateTrust, (google::longrunning::Operation const& operation),
               (override));
 };
 

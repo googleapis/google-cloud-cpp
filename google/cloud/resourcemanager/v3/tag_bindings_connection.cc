@@ -56,15 +56,14 @@ TagBindingsConnection::CreateTagBinding(
 
 StatusOr<google::longrunning::Operation>
 TagBindingsConnection::CreateTagBinding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>
-TagBindingsConnection::CreateTagBinding(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+TagBindingsConnection::CreateTagBinding(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::TagBinding>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -80,15 +79,14 @@ TagBindingsConnection::DeleteTagBinding(
 
 StatusOr<google::longrunning::Operation>
 TagBindingsConnection::DeleteTagBinding(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>
-TagBindingsConnection::DeleteTagBinding(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+TagBindingsConnection::DeleteTagBinding(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

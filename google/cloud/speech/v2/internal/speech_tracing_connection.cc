@@ -44,24 +44,23 @@ SpeechTracingConnection::CreateRecognizer(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::CreateRecognizer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::CreateRecognizerRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreateRecognizer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateRecognizer(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateRecognizer(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechTracingConnection::CreateRecognizer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreateRecognizer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateRecognizer(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateRecognizer(operation));
 }
 
 StreamRange<google::cloud::speech::v2::Recognizer>
@@ -94,24 +93,23 @@ SpeechTracingConnection::UpdateRecognizer(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::UpdateRecognizer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdateRecognizer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateRecognizer(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateRecognizer(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechTracingConnection::UpdateRecognizer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdateRecognizer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateRecognizer(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateRecognizer(operation));
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
@@ -125,24 +123,23 @@ SpeechTracingConnection::DeleteRecognizer(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::DeleteRecognizer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeleteRecognizer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteRecognizer(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteRecognizer(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechTracingConnection::DeleteRecognizer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeleteRecognizer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteRecognizer(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteRecognizer(operation));
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
@@ -157,24 +154,23 @@ SpeechTracingConnection::UndeleteRecognizer(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::UndeleteRecognizer(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeleteRecognizer");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UndeleteRecognizer(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UndeleteRecognizer(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechTracingConnection::UndeleteRecognizer(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeleteRecognizer");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UndeleteRecognizer(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UndeleteRecognizer(operation));
 }
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse>
@@ -202,21 +198,20 @@ SpeechTracingConnection::BatchRecognize(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::BatchRecognize(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::BatchRecognizeRequest const& request) {
   auto span = internal::MakeSpan("speech_v2::SpeechConnection::BatchRecognize");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->BatchRecognize(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchRecognize(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
 SpeechTracingConnection::BatchRecognize(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("speech_v2::SpeechConnection::BatchRecognize");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->BatchRecognize(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->BatchRecognize(operation));
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechTracingConnection::GetConfig(
@@ -245,24 +240,23 @@ SpeechTracingConnection::CreateCustomClass(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::CreateCustomClass(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::CreateCustomClassRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreateCustomClass");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateCustomClass(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateCustomClass(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechTracingConnection::CreateCustomClass(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreateCustomClass");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateCustomClass(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateCustomClass(operation));
 }
 
 StreamRange<google::cloud::speech::v2::CustomClass>
@@ -295,24 +289,23 @@ SpeechTracingConnection::UpdateCustomClass(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::UpdateCustomClass(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdateCustomClass");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateCustomClass(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateCustomClass(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechTracingConnection::UpdateCustomClass(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdateCustomClass");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateCustomClass(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateCustomClass(operation));
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
@@ -326,24 +319,23 @@ SpeechTracingConnection::DeleteCustomClass(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::DeleteCustomClass(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeleteCustomClass");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteCustomClass(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteCustomClass(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechTracingConnection::DeleteCustomClass(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeleteCustomClass");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteCustomClass(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteCustomClass(operation));
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
@@ -358,24 +350,23 @@ SpeechTracingConnection::UndeleteCustomClass(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::UndeleteCustomClass(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeleteCustomClass");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UndeleteCustomClass(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UndeleteCustomClass(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechTracingConnection::UndeleteCustomClass(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeleteCustomClass");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UndeleteCustomClass(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UndeleteCustomClass(operation));
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
@@ -389,23 +380,22 @@ SpeechTracingConnection::CreatePhraseSet(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::CreatePhraseSet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreatePhraseSet");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreatePhraseSet(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreatePhraseSet(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechTracingConnection::CreatePhraseSet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::CreatePhraseSet");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreatePhraseSet(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreatePhraseSet(operation));
 }
 
 StreamRange<google::cloud::speech::v2::PhraseSet>
@@ -437,23 +427,22 @@ SpeechTracingConnection::UpdatePhraseSet(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::UpdatePhraseSet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdatePhraseSet");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdatePhraseSet(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdatePhraseSet(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechTracingConnection::UpdatePhraseSet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UpdatePhraseSet");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdatePhraseSet(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdatePhraseSet(operation));
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
@@ -467,23 +456,22 @@ SpeechTracingConnection::DeletePhraseSet(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::DeletePhraseSet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeletePhraseSet");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeletePhraseSet(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeletePhraseSet(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechTracingConnection::DeletePhraseSet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::DeletePhraseSet");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeletePhraseSet(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeletePhraseSet(operation));
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
@@ -497,24 +485,23 @@ SpeechTracingConnection::UndeletePhraseSet(
 
 StatusOr<google::longrunning::Operation>
 SpeechTracingConnection::UndeletePhraseSet(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeletePhraseSet");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UndeletePhraseSet(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UndeletePhraseSet(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechTracingConnection::UndeletePhraseSet(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("speech_v2::SpeechConnection::UndeletePhraseSet");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UndeletePhraseSet(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UndeletePhraseSet(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

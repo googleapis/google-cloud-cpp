@@ -63,14 +63,12 @@ class MockInstancesConnection : public appengine_v1::InstancesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::DeleteInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-              DeleteInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -81,14 +79,12 @@ class MockInstancesConnection : public appengine_v1::InstancesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DebugInstance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::DebugInstanceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Instance>>, DebugInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

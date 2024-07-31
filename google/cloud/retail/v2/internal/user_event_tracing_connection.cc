@@ -61,23 +61,22 @@ UserEventServiceTracingConnection::PurgeUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceTracingConnection::PurgeUserEvents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::PurgeUserEvents");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PurgeUserEvents(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->PurgeUserEvents(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
 UserEventServiceTracingConnection::PurgeUserEvents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::PurgeUserEvents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->PurgeUserEvents(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PurgeUserEvents(operation));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
@@ -91,24 +90,23 @@ UserEventServiceTracingConnection::ImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceTracingConnection::ImportUserEvents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::ImportUserEvents");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ImportUserEvents(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ImportUserEvents(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceTracingConnection::ImportUserEvents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::ImportUserEvents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->ImportUserEvents(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ImportUserEvents(operation));
 }
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
@@ -122,24 +120,23 @@ UserEventServiceTracingConnection::RejoinUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceTracingConnection::RejoinUserEvents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::RejoinUserEvents");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->RejoinUserEvents(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RejoinUserEvents(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceTracingConnection::RejoinUserEvents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "retail_v2::UserEventServiceConnection::RejoinUserEvents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RejoinUserEvents(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RejoinUserEvents(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -66,14 +66,12 @@ class MockCloudMemcacheConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::memcache::v1::CreateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              CreateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -86,14 +84,12 @@ class MockCloudMemcacheConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::memcache::v1::UpdateInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
-              UpdateInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -106,15 +102,13 @@ class MockCloudMemcacheConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateParameters,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::memcache::v1::UpdateParametersRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
               UpdateParameters,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteInstance)` is now ambiguous. Use
@@ -127,14 +121,12 @@ class MockCloudMemcacheConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::memcache::v1::DeleteInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>,
-              DeleteInstance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteInstance, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -147,15 +139,13 @@ class MockCloudMemcacheConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ApplyParameters,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::memcache::v1::ApplyParametersRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
               ApplyParameters,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, RescheduleMaintenance)` is now ambiguous. Use
@@ -167,16 +157,14 @@ class MockCloudMemcacheConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RescheduleMaintenance,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
               RescheduleMaintenance,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

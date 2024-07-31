@@ -43,11 +43,10 @@ class AssetServiceTracingConnection : public asset_v1::AssetServiceConnection {
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ExportAssets(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
   future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>> ExportAssets(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::asset::v1::Asset> ListAssets(
@@ -92,14 +91,13 @@ class AssetServiceTracingConnection : public asset_v1::AssetServiceConnection {
           request) override;
 
   StatusOr<google::longrunning::Operation> AnalyzeIamPolicyLongrunning(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
           request) override;
 
   future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
   AnalyzeIamPolicyLongrunning(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(

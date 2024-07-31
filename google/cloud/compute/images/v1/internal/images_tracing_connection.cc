@@ -45,25 +45,22 @@ ImagesTracingConnection::DeleteImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesTracingConnection::DeleteImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
         request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::DeleteImage");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteImage(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteImage(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesTracingConnection::DeleteImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::DeleteImage");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteImage(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteImage(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -77,24 +74,21 @@ ImagesTracingConnection::Deprecate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesTracingConnection::Deprecate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::DeprecateRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::Deprecate");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->Deprecate(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->Deprecate(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesTracingConnection::Deprecate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::Deprecate");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->Deprecate(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->Deprecate(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Image>
@@ -138,25 +132,22 @@ ImagesTracingConnection::InsertImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesTracingConnection::InsertImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::InsertImageRequest const&
         request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::InsertImage");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->InsertImage(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->InsertImage(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesTracingConnection::InsertImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::InsertImage");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->InsertImage(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->InsertImage(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Image>
@@ -181,24 +172,21 @@ ImagesTracingConnection::PatchImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesTracingConnection::PatchImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::PatchImageRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::PatchImage");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PatchImage(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchImage(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesTracingConnection::PatchImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::PatchImage");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchImage(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PatchImage(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -222,24 +210,21 @@ ImagesTracingConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 ImagesTracingConnection::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 ImagesTracingConnection::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span =
       internal::MakeSpan("compute_images_v1::ImagesConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetLabels(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

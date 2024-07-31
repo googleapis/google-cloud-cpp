@@ -661,17 +661,17 @@ TEST_F(DatabaseAdminClientTest, LROStartAwait) {
 
   // Start an LRO.
   auto operation = client_.CreateDatabase(
-      ExperimentalTag{}, NoAwaitTag{}, database_.instance().FullName(),
+      NoAwaitTag{}, database_.instance().FullName(),
       absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
   ASSERT_STATUS_OK(operation);
 
   // Verify that an error is returned if there is a mismatch between the RPC
   // that returned the operation and the RPC in which is it used.
-  auto fail = client_.UpdateDatabase(ExperimentalTag{}, *operation).get();
+  auto fail = client_.UpdateDatabase(*operation).get();
   EXPECT_THAT(fail, StatusIs(StatusCode::kInvalidArgument));
 
   // Wait for the LRO to complete.
-  auto database = client_.CreateDatabase(ExperimentalTag{}, *operation).get();
+  auto database = client_.CreateDatabase(*operation).get();
   ASSERT_STATUS_OK(database);
   EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
 

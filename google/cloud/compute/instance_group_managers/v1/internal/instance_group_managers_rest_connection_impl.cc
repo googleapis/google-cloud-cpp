@@ -109,9 +109,8 @@ InstanceGroupManagersRestConnectionImpl::AbandonInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::AbandonInstances(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        AbandonInstancesRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    AbandonInstancesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -126,7 +125,6 @@ InstanceGroupManagersRestConnectionImpl::AbandonInstances(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::AbandonInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -289,9 +287,8 @@ InstanceGroupManagersRestConnectionImpl::ApplyUpdatesToInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::ApplyUpdatesToInstances(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        ApplyUpdatesToInstancesRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    ApplyUpdatesToInstancesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -306,7 +303,6 @@ InstanceGroupManagersRestConnectionImpl::ApplyUpdatesToInstances(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::ApplyUpdatesToInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -422,9 +418,8 @@ InstanceGroupManagersRestConnectionImpl::CreateInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::CreateInstances(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        CreateInstancesRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    CreateInstancesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -439,7 +434,6 @@ InstanceGroupManagersRestConnectionImpl::CreateInstances(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::CreateInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -555,9 +549,8 @@ InstanceGroupManagersRestConnectionImpl::DeleteInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::DeleteInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        DeleteInstanceGroupManagerRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    DeleteInstanceGroupManagerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -573,7 +566,6 @@ InstanceGroupManagersRestConnectionImpl::DeleteInstanceGroupManager(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::DeleteInstanceGroupManager(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -689,9 +681,8 @@ InstanceGroupManagersRestConnectionImpl::DeleteInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::DeleteInstances(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        DeleteInstancesRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    DeleteInstancesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -706,7 +697,6 @@ InstanceGroupManagersRestConnectionImpl::DeleteInstances(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::DeleteInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -822,9 +812,8 @@ InstanceGroupManagersRestConnectionImpl::DeletePerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::DeletePerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        DeletePerInstanceConfigsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    DeletePerInstanceConfigsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -839,7 +828,6 @@ InstanceGroupManagersRestConnectionImpl::DeletePerInstanceConfigs(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::DeletePerInstanceConfigs(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -971,9 +959,8 @@ InstanceGroupManagersRestConnectionImpl::InsertInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::InsertInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        InsertInstanceGroupManagerRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    InsertInstanceGroupManagerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -989,7 +976,6 @@ InstanceGroupManagersRestConnectionImpl::InsertInstanceGroupManager(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::InsertInstanceGroupManager(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1242,9 +1228,8 @@ InstanceGroupManagersRestConnectionImpl::PatchInstanceGroupManager(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::PatchInstanceGroupManager(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        PatchInstanceGroupManagerRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    PatchInstanceGroupManagerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1259,7 +1244,6 @@ InstanceGroupManagersRestConnectionImpl::PatchInstanceGroupManager(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::PatchInstanceGroupManager(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1375,9 +1359,8 @@ InstanceGroupManagersRestConnectionImpl::PatchPerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::PatchPerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        PatchPerInstanceConfigsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    PatchPerInstanceConfigsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1392,7 +1375,6 @@ InstanceGroupManagersRestConnectionImpl::PatchPerInstanceConfigs(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::PatchPerInstanceConfigs(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1508,9 +1490,8 @@ InstanceGroupManagersRestConnectionImpl::RecreateInstances(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::RecreateInstances(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        RecreateInstancesRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    RecreateInstancesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1525,7 +1506,6 @@ InstanceGroupManagersRestConnectionImpl::RecreateInstances(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::RecreateInstances(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1641,9 +1621,8 @@ InstanceGroupManagersRestConnectionImpl::Resize(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::Resize(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        ResizeRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    ResizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1658,7 +1637,6 @@ InstanceGroupManagersRestConnectionImpl::Resize(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::Resize(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1774,9 +1752,8 @@ InstanceGroupManagersRestConnectionImpl::SetInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::SetInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        SetInstanceTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    SetInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1791,7 +1768,6 @@ InstanceGroupManagersRestConnectionImpl::SetInstanceTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::SetInstanceTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1907,9 +1883,8 @@ InstanceGroupManagersRestConnectionImpl::SetTargetPools(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::SetTargetPools(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        SetTargetPoolsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    SetTargetPoolsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1924,7 +1899,6 @@ InstanceGroupManagersRestConnectionImpl::SetTargetPools(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::SetTargetPools(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -2040,9 +2014,8 @@ InstanceGroupManagersRestConnectionImpl::UpdatePerInstanceConfigs(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InstanceGroupManagersRestConnectionImpl::UpdatePerInstanceConfigs(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::instance_group_managers::v1::
-        UpdatePerInstanceConfigsRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::instance_group_managers::v1::
+                    UpdatePerInstanceConfigsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -2057,7 +2030,6 @@ InstanceGroupManagersRestConnectionImpl::UpdatePerInstanceConfigs(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InstanceGroupManagersRestConnectionImpl::UpdatePerInstanceConfigs(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

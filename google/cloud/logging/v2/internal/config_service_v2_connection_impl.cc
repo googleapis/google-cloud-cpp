@@ -150,8 +150,7 @@ ConfigServiceV2ConnectionImpl::CreateBucketAsync(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::CreateBucketAsync(
-    ExperimentalTag, NoAwaitTag,
-    google::logging::v2::CreateBucketRequest const& request) {
+    NoAwaitTag, google::logging::v2::CreateBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -165,7 +164,7 @@ ConfigServiceV2ConnectionImpl::CreateBucketAsync(
 
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2ConnectionImpl::CreateBucketAsync(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::logging::v2::BucketMetadata>()) {
@@ -239,8 +238,7 @@ ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
-    ExperimentalTag, NoAwaitTag,
-    google::logging::v2::UpdateBucketRequest const& request) {
+    NoAwaitTag, google::logging::v2::UpdateBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -254,7 +252,7 @@ ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
 
 future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::logging::v2::BucketMetadata>()) {
@@ -554,8 +552,7 @@ ConfigServiceV2ConnectionImpl::CreateLink(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::CreateLink(
-    ExperimentalTag, NoAwaitTag,
-    google::logging::v2::CreateLinkRequest const& request) {
+    NoAwaitTag, google::logging::v2::CreateLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -569,7 +566,7 @@ ConfigServiceV2ConnectionImpl::CreateLink(
 
 future<StatusOr<google::logging::v2::Link>>
 ConfigServiceV2ConnectionImpl::CreateLink(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::logging::v2::LinkMetadata>()) {
     return make_ready_future<StatusOr<google::logging::v2::Link>>(
@@ -642,8 +639,7 @@ ConfigServiceV2ConnectionImpl::DeleteLink(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::DeleteLink(
-    ExperimentalTag, NoAwaitTag,
-    google::logging::v2::DeleteLinkRequest const& request) {
+    NoAwaitTag, google::logging::v2::DeleteLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -657,7 +653,7 @@ ConfigServiceV2ConnectionImpl::DeleteLink(
 
 future<StatusOr<google::logging::v2::LinkMetadata>>
 ConfigServiceV2ConnectionImpl::DeleteLink(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::logging::v2::LinkMetadata>()) {
     return make_ready_future<StatusOr<google::logging::v2::LinkMetadata>>(
@@ -919,8 +915,7 @@ ConfigServiceV2ConnectionImpl::CopyLogEntries(
 
 StatusOr<google::longrunning::Operation>
 ConfigServiceV2ConnectionImpl::CopyLogEntries(
-    ExperimentalTag, NoAwaitTag,
-    google::logging::v2::CopyLogEntriesRequest const& request) {
+    NoAwaitTag, google::logging::v2::CopyLogEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -934,7 +929,7 @@ ConfigServiceV2ConnectionImpl::CopyLogEntries(
 
 future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
 ConfigServiceV2ConnectionImpl::CopyLogEntries(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::logging::v2::CopyLogEntriesMetadata>()) {

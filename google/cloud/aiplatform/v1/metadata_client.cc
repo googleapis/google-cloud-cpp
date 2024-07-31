@@ -47,7 +47,7 @@ MetadataServiceClient::CreateMetadataStore(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceClient::CreateMetadataStore(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
     std::string const& metadata_store_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -55,8 +55,7 @@ MetadataServiceClient::CreateMetadataStore(
   request.set_parent(parent);
   *request.mutable_metadata_store() = metadata_store;
   request.set_metadata_store_id(metadata_store_id);
-  return connection_->CreateMetadataStore(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->CreateMetadataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
@@ -69,20 +68,18 @@ MetadataServiceClient::CreateMetadataStore(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceClient::CreateMetadataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMetadataStore(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->CreateMetadataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
 MetadataServiceClient::CreateMetadataStore(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateMetadataStore(ExperimentalTag{}, operation);
+  return connection_->CreateMetadataStore(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
@@ -129,14 +126,12 @@ MetadataServiceClient::DeleteMetadataStore(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-MetadataServiceClient::DeleteMetadataStore(ExperimentalTag, NoAwaitTag,
-                                           std::string const& name,
+MetadataServiceClient::DeleteMetadataStore(NoAwaitTag, std::string const& name,
                                            Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteMetadataStoreRequest request;
   request.set_name(name);
-  return connection_->DeleteMetadataStore(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->DeleteMetadataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
@@ -150,21 +145,19 @@ MetadataServiceClient::DeleteMetadataStore(
 
 StatusOr<google::longrunning::Operation>
 MetadataServiceClient::DeleteMetadataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMetadataStore(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->DeleteMetadataStore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
 MetadataServiceClient::DeleteMetadataStore(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMetadataStore(ExperimentalTag{}, operation);
+  return connection_->DeleteMetadataStore(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
@@ -247,11 +240,11 @@ MetadataServiceClient::DeleteArtifact(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteArtifact(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteArtifactRequest request;
   request.set_name(name);
-  return connection_->DeleteArtifact(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteArtifact(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -263,19 +256,18 @@ MetadataServiceClient::DeleteArtifact(
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteArtifact(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteArtifact(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteArtifact(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceClient::DeleteArtifact(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteArtifact(ExperimentalTag{}, operation);
+  return connection_->DeleteArtifact(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
@@ -287,11 +279,11 @@ MetadataServiceClient::PurgeArtifacts(std::string const& parent, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeArtifacts(
-    ExperimentalTag, NoAwaitTag, std::string const& parent, Options opts) {
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PurgeArtifactsRequest request;
   request.set_parent(parent);
-  return connection_->PurgeArtifacts(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PurgeArtifacts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
@@ -303,19 +295,18 @@ MetadataServiceClient::PurgeArtifacts(
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeArtifacts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeArtifacts(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PurgeArtifacts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
 MetadataServiceClient::PurgeArtifacts(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeArtifacts(ExperimentalTag{}, operation);
+  return connection_->PurgeArtifacts(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
@@ -398,11 +389,11 @@ MetadataServiceClient::DeleteContext(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteContext(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteContextRequest request;
   request.set_name(name);
-  return connection_->DeleteContext(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteContext(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -414,19 +405,18 @@ MetadataServiceClient::DeleteContext(
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteContext(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteContextRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteContext(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteContext(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceClient::DeleteContext(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteContext(ExperimentalTag{}, operation);
+  return connection_->DeleteContext(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
@@ -438,11 +428,11 @@ MetadataServiceClient::PurgeContexts(std::string const& parent, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeContexts(
-    ExperimentalTag, NoAwaitTag, std::string const& parent, Options opts) {
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PurgeContextsRequest request;
   request.set_parent(parent);
-  return connection_->PurgeContexts(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PurgeContexts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
@@ -454,19 +444,18 @@ MetadataServiceClient::PurgeContexts(
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeContexts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeContexts(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PurgeContexts(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
 MetadataServiceClient::PurgeContexts(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeContexts(ExperimentalTag{}, operation);
+  return connection_->PurgeContexts(operation);
 }
 
 StatusOr<
@@ -632,11 +621,11 @@ MetadataServiceClient::DeleteExecution(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteExecution(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteExecutionRequest request;
   request.set_name(name);
-  return connection_->DeleteExecution(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteExecution(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -648,19 +637,18 @@ MetadataServiceClient::DeleteExecution(
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::DeleteExecution(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteExecution(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteExecution(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 MetadataServiceClient::DeleteExecution(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteExecution(ExperimentalTag{}, operation);
+  return connection_->DeleteExecution(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
@@ -673,11 +661,11 @@ MetadataServiceClient::PurgeExecutions(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeExecutions(
-    ExperimentalTag, NoAwaitTag, std::string const& parent, Options opts) {
+    NoAwaitTag, std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::PurgeExecutionsRequest request;
   request.set_parent(parent);
-  return connection_->PurgeExecutions(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PurgeExecutions(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
@@ -689,19 +677,18 @@ MetadataServiceClient::PurgeExecutions(
 }
 
 StatusOr<google::longrunning::Operation> MetadataServiceClient::PurgeExecutions(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeExecutions(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->PurgeExecutions(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
 MetadataServiceClient::PurgeExecutions(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PurgeExecutions(ExperimentalTag{}, operation);
+  return connection_->PurgeExecutions(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>

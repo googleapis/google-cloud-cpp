@@ -22,7 +22,6 @@
 #include "google/cloud/privilegedaccessmanager/v1/internal/privileged_access_manager_retry_traits.h"
 #include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -221,14 +220,12 @@ class PrivilegedAccessManagerConnection {
                         CreateEntitlementRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateEntitlement(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::
-          CreateEntitlementRequest const& request);
+      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                      CreateEntitlementRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  CreateEntitlement(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -236,14 +233,12 @@ class PrivilegedAccessManagerConnection {
                         DeleteEntitlementRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::
-          DeleteEntitlementRequest const& request);
+      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                      DeleteEntitlementRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  DeleteEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  DeleteEntitlement(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -251,14 +246,12 @@ class PrivilegedAccessManagerConnection {
                         UpdateEntitlementRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::
-          UpdateEntitlementRequest const& request);
+      NoAwaitTag, google::cloud::privilegedaccessmanager::v1::
+                      UpdateEntitlementRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  UpdateEntitlement(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
   ListGrants(
@@ -292,12 +285,12 @@ class PrivilegedAccessManagerConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> RevokeGrant(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
-  RevokeGrant(ExperimentalTag, google::longrunning::Operation const& operation);
+  RevokeGrant(google::longrunning::Operation const& operation);
 };
 
 /**

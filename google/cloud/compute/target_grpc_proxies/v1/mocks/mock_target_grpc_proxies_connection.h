@@ -58,15 +58,13 @@ class MockTargetGrpcProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteTargetGrpcProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_grpc_proxies::v1::
-                   DeleteTargetGrpcProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::
+                               v1::DeleteTargetGrpcProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteTargetGrpcProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>,
@@ -86,15 +84,13 @@ class MockTargetGrpcProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertTargetGrpcProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_grpc_proxies::v1::
-                   InsertTargetGrpcProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::
+                               v1::InsertTargetGrpcProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertTargetGrpcProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetGrpcProxy>),
@@ -114,15 +110,13 @@ class MockTargetGrpcProxiesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchTargetGrpcProxy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::target_grpc_proxies::v1::
-                   PatchTargetGrpcProxyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::target_grpc_proxies::
+                               v1::PatchTargetGrpcProxyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchTargetGrpcProxy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

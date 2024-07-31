@@ -22,7 +22,6 @@
 #include "google/cloud/policysimulator/v1/internal/simulator_retry_traits.h"
 #include "google/cloud/policysimulator/v1/simulator_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -194,12 +193,11 @@ class SimulatorConnection {
       google::cloud::policysimulator::v1::CreateReplayRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateReplay(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::policysimulator::v1::CreateReplayRequest const& request);
 
   virtual future<StatusOr<google::cloud::policysimulator::v1::Replay>>
-  CreateReplay(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  CreateReplay(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::policysimulator::v1::ReplayResult>
   ListReplayResults(

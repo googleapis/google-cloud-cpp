@@ -22,7 +22,6 @@
 #include "google/cloud/compute/region_disks/v1/internal/region_disks_retry_traits.h"
 #include "google/cloud/compute/region_disks/v1/region_disks_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -190,13 +189,12 @@ class RegionDisksConnection {
                           AddResourcePoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddResourcePolicies(ExperimentalTag, NoAwaitTag,
+  AddResourcePolicies(NoAwaitTag,
                       google::cloud::cpp::compute::region_disks::v1::
                           AddResourcePoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -205,26 +203,23 @@ class RegionDisksConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(ExperimentalTag,
-             google::cloud::cpp::compute::v1::Operation const& operation);
+  BulkInsert(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   CreateSnapshot(google::cloud::cpp::compute::region_disks::v1::
                      CreateSnapshotRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_disks::v1::
-          CreateSnapshotRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_disks::v1::
+                      CreateSnapshotRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  CreateSnapshot(ExperimentalTag,
-                 google::cloud::cpp::compute::v1::Operation const& operation);
+  CreateSnapshot(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteDisk(
@@ -232,13 +227,12 @@ class RegionDisksConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteDisk(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteDisk(ExperimentalTag,
-             google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteDisk(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Disk> GetDisk(
       google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
@@ -254,13 +248,12 @@ class RegionDisksConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertDisk(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertDisk(ExperimentalTag,
-             google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertDisk(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::Disk> ListRegionDisks(
       google::cloud::cpp::compute::region_disks::v1::ListRegionDisksRequest
@@ -271,13 +264,12 @@ class RegionDisksConnection {
                              RemoveResourcePoliciesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveResourcePolicies(ExperimentalTag, NoAwaitTag,
+  RemoveResourcePolicies(NoAwaitTag,
                          google::cloud::cpp::compute::region_disks::v1::
                              RemoveResourcePoliciesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
@@ -285,12 +277,11 @@ class RegionDisksConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Resize(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::ResizeRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resize(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -303,26 +294,24 @@ class RegionDisksConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(ExperimentalTag,
-            google::cloud::cpp::compute::v1::Operation const& operation);
+  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartAsyncReplication(google::cloud::cpp::compute::region_disks::v1::
                             StartAsyncReplicationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  StartAsyncReplication(ExperimentalTag, NoAwaitTag,
+  StartAsyncReplication(NoAwaitTag,
                         google::cloud::cpp::compute::region_disks::v1::
                             StartAsyncReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartAsyncReplication(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -330,13 +319,12 @@ class RegionDisksConnection {
                            StopAsyncReplicationRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  StopAsyncReplication(ExperimentalTag, NoAwaitTag,
+  StopAsyncReplication(NoAwaitTag,
                        google::cloud::cpp::compute::region_disks::v1::
                            StopAsyncReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopAsyncReplication(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -346,13 +334,11 @@ class RegionDisksConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   StopGroupAsyncReplication(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_disks::v1::
-          StopGroupAsyncReplicationRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_disks::v1::
+                      StopGroupAsyncReplicationRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StopGroupAsyncReplication(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -365,13 +351,12 @@ class RegionDisksConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisk(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateDisk(ExperimentalTag,
-             google::cloud::cpp::compute::v1::Operation const& operation);
+  UpdateDisk(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

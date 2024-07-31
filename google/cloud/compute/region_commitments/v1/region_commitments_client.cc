@@ -92,8 +92,7 @@ RegionCommitmentsClient::InsertCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsClient::InsertCommitment(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -102,8 +101,7 @@ RegionCommitmentsClient::InsertCommitment(
   request.set_project(project);
   request.set_region(region);
   *request.mutable_commitment_resource() = commitment_resource;
-  return connection_->InsertCommitment(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->InsertCommitment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -117,21 +115,19 @@ RegionCommitmentsClient::InsertCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsClient::InsertCommitment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_commitments::v1::
         InsertCommitmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertCommitment(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->InsertCommitment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsClient::InsertCommitment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertCommitment(ExperimentalTag{}, operation);
+  return connection_->InsertCommitment(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Commitment>
@@ -174,9 +170,8 @@ RegionCommitmentsClient::UpdateCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsClient::UpdateCommitment(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& commitment,
-    std::string const& update_mask,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& commitment, std::string const& update_mask,
     google::cloud::cpp::compute::v1::Commitment const& commitment_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -187,8 +182,7 @@ RegionCommitmentsClient::UpdateCommitment(
   request.set_commitment(commitment);
   request.set_update_mask(update_mask);
   *request.mutable_commitment_resource() = commitment_resource;
-  return connection_->UpdateCommitment(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->UpdateCommitment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -202,21 +196,19 @@ RegionCommitmentsClient::UpdateCommitment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionCommitmentsClient::UpdateCommitment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_commitments::v1::
         UpdateCommitmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCommitment(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->UpdateCommitment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionCommitmentsClient::UpdateCommitment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateCommitment(ExperimentalTag{}, operation);
+  return connection_->UpdateCommitment(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

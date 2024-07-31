@@ -46,15 +46,14 @@ FeaturestoreServiceClient::CreateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateFeaturestore(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::Featurestore const& featurestore,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeaturestoreRequest request;
   request.set_parent(parent);
   *request.mutable_featurestore() = featurestore;
-  return connection_->CreateFeaturestore(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->CreateFeaturestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
@@ -72,7 +71,7 @@ FeaturestoreServiceClient::CreateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateFeaturestore(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::Featurestore const& featurestore,
     std::string const& featurestore_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -80,8 +79,7 @@ FeaturestoreServiceClient::CreateFeaturestore(
   request.set_parent(parent);
   *request.mutable_featurestore() = featurestore;
   request.set_featurestore_id(featurestore_id);
-  return connection_->CreateFeaturestore(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->CreateFeaturestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
@@ -94,20 +92,18 @@ FeaturestoreServiceClient::CreateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateFeaturestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFeaturestore(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->CreateFeaturestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
 FeaturestoreServiceClient::CreateFeaturestore(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFeaturestore(ExperimentalTag{}, operation);
+  return connection_->CreateFeaturestore(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
@@ -157,15 +153,13 @@ FeaturestoreServiceClient::UpdateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::UpdateFeaturestore(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::Featurestore const& featurestore,
+    NoAwaitTag, google::cloud::aiplatform::v1::Featurestore const& featurestore,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::UpdateFeaturestoreRequest request;
   *request.mutable_featurestore() = featurestore;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateFeaturestore(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->UpdateFeaturestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
@@ -178,20 +172,18 @@ FeaturestoreServiceClient::UpdateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::UpdateFeaturestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateFeaturestore(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->UpdateFeaturestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
 FeaturestoreServiceClient::UpdateFeaturestore(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateFeaturestore(ExperimentalTag{}, operation);
+  return connection_->UpdateFeaturestore(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -204,14 +196,13 @@ FeaturestoreServiceClient::DeleteFeaturestore(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceClient::DeleteFeaturestore(ExperimentalTag, NoAwaitTag,
+FeaturestoreServiceClient::DeleteFeaturestore(NoAwaitTag,
                                               std::string const& name,
                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeaturestoreRequest request;
   request.set_name(name);
-  return connection_->DeleteFeaturestore(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DeleteFeaturestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -225,15 +216,14 @@ FeaturestoreServiceClient::DeleteFeaturestore(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceClient::DeleteFeaturestore(ExperimentalTag, NoAwaitTag,
+FeaturestoreServiceClient::DeleteFeaturestore(NoAwaitTag,
                                               std::string const& name,
                                               bool force, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeaturestoreRequest request;
   request.set_name(name);
   request.set_force(force);
-  return connection_->DeleteFeaturestore(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DeleteFeaturestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -246,20 +236,18 @@ FeaturestoreServiceClient::DeleteFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::DeleteFeaturestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeaturestore(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DeleteFeaturestore(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceClient::DeleteFeaturestore(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeaturestore(ExperimentalTag{}, operation);
+  return connection_->DeleteFeaturestore(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
@@ -276,15 +264,14 @@ FeaturestoreServiceClient::CreateEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateEntityType(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::EntityType const& entity_type,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateEntityTypeRequest request;
   request.set_parent(parent);
   *request.mutable_entity_type() = entity_type;
-  return connection_->CreateEntityType(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateEntityType(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
@@ -302,7 +289,7 @@ FeaturestoreServiceClient::CreateEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateEntityType(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::EntityType const& entity_type,
     std::string const& entity_type_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -310,8 +297,7 @@ FeaturestoreServiceClient::CreateEntityType(
   request.set_parent(parent);
   *request.mutable_entity_type() = entity_type;
   request.set_entity_type_id(entity_type_id);
-  return connection_->CreateEntityType(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateEntityType(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
@@ -324,20 +310,18 @@ FeaturestoreServiceClient::CreateEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateEntityType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEntityType(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateEntityType(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
 FeaturestoreServiceClient::CreateEntityType(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEntityType(ExperimentalTag{}, operation);
+  return connection_->CreateEntityType(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
@@ -403,14 +387,12 @@ FeaturestoreServiceClient::DeleteEntityType(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceClient::DeleteEntityType(ExperimentalTag, NoAwaitTag,
-                                            std::string const& name,
+FeaturestoreServiceClient::DeleteEntityType(NoAwaitTag, std::string const& name,
                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteEntityTypeRequest request;
   request.set_name(name);
-  return connection_->DeleteEntityType(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteEntityType(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -424,15 +406,13 @@ FeaturestoreServiceClient::DeleteEntityType(std::string const& name, bool force,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceClient::DeleteEntityType(ExperimentalTag, NoAwaitTag,
-                                            std::string const& name, bool force,
-                                            Options opts) {
+FeaturestoreServiceClient::DeleteEntityType(NoAwaitTag, std::string const& name,
+                                            bool force, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteEntityTypeRequest request;
   request.set_name(name);
   request.set_force(force);
-  return connection_->DeleteEntityType(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteEntityType(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -445,20 +425,18 @@ FeaturestoreServiceClient::DeleteEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::DeleteEntityType(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEntityType(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteEntityType(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceClient::DeleteEntityType(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEntityType(ExperimentalTag{}, operation);
+  return connection_->DeleteEntityType(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
@@ -474,13 +452,13 @@ FeaturestoreServiceClient::CreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateFeature(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::Feature const& feature, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::CreateFeatureRequest request;
   request.set_parent(parent);
   *request.mutable_feature() = feature;
-  return connection_->CreateFeature(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateFeature(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
@@ -498,7 +476,7 @@ FeaturestoreServiceClient::CreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateFeature(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::aiplatform::v1::Feature const& feature,
     std::string const& feature_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -506,7 +484,7 @@ FeaturestoreServiceClient::CreateFeature(
   request.set_parent(parent);
   *request.mutable_feature() = feature;
   request.set_feature_id(feature_id);
-  return connection_->CreateFeature(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateFeature(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
@@ -519,19 +497,18 @@ FeaturestoreServiceClient::CreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::CreateFeature(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFeature(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateFeature(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
 FeaturestoreServiceClient::CreateFeature(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateFeature(ExperimentalTag{}, operation);
+  return connection_->CreateFeature(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
@@ -549,7 +526,7 @@ FeaturestoreServiceClient::BatchCreateFeatures(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::BatchCreateFeatures(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const&
         requests,
     Options opts) {
@@ -557,8 +534,7 @@ FeaturestoreServiceClient::BatchCreateFeatures(
   google::cloud::aiplatform::v1::BatchCreateFeaturesRequest request;
   request.set_parent(parent);
   *request.mutable_requests() = {requests.begin(), requests.end()};
-  return connection_->BatchCreateFeatures(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchCreateFeatures(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
@@ -571,20 +547,18 @@ FeaturestoreServiceClient::BatchCreateFeatures(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::BatchCreateFeatures(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateFeatures(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchCreateFeatures(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
 FeaturestoreServiceClient::BatchCreateFeatures(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateFeatures(ExperimentalTag{}, operation);
+  return connection_->BatchCreateFeatures(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
@@ -648,13 +622,12 @@ FeaturestoreServiceClient::DeleteFeature(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceClient::DeleteFeature(ExperimentalTag, NoAwaitTag,
-                                         std::string const& name,
+FeaturestoreServiceClient::DeleteFeature(NoAwaitTag, std::string const& name,
                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureRequest request;
   request.set_name(name);
-  return connection_->DeleteFeature(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteFeature(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -667,19 +640,18 @@ FeaturestoreServiceClient::DeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::DeleteFeature(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeature(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteFeature(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceClient::DeleteFeature(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeature(ExperimentalTag{}, operation);
+  return connection_->DeleteFeature(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
@@ -692,14 +664,13 @@ FeaturestoreServiceClient::ImportFeatureValues(std::string const& entity_type,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceClient::ImportFeatureValues(ExperimentalTag, NoAwaitTag,
+FeaturestoreServiceClient::ImportFeatureValues(NoAwaitTag,
                                                std::string const& entity_type,
                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ImportFeatureValuesRequest request;
   request.set_entity_type(entity_type);
-  return connection_->ImportFeatureValues(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->ImportFeatureValues(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
@@ -712,20 +683,18 @@ FeaturestoreServiceClient::ImportFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::ImportFeatureValues(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportFeatureValues(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->ImportFeatureValues(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
 FeaturestoreServiceClient::ImportFeatureValues(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportFeatureValues(ExperimentalTag{}, operation);
+  return connection_->ImportFeatureValues(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
@@ -739,13 +708,11 @@ FeaturestoreServiceClient::BatchReadFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::BatchReadFeatureValues(
-    ExperimentalTag, NoAwaitTag, std::string const& featurestore,
-    Options opts) {
+    NoAwaitTag, std::string const& featurestore, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest request;
   request.set_featurestore(featurestore);
-  return connection_->BatchReadFeatureValues(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->BatchReadFeatureValues(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
@@ -758,20 +725,18 @@ FeaturestoreServiceClient::BatchReadFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::BatchReadFeatureValues(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchReadFeatureValues(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->BatchReadFeatureValues(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
 FeaturestoreServiceClient::BatchReadFeatureValues(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchReadFeatureValues(ExperimentalTag{}, operation);
+  return connection_->BatchReadFeatureValues(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
@@ -784,14 +749,13 @@ FeaturestoreServiceClient::ExportFeatureValues(std::string const& entity_type,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceClient::ExportFeatureValues(ExperimentalTag, NoAwaitTag,
+FeaturestoreServiceClient::ExportFeatureValues(NoAwaitTag,
                                                std::string const& entity_type,
                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::ExportFeatureValuesRequest request;
   request.set_entity_type(entity_type);
-  return connection_->ExportFeatureValues(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->ExportFeatureValues(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
@@ -804,20 +768,18 @@ FeaturestoreServiceClient::ExportFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::ExportFeatureValues(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportFeatureValues(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->ExportFeatureValues(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
 FeaturestoreServiceClient::ExportFeatureValues(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportFeatureValues(ExperimentalTag{}, operation);
+  return connection_->ExportFeatureValues(operation);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -830,14 +792,13 @@ FeaturestoreServiceClient::DeleteFeatureValues(std::string const& entity_type,
 }
 
 StatusOr<google::longrunning::Operation>
-FeaturestoreServiceClient::DeleteFeatureValues(ExperimentalTag, NoAwaitTag,
+FeaturestoreServiceClient::DeleteFeatureValues(NoAwaitTag,
                                                std::string const& entity_type,
                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteFeatureValuesRequest request;
   request.set_entity_type(entity_type);
-  return connection_->DeleteFeatureValues(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->DeleteFeatureValues(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -850,20 +811,18 @@ FeaturestoreServiceClient::DeleteFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceClient::DeleteFeatureValues(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeatureValues(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->DeleteFeatureValues(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
 FeaturestoreServiceClient::DeleteFeatureValues(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteFeatureValues(ExperimentalTag{}, operation);
+  return connection_->DeleteFeatureValues(operation);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>

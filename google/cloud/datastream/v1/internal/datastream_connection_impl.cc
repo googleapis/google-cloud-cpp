@@ -158,7 +158,7 @@ DatastreamConnectionImpl::CreateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::CreateConnectionProfile(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -176,7 +176,7 @@ DatastreamConnectionImpl::CreateConnectionProfile(
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamConnectionImpl::CreateConnectionProfile(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -254,7 +254,7 @@ DatastreamConnectionImpl::UpdateConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::UpdateConnectionProfile(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -272,7 +272,7 @@ DatastreamConnectionImpl::UpdateConnectionProfile(
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamConnectionImpl::UpdateConnectionProfile(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -350,7 +350,7 @@ DatastreamConnectionImpl::DeleteConnectionProfile(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::DeleteConnectionProfile(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -368,7 +368,7 @@ DatastreamConnectionImpl::DeleteConnectionProfile(
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnectionImpl::DeleteConnectionProfile(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -508,7 +508,7 @@ DatastreamConnectionImpl::CreateStream(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::CreateStream(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -524,7 +524,7 @@ StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::CreateStream(
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamConnectionImpl::CreateStream(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -598,7 +598,7 @@ DatastreamConnectionImpl::UpdateStream(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::UpdateStream(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -614,7 +614,7 @@ StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::UpdateStream(
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamConnectionImpl::UpdateStream(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -688,7 +688,7 @@ DatastreamConnectionImpl::DeleteStream(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::DeleteStream(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -704,7 +704,7 @@ StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::DeleteStream(
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnectionImpl::DeleteStream(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -908,7 +908,7 @@ DatastreamConnectionImpl::CreatePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::CreatePrivateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -926,7 +926,7 @@ DatastreamConnectionImpl::CreatePrivateConnection(
 
 future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
 DatastreamConnectionImpl::CreatePrivateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -1055,7 +1055,7 @@ DatastreamConnectionImpl::DeletePrivateConnection(
 
 StatusOr<google::longrunning::Operation>
 DatastreamConnectionImpl::DeletePrivateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1073,7 +1073,7 @@ DatastreamConnectionImpl::DeletePrivateConnection(
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnectionImpl::DeletePrivateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -1148,7 +1148,7 @@ DatastreamConnectionImpl::CreateRoute(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::CreateRoute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1163,7 +1163,7 @@ StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::CreateRoute(
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
 DatastreamConnectionImpl::CreateRoute(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {
@@ -1285,7 +1285,7 @@ DatastreamConnectionImpl::DeleteRoute(
 }
 
 StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::DeleteRoute(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -1300,7 +1300,7 @@ StatusOr<google::longrunning::Operation> DatastreamConnectionImpl::DeleteRoute(
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnectionImpl::DeleteRoute(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::datastream::v1::OperationMetadata>()) {

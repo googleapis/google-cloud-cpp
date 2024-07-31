@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_EDGE_CONTAINER_CLIENT_H
 
 #include "google/cloud/edgecontainer/v1/edge_container_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -268,7 +267,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::edgecontainer::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
@@ -322,7 +321,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateClusterRequest const& request,
       Options opts = {});
 
@@ -336,8 +335,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -389,8 +387,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::edgecontainer::v1::Cluster const& cluster,
+      NoAwaitTag, google::cloud::edgecontainer::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -443,7 +440,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
@@ -457,8 +454,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -509,8 +505,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpgradeCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
-      std::string const& target_version,
+      NoAwaitTag, std::string const& name, std::string const& target_version,
       google::cloud::edgecontainer::v1::UpgradeClusterRequest::Schedule
           schedule,
       Options opts = {});
@@ -565,7 +560,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpgradeCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request,
       Options opts = {});
 
@@ -579,8 +574,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -626,7 +620,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -679,7 +673,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request,
       Options opts = {});
 
@@ -693,8 +687,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  DeleteCluster(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -991,7 +984,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateNodePool(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
       std::string const& node_pool_id, Options opts = {});
 
@@ -1045,7 +1038,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateNodePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request,
       Options opts = {});
 
@@ -1059,8 +1052,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1112,8 +1104,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNodePool(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::edgecontainer::v1::NodePool const& node_pool,
+      NoAwaitTag, google::cloud::edgecontainer::v1::NodePool const& node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1166,7 +1157,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateNodePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request,
       Options opts = {});
 
@@ -1180,8 +1171,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1227,7 +1217,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNodePool(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1280,7 +1270,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteNodePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request,
       Options opts = {});
 
@@ -1294,8 +1284,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteNodePool(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteNodePool(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -1609,7 +1598,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateVpnConnection(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::edgecontainer::v1::VpnConnection const& vpn_connection,
       std::string const& vpn_connection_id, Options opts = {});
 
@@ -1665,7 +1654,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateVpnConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
           request,
       Options opts = {});
@@ -1680,8 +1669,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
-  CreateVpnConnection(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  CreateVpnConnection(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -1728,7 +1716,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVpnConnection(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1782,7 +1770,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVpnConnection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request,
       Options opts = {});
@@ -1797,8 +1785,7 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
-  DeleteVpnConnection(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  DeleteVpnConnection(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off

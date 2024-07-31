@@ -57,14 +57,12 @@ class MockIndexServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateIndex,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::CreateIndexRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-              CreateIndex,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateIndex, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Index>, GetIndex,
@@ -85,14 +83,12 @@ class MockIndexServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateIndex,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::UpdateIndexRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Index>>,
-              UpdateIndex,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateIndex, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -106,14 +102,13 @@ class MockIndexServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteIndex,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteIndexRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteIndex,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteIndex, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

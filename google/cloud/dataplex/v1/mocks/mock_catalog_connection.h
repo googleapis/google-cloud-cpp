@@ -57,15 +57,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEntryType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::CreateEntryTypeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::EntryType>>,
               CreateEntryType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateEntryType)` is now ambiguous. Use
@@ -77,15 +75,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateEntryType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::UpdateEntryTypeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::EntryType>>,
               UpdateEntryType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteEntryType)` is now ambiguous. Use
@@ -98,15 +94,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteEntryType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::DeleteEntryTypeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteEntryType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::EntryType>),
               ListEntryTypes,
@@ -128,15 +122,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateAspectType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::CreateAspectTypeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::AspectType>>,
               CreateAspectType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateAspectType)` is now ambiguous. Use
@@ -149,15 +141,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateAspectType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::UpdateAspectTypeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::AspectType>>,
               UpdateAspectType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteAspectType)` is now ambiguous. Use
@@ -170,15 +160,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteAspectType,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::DeleteAspectTypeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteAspectType,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::AspectType>),
               ListAspectTypes,
@@ -201,15 +189,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateEntryGroup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::CreateEntryGroupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>,
               CreateEntryGroup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateEntryGroup)` is now ambiguous. Use
@@ -222,15 +208,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateEntryGroup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::UpdateEntryGroupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::EntryGroup>>,
               UpdateEntryGroup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteEntryGroup)` is now ambiguous. Use
@@ -243,15 +227,13 @@ class MockCatalogServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteEntryGroup,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dataplex::v1::DeleteEntryGroupRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>,
               DeleteEntryGroup,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::dataplex::v1::EntryGroup>),
               ListEntryGroups,

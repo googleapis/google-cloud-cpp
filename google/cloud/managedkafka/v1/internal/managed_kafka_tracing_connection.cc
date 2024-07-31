@@ -64,23 +64,21 @@ ManagedKafkaTracingConnection::CreateCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaTracingConnection::CreateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::CreateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaTracingConnection::CreateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::CreateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateCluster(operation));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
@@ -94,23 +92,21 @@ ManagedKafkaTracingConnection::UpdateCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaTracingConnection::UpdateCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::UpdateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
 ManagedKafkaTracingConnection::UpdateCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::UpdateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateCluster(operation));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -124,23 +120,21 @@ ManagedKafkaTracingConnection::DeleteCluster(
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaTracingConnection::DeleteCluster(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::DeleteCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteCluster(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
 ManagedKafkaTracingConnection::DeleteCluster(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::DeleteCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteCluster(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteCluster(operation));
 }
 
 StreamRange<google::cloud::managedkafka::v1::Topic>

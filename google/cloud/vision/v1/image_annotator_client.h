@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VISION_V1_IMAGE_ANNOTATOR_CLIENT_H
 
 #include "google/cloud/vision/v1/image_annotator_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -281,7 +280,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       std::vector<google::cloud::vision::v1::AnnotateImageRequest> const&
           requests,
       google::cloud::vision::v1::OutputConfig const& output_config,
@@ -346,7 +345,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateImages(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request,
       Options opts = {});
 
@@ -360,8 +359,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
-  AsyncBatchAnnotateImages(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  AsyncBatchAnnotateImages(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off
@@ -416,7 +414,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       std::vector<google::cloud::vision::v1::AsyncAnnotateFileRequest> const&
           requests,
       Options opts = {});
@@ -477,7 +475,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> AsyncBatchAnnotateFiles(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request,
       Options opts = {});
 
@@ -491,8 +489,7 @@ class ImageAnnotatorClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
-  AsyncBatchAnnotateFiles(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+  AsyncBatchAnnotateFiles(google::longrunning::Operation const& operation,
                           Options opts = {});
 
  private:

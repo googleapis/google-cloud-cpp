@@ -67,15 +67,14 @@ TargetHttpProxiesClient::DeleteTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesClient::DeleteTargetHttpProxy(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     std::string const& target_http_proxy, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::target_http_proxies::v1::
       DeleteTargetHttpProxyRequest request;
   request.set_project(project);
   request.set_target_http_proxy(target_http_proxy);
-  return connection_->DeleteTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->DeleteTargetHttpProxy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -89,21 +88,19 @@ TargetHttpProxiesClient::DeleteTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesClient::DeleteTargetHttpProxy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         DeleteTargetHttpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->DeleteTargetHttpProxy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesClient::DeleteTargetHttpProxy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteTargetHttpProxy(ExperimentalTag{}, operation);
+  return connection_->DeleteTargetHttpProxy(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -143,7 +140,7 @@ TargetHttpProxiesClient::InsertTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesClient::InsertTargetHttpProxy(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::TargetHttpProxy const&
         target_http_proxy_resource,
     Options opts) {
@@ -152,8 +149,7 @@ TargetHttpProxiesClient::InsertTargetHttpProxy(
       InsertTargetHttpProxyRequest request;
   request.set_project(project);
   *request.mutable_target_http_proxy_resource() = target_http_proxy_resource;
-  return connection_->InsertTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->InsertTargetHttpProxy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -167,21 +163,19 @@ TargetHttpProxiesClient::InsertTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesClient::InsertTargetHttpProxy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         InsertTargetHttpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->InsertTargetHttpProxy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesClient::InsertTargetHttpProxy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertTargetHttpProxy(ExperimentalTag{}, operation);
+  return connection_->InsertTargetHttpProxy(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>
@@ -220,7 +214,7 @@ TargetHttpProxiesClient::PatchTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesClient::PatchTargetHttpProxy(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     std::string const& target_http_proxy,
     google::cloud::cpp::compute::v1::TargetHttpProxy const&
         target_http_proxy_resource,
@@ -231,8 +225,7 @@ TargetHttpProxiesClient::PatchTargetHttpProxy(
   request.set_project(project);
   request.set_target_http_proxy(target_http_proxy);
   *request.mutable_target_http_proxy_resource() = target_http_proxy_resource;
-  return connection_->PatchTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->PatchTargetHttpProxy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -246,21 +239,19 @@ TargetHttpProxiesClient::PatchTargetHttpProxy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesClient::PatchTargetHttpProxy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         PatchTargetHttpProxyRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchTargetHttpProxy(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->PatchTargetHttpProxy(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesClient::PatchTargetHttpProxy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchTargetHttpProxy(ExperimentalTag{}, operation);
+  return connection_->PatchTargetHttpProxy(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -280,7 +271,7 @@ TargetHttpProxiesClient::SetUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesClient::SetUrlMap(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     std::string const& target_http_proxy,
     google::cloud::cpp::compute::v1::UrlMapReference const&
         url_map_reference_resource,
@@ -291,7 +282,7 @@ TargetHttpProxiesClient::SetUrlMap(
   request.set_project(project);
   request.set_target_http_proxy(target_http_proxy);
   *request.mutable_url_map_reference_resource() = url_map_reference_resource;
-  return connection_->SetUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetUrlMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -305,20 +296,19 @@ TargetHttpProxiesClient::SetUrlMap(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetHttpProxiesClient::SetUrlMap(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::target_http_proxies::v1::
         SetUrlMapRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetUrlMap(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetUrlMap(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetHttpProxiesClient::SetUrlMap(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetUrlMap(ExperimentalTag{}, operation);
+  return connection_->SetUrlMap(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

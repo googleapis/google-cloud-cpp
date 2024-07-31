@@ -57,24 +57,23 @@ DatabaseAdminTracingConnection::CreateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminTracingConnection::CreateDatabase(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::CreateDatabase");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateDatabase(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateDatabase(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminTracingConnection::CreateDatabase(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::CreateDatabase");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateDatabase(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateDatabase(operation));
 }
 
 StatusOr<google::spanner::admin::database::v1::Database>
@@ -98,24 +97,23 @@ DatabaseAdminTracingConnection::UpdateDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminTracingConnection::UpdateDatabase(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::UpdateDatabase");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateDatabase(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateDatabase(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminTracingConnection::UpdateDatabase(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::UpdateDatabase");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateDatabase(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateDatabase(operation));
 }
 
 future<
@@ -131,26 +129,25 @@ DatabaseAdminTracingConnection::UpdateDatabaseDdl(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminTracingConnection::UpdateDatabaseDdl(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::UpdateDatabaseDdl");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateDatabaseDdl(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateDatabaseDdl(NoAwaitTag{}, request));
 }
 
 future<
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
 DatabaseAdminTracingConnection::UpdateDatabaseDdl(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::UpdateDatabaseDdl");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateDatabaseDdl(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateDatabaseDdl(operation));
 }
 
 Status DatabaseAdminTracingConnection::DropDatabase(
@@ -207,23 +204,21 @@ DatabaseAdminTracingConnection::CreateBackup(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminTracingConnection::CreateBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::CreateBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 DatabaseAdminTracingConnection::CreateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::CreateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateBackup(operation));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
@@ -237,23 +232,21 @@ DatabaseAdminTracingConnection::CopyBackup(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminTracingConnection::CopyBackup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   auto span =
       internal::MakeSpan("spanner_admin::DatabaseAdminConnection::CopyBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CopyBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CopyBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
 DatabaseAdminTracingConnection::CopyBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("spanner_admin::DatabaseAdminConnection::CopyBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CopyBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CopyBackup(operation));
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
@@ -306,24 +299,23 @@ DatabaseAdminTracingConnection::RestoreDatabase(
 
 StatusOr<google::longrunning::Operation>
 DatabaseAdminTracingConnection::RestoreDatabase(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::RestoreDatabase");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RestoreDatabase(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RestoreDatabase(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Database>>
 DatabaseAdminTracingConnection::RestoreDatabase(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "spanner_admin::DatabaseAdminConnection::RestoreDatabase");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RestoreDatabase(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RestoreDatabase(operation));
 }
 
 StreamRange<google::longrunning::Operation>
