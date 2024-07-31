@@ -355,7 +355,6 @@ Default$stub_rest_class_name$::Async$method_name$(
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
       std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
-      query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$,
           $preserve_proto_field_names_in_json$,
@@ -379,7 +378,6 @@ Default$stub_rest_class_name$::$method_name$(
       Options const& options,
       $request_type$ const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$, std::move(query_params));
@@ -394,7 +392,6 @@ Status Default$stub_rest_class_name$::$method_name$(
       Options const& options,
       $request_type$ const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::$method_http_verb$<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$, std::move(query_params));
@@ -408,7 +405,6 @@ Default$stub_rest_class_name$::$method_name$(
       Options const& options,
       $request_type$ const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::$method_http_verb$<$response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$, std::move(query_params));
@@ -435,7 +431,6 @@ Default$stub_rest_class_name$::Async$method_name$(
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
       std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
-      query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
       p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
           $method_rest_path_async$, std::move(query_params)));
@@ -463,7 +458,6 @@ Default$stub_rest_class_name$::Async$method_name$(
   std::thread t{[](
           auto p, auto service, auto request, auto rest_context, auto options) {
       std::vector<std::pair<std::string, std::string>> query_params;$method_http_query_parameters$
-      query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
           $method_rest_path_async$, std::move(query_params)));

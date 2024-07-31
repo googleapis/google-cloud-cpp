@@ -136,6 +136,10 @@ std::string FormatQueryParameterCode(
                               i.first, field_access);
     }
   }
+  if (!code.empty()) {
+    code += R"""(
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));)""";
+  }
   return code;
 }
 

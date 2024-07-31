@@ -616,7 +616,8 @@ TEST_F(HttpOptionUtilsTest, SetHttpGetQueryParametersGetPaginated) {
   SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(vars,
               Contains(Pair("method_http_query_parameters",
-                            AllOf(HasSubstr("page_token"), HasSubstr("name"),
+                            AllOf(HasSubstr("TrimEmptyQueryParameters"),
+                                  HasSubstr("page_token"), HasSubstr("name"),
                                   HasSubstr("include_foo")))));
 }
 
@@ -629,12 +630,13 @@ TEST_F(HttpOptionUtilsTest,
   VarsDictionary vars;
   SetHttpQueryParameters(ParseHttpExtension(*method), *method, vars);
   EXPECT_THAT(
-      vars, Contains(Pair(
-                "method_http_query_parameters",
-                AllOf(HasSubstr("page_token"), HasSubstr("max_results"),
-                      HasSubstr("include_location"), HasSubstr("double_value"),
-                      HasSubstr("float_value"), HasSubstr("int32_value"),
-                      HasSubstr("int64_value")))));
+      vars,
+      Contains(Pair(
+          "method_http_query_parameters",
+          AllOf(HasSubstr("TrimEmptyQueryParameters"), HasSubstr("page_token"),
+                HasSubstr("max_results"), HasSubstr("include_location"),
+                HasSubstr("double_value"), HasSubstr("float_value"),
+                HasSubstr("int32_value"), HasSubstr("int64_value")))));
 }
 
 TEST_F(HttpOptionUtilsTest, HasHttpAnnotationRoutingHeaderSuccess) {
