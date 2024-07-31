@@ -52,12 +52,16 @@ DefaultInstanceSettingsRestStub::GetInstanceSettings(
     Options const& options,
     google::cloud::cpp::compute::instance_settings::v1::
         GetInstanceSettingsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceSettings>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "instanceSettings"));
+                   request.zone(), "/", "instanceSettings"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -72,6 +76,11 @@ DefaultInstanceSettingsRestStub::AsyncPatchInstanceSettings(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back({"update_mask", request.update_mask()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.instance_settings_resource(),
@@ -81,9 +90,7 @@ DefaultInstanceSettingsRestStub::AsyncPatchInstanceSettings(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/",
                              "instanceSettings"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("update_mask", request.update_mask())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -102,15 +109,18 @@ DefaultInstanceSettingsRestStub::PatchInstanceSettings(
     Options const& options,
     google::cloud::cpp::compute::instance_settings::v1::
         PatchInstanceSettingsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back({"update_mask", request.update_mask()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.instance_settings_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceSettings"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("update_mask", request.update_mask())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

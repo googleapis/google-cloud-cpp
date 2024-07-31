@@ -51,6 +51,20 @@ DefaultSslPoliciesRestStub::AggregatedListSslPolicies(
     Options const& options,
     google::cloud::cpp::compute::ssl_policies::v1::
         AggregatedListSslPoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::SslPoliciesAggregatedList>(
       *service_, rest_context, request, false,
@@ -58,17 +72,7 @@ DefaultSslPoliciesRestStub::AggregatedListSslPolicies(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "sslPolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -83,6 +87,10 @@ DefaultSslPoliciesRestStub::AsyncDeleteSslPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -91,8 +99,7 @@ DefaultSslPoliciesRestStub::AsyncDeleteSslPolicy(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "sslPolicies", "/",
                              request.ssl_policy()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -111,14 +118,17 @@ DefaultSslPoliciesRestStub::DeleteSslPolicy(
     Options const& options,
     google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "sslPolicies", "/", request.ssl_policy()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPolicy>
@@ -127,12 +137,16 @@ DefaultSslPoliciesRestStub::GetSslPolicy(
     Options const& options,
     google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "sslPolicies", "/", request.ssl_policy()));
+                   "sslPolicies", "/", request.ssl_policy()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -147,6 +161,10 @@ DefaultSslPoliciesRestStub::AsyncInsertSslPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_policy_resource(), false,
@@ -154,8 +172,7 @@ DefaultSslPoliciesRestStub::AsyncInsertSslPolicy(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "sslPolicies"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -174,14 +191,17 @@ DefaultSslPoliciesRestStub::InsertSslPolicy(
     Options const& options,
     google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.ssl_policy_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "sslPolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::SslPoliciesList>
@@ -190,19 +210,23 @@ DefaultSslPoliciesRestStub::ListSslPolicies(
     Options const& options,
     google::cloud::cpp::compute::ssl_policies::v1::ListSslPoliciesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::SslPoliciesList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "sslPolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<
@@ -212,6 +236,16 @@ DefaultSslPoliciesRestStub::ListAvailableFeatures(
     Options const& options,
     google::cloud::cpp::compute::ssl_policies::v1::
         ListAvailableFeaturesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::
                                 SslPoliciesListAvailableFeaturesResponse>(
       *service_, rest_context, request, false,
@@ -219,13 +253,7 @@ DefaultSslPoliciesRestStub::ListAvailableFeatures(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "sslPolicies", "/", "listAvailableFeatures"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -240,6 +268,10 @@ DefaultSslPoliciesRestStub::AsyncPatchSslPolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.ssl_policy_resource(), false,
@@ -248,8 +280,7 @@ DefaultSslPoliciesRestStub::AsyncPatchSslPolicy(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "sslPolicies", "/",
                              request.ssl_policy()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -268,14 +299,17 @@ DefaultSslPoliciesRestStub::PatchSslPolicy(
     Options const& options,
     google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.ssl_policy_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "sslPolicies", "/", request.ssl_policy()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

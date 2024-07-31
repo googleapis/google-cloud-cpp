@@ -45,6 +45,20 @@ DefaultDiskTypesRestStub::AggregatedListDiskTypes(
     Options const& options,
     google::cloud::cpp::compute::disk_types::v1::
         AggregatedListDiskTypesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::DiskTypeAggregatedList>(
       *service_, rest_context, request, false,
@@ -52,17 +66,7 @@ DefaultDiskTypesRestStub::AggregatedListDiskTypes(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "diskTypes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskType>
@@ -71,12 +75,16 @@ DefaultDiskTypesRestStub::GetDiskType(
     Options const& options,
     google::cloud::cpp::compute::disk_types::v1::GetDiskTypeRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
-                   request.zone(), "/", "diskTypes", "/", request.disk_type()));
+                   request.zone(), "/", "diskTypes", "/", request.disk_type()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::DiskTypeList>
@@ -85,19 +93,23 @@ DefaultDiskTypesRestStub::ListDiskTypes(
     Options const& options,
     google::cloud::cpp::compute::disk_types::v1::ListDiskTypesRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::DiskTypeList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "diskTypes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -52,6 +52,20 @@ DefaultNetworkAttachmentsRestStub::AggregatedListNetworkAttachments(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         AggregatedListNetworkAttachmentsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkAttachmentAggregatedList>(
       *service_, rest_context, request, false,
@@ -59,17 +73,7 @@ DefaultNetworkAttachmentsRestStub::AggregatedListNetworkAttachments(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "networkAttachments"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -84,6 +88,10 @@ DefaultNetworkAttachmentsRestStub::AsyncDeleteNetworkAttachment(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -93,8 +101,7 @@ DefaultNetworkAttachmentsRestStub::AsyncDeleteNetworkAttachment(
                              "regions", "/", request.region(), "/",
                              "networkAttachments", "/",
                              request.network_attachment()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -113,6 +120,10 @@ DefaultNetworkAttachmentsRestStub::DeleteNetworkAttachment(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         DeleteNetworkAttachmentRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -120,8 +131,7 @@ DefaultNetworkAttachmentsRestStub::DeleteNetworkAttachment(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkAttachments", "/",
                    request.network_attachment()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>
@@ -130,13 +140,17 @@ DefaultNetworkAttachmentsRestStub::GetNetworkAttachment(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         GetNetworkAttachmentRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::NetworkAttachment>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkAttachments", "/",
-                   request.network_attachment()));
+                   request.network_attachment()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -145,6 +159,12 @@ DefaultNetworkAttachmentsRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         GetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -152,9 +172,7 @@ DefaultNetworkAttachmentsRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkAttachments", "/",
                    request.resource(), "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -169,6 +187,10 @@ DefaultNetworkAttachmentsRestStub::AsyncInsertNetworkAttachment(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.network_attachment_resource(),
@@ -178,8 +200,7 @@ DefaultNetworkAttachmentsRestStub::AsyncInsertNetworkAttachment(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "networkAttachments"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -198,14 +219,17 @@ DefaultNetworkAttachmentsRestStub::InsertNetworkAttachment(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         InsertNetworkAttachmentRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.network_attachment_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkAttachments"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkAttachmentList>
@@ -214,6 +238,16 @@ DefaultNetworkAttachmentsRestStub::ListNetworkAttachments(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         ListNetworkAttachmentsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkAttachmentList>(
       *service_, rest_context, request, false,
@@ -221,13 +255,7 @@ DefaultNetworkAttachmentsRestStub::ListNetworkAttachments(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkAttachments"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -242,6 +270,10 @@ DefaultNetworkAttachmentsRestStub::AsyncPatchNetworkAttachment(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.network_attachment_resource(),
@@ -252,8 +284,7 @@ DefaultNetworkAttachmentsRestStub::AsyncPatchNetworkAttachment(
                              "regions", "/", request.region(), "/",
                              "networkAttachments", "/",
                              request.network_attachment()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -272,6 +303,10 @@ DefaultNetworkAttachmentsRestStub::PatchNetworkAttachment(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         PatchNetworkAttachmentRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.network_attachment_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -279,8 +314,7 @@ DefaultNetworkAttachmentsRestStub::PatchNetworkAttachment(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkAttachments", "/",
                    request.network_attachment()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -289,6 +323,9 @@ DefaultNetworkAttachmentsRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         SetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -296,7 +333,8 @@ DefaultNetworkAttachmentsRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkAttachments", "/",
-                   request.resource(), "/", "setIamPolicy"));
+                   request.resource(), "/", "setIamPolicy"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -305,6 +343,9 @@ DefaultNetworkAttachmentsRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::network_attachments::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -313,7 +354,8 @@ DefaultNetworkAttachmentsRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkAttachments", "/",
-                   request.resource(), "/", "testIamPermissions"));
+                   request.resource(), "/", "testIamPermissions"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

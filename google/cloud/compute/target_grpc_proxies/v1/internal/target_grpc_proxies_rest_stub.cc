@@ -58,6 +58,10 @@ DefaultTargetGrpcProxiesRestStub::AsyncDeleteTargetGrpcProxy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -66,8 +70,7 @@ DefaultTargetGrpcProxiesRestStub::AsyncDeleteTargetGrpcProxy(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "targetGrpcProxies", "/",
                              request.target_grpc_proxy()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -86,14 +89,17 @@ DefaultTargetGrpcProxiesRestStub::DeleteTargetGrpcProxy(
     Options const& options,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         DeleteTargetGrpcProxyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "targetGrpcProxies", "/", request.target_grpc_proxy()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxy>
@@ -102,12 +108,16 @@ DefaultTargetGrpcProxiesRestStub::GetTargetGrpcProxy(
     Options const& options,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         GetTargetGrpcProxyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetGrpcProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "targetGrpcProxies", "/", request.target_grpc_proxy()));
+                   "targetGrpcProxies", "/", request.target_grpc_proxy()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -122,6 +132,10 @@ DefaultTargetGrpcProxiesRestStub::AsyncInsertTargetGrpcProxy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_grpc_proxy_resource(),
@@ -130,8 +144,7 @@ DefaultTargetGrpcProxiesRestStub::AsyncInsertTargetGrpcProxy(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "targetGrpcProxies"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -150,14 +163,17 @@ DefaultTargetGrpcProxiesRestStub::InsertTargetGrpcProxy(
     Options const& options,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         InsertTargetGrpcProxyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.target_grpc_proxy_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "targetGrpcProxies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetGrpcProxyList>
@@ -166,6 +182,16 @@ DefaultTargetGrpcProxiesRestStub::ListTargetGrpcProxies(
     Options const& options,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         ListTargetGrpcProxiesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetGrpcProxyList>(
       *service_, rest_context, request, false,
@@ -173,13 +199,7 @@ DefaultTargetGrpcProxiesRestStub::ListTargetGrpcProxies(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "targetGrpcProxies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -194,6 +214,10 @@ DefaultTargetGrpcProxiesRestStub::AsyncPatchTargetGrpcProxy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_grpc_proxy_resource(),
@@ -203,8 +227,7 @@ DefaultTargetGrpcProxiesRestStub::AsyncPatchTargetGrpcProxy(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "targetGrpcProxies", "/",
                              request.target_grpc_proxy()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -223,14 +246,17 @@ DefaultTargetGrpcProxiesRestStub::PatchTargetGrpcProxy(
     Options const& options,
     google::cloud::cpp::compute::target_grpc_proxies::v1::
         PatchTargetGrpcProxyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.target_grpc_proxy_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "targetGrpcProxies", "/", request.target_grpc_proxy()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

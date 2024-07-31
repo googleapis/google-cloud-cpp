@@ -59,6 +59,10 @@ DefaultRegionHealthChecksRestStub::AsyncDeleteHealthCheck(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -67,8 +71,7 @@ DefaultRegionHealthChecksRestStub::AsyncDeleteHealthCheck(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "healthChecks", "/", request.health_check()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -87,6 +90,10 @@ DefaultRegionHealthChecksRestStub::DeleteHealthCheck(
     Options const& options,
     google::cloud::cpp::compute::region_health_checks::v1::
         DeleteHealthCheckRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -94,8 +101,7 @@ DefaultRegionHealthChecksRestStub::DeleteHealthCheck(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "healthChecks", "/",
                    request.health_check()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheck>
@@ -104,13 +110,17 @@ DefaultRegionHealthChecksRestStub::GetHealthCheck(
     Options const& options,
     google::cloud::cpp::compute::region_health_checks::v1::
         GetHealthCheckRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheck>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "healthChecks", "/",
-                   request.health_check()));
+                   request.health_check()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -125,6 +135,10 @@ DefaultRegionHealthChecksRestStub::AsyncInsertHealthCheck(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.health_check_resource(), false,
@@ -133,8 +147,7 @@ DefaultRegionHealthChecksRestStub::AsyncInsertHealthCheck(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "healthChecks"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -153,14 +166,17 @@ DefaultRegionHealthChecksRestStub::InsertHealthCheck(
     Options const& options,
     google::cloud::cpp::compute::region_health_checks::v1::
         InsertHealthCheckRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.health_check_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "healthChecks"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::HealthCheckList>
@@ -169,19 +185,23 @@ DefaultRegionHealthChecksRestStub::ListRegionHealthChecks(
     Options const& options,
     google::cloud::cpp::compute::region_health_checks::v1::
         ListRegionHealthChecksRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheckList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "healthChecks"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -196,6 +216,10 @@ DefaultRegionHealthChecksRestStub::AsyncPatchHealthCheck(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.health_check_resource(), false,
@@ -204,8 +228,7 @@ DefaultRegionHealthChecksRestStub::AsyncPatchHealthCheck(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "healthChecks", "/", request.health_check()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -224,6 +247,10 @@ DefaultRegionHealthChecksRestStub::PatchHealthCheck(
     Options const& options,
     google::cloud::cpp::compute::region_health_checks::v1::
         PatchHealthCheckRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.health_check_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -231,8 +258,7 @@ DefaultRegionHealthChecksRestStub::PatchHealthCheck(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "healthChecks", "/",
                    request.health_check()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -247,6 +273,10 @@ DefaultRegionHealthChecksRestStub::AsyncUpdateHealthCheck(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.health_check_resource(), false,
@@ -255,8 +285,7 @@ DefaultRegionHealthChecksRestStub::AsyncUpdateHealthCheck(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "healthChecks", "/", request.health_check()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -275,6 +304,10 @@ DefaultRegionHealthChecksRestStub::UpdateHealthCheck(
     Options const& options,
     google::cloud::cpp::compute::region_health_checks::v1::
         UpdateHealthCheckRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.health_check_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -282,8 +315,7 @@ DefaultRegionHealthChecksRestStub::UpdateHealthCheck(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "healthChecks", "/",
                    request.health_check()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

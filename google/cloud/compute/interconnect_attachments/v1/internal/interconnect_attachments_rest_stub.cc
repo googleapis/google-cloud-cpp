@@ -53,6 +53,20 @@ DefaultInterconnectAttachmentsRestStub::AggregatedListInterconnectAttachments(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         AggregatedListInterconnectAttachmentsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentAggregatedList>(
       *service_, rest_context, request, false,
@@ -60,17 +74,7 @@ DefaultInterconnectAttachmentsRestStub::AggregatedListInterconnectAttachments(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "interconnectAttachments"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -85,6 +89,10 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -94,8 +102,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncDeleteInterconnectAttachment(
                              "regions", "/", request.region(), "/",
                              "interconnectAttachments", "/",
                              request.interconnect_attachment()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -114,6 +121,10 @@ DefaultInterconnectAttachmentsRestStub::DeleteInterconnectAttachment(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         DeleteInterconnectAttachmentRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -121,8 +132,7 @@ DefaultInterconnectAttachmentsRestStub::DeleteInterconnectAttachment(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "interconnectAttachments", "/",
                    request.interconnect_attachment()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -131,6 +141,9 @@ DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachment(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         GetInterconnectAttachmentRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachment>(
       *service_, rest_context, request, false,
@@ -138,7 +151,8 @@ DefaultInterconnectAttachmentsRestStub::GetInterconnectAttachment(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "interconnectAttachments", "/",
-                   request.interconnect_attachment()));
+                   request.interconnect_attachment()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -153,6 +167,12 @@ DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back(
+            {"validate_only", (request.validate_only() ? "1" : "0")});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -162,10 +182,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncInsertInterconnectAttachment(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "interconnectAttachments"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("validate_only",
-                                    (request.validate_only() ? "1" : "0"))})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -184,6 +201,12 @@ DefaultInterconnectAttachmentsRestStub::InsertInterconnectAttachment(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         InsertInterconnectAttachmentRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back(
+      {"validate_only", (request.validate_only() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.interconnect_attachment_resource(),
       false,
@@ -191,10 +214,7 @@ DefaultInterconnectAttachmentsRestStub::InsertInterconnectAttachment(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "interconnectAttachments"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("validate_only",
-                          (request.validate_only() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachmentList>
@@ -203,6 +223,16 @@ DefaultInterconnectAttachmentsRestStub::ListInterconnectAttachments(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         ListInterconnectAttachmentsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectAttachmentList>(
       *service_, rest_context, request, false,
@@ -210,13 +240,7 @@ DefaultInterconnectAttachmentsRestStub::ListInterconnectAttachments(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "interconnectAttachments"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -231,6 +255,10 @@ DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachment(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -241,8 +269,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncPatchInterconnectAttachment(
                              "regions", "/", request.region(), "/",
                              "interconnectAttachments", "/",
                              request.interconnect_attachment()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -261,6 +288,10 @@ DefaultInterconnectAttachmentsRestStub::PatchInterconnectAttachment(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         PatchInterconnectAttachmentRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.interconnect_attachment_resource(),
       false,
@@ -269,8 +300,7 @@ DefaultInterconnectAttachmentsRestStub::PatchInterconnectAttachment(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "interconnectAttachments", "/",
                    request.interconnect_attachment()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -285,6 +315,10 @@ DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -295,8 +329,7 @@ DefaultInterconnectAttachmentsRestStub::AsyncSetLabels(
                              "regions", "/", request.region(), "/",
                              "interconnectAttachments", "/", request.resource(),
                              "/", "setLabels"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -315,6 +348,10 @@ DefaultInterconnectAttachmentsRestStub::SetLabels(
     Options const& options,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         SetLabelsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.region_set_labels_request_resource(),
       false,
@@ -323,8 +360,7 @@ DefaultInterconnectAttachmentsRestStub::SetLabels(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "interconnectAttachments", "/",
                    request.resource(), "/", "setLabels"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

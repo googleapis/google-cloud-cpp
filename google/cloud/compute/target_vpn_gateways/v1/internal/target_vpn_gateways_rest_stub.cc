@@ -52,6 +52,20 @@ DefaultTargetVpnGatewaysRestStub::AggregatedListTargetVpnGateways(
     Options const& options,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         AggregatedListTargetVpnGatewaysRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetVpnGatewayAggregatedList>(
       *service_, rest_context, request, false,
@@ -59,17 +73,7 @@ DefaultTargetVpnGatewaysRestStub::AggregatedListTargetVpnGateways(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "targetVpnGateways"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -84,6 +88,10 @@ DefaultTargetVpnGatewaysRestStub::AsyncDeleteTargetVpnGateway(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -93,8 +101,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncDeleteTargetVpnGateway(
                              "regions", "/", request.region(), "/",
                              "targetVpnGateways", "/",
                              request.target_vpn_gateway()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -113,6 +120,10 @@ DefaultTargetVpnGatewaysRestStub::DeleteTargetVpnGateway(
     Options const& options,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         DeleteTargetVpnGatewayRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -120,8 +131,7 @@ DefaultTargetVpnGatewaysRestStub::DeleteTargetVpnGateway(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "targetVpnGateways", "/",
                    request.target_vpn_gateway()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGateway>
@@ -130,13 +140,17 @@ DefaultTargetVpnGatewaysRestStub::GetTargetVpnGateway(
     Options const& options,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         GetTargetVpnGatewayRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetVpnGateway>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "targetVpnGateways", "/",
-                   request.target_vpn_gateway()));
+                   request.target_vpn_gateway()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -151,6 +165,10 @@ DefaultTargetVpnGatewaysRestStub::AsyncInsertTargetVpnGateway(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_vpn_gateway_resource(),
@@ -160,8 +178,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncInsertTargetVpnGateway(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "targetVpnGateways"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -180,14 +197,17 @@ DefaultTargetVpnGatewaysRestStub::InsertTargetVpnGateway(
     Options const& options,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         InsertTargetVpnGatewayRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.target_vpn_gateway_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "targetVpnGateways"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetVpnGatewayList>
@@ -196,6 +216,16 @@ DefaultTargetVpnGatewaysRestStub::ListTargetVpnGateways(
     Options const& options,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         ListTargetVpnGatewaysRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::TargetVpnGatewayList>(
       *service_, rest_context, request, false,
@@ -203,13 +233,7 @@ DefaultTargetVpnGatewaysRestStub::ListTargetVpnGateways(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "targetVpnGateways"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -224,6 +248,10 @@ DefaultTargetVpnGatewaysRestStub::AsyncSetLabels(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -234,8 +262,7 @@ DefaultTargetVpnGatewaysRestStub::AsyncSetLabels(
                              "regions", "/", request.region(), "/",
                              "targetVpnGateways", "/", request.resource(), "/",
                              "setLabels"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -254,6 +281,10 @@ DefaultTargetVpnGatewaysRestStub::SetLabels(
     Options const& options,
     google::cloud::cpp::compute::target_vpn_gateways::v1::
         SetLabelsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.region_set_labels_request_resource(),
       false,
@@ -262,8 +293,7 @@ DefaultTargetVpnGatewaysRestStub::SetLabels(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "targetVpnGateways", "/",
                    request.resource(), "/", "setLabels"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

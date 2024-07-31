@@ -51,6 +51,20 @@ DefaultForwardingRulesRestStub::AggregatedListForwardingRules(
     Options const& options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         AggregatedListForwardingRulesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ForwardingRuleAggregatedList>(
       *service_, rest_context, request, false,
@@ -58,17 +72,7 @@ DefaultForwardingRulesRestStub::AggregatedListForwardingRules(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "forwardingRules"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -83,6 +87,10 @@ DefaultForwardingRulesRestStub::AsyncDeleteForwardingRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -91,8 +99,7 @@ DefaultForwardingRulesRestStub::AsyncDeleteForwardingRule(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "forwardingRules", "/", request.forwarding_rule()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -111,6 +118,10 @@ DefaultForwardingRulesRestStub::DeleteForwardingRule(
     Options const& options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         DeleteForwardingRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -118,8 +129,7 @@ DefaultForwardingRulesRestStub::DeleteForwardingRule(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "forwardingRules", "/",
                    request.forwarding_rule()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRule>
@@ -128,13 +138,17 @@ DefaultForwardingRulesRestStub::GetForwardingRule(
     Options const& options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         GetForwardingRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRule>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "forwardingRules", "/",
-                   request.forwarding_rule()));
+                   request.forwarding_rule()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -149,6 +163,10 @@ DefaultForwardingRulesRestStub::AsyncInsertForwardingRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.forwarding_rule_resource(),
@@ -158,8 +176,7 @@ DefaultForwardingRulesRestStub::AsyncInsertForwardingRule(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "forwardingRules"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -178,14 +195,17 @@ DefaultForwardingRulesRestStub::InsertForwardingRule(
     Options const& options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         InsertForwardingRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.forwarding_rule_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "forwardingRules"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ForwardingRuleList>
@@ -194,6 +214,16 @@ DefaultForwardingRulesRestStub::ListForwardingRules(
     Options const& options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         ListForwardingRulesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ForwardingRuleList>(
       *service_, rest_context, request, false,
@@ -201,13 +231,7 @@ DefaultForwardingRulesRestStub::ListForwardingRules(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "forwardingRules"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -222,6 +246,10 @@ DefaultForwardingRulesRestStub::AsyncPatchForwardingRule(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.forwarding_rule_resource(),
@@ -231,8 +259,7 @@ DefaultForwardingRulesRestStub::AsyncPatchForwardingRule(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "forwardingRules", "/", request.forwarding_rule()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -251,6 +278,10 @@ DefaultForwardingRulesRestStub::PatchForwardingRule(
     Options const& options,
     google::cloud::cpp::compute::forwarding_rules::v1::
         PatchForwardingRuleRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.forwarding_rule_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -258,8 +289,7 @@ DefaultForwardingRulesRestStub::PatchForwardingRule(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "forwardingRules", "/",
                    request.forwarding_rule()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -274,6 +304,10 @@ DefaultForwardingRulesRestStub::AsyncSetLabels(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -284,8 +318,7 @@ DefaultForwardingRulesRestStub::AsyncSetLabels(
                              "regions", "/", request.region(), "/",
                              "forwardingRules", "/", request.resource(), "/",
                              "setLabels"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -304,6 +337,10 @@ DefaultForwardingRulesRestStub::SetLabels(
     Options const& options,
     google::cloud::cpp::compute::forwarding_rules::v1::SetLabelsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.region_set_labels_request_resource(),
       false,
@@ -312,8 +349,7 @@ DefaultForwardingRulesRestStub::SetLabels(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "forwardingRules", "/",
                    request.resource(), "/", "setLabels"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -328,6 +364,10 @@ DefaultForwardingRulesRestStub::AsyncSetTarget(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.target_reference_resource(),
@@ -338,8 +378,7 @@ DefaultForwardingRulesRestStub::AsyncSetTarget(
                              "regions", "/", request.region(), "/",
                              "forwardingRules", "/", request.forwarding_rule(),
                              "/", "setTarget"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -358,6 +397,10 @@ DefaultForwardingRulesRestStub::SetTarget(
     Options const& options,
     google::cloud::cpp::compute::forwarding_rules::v1::SetTargetRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.target_reference_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -365,8 +408,7 @@ DefaultForwardingRulesRestStub::SetTarget(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "forwardingRules", "/",
                    request.forwarding_rule(), "/", "setTarget"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

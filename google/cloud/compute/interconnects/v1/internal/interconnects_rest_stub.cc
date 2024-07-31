@@ -57,6 +57,10 @@ DefaultInterconnectsRestStub::AsyncDeleteInterconnect(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -65,8 +69,7 @@ DefaultInterconnectsRestStub::AsyncDeleteInterconnect(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "interconnects", "/",
                              request.interconnect()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -85,14 +88,17 @@ DefaultInterconnectsRestStub::DeleteInterconnect(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         DeleteInterconnectRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "interconnects", "/", request.interconnect()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
@@ -101,12 +107,16 @@ DefaultInterconnectsRestStub::GetInterconnect(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         GetInterconnectRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Interconnect>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "interconnects", "/", request.interconnect()));
+                   "interconnects", "/", request.interconnect()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>
@@ -115,6 +125,9 @@ DefaultInterconnectsRestStub::GetDiagnostics(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::GetDiagnosticsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectsGetDiagnosticsResponse>(
       *service_, rest_context, request, false,
@@ -122,7 +135,8 @@ DefaultInterconnectsRestStub::GetDiagnostics(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "interconnects", "/", request.interconnect(), "/",
-                   "getDiagnostics"));
+                   "getDiagnostics"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>
@@ -131,6 +145,9 @@ DefaultInterconnectsRestStub::GetMacsecConfig(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         GetMacsecConfigRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InterconnectsGetMacsecConfigResponse>(
       *service_, rest_context, request, false,
@@ -138,7 +155,8 @@ DefaultInterconnectsRestStub::GetMacsecConfig(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "interconnects", "/", request.interconnect(), "/",
-                   "getMacsecConfig"));
+                   "getMacsecConfig"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -153,6 +171,10 @@ DefaultInterconnectsRestStub::AsyncInsertInterconnect(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.interconnect_resource(), false,
@@ -160,8 +182,7 @@ DefaultInterconnectsRestStub::AsyncInsertInterconnect(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "interconnects"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -180,14 +201,17 @@ DefaultInterconnectsRestStub::InsertInterconnect(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         InsertInterconnectRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.interconnect_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "interconnects"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectList>
@@ -196,19 +220,23 @@ DefaultInterconnectsRestStub::ListInterconnects(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         ListInterconnectsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::InterconnectList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "interconnects"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -223,6 +251,10 @@ DefaultInterconnectsRestStub::AsyncPatchInterconnect(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.interconnect_resource(), false,
@@ -231,8 +263,7 @@ DefaultInterconnectsRestStub::AsyncPatchInterconnect(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "interconnects", "/",
                              request.interconnect()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -251,14 +282,17 @@ DefaultInterconnectsRestStub::PatchInterconnect(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::
         PatchInterconnectRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.interconnect_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "interconnects", "/", request.interconnect()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -273,6 +307,9 @@ DefaultInterconnectsRestStub::AsyncSetLabels(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -281,7 +318,8 @@ DefaultInterconnectsRestStub::AsyncSetLabels(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "interconnects", "/",
-                             request.resource(), "/", "setLabels")));
+                             request.resource(), "/", "setLabels"),
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -300,13 +338,17 @@ DefaultInterconnectsRestStub::SetLabels(
     Options const& options,
     google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.global_set_labels_request_resource(),
       false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
-                   "interconnects", "/", request.resource(), "/", "setLabels"));
+                   "interconnects", "/", request.resource(), "/", "setLabels"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

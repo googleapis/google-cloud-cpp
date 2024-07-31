@@ -44,6 +44,11 @@ DefaultTableServiceRestStub::GetTable(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetTableRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"selected_fields", request.selected_fields()});
+  query_params.push_back({"view", std::to_string(request.view())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::bigquery::v2::Table>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
@@ -51,9 +56,7 @@ DefaultTableServiceRestStub::GetTable(
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id(), "/", "tables", "/",
                    request.table_id()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("selected_fields", request.selected_fields()),
-           std::make_pair("view", std::to_string(request.view()))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
@@ -61,12 +64,16 @@ DefaultTableServiceRestStub::InsertTable(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::InsertTableRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::bigquery::v2::Table>(
       *service_, rest_context, request.table(), false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "datasets", "/",
-                   request.dataset_id(), "/", "tables"));
+                   request.dataset_id(), "/", "tables"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
@@ -74,6 +81,11 @@ DefaultTableServiceRestStub::PatchTable(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"autodetect_schema", (request.autodetect_schema() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::bigquery::v2::Table>(
       *service_, rest_context, request.table(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -81,8 +93,7 @@ DefaultTableServiceRestStub::PatchTable(
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id(), "/", "tables", "/",
                    request.table_id()),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "autodetect_schema", (request.autodetect_schema() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::bigquery::v2::Table>
@@ -90,6 +101,11 @@ DefaultTableServiceRestStub::UpdateTable(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::UpdateOrPatchTableRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"autodetect_schema", (request.autodetect_schema() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::bigquery::v2::Table>(
       *service_, rest_context, request.table(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -97,21 +113,24 @@ DefaultTableServiceRestStub::UpdateTable(
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id(), "/", "tables", "/",
                    request.table_id()),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "autodetect_schema", (request.autodetect_schema() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 Status DefaultTableServiceRestStub::DeleteTable(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::DeleteTableRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id(), "/", "tables", "/",
-                   request.table_id()));
+                   request.table_id()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::bigquery::v2::TableList>
@@ -119,18 +138,21 @@ DefaultTableServiceRestStub::ListTables(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::ListTablesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"max_results", (request.has_max_results()
+                           ? std::to_string(request.max_results().value())
+                           : "")});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::bigquery::v2::TableList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/", "datasets", "/",
                    request.dataset_id(), "/", "tables"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("max_results",
-                          (request.has_max_results()
-                               ? std::to_string(request.max_results().value())
-                               : "")),
-           std::make_pair("page_token", request.page_token())}));
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

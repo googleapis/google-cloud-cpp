@@ -53,6 +53,20 @@ DefaultPublicDelegatedPrefixesRestStub::AggregatedListPublicDelegatedPrefixes(
     Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         AggregatedListPublicDelegatedPrefixesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefixAggregatedList>(
       *service_, rest_context, request, false,
@@ -60,17 +74,7 @@ DefaultPublicDelegatedPrefixesRestStub::AggregatedListPublicDelegatedPrefixes(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "publicDelegatedPrefixes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -85,6 +89,9 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncAnnounce(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -93,7 +100,8 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncAnnounce(
                     rest_internal::DetermineApiVersion("v1", *options), "/",
                     "projects", "/", request.project(), "/", "regions", "/",
                     request.region(), "/", "publicDelegatedPrefixes", "/",
-                    request.public_delegated_prefix(), "/", "announce")));
+                    request.public_delegated_prefix(), "/", "announce"),
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -112,13 +120,17 @@ DefaultPublicDelegatedPrefixesRestStub::Announce(
     Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         AnnounceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes", "/",
-                   request.public_delegated_prefix(), "/", "announce"));
+                   request.public_delegated_prefix(), "/", "announce"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -133,6 +145,10 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -142,8 +158,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncDeletePublicDelegatedPrefix(
                              "regions", "/", request.region(), "/",
                              "publicDelegatedPrefixes", "/",
                              request.public_delegated_prefix()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -162,6 +177,10 @@ DefaultPublicDelegatedPrefixesRestStub::DeletePublicDelegatedPrefix(
     Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         DeletePublicDelegatedPrefixRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -169,8 +188,7 @@ DefaultPublicDelegatedPrefixesRestStub::DeletePublicDelegatedPrefix(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes", "/",
                    request.public_delegated_prefix()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -179,6 +197,9 @@ DefaultPublicDelegatedPrefixesRestStub::GetPublicDelegatedPrefix(
     Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         GetPublicDelegatedPrefixRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefix>(
       *service_, rest_context, request, false,
@@ -186,7 +207,8 @@ DefaultPublicDelegatedPrefixesRestStub::GetPublicDelegatedPrefix(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes", "/",
-                   request.public_delegated_prefix()));
+                   request.public_delegated_prefix()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -201,6 +223,10 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -210,8 +236,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncInsertPublicDelegatedPrefix(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "publicDelegatedPrefixes"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -230,6 +255,10 @@ DefaultPublicDelegatedPrefixesRestStub::InsertPublicDelegatedPrefix(
     Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         InsertPublicDelegatedPrefixRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.public_delegated_prefix_resource(),
       false,
@@ -237,8 +266,7 @@ DefaultPublicDelegatedPrefixesRestStub::InsertPublicDelegatedPrefix(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>
@@ -247,6 +275,16 @@ DefaultPublicDelegatedPrefixesRestStub::ListPublicDelegatedPrefixes(
     Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         ListPublicDelegatedPrefixesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicDelegatedPrefixList>(
       *service_, rest_context, request, false,
@@ -254,13 +292,7 @@ DefaultPublicDelegatedPrefixesRestStub::ListPublicDelegatedPrefixes(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -275,6 +307,10 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefix(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -285,8 +321,7 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncPatchPublicDelegatedPrefix(
                              "regions", "/", request.region(), "/",
                              "publicDelegatedPrefixes", "/",
                              request.public_delegated_prefix()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -305,6 +340,10 @@ DefaultPublicDelegatedPrefixesRestStub::PatchPublicDelegatedPrefix(
     Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         PatchPublicDelegatedPrefixRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.public_delegated_prefix_resource(),
       false,
@@ -313,8 +352,7 @@ DefaultPublicDelegatedPrefixesRestStub::PatchPublicDelegatedPrefix(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes", "/",
                    request.public_delegated_prefix()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -329,6 +367,9 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncWithdraw(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -337,7 +378,8 @@ DefaultPublicDelegatedPrefixesRestStub::AsyncWithdraw(
                     rest_internal::DetermineApiVersion("v1", *options), "/",
                     "projects", "/", request.project(), "/", "regions", "/",
                     request.region(), "/", "publicDelegatedPrefixes", "/",
-                    request.public_delegated_prefix(), "/", "withdraw")));
+                    request.public_delegated_prefix(), "/", "withdraw"),
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -356,13 +398,17 @@ DefaultPublicDelegatedPrefixesRestStub::Withdraw(
     Options const& options,
     google::cloud::cpp::compute::public_delegated_prefixes::v1::
         WithdrawRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "publicDelegatedPrefixes", "/",
-                   request.public_delegated_prefix(), "/", "withdraw"));
+                   request.public_delegated_prefix(), "/", "withdraw"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

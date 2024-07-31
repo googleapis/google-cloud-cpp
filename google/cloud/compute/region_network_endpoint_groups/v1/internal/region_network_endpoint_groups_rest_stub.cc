@@ -60,6 +60,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -73,8 +77,7 @@ DefaultRegionNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
                          "networkEndpointGroups", "/",
                          request.network_endpoint_group(), "/",
                          "attachNetworkEndpoints"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -93,6 +96,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::AttachNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         AttachNetworkEndpointsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request
@@ -104,8 +111,7 @@ DefaultRegionNetworkEndpointGroupsRestStub::AttachNetworkEndpoints(
                    request.region(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group(), "/",
                    "attachNetworkEndpoints"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -120,6 +126,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -129,8 +139,7 @@ DefaultRegionNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
                              "regions", "/", request.region(), "/",
                              "networkEndpointGroups", "/",
                              request.network_endpoint_group()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -149,6 +158,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::DeleteNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -156,8 +169,7 @@ DefaultRegionNetworkEndpointGroupsRestStub::DeleteNetworkEndpointGroup(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -172,6 +184,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -185,8 +201,7 @@ DefaultRegionNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
                          "networkEndpointGroups", "/",
                          request.network_endpoint_group(), "/",
                          "detachNetworkEndpoints"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -205,6 +220,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::DetachNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         DetachNetworkEndpointsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request
@@ -216,8 +235,7 @@ DefaultRegionNetworkEndpointGroupsRestStub::DetachNetworkEndpoints(
                    request.region(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group(), "/",
                    "detachNetworkEndpoints"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -226,6 +244,9 @@ DefaultRegionNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         GetNetworkEndpointGroupRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request, false,
@@ -233,7 +254,8 @@ DefaultRegionNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkEndpointGroups", "/",
-                   request.network_endpoint_group()));
+                   request.network_endpoint_group()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -248,6 +270,10 @@ DefaultRegionNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -257,8 +283,7 @@ DefaultRegionNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "networkEndpointGroups"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -277,14 +302,17 @@ DefaultRegionNetworkEndpointGroupsRestStub::InsertNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         InsertNetworkEndpointGroupRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.network_endpoint_group_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkEndpointGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
@@ -293,6 +321,16 @@ DefaultRegionNetworkEndpointGroupsRestStub::ListRegionNetworkEndpointGroups(
     Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         ListRegionNetworkEndpointGroupsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
       *service_, rest_context, request, false,
@@ -300,13 +338,7 @@ DefaultRegionNetworkEndpointGroupsRestStub::ListRegionNetworkEndpointGroups(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkEndpointGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<
@@ -316,6 +348,9 @@ DefaultRegionNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         ListNetworkEndpointsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
       *service_, rest_context, request, false,
@@ -324,7 +359,8 @@ DefaultRegionNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group(), "/",
-                   "listNetworkEndpoints"));
+                   "listNetworkEndpoints"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -44,27 +44,33 @@ DefaultSqlUsersServiceRestStub::Delete(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersDeleteRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"host", request.host()});
+  query_params.push_back({"name", request.name()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "users"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("host", request.host()),
-           std::make_pair("name", request.name())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::User> DefaultSqlUsersServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersGetRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"host", request.host()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::User>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "users", "/", request.name()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("host", request.host())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -72,11 +78,15 @@ DefaultSqlUsersServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "users"));
+                   request.instance(), "/", "users"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::UsersListResponse>
@@ -84,11 +94,15 @@ DefaultSqlUsersServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersListRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::UsersListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
-                   request.instance(), "/", "users"));
+                   request.instance(), "/", "users"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::Operation>
@@ -96,14 +110,17 @@ DefaultSqlUsersServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlUsersUpdateRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"host", request.host()});
+  query_params.push_back({"name", request.name()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "instances", "/",
                    request.instance(), "/", "users"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("host", request.host()),
-           std::make_pair("name", request.name())}));
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

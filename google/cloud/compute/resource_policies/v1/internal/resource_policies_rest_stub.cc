@@ -52,6 +52,20 @@ DefaultResourcePoliciesRestStub::AggregatedListResourcePolicies(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         AggregatedListResourcePoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ResourcePolicyAggregatedList>(
       *service_, rest_context, request, false,
@@ -59,17 +73,7 @@ DefaultResourcePoliciesRestStub::AggregatedListResourcePolicies(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "resourcePolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -84,6 +88,10 @@ DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -93,8 +101,7 @@ DefaultResourcePoliciesRestStub::AsyncDeleteResourcePolicy(
                              "regions", "/", request.region(), "/",
                              "resourcePolicies", "/",
                              request.resource_policy()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -113,6 +120,10 @@ DefaultResourcePoliciesRestStub::DeleteResourcePolicy(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         DeleteResourcePolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -120,8 +131,7 @@ DefaultResourcePoliciesRestStub::DeleteResourcePolicy(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "resourcePolicies", "/",
                    request.resource_policy()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicy>
@@ -130,13 +140,17 @@ DefaultResourcePoliciesRestStub::GetResourcePolicy(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         GetResourcePolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "resourcePolicies", "/",
-                   request.resource_policy()));
+                   request.resource_policy()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -145,6 +159,12 @@ DefaultResourcePoliciesRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         GetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -152,9 +172,7 @@ DefaultResourcePoliciesRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "resourcePolicies", "/",
                    request.resource(), "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -169,6 +187,10 @@ DefaultResourcePoliciesRestStub::AsyncInsertResourcePolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.resource_policy_resource(),
@@ -178,8 +200,7 @@ DefaultResourcePoliciesRestStub::AsyncInsertResourcePolicy(
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "resourcePolicies"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -198,14 +219,17 @@ DefaultResourcePoliciesRestStub::InsertResourcePolicy(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         InsertResourcePolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.resource_policy_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "resourcePolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::ResourcePolicyList>
@@ -214,6 +238,16 @@ DefaultResourcePoliciesRestStub::ListResourcePolicies(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         ListResourcePoliciesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::ResourcePolicyList>(
       *service_, rest_context, request, false,
@@ -221,13 +255,7 @@ DefaultResourcePoliciesRestStub::ListResourcePolicies(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "resourcePolicies"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -242,6 +270,11 @@ DefaultResourcePoliciesRestStub::AsyncPatchResourcePolicy(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back({"update_mask", request.update_mask()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.resource_policy_resource(),
@@ -252,9 +285,7 @@ DefaultResourcePoliciesRestStub::AsyncPatchResourcePolicy(
                              "regions", "/", request.region(), "/",
                              "resourcePolicies", "/",
                              request.resource_policy()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("update_mask", request.update_mask())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -273,6 +304,11 @@ DefaultResourcePoliciesRestStub::PatchResourcePolicy(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         PatchResourcePolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back({"update_mask", request.update_mask()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.resource_policy_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -280,9 +316,7 @@ DefaultResourcePoliciesRestStub::PatchResourcePolicy(
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "resourcePolicies", "/",
                    request.resource_policy()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("update_mask", request.update_mask())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -291,6 +325,9 @@ DefaultResourcePoliciesRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         SetIamPolicyRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -298,7 +335,8 @@ DefaultResourcePoliciesRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "resourcePolicies", "/",
-                   request.resource(), "/", "setIamPolicy"));
+                   request.resource(), "/", "setIamPolicy"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -307,6 +345,9 @@ DefaultResourcePoliciesRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::resource_policies::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -315,7 +356,8 @@ DefaultResourcePoliciesRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "regions", "/",
                    request.region(), "/", "resourcePolicies", "/",
-                   request.resource(), "/", "testIamPermissions"));
+                   request.resource(), "/", "testIamPermissions"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

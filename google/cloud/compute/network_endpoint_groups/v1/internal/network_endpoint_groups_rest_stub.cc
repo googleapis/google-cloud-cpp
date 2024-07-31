@@ -53,6 +53,20 @@ DefaultNetworkEndpointGroupsRestStub::AggregatedListNetworkEndpointGroups(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         AggregatedListNetworkEndpointGroupsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupAggregatedList>(
       *service_, rest_context, request, false,
@@ -60,17 +74,7 @@ DefaultNetworkEndpointGroupsRestStub::AggregatedListNetworkEndpointGroups(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "networkEndpointGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -85,6 +89,10 @@ DefaultNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -96,8 +104,7 @@ DefaultNetworkEndpointGroupsRestStub::AsyncAttachNetworkEndpoints(
                          "/", request.zone(), "/", "networkEndpointGroups", "/",
                          request.network_endpoint_group(), "/",
                          "attachNetworkEndpoints"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -116,6 +123,10 @@ DefaultNetworkEndpointGroupsRestStub::AttachNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         AttachNetworkEndpointsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.network_endpoint_groups_attach_endpoints_request_resource(),
@@ -126,8 +137,7 @@ DefaultNetworkEndpointGroupsRestStub::AttachNetworkEndpoints(
                    request.zone(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group(), "/",
                    "attachNetworkEndpoints"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -142,6 +152,10 @@ DefaultNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -151,8 +165,7 @@ DefaultNetworkEndpointGroupsRestStub::AsyncDeleteNetworkEndpointGroup(
                              "zones", "/", request.zone(), "/",
                              "networkEndpointGroups", "/",
                              request.network_endpoint_group()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -171,6 +184,10 @@ DefaultNetworkEndpointGroupsRestStub::DeleteNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         DeleteNetworkEndpointGroupRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -178,8 +195,7 @@ DefaultNetworkEndpointGroupsRestStub::DeleteNetworkEndpointGroup(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -194,6 +210,10 @@ DefaultNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -205,8 +225,7 @@ DefaultNetworkEndpointGroupsRestStub::AsyncDetachNetworkEndpoints(
                          "/", request.zone(), "/", "networkEndpointGroups", "/",
                          request.network_endpoint_group(), "/",
                          "detachNetworkEndpoints"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -225,6 +244,10 @@ DefaultNetworkEndpointGroupsRestStub::DetachNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         DetachNetworkEndpointsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.network_endpoint_groups_detach_endpoints_request_resource(),
@@ -235,8 +258,7 @@ DefaultNetworkEndpointGroupsRestStub::DetachNetworkEndpoints(
                    request.zone(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group(), "/",
                    "detachNetworkEndpoints"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -245,6 +267,9 @@ DefaultNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         GetNetworkEndpointGroupRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request, false,
@@ -252,7 +277,8 @@ DefaultNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "networkEndpointGroups", "/",
-                   request.network_endpoint_group()));
+                   request.network_endpoint_group()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -267,6 +293,10 @@ DefaultNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -276,8 +306,7 @@ DefaultNetworkEndpointGroupsRestStub::AsyncInsertNetworkEndpointGroup(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/",
                              "networkEndpointGroups"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -296,14 +325,17 @@ DefaultNetworkEndpointGroupsRestStub::InsertNetworkEndpointGroup(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         InsertNetworkEndpointGroupRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.network_endpoint_group_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "networkEndpointGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroupList>
@@ -312,6 +344,16 @@ DefaultNetworkEndpointGroupsRestStub::ListNetworkEndpointGroups(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         ListNetworkEndpointGroupsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroupList>(
       *service_, rest_context, request, false,
@@ -319,13 +361,7 @@ DefaultNetworkEndpointGroupsRestStub::ListNetworkEndpointGroups(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "networkEndpointGroups"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<
@@ -335,6 +371,16 @@ DefaultNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         ListNetworkEndpointsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
       *service_, rest_context,
@@ -345,13 +391,7 @@ DefaultNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
                    request.zone(), "/", "networkEndpointGroups", "/",
                    request.network_endpoint_group(), "/",
                    "listNetworkEndpoints"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -360,6 +400,9 @@ DefaultNetworkEndpointGroupsRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::network_endpoint_groups::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -368,7 +411,8 @@ DefaultNetworkEndpointGroupsRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "networkEndpointGroups", "/",
-                   request.resource(), "/", "testIamPermissions"));
+                   request.resource(), "/", "testIamPermissions"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

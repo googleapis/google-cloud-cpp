@@ -59,6 +59,10 @@ DefaultInstanceGroupManagersRestStub::AsyncAbandonInstances(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -71,8 +75,7 @@ DefaultInstanceGroupManagersRestStub::AsyncAbandonInstances(
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
                          "abandonInstances"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -91,6 +94,10 @@ DefaultInstanceGroupManagersRestStub::AbandonInstances(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         AbandonInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instance_group_managers_abandon_instances_request_resource(),
@@ -100,8 +107,7 @@ DefaultInstanceGroupManagersRestStub::AbandonInstances(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "abandonInstances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>
@@ -110,6 +116,20 @@ DefaultInstanceGroupManagersRestStub::AggregatedListInstanceGroupManagers(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         AggregatedListInstanceGroupManagersRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerAggregatedList>(
       *service_, rest_context, request, false,
@@ -117,17 +137,7 @@ DefaultInstanceGroupManagersRestStub::AggregatedListInstanceGroupManagers(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "instanceGroupManagers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -142,6 +152,9 @@ DefaultInstanceGroupManagersRestStub::AsyncApplyUpdatesToInstances(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -154,7 +167,8 @@ DefaultInstanceGroupManagersRestStub::AsyncApplyUpdatesToInstances(
                              "zones", "/", request.zone(), "/",
                              "instanceGroupManagers", "/",
                              request.instance_group_manager(), "/",
-                             "applyUpdatesToInstances")));
+                             "applyUpdatesToInstances"),
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -173,6 +187,9 @@ DefaultInstanceGroupManagersRestStub::ApplyUpdatesToInstances(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ApplyUpdatesToInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instance_group_managers_apply_updates_request_resource(), false,
@@ -181,7 +198,8 @@ DefaultInstanceGroupManagersRestStub::ApplyUpdatesToInstances(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
-                   "applyUpdatesToInstances"));
+                   "applyUpdatesToInstances"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -196,6 +214,10 @@ DefaultInstanceGroupManagersRestStub::AsyncCreateInstances(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -207,8 +229,7 @@ DefaultInstanceGroupManagersRestStub::AsyncCreateInstances(
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
                          "createInstances"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -227,6 +248,10 @@ DefaultInstanceGroupManagersRestStub::CreateInstances(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         CreateInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instance_group_managers_create_instances_request_resource(),
@@ -236,8 +261,7 @@ DefaultInstanceGroupManagersRestStub::CreateInstances(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "createInstances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -252,6 +276,10 @@ DefaultInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManager(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -261,8 +289,7 @@ DefaultInstanceGroupManagersRestStub::AsyncDeleteInstanceGroupManager(
                              "zones", "/", request.zone(), "/",
                              "instanceGroupManagers", "/",
                              request.instance_group_manager()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -281,6 +308,10 @@ DefaultInstanceGroupManagersRestStub::DeleteInstanceGroupManager(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         DeleteInstanceGroupManagerRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -288,8 +319,7 @@ DefaultInstanceGroupManagersRestStub::DeleteInstanceGroupManager(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -304,6 +334,10 @@ DefaultInstanceGroupManagersRestStub::AsyncDeleteInstances(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -315,8 +349,7 @@ DefaultInstanceGroupManagersRestStub::AsyncDeleteInstances(
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
                          "deleteInstances"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -335,6 +368,10 @@ DefaultInstanceGroupManagersRestStub::DeleteInstances(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         DeleteInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instance_group_managers_delete_instances_request_resource(),
@@ -344,8 +381,7 @@ DefaultInstanceGroupManagersRestStub::DeleteInstances(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "deleteInstances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -360,6 +396,9 @@ DefaultInstanceGroupManagersRestStub::AsyncDeletePerInstanceConfigs(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -371,7 +410,8 @@ DefaultInstanceGroupManagersRestStub::AsyncDeletePerInstanceConfigs(
                          "/", "projects", "/", request.project(), "/", "zones",
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
-                         "deletePerInstanceConfigs")));
+                         "deletePerInstanceConfigs"),
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -390,6 +430,9 @@ DefaultInstanceGroupManagersRestStub::DeletePerInstanceConfigs(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         DeletePerInstanceConfigsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request
@@ -400,7 +443,8 @@ DefaultInstanceGroupManagersRestStub::DeletePerInstanceConfigs(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
-                   "deletePerInstanceConfigs"));
+                   "deletePerInstanceConfigs"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>
@@ -409,6 +453,9 @@ DefaultInstanceGroupManagersRestStub::GetInstanceGroupManager(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         GetInstanceGroupManagerRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request, false,
@@ -416,7 +463,8 @@ DefaultInstanceGroupManagersRestStub::GetInstanceGroupManager(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
-                   request.instance_group_manager()));
+                   request.instance_group_manager()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -431,6 +479,10 @@ DefaultInstanceGroupManagersRestStub::AsyncInsertInstanceGroupManager(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -440,8 +492,7 @@ DefaultInstanceGroupManagersRestStub::AsyncInsertInstanceGroupManager(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/",
                              "instanceGroupManagers"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -460,14 +511,17 @@ DefaultInstanceGroupManagersRestStub::InsertInstanceGroupManager(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         InsertInstanceGroupManagerRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.instance_group_manager_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManagerList>
@@ -476,6 +530,16 @@ DefaultInstanceGroupManagersRestStub::ListInstanceGroupManagers(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListInstanceGroupManagersRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagerList>(
       *service_, rest_context, request, false,
@@ -483,13 +547,7 @@ DefaultInstanceGroupManagersRestStub::ListInstanceGroupManagers(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<
@@ -499,6 +557,16 @@ DefaultInstanceGroupManagersRestStub::ListErrors(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListErrorsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManagersListErrorsResponse>(
       *service_, rest_context, request, false,
@@ -507,13 +575,7 @@ DefaultInstanceGroupManagersRestStub::ListErrors(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "listErrors"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -523,6 +585,9 @@ DefaultInstanceGroupManagersRestStub::ListManagedInstances(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListManagedInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersListManagedInstancesResponse>(
@@ -532,7 +597,8 @@ DefaultInstanceGroupManagersRestStub::ListManagedInstances(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
-                   "listManagedInstances"));
+                   "listManagedInstances"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::
@@ -542,6 +608,9 @@ DefaultInstanceGroupManagersRestStub::ListPerInstanceConfigs(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ListPerInstanceConfigsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           InstanceGroupManagersListPerInstanceConfigsResp>(
@@ -551,7 +620,8 @@ DefaultInstanceGroupManagersRestStub::ListPerInstanceConfigs(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
-                   "listPerInstanceConfigs"));
+                   "listPerInstanceConfigs"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -566,6 +636,10 @@ DefaultInstanceGroupManagersRestStub::AsyncPatchInstanceGroupManager(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -576,8 +650,7 @@ DefaultInstanceGroupManagersRestStub::AsyncPatchInstanceGroupManager(
                              "zones", "/", request.zone(), "/",
                              "instanceGroupManagers", "/",
                              request.instance_group_manager()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -596,6 +669,10 @@ DefaultInstanceGroupManagersRestStub::PatchInstanceGroupManager(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         PatchInstanceGroupManagerRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.instance_group_manager_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -603,8 +680,7 @@ DefaultInstanceGroupManagersRestStub::PatchInstanceGroupManager(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -619,6 +695,10 @@ DefaultInstanceGroupManagersRestStub::AsyncPatchPerInstanceConfigs(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -631,8 +711,7 @@ DefaultInstanceGroupManagersRestStub::AsyncPatchPerInstanceConfigs(
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
                          "patchPerInstanceConfigs"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -651,6 +730,10 @@ DefaultInstanceGroupManagersRestStub::PatchPerInstanceConfigs(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         PatchPerInstanceConfigsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instance_group_managers_patch_per_instance_configs_req_resource(),
@@ -661,8 +744,7 @@ DefaultInstanceGroupManagersRestStub::PatchPerInstanceConfigs(
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
                    "patchPerInstanceConfigs"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -677,6 +759,10 @@ DefaultInstanceGroupManagersRestStub::AsyncRecreateInstances(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -689,8 +775,7 @@ DefaultInstanceGroupManagersRestStub::AsyncRecreateInstances(
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
                          "recreateInstances"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -709,6 +794,10 @@ DefaultInstanceGroupManagersRestStub::RecreateInstances(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         RecreateInstancesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instance_group_managers_recreate_instances_request_resource(),
@@ -718,8 +807,7 @@ DefaultInstanceGroupManagersRestStub::RecreateInstances(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "recreateInstances"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -734,6 +822,9 @@ DefaultInstanceGroupManagersRestStub::AsyncResize(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -742,7 +833,8 @@ DefaultInstanceGroupManagersRestStub::AsyncResize(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/",
                              "instanceGroupManagers", "/",
-                             request.instance_group_manager(), "/", "resize")));
+                             request.instance_group_manager(), "/", "resize"),
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -761,13 +853,17 @@ DefaultInstanceGroupManagersRestStub::Resize(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         ResizeRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
-                   request.instance_group_manager(), "/", "resize"));
+                   request.instance_group_manager(), "/", "resize"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -782,6 +878,10 @@ DefaultInstanceGroupManagersRestStub::AsyncSetInstanceTemplate(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -794,8 +894,7 @@ DefaultInstanceGroupManagersRestStub::AsyncSetInstanceTemplate(
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
                          "setInstanceTemplate"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -814,6 +913,10 @@ DefaultInstanceGroupManagersRestStub::SetInstanceTemplate(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         SetInstanceTemplateRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instance_group_managers_set_instance_template_request_resource(),
@@ -824,8 +927,7 @@ DefaultInstanceGroupManagersRestStub::SetInstanceTemplate(
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
                    "setInstanceTemplate"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -840,6 +942,10 @@ DefaultInstanceGroupManagersRestStub::AsyncSetTargetPools(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -851,8 +957,7 @@ DefaultInstanceGroupManagersRestStub::AsyncSetTargetPools(
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
                          "setTargetPools"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -871,6 +976,10 @@ DefaultInstanceGroupManagersRestStub::SetTargetPools(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         SetTargetPoolsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.instance_group_managers_set_target_pools_request_resource(),
@@ -880,8 +989,7 @@ DefaultInstanceGroupManagersRestStub::SetTargetPools(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/", "setTargetPools"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -896,6 +1004,10 @@ DefaultInstanceGroupManagersRestStub::AsyncUpdatePerInstanceConfigs(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -908,8 +1020,7 @@ DefaultInstanceGroupManagersRestStub::AsyncUpdatePerInstanceConfigs(
                          "/", request.zone(), "/", "instanceGroupManagers", "/",
                          request.instance_group_manager(), "/",
                          "updatePerInstanceConfigs"),
-            rest_internal::TrimEmptyQueryParameters(
-                {std::make_pair("request_id", request.request_id())})));
+            std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -928,6 +1039,10 @@ DefaultInstanceGroupManagersRestStub::UpdatePerInstanceConfigs(
     Options const& options,
     google::cloud::cpp::compute::instance_group_managers::v1::
         UpdatePerInstanceConfigsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request
@@ -939,8 +1054,7 @@ DefaultInstanceGroupManagersRestStub::UpdatePerInstanceConfigs(
                    request.zone(), "/", "instanceGroupManagers", "/",
                    request.instance_group_manager(), "/",
                    "updatePerInstanceConfigs"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
