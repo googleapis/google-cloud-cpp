@@ -398,7 +398,7 @@ std::string FormatApiVersionFromPackageName(
 // In some cases(i.e. location), there is no version in the package name.
 std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
                                            std::string const& file_name) {
-  std::vector<std::string> parts = absl::StrSplit(url_pattern, "/");
+  std::vector<std::string> parts = absl::StrSplit(url_pattern, '/');
   std::regex re{R"(v\d+)"};
   for (auto const& part : parts) {
     if (std::regex_match(part, re)) {
