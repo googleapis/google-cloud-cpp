@@ -399,9 +399,9 @@ std::string FormatApiVersionFromPackageName(
 std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
                                            std::string const& file_name) {
   std::vector<std::string> parts = absl::StrSplit(url_pattern, '/');
-  static std::regex const re{R"(v\d+)"};
+  static std::regex const kRe{R"(v\d+)"};
   for (auto const& part : parts) {
-    if (std::regex_match(part, re)) {
+    if (std::regex_match(part, kRe)) {
       return part;
     }
   }
