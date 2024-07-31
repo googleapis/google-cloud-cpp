@@ -264,7 +264,6 @@ void SetHttpQueryParameters(HttpExtensionInfo const& info,
 HttpExtensionInfo ParseHttpExtension(
     google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) return {};
-  auto api_version = FormatApiVersionFromPackageName(method);
 
   HttpExtensionInfo info;
   google::api::HttpRule http_rule =
@@ -321,6 +320,9 @@ HttpExtensionInfo ParseHttpExtension(
                               std::shared_ptr<PathTemplate::Segment> const& s) {
     out->append(absl::visit(SegmentAsStringVisitor{}, s->value));
   };
+
+  auto api_version =
+      FormatApiVersionFromUrlPattern(url_pattern, method.file()->name());
 
   auto rest_path_visitor = RestPathVisitor(api_version, info.rest_path);
   for (auto const& s : parsed_http_rule->segments) {
@@ -389,6 +391,22 @@ std::string FormatApiVersionFromPackageName(
   GCP_LOG(FATAL) << "Unrecognized API version in file: "
                  << method.file()->name()
                  << ", package: " << method.file()->package();
+  return {};  // Suppress clang-tidy warnings
+}
+
+// Generate api version by extracting the version from the url pattern.
+// In some cases(i.e. location), there is no version in the package name.
+std::string FormatApiVersionFromUrlPattern(std::string const& url_pattern,
+                                           std::string const& file_name) {
+  std::vector<std::string> parts = absl::StrSplit(url_pattern, "/");
+  std::regex regexObj{R"(v\d+)"};
+  for (auto const& part : parts) {
+    if (std::regex_match(part, regexObj)) {
+      return part;
+    }
+  }
+  GCP_LOG(FATAL) << "Unrecognized API version in file: " << file_name
+                 << ", url pattern: " << url_pattern;
   return {};  // Suppress clang-tidy warnings
 }
 
