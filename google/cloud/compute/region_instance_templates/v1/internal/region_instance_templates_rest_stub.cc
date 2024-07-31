@@ -112,8 +112,6 @@ DefaultRegionInstanceTemplatesRestStub::GetInstanceTemplate(
     google::cloud::cpp::compute::region_instance_templates::v1::
         GetInstanceTemplateRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

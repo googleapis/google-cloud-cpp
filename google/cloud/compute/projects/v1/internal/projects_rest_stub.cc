@@ -58,8 +58,6 @@ DefaultProjectsRestStub::AsyncDisableXpnHost(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -87,8 +85,6 @@ DefaultProjectsRestStub::DisableXpnHost(
     google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -167,8 +163,6 @@ DefaultProjectsRestStub::AsyncEnableXpnHost(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -196,8 +190,6 @@ DefaultProjectsRestStub::EnableXpnHost(
     google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -270,8 +262,6 @@ DefaultProjectsRestStub::GetProject(
     google::cloud::cpp::compute::projects::v1::GetProjectRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -287,8 +277,6 @@ DefaultProjectsRestStub::GetXpnHost(
     google::cloud::cpp::compute::projects::v1::GetXpnHostRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Project>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

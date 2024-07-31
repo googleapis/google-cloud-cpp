@@ -65,8 +65,6 @@ DefaultTableServiceRestStub::InsertTable(
     Options const& options,
     google::cloud::bigquery::v2::InsertTableRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::bigquery::v2::Table>(
       *service_, rest_context, request.table(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -121,8 +119,6 @@ Status DefaultTableServiceRestStub::DeleteTable(
     Options const& options,
     google::cloud::bigquery::v2::DeleteTableRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",

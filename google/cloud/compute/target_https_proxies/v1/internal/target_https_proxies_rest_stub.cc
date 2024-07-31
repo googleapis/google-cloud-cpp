@@ -140,8 +140,6 @@ DefaultTargetHttpsProxiesRestStub::GetTargetHttpsProxy(
     google::cloud::cpp::compute::target_https_proxies::v1::
         GetTargetHttpsProxyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetHttpsProxy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

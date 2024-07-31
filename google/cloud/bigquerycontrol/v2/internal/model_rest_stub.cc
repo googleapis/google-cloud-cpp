@@ -45,8 +45,6 @@ DefaultModelServiceRestStub::GetModel(
     Options const& options,
     google::cloud::bigquery::v2::GetModelRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::bigquery::v2::Model>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
@@ -85,8 +83,6 @@ DefaultModelServiceRestStub::PatchModel(
     Options const& options,
     google::cloud::bigquery::v2::PatchModelRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::bigquery::v2::Model>(
       *service_, rest_context, request.model(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -102,8 +98,6 @@ Status DefaultModelServiceRestStub::DeleteModel(
     Options const& options,
     google::cloud::bigquery::v2::DeleteModelRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",

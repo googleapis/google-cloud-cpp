@@ -61,8 +61,6 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncAnnounce(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -92,8 +90,6 @@ DefaultPublicAdvertisedPrefixesRestStub::Announce(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         AnnounceRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -168,8 +164,6 @@ DefaultPublicAdvertisedPrefixesRestStub::GetPublicAdvertisedPrefix(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         GetPublicAdvertisedPrefixRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>(
       *service_, rest_context, request, false,
@@ -336,8 +330,6 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncWithdraw(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -367,8 +359,6 @@ DefaultPublicAdvertisedPrefixesRestStub::Withdraw(
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         WithdrawRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

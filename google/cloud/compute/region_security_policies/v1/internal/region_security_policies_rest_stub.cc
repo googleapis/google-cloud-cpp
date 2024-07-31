@@ -173,8 +173,6 @@ DefaultRegionSecurityPoliciesRestStub::GetSecurityPolicy(
     google::cloud::cpp::compute::region_security_policies::v1::
         GetSecurityPolicyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::SecurityPolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -433,8 +431,6 @@ DefaultRegionSecurityPoliciesRestStub::AsyncRemoveRule(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -464,8 +460,6 @@ DefaultRegionSecurityPoliciesRestStub::RemoveRule(
     google::cloud::cpp::compute::region_security_policies::v1::
         RemoveRuleRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

@@ -139,8 +139,6 @@ DefaultVpnTunnelsRestStub::GetVpnTunnel(
     google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::VpnTunnel>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

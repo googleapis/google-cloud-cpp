@@ -137,8 +137,6 @@ DefaultRoutersRestStub::GetRouter(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Router>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -203,8 +201,6 @@ DefaultRoutersRestStub::GetRouterStatus(
     google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::RouterStatusResponse>(
       *service_, rest_context, request, false,
@@ -358,8 +354,6 @@ DefaultRoutersRestStub::Preview(
     Options const& options,
     google::cloud::cpp::compute::routers::v1::PreviewRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::RoutersPreviewResponse>(
       *service_, rest_context, request.router_resource(), false,

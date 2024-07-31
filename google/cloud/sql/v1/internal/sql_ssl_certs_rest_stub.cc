@@ -46,8 +46,6 @@ DefaultSqlSslCertsServiceRestStub::Delete(
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsDeleteRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -63,8 +61,6 @@ DefaultSqlSslCertsServiceRestStub::Get(
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsGetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::SslCert>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -80,8 +76,6 @@ DefaultSqlSslCertsServiceRestStub::Insert(
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsInsertRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::SslCertsInsertResponse>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -96,8 +90,6 @@ DefaultSqlSslCertsServiceRestStub::List(
     Options const& options,
     google::cloud::sql::v1::SqlSslCertsListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::SslCertsListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

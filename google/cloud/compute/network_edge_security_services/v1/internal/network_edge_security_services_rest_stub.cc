@@ -146,8 +146,6 @@ DefaultNetworkEdgeSecurityServicesRestStub::GetNetworkEdgeSecurityService(
     google::cloud::cpp::compute::network_edge_security_services::v1::
         GetNetworkEdgeSecurityServiceRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>(
       *service_, rest_context, request, false,

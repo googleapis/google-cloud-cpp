@@ -113,8 +113,6 @@ DefaultRegionNotificationEndpointsRestStub::GetNotificationEndpoint(
     google::cloud::cpp::compute::region_notification_endpoints::v1::
         GetNotificationEndpointRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NotificationEndpoint>(
       *service_, rest_context, request, false,

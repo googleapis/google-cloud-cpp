@@ -46,8 +46,6 @@ DefaultSqlOperationsServiceRestStub::Get(
     Options const& options,
     google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -80,8 +78,6 @@ Status DefaultSqlOperationsServiceRestStub::Cancel(
     Options const& options,
     google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

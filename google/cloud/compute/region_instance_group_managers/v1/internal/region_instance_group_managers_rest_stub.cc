@@ -125,8 +125,6 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncApplyUpdatesToInstances(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -160,8 +158,6 @@ DefaultRegionInstanceGroupManagersRestStub::ApplyUpdatesToInstances(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ApplyUpdatesToInstancesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request.region_instance_group_managers_apply_updates_request_resource(),
@@ -374,8 +370,6 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncDeletePerInstanceConfigs(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<
                     google::cloud::cpp::compute::v1::Operation>(
             *service, *rest_context,
@@ -409,8 +403,6 @@ DefaultRegionInstanceGroupManagersRestStub::DeletePerInstanceConfigs(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         DeletePerInstanceConfigsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context,
       request
@@ -432,8 +424,6 @@ DefaultRegionInstanceGroupManagersRestStub::GetInstanceGroupManager(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         GetInstanceGroupManagerRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::InstanceGroupManager>(
       *service_, rest_context, request, false,
@@ -564,8 +554,6 @@ DefaultRegionInstanceGroupManagersRestStub::ListManagedInstances(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListManagedInstancesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstancesResponse>(
@@ -587,8 +575,6 @@ DefaultRegionInstanceGroupManagersRestStub::ListPerInstanceConfigs(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ListPerInstanceConfigsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::
           RegionInstanceGroupManagersListInstanceConfigsResp>(
@@ -802,8 +788,6 @@ DefaultRegionInstanceGroupManagersRestStub::AsyncResize(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -833,8 +817,6 @@ DefaultRegionInstanceGroupManagersRestStub::Resize(
     google::cloud::cpp::compute::region_instance_group_managers::v1::
         ResizeRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

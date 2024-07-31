@@ -79,8 +79,6 @@ DefaultSqlUsersServiceRestStub::Insert(
     Options const& options,
     google::cloud::sql::v1::SqlUsersInsertRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -95,8 +93,6 @@ DefaultSqlUsersServiceRestStub::List(
     Options const& options,
     google::cloud::sql::v1::SqlUsersListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::UsersListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

@@ -110,8 +110,6 @@ DefaultGlobalForwardingRulesRestStub::GetForwardingRule(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         GetForwardingRuleRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::ForwardingRule>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -273,8 +271,6 @@ DefaultGlobalForwardingRulesRestStub::AsyncSetLabels(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -304,8 +300,6 @@ DefaultGlobalForwardingRulesRestStub::SetLabels(
     google::cloud::cpp::compute::global_forwarding_rules::v1::
         SetLabelsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.global_set_labels_request_resource(),
       false,

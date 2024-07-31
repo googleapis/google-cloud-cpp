@@ -45,8 +45,6 @@ Status DefaultZoneOperationsRestStub::DeleteOperation(
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -63,8 +61,6 @@ DefaultZoneOperationsRestStub::GetOperation(
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -106,8 +102,6 @@ DefaultZoneOperationsRestStub::Wait(
     google::cloud::cpp::compute::zone_operations::v1::WaitRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

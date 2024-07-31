@@ -45,8 +45,6 @@ DefaultSqlTiersServiceRestStub::List(
     Options const& options,
     google::cloud::sql::v1::SqlTiersListRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::TiersListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

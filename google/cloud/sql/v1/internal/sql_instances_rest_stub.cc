@@ -46,8 +46,6 @@ DefaultSqlInstancesServiceRestStub::AddServerCa(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesAddServerCaRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -62,8 +60,6 @@ DefaultSqlInstancesServiceRestStub::Clone(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesCloneRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -78,8 +74,6 @@ DefaultSqlInstancesServiceRestStub::Delete(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesDeleteRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -94,8 +88,6 @@ DefaultSqlInstancesServiceRestStub::DemoteMaster(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesDemoteMasterRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -110,8 +102,6 @@ DefaultSqlInstancesServiceRestStub::Demote(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesDemoteRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -126,8 +116,6 @@ DefaultSqlInstancesServiceRestStub::Export(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesExportRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -142,8 +130,6 @@ DefaultSqlInstancesServiceRestStub::Failover(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesFailoverRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -158,8 +144,6 @@ DefaultSqlInstancesServiceRestStub::Reencrypt(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesReencryptRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -174,8 +158,6 @@ DefaultSqlInstancesServiceRestStub::Get(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesGetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::DatabaseInstance>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -190,8 +172,6 @@ DefaultSqlInstancesServiceRestStub::Import(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesImportRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -206,8 +186,6 @@ DefaultSqlInstancesServiceRestStub::Insert(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesInsertRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -240,8 +218,6 @@ DefaultSqlInstancesServiceRestStub::ListServerCas(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesListServerCasRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::sql::v1::InstancesListServerCasResponse>(
       *service_, rest_context, request, true,
@@ -257,8 +233,6 @@ DefaultSqlInstancesServiceRestStub::Patch(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesPatchRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -290,8 +264,6 @@ DefaultSqlInstancesServiceRestStub::Switchover(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesSwitchoverRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -306,8 +278,6 @@ DefaultSqlInstancesServiceRestStub::ResetSslConfig(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesResetSslConfigRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -322,8 +292,6 @@ DefaultSqlInstancesServiceRestStub::Restart(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRestartRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -338,8 +306,6 @@ DefaultSqlInstancesServiceRestStub::RestoreBackup(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRestoreBackupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -354,8 +320,6 @@ DefaultSqlInstancesServiceRestStub::RotateServerCa(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesRotateServerCaRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -370,8 +334,6 @@ DefaultSqlInstancesServiceRestStub::StartReplica(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesStartReplicaRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -386,8 +348,6 @@ DefaultSqlInstancesServiceRestStub::StopReplica(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesStopReplicaRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -402,8 +362,6 @@ DefaultSqlInstancesServiceRestStub::TruncateLog(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesTruncateLogRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -418,8 +376,6 @@ DefaultSqlInstancesServiceRestStub::Update(
     Options const& options,
     google::cloud::sql::v1::SqlInstancesUpdateRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -435,8 +391,6 @@ DefaultSqlInstancesServiceRestStub::CreateEphemeral(
     google::cloud::sql::v1::SqlInstancesCreateEphemeralCertRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::SslCert>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -452,8 +406,6 @@ DefaultSqlInstancesServiceRestStub::RescheduleMaintenance(
     google::cloud::sql::v1::SqlInstancesRescheduleMaintenanceRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -469,8 +421,6 @@ DefaultSqlInstancesServiceRestStub::VerifyExternalSyncSettings(
     google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::sql::v1::SqlInstancesVerifyExternalSyncSettingsResponse>(
       *service_, rest_context, request, true,
@@ -487,8 +437,6 @@ DefaultSqlInstancesServiceRestStub::StartExternalSync(
     google::cloud::sql::v1::SqlInstancesStartExternalSyncRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -504,8 +452,6 @@ DefaultSqlInstancesServiceRestStub::PerformDiskShrink(
     google::cloud::sql::v1::SqlInstancesPerformDiskShrinkRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -521,8 +467,6 @@ DefaultSqlInstancesServiceRestStub::GetDiskShrinkConfig(
     google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::sql::v1::SqlInstancesGetDiskShrinkConfigResponse>(
       *service_, rest_context, request, true,
@@ -539,8 +483,6 @@ DefaultSqlInstancesServiceRestStub::ResetReplicaSize(
     google::cloud::sql::v1::SqlInstancesResetReplicaSizeRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -556,8 +498,6 @@ DefaultSqlInstancesServiceRestStub::GetLatestRecoveryTime(
     google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::sql::v1::SqlInstancesGetLatestRecoveryTimeResponse>(
       *service_, rest_context, request, true,
@@ -574,8 +514,6 @@ DefaultSqlInstancesServiceRestStub::AcquireSsrsLease(
     google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::sql::v1::SqlInstancesAcquireSsrsLeaseResponse>(
       *service_, rest_context, request.body(), true,
@@ -592,8 +530,6 @@ DefaultSqlInstancesServiceRestStub::ReleaseSsrsLease(
     google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::sql::v1::SqlInstancesReleaseSsrsLeaseResponse>(
       *service_, rest_context, request, true,

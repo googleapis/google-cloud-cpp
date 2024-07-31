@@ -83,8 +83,6 @@ DefaultRegionCommitmentsRestStub::GetCommitment(
     google::cloud::cpp::compute::region_commitments::v1::
         GetCommitmentRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Commitment>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

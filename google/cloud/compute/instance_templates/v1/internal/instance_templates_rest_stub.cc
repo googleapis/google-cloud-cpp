@@ -139,8 +139,6 @@ DefaultInstanceTemplatesRestStub::GetInstanceTemplate(
     google::cloud::cpp::compute::instance_templates::v1::
         GetInstanceTemplateRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::InstanceTemplate>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -261,8 +259,6 @@ DefaultInstanceTemplatesRestStub::SetIamPolicy(
     google::cloud::cpp::compute::instance_templates::v1::
         SetIamPolicyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -281,8 +277,6 @@ DefaultInstanceTemplatesRestStub::TestIamPermissions(
     google::cloud::cpp::compute::instance_templates::v1::
         TestIamPermissionsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

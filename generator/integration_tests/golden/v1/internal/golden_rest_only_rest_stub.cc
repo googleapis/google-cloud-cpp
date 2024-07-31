@@ -46,7 +46,6 @@ Status DefaultGoldenRestOnlyRestStub::Noop(
       Options const& options,
       google::protobuf::Empty const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "noop"), std::move(query_params));

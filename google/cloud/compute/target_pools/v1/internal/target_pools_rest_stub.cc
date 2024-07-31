@@ -259,8 +259,6 @@ DefaultTargetPoolsRestStub::GetTargetPool(
     google::cloud::cpp::compute::target_pools::v1::GetTargetPoolRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetPool>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -278,8 +276,6 @@ DefaultTargetPoolsRestStub::GetHealth(
     google::cloud::cpp::compute::target_pools::v1::GetHealthRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TargetPoolInstanceHealth>(
       *service_, rest_context, request.instance_reference_resource(), false,

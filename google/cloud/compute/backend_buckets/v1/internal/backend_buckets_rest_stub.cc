@@ -172,8 +172,6 @@ DefaultBackendBucketsRestStub::AsyncDeleteSignedUrlKey(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -203,8 +201,6 @@ DefaultBackendBucketsRestStub::DeleteSignedUrlKey(
     google::cloud::cpp::compute::backend_buckets::v1::
         DeleteSignedUrlKeyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -222,8 +218,6 @@ DefaultBackendBucketsRestStub::GetBackendBucket(
     google::cloud::cpp::compute::backend_buckets::v1::
         GetBackendBucketRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::BackendBucket>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -460,8 +454,6 @@ DefaultBackendBucketsRestStub::SetIamPolicy(
     google::cloud::cpp::compute::backend_buckets::v1::SetIamPolicyRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -480,8 +472,6 @@ DefaultBackendBucketsRestStub::TestIamPermissions(
     google::cloud::cpp::compute::backend_buckets::v1::
         TestIamPermissionsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

@@ -45,8 +45,6 @@ DefaultRoutineServiceRestStub::GetRoutine(
     Options const& options,
     google::cloud::bigquery::v2::GetRoutineRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::bigquery::v2::Routine>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
@@ -63,8 +61,6 @@ DefaultRoutineServiceRestStub::InsertRoutine(
     Options const& options,
     google::cloud::bigquery::v2::InsertRoutineRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::bigquery::v2::Routine>(
       *service_, rest_context, request.routine(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -80,8 +76,6 @@ DefaultRoutineServiceRestStub::UpdateRoutine(
     Options const& options,
     google::cloud::bigquery::v2::UpdateRoutineRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Put<google::cloud::bigquery::v2::Routine>(
       *service_, rest_context, request.routine(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -97,8 +91,6 @@ Status DefaultRoutineServiceRestStub::DeleteRoutine(
     Options const& options,
     google::cloud::bigquery::v2::DeleteRoutineRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",

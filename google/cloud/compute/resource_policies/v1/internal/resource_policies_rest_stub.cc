@@ -141,8 +141,6 @@ DefaultResourcePoliciesRestStub::GetResourcePolicy(
     google::cloud::cpp::compute::resource_policies::v1::
         GetResourcePolicyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::ResourcePolicy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -326,8 +324,6 @@ DefaultResourcePoliciesRestStub::SetIamPolicy(
     google::cloud::cpp::compute::resource_policies::v1::
         SetIamPolicyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -346,8 +342,6 @@ DefaultResourcePoliciesRestStub::TestIamPermissions(
     google::cloud::cpp::compute::resource_policies::v1::
         TestIamPermissionsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

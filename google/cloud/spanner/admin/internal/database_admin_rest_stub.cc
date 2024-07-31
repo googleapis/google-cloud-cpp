@@ -75,8 +75,6 @@ DefaultDatabaseAdminRestStub::AsyncCreateDatabase(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request, false,
             absl::StrCat("/",
@@ -102,8 +100,6 @@ DefaultDatabaseAdminRestStub::CreateDatabase(
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -117,8 +113,6 @@ DefaultDatabaseAdminRestStub::GetDatabase(
     Options const& options,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::spanner::admin::database::v1::Database>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -138,8 +132,6 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabase(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request.database(), false,
             absl::StrCat("/",
@@ -165,8 +157,6 @@ DefaultDatabaseAdminRestStub::UpdateDatabase(
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::longrunning::Operation>(
       *service_, rest_context, request.database(), false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -186,8 +176,6 @@ DefaultDatabaseAdminRestStub::AsyncUpdateDatabaseDdl(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Patch<google::longrunning::Operation>(
             *service, *rest_context, request, false,
             absl::StrCat("/",
@@ -213,8 +201,6 @@ DefaultDatabaseAdminRestStub::UpdateDatabaseDdl(
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -227,8 +213,6 @@ Status DefaultDatabaseAdminRestStub::DropDatabase(
     Options const& options,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -243,8 +227,6 @@ DefaultDatabaseAdminRestStub::GetDatabaseDdl(
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::GetDatabaseDdlResponse>(
       *service_, rest_context, request, false,
@@ -258,8 +240,6 @@ StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::SetIamPolicy(
     Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -272,8 +252,6 @@ StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminRestStub::GetIamPolicy(
     Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::iam::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -287,8 +265,6 @@ DefaultDatabaseAdminRestStub::TestIamPermissions(
     Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -355,8 +331,6 @@ DefaultDatabaseAdminRestStub::AsyncCopyBackup(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request, false,
             absl::StrCat("/",
@@ -381,8 +355,6 @@ DefaultDatabaseAdminRestStub::CopyBackup(
     Options const& options,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -396,8 +368,6 @@ DefaultDatabaseAdminRestStub::GetBackup(
     Options const& options,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::spanner::admin::database::v1::Backup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -411,8 +381,6 @@ DefaultDatabaseAdminRestStub::UpdateBackup(
     Options const& options,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::spanner::admin::database::v1::Backup>(
       *service_, rest_context, request.backup(), false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -425,8 +393,6 @@ Status DefaultDatabaseAdminRestStub::DeleteBackup(
     Options const& options,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -465,8 +431,6 @@ DefaultDatabaseAdminRestStub::AsyncRestoreDatabase(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(rest_internal::Post<google::longrunning::Operation>(
             *service, *rest_context, request, false,
             absl::StrCat("/",
@@ -492,8 +456,6 @@ DefaultDatabaseAdminRestStub::RestoreDatabase(
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::longrunning::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -585,8 +547,6 @@ DefaultDatabaseAdminRestStub::GetBackupSchedule(
     google::spanner::admin::database::v1::GetBackupScheduleRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::spanner::admin::database::v1::BackupSchedule>(
       *service_, rest_context, request, false,
@@ -602,8 +562,6 @@ DefaultDatabaseAdminRestStub::UpdateBackupSchedule(
     google::spanner::admin::database::v1::UpdateBackupScheduleRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<
       google::spanner::admin::database::v1::BackupSchedule>(
       *service_, rest_context, request.backup_schedule(), false,
@@ -618,8 +576,6 @@ Status DefaultDatabaseAdminRestStub::DeleteBackupSchedule(
     google::spanner::admin::database::v1::DeleteBackupScheduleRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

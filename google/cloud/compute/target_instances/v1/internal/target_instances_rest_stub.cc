@@ -139,8 +139,6 @@ DefaultTargetInstancesRestStub::GetTargetInstance(
     google::cloud::cpp::compute::target_instances::v1::
         GetTargetInstanceRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::TargetInstance>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

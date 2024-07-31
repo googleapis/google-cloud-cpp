@@ -137,8 +137,6 @@ DefaultUrlMapsRestStub::GetUrlMap(
     google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::UrlMap>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -402,8 +400,6 @@ DefaultUrlMapsRestStub::Validate(
     Options const& options,
     google::cloud::cpp::compute::url_maps::v1::ValidateRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::UrlMapsValidateResponse>(
       *service_, rest_context, request.url_maps_validate_request_resource(),

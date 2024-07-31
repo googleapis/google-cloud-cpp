@@ -107,8 +107,6 @@ DefaultLicensesRestStub::GetLicense(
     google::cloud::cpp::compute::licenses::v1::GetLicenseRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::License>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -227,8 +225,6 @@ DefaultLicensesRestStub::SetIamPolicy(
     google::cloud::cpp::compute::licenses::v1::SetIamPolicyRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -246,8 +242,6 @@ DefaultLicensesRestStub::TestIamPermissions(
     google::cloud::cpp::compute::licenses::v1::TestIamPermissionsRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

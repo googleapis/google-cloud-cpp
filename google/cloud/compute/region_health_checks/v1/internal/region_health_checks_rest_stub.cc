@@ -111,8 +111,6 @@ DefaultRegionHealthChecksRestStub::GetHealthCheck(
     google::cloud::cpp::compute::region_health_checks::v1::
         GetHealthCheckRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::HealthCheck>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",

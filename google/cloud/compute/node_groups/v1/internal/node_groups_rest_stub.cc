@@ -257,8 +257,6 @@ DefaultNodeGroupsRestStub::GetNodeGroup(
     google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::NodeGroup>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -382,8 +380,6 @@ DefaultNodeGroupsRestStub::ListNodes(
     google::cloud::cpp::compute::node_groups::v1::ListNodesRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::NodeGroupsListNodes>(
       *service_, rest_context, request, false,
@@ -520,8 +516,6 @@ DefaultNodeGroupsRestStub::SetIamPolicy(
     google::cloud::cpp::compute::node_groups::v1::SetIamPolicyRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
       false,
@@ -661,8 +655,6 @@ DefaultNodeGroupsRestStub::TestIamPermissions(
     google::cloud::cpp::compute::node_groups::v1::
         TestIamPermissionsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

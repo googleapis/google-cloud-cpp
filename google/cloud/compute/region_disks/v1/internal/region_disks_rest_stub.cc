@@ -282,8 +282,6 @@ DefaultRegionDisksRestStub::GetDisk(
     google::cloud::cpp::compute::region_disks::v1::GetDiskRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Disk>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -525,8 +523,6 @@ DefaultRegionDisksRestStub::SetIamPolicy(
     google::cloud::cpp::compute::region_disks::v1::SetIamPolicyRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.region_set_policy_request_resource(),
       false,
@@ -670,8 +666,6 @@ DefaultRegionDisksRestStub::AsyncStopAsyncReplication(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -700,8 +694,6 @@ DefaultRegionDisksRestStub::StopAsyncReplication(
     google::cloud::cpp::compute::region_disks::v1::
         StopAsyncReplicationRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -778,8 +770,6 @@ DefaultRegionDisksRestStub::TestIamPermissions(
     google::cloud::cpp::compute::region_disks::v1::
         TestIamPermissionsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

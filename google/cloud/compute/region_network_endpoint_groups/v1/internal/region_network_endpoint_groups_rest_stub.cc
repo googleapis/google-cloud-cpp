@@ -245,8 +245,6 @@ DefaultRegionNetworkEndpointGroupsRestStub::GetNetworkEndpointGroup(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         GetNetworkEndpointGroupRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::NetworkEndpointGroup>(
       *service_, rest_context, request, false,
@@ -349,8 +347,6 @@ DefaultRegionNetworkEndpointGroupsRestStub::ListNetworkEndpoints(
     google::cloud::cpp::compute::region_network_endpoint_groups::v1::
         ListNetworkEndpointsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::
                                  NetworkEndpointGroupsListNetworkEndpoints>(
       *service_, rest_context, request, false,

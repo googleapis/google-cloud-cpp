@@ -47,7 +47,6 @@ DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
       Options const& options,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::test::admin::database::v1::GenerateAccessTokenResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), ":generateAccessToken"), std::move(query_params));
@@ -59,7 +58,6 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
       Options const& options,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "token", ":generate"), std::move(query_params));
@@ -71,7 +69,6 @@ DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
       Options const& options,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "entries", ":write"), std::move(query_params));
@@ -97,7 +94,6 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       Options const& options,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.name(), "/", "keys"), std::move(query_params));
@@ -108,7 +104,6 @@ Status DefaultGoldenKitchenSinkRestStub::DoNothing(
       Options const& options,
       google::protobuf::Empty const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "doNothing"), std::move(query_params));
@@ -119,7 +114,6 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting1"), std::move(query_params));
@@ -130,7 +124,6 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.table_name(), ":explicitRouting2"), std::move(query_params));

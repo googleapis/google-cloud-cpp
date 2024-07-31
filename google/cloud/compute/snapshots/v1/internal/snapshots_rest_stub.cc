@@ -108,8 +108,6 @@ DefaultSnapshotsRestStub::GetSnapshot(
     google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Snapshot>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -227,8 +225,6 @@ DefaultSnapshotsRestStub::SetIamPolicy(
     google::cloud::cpp::compute::snapshots::v1::SetIamPolicyRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -252,8 +248,6 @@ DefaultSnapshotsRestStub::AsyncSetLabels(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -283,8 +277,6 @@ DefaultSnapshotsRestStub::SetLabels(
     google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.global_set_labels_request_resource(),
       false,
@@ -302,8 +294,6 @@ DefaultSnapshotsRestStub::TestIamPermissions(
     google::cloud::cpp::compute::snapshots::v1::TestIamPermissionsRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

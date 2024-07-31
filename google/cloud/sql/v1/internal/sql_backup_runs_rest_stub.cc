@@ -46,8 +46,6 @@ DefaultSqlBackupRunsServiceRestStub::Delete(
     Options const& options,
     google::cloud::sql::v1::SqlBackupRunsDeleteRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -62,8 +60,6 @@ DefaultSqlBackupRunsServiceRestStub::Get(
     Options const& options,
     google::cloud::sql::v1::SqlBackupRunsGetRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::BackupRun>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
@@ -78,8 +74,6 @@ DefaultSqlBackupRunsServiceRestStub::Insert(
     Options const& options,
     google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request.body(), true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",

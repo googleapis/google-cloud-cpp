@@ -161,8 +161,6 @@ DefaultImagesRestStub::GetImage(
     Options const& options,
     google::cloud::cpp::compute::images::v1::GetImageRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -179,8 +177,6 @@ DefaultImagesRestStub::GetFromFamily(
     google::cloud::cpp::compute::images::v1::GetFromFamilyRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Image>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -354,8 +350,6 @@ DefaultImagesRestStub::SetIamPolicy(
     google::cloud::cpp::compute::images::v1::SetIamPolicyRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.global_set_policy_request_resource(),
       false,
@@ -378,8 +372,6 @@ DefaultImagesRestStub::AsyncSetLabels(
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
         std::vector<std::pair<std::string, std::string>> query_params;
-        query_params =
-            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -408,8 +400,6 @@ DefaultImagesRestStub::SetLabels(
     Options const& options,
     google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.global_set_labels_request_resource(),
       false,
@@ -427,8 +417,6 @@ DefaultImagesRestStub::TestIamPermissions(
     google::cloud::cpp::compute::images::v1::TestIamPermissionsRequest const&
         request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),

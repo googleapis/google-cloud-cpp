@@ -79,8 +79,6 @@ StatusOr<google::cloud::bigquery::v2::Job> DefaultJobServiceRestStub::InsertJob(
     Options const& options,
     google::cloud::bigquery::v2::InsertJobRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::bigquery::v2::Job>(
       *service_, rest_context, request.job(), false,
       absl::StrCat("/", "bigquery", "/",
@@ -175,8 +173,6 @@ DefaultJobServiceRestStub::Query(
     Options const& options,
     google::cloud::bigquery::v2::PostQueryRequest const& request) {
   std::vector<std::pair<std::string, std::string>> query_params;
-  query_params =
-      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::bigquery::v2::QueryResponse>(
       *service_, rest_context, request.query_request(), false,
       absl::StrCat("/", "bigquery", "/",
