@@ -58,15 +58,14 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, AddResourcePolicies,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddResourcePolicies,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -87,15 +86,14 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, BulkInsert,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               BulkInsert,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -110,15 +108,14 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, CreateSnapshot,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CreateSnapshot,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -131,15 +128,14 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, DeleteDisk,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteDisk,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -163,15 +159,14 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, InsertDisk,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::cpp::compute::disks::v1::InsertDiskRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertDisk,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -190,15 +185,13 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               RemoveResourcePolicies,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::disks::v1::
-                   RemoveResourcePoliciesRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                               RemoveResourcePoliciesRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveResourcePolicies,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -211,14 +204,13 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, Resize,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::disks::v1::ResizeRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -237,14 +229,13 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -258,15 +249,13 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               StartAsyncReplication,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::disks::v1::
-                   StartAsyncReplicationRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                               StartAsyncReplicationRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StartAsyncReplication,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -280,15 +269,13 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               StopAsyncReplication,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::disks::v1::
-                   StopAsyncReplicationRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                               StopAsyncReplicationRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopAsyncReplication,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -302,15 +289,13 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               StopGroupAsyncReplication,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::disks::v1::
-                   StopGroupAsyncReplicationRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::disks::v1::
+                               StopGroupAsyncReplicationRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopGroupAsyncReplication,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -330,15 +315,14 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, UpdateDisk,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&
                    request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateDisk,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

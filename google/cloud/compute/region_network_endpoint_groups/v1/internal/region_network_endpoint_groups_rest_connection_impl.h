@@ -60,13 +60,12 @@ class RegionNetworkEndpointGroupsRestConnectionImpl
           AttachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachNetworkEndpoints(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AttachNetworkEndpoints(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -76,13 +75,12 @@ class RegionNetworkEndpointGroupsRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteNetworkEndpointGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNetworkEndpointGroup(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -91,13 +89,12 @@ class RegionNetworkEndpointGroupsRestConnectionImpl
           DetachNetworkEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachNetworkEndpoints(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DetachNetworkEndpoints(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -112,13 +109,12 @@ class RegionNetworkEndpointGroupsRestConnectionImpl
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertNetworkEndpointGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNetworkEndpointGroup(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>

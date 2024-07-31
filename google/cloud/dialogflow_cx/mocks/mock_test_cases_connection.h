@@ -83,14 +83,13 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RunTestCase,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
-      RunTestCase,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      RunTestCase, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -106,7 +105,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchRunTestCases,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
            request),
       (override));
@@ -114,8 +113,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
-      BatchRunTestCases,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchRunTestCases, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -137,7 +135,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ImportTestCases,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
                    request),
               (override));
@@ -145,8 +143,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>,
-      ImportTestCases,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportTestCases, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -161,7 +158,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, ExportTestCases,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
                    request),
               (override));
@@ -169,8 +166,7 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>,
-      ExportTestCases,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ExportTestCases, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

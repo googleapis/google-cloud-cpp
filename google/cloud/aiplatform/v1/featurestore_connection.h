@@ -22,7 +22,6 @@
 #include "google/cloud/aiplatform/v1/featurestore_connection_idempotency_policy.h"
 #include "google/cloud/aiplatform/v1/internal/featurestore_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -196,12 +195,11 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFeaturestore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeaturestoreRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  CreateFeaturestore(ExperimentalTag,
-                     google::longrunning::Operation const& operation);
+  CreateFeaturestore(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
       google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request);
@@ -215,12 +213,11 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateFeaturestore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
-  UpdateFeaturestore(ExperimentalTag,
-                     google::longrunning::Operation const& operation);
+  UpdateFeaturestore(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -228,25 +225,23 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeaturestore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeaturestore(ExperimentalTag,
-                     google::longrunning::Operation const& operation);
+  DeleteFeaturestore(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
   CreateEntityType(
       google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateEntityType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateEntityTypeRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
-  CreateEntityType(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  CreateEntityType(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
       google::cloud::aiplatform::v1::GetEntityTypeRequest const& request);
@@ -264,25 +259,23 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteEntityType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteEntityTypeRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEntityType(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteEntityType(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
   CreateFeature(
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFeature(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureRequest const& request);
 
   virtual future<StatusOr<google::cloud::aiplatform::v1::Feature>>
-  CreateFeature(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  CreateFeature(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
@@ -290,13 +283,12 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> BatchCreateFeatures(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
-  BatchCreateFeatures(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  BatchCreateFeatures(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
       google::cloud::aiplatform::v1::GetFeatureRequest const& request);
@@ -313,13 +305,12 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeature(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  DeleteFeature(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
@@ -327,13 +318,12 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ImportFeatureValues(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::ImportFeatureValuesRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
-  ImportFeatureValues(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  ImportFeatureValues(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
@@ -342,14 +332,13 @@ class FeaturestoreServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> BatchReadFeatureValues(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
-  BatchReadFeatureValues(ExperimentalTag,
-                         google::longrunning::Operation const& operation);
+  BatchReadFeatureValues(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
@@ -357,13 +346,12 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ExportFeatureValues(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::ExportFeatureValuesRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
-  ExportFeatureValues(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  ExportFeatureValues(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -371,13 +359,12 @@ class FeaturestoreServiceConnection {
       google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFeatureValues(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
-  DeleteFeatureValues(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  DeleteFeatureValues(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::aiplatform::v1::Feature> SearchFeatures(
       google::cloud::aiplatform::v1::SearchFeaturesRequest request);

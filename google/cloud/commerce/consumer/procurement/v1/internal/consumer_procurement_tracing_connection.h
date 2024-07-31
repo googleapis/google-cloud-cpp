@@ -49,13 +49,11 @@ class ConsumerProcurementServiceTracingConnection
                  PlaceOrderRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> PlaceOrder(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::commerce::consumer::procurement::v1::
-          PlaceOrderRequest const& request) override;
+      NoAwaitTag, google::cloud::commerce::consumer::procurement::v1::
+                      PlaceOrderRequest const& request) override;
 
   future<StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>>
-  PlaceOrder(ExperimentalTag,
-             google::longrunning::Operation const& operation) override;
+  PlaceOrder(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::commerce::consumer::procurement::v1::Order> GetOrder(
       google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&

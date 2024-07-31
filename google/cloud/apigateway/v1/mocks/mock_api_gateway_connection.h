@@ -66,14 +66,12 @@ class MockApiGatewayServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateGateway,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::CreateGatewayRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Gateway>>,
-              CreateGateway,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateGateway, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -86,14 +84,12 @@ class MockApiGatewayServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateGateway,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::UpdateGatewayRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Gateway>>,
-              UpdateGateway,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateGateway, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -107,14 +103,13 @@ class MockApiGatewayServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteGateway,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::DeleteGatewayRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteGateway,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteGateway, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::Api>), ListApis,
@@ -133,14 +128,12 @@ class MockApiGatewayServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateApi,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apigateway::v1::CreateApiRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, CreateApi,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateApi)` is now ambiguous. Use
@@ -150,14 +143,12 @@ class MockApiGatewayServiceConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateApi,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apigateway::v1::UpdateApiRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::Api>>, UpdateApi,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteApi)` is now ambiguous. Use
@@ -169,15 +160,13 @@ class MockApiGatewayServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteApi,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::apigateway::v1::DeleteApiRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteApi,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      DeleteApi, (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apigateway::v1::ApiConfig>),
               ListApiConfigs,
@@ -200,15 +189,13 @@ class MockApiGatewayServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateApiConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::CreateApiConfigRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
               CreateApiConfig,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateApiConfig)` is now ambiguous. Use
@@ -221,15 +208,13 @@ class MockApiGatewayServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateApiConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::UpdateApiConfigRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>,
               UpdateApiConfig,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteApiConfig)` is now ambiguous. Use
@@ -242,14 +227,13 @@ class MockApiGatewayServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteApiConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::apigateway::v1::DeleteApiConfigRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>,
-      DeleteApiConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteApiConfig, (google::longrunning::Operation const& operation),
       (override));
 };
 

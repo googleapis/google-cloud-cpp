@@ -22,7 +22,6 @@
 #include "google/cloud/aiplatform/v1/internal/job_retry_traits.h"
 #include "google/cloud/aiplatform/v1/job_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -202,13 +201,12 @@ class JobServiceConnection {
       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteCustomJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteCustomJob(ExperimentalTag,
-                  google::longrunning::Operation const& operation);
+  DeleteCustomJob(google::longrunning::Operation const& operation);
 
   virtual Status CancelCustomJob(
       google::cloud::aiplatform::v1::CancelCustomJobRequest const& request);
@@ -233,14 +231,13 @@ class JobServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDataLabelingJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataLabelingJob(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  DeleteDataLabelingJob(google::longrunning::Operation const& operation);
 
   virtual Status CancelDataLabelingJob(
       google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
@@ -269,14 +266,14 @@ class JobServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   DeleteHyperparameterTuningJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteHyperparameterTuningJob(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual Status CancelHyperparameterTuningJob(
       google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
@@ -297,13 +294,12 @@ class JobServiceConnection {
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteNasJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteNasJob(ExperimentalTag,
-               google::longrunning::Operation const& operation);
+  DeleteNasJob(google::longrunning::Operation const& operation);
 
   virtual Status CancelNasJob(
       google::cloud::aiplatform::v1::CancelNasJobRequest const& request);
@@ -337,14 +333,13 @@ class JobServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteBatchPredictionJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteBatchPredictionJob(ExperimentalTag,
-                           google::longrunning::Operation const& operation);
+  DeleteBatchPredictionJob(google::longrunning::Operation const& operation);
 
   virtual Status CancelBatchPredictionJob(
       google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
@@ -380,14 +375,13 @@ class JobServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   UpdateModelDeploymentMonitoringJob(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::aiplatform::v1::
-          UpdateModelDeploymentMonitoringJobRequest const& request);
+      NoAwaitTag, google::cloud::aiplatform::v1::
+                      UpdateModelDeploymentMonitoringJobRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
   UpdateModelDeploymentMonitoringJob(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -397,14 +391,13 @@ class JobServiceConnection {
 
   virtual StatusOr<google::longrunning::Operation>
   DeleteModelDeploymentMonitoringJob(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::aiplatform::v1::
-          DeleteModelDeploymentMonitoringJobRequest const& request);
+      NoAwaitTag, google::cloud::aiplatform::v1::
+                      DeleteModelDeploymentMonitoringJobRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteModelDeploymentMonitoringJob(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual Status PauseModelDeploymentMonitoringJob(
       google::cloud::aiplatform::v1::

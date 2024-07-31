@@ -52,12 +52,11 @@ class HubServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateHub(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request)
       override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
@@ -65,12 +64,11 @@ class HubServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateHub(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request)
       override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -78,13 +76,12 @@ class HubServiceTracingConnection
                 request) override;
 
   StatusOr<google::longrunning::Operation> DeleteHub(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request)
       override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(ExperimentalTag,
-            google::longrunning::Operation const& operation) override;
+  DeleteHub(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListHubSpokes(
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest request)
@@ -103,12 +100,11 @@ class HubServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
@@ -116,12 +112,11 @@ class HubServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<
@@ -131,14 +126,13 @@ class HubServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request) override;
 
   future<
       StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  RejectHubSpoke(google::longrunning::Operation const& operation) override;
 
   future<
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
@@ -147,27 +141,25 @@ class HubServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request) override;
 
   future<
       StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  AcceptHubSpoke(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
                   request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSpoke(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(ExperimentalTag,
-              google::longrunning::Operation const& operation) override;
+  DeleteSpoke(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
       google::cloud::networkconnectivity::v1::GetRouteTableRequest const&

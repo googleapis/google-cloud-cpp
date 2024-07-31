@@ -63,12 +63,11 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::CreateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> CreateInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> UpdateInstance(
@@ -76,12 +75,11 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::UpdateInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> UpdateInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
@@ -89,25 +87,23 @@ class NotebookServiceConnectionImpl
                      request) override;
 
   StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::DeleteInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
-  DeleteInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation) override;
+  DeleteInstance(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> StartInstance(
       google::cloud::notebooks::v2::StartInstanceRequest const& request)
       override;
 
   StatusOr<google::longrunning::Operation> StartInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::StartInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> StartInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
@@ -115,12 +111,11 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> StopInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::StopInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> ResetInstance(
@@ -128,12 +123,11 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> ResetInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::ResetInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> ResetInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
@@ -146,12 +140,11 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpgradeInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::UpgradeInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> UpgradeInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> RollbackInstance(
@@ -159,12 +152,11 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> RollbackInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::RollbackInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> RollbackInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> DiagnoseInstance(
@@ -172,12 +164,11 @@ class NotebookServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DiagnoseInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v2::Instance>> DiagnoseInstance(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

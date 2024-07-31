@@ -64,7 +64,7 @@ class MockFleetRoutingConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BatchOptimizeTours,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::optimization::v1::BatchOptimizeToursRequest const&
                    request),
               (override));
@@ -72,9 +72,7 @@ class MockFleetRoutingConnection
   MOCK_METHOD(future<StatusOr<
                   google::cloud::optimization::v1::BatchOptimizeToursResponse>>,
               BatchOptimizeTours,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

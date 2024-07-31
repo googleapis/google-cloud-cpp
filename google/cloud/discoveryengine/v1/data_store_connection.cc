@@ -48,7 +48,7 @@ DataStoreServiceConnection::CreateDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceConnection::CreateDataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::CreateDataStoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ DataStoreServiceConnection::CreateDataStore(
 
 future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
 DataStoreServiceConnection::CreateDataStore(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::DataStore>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ DataStoreServiceConnection::DeleteDataStore(
 
 StatusOr<google::longrunning::Operation>
 DataStoreServiceConnection::DeleteDataStore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::DeleteDataStoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ DataStoreServiceConnection::DeleteDataStore(
 
 future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
 DataStoreServiceConnection::DeleteDataStore(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

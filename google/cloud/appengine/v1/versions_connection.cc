@@ -59,15 +59,13 @@ VersionsConnection::CreateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnection::CreateVersion(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::CreateVersionRequest const&) {
+    NoAwaitTag, google::appengine::v1::CreateVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
-VersionsConnection::CreateVersion(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+VersionsConnection::CreateVersion(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Version>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,15 +80,13 @@ VersionsConnection::UpdateVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnection::UpdateVersion(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::UpdateVersionRequest const&) {
+    NoAwaitTag, google::appengine::v1::UpdateVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Version>>
-VersionsConnection::UpdateVersion(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+VersionsConnection::UpdateVersion(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Version>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -105,15 +101,13 @@ VersionsConnection::DeleteVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsConnection::DeleteVersion(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::DeleteVersionRequest const&) {
+    NoAwaitTag, google::appengine::v1::DeleteVersionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-VersionsConnection::DeleteVersion(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+VersionsConnection::DeleteVersion(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::OperationMetadataV1>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

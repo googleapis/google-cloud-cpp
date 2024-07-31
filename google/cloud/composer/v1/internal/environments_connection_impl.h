@@ -57,14 +57,12 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                         CreateEnvironmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateEnvironment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          CreateEnvironmentRequest const& request) override;
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      CreateEnvironmentRequest const& request) override;
 
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  CreateEnvironment(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  CreateEnvironment(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
   GetEnvironment(google::cloud::orchestration::airflow::service::v1::
@@ -80,14 +78,12 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                         UpdateEnvironmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEnvironment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          UpdateEnvironmentRequest const& request) override;
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      UpdateEnvironmentRequest const& request) override;
 
   future<
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
-  UpdateEnvironment(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  UpdateEnvironment(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
@@ -95,14 +91,12 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                         DeleteEnvironmentRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEnvironment(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          DeleteEnvironmentRequest const& request) override;
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      DeleteEnvironmentRequest const& request) override;
 
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
-  DeleteEnvironment(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  DeleteEnvironment(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ExecuteAirflowCommandResponse>
@@ -188,14 +182,12 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                    SaveSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> SaveSnapshot(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          SaveSnapshotRequest const& request) override;
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      SaveSnapshotRequest const& request) override;
 
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
-  SaveSnapshot(ExperimentalTag,
-               google::longrunning::Operation const& operation) override;
+  SaveSnapshot(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
@@ -203,14 +195,12 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                    LoadSnapshotRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> LoadSnapshot(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          LoadSnapshotRequest const& request) override;
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      LoadSnapshotRequest const& request) override;
 
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
-  LoadSnapshot(ExperimentalTag,
-               google::longrunning::Operation const& operation) override;
+  LoadSnapshot(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                       DatabaseFailoverResponse>>
@@ -218,14 +208,12 @@ class EnvironmentsConnectionImpl : public composer_v1::EnvironmentsConnection {
                        DatabaseFailoverRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DatabaseFailover(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::orchestration::airflow::service::v1::
-          DatabaseFailoverRequest const& request) override;
+      NoAwaitTag, google::cloud::orchestration::airflow::service::v1::
+                      DatabaseFailoverRequest const& request) override;
 
   future<StatusOr<google::cloud::orchestration::airflow::service::v1::
                       DatabaseFailoverResponse>>
-  DatabaseFailover(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  DatabaseFailover(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                FetchDatabasePropertiesResponse>

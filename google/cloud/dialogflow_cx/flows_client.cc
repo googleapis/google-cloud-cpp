@@ -118,11 +118,11 @@ future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsClient::TrainFlow(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::cx::v3::TrainFlowRequest request;
   request.set_name(name);
-  return connection_->TrainFlow(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->TrainFlow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
@@ -133,18 +133,17 @@ future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsClient::TrainFlow(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TrainFlow(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->TrainFlow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>> FlowsClient::TrainFlow(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TrainFlow(ExperimentalTag{}, operation);
+  return connection_->TrainFlow(operation);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
@@ -181,19 +180,18 @@ FlowsClient::ImportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsClient::ImportFlow(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportFlow(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ImportFlow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
-FlowsClient::ImportFlow(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+FlowsClient::ImportFlow(google::longrunning::Operation const& operation,
                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ImportFlow(ExperimentalTag{}, operation);
+  return connection_->ImportFlow(operation);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
@@ -205,19 +203,18 @@ FlowsClient::ExportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsClient::ExportFlow(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportFlow(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->ExportFlow(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
-FlowsClient::ExportFlow(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+FlowsClient::ExportFlow(google::longrunning::Operation const& operation,
                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->ExportFlow(ExperimentalTag{}, operation);
+  return connection_->ExportFlow(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

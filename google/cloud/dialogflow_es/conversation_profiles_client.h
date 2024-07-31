@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_CONVERSATION_PROFILES_CLIENT_H
 
 #include "google/cloud/dialogflow_es/conversation_profiles_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -494,8 +493,7 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
-      Options opts = {});
+      NoAwaitTag, std::string const& conversation_profile, Options opts = {});
 
   // clang-format off
   ///
@@ -568,7 +566,7 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
+      NoAwaitTag, std::string const& conversation_profile,
       google::cloud::dialogflow::v2::Participant::Role participant_role,
       google::cloud::dialogflow::v2::HumanAgentAssistantConfig::
           SuggestionFeatureConfig const& suggestion_feature_config,
@@ -644,7 +642,7 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
           request,
       Options opts = {});
@@ -659,8 +657,7 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(ExperimentalTag,
-                             google::longrunning::Operation const& operation,
+  SetSuggestionFeatureConfig(google::longrunning::Operation const& operation,
                              Options opts = {});
 
   // clang-format off
@@ -720,8 +717,7 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
-      Options opts = {});
+      NoAwaitTag, std::string const& conversation_profile, Options opts = {});
 
   // clang-format off
   ///
@@ -787,7 +783,7 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& conversation_profile,
+      NoAwaitTag, std::string const& conversation_profile,
       google::cloud::dialogflow::v2::Participant::Role participant_role,
       google::cloud::dialogflow::v2::SuggestionFeature::Type
           suggestion_feature_type,
@@ -856,7 +852,7 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
           request,
       Options opts = {});
@@ -871,8 +867,7 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(ExperimentalTag,
-                               google::longrunning::Operation const& operation,
+  ClearSuggestionFeatureConfig(google::longrunning::Operation const& operation,
                                Options opts = {});
 
  private:

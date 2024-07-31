@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SERVICE_ATTACHMENTS_V1_SERVICE_ATTACHMENTS_CLIENT_H
 
 #include "google/cloud/compute/service_attachments/v1/service_attachments_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -226,9 +225,8 @@ class ServiceAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachment(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& service_attachment,
-      Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& service_attachment, Options opts = {});
 
   // clang-format off
   ///
@@ -281,7 +279,7 @@ class ServiceAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteServiceAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           DeleteServiceAttachmentRequest const& request,
       Options opts = {});
@@ -297,7 +295,6 @@ class ServiceAttachmentsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteServiceAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -479,8 +476,7 @@ class ServiceAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachment(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::ServiceAttachment const&
           service_attachment_resource,
       Options opts = {});
@@ -537,7 +533,7 @@ class ServiceAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertServiceAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           InsertServiceAttachmentRequest const& request,
       Options opts = {});
@@ -553,7 +549,6 @@ class ServiceAttachmentsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertServiceAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -691,8 +686,8 @@ class ServiceAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachment(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& service_attachment,
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& service_attachment,
       google::cloud::cpp::compute::v1::ServiceAttachment const&
           service_attachment_resource,
       Options opts = {});
@@ -750,7 +745,7 @@ class ServiceAttachmentsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> PatchServiceAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::service_attachments::v1::
           PatchServiceAttachmentRequest const& request,
       Options opts = {});
@@ -766,7 +761,6 @@ class ServiceAttachmentsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchServiceAttachment(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

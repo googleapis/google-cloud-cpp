@@ -22,7 +22,6 @@
 #include "google/cloud/gkemulticloud/v1/attached_clusters_connection_idempotency_policy.h"
 #include "google/cloud/gkemulticloud/v1/internal/attached_clusters_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -195,13 +194,12 @@ class AttachedClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  CreateAttachedCluster(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  CreateAttachedCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   UpdateAttachedCluster(
@@ -209,13 +207,12 @@ class AttachedClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  UpdateAttachedCluster(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  UpdateAttachedCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   ImportAttachedCluster(
@@ -223,13 +220,12 @@ class AttachedClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  ImportAttachedCluster(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  ImportAttachedCluster(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
   GetAttachedCluster(
@@ -246,13 +242,12 @@ class AttachedClustersConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAttachedCluster(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  DeleteAttachedCluster(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
   GetAttachedServerConfig(

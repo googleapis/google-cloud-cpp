@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_TEMPLATES_V1_INSTANCE_TEMPLATES_CLIENT_H
 
 #include "google/cloud/compute/instance_templates/v1/instance_templates_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -226,7 +225,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       std::string const& instance_template, Options opts = {});
 
   // clang-format off
@@ -282,7 +281,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstanceTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_templates::v1::
           DeleteInstanceTemplateRequest const& request,
       Options opts = {});
@@ -298,7 +297,6 @@ class InstanceTemplatesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceTemplate(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -478,7 +476,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
+      NoAwaitTag, std::string const& project,
       google::cloud::cpp::compute::v1::InstanceTemplate const&
           instance_template_resource,
       Options opts = {});
@@ -537,7 +535,7 @@ class InstanceTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstanceTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_templates::v1::
           InsertInstanceTemplateRequest const& request,
       Options opts = {});
@@ -553,7 +551,6 @@ class InstanceTemplatesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceTemplate(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

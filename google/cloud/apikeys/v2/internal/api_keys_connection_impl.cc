@@ -101,8 +101,7 @@ ApiKeysConnectionImpl::CreateKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::CreateKey(
-    ExperimentalTag, NoAwaitTag,
-    google::api::apikeys::v2::CreateKeyRequest const& request) {
+    NoAwaitTag, google::api::apikeys::v2::CreateKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -116,7 +115,7 @@ StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::CreateKey(
 
 future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::CreateKey(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Empty>()) {
     return make_ready_future<StatusOr<google::api::apikeys::v2::Key>>(
@@ -246,8 +245,7 @@ ApiKeysConnectionImpl::UpdateKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::UpdateKey(
-    ExperimentalTag, NoAwaitTag,
-    google::api::apikeys::v2::UpdateKeyRequest const& request) {
+    NoAwaitTag, google::api::apikeys::v2::UpdateKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -261,7 +259,7 @@ StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::UpdateKey(
 
 future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::UpdateKey(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Empty>()) {
     return make_ready_future<StatusOr<google::api::apikeys::v2::Key>>(
@@ -333,8 +331,7 @@ ApiKeysConnectionImpl::DeleteKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::DeleteKey(
-    ExperimentalTag, NoAwaitTag,
-    google::api::apikeys::v2::DeleteKeyRequest const& request) {
+    NoAwaitTag, google::api::apikeys::v2::DeleteKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -348,7 +345,7 @@ StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::DeleteKey(
 
 future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::DeleteKey(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Empty>()) {
     return make_ready_future<StatusOr<google::api::apikeys::v2::Key>>(
@@ -421,8 +418,7 @@ ApiKeysConnectionImpl::UndeleteKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::UndeleteKey(
-    ExperimentalTag, NoAwaitTag,
-    google::api::apikeys::v2::UndeleteKeyRequest const& request) {
+    NoAwaitTag, google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -436,7 +432,7 @@ StatusOr<google::longrunning::Operation> ApiKeysConnectionImpl::UndeleteKey(
 
 future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::UndeleteKey(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Empty>()) {
     return make_ready_future<StatusOr<google::api::apikeys::v2::Key>>(

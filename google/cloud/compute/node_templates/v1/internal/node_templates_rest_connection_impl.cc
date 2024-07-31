@@ -149,9 +149,8 @@ NodeTemplatesRestConnectionImpl::DeleteNodeTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesRestConnectionImpl::DeleteNodeTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::node_templates::v1::
-        DeleteNodeTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::
+                    DeleteNodeTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -166,7 +165,6 @@ NodeTemplatesRestConnectionImpl::DeleteNodeTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestConnectionImpl::DeleteNodeTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -314,9 +312,8 @@ NodeTemplatesRestConnectionImpl::InsertNodeTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeTemplatesRestConnectionImpl::InsertNodeTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::node_templates::v1::
-        InsertNodeTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::node_templates::v1::
+                    InsertNodeTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -331,7 +328,6 @@ NodeTemplatesRestConnectionImpl::InsertNodeTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeTemplatesRestConnectionImpl::InsertNodeTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

@@ -55,24 +55,23 @@ NetAppTracingConnection::CreateStoragePool(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::CreateStoragePool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateStoragePool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateStoragePool(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateStoragePool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppTracingConnection::CreateStoragePool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateStoragePool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateStoragePool(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateStoragePool(operation));
 }
 
 StatusOr<google::cloud::netapp::v1::StoragePool>
@@ -94,24 +93,23 @@ NetAppTracingConnection::UpdateStoragePool(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::UpdateStoragePool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateStoragePool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateStoragePool(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateStoragePool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppTracingConnection::UpdateStoragePool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateStoragePool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateStoragePool(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateStoragePool(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -125,24 +123,23 @@ NetAppTracingConnection::DeleteStoragePool(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::DeleteStoragePool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteStoragePool");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteStoragePool(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteStoragePool(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteStoragePool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteStoragePool");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteStoragePool(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteStoragePool(operation));
 }
 
 StreamRange<google::cloud::netapp::v1::Volume>
@@ -171,21 +168,18 @@ NetAppTracingConnection::CreateVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppTracingConnection::CreateVolume(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::netapp::v1::CreateVolumeRequest const& request) {
+    NoAwaitTag, google::cloud::netapp::v1::CreateVolumeRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::CreateVolume");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateVolume(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateVolume(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppTracingConnection::CreateVolume(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::CreateVolume");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateVolume(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateVolume(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
@@ -197,21 +191,18 @@ NetAppTracingConnection::UpdateVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppTracingConnection::UpdateVolume(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
+    NoAwaitTag, google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::UpdateVolume");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateVolume(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateVolume(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppTracingConnection::UpdateVolume(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::UpdateVolume");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateVolume(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateVolume(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -223,21 +214,18 @@ NetAppTracingConnection::DeleteVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppTracingConnection::DeleteVolume(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
+    NoAwaitTag, google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::DeleteVolume");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteVolume(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteVolume(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteVolume(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::DeleteVolume");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteVolume(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteVolume(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
@@ -249,21 +237,18 @@ NetAppTracingConnection::RevertVolume(
 }
 
 StatusOr<google::longrunning::Operation> NetAppTracingConnection::RevertVolume(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::netapp::v1::RevertVolumeRequest const& request) {
+    NoAwaitTag, google::cloud::netapp::v1::RevertVolumeRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::RevertVolume");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RevertVolume(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RevertVolume(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppTracingConnection::RevertVolume(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::RevertVolume");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RevertVolume(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RevertVolume(operation));
 }
 
 StreamRange<google::cloud::netapp::v1::Snapshot>
@@ -294,21 +279,20 @@ NetAppTracingConnection::CreateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::CreateSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::CreateSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
 NetAppTracingConnection::CreateSnapshot(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::CreateSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateSnapshot(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -321,21 +305,20 @@ NetAppTracingConnection::DeleteSnapshot(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::DeleteSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::DeleteSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteSnapshot(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::DeleteSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSnapshot(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
@@ -348,21 +331,20 @@ NetAppTracingConnection::UpdateSnapshot(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::UpdateSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::UpdateSnapshot");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateSnapshot(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
 NetAppTracingConnection::UpdateSnapshot(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::UpdateSnapshot");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateSnapshot(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateSnapshot(operation));
 }
 
 StreamRange<google::cloud::netapp::v1::ActiveDirectory>
@@ -398,24 +380,23 @@ NetAppTracingConnection::CreateActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::CreateActiveDirectory(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateActiveDirectory");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->CreateActiveDirectory(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->CreateActiveDirectory(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
 NetAppTracingConnection::CreateActiveDirectory(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateActiveDirectory");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateActiveDirectory(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateActiveDirectory(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
@@ -430,24 +411,23 @@ NetAppTracingConnection::UpdateActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::UpdateActiveDirectory(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateActiveDirectory");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->UpdateActiveDirectory(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->UpdateActiveDirectory(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
 NetAppTracingConnection::UpdateActiveDirectory(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateActiveDirectory");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateActiveDirectory(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateActiveDirectory(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -462,24 +442,23 @@ NetAppTracingConnection::DeleteActiveDirectory(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::DeleteActiveDirectory(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteActiveDirectory");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->DeleteActiveDirectory(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->DeleteActiveDirectory(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteActiveDirectory(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteActiveDirectory");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteActiveDirectory(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteActiveDirectory(operation));
 }
 
 StreamRange<google::cloud::netapp::v1::KmsConfig>
@@ -503,23 +482,22 @@ NetAppTracingConnection::CreateKmsConfig(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::CreateKmsConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateKmsConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateKmsConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
 NetAppTracingConnection::CreateKmsConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateKmsConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateKmsConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateKmsConfig(operation));
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig>
@@ -541,23 +519,22 @@ NetAppTracingConnection::UpdateKmsConfig(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::UpdateKmsConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateKmsConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateKmsConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
 NetAppTracingConnection::UpdateKmsConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateKmsConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateKmsConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateKmsConfig(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
@@ -570,21 +547,20 @@ NetAppTracingConnection::EncryptVolumes(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::EncryptVolumes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::EncryptVolumes");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->EncryptVolumes(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->EncryptVolumes(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
 NetAppTracingConnection::EncryptVolumes(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::EncryptVolumes");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->EncryptVolumes(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->EncryptVolumes(operation));
 }
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
@@ -607,23 +583,22 @@ NetAppTracingConnection::DeleteKmsConfig(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::DeleteKmsConfig(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteKmsConfig");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteKmsConfig(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteKmsConfig(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteKmsConfig(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteKmsConfig");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteKmsConfig(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteKmsConfig(operation));
 }
 
 StreamRange<google::cloud::netapp::v1::Replication>
@@ -656,24 +631,23 @@ NetAppTracingConnection::CreateReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::CreateReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::CreateReplicationRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateReplication");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateReplication(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateReplication(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppTracingConnection::CreateReplication(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateReplication");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateReplication(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateReplication(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -687,24 +661,23 @@ NetAppTracingConnection::DeleteReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::DeleteReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteReplication");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteReplication(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteReplication(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteReplication(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteReplication");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteReplication(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteReplication(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -718,24 +691,23 @@ NetAppTracingConnection::UpdateReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::UpdateReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateReplication");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateReplication(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateReplication(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppTracingConnection::UpdateReplication(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateReplication");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateReplication(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateReplication(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -749,23 +721,22 @@ NetAppTracingConnection::StopReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::StopReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::StopReplicationRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::StopReplication");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->StopReplication(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->StopReplication(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppTracingConnection::StopReplication(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::StopReplication");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->StopReplication(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->StopReplication(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -779,24 +750,23 @@ NetAppTracingConnection::ResumeReplication(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::ResumeReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::ResumeReplication");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->ResumeReplication(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ResumeReplication(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppTracingConnection::ResumeReplication(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::ResumeReplication");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->ResumeReplication(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ResumeReplication(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -812,25 +782,24 @@ NetAppTracingConnection::ReverseReplicationDirection(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::ReverseReplicationDirection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
         request) {
   auto span = internal::MakeSpan(
       "netapp_v1::NetAppConnection::ReverseReplicationDirection");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->ReverseReplicationDirection(ExperimentalTag{},
-                                                 NoAwaitTag{}, request));
+      *span, child_->ReverseReplicationDirection(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppTracingConnection::ReverseReplicationDirection(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "netapp_v1::NetAppConnection::ReverseReplicationDirection");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->ReverseReplicationDirection(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->ReverseReplicationDirection(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
@@ -844,24 +813,23 @@ NetAppTracingConnection::CreateBackupVault(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::CreateBackupVault(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackupVault");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateBackupVault(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateBackupVault(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppTracingConnection::CreateBackupVault(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackupVault");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateBackupVault(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackupVault(operation));
 }
 
 StatusOr<google::cloud::netapp::v1::BackupVault>
@@ -894,24 +862,23 @@ NetAppTracingConnection::UpdateBackupVault(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::UpdateBackupVault(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupVault");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateBackupVault(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateBackupVault(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppTracingConnection::UpdateBackupVault(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupVault");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateBackupVault(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBackupVault(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -925,24 +892,23 @@ NetAppTracingConnection::DeleteBackupVault(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::DeleteBackupVault(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackupVault");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteBackupVault(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteBackupVault(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteBackupVault(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackupVault");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteBackupVault(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackupVault(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>>
@@ -954,21 +920,18 @@ NetAppTracingConnection::CreateBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppTracingConnection::CreateBackup(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::netapp::v1::CreateBackupRequest const& request) {
+    NoAwaitTag, google::cloud::netapp::v1::CreateBackupRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>>
 NetAppTracingConnection::CreateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateBackup(operation));
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> NetAppTracingConnection::GetBackup(
@@ -997,21 +960,18 @@ NetAppTracingConnection::DeleteBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppTracingConnection::DeleteBackup(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::netapp::v1::DeleteBackupRequest const& request) {
+    NoAwaitTag, google::cloud::netapp::v1::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteBackup(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>>
@@ -1023,21 +983,18 @@ NetAppTracingConnection::UpdateBackup(
 }
 
 StatusOr<google::longrunning::Operation> NetAppTracingConnection::UpdateBackup(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::netapp::v1::UpdateBackupRequest const& request) {
+    NoAwaitTag, google::cloud::netapp::v1::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackup");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateBackup(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateBackup(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::Backup>>
 NetAppTracingConnection::UpdateBackup(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackup");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateBackup(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateBackup(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
@@ -1052,24 +1009,23 @@ NetAppTracingConnection::CreateBackupPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::CreateBackupPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackupPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->CreateBackupPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateBackupPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
 NetAppTracingConnection::CreateBackupPolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::CreateBackupPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->CreateBackupPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->CreateBackupPolicy(operation));
 }
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy>
@@ -1104,24 +1060,23 @@ NetAppTracingConnection::UpdateBackupPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::UpdateBackupPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateBackupPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateBackupPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
 NetAppTracingConnection::UpdateBackupPolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::UpdateBackupPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->UpdateBackupPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateBackupPolicy(operation));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -1136,24 +1091,23 @@ NetAppTracingConnection::DeleteBackupPolicy(
 
 StatusOr<google::longrunning::Operation>
 NetAppTracingConnection::DeleteBackupPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackupPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteBackupPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteBackupPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppTracingConnection::DeleteBackupPolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("netapp_v1::NetAppConnection::DeleteBackupPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteBackupPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteBackupPolicy(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

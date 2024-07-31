@@ -48,7 +48,7 @@ ConversationModelsConnection::CreateConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnection::CreateConversationModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::CreateConversationModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ ConversationModelsConnection::CreateConversationModel(
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
 ConversationModelsConnection::CreateConversationModel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::ConversationModel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,7 +87,7 @@ ConversationModelsConnection::DeleteConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnection::DeleteConversationModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::DeleteConversationModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -96,7 +96,7 @@ ConversationModelsConnection::DeleteConversationModel(
 future<StatusOr<
     google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
 ConversationModelsConnection::DeleteConversationModel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -113,7 +113,7 @@ ConversationModelsConnection::DeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnection::DeployConversationModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::DeployConversationModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -122,7 +122,7 @@ ConversationModelsConnection::DeployConversationModel(
 future<StatusOr<
     google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
 ConversationModelsConnection::DeployConversationModel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -140,7 +140,7 @@ ConversationModelsConnection::UndeployConversationModel(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnection::UndeployConversationModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::UndeployConversationModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -149,7 +149,7 @@ ConversationModelsConnection::UndeployConversationModel(
 future<StatusOr<
     google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
 ConversationModelsConnection::UndeployConversationModel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::
                    UndeployConversationModelOperationMetadata>>(
@@ -182,16 +182,15 @@ ConversationModelsConnection::CreateConversationModelEvaluation(
 
 StatusOr<google::longrunning::Operation>
 ConversationModelsConnection::CreateConversationModelEvaluation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dialogflow::v2::
-        CreateConversationModelEvaluationRequest const&) {
+    NoAwaitTag, google::cloud::dialogflow::v2::
+                    CreateConversationModelEvaluationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
 ConversationModelsConnection::CreateConversationModelEvaluation(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -68,13 +68,12 @@ class WorkstationsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateWorkstationCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   CreateWorkstationCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -83,13 +82,12 @@ class WorkstationsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkstationCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   UpdateWorkstationCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
@@ -98,13 +96,12 @@ class WorkstationsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkstationCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationCluster>>
   DeleteWorkstationCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
@@ -128,13 +125,12 @@ class WorkstationsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateWorkstationConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   CreateWorkstationConfig(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -143,13 +139,12 @@ class WorkstationsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkstationConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   UpdateWorkstationConfig(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
@@ -158,13 +153,12 @@ class WorkstationsConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkstationConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::workstations::v1::WorkstationConfig>>
   DeleteWorkstationConfig(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
@@ -186,13 +180,12 @@ class WorkstationsConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateWorkstation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::CreateWorkstationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  CreateWorkstation(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  CreateWorkstation(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   UpdateWorkstation(
@@ -200,13 +193,12 @@ class WorkstationsConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateWorkstation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::UpdateWorkstationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  UpdateWorkstation(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  UpdateWorkstation(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   DeleteWorkstation(
@@ -214,13 +206,12 @@ class WorkstationsConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteWorkstation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::DeleteWorkstationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  DeleteWorkstation(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  DeleteWorkstation(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StartWorkstation(
@@ -228,26 +219,24 @@ class WorkstationsConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> StartWorkstation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::StartWorkstationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StartWorkstation(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  StartWorkstation(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
   StopWorkstation(google::cloud::workstations::v1::StopWorkstationRequest const&
                       request) override;
 
   StatusOr<google::longrunning::Operation> StopWorkstation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workstations::v1::StopWorkstationRequest const& request)
       override;
 
   future<StatusOr<google::cloud::workstations::v1::Workstation>>
-  StopWorkstation(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  StopWorkstation(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(

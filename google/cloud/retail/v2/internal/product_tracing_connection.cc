@@ -90,23 +90,21 @@ ProductServiceTracingConnection::PurgeProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceTracingConnection::PurgeProducts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::PurgeProductsRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::PurgeProducts");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PurgeProducts(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PurgeProducts(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
 ProductServiceTracingConnection::PurgeProducts(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::PurgeProducts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PurgeProducts(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PurgeProducts(operation));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
@@ -120,23 +118,22 @@ ProductServiceTracingConnection::ImportProducts(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceTracingConnection::ImportProducts(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::ImportProductsRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::ImportProducts");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ImportProducts(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ImportProducts(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceTracingConnection::ImportProducts(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::ImportProducts");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->ImportProducts(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ImportProducts(operation));
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
@@ -150,23 +147,20 @@ ProductServiceTracingConnection::SetInventory(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceTracingConnection::SetInventory(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::SetInventoryRequest const& request) {
+    NoAwaitTag, google::cloud::retail::v2::SetInventoryRequest const& request) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::SetInventory");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->SetInventory(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetInventory(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceTracingConnection::SetInventory(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("retail_v2::ProductServiceConnection::SetInventory");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetInventory(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SetInventory(operation));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
@@ -181,24 +175,23 @@ ProductServiceTracingConnection::AddFulfillmentPlaces(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceTracingConnection::AddFulfillmentPlaces(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::AddFulfillmentPlaces");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->AddFulfillmentPlaces(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->AddFulfillmentPlaces(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceTracingConnection::AddFulfillmentPlaces(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::AddFulfillmentPlaces");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AddFulfillmentPlaces(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->AddFulfillmentPlaces(operation));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
@@ -213,24 +206,23 @@ ProductServiceTracingConnection::RemoveFulfillmentPlaces(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceTracingConnection::RemoveFulfillmentPlaces(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::RemoveFulfillmentPlaces");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->RemoveFulfillmentPlaces(ExperimentalTag{}, NoAwaitTag{},
-                                             request));
+      *span, child_->RemoveFulfillmentPlaces(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceTracingConnection::RemoveFulfillmentPlaces(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::RemoveFulfillmentPlaces");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RemoveFulfillmentPlaces(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RemoveFulfillmentPlaces(operation));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
@@ -245,24 +237,23 @@ ProductServiceTracingConnection::AddLocalInventories(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceTracingConnection::AddLocalInventories(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::AddLocalInventories");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->AddLocalInventories(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->AddLocalInventories(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceTracingConnection::AddLocalInventories(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::AddLocalInventories");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->AddLocalInventories(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->AddLocalInventories(operation));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
@@ -277,24 +268,23 @@ ProductServiceTracingConnection::RemoveLocalInventories(
 
 StatusOr<google::longrunning::Operation>
 ProductServiceTracingConnection::RemoveLocalInventories(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::RemoveLocalInventories");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->RemoveLocalInventories(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->RemoveLocalInventories(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceTracingConnection::RemoveLocalInventories(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "retail_v2::ProductServiceConnection::RemoveLocalInventories");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RemoveLocalInventories(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RemoveLocalInventories(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -138,14 +138,13 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ImportProductSets,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::vision::v1::ImportProductSetsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
-      ImportProductSets,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ImportProductSets, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -158,14 +157,13 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, PurgeProducts,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::vision::v1::PurgeProductsRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
-      PurgeProducts,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      PurgeProducts, (google::longrunning::Operation const& operation),
       (override));
 };
 

@@ -23,7 +23,6 @@
 #include "google/cloud/compute/region_target_https_proxies/v1/internal/region_target_https_proxies_retry_traits.h"
 #include "google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -210,13 +209,11 @@ class RegionTargetHttpsProxiesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteTargetHttpsProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_target_https_proxies::v1::
-          DeleteTargetHttpsProxyRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                      DeleteTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteTargetHttpsProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -230,13 +227,11 @@ class RegionTargetHttpsProxiesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertTargetHttpsProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_target_https_proxies::v1::
-          InsertTargetHttpsProxyRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                      InsertTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertTargetHttpsProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::TargetHttpsProxy>
@@ -251,13 +246,11 @@ class RegionTargetHttpsProxiesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchTargetHttpsProxy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_target_https_proxies::v1::
-          PatchTargetHttpsProxyRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                      PatchTargetHttpsProxyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchTargetHttpsProxy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -265,13 +258,12 @@ class RegionTargetHttpsProxiesConnection {
                          v1::SetSslCertificatesRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSslCertificates(ExperimentalTag, NoAwaitTag,
+  SetSslCertificates(NoAwaitTag,
                      google::cloud::cpp::compute::region_target_https_proxies::
                          v1::SetSslCertificatesRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -279,13 +271,11 @@ class RegionTargetHttpsProxiesConnection {
                 SetUrlMapRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_target_https_proxies::v1::
-          SetUrlMapRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_target_https_proxies::v1::
+                      SetUrlMapRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetUrlMap(ExperimentalTag,
-            google::cloud::cpp::compute::v1::Operation const& operation);
+  SetUrlMap(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

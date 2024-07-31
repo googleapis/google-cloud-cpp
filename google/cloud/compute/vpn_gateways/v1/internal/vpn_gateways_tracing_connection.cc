@@ -60,26 +60,23 @@ VpnGatewaysTracingConnection::DeleteVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnGatewaysTracingConnection::DeleteVpnGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::vpn_gateways::v1::
-        DeleteVpnGatewayRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::vpn_gateways::v1::
+                    DeleteVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::DeleteVpnGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteVpnGateway(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteVpnGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysTracingConnection::DeleteVpnGateway(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::DeleteVpnGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteVpnGateway(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteVpnGateway(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::VpnGateway>
@@ -114,26 +111,23 @@ VpnGatewaysTracingConnection::InsertVpnGateway(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnGatewaysTracingConnection::InsertVpnGateway(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::vpn_gateways::v1::
-        InsertVpnGatewayRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::vpn_gateways::v1::
+                    InsertVpnGatewayRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::InsertVpnGateway");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->InsertVpnGateway(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertVpnGateway(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysTracingConnection::InsertVpnGateway(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::InsertVpnGateway");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->InsertVpnGateway(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertVpnGateway(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::VpnGateway>
@@ -161,25 +155,22 @@ VpnGatewaysTracingConnection::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 VpnGatewaysTracingConnection::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
         request) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::SetLabels");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->SetLabels(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 VpnGatewaysTracingConnection::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_vpn_gateways_v1::VpnGatewaysConnection::SetLabels");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->SetLabels(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->SetLabels(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

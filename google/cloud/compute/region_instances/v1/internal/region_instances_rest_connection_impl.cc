@@ -106,7 +106,7 @@ RegionInstancesRestConnectionImpl::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstancesRestConnectionImpl::BulkInsert(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instances::v1::BulkInsertRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -123,7 +123,6 @@ RegionInstancesRestConnectionImpl::BulkInsert(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstancesRestConnectionImpl::BulkInsert(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

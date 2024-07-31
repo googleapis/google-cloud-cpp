@@ -59,15 +59,13 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateApplication,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::CreateApplicationRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               CreateApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateApplication)` is now ambiguous. Use
@@ -78,15 +76,13 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateApplication,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::UpdateApplicationRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               UpdateApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, RepairApplication)` is now ambiguous. Use
@@ -97,15 +93,13 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, RepairApplication,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::RepairApplicationRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               RepairApplication,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -52,12 +52,11 @@ class ManagedKafkaTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::CreateClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> CreateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
@@ -65,12 +64,11 @@ class ManagedKafkaTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::UpdateClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::managedkafka::v1::Cluster>> UpdateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -78,13 +76,12 @@ class ManagedKafkaTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::DeleteClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  DeleteCluster(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
       google::cloud::managedkafka::v1::ListTopicsRequest request) override;

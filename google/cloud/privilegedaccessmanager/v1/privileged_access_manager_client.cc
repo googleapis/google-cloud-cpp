@@ -101,7 +101,7 @@ PrivilegedAccessManagerClient::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerClient::CreateEntitlement(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::privilegedaccessmanager::v1::Entitlement const& entitlement,
     std::string const& entitlement_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -109,8 +109,7 @@ PrivilegedAccessManagerClient::CreateEntitlement(
   request.set_parent(parent);
   *request.mutable_entitlement() = entitlement;
   request.set_entitlement_id(entitlement_id);
-  return connection_->CreateEntitlement(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->CreateEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -124,21 +123,19 @@ PrivilegedAccessManagerClient::CreateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerClient::CreateEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEntitlement(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->CreateEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerClient::CreateEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEntitlement(ExperimentalTag{}, operation);
+  return connection_->CreateEntitlement(operation);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -151,14 +148,13 @@ PrivilegedAccessManagerClient::DeleteEntitlement(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-PrivilegedAccessManagerClient::DeleteEntitlement(ExperimentalTag, NoAwaitTag,
+PrivilegedAccessManagerClient::DeleteEntitlement(NoAwaitTag,
                                                  std::string const& name,
                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest request;
   request.set_name(name);
-  return connection_->DeleteEntitlement(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->DeleteEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -172,21 +168,19 @@ PrivilegedAccessManagerClient::DeleteEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerClient::DeleteEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEntitlement(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->DeleteEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerClient::DeleteEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEntitlement(ExperimentalTag{}, operation);
+  return connection_->DeleteEntitlement(operation);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -202,15 +196,14 @@ PrivilegedAccessManagerClient::UpdateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerClient::UpdateEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::Entitlement const& entitlement,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest request;
   *request.mutable_entitlement() = entitlement;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateEntitlement(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->UpdateEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -224,21 +217,19 @@ PrivilegedAccessManagerClient::UpdateEntitlement(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerClient::UpdateEntitlement(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEntitlement(ExperimentalTag{}, NoAwaitTag{},
-                                        request);
+  return connection_->UpdateEntitlement(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
 PrivilegedAccessManagerClient::UpdateEntitlement(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateEntitlement(ExperimentalTag{}, operation);
+  return connection_->UpdateEntitlement(operation);
 }
 
 StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
@@ -331,20 +322,19 @@ PrivilegedAccessManagerClient::RevokeGrant(
 
 StatusOr<google::longrunning::Operation>
 PrivilegedAccessManagerClient::RevokeGrant(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RevokeGrant(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->RevokeGrant(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
 PrivilegedAccessManagerClient::RevokeGrant(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RevokeGrant(ExperimentalTag{}, operation);
+  return connection_->RevokeGrant(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

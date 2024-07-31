@@ -76,23 +76,21 @@ FoldersTracingConnection::CreateFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersTracingConnection::CreateFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::CreateFolder");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateFolder(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateFolder(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersTracingConnection::CreateFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::CreateFolder");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateFolder(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateFolder(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
@@ -105,23 +103,21 @@ FoldersTracingConnection::UpdateFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersTracingConnection::UpdateFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::UpdateFolder");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateFolder(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateFolder(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersTracingConnection::UpdateFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::UpdateFolder");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateFolder(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateFolder(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
@@ -134,23 +130,21 @@ FoldersTracingConnection::MoveFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersTracingConnection::MoveFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::MoveFolder");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->MoveFolder(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->MoveFolder(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersTracingConnection::MoveFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::MoveFolder");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->MoveFolder(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->MoveFolder(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
@@ -163,23 +157,21 @@ FoldersTracingConnection::DeleteFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersTracingConnection::DeleteFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::DeleteFolder");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteFolder(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteFolder(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersTracingConnection::DeleteFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("resourcemanager_v3::FoldersConnection::DeleteFolder");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteFolder(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteFolder(operation));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
@@ -193,23 +185,22 @@ FoldersTracingConnection::UndeleteFolder(
 
 StatusOr<google::longrunning::Operation>
 FoldersTracingConnection::UndeleteFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::FoldersConnection::UndeleteFolder");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UndeleteFolder(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UndeleteFolder(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersTracingConnection::UndeleteFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "resourcemanager_v3::FoldersConnection::UndeleteFolder");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UndeleteFolder(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UndeleteFolder(operation));
 }
 
 StatusOr<google::iam::v1::Policy> FoldersTracingConnection::GetIamPolicy(

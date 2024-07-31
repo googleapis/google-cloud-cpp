@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETAPP_V1_NET_APP_CLIENT_H
 
 #include "google/cloud/netapp/v1/net_app_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -211,7 +210,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateStoragePool(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::StoragePool const& storage_pool,
       std::string const& storage_pool_id, Options opts = {});
 
@@ -265,7 +264,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateStoragePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::CreateStoragePoolRequest const& request,
       Options opts = {});
 
@@ -279,8 +278,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::StoragePool>> CreateStoragePool(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -388,8 +386,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateStoragePool(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::StoragePool const& storage_pool,
+      NoAwaitTag, google::cloud::netapp::v1::StoragePool const& storage_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -442,7 +439,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateStoragePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::UpdateStoragePoolRequest const& request,
       Options opts = {});
 
@@ -456,8 +453,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::StoragePool>> UpdateStoragePool(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -503,7 +499,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -556,7 +552,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteStoragePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::DeleteStoragePoolRequest const& request,
       Options opts = {});
 
@@ -570,8 +566,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteStoragePool(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteStoragePool(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -753,7 +748,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateVolume(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::Volume const& volume,
       std::string const& volume_id, Options opts = {});
 
@@ -807,8 +802,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateVolume(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::CreateVolumeRequest const& request,
+      NoAwaitTag, google::cloud::netapp::v1::CreateVolumeRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -821,8 +815,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> CreateVolume(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -874,8 +867,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVolume(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::Volume const& volume,
+      NoAwaitTag, google::cloud::netapp::v1::Volume const& volume,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -928,8 +920,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateVolume(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::UpdateVolumeRequest const& request,
+      NoAwaitTag, google::cloud::netapp::v1::UpdateVolumeRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -942,8 +933,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> UpdateVolume(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -988,8 +978,7 @@ class NetAppClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteVolume(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteVolume(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -1043,8 +1032,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteVolume(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::DeleteVolumeRequest const& request,
+      NoAwaitTag, google::cloud::netapp::v1::DeleteVolumeRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1057,8 +1045,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteVolume(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1112,8 +1099,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RevertVolume(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::RevertVolumeRequest const& request,
+      NoAwaitTag, google::cloud::netapp::v1::RevertVolumeRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1126,8 +1112,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Volume>> RevertVolume(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1313,7 +1298,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::Snapshot const& snapshot,
       std::string const& snapshot_id, Options opts = {});
 
@@ -1367,7 +1352,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::CreateSnapshotRequest const& request,
       Options opts = {});
 
@@ -1381,8 +1366,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Snapshot>> CreateSnapshot(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1429,7 +1413,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1481,7 +1465,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::DeleteSnapshotRequest const& request,
       Options opts = {});
 
@@ -1495,8 +1479,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteSnapshot(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1545,8 +1528,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::Snapshot const& snapshot,
+      NoAwaitTag, google::cloud::netapp::v1::Snapshot const& snapshot,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1599,7 +1581,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::UpdateSnapshotRequest const& request,
       Options opts = {});
 
@@ -1613,8 +1595,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Snapshot>> UpdateSnapshot(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1796,7 +1777,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateActiveDirectory(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::ActiveDirectory const& active_directory,
       std::string const& active_directory_id, Options opts = {});
 
@@ -1852,7 +1833,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateActiveDirectory(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request,
       Options opts = {});
 
@@ -1866,8 +1847,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
-  CreateActiveDirectory(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  CreateActiveDirectory(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -1921,7 +1901,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateActiveDirectory(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::ActiveDirectory const& active_directory,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1976,7 +1956,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateActiveDirectory(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request,
       Options opts = {});
 
@@ -1990,8 +1970,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
-  UpdateActiveDirectory(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  UpdateActiveDirectory(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -2038,7 +2017,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteActiveDirectory(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2091,7 +2070,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteActiveDirectory(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request,
       Options opts = {});
 
@@ -2105,8 +2084,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteActiveDirectory(ExperimentalTag,
-                        google::longrunning::Operation const& operation,
+  DeleteActiveDirectory(google::longrunning::Operation const& operation,
                         Options opts = {});
 
   // clang-format off
@@ -2233,7 +2211,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateKmsConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::KmsConfig const& kms_config,
       std::string const& kms_config_id, Options opts = {});
 
@@ -2287,7 +2265,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateKmsConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::CreateKmsConfigRequest const& request,
       Options opts = {});
 
@@ -2301,8 +2279,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::KmsConfig>> CreateKmsConfig(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2410,8 +2387,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateKmsConfig(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::KmsConfig const& kms_config,
+      NoAwaitTag, google::cloud::netapp::v1::KmsConfig const& kms_config,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -2464,7 +2440,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateKmsConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::UpdateKmsConfigRequest const& request,
       Options opts = {});
 
@@ -2478,8 +2454,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::KmsConfig>> UpdateKmsConfig(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2532,7 +2507,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> EncryptVolumes(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::EncryptVolumesRequest const& request,
       Options opts = {});
 
@@ -2546,8 +2521,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::KmsConfig>> EncryptVolumes(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2624,7 +2598,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteKmsConfig(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2677,7 +2651,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteKmsConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::DeleteKmsConfigRequest const& request,
       Options opts = {});
 
@@ -2691,8 +2665,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteKmsConfig(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteKmsConfig(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -2879,7 +2852,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateReplication(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::Replication const& replication,
       std::string const& replication_id, Options opts = {});
 
@@ -2933,7 +2906,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateReplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::CreateReplicationRequest const& request,
       Options opts = {});
 
@@ -2947,8 +2920,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> CreateReplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2995,7 +2967,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteReplication(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3048,7 +3020,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteReplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::DeleteReplicationRequest const& request,
       Options opts = {});
 
@@ -3062,8 +3034,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteReplication(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteReplication(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -3113,8 +3084,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateReplication(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::Replication const& replication,
+      NoAwaitTag, google::cloud::netapp::v1::Replication const& replication,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -3167,7 +3137,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateReplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::UpdateReplicationRequest const& request,
       Options opts = {});
 
@@ -3181,8 +3151,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> UpdateReplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3234,7 +3203,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> StopReplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::StopReplicationRequest const& request,
       Options opts = {});
 
@@ -3248,8 +3217,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> StopReplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3301,7 +3269,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ResumeReplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::ResumeReplicationRequest const& request,
       Options opts = {});
 
@@ -3315,8 +3283,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>> ResumeReplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3371,7 +3338,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ReverseReplicationDirection(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
           request,
       Options opts = {});
@@ -3386,8 +3353,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Replication>>
-  ReverseReplicationDirection(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+  ReverseReplicationDirection(google::longrunning::Operation const& operation,
                               Options opts = {});
 
   // clang-format off
@@ -3445,7 +3411,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupVault(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::BackupVault const& backup_vault,
       std::string const& backup_vault_id, Options opts = {});
 
@@ -3499,7 +3465,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupVault(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::CreateBackupVaultRequest const& request,
       Options opts = {});
 
@@ -3513,8 +3479,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> CreateBackupVault(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3699,8 +3664,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupVault(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::BackupVault const& backup_vault,
+      NoAwaitTag, google::cloud::netapp::v1::BackupVault const& backup_vault,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -3753,7 +3717,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupVault(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::UpdateBackupVaultRequest const& request,
       Options opts = {});
 
@@ -3767,8 +3731,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupVault>> UpdateBackupVault(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3815,7 +3778,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupVault(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3868,7 +3831,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupVault(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::DeleteBackupVaultRequest const& request,
       Options opts = {});
 
@@ -3882,8 +3845,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteBackupVault(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteBackupVault(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -3943,7 +3905,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::Backup const& backup,
       std::string const& backup_id, Options opts = {});
 
@@ -4000,8 +3962,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::CreateBackupRequest const& request,
+      NoAwaitTag, google::cloud::netapp::v1::CreateBackupRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -4014,8 +3975,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> CreateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4199,8 +4159,7 @@ class NetAppClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteBackup(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteBackup(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -4254,8 +4213,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::DeleteBackupRequest const& request,
+      NoAwaitTag, google::cloud::netapp::v1::DeleteBackupRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -4268,8 +4226,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>> DeleteBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4321,8 +4278,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::Backup const& backup,
+      NoAwaitTag, google::cloud::netapp::v1::Backup const& backup,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -4375,8 +4331,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::UpdateBackupRequest const& request,
+      NoAwaitTag, google::cloud::netapp::v1::UpdateBackupRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -4389,8 +4344,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::Backup>> UpdateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4444,7 +4398,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::netapp::v1::BackupPolicy const& backup_policy,
       std::string const& backup_policy_id, Options opts = {});
 
@@ -4498,7 +4452,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackupPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::CreateBackupPolicyRequest const& request,
       Options opts = {});
 
@@ -4512,8 +4466,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> CreateBackupPolicy(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4696,8 +4649,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::netapp::v1::BackupPolicy const& backup_policy,
+      NoAwaitTag, google::cloud::netapp::v1::BackupPolicy const& backup_policy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -4750,7 +4702,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateBackupPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request,
       Options opts = {});
 
@@ -4764,8 +4716,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::BackupPolicy>> UpdateBackupPolicy(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -4812,7 +4763,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4865,7 +4816,7 @@ class NetAppClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteBackupPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request,
       Options opts = {});
 
@@ -4879,8 +4830,7 @@ class NetAppClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
-  DeleteBackupPolicy(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  DeleteBackupPolicy(google::longrunning::Operation const& operation,
                      Options opts = {});
 
  private:

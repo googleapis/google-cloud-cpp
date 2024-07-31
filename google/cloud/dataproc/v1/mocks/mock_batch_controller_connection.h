@@ -55,14 +55,12 @@ class MockBatchControllerConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateBatch,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::dataproc::v1::CreateBatchRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Batch>>, CreateBatch,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Batch>, GetBatch,
               (google::cloud::dataproc::v1::GetBatchRequest const& request),

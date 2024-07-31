@@ -58,11 +58,11 @@ class MockRequestIdServiceConnection : public golden_v1::RequestIdServiceConnect
   (google::test::requestid::v1::RenameFooRequest const& request), (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
-  RenameFoo, (ExperimentalTag, NoAwaitTag,
+  RenameFoo, (NoAwaitTag,
     google::test::requestid::v1::RenameFooRequest const& request), (override));
 
   MOCK_METHOD(future<StatusOr<google::test::requestid::v1::Foo>>,
-  RenameFoo, (ExperimentalTag,
+  RenameFoo, (
     google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::test::requestid::v1::Foo>),

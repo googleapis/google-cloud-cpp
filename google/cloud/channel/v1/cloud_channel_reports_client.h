@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CHANNEL_V1_CLOUD_CHANNEL_REPORTS_CLIENT_H
 
 #include "google/cloud/channel/v1/cloud_channel_reports_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -187,7 +186,7 @@ class CloudChannelReportsServiceClient {
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   StatusOr<google::longrunning::Operation> RunReportJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::RunReportJobRequest const& request,
       Options opts = {});
 
@@ -204,7 +203,7 @@ class CloudChannelReportsServiceClient {
   // clang-format on
   GOOGLE_CLOUD_CPP_DEPRECATED("This RPC is deprecated.")
   future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
-  RunReportJob(ExperimentalTag, google::longrunning::Operation const& operation,
+  RunReportJob(google::longrunning::Operation const& operation,
                Options opts = {});
 
   // clang-format off

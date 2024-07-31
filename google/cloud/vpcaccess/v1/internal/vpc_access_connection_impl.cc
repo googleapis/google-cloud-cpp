@@ -108,7 +108,7 @@ VpcAccessServiceConnectionImpl::CreateConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceConnectionImpl::CreateConnector(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -124,7 +124,7 @@ VpcAccessServiceConnectionImpl::CreateConnector(
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceConnectionImpl::CreateConnector(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vpcaccess::v1::OperationMetadata>()) {
@@ -247,7 +247,7 @@ VpcAccessServiceConnectionImpl::DeleteConnector(
 
 StatusOr<google::longrunning::Operation>
 VpcAccessServiceConnectionImpl::DeleteConnector(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -263,7 +263,7 @@ VpcAccessServiceConnectionImpl::DeleteConnector(
 
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceConnectionImpl::DeleteConnector(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::vpcaccess::v1::OperationMetadata>()) {

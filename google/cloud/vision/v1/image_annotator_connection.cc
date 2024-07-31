@@ -59,7 +59,7 @@ ImageAnnotatorConnection::AsyncBatchAnnotateImages(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorConnection::AsyncBatchAnnotateImages(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -67,7 +67,7 @@ ImageAnnotatorConnection::AsyncBatchAnnotateImages(
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorConnection::AsyncBatchAnnotateImages(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,7 +83,7 @@ ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
 
 StatusOr<google::longrunning::Operation>
 ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -91,7 +91,7 @@ ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

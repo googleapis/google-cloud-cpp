@@ -60,15 +60,13 @@ EventarcConnection::CreateTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnection::CreateTrigger(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::eventarc::v1::CreateTriggerRequest const&) {
+    NoAwaitTag, google::cloud::eventarc::v1::CreateTriggerRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcConnection::CreateTrigger(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+EventarcConnection::CreateTrigger(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::eventarc::v1::Trigger>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,15 +81,13 @@ EventarcConnection::UpdateTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnection::UpdateTrigger(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::eventarc::v1::UpdateTriggerRequest const&) {
+    NoAwaitTag, google::cloud::eventarc::v1::UpdateTriggerRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcConnection::UpdateTrigger(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+EventarcConnection::UpdateTrigger(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::eventarc::v1::Trigger>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -106,15 +102,13 @@ EventarcConnection::DeleteTrigger(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnection::DeleteTrigger(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::eventarc::v1::DeleteTriggerRequest const&) {
+    NoAwaitTag, google::cloud::eventarc::v1::DeleteTriggerRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Trigger>>
-EventarcConnection::DeleteTrigger(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+EventarcConnection::DeleteTrigger(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::eventarc::v1::Trigger>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,15 +136,13 @@ EventarcConnection::CreateChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnection::CreateChannel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::eventarc::v1::CreateChannelRequest const&) {
+    NoAwaitTag, google::cloud::eventarc::v1::CreateChannelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcConnection::CreateChannel(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+EventarcConnection::CreateChannel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::eventarc::v1::Channel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -165,15 +157,13 @@ EventarcConnection::UpdateChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnection::UpdateChannel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::eventarc::v1::UpdateChannelRequest const&) {
+    NoAwaitTag, google::cloud::eventarc::v1::UpdateChannelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcConnection::UpdateChannel(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+EventarcConnection::UpdateChannel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::eventarc::v1::Channel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -188,15 +178,13 @@ EventarcConnection::DeleteChannel(
 }
 
 StatusOr<google::longrunning::Operation> EventarcConnection::DeleteChannel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::eventarc::v1::DeleteChannelRequest const&) {
+    NoAwaitTag, google::cloud::eventarc::v1::DeleteChannelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::eventarc::v1::Channel>>
-EventarcConnection::DeleteChannel(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+EventarcConnection::DeleteChannel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::eventarc::v1::Channel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -239,7 +227,7 @@ EventarcConnection::CreateChannelConnection(
 
 StatusOr<google::longrunning::Operation>
 EventarcConnection::CreateChannelConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -247,7 +235,7 @@ EventarcConnection::CreateChannelConnection(
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcConnection::CreateChannelConnection(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::eventarc::v1::ChannelConnection>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -263,7 +251,7 @@ EventarcConnection::DeleteChannelConnection(
 
 StatusOr<google::longrunning::Operation>
 EventarcConnection::DeleteChannelConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -271,7 +259,7 @@ EventarcConnection::DeleteChannelConnection(
 
 future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
 EventarcConnection::DeleteChannelConnection(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::eventarc::v1::ChannelConnection>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

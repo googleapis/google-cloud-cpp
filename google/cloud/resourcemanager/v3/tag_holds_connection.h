@@ -22,7 +22,6 @@
 #include "google/cloud/resourcemanager/v3/internal/tag_holds_retry_traits.h"
 #include "google/cloud/resourcemanager/v3/tag_holds_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -189,12 +188,11 @@ class TagHoldsConnection {
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateTagHold(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request);
 
   virtual future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
-  CreateTagHold(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  CreateTagHold(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
@@ -202,13 +200,12 @@ class TagHoldsConnection {
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteTagHold(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request);
 
   virtual future<
       StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
-  DeleteTagHold(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  DeleteTagHold(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::resourcemanager::v3::TagHold> ListTagHolds(
       google::cloud::resourcemanager::v3::ListTagHoldsRequest request);

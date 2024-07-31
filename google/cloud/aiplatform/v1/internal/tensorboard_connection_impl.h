@@ -63,13 +63,12 @@ class TensorboardServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateTensorboard(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  CreateTensorboard(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  CreateTensorboard(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::Tensorboard> GetTensorboard(
       google::cloud::aiplatform::v1::GetTensorboardRequest const& request)
@@ -81,13 +80,12 @@ class TensorboardServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTensorboard(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  UpdateTensorboard(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  UpdateTensorboard(google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::aiplatform::v1::Tensorboard> ListTensorboards(
       google::cloud::aiplatform::v1::ListTensorboardsRequest request) override;
@@ -98,13 +96,12 @@ class TensorboardServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTensorboard(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboard(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  DeleteTensorboard(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
   ReadTensorboardUsage(
@@ -142,13 +139,12 @@ class TensorboardServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTensorboardExperiment(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::aiplatform::v1::TensorboardRun> CreateTensorboardRun(
@@ -178,13 +174,12 @@ class TensorboardServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request)
       override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTensorboardRun(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<
@@ -219,13 +214,12 @@ class TensorboardServiceConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
           request) override;
 
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteTensorboardTimeSeries(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<

@@ -61,14 +61,13 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchCreateJobs,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::talent::v4::BatchCreateJobsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>,
-      BatchCreateJobs,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchCreateJobs, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::talent::v4::Job>, GetJob,
@@ -90,14 +89,13 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchUpdateJobs,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::talent::v4::BatchUpdateJobsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>,
-      BatchUpdateJobs,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchUpdateJobs, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(Status, DeleteJob,
@@ -115,14 +113,13 @@ class MockJobServiceConnection : public talent_v4::JobServiceConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeleteJobs,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::talent::v4::BatchDeleteJobsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>,
-      BatchDeleteJobs,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchDeleteJobs, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::talent::v4::Job>), ListJobs,

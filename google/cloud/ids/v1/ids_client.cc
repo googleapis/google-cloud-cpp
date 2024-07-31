@@ -71,7 +71,7 @@ future<StatusOr<google::cloud::ids::v1::Endpoint>> IDSClient::CreateEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> IDSClient::CreateEndpoint(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::ids::v1::Endpoint const& endpoint,
     std::string const& endpoint_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -79,7 +79,7 @@ StatusOr<google::longrunning::Operation> IDSClient::CreateEndpoint(
   request.set_parent(parent);
   *request.mutable_endpoint() = endpoint;
   request.set_endpoint_id(endpoint_id);
-  return connection_->CreateEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateEndpoint(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>> IDSClient::CreateEndpoint(
@@ -90,18 +90,16 @@ future<StatusOr<google::cloud::ids::v1::Endpoint>> IDSClient::CreateEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> IDSClient::CreateEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::ids::v1::CreateEndpointRequest const& request,
+    NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateEndpoint(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>> IDSClient::CreateEndpoint(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateEndpoint(ExperimentalTag{}, operation);
+  return connection_->CreateEndpoint(operation);
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
@@ -113,11 +111,11 @@ IDSClient::DeleteEndpoint(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> IDSClient::DeleteEndpoint(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::ids::v1::DeleteEndpointRequest request;
   request.set_name(name);
-  return connection_->DeleteEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteEndpoint(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
@@ -129,19 +127,17 @@ IDSClient::DeleteEndpoint(
 }
 
 StatusOr<google::longrunning::Operation> IDSClient::DeleteEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::ids::v1::DeleteEndpointRequest const& request,
+    NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEndpoint(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteEndpoint(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
-IDSClient::DeleteEndpoint(ExperimentalTag,
-                          google::longrunning::Operation const& operation,
+IDSClient::DeleteEndpoint(google::longrunning::Operation const& operation,
                           Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteEndpoint(ExperimentalTag{}, operation);
+  return connection_->DeleteEndpoint(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

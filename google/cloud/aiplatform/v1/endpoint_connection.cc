@@ -48,15 +48,14 @@ EndpointServiceConnection::CreateEndpoint(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnection::CreateEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateEndpointRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateEndpointRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
 EndpointServiceConnection::CreateEndpoint(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Endpoint>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -92,15 +91,14 @@ EndpointServiceConnection::DeleteEndpoint(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnection::DeleteEndpoint(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteEndpointRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteEndpointRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 EndpointServiceConnection::DeleteEndpoint(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -115,15 +113,13 @@ EndpointServiceConnection::DeployModel(
 }
 
 StatusOr<google::longrunning::Operation> EndpointServiceConnection::DeployModel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::DeployModelRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeployModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-EndpointServiceConnection::DeployModel(ExperimentalTag,
-                                       google::longrunning::Operation const&) {
+EndpointServiceConnection::DeployModel(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -139,15 +135,14 @@ EndpointServiceConnection::UndeployModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnection::UndeployModel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::UndeployModelRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::UndeployModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
 EndpointServiceConnection::UndeployModel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -163,7 +158,7 @@ EndpointServiceConnection::MutateDeployedModel(
 
 StatusOr<google::longrunning::Operation>
 EndpointServiceConnection::MutateDeployedModel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -171,7 +166,7 @@ EndpointServiceConnection::MutateDeployedModel(
 
 future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
 EndpointServiceConnection::MutateDeployedModel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

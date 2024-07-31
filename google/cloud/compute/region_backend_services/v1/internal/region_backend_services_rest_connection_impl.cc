@@ -109,9 +109,8 @@ RegionBackendServicesRestConnectionImpl::DeleteBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesRestConnectionImpl::DeleteBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_backend_services::v1::
-        DeleteBackendServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_backend_services::v1::
+                    DeleteBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -126,7 +125,6 @@ RegionBackendServicesRestConnectionImpl::DeleteBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestConnectionImpl::DeleteBackendService(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -290,9 +288,8 @@ RegionBackendServicesRestConnectionImpl::InsertBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesRestConnectionImpl::InsertBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_backend_services::v1::
-        InsertBackendServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_backend_services::v1::
+                    InsertBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -307,7 +304,6 @@ RegionBackendServicesRestConnectionImpl::InsertBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestConnectionImpl::InsertBackendService(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -501,9 +497,8 @@ RegionBackendServicesRestConnectionImpl::PatchBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesRestConnectionImpl::PatchBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_backend_services::v1::
-        PatchBackendServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_backend_services::v1::
+                    PatchBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -518,7 +513,6 @@ RegionBackendServicesRestConnectionImpl::PatchBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestConnectionImpl::PatchBackendService(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -650,9 +644,8 @@ RegionBackendServicesRestConnectionImpl::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesRestConnectionImpl::SetSecurityPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_backend_services::v1::
-        SetSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_backend_services::v1::
+                    SetSecurityPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -667,7 +660,6 @@ RegionBackendServicesRestConnectionImpl::SetSecurityPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestConnectionImpl::SetSecurityPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -799,9 +791,8 @@ RegionBackendServicesRestConnectionImpl::UpdateBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionBackendServicesRestConnectionImpl::UpdateBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_backend_services::v1::
-        UpdateBackendServiceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_backend_services::v1::
+                    UpdateBackendServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -816,7 +807,6 @@ RegionBackendServicesRestConnectionImpl::UpdateBackendService(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionBackendServicesRestConnectionImpl::UpdateBackendService(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

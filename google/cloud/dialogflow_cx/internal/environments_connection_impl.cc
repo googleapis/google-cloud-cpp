@@ -156,7 +156,7 @@ EnvironmentsConnectionImpl::CreateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::CreateEnvironment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -173,7 +173,7 @@ EnvironmentsConnectionImpl::CreateEnvironment(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnectionImpl::CreateEnvironment(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<
@@ -250,7 +250,7 @@ EnvironmentsConnectionImpl::UpdateEnvironment(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::UpdateEnvironment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -267,7 +267,7 @@ EnvironmentsConnectionImpl::UpdateEnvironment(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
 EnvironmentsConnectionImpl::UpdateEnvironment(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<
@@ -397,7 +397,7 @@ EnvironmentsConnectionImpl::RunContinuousTest(
 
 StatusOr<google::longrunning::Operation>
 EnvironmentsConnectionImpl::RunContinuousTest(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -414,7 +414,7 @@ EnvironmentsConnectionImpl::RunContinuousTest(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>
 EnvironmentsConnectionImpl::RunContinuousTest(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::
@@ -528,7 +528,7 @@ EnvironmentsConnectionImpl::DeployFlow(
 }
 
 StatusOr<google::longrunning::Operation> EnvironmentsConnectionImpl::DeployFlow(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -544,7 +544,7 @@ StatusOr<google::longrunning::Operation> EnvironmentsConnectionImpl::DeployFlow(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>
 EnvironmentsConnectionImpl::DeployFlow(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::

@@ -60,11 +60,11 @@ ScheduleServiceClient::DeleteSchedule(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> ScheduleServiceClient::DeleteSchedule(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::aiplatform::v1::DeleteScheduleRequest request;
   request.set_name(name);
-  return connection_->DeleteSchedule(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteSchedule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -76,19 +76,18 @@ ScheduleServiceClient::DeleteSchedule(
 }
 
 StatusOr<google::longrunning::Operation> ScheduleServiceClient::DeleteSchedule(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSchedule(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteSchedule(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ScheduleServiceClient::DeleteSchedule(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteSchedule(ExperimentalTag{}, operation);
+  return connection_->DeleteSchedule(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>

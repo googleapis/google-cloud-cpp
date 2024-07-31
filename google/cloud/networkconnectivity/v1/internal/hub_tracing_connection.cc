@@ -64,23 +64,21 @@ HubServiceTracingConnection::CreateHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceTracingConnection::CreateHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateHubRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::CreateHub");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateHub(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateHub(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
 HubServiceTracingConnection::CreateHub(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::CreateHub");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateHub(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateHub(operation));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
@@ -93,23 +91,21 @@ HubServiceTracingConnection::UpdateHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceTracingConnection::UpdateHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateHubRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::UpdateHub");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateHub(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateHub(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
 HubServiceTracingConnection::UpdateHub(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::UpdateHub");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateHub(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateHub(operation));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -122,23 +118,21 @@ HubServiceTracingConnection::DeleteHub(
 }
 
 StatusOr<google::longrunning::Operation> HubServiceTracingConnection::DeleteHub(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteHubRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::DeleteHub");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteHub(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteHub(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceTracingConnection::DeleteHub(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::DeleteHub");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteHub(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteHub(operation));
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Spoke>
@@ -185,23 +179,21 @@ HubServiceTracingConnection::CreateSpoke(
 
 StatusOr<google::longrunning::Operation>
 HubServiceTracingConnection::CreateSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::CreateSpoke");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateSpoke(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateSpoke(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
 HubServiceTracingConnection::CreateSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::CreateSpoke");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateSpoke(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateSpoke(operation));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
@@ -215,23 +207,21 @@ HubServiceTracingConnection::UpdateSpoke(
 
 StatusOr<google::longrunning::Operation>
 HubServiceTracingConnection::UpdateSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::UpdateSpoke");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateSpoke(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateSpoke(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
 HubServiceTracingConnection::UpdateSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::UpdateSpoke");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->UpdateSpoke(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateSpoke(operation));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
@@ -246,24 +236,23 @@ HubServiceTracingConnection::RejectHubSpoke(
 
 StatusOr<google::longrunning::Operation>
 HubServiceTracingConnection::RejectHubSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::RejectHubSpoke");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RejectHubSpoke(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RejectHubSpoke(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
 HubServiceTracingConnection::RejectHubSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::RejectHubSpoke");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RejectHubSpoke(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RejectHubSpoke(operation));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
@@ -278,24 +267,23 @@ HubServiceTracingConnection::AcceptHubSpoke(
 
 StatusOr<google::longrunning::Operation>
 HubServiceTracingConnection::AcceptHubSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
         request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::AcceptHubSpoke");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->AcceptHubSpoke(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->AcceptHubSpoke(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
 HubServiceTracingConnection::AcceptHubSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::AcceptHubSpoke");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->AcceptHubSpoke(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->AcceptHubSpoke(operation));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
@@ -309,23 +297,21 @@ HubServiceTracingConnection::DeleteSpoke(
 
 StatusOr<google::longrunning::Operation>
 HubServiceTracingConnection::DeleteSpoke(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::DeleteSpoke");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteSpoke(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteSpoke(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
 HubServiceTracingConnection::DeleteSpoke(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "networkconnectivity_v1::HubServiceConnection::DeleteSpoke");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->DeleteSpoke(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteSpoke(operation));
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::RouteTable>

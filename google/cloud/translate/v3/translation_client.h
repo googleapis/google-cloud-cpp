@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TRANSLATE_V3_TRANSLATION_CLIENT_H
 
 #include "google/cloud/translate/v3/translation_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -491,7 +490,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchTranslateText(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::translation::v3::BatchTranslateTextRequest const& request,
       Options opts = {});
 
@@ -505,8 +504,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
-  BatchTranslateText(ExperimentalTag,
-                     google::longrunning::Operation const& operation,
+  BatchTranslateText(google::longrunning::Operation const& operation,
                      Options opts = {});
 
   // clang-format off
@@ -588,7 +586,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchTranslateDocument(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       std::string const& source_language_code,
       std::vector<std::string> const& target_language_codes,
       std::vector<
@@ -657,7 +655,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchTranslateDocument(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::translation::v3::BatchTranslateDocumentRequest const&
           request,
       Options opts = {});
@@ -673,8 +671,7 @@ class TranslationServiceClient {
   // clang-format on
   future<
       StatusOr<google::cloud::translation::v3::BatchTranslateDocumentResponse>>
-  BatchTranslateDocument(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  BatchTranslateDocument(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -725,7 +722,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGlossary(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::translation::v3::Glossary const& glossary,
       Options opts = {});
 
@@ -780,7 +777,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateGlossary(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::translation::v3::CreateGlossaryRequest const& request,
       Options opts = {});
 
@@ -794,8 +791,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::Glossary>> CreateGlossary(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -977,7 +973,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGlossary(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1032,7 +1028,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteGlossary(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::translation::v3::DeleteGlossaryRequest const& request,
       Options opts = {});
 
@@ -1046,8 +1042,7 @@ class TranslationServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
-  DeleteGlossary(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteGlossary(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off

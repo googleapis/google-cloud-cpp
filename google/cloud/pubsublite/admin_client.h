@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_ADMIN_CLIENT_H
 
 #include "google/cloud/pubsublite/admin_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -892,7 +891,7 @@ class AdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> SeekSubscription(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request,
       Options opts = {});
 
@@ -906,8 +905,7 @@ class AdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
-  SeekSubscription(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  SeekSubscription(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off

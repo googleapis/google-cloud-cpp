@@ -65,23 +65,21 @@ VersionsTracingConnection::CreateVersion(
 
 StatusOr<google::longrunning::Operation>
 VersionsTracingConnection::CreateVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::CreateVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateVersion(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateVersion(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
 VersionsTracingConnection::CreateVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::CreateVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateVersion(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateVersion(operation));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
@@ -111,23 +109,21 @@ VersionsTracingConnection::LoadVersion(
 }
 
 StatusOr<google::longrunning::Operation> VersionsTracingConnection::LoadVersion(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::LoadVersion");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->LoadVersion(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->LoadVersion(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 VersionsTracingConnection::LoadVersion(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::VersionsConnection::LoadVersion");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->LoadVersion(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->LoadVersion(operation));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>

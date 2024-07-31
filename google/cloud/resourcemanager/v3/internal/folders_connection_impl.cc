@@ -189,7 +189,7 @@ FoldersConnectionImpl::CreateFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersConnectionImpl::CreateFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -205,7 +205,7 @@ StatusOr<google::longrunning::Operation> FoldersConnectionImpl::CreateFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::CreateFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -282,7 +282,7 @@ FoldersConnectionImpl::UpdateFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersConnectionImpl::UpdateFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -298,7 +298,7 @@ StatusOr<google::longrunning::Operation> FoldersConnectionImpl::UpdateFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::UpdateFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -375,7 +375,7 @@ FoldersConnectionImpl::MoveFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersConnectionImpl::MoveFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -391,7 +391,7 @@ StatusOr<google::longrunning::Operation> FoldersConnectionImpl::MoveFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::MoveFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -468,7 +468,7 @@ FoldersConnectionImpl::DeleteFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersConnectionImpl::DeleteFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -484,7 +484,7 @@ StatusOr<google::longrunning::Operation> FoldersConnectionImpl::DeleteFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::DeleteFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::
@@ -561,7 +561,7 @@ FoldersConnectionImpl::UndeleteFolder(
 }
 
 StatusOr<google::longrunning::Operation> FoldersConnectionImpl::UndeleteFolder(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -577,7 +577,7 @@ StatusOr<google::longrunning::Operation> FoldersConnectionImpl::UndeleteFolder(
 
 future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::UndeleteFolder(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::resourcemanager::v3::

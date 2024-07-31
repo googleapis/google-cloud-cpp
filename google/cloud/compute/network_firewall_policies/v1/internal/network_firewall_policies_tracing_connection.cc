@@ -50,27 +50,24 @@ NetworkFirewallPoliciesTracingConnection::AddAssociation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::AddAssociation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        AddAssociationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    AddAssociationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":AddAssociation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->AddAssociation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->AddAssociation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::AddAssociation(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":AddAssociation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->AddAssociation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->AddAssociation(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -86,27 +83,23 @@ NetworkFirewallPoliciesTracingConnection::AddRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::AddRule(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        AddRuleRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    AddRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":AddRule");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->AddRule(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->AddRule(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::AddRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":AddRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->AddRule(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->AddRule(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -122,27 +115,23 @@ NetworkFirewallPoliciesTracingConnection::CloneRules(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::CloneRules(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        CloneRulesRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    CloneRulesRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":CloneRules");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CloneRules(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CloneRules(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::CloneRules(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":CloneRules");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CloneRules(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CloneRules(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -159,28 +148,25 @@ NetworkFirewallPoliciesTracingConnection::DeleteFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::DeleteFirewallPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        DeleteFirewallPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    DeleteFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":DeleteFirewallPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteFirewallPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteFirewallPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::DeleteFirewallPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":DeleteFirewallPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteFirewallPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteFirewallPolicy(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -241,28 +227,25 @@ NetworkFirewallPoliciesTracingConnection::InsertFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::InsertFirewallPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        InsertFirewallPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    InsertFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":InsertFirewallPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->InsertFirewallPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertFirewallPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::InsertFirewallPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":InsertFirewallPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertFirewallPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertFirewallPolicy(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>
@@ -293,28 +276,25 @@ NetworkFirewallPoliciesTracingConnection::PatchFirewallPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::PatchFirewallPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        PatchFirewallPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    PatchFirewallPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":PatchFirewallPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->PatchFirewallPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->PatchFirewallPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::PatchFirewallPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":PatchFirewallPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchFirewallPolicy(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchFirewallPolicy(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -330,27 +310,23 @@ NetworkFirewallPoliciesTracingConnection::PatchRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::PatchRule(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        PatchRuleRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    PatchRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":PatchRule");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->PatchRule(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->PatchRule(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::PatchRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":PatchRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->PatchRule(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->PatchRule(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -366,28 +342,25 @@ NetworkFirewallPoliciesTracingConnection::RemoveAssociation(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::RemoveAssociation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        RemoveAssociationRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    RemoveAssociationRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":RemoveAssociation");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->RemoveAssociation(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->RemoveAssociation(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::RemoveAssociation(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":RemoveAssociation");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->RemoveAssociation(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RemoveAssociation(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -403,27 +376,23 @@ NetworkFirewallPoliciesTracingConnection::RemoveRule(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NetworkFirewallPoliciesTracingConnection::RemoveRule(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::network_firewall_policies::v1::
-        RemoveRuleRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::network_firewall_policies::v1::
+                    RemoveRuleRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":RemoveRule");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RemoveRule(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RemoveRule(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkFirewallPoliciesTracingConnection::RemoveRule(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_network_firewall_policies_v1::NetworkFirewallPoliciesConnection:"
       ":RemoveRule");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RemoveRule(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RemoveRule(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>

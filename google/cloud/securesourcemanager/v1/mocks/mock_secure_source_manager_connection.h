@@ -71,15 +71,14 @@ class MockSecureSourceManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>,
-      CreateInstance,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateInstance, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -95,7 +94,7 @@ class MockSecureSourceManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteInstance,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
            request),
       (override));
@@ -103,8 +102,7 @@ class MockSecureSourceManagerConnection
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
-      DeleteInstance,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteInstance, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -132,15 +130,14 @@ class MockSecureSourceManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateRepository,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>,
-      CreateRepository,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateRepository, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -156,7 +153,7 @@ class MockSecureSourceManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteRepository,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
            request),
       (override));
@@ -164,8 +161,7 @@ class MockSecureSourceManagerConnection
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
-      DeleteRepository,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteRepository, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicyRepo,

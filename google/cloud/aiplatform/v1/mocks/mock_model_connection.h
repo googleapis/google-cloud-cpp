@@ -58,14 +58,13 @@ class MockModelServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UploadModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::UploadModelRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>,
-      UploadModel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UploadModel, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>, GetModel,
@@ -99,7 +98,7 @@ class MockModelServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateExplanationDataset,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
            request),
       (override));
@@ -108,8 +107,7 @@ class MockModelServiceConnection
       future<StatusOr<
           google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>,
       UpdateExplanationDataset,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteModel)` is now ambiguous. Use
@@ -122,14 +120,13 @@ class MockModelServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteModelRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteModel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteModel, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -143,14 +140,13 @@ class MockModelServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteModelVersion,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteModelVersion,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteModelVersion, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Model>,
@@ -170,14 +166,13 @@ class MockModelServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, ExportModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::ExportModelRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>,
-      ExportModel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      ExportModel, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -190,15 +185,13 @@ class MockModelServiceConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CopyModel,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::aiplatform::v1::CopyModelRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>,
-      CopyModel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      CopyModel, (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>,

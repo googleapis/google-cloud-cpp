@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_REVISIONS_CLIENT_H
 
 #include "google/cloud/run/v2/revisions_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -269,7 +268,7 @@ class RevisionsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRevision(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -321,8 +320,7 @@ class RevisionsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteRevision(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::run::v2::DeleteRevisionRequest const& request,
+      NoAwaitTag, google::cloud::run::v2::DeleteRevisionRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -335,8 +333,7 @@ class RevisionsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<RevisionsConnection> connection_;

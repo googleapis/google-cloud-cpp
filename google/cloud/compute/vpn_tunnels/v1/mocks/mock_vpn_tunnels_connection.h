@@ -67,15 +67,13 @@ class MockVpnTunnelsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteVpnTunnel,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::vpn_tunnels::v1::
-                   DeleteVpnTunnelRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::vpn_tunnels::v1::
+                               DeleteVpnTunnelRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteVpnTunnel,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -95,15 +93,13 @@ class MockVpnTunnelsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertVpnTunnel,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::vpn_tunnels::v1::
-                   InsertVpnTunnelRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::vpn_tunnels::v1::
+                               InsertVpnTunnelRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertVpnTunnel,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -123,15 +119,14 @@ class MockVpnTunnelsConnection
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Operation>, SetLabels,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
            request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetLabels,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

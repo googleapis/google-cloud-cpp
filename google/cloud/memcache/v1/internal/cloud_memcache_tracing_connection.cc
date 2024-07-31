@@ -64,23 +64,22 @@ CloudMemcacheTracingConnection::CreateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingConnection::CreateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::CreateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->CreateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::CreateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::CreateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->CreateInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateInstance(operation));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -94,23 +93,22 @@ CloudMemcacheTracingConnection::UpdateInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingConnection::UpdateInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::UpdateInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->UpdateInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::UpdateInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::UpdateInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->UpdateInstance(operation));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -124,24 +122,23 @@ CloudMemcacheTracingConnection::UpdateParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingConnection::UpdateParameters(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::UpdateParameters");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->UpdateParameters(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->UpdateParameters(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::UpdateParameters(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::UpdateParameters");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->UpdateParameters(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateParameters(operation));
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
@@ -155,23 +152,22 @@ CloudMemcacheTracingConnection::DeleteInstance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingConnection::DeleteInstance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::DeleteInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->DeleteInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheTracingConnection::DeleteInstance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::DeleteInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->DeleteInstance(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->DeleteInstance(operation));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -185,23 +181,22 @@ CloudMemcacheTracingConnection::ApplyParameters(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingConnection::ApplyParameters(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::ApplyParameters");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ApplyParameters(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ApplyParameters(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::ApplyParameters(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::ApplyParameters");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->ApplyParameters(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ApplyParameters(operation));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
@@ -216,24 +211,23 @@ CloudMemcacheTracingConnection::RescheduleMaintenance(
 
 StatusOr<google::longrunning::Operation>
 CloudMemcacheTracingConnection::RescheduleMaintenance(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::RescheduleMaintenance");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span,
-      child_->RescheduleMaintenance(ExperimentalTag{}, NoAwaitTag{}, request));
+      *span, child_->RescheduleMaintenance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheTracingConnection::RescheduleMaintenance(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "memcache_v1::CloudMemcacheConnection::RescheduleMaintenance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->RescheduleMaintenance(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->RescheduleMaintenance(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

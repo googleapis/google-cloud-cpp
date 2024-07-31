@@ -147,9 +147,8 @@ HealthChecksRestConnectionImpl::DeleteHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HealthChecksRestConnectionImpl::DeleteHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::health_checks::v1::
-        DeleteHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                    DeleteHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -164,7 +163,6 @@ HealthChecksRestConnectionImpl::DeleteHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksRestConnectionImpl::DeleteHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -292,9 +290,8 @@ HealthChecksRestConnectionImpl::InsertHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HealthChecksRestConnectionImpl::InsertHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::health_checks::v1::
-        InsertHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                    InsertHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -309,7 +306,6 @@ HealthChecksRestConnectionImpl::InsertHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksRestConnectionImpl::InsertHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -458,9 +454,8 @@ HealthChecksRestConnectionImpl::PatchHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HealthChecksRestConnectionImpl::PatchHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::health_checks::v1::
-        PatchHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                    PatchHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -475,7 +470,6 @@ HealthChecksRestConnectionImpl::PatchHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksRestConnectionImpl::PatchHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -587,9 +581,8 @@ HealthChecksRestConnectionImpl::UpdateHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 HealthChecksRestConnectionImpl::UpdateHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::health_checks::v1::
-        UpdateHealthCheckRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::health_checks::v1::
+                    UpdateHealthCheckRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -604,7 +597,6 @@ HealthChecksRestConnectionImpl::UpdateHealthCheck(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 HealthChecksRestConnectionImpl::UpdateHealthCheck(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

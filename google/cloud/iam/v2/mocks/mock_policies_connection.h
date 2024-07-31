@@ -60,14 +60,11 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreatePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::iam::v2::CreatePolicyRequest const& request),
+              (NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, CreatePolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdatePolicy)` is now ambiguous. Use
@@ -77,14 +74,11 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdatePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::iam::v2::UpdatePolicyRequest const& request),
+              (NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeletePolicy)` is now ambiguous. Use
@@ -94,14 +88,11 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeletePolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::iam::v2::DeletePolicyRequest const& request),
+              (NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

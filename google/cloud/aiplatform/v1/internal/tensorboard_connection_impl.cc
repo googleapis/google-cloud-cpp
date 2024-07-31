@@ -115,7 +115,7 @@ TensorboardServiceConnectionImpl::CreateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::CreateTensorboard(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -131,7 +131,7 @@ TensorboardServiceConnectionImpl::CreateTensorboard(
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnectionImpl::CreateTensorboard(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -224,7 +224,7 @@ TensorboardServiceConnectionImpl::UpdateTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::UpdateTensorboard(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -240,7 +240,7 @@ TensorboardServiceConnectionImpl::UpdateTensorboard(
 
 future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
 TensorboardServiceConnectionImpl::UpdateTensorboard(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -352,7 +352,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboard(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::DeleteTensorboard(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -368,7 +368,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboard(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnectionImpl::DeleteTensorboard(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -562,7 +562,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardExperiment(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::DeleteTensorboardExperiment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -579,7 +579,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardExperiment(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnectionImpl::DeleteTensorboardExperiment(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -753,7 +753,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardRun(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::DeleteTensorboardRun(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -769,7 +769,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardRun(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnectionImpl::DeleteTensorboardRun(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -950,7 +950,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardTimeSeries(
 
 StatusOr<google::longrunning::Operation>
 TensorboardServiceConnectionImpl::DeleteTensorboardTimeSeries(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -967,7 +967,7 @@ TensorboardServiceConnectionImpl::DeleteTensorboardTimeSeries(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 TensorboardServiceConnectionImpl::DeleteTensorboardTimeSeries(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

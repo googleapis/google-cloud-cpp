@@ -58,7 +58,7 @@ UserEventServiceConnection::ImportUserEvents(
 
 StatusOr<google::longrunning::Operation>
 UserEventServiceConnection::ImportUserEvents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -66,7 +66,7 @@ UserEventServiceConnection::ImportUserEvents(
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
 UserEventServiceConnection::ImportUserEvents(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_NODE_TEMPLATES_V1_NODE_TEMPLATES_CLIENT_H
 
 #include "google/cloud/compute/node_templates/v1/node_templates_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -217,9 +216,8 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region, std::string const& node_template,
-      Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& region,
+      std::string const& node_template, Options opts = {});
 
   // clang-format off
   ///
@@ -272,7 +270,7 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::node_templates::v1::
           DeleteNodeTemplateRequest const& request,
       Options opts = {});
@@ -288,7 +286,6 @@ class NodeTemplatesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodeTemplate(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -468,8 +465,7 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& region,
+      NoAwaitTag, std::string const& project, std::string const& region,
       google::cloud::cpp::compute::v1::NodeTemplate const&
           node_template_resource,
       Options opts = {});
@@ -526,7 +522,7 @@ class NodeTemplatesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeTemplate(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::node_templates::v1::
           InsertNodeTemplateRequest const& request,
       Options opts = {});
@@ -542,7 +538,6 @@ class NodeTemplatesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertNodeTemplate(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

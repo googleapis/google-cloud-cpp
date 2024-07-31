@@ -48,7 +48,7 @@ FeaturestoreServiceConnection::CreateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::CreateFeaturestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateFeaturestoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ FeaturestoreServiceConnection::CreateFeaturestore(
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
 FeaturestoreServiceConnection::CreateFeaturestore(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Featurestore>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ FeaturestoreServiceConnection::UpdateFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::UpdateFeaturestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateFeaturestoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ FeaturestoreServiceConnection::UpdateFeaturestore(
 
 future<StatusOr<google::cloud::aiplatform::v1::Featurestore>>
 FeaturestoreServiceConnection::UpdateFeaturestore(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Featurestore>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ FeaturestoreServiceConnection::DeleteFeaturestore(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::DeleteFeaturestore(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeaturestoreRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ FeaturestoreServiceConnection::DeleteFeaturestore(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnection::DeleteFeaturestore(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,15 +134,14 @@ FeaturestoreServiceConnection::CreateEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::CreateEntityType(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateEntityTypeRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateEntityTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::EntityType>>
 FeaturestoreServiceConnection::CreateEntityType(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::EntityType>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -178,15 +177,14 @@ FeaturestoreServiceConnection::DeleteEntityType(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::DeleteEntityType(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteEntityTypeRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteEntityTypeRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnection::DeleteEntityType(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -202,15 +200,14 @@ FeaturestoreServiceConnection::CreateFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::CreateFeature(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::CreateFeatureRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::Feature>>
 FeaturestoreServiceConnection::CreateFeature(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::Feature>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -226,7 +223,7 @@ FeaturestoreServiceConnection::BatchCreateFeatures(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::BatchCreateFeatures(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -234,7 +231,7 @@ FeaturestoreServiceConnection::BatchCreateFeatures(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
 FeaturestoreServiceConnection::BatchCreateFeatures(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -270,15 +267,14 @@ FeaturestoreServiceConnection::DeleteFeature(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::DeleteFeature(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::DeleteFeatureRequest const&) {
+    NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeaturestoreServiceConnection::DeleteFeature(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -294,7 +290,7 @@ FeaturestoreServiceConnection::ImportFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::ImportFeatureValues(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::ImportFeatureValuesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -302,7 +298,7 @@ FeaturestoreServiceConnection::ImportFeatureValues(
 
 future<StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>
 FeaturestoreServiceConnection::ImportFeatureValues(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::ImportFeatureValuesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -318,7 +314,7 @@ FeaturestoreServiceConnection::BatchReadFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::BatchReadFeatureValues(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::BatchReadFeatureValuesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -326,7 +322,7 @@ FeaturestoreServiceConnection::BatchReadFeatureValues(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>
 FeaturestoreServiceConnection::BatchReadFeatureValues(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::BatchReadFeatureValuesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -342,7 +338,7 @@ FeaturestoreServiceConnection::ExportFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::ExportFeatureValues(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::ExportFeatureValuesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -350,7 +346,7 @@ FeaturestoreServiceConnection::ExportFeatureValues(
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>
 FeaturestoreServiceConnection::ExportFeatureValues(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::ExportFeatureValuesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -366,7 +362,7 @@ FeaturestoreServiceConnection::DeleteFeatureValues(
 
 StatusOr<google::longrunning::Operation>
 FeaturestoreServiceConnection::DeleteFeatureValues(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteFeatureValuesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -374,7 +370,7 @@ FeaturestoreServiceConnection::DeleteFeatureValues(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
 FeaturestoreServiceConnection::DeleteFeatureValues(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

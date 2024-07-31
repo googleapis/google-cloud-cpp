@@ -92,23 +92,21 @@ TestCasesTracingConnection::RunTestCase(
 
 StatusOr<google::longrunning::Operation>
 TestCasesTracingConnection::RunTestCase(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::RunTestCase");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RunTestCase(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RunTestCase(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
 TestCasesTracingConnection::RunTestCase(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::RunTestCase");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RunTestCase(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RunTestCase(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
@@ -123,25 +121,24 @@ TestCasesTracingConnection::BatchRunTestCases(
 
 StatusOr<google::longrunning::Operation>
 TestCasesTracingConnection::BatchRunTestCases(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::TestCasesConnection::BatchRunTestCases");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->BatchRunTestCases(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchRunTestCases(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
 TestCasesTracingConnection::BatchRunTestCases(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_cx::TestCasesConnection::BatchRunTestCases");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->BatchRunTestCases(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchRunTestCases(operation));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
@@ -165,23 +162,22 @@ TestCasesTracingConnection::ImportTestCases(
 
 StatusOr<google::longrunning::Operation>
 TestCasesTracingConnection::ImportTestCases(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::ImportTestCases");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ImportTestCases(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ImportTestCases(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
 TestCasesTracingConnection::ImportTestCases(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::ImportTestCases");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->ImportTestCases(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ImportTestCases(operation));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
@@ -195,23 +191,22 @@ TestCasesTracingConnection::ExportTestCases(
 
 StatusOr<google::longrunning::Operation>
 TestCasesTracingConnection::ExportTestCases(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::ExportTestCases");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->ExportTestCases(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->ExportTestCases(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
 TestCasesTracingConnection::ExportTestCases(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dialogflow_cx::TestCasesConnection::ExportTestCases");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->ExportTestCases(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->ExportTestCases(operation));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>

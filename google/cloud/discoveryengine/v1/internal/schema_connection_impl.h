@@ -64,12 +64,11 @@ class SchemaServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> CreateSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateSchemaRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> CreateSchema(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
@@ -77,12 +76,11 @@ class SchemaServiceConnectionImpl
       override;
 
   StatusOr<google::longrunning::Operation> UpdateSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Schema>> UpdateSchema(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
@@ -90,13 +88,12 @@ class SchemaServiceConnectionImpl
                    request) override;
 
   StatusOr<google::longrunning::Operation> DeleteSchema(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request)
       override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
-  DeleteSchema(ExperimentalTag,
-               google::longrunning::Operation const& operation) override;
+  DeleteSchema(google::longrunning::Operation const& operation) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

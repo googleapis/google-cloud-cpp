@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_METRICSSCOPE_V1_METRICS_SCOPES_CLIENT_H
 
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -240,7 +239,7 @@ class MetricsScopesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::monitoring::metricsscope::v1::MonitoredProject const&
           monitored_project,
       Options opts = {});
@@ -298,7 +297,7 @@ class MetricsScopesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMonitoredProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
           request,
       Options opts = {});
@@ -313,8 +312,7 @@ class MetricsScopesClient {
   ///
   // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>
-  CreateMonitoredProject(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  CreateMonitoredProject(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -367,7 +365,7 @@ class MetricsScopesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -421,7 +419,7 @@ class MetricsScopesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMonitoredProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
           request,
       Options opts = {});
@@ -436,8 +434,7 @@ class MetricsScopesClient {
   ///
   // clang-format on
   future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>
-  DeleteMonitoredProject(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  DeleteMonitoredProject(google::longrunning::Operation const& operation,
                          Options opts = {});
 
  private:

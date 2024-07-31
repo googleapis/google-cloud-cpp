@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_BIGTABLE_TABLE_ADMIN_CLIENT_H
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
@@ -354,8 +353,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTable(
-      ExperimentalTag, NoAwaitTag,
-      google::bigtable::admin::v2::Table const& table,
+      NoAwaitTag, google::bigtable::admin::v2::Table const& table,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -408,7 +406,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTable(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UpdateTableRequest const& request,
       Options opts = {});
 
@@ -422,8 +420,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -522,7 +519,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteTable(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -574,7 +571,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeleteTable(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UndeleteTableRequest const& request,
       Options opts = {});
 
@@ -588,8 +585,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -645,7 +641,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::bigtable::admin::v2::AuthorizedView const& authorized_view,
       std::string const& authorized_view_id, Options opts = {});
 
@@ -700,7 +696,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request,
       Options opts = {});
 
@@ -714,8 +710,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  CreateAuthorizedView(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -908,7 +903,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::AuthorizedView const& authorized_view,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -963,7 +958,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request,
       Options opts = {});
 
@@ -977,8 +972,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  UpdateAuthorizedView(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1329,8 +1323,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& backup_id,
+      NoAwaitTag, std::string const& parent, std::string const& backup_id,
       google::bigtable::admin::v2::Backup const& backup, Options opts = {});
 
   // clang-format off
@@ -1394,7 +1387,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateBackup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::CreateBackupRequest const& request,
       Options opts = {});
 
@@ -1408,8 +1401,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1724,7 +1716,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestoreTable(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::bigtable::admin::v2::RestoreTableRequest const& request,
       Options opts = {});
 
@@ -1738,8 +1730,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1808,8 +1799,8 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CopyBackup(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& backup_id, std::string const& source_backup,
+      NoAwaitTag, std::string const& parent, std::string const& backup_id,
+      std::string const& source_backup,
       google::protobuf::Timestamp const& expire_time, Options opts = {});
 
   // clang-format off
@@ -1863,8 +1854,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CopyBackup(
-      ExperimentalTag, NoAwaitTag,
-      google::bigtable::admin::v2::CopyBackupRequest const& request,
+      NoAwaitTag, google::bigtable::admin::v2::CopyBackupRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1877,8 +1867,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

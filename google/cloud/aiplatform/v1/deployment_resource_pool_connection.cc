@@ -49,7 +49,7 @@ DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -57,7 +57,7 @@ DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
 DeploymentResourcePoolServiceConnection::CreateDeploymentResourcePool(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -87,7 +87,7 @@ DeploymentResourcePoolServiceConnection::UpdateDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceConnection::UpdateDeploymentResourcePool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::UpdateDeploymentResourcePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -95,7 +95,7 @@ DeploymentResourcePoolServiceConnection::UpdateDeploymentResourcePool(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>
 DeploymentResourcePoolServiceConnection::UpdateDeploymentResourcePool(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,7 +111,7 @@ DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
 
 StatusOr<google::longrunning::Operation>
 DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -119,7 +119,7 @@ DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DeploymentResourcePoolServiceConnection::DeleteDeploymentResourcePool(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -63,28 +63,25 @@ TargetInstancesTracingConnection::DeleteTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesTracingConnection::DeleteTargetInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::
-        DeleteTargetInstanceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                    DeleteTargetInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "DeleteTargetInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->DeleteTargetInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->DeleteTargetInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesTracingConnection::DeleteTargetInstance(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "DeleteTargetInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeleteTargetInstance(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeleteTargetInstance(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TargetInstance>
@@ -112,28 +109,25 @@ TargetInstancesTracingConnection::InsertTargetInstance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesTracingConnection::InsertTargetInstance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::
-        InsertTargetInstanceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                    InsertTargetInstanceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "InsertTargetInstance");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->InsertTargetInstance(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->InsertTargetInstance(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesTracingConnection::InsertTargetInstance(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "InsertTargetInstance");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertTargetInstance(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertTargetInstance(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::TargetInstance>
@@ -163,28 +157,25 @@ TargetInstancesTracingConnection::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 TargetInstancesTracingConnection::SetSecurityPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::target_instances::v1::
-        SetSecurityPolicyRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::target_instances::v1::
+                    SetSecurityPolicyRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "SetSecurityPolicy");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->SetSecurityPolicy(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->SetSecurityPolicy(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 TargetInstancesTracingConnection::SetSecurityPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_target_instances_v1::TargetInstancesConnection::"
       "SetSecurityPolicy");
   internal::OTelScope scope(span);
-  return internal::EndSpan(
-      std::move(span), child_->SetSecurityPolicy(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->SetSecurityPolicy(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

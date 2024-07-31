@@ -109,9 +109,8 @@ RegionInstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_instance_templates::v1::
-        DeleteInstanceTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_instance_templates::v1::
+                    DeleteInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -126,7 +125,6 @@ RegionInstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceTemplatesRestConnectionImpl::DeleteInstanceTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -258,9 +256,8 @@ RegionInstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_instance_templates::v1::
-        InsertInstanceTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_instance_templates::v1::
+                    InsertInstanceTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -275,7 +272,6 @@ RegionInstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceTemplatesRestConnectionImpl::InsertInstanceTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

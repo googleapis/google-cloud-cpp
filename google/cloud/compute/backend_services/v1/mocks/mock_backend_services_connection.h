@@ -58,15 +58,13 @@ class MockBackendServicesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               AddSignedUrlKey,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_services::v1::
-                   AddSignedUrlKeyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                               AddSignedUrlKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddSignedUrlKey,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -88,15 +86,13 @@ class MockBackendServicesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteBackendService,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_services::v1::
-                   DeleteBackendServiceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                               DeleteBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteBackendService,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -110,15 +106,13 @@ class MockBackendServicesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteSignedUrlKey,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_services::v1::
-                   DeleteSignedUrlKeyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                               DeleteSignedUrlKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSignedUrlKey,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendService>,
@@ -150,15 +144,13 @@ class MockBackendServicesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertBackendService,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_services::v1::
-                   InsertBackendServiceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                               InsertBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertBackendService,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::BackendService>),
@@ -185,15 +177,13 @@ class MockBackendServicesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchBackendService,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_services::v1::
-                   PatchBackendServiceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                               PatchBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchBackendService,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -207,15 +197,13 @@ class MockBackendServicesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetEdgeSecurityPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_services::v1::
-                   SetEdgeSecurityPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                               SetEdgeSecurityPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetEdgeSecurityPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
@@ -234,15 +222,13 @@ class MockBackendServicesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetSecurityPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_services::v1::
-                   SetSecurityPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                               SetSecurityPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSecurityPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -263,15 +249,13 @@ class MockBackendServicesConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdateBackendService,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_services::v1::
-                   UpdateBackendServiceRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                               UpdateBackendServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendService,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

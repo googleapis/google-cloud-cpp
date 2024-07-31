@@ -64,15 +64,13 @@ class MockSnapshotSettingsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchSnapshotSettings,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::snapshot_settings::v1::
-                   PatchSnapshotSettingsRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::snapshot_settings::v1::
+                               PatchSnapshotSettingsRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchSnapshotSettings,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

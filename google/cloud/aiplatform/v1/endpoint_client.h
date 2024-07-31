@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_ENDPOINT_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/endpoint_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -137,7 +136,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Endpoint const& endpoint,
       Options opts = {});
 
@@ -203,7 +202,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Endpoint const& endpoint,
       std::string const& endpoint_id, Options opts = {});
 
@@ -257,7 +256,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateEndpointRequest const& request,
       Options opts = {});
 
@@ -271,8 +270,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Endpoint>> CreateEndpoint(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -513,7 +511,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -566,7 +564,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteEndpointRequest const& request,
       Options opts = {});
 
@@ -580,8 +578,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteEndpoint(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DeleteEndpoint(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -654,7 +651,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeployModel(
-      ExperimentalTag, NoAwaitTag, std::string const& endpoint,
+      NoAwaitTag, std::string const& endpoint,
       google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
       std::map<std::string, std::int32_t> const& traffic_split,
       Options opts = {});
@@ -709,7 +706,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeployModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeployModelRequest const& request,
       Options opts = {});
 
@@ -723,7 +720,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
-  DeployModel(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeployModel(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -785,7 +782,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeployModel(
-      ExperimentalTag, NoAwaitTag, std::string const& endpoint,
+      NoAwaitTag, std::string const& endpoint,
       std::string const& deployed_model_id,
       std::map<std::string, std::int32_t> const& traffic_split,
       Options opts = {});
@@ -842,7 +839,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeployModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UndeployModelRequest const& request,
       Options opts = {});
 
@@ -856,8 +853,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
-  UndeployModel(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  UndeployModel(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -930,7 +926,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> MutateDeployedModel(
-      ExperimentalTag, NoAwaitTag, std::string const& endpoint,
+      NoAwaitTag, std::string const& endpoint,
       google::cloud::aiplatform::v1::DeployedModel const& deployed_model,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -988,7 +984,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> MutateDeployedModel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request,
       Options opts = {});
 
@@ -1002,8 +998,7 @@ class EndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
-  MutateDeployedModel(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  MutateDeployedModel(google::longrunning::Operation const& operation,
                       Options opts = {});
 
  private:

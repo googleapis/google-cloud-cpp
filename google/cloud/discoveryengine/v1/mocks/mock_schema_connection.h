@@ -68,14 +68,12 @@ class MockSchemaServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateSchema,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::CreateSchemaRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Schema>>,
-              CreateSchema,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateSchema, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -89,14 +87,12 @@ class MockSchemaServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateSchema,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::Schema>>,
-              UpdateSchema,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateSchema, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -111,15 +107,14 @@ class MockSchemaServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteSchema,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>,
-      DeleteSchema,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteSchema, (google::longrunning::Operation const& operation),
       (override));
 };
 

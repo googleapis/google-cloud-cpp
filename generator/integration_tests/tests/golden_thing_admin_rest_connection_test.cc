@@ -283,12 +283,11 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseStartAwait) {
   ::google::test::admin::database::v1::CreateDatabaseRequest dbase;
   google::cloud::internal::OptionsSpan span(
       google::cloud::internal::MergeOptions(Options{}, conn->options()));
-  // TODO(#14344): Remove experimental tag.
-  auto operation = conn->CreateDatabase(ExperimentalTag{}, NoAwaitTag{}, dbase);
+  auto operation = conn->CreateDatabase(NoAwaitTag{}, dbase);
   ASSERT_STATUS_OK(operation);
   EXPECT_THAT(operation->name(), Eq(expected_operation.name()));
 
-  auto database = conn->CreateDatabase(ExperimentalTag{}, *operation).get();
+  auto database = conn->CreateDatabase(*operation).get();
   ASSERT_STATUS_OK(database);
   EXPECT_EQ("test-database", database->name());
 }
@@ -472,13 +471,11 @@ TEST(GoldenThingAdminRestConnectionTest, UpdateDatabaseDdlStartAwait) {
       "ALTER TABLE Albums ADD COLUMN MarketingBudget INT64";
   google::cloud::internal::OptionsSpan span(
       google::cloud::internal::MergeOptions(Options{}, conn->options()));
-  // TODO(#14344): Remove experimental tag.
-  auto operation =
-      conn->UpdateDatabaseDdl(ExperimentalTag{}, NoAwaitTag{}, request);
+  auto operation = conn->UpdateDatabaseDdl(NoAwaitTag{}, request);
   ASSERT_STATUS_OK(operation);
   EXPECT_THAT(operation->name(), Eq(expected_operation.name()));
 
-  auto update = conn->UpdateDatabaseDdl(ExperimentalTag{}, *operation).get();
+  auto update = conn->UpdateDatabaseDdl(*operation).get();
   ASSERT_STATUS_OK(update);
   EXPECT_EQ("test-database", update->database());
 }
@@ -906,12 +903,11 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupStartAwait) {
   request.mutable_backup()->set_name("test-backup");
   google::cloud::internal::OptionsSpan span(
       google::cloud::internal::MergeOptions(Options{}, conn->options()));
-  // TODO(#14344): Remove experimental tag.
-  auto operation = conn->CreateBackup(ExperimentalTag{}, NoAwaitTag{}, request);
+  auto operation = conn->CreateBackup(NoAwaitTag{}, request);
   ASSERT_STATUS_OK(operation);
   EXPECT_THAT(operation->name(), Eq(expected_operation.name()));
 
-  auto backup = conn->CreateBackup(ExperimentalTag{}, *operation).get();
+  auto backup = conn->CreateBackup(*operation).get();
   ASSERT_STATUS_OK(backup);
   EXPECT_EQ("test-backup", backup->name());
 }
@@ -1286,13 +1282,11 @@ TEST(GoldenThingAdminConnectionTest, RestoreDatabaseStartAwait) {
       "projects/test-project/instances/test-instance/backups/test-backup");
   google::cloud::internal::OptionsSpan span(
       google::cloud::internal::MergeOptions(Options{}, conn->options()));
-  // TODO(#14344): Remove experimental tag.
-  auto operation =
-      conn->RestoreDatabase(ExperimentalTag{}, NoAwaitTag{}, request);
+  auto operation = conn->RestoreDatabase(NoAwaitTag{}, request);
   ASSERT_STATUS_OK(operation);
   EXPECT_THAT(operation->name(), Eq(expected_operation.name()));
 
-  auto database = conn->RestoreDatabase(ExperimentalTag{}, *operation).get();
+  auto database = conn->RestoreDatabase(*operation).get();
   ASSERT_STATUS_OK(database);
   EXPECT_EQ("test-database", database->name());
 }

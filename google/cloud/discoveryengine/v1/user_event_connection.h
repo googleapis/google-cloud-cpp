@@ -22,7 +22,6 @@
 #include "google/cloud/discoveryengine/v1/internal/user_event_retry_traits.h"
 #include "google/cloud/discoveryengine/v1/user_event_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -202,14 +201,13 @@ class UserEventServiceConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> ImportUserEvents(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>
-  ImportUserEvents(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  ImportUserEvents(google::longrunning::Operation const& operation);
 };
 
 /**

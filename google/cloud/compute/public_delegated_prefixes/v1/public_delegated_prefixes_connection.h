@@ -23,7 +23,6 @@
 #include "google/cloud/compute/public_delegated_prefixes/v1/internal/public_delegated_prefixes_retry_traits.h"
 #include "google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -209,12 +208,10 @@ class PublicDelegatedPrefixesConnection {
           AnnounceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Announce(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          AnnounceRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                      AnnounceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Announce(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -224,13 +221,11 @@ class PublicDelegatedPrefixesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeletePublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          DeletePublicDelegatedPrefixRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                      DeletePublicDelegatedPrefixRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeletePublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -245,13 +240,11 @@ class PublicDelegatedPrefixesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertPublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          InsertPublicDelegatedPrefixRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                      InsertPublicDelegatedPrefixRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertPublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -266,13 +259,11 @@ class PublicDelegatedPrefixesConnection {
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
   PatchPublicDelegatedPrefix(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          PatchPublicDelegatedPrefixRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                      PatchPublicDelegatedPrefixRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchPublicDelegatedPrefix(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
@@ -280,12 +271,10 @@ class PublicDelegatedPrefixesConnection {
           WithdrawRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> Withdraw(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::public_delegated_prefixes::v1::
-          WithdrawRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                      WithdrawRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Withdraw(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 };
 

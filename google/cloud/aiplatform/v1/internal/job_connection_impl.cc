@@ -170,7 +170,7 @@ JobServiceConnectionImpl::DeleteCustomJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteCustomJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -186,7 +186,7 @@ JobServiceConnectionImpl::DeleteCustomJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteCustomJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -345,7 +345,7 @@ JobServiceConnectionImpl::DeleteDataLabelingJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteDataLabelingJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteDataLabelingJobRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -362,7 +362,7 @@ JobServiceConnectionImpl::DeleteDataLabelingJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteDataLabelingJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -526,7 +526,7 @@ JobServiceConnectionImpl::DeleteHyperparameterTuningJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteHyperparameterTuningJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteHyperparameterTuningJobRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -543,7 +543,7 @@ JobServiceConnectionImpl::DeleteHyperparameterTuningJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteHyperparameterTuningJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -697,7 +697,7 @@ JobServiceConnectionImpl::DeleteNasJob(
 }
 
 StatusOr<google::longrunning::Operation> JobServiceConnectionImpl::DeleteNasJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -713,7 +713,7 @@ StatusOr<google::longrunning::Operation> JobServiceConnectionImpl::DeleteNasJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteNasJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -925,7 +925,7 @@ JobServiceConnectionImpl::DeleteBatchPredictionJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteBatchPredictionJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteBatchPredictionJobRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -943,7 +943,7 @@ JobServiceConnectionImpl::DeleteBatchPredictionJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteBatchPredictionJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -1156,9 +1156,8 @@ JobServiceConnectionImpl::UpdateModelDeploymentMonitoringJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::UpdateModelDeploymentMonitoringJob(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::
-        UpdateModelDeploymentMonitoringJobRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::
+                    UpdateModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1174,7 +1173,7 @@ JobServiceConnectionImpl::UpdateModelDeploymentMonitoringJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>>
 JobServiceConnectionImpl::UpdateModelDeploymentMonitoringJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -1255,9 +1254,8 @@ JobServiceConnectionImpl::DeleteModelDeploymentMonitoringJob(
 
 StatusOr<google::longrunning::Operation>
 JobServiceConnectionImpl::DeleteModelDeploymentMonitoringJob(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::aiplatform::v1::
-        DeleteModelDeploymentMonitoringJobRequest const& request) {
+    NoAwaitTag, google::cloud::aiplatform::v1::
+                    DeleteModelDeploymentMonitoringJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1273,7 +1271,7 @@ JobServiceConnectionImpl::DeleteModelDeploymentMonitoringJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 JobServiceConnectionImpl::DeleteModelDeploymentMonitoringJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

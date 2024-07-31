@@ -45,12 +45,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -58,13 +57,11 @@ class InstancesTracingConnection
                           AddResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          AddResourcePoliciesRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      AddResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   AddResourcePolicies(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<std::pair<std::string,
@@ -78,12 +75,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
@@ -91,12 +87,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
@@ -104,12 +99,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -117,13 +111,11 @@ class InstancesTracingConnection
                          DeleteAccessConfigRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          DeleteAccessConfigRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      DeleteAccessConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteAccessConfig(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
@@ -131,12 +123,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
@@ -175,12 +166,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
@@ -196,13 +186,11 @@ class InstancesTracingConnection
                          PerformMaintenanceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          PerformMaintenanceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      PerformMaintenanceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -211,13 +199,11 @@ class InstancesTracingConnection
           RemoveResourcePoliciesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          RemoveResourcePoliciesRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      RemoveResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
@@ -225,12 +211,11 @@ class InstancesTracingConnection
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
@@ -238,12 +223,11 @@ class InstancesTracingConnection
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::ResumeRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   Status SendDiagnosticInterrupt(
@@ -256,13 +240,11 @@ class InstancesTracingConnection
           SetDeletionProtectionRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          SetDeletionProtectionRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      SetDeletionProtectionRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDeletionProtection(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -270,13 +252,11 @@ class InstancesTracingConnection
                         SetDiskAutoDeleteRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          SetDiskAutoDeleteRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      SetDiskAutoDeleteRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDiskAutoDelete(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -288,12 +268,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -301,13 +280,11 @@ class InstancesTracingConnection
                           SetMachineResourcesRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          SetMachineResourcesRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      SetMachineResourcesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetMachineResources(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
@@ -315,12 +292,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
@@ -328,12 +304,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -341,13 +316,11 @@ class InstancesTracingConnection
                         SetMinCpuPlatformRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          SetMinCpuPlatformRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      SetMinCpuPlatformRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetMinCpuPlatform(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
@@ -355,12 +328,11 @@ class InstancesTracingConnection
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetNameRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
@@ -368,12 +340,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -381,13 +352,11 @@ class InstancesTracingConnection
                         SetSecurityPolicyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          SetSecurityPolicyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      SetSecurityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -395,13 +364,11 @@ class InstancesTracingConnection
                         SetServiceAccountRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          SetServiceAccountRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      SetServiceAccountRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetServiceAccount(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -411,13 +378,12 @@ class InstancesTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   SetShieldedInstanceIntegrityPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           SetShieldedInstanceIntegrityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetShieldedInstanceIntegrityPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
@@ -425,12 +391,11 @@ class InstancesTracingConnection
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -439,13 +404,11 @@ class InstancesTracingConnection
           SimulateMaintenanceEventRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          SimulateMaintenanceEventRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      SimulateMaintenanceEventRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SimulateMaintenanceEvent(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
@@ -453,12 +416,11 @@ class InstancesTracingConnection
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::StartRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -467,13 +429,11 @@ class InstancesTracingConnection
           StartWithEncryptionKeyRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          StartWithEncryptionKeyRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      StartWithEncryptionKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartWithEncryptionKey(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
@@ -481,12 +441,11 @@ class InstancesTracingConnection
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::StopRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
@@ -494,12 +453,11 @@ class InstancesTracingConnection
       override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::SuspendRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -511,12 +469,11 @@ class InstancesTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -524,13 +481,11 @@ class InstancesTracingConnection
                          UpdateAccessConfigRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          UpdateAccessConfigRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      UpdateAccessConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateAccessConfig(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -538,13 +493,11 @@ class InstancesTracingConnection
                           UpdateDisplayDeviceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          UpdateDisplayDeviceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      UpdateDisplayDeviceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateDisplayDevice(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -553,13 +506,11 @@ class InstancesTracingConnection
           UpdateNetworkInterfaceRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::instances::v1::
-          UpdateNetworkInterfaceRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::instances::v1::
+                      UpdateNetworkInterfaceRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateNetworkInterface(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -569,13 +520,12 @@ class InstancesTracingConnection
 
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   UpdateShieldedInstanceConfig(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instances::v1::
           UpdateShieldedInstanceConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateShieldedInstanceConfig(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

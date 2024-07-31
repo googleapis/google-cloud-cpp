@@ -47,15 +47,13 @@ AssetServiceConnection::ExportAssets(
 }
 
 StatusOr<google::longrunning::Operation> AssetServiceConnection::ExportAssets(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::asset::v1::ExportAssetsRequest const&) {
+    NoAwaitTag, google::cloud::asset::v1::ExportAssetsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
-AssetServiceConnection::ExportAssets(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+AssetServiceConnection::ExportAssets(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -132,7 +130,7 @@ AssetServiceConnection::AnalyzeIamPolicyLongrunning(
 
 StatusOr<google::longrunning::Operation>
 AssetServiceConnection::AnalyzeIamPolicyLongrunning(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -140,7 +138,7 @@ AssetServiceConnection::AnalyzeIamPolicyLongrunning(
 
 future<StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>
 AssetServiceConnection::AnalyzeIamPolicyLongrunning(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

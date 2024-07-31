@@ -191,7 +191,7 @@ future<StatusOr<google::protobuf::Struct>> FlowsConnectionImpl::TrainFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnectionImpl::TrainFlow(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -206,7 +206,7 @@ StatusOr<google::longrunning::Operation> FlowsConnectionImpl::TrainFlow(
 }
 
 future<StatusOr<google::protobuf::Struct>> FlowsConnectionImpl::TrainFlow(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<StatusOr<google::protobuf::Struct>>(
@@ -310,7 +310,7 @@ FlowsConnectionImpl::ImportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnectionImpl::ImportFlow(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -326,7 +326,7 @@ StatusOr<google::longrunning::Operation> FlowsConnectionImpl::ImportFlow(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
 FlowsConnectionImpl::ImportFlow(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<
@@ -400,7 +400,7 @@ FlowsConnectionImpl::ExportFlow(
 }
 
 StatusOr<google::longrunning::Operation> FlowsConnectionImpl::ExportFlow(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -416,7 +416,7 @@ StatusOr<google::longrunning::Operation> FlowsConnectionImpl::ExportFlow(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
 FlowsConnectionImpl::ExportFlow(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata().Is<typename google::protobuf::Struct>()) {
     return make_ready_future<

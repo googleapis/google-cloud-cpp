@@ -201,7 +201,7 @@ EntityTypesConnectionImpl::ExportEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::ExportEntityTypes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -218,7 +218,7 @@ EntityTypesConnectionImpl::ExportEntityTypes(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
 EntityTypesConnectionImpl::ExportEntityTypes(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::
@@ -297,7 +297,7 @@ EntityTypesConnectionImpl::ImportEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesConnectionImpl::ImportEntityTypes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -314,7 +314,7 @@ EntityTypesConnectionImpl::ImportEntityTypes(
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
 EntityTypesConnectionImpl::ImportEntityTypes(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::dialogflow::cx::v3::

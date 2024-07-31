@@ -65,7 +65,7 @@ class MockSecurityCenterConnection
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, BulkMuteFindings,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
                    request),
               (override));
@@ -73,9 +73,7 @@ class MockSecurityCenterConnection
   MOCK_METHOD(future<StatusOr<
                   google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>,
               BulkMuteFindings,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::securitycenter::v2::BigQueryExport>,

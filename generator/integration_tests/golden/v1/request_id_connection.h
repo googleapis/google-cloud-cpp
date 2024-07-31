@@ -22,7 +22,6 @@
 #include "generator/integration_tests/golden/v1/internal/request_id_retry_traits.h"
 #include "generator/integration_tests/golden/v1/request_id_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -187,10 +186,10 @@ class RequestIdServiceConnection {
   RenameFoo(google::test::requestid::v1::RenameFooRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation>
-  RenameFoo(ExperimentalTag, NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request);
+  RenameFoo(NoAwaitTag, google::test::requestid::v1::RenameFooRequest const& request);
 
   virtual future<StatusOr<google::test::requestid::v1::Foo>>
-  RenameFoo(ExperimentalTag, google::longrunning::Operation const& operation);
+  RenameFoo( google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::test::requestid::v1::Foo>
   ListFoos(google::test::requestid::v1::ListFoosRequest request);

@@ -22,7 +22,6 @@
 #include "google/cloud/securitycenter/v1/internal/security_center_retry_traits.h"
 #include "google/cloud/securitycenter/v1/security_center_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -194,14 +193,13 @@ class SecurityCenterConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> BulkMuteFindings(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
-  BulkMuteFindings(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  BulkMuteFindings(google::longrunning::Operation const& operation);
 
   virtual StatusOr<
       google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
@@ -334,14 +332,13 @@ class SecurityCenterConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> RunAssetDiscovery(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>>
-  RunAssetDiscovery(ExperimentalTag,
-                    google::longrunning::Operation const& operation);
+  RunAssetDiscovery(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::securitycenter::v1::Finding> SetFindingState(
       google::cloud::securitycenter::v1::SetFindingStateRequest const& request);

@@ -56,7 +56,7 @@ MigrationServiceConnection::BatchMigrateResources(
 
 StatusOr<google::longrunning::Operation>
 MigrationServiceConnection::BatchMigrateResources(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -64,7 +64,7 @@ MigrationServiceConnection::BatchMigrateResources(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>
 MigrationServiceConnection::BatchMigrateResources(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

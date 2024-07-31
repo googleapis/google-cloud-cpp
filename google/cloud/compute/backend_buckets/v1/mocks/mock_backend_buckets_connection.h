@@ -58,15 +58,13 @@ class MockBackendBucketsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               AddSignedUrlKey,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   AddSignedUrlKeyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               AddSignedUrlKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddSignedUrlKey,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -80,15 +78,13 @@ class MockBackendBucketsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteBackendBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   DeleteBackendBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               DeleteBackendBucketRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteBackendBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -102,15 +98,13 @@ class MockBackendBucketsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteSignedUrlKey,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   DeleteSignedUrlKeyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               DeleteSignedUrlKeyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSignedUrlKey,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendBucket>,
@@ -135,15 +129,13 @@ class MockBackendBucketsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertBackendBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   InsertBackendBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               InsertBackendBucketRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertBackendBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::BackendBucket>),
@@ -163,15 +155,13 @@ class MockBackendBucketsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               PatchBackendBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   PatchBackendBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               PatchBackendBucketRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchBackendBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -185,15 +175,13 @@ class MockBackendBucketsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetEdgeSecurityPolicy,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   SetEdgeSecurityPolicyRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               SetEdgeSecurityPolicyRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetEdgeSecurityPolicy,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
@@ -219,15 +207,13 @@ class MockBackendBucketsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdateBackendBucket,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::backend_buckets::v1::
-                   UpdateBackendBucketRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::backend_buckets::v1::
+                               UpdateBackendBucketRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateBackendBucket,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

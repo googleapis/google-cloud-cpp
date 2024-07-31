@@ -80,7 +80,7 @@ DeveloperConnectClient::CreateConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectClient::CreateConnection(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::developerconnect::v1::Connection const& connection,
     std::string const& connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -88,8 +88,7 @@ DeveloperConnectClient::CreateConnection(
   request.set_parent(parent);
   *request.mutable_connection() = connection;
   request.set_connection_id(connection_id);
-  return connection_->CreateConnection(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -102,20 +101,18 @@ DeveloperConnectClient::CreateConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectClient::CreateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::CreateConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateConnection(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->CreateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
 DeveloperConnectClient::CreateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateConnection(ExperimentalTag{}, operation);
+  return connection_->CreateConnection(operation);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -131,15 +128,14 @@ DeveloperConnectClient::UpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectClient::UpdateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::Connection const& connection,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::UpdateConnectionRequest request;
   *request.mutable_connection() = connection;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateConnection(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->UpdateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
@@ -152,20 +148,18 @@ DeveloperConnectClient::UpdateConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectClient::UpdateConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::UpdateConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateConnection(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->UpdateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
 DeveloperConnectClient::UpdateConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateConnection(ExperimentalTag{}, operation);
+  return connection_->UpdateConnection(operation);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -178,14 +172,12 @@ DeveloperConnectClient::DeleteConnection(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::DeleteConnection(ExperimentalTag, NoAwaitTag,
-                                         std::string const& name,
+DeveloperConnectClient::DeleteConnection(NoAwaitTag, std::string const& name,
                                          Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::DeleteConnectionRequest request;
   request.set_name(name);
-  return connection_->DeleteConnection(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -198,20 +190,18 @@ DeveloperConnectClient::DeleteConnection(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectClient::DeleteConnection(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::DeleteConnectionRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteConnection(ExperimentalTag{}, NoAwaitTag{},
-                                       request);
+  return connection_->DeleteConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectClient::DeleteConnection(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteConnection(ExperimentalTag{}, operation);
+  return connection_->DeleteConnection(operation);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
@@ -230,7 +220,7 @@ DeveloperConnectClient::CreateGitRepositoryLink(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectClient::CreateGitRepositoryLink(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::developerconnect::v1::GitRepositoryLink const&
         git_repository_link,
     std::string const& git_repository_link_id, Options opts) {
@@ -239,8 +229,7 @@ DeveloperConnectClient::CreateGitRepositoryLink(
   request.set_parent(parent);
   *request.mutable_git_repository_link() = git_repository_link;
   request.set_git_repository_link_id(git_repository_link_id);
-  return connection_->CreateGitRepositoryLink(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->CreateGitRepositoryLink(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
@@ -254,21 +243,19 @@ DeveloperConnectClient::CreateGitRepositoryLink(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectClient::CreateGitRepositoryLink(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGitRepositoryLink(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->CreateGitRepositoryLink(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
 DeveloperConnectClient::CreateGitRepositoryLink(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateGitRepositoryLink(ExperimentalTag{}, operation);
+  return connection_->CreateGitRepositoryLink(operation);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -281,14 +268,13 @@ DeveloperConnectClient::DeleteGitRepositoryLink(std::string const& name,
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::DeleteGitRepositoryLink(ExperimentalTag, NoAwaitTag,
+DeveloperConnectClient::DeleteGitRepositoryLink(NoAwaitTag,
                                                 std::string const& name,
                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest request;
   request.set_name(name);
-  return connection_->DeleteGitRepositoryLink(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->DeleteGitRepositoryLink(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
@@ -302,21 +288,19 @@ DeveloperConnectClient::DeleteGitRepositoryLink(
 
 StatusOr<google::longrunning::Operation>
 DeveloperConnectClient::DeleteGitRepositoryLink(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGitRepositoryLink(ExperimentalTag{}, NoAwaitTag{},
-                                              request);
+  return connection_->DeleteGitRepositoryLink(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
 DeveloperConnectClient::DeleteGitRepositoryLink(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteGitRepositoryLink(ExperimentalTag{}, operation);
+  return connection_->DeleteGitRepositoryLink(operation);
 }
 
 StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>

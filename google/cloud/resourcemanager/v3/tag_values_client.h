@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_VALUES_CLIENT_H
 
 #include "google/cloud/resourcemanager/v3/tag_values_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
@@ -339,8 +338,7 @@ class TagValuesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagValue(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::resourcemanager::v3::TagValue const& tag_value,
+      NoAwaitTag, google::cloud::resourcemanager::v3::TagValue const& tag_value,
       Options opts = {});
 
   // clang-format off
@@ -396,7 +394,7 @@ class TagValuesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTagValue(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagValueRequest const& request,
       Options opts = {});
 
@@ -410,8 +408,7 @@ class TagValuesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> CreateTagValue(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -462,8 +459,7 @@ class TagValuesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTagValue(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::resourcemanager::v3::TagValue const& tag_value,
+      NoAwaitTag, google::cloud::resourcemanager::v3::TagValue const& tag_value,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -516,7 +512,7 @@ class TagValuesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTagValue(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request,
       Options opts = {});
 
@@ -530,8 +526,7 @@ class TagValuesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> UpdateTagValue(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -579,7 +574,7 @@ class TagValuesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagValue(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -632,7 +627,7 @@ class TagValuesClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTagValue(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request,
       Options opts = {});
 
@@ -646,8 +641,7 @@ class TagValuesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::TagValue>> DeleteTagValue(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

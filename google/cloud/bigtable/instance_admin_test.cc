@@ -53,7 +53,6 @@ using ::google::cloud::bigtable::testing::MockPollingPolicy;
 using ::google::cloud::bigtable::testing::MockRetryPolicy;
 using ::google::cloud::bigtable_internal::InstanceAdminTester;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
 using ::testing::An;
 using ::testing::Contains;
 using ::testing::ElementsAreArray;
@@ -301,7 +300,8 @@ TEST_F(InstanceAdminTest, CreateInstance) {
       {"c1", ClusterConfig("l1", 3, btadmin::HDD)}};
   auto config = InstanceConfig(kInstanceId, kDisplayName, cluster_map);
 
-  EXPECT_CALL(*connection_, CreateInstance(_))
+  EXPECT_CALL(*connection_,
+              CreateInstance(An<btadmin::CreateInstanceRequest const&>()))
       .WillOnce([&](btadmin::CreateInstanceRequest const& request) {
         CheckOptions(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kInstanceId, request.instance_id());
@@ -325,7 +325,8 @@ TEST_F(InstanceAdminTest, CreateCluster) {
   auto const location_name = LocationName("the-location");
   auto config = ClusterConfig("the-location", 3, btadmin::HDD);
 
-  EXPECT_CALL(*connection_, CreateCluster(_))
+  EXPECT_CALL(*connection_,
+              CreateCluster(An<btadmin::CreateClusterRequest const&>()))
       .WillOnce([&](btadmin::CreateClusterRequest const& request) {
         CheckOptions(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kClusterId, request.cluster_id());
@@ -346,7 +347,9 @@ TEST_F(InstanceAdminTest, UpdateInstance) {
   InstanceUpdateConfig config({});
   config.set_display_name(kDisplayName);
 
-  EXPECT_CALL(*connection_, PartialUpdateInstance(_))
+  EXPECT_CALL(
+      *connection_,
+      PartialUpdateInstance(An<btadmin::PartialUpdateInstanceRequest const&>()))
       .WillOnce([&](btadmin::PartialUpdateInstanceRequest const& request) {
         CheckOptions(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kDisplayName, request.instance().display_name());
@@ -459,7 +462,7 @@ TEST_F(InstanceAdminTest, UpdateCluster) {
   c.set_default_storage_type(btadmin::HDD);
   auto config = ClusterConfig(std::move(c));
 
-  EXPECT_CALL(*connection_, UpdateCluster(_))
+  EXPECT_CALL(*connection_, UpdateCluster(An<btadmin::Cluster const&>()))
       .WillOnce([&](btadmin::Cluster const& cluster) {
         CheckOptions(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kClusterName, cluster.name());
@@ -521,7 +524,8 @@ TEST_F(InstanceAdminTest, UpdateAppProfile) {
   auto constexpr kDescription = "description";
   auto config = AppProfileUpdateConfig().set_description(kDescription);
 
-  EXPECT_CALL(*connection_, UpdateAppProfile(_))
+  EXPECT_CALL(*connection_,
+              UpdateAppProfile(An<btadmin::UpdateAppProfileRequest const&>()))
       .WillOnce([&](btadmin::UpdateAppProfileRequest const& request) {
         CheckOptions(google::cloud::internal::CurrentOptions());
         EXPECT_EQ(kProfileName, request.app_profile().name());

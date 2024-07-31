@@ -115,7 +115,7 @@ AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
 
 StatusOr<google::longrunning::Operation>
 AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -131,7 +131,7 @@ AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::assuredworkloads::v1::

@@ -22,7 +22,6 @@
 #include "google/cloud/functions/v1/cloud_functions_connection_idempotency_policy.h"
 #include "google/cloud/functions/v1/internal/cloud_functions_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -205,36 +204,33 @@ class CloudFunctionsServiceConnection {
       google::cloud::functions::v1::CreateFunctionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::CreateFunctionRequest const& request);
 
   virtual future<StatusOr<google::cloud::functions::v1::CloudFunction>>
-  CreateFunction(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  CreateFunction(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::functions::v1::CloudFunction>>
   UpdateFunction(
       google::cloud::functions::v1::UpdateFunctionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::UpdateFunctionRequest const& request);
 
   virtual future<StatusOr<google::cloud::functions::v1::CloudFunction>>
-  UpdateFunction(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  UpdateFunction(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
   DeleteFunction(
       google::cloud::functions::v1::DeleteFunctionRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteFunction(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::functions::v1::DeleteFunctionRequest const& request);
 
   virtual future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
-  DeleteFunction(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  DeleteFunction(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::functions::v1::CallFunctionResponse>
   CallFunction(

@@ -22,7 +22,6 @@
 #include "google/cloud/managedkafka/v1/internal/managed_kafka_retry_traits.h"
 #include "google/cloud/managedkafka/v1/managed_kafka_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -198,36 +197,33 @@ class ManagedKafkaConnection {
       google::cloud::managedkafka::v1::CreateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::CreateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  CreateCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  CreateCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
   UpdateCluster(
       google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-  UpdateCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  UpdateCluster(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
   DeleteCluster(
       google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
 
   virtual future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-  DeleteCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation);
+  DeleteCluster(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::managedkafka::v1::Topic> ListTopics(
       google::cloud::managedkafka::v1::ListTopicsRequest request);

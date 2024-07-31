@@ -46,13 +46,12 @@ class ProjectServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> ProvisionProject(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::ProvisionProjectRequest const&
           request) override;
 
   future<StatusOr<google::cloud::discoveryengine::v1::Project>>
-  ProvisionProject(ExperimentalTag,
-                   google::longrunning::Operation const& operation) override;
+  ProvisionProject(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<discoveryengine_v1::ProjectServiceConnection> child_;

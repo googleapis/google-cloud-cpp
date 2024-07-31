@@ -44,23 +44,21 @@ BatchControllerTracingConnection::CreateBatch(
 
 StatusOr<google::longrunning::Operation>
 BatchControllerTracingConnection::CreateBatch(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
   auto span =
       internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->CreateBatch(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateBatch(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerTracingConnection::CreateBatch(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span =
       internal::MakeSpan("dataproc_v1::BatchControllerConnection::CreateBatch");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->CreateBatch(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->CreateBatch(operation));
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch>

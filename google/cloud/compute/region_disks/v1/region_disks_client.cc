@@ -53,8 +53,8 @@ RegionDisksClient::AddResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::AddResourcePolicies(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& disk,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& disk,
     google::cloud::cpp::compute::v1::
         RegionDisksAddResourcePoliciesRequest const&
             region_disks_add_resource_policies_request_resource,
@@ -67,8 +67,7 @@ RegionDisksClient::AddResourcePolicies(
   request.set_disk(disk);
   *request.mutable_region_disks_add_resource_policies_request_resource() =
       region_disks_add_resource_policies_request_resource;
-  return connection_->AddResourcePolicies(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->AddResourcePolicies(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -82,21 +81,19 @@ RegionDisksClient::AddResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::AddResourcePolicies(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::
         AddResourcePoliciesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AddResourcePolicies(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->AddResourcePolicies(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::AddResourcePolicies(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AddResourcePolicies(ExperimentalTag{}, operation);
+  return connection_->AddResourcePolicies(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -115,8 +112,7 @@ RegionDisksClient::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::BulkInsert(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::BulkInsertDiskResource const&
         bulk_insert_disk_resource,
     Options opts) {
@@ -125,7 +121,7 @@ RegionDisksClient::BulkInsert(
   request.set_project(project);
   request.set_region(region);
   *request.mutable_bulk_insert_disk_resource() = bulk_insert_disk_resource;
-  return connection_->BulkInsert(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->BulkInsert(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -139,20 +135,19 @@ RegionDisksClient::BulkInsert(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::BulkInsert(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::BulkInsertRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BulkInsert(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->BulkInsert(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::BulkInsert(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BulkInsert(ExperimentalTag{}, operation);
+  return connection_->BulkInsert(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -172,8 +167,8 @@ RegionDisksClient::CreateSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::CreateSnapshot(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& disk,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& disk,
     google::cloud::cpp::compute::v1::Snapshot const& snapshot_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -182,7 +177,7 @@ RegionDisksClient::CreateSnapshot(
   request.set_region(region);
   request.set_disk(disk);
   *request.mutable_snapshot_resource() = snapshot_resource;
-  return connection_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateSnapshot(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -196,20 +191,19 @@ RegionDisksClient::CreateSnapshot(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::CreateSnapshot(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::CreateSnapshotRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSnapshot(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateSnapshot(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::CreateSnapshot(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateSnapshot(ExperimentalTag{}, operation);
+  return connection_->CreateSnapshot(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -225,8 +219,7 @@ RegionDisksClient::DeleteDisk(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionDisksClient::DeleteDisk(ExperimentalTag, NoAwaitTag,
-                              std::string const& project,
+RegionDisksClient::DeleteDisk(NoAwaitTag, std::string const& project,
                               std::string const& region,
                               std::string const& disk, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -234,7 +227,7 @@ RegionDisksClient::DeleteDisk(ExperimentalTag, NoAwaitTag,
   request.set_project(project);
   request.set_region(region);
   request.set_disk(disk);
-  return connection_->DeleteDisk(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteDisk(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -248,20 +241,19 @@ RegionDisksClient::DeleteDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::DeleteDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::DeleteDiskRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDisk(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteDisk(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::DeleteDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteDisk(ExperimentalTag{}, operation);
+  return connection_->DeleteDisk(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Disk> RegionDisksClient::GetDisk(
@@ -318,15 +310,14 @@ RegionDisksClient::InsertDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::InsertDisk(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest request;
   request.set_project(project);
   request.set_region(region);
   *request.mutable_disk_resource() = disk_resource;
-  return connection_->InsertDisk(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->InsertDisk(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -340,20 +331,19 @@ RegionDisksClient::InsertDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::InsertDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::InsertDiskRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertDisk(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->InsertDisk(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::InsertDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertDisk(ExperimentalTag{}, operation);
+  return connection_->InsertDisk(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::Disk>
@@ -396,8 +386,8 @@ RegionDisksClient::RemoveResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::RemoveResourcePolicies(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& disk,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& disk,
     google::cloud::cpp::compute::v1::
         RegionDisksRemoveResourcePoliciesRequest const&
             region_disks_remove_resource_policies_request_resource,
@@ -410,8 +400,7 @@ RegionDisksClient::RemoveResourcePolicies(
   request.set_disk(disk);
   *request.mutable_region_disks_remove_resource_policies_request_resource() =
       region_disks_remove_resource_policies_request_resource;
-  return connection_->RemoveResourcePolicies(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->RemoveResourcePolicies(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -425,21 +414,19 @@ RegionDisksClient::RemoveResourcePolicies(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::RemoveResourcePolicies(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::
         RemoveResourcePoliciesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RemoveResourcePolicies(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->RemoveResourcePolicies(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::RemoveResourcePolicies(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->RemoveResourcePolicies(ExperimentalTag{}, operation);
+  return connection_->RemoveResourcePolicies(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -460,8 +447,8 @@ RegionDisksClient::Resize(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> RegionDisksClient::Resize(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& disk,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& disk,
     google::cloud::cpp::compute::v1::RegionDisksResizeRequest const&
         region_disks_resize_request_resource,
     Options opts) {
@@ -472,7 +459,7 @@ StatusOr<google::cloud::cpp::compute::v1::Operation> RegionDisksClient::Resize(
   request.set_disk(disk);
   *request.mutable_region_disks_resize_request_resource() =
       region_disks_resize_request_resource;
-  return connection_->Resize(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Resize(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -484,19 +471,18 @@ RegionDisksClient::Resize(
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation> RegionDisksClient::Resize(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::ResizeRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Resize(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->Resize(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::Resize(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->Resize(ExperimentalTag{}, operation);
+  return connection_->Resize(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -544,8 +530,8 @@ RegionDisksClient::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::SetLabels(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& resource,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& resource,
     google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
         region_set_labels_request_resource,
     Options opts) {
@@ -556,7 +542,7 @@ RegionDisksClient::SetLabels(
   request.set_resource(resource);
   *request.mutable_region_set_labels_request_resource() =
       region_set_labels_request_resource;
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -570,20 +556,19 @@ RegionDisksClient::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::SetLabelsRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, operation);
+  return connection_->SetLabels(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -607,8 +592,8 @@ RegionDisksClient::StartAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::StartAsyncReplication(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& disk,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& disk,
     google::cloud::cpp::compute::v1::
         RegionDisksStartAsyncReplicationRequest const&
             region_disks_start_async_replication_request_resource,
@@ -621,8 +606,7 @@ RegionDisksClient::StartAsyncReplication(
   request.set_disk(disk);
   *request.mutable_region_disks_start_async_replication_request_resource() =
       region_disks_start_async_replication_request_resource;
-  return connection_->StartAsyncReplication(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->StartAsyncReplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -636,21 +620,19 @@ RegionDisksClient::StartAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::StartAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::
         StartAsyncReplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartAsyncReplication(ExperimentalTag{}, NoAwaitTag{},
-                                            request);
+  return connection_->StartAsyncReplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::StartAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartAsyncReplication(ExperimentalTag{}, operation);
+  return connection_->StartAsyncReplication(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -667,8 +649,7 @@ RegionDisksClient::StopAsyncReplication(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-RegionDisksClient::StopAsyncReplication(ExperimentalTag, NoAwaitTag,
-                                        std::string const& project,
+RegionDisksClient::StopAsyncReplication(NoAwaitTag, std::string const& project,
                                         std::string const& region,
                                         std::string const& disk, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -677,8 +658,7 @@ RegionDisksClient::StopAsyncReplication(ExperimentalTag, NoAwaitTag,
   request.set_project(project);
   request.set_region(region);
   request.set_disk(disk);
-  return connection_->StopAsyncReplication(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->StopAsyncReplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -692,21 +672,19 @@ RegionDisksClient::StopAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::StopAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::
         StopAsyncReplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopAsyncReplication(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->StopAsyncReplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::StopAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopAsyncReplication(ExperimentalTag{}, operation);
+  return connection_->StopAsyncReplication(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -728,8 +706,7 @@ RegionDisksClient::StopGroupAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::StopGroupAsyncReplication(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::
         DisksStopGroupAsyncReplicationResource const&
             disks_stop_group_async_replication_resource,
@@ -741,8 +718,7 @@ RegionDisksClient::StopGroupAsyncReplication(
   request.set_region(region);
   *request.mutable_disks_stop_group_async_replication_resource() =
       disks_stop_group_async_replication_resource;
-  return connection_->StopGroupAsyncReplication(ExperimentalTag{}, NoAwaitTag{},
-                                                request);
+  return connection_->StopGroupAsyncReplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -756,21 +732,19 @@ RegionDisksClient::StopGroupAsyncReplication(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::StopGroupAsyncReplication(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::
         StopGroupAsyncReplicationRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopGroupAsyncReplication(ExperimentalTag{}, NoAwaitTag{},
-                                                request);
+  return connection_->StopGroupAsyncReplication(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::StopGroupAsyncReplication(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopGroupAsyncReplication(ExperimentalTag{}, operation);
+  return connection_->StopGroupAsyncReplication(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -817,9 +791,8 @@ RegionDisksClient::UpdateDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::UpdateDisk(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& disk,
-    std::string const& update_mask,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& disk, std::string const& update_mask,
     google::cloud::cpp::compute::v1::Disk const& disk_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest request;
@@ -828,7 +801,7 @@ RegionDisksClient::UpdateDisk(
   request.set_disk(disk);
   request.set_update_mask(update_mask);
   *request.mutable_disk_resource() = disk_resource;
-  return connection_->UpdateDisk(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateDisk(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -842,20 +815,19 @@ RegionDisksClient::UpdateDisk(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionDisksClient::UpdateDisk(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_disks::v1::UpdateDiskRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDisk(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateDisk(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionDisksClient::UpdateDisk(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateDisk(ExperimentalTag{}, operation);
+  return connection_->UpdateDisk(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

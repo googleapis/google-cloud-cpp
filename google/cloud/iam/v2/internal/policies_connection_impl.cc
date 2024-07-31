@@ -144,8 +144,7 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::CreatePolicy(
 }
 
 StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::CreatePolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::iam::v2::CreatePolicyRequest const& request) {
+    NoAwaitTag, google::iam::v2::CreatePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -158,7 +157,7 @@ StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::CreatePolicy(
 }
 
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::CreatePolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::iam::v2::PolicyOperationMetadata>()) {
@@ -230,8 +229,7 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::UpdatePolicy(
 }
 
 StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::UpdatePolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::iam::v2::UpdatePolicyRequest const& request) {
+    NoAwaitTag, google::iam::v2::UpdatePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -244,7 +242,7 @@ StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::UpdatePolicy(
 }
 
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::UpdatePolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::iam::v2::PolicyOperationMetadata>()) {
@@ -316,8 +314,7 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::DeletePolicy(
 }
 
 StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::DeletePolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::iam::v2::DeletePolicyRequest const& request) {
+    NoAwaitTag, google::iam::v2::DeletePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -330,7 +327,7 @@ StatusOr<google::longrunning::Operation> PoliciesConnectionImpl::DeletePolicy(
 }
 
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::DeletePolicy(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::iam::v2::PolicyOperationMetadata>()) {

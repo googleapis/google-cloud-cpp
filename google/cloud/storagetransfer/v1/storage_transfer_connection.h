@@ -22,7 +22,6 @@
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_retry_traits.h"
 #include "google/cloud/storagetransfer/v1/storage_transfer_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -225,12 +224,11 @@ class StorageTransferServiceConnection {
       google::storagetransfer::v1::RunTransferJobRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RunTransferJob(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::storagetransfer::v1::RunTransferJobRequest const& request);
 
   virtual future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-  RunTransferJob(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  RunTransferJob(google::longrunning::Operation const& operation);
 
   virtual Status DeleteTransferJob(
       google::storagetransfer::v1::DeleteTransferJobRequest const& request);

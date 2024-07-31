@@ -90,24 +90,23 @@ IntentsTracingConnection::BatchUpdateIntents(
 
 StatusOr<google::longrunning::Operation>
 IntentsTracingConnection::BatchUpdateIntents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchUpdateIntents");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->BatchUpdateIntents(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchUpdateIntents(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
 IntentsTracingConnection::BatchUpdateIntents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchUpdateIntents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchUpdateIntents(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchUpdateIntents(operation));
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -122,24 +121,23 @@ IntentsTracingConnection::BatchDeleteIntents(
 
 StatusOr<google::longrunning::Operation>
 IntentsTracingConnection::BatchDeleteIntents(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchDeleteIntents");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span,
-      child_->BatchDeleteIntents(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span,
+                           child_->BatchDeleteIntents(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::protobuf::Struct>>
 IntentsTracingConnection::BatchDeleteIntents(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "dialogflow_es::IntentsConnection::BatchDeleteIntents");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->BatchDeleteIntents(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->BatchDeleteIntents(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

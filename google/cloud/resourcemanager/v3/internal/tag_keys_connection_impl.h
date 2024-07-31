@@ -67,12 +67,11 @@ class TagKeysConnectionImpl : public resourcemanager_v3::TagKeysConnection {
       override;
 
   StatusOr<google::longrunning::Operation> CreateTagKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> CreateTagKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> UpdateTagKey(
@@ -80,12 +79,11 @@ class TagKeysConnectionImpl : public resourcemanager_v3::TagKeysConnection {
       override;
 
   StatusOr<google::longrunning::Operation> UpdateTagKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> UpdateTagKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> DeleteTagKey(
@@ -93,12 +91,11 @@ class TagKeysConnectionImpl : public resourcemanager_v3::TagKeysConnection {
       override;
 
   StatusOr<google::longrunning::Operation> DeleteTagKey(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request)
       override;
 
   future<StatusOr<google::cloud::resourcemanager::v3::TagKey>> DeleteTagKey(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

@@ -218,9 +218,8 @@ CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        ActivateCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    ActivateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -235,7 +234,7 @@ CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -313,9 +312,8 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        CreateCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    CreateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -330,7 +328,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -408,9 +406,8 @@ CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DisableCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DisableCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -425,7 +422,7 @@ CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -503,9 +500,8 @@ CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        EnableCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    EnableCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -520,7 +516,7 @@ CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -672,9 +668,8 @@ CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UndeleteCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UndeleteCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -689,7 +684,7 @@ CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -767,9 +762,8 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DeleteCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -784,7 +778,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -862,9 +856,8 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateAuthorityRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -879,7 +872,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -958,7 +951,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -975,7 +968,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceConnectionImpl::CreateCaPool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1054,7 +1047,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1071,7 +1064,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::CaPool>>
 CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1200,7 +1193,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1217,7 +1210,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1371,9 +1364,8 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateRevocationListRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateRevocationListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1390,7 +1382,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
 future<
     StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1468,9 +1460,8 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        CreateCertificateTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    CreateCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1485,7 +1476,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1563,9 +1554,8 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        DeleteCertificateTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    DeleteCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1580,7 +1570,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
 
 future<StatusOr<google::cloud::security::privateca::v1::OperationMetadata>>
 CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::
@@ -1713,9 +1703,8 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
 
 StatusOr<google::longrunning::Operation>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::security::privateca::v1::
-        UpdateCertificateTemplateRequest const& request) {
+    NoAwaitTag, google::cloud::security::privateca::v1::
+                    UpdateCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1730,7 +1719,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>>
 CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::security::privateca::v1::

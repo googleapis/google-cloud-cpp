@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPHUB_V1_APP_HUB_CLIENT_H
 
 #include "google/cloud/apphub/v1/app_hub_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -279,7 +278,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::apphub::v1::ServiceProjectAttachment const&
           service_project_attachment,
       std::string const& service_project_attachment_id, Options opts = {});
@@ -336,7 +335,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
           request,
       Options opts = {});
@@ -352,8 +351,7 @@ class AppHubClient {
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
   CreateServiceProjectAttachment(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -461,7 +459,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -515,7 +513,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
           request,
       Options opts = {});
@@ -531,8 +529,7 @@ class AppHubClient {
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
   DeleteServiceProjectAttachment(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -927,7 +924,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::apphub::v1::Service const& service,
       std::string const& service_id, Options opts = {});
 
@@ -981,7 +978,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateServiceRequest const& request,
       Options opts = {});
 
@@ -995,8 +992,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1110,8 +1106,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::apphub::v1::Service const& service,
+      NoAwaitTag, google::cloud::apphub::v1::Service const& service,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1164,7 +1159,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateServiceRequest const& request,
       Options opts = {});
 
@@ -1178,8 +1173,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1227,7 +1221,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1279,7 +1273,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteServiceRequest const& request,
       Options opts = {});
 
@@ -1293,8 +1287,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1625,7 +1618,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::apphub::v1::Workload const& workload,
       std::string const& workload_id, Options opts = {});
 
@@ -1679,7 +1672,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateWorkloadRequest const& request,
       Options opts = {});
 
@@ -1693,8 +1686,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1808,8 +1800,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkload(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::apphub::v1::Workload const& workload,
+      NoAwaitTag, google::cloud::apphub::v1::Workload const& workload,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1862,7 +1853,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateWorkloadRequest const& request,
       Options opts = {});
 
@@ -1876,8 +1867,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1925,7 +1915,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkload(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1977,7 +1967,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteWorkload(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteWorkloadRequest const& request,
       Options opts = {});
 
@@ -1991,8 +1981,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2121,7 +2110,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateApplication(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::apphub::v1::Application const& application,
       std::string const& application_id, Options opts = {});
 
@@ -2175,7 +2164,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::CreateApplicationRequest const& request,
       Options opts = {});
 
@@ -2189,8 +2178,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Application>> CreateApplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2304,8 +2292,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::apphub::v1::Application const& application,
+      NoAwaitTag, google::cloud::apphub::v1::Application const& application,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -2358,7 +2345,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::UpdateApplicationRequest const& request,
       Options opts = {});
 
@@ -2372,8 +2359,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::Application>> UpdateApplication(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2421,7 +2407,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteApplication(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2474,7 +2460,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteApplication(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::apphub::v1::DeleteApplicationRequest const& request,
       Options opts = {});
 
@@ -2488,8 +2474,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteApplication(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteApplication(google::longrunning::Operation const& operation,
                     Options opts = {});
 
  private:

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DEPLOY_V1_CLOUD_DEPLOY_CLIENT_H
 
 #include "google/cloud/deploy/v1/cloud_deploy_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -274,7 +273,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
       std::string const& delivery_pipeline_id, Options opts = {});
 
@@ -329,7 +328,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request,
       Options opts = {});
 
@@ -343,8 +342,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  CreateDeliveryPipeline(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  CreateDeliveryPipeline(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -398,7 +396,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -453,7 +451,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request,
       Options opts = {});
 
@@ -467,8 +465,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  UpdateDeliveryPipeline(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  UpdateDeliveryPipeline(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -516,7 +513,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -569,7 +566,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request,
       Options opts = {});
 
@@ -583,8 +580,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeliveryPipeline(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  DeleteDeliveryPipeline(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -829,7 +825,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTarget(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::deploy::v1::Target const& target,
       std::string const& target_id, Options opts = {});
 
@@ -883,8 +879,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTarget(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::deploy::v1::CreateTargetRequest const& request,
+      NoAwaitTag, google::cloud::deploy::v1::CreateTargetRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -897,8 +892,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -950,8 +944,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTarget(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::deploy::v1::Target const& target,
+      NoAwaitTag, google::cloud::deploy::v1::Target const& target,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -1004,8 +997,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTarget(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::deploy::v1::UpdateTargetRequest const& request,
+      NoAwaitTag, google::cloud::deploy::v1::UpdateTargetRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1018,8 +1010,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1065,8 +1056,7 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTarget(ExperimentalTag,
-                                                        NoAwaitTag,
+  StatusOr<google::longrunning::Operation> DeleteTarget(NoAwaitTag,
                                                         std::string const& name,
                                                         Options opts = {});
 
@@ -1120,8 +1110,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTarget(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::deploy::v1::DeleteTargetRequest const& request,
+      NoAwaitTag, google::cloud::deploy::v1::DeleteTargetRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -1134,8 +1123,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1321,7 +1309,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCustomTargetType(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
       std::string const& custom_target_type_id, Options opts = {});
 
@@ -1376,7 +1364,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request,
       Options opts = {});
 
@@ -1390,8 +1378,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  CreateCustomTargetType(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  CreateCustomTargetType(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -1445,7 +1432,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1500,7 +1487,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request,
       Options opts = {});
 
@@ -1514,8 +1501,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  UpdateCustomTargetType(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  UpdateCustomTargetType(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -1563,7 +1549,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1616,7 +1602,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request,
       Options opts = {});
 
@@ -1630,8 +1616,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteCustomTargetType(ExperimentalTag,
-                         google::longrunning::Operation const& operation,
+  DeleteCustomTargetType(google::longrunning::Operation const& operation,
                          Options opts = {});
 
   // clang-format off
@@ -1816,7 +1801,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateRelease(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::deploy::v1::Release const& release,
       std::string const& release_id, Options opts = {});
 
@@ -1870,7 +1855,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateRelease(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateReleaseRequest const& request,
       Options opts = {});
 
@@ -1884,8 +1869,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2297,7 +2281,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateRollout(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::deploy::v1::Rollout const& rollout,
       std::string const& rollout_id, Options opts = {});
 
@@ -2351,7 +2335,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateRollout(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateRolloutRequest const& request,
       Options opts = {});
 
@@ -2365,8 +2349,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2781,7 +2764,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAutomation(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::deploy::v1::Automation const& automation,
       std::string const& automation_id, Options opts = {});
 
@@ -2835,7 +2818,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::CreateAutomationRequest const& request,
       Options opts = {});
 
@@ -2849,8 +2832,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2902,8 +2884,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAutomation(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::deploy::v1::Automation const& automation,
+      NoAwaitTag, google::cloud::deploy::v1::Automation const& automation,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -2956,7 +2937,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::UpdateAutomationRequest const& request,
       Options opts = {});
 
@@ -2970,8 +2951,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3018,7 +2998,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAutomation(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3071,7 +3051,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteAutomation(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::deploy::v1::DeleteAutomationRequest const& request,
       Options opts = {});
 
@@ -3085,8 +3065,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteAutomation(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteAutomation(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off

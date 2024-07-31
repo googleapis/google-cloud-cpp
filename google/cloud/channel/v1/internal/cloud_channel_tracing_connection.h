@@ -71,12 +71,11 @@ class CloudChannelServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> ProvisionCloudIdentity(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::Customer>> ProvisionCloudIdentity(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::channel::v1::Entitlement> ListEntitlements(
@@ -99,12 +98,11 @@ class CloudChannelServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::CreateEntitlementRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> CreateEntitlement(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
@@ -112,12 +110,11 @@ class CloudChannelServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> ChangeParameters(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ChangeParametersRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeParameters(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -126,24 +123,22 @@ class CloudChannelServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> ChangeRenewalSettings(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>>
   ChangeRenewalSettings(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
       google::cloud::channel::v1::ChangeOfferRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> ChangeOffer(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ChangeOfferRequest const& request) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ChangeOffer(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
@@ -151,12 +146,11 @@ class CloudChannelServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> StartPaidService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::StartPaidServiceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> StartPaidService(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
@@ -164,12 +158,11 @@ class CloudChannelServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> SuspendEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::SuspendEntitlementRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> SuspendEntitlement(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
@@ -177,25 +170,23 @@ class CloudChannelServiceTracingConnection
                         request) override;
 
   StatusOr<google::longrunning::Operation> CancelEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::CancelEntitlementRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
-  CancelEntitlement(ExperimentalTag,
-                    google::longrunning::Operation const& operation) override;
+  CancelEntitlement(google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
       google::cloud::channel::v1::ActivateEntitlementRequest const& request)
       override;
 
   StatusOr<google::longrunning::Operation> ActivateEntitlement(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::ActivateEntitlementRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::Entitlement>> ActivateEntitlement(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
@@ -204,13 +195,12 @@ class CloudChannelServiceTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> TransferEntitlements(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::TransferEntitlementsRequest const& request)
       override;
 
   future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
   TransferEntitlements(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
@@ -219,13 +209,12 @@ class CloudChannelServiceTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> TransferEntitlementsToGoogle(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
           request) override;
 
   future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
   TransferEntitlementsToGoogle(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::channel::v1::ChannelPartnerLink>

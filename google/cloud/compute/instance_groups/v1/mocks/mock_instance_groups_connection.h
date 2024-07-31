@@ -58,15 +58,13 @@ class MockInstanceGroupsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               AddInstances,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::instance_groups::v1::
-                   AddInstancesRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                               AddInstancesRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddInstances,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -88,15 +86,13 @@ class MockInstanceGroupsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               DeleteInstanceGroup,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::instance_groups::v1::
-                   DeleteInstanceGroupRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                               DeleteInstanceGroupRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstanceGroup,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>,
@@ -116,15 +112,13 @@ class MockInstanceGroupsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertInstanceGroup,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::instance_groups::v1::
-                   InsertInstanceGroupRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                               InsertInstanceGroupRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertInstanceGroup,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>),
@@ -151,15 +145,13 @@ class MockInstanceGroupsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               RemoveInstances,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::instance_groups::v1::
-                   RemoveInstancesRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                               RemoveInstancesRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveInstances,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -173,15 +165,13 @@ class MockInstanceGroupsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               SetNamedPorts,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::instance_groups::v1::
-                   SetNamedPortsRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::instance_groups::v1::
+                               SetNamedPortsRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetNamedPorts,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

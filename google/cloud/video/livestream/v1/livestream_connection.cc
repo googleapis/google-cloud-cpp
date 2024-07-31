@@ -48,7 +48,7 @@ LivestreamServiceConnection::CreateChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::CreateChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::CreateChannelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -56,7 +56,7 @@ LivestreamServiceConnection::CreateChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceConnection::CreateChannel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::Channel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -86,7 +86,7 @@ LivestreamServiceConnection::DeleteChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::DeleteChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::DeleteChannelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -94,7 +94,7 @@ LivestreamServiceConnection::DeleteChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnection::DeleteChannel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -110,7 +110,7 @@ LivestreamServiceConnection::UpdateChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::UpdateChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::UpdateChannelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -118,7 +118,7 @@ LivestreamServiceConnection::UpdateChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceConnection::UpdateChannel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::Channel>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -134,7 +134,7 @@ LivestreamServiceConnection::StartChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::StartChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::StartChannelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -142,7 +142,7 @@ LivestreamServiceConnection::StartChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceConnection::StartChannel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -158,7 +158,7 @@ LivestreamServiceConnection::StopChannel(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::StopChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::StopChannelRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -166,7 +166,7 @@ LivestreamServiceConnection::StopChannel(
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceConnection::StopChannel(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -182,7 +182,7 @@ LivestreamServiceConnection::CreateInput(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::CreateInput(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::CreateInputRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -190,7 +190,7 @@ LivestreamServiceConnection::CreateInput(
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceConnection::CreateInput(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::Input>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -220,7 +220,7 @@ LivestreamServiceConnection::DeleteInput(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::DeleteInput(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::DeleteInputRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -228,7 +228,7 @@ LivestreamServiceConnection::DeleteInput(
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnection::DeleteInput(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -244,7 +244,7 @@ LivestreamServiceConnection::UpdateInput(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::UpdateInput(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::UpdateInputRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -252,7 +252,7 @@ LivestreamServiceConnection::UpdateInput(
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceConnection::UpdateInput(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::Input>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -307,15 +307,14 @@ LivestreamServiceConnection::CreateClip(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::CreateClip(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::CreateClipRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Clip>>
-LivestreamServiceConnection::CreateClip(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+LivestreamServiceConnection::CreateClip(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::Clip>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -331,15 +330,14 @@ LivestreamServiceConnection::DeleteClip(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::DeleteClip(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::DeleteClipRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-LivestreamServiceConnection::DeleteClip(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+LivestreamServiceConnection::DeleteClip(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -355,7 +353,7 @@ LivestreamServiceConnection::CreateAsset(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::CreateAsset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::CreateAssetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -363,7 +361,7 @@ LivestreamServiceConnection::CreateAsset(
 
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
 LivestreamServiceConnection::CreateAsset(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::Asset>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -379,7 +377,7 @@ LivestreamServiceConnection::DeleteAsset(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::DeleteAsset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::DeleteAssetRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -387,7 +385,7 @@ LivestreamServiceConnection::DeleteAsset(
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnection::DeleteAsset(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -423,15 +421,14 @@ LivestreamServiceConnection::UpdatePool(
 
 StatusOr<google::longrunning::Operation>
 LivestreamServiceConnection::UpdatePool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::UpdatePoolRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Pool>>
-LivestreamServiceConnection::UpdatePool(ExperimentalTag,
-                                        google::longrunning::Operation const&) {
+LivestreamServiceConnection::UpdatePool(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::video::livestream::v1::Pool>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

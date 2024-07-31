@@ -22,7 +22,6 @@
 #include "google/cloud/appengine/v1/domain_mappings_connection_idempotency_policy.h"
 #include "google/cloud/appengine/v1/internal/domain_mappings_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -199,36 +198,33 @@ class DomainMappingsConnection {
       google::appengine::v1::CreateDomainMappingRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDomainMapping(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::appengine::v1::CreateDomainMappingRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::DomainMapping>>
-  CreateDomainMapping(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  CreateDomainMapping(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::DomainMapping>>
   UpdateDomainMapping(
       google::appengine::v1::UpdateDomainMappingRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateDomainMapping(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::appengine::v1::UpdateDomainMappingRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::DomainMapping>>
-  UpdateDomainMapping(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  UpdateDomainMapping(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
   DeleteDomainMapping(
       google::appengine::v1::DeleteDomainMappingRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDomainMapping(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::appengine::v1::DeleteDomainMappingRequest const& request);
 
   virtual future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-  DeleteDomainMapping(ExperimentalTag,
-                      google::longrunning::Operation const& operation);
+  DeleteDomainMapping(google::longrunning::Operation const& operation);
 };
 
 /**

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEUSAGE_V1_SERVICE_USAGE_CLIENT_H
 
 #include "google/cloud/serviceusage/v1/service_usage_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -144,7 +143,7 @@ class ServiceUsageClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> EnableService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::serviceusage::v1::EnableServiceRequest const& request,
       Options opts = {});
 
@@ -158,8 +157,7 @@ class ServiceUsageClient {
   ///
   // clang-format on
   future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
-  EnableService(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  EnableService(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -219,7 +217,7 @@ class ServiceUsageClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DisableService(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::serviceusage::v1::DisableServiceRequest const& request,
       Options opts = {});
 
@@ -233,8 +231,7 @@ class ServiceUsageClient {
   ///
   // clang-format on
   future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
-  DisableService(ExperimentalTag,
-                 google::longrunning::Operation const& operation,
+  DisableService(google::longrunning::Operation const& operation,
                  Options opts = {});
 
   // clang-format off
@@ -373,7 +370,7 @@ class ServiceUsageClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchEnableServices(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::api::serviceusage::v1::BatchEnableServicesRequest const& request,
       Options opts = {});
 
@@ -387,8 +384,7 @@ class ServiceUsageClient {
   ///
   // clang-format on
   future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
-  BatchEnableServices(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  BatchEnableServices(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off

@@ -57,11 +57,11 @@ class GoldenThingAdminRestConnectionImpl
   CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  CreateDatabase(ExperimentalTag, NoAwaitTag,
+  CreateDatabase(NoAwaitTag,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>
-  CreateDatabase(ExperimentalTag,
+  CreateDatabase(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::test::admin::database::v1::Database>
@@ -71,11 +71,11 @@ class GoldenThingAdminRestConnectionImpl
   UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag,
+  UpdateDatabaseDdl(NoAwaitTag,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(ExperimentalTag,
+  UpdateDatabaseDdl(
       google::longrunning::Operation const& operation) override;
 
   Status
@@ -97,11 +97,11 @@ class GoldenThingAdminRestConnectionImpl
   CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  CreateBackup(ExperimentalTag, NoAwaitTag,
+  CreateBackup(NoAwaitTag,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Backup>>
-  CreateBackup(ExperimentalTag,
+  CreateBackup(
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::test::admin::database::v1::Backup>
@@ -120,11 +120,11 @@ class GoldenThingAdminRestConnectionImpl
   RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation>
-  RestoreDatabase(ExperimentalTag, NoAwaitTag,
+  RestoreDatabase(NoAwaitTag,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   future<StatusOr<google::test::admin::database::v1::Database>>
-  RestoreDatabase(ExperimentalTag,
+  RestoreDatabase(
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::longrunning::Operation>

@@ -21,7 +21,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCE_GROUP_MANAGER_RESIZE_REQUESTS_V1_INSTANCE_GROUP_MANAGER_RESIZE_REQUESTS_CLIENT_H
 
 #include "google/cloud/compute/instance_group_manager_resize_requests/v1/instance_group_manager_resize_requests_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -149,8 +148,8 @@ class InstanceGroupManagerResizeRequestsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Cancel(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       std::string const& resize_request, Options opts = {});
 
   // clang-format off
@@ -207,7 +206,7 @@ class InstanceGroupManagerResizeRequestsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> Cancel(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           CancelRequest const& request,
       Options opts = {});
@@ -222,7 +221,6 @@ class InstanceGroupManagerResizeRequestsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Cancel(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -282,8 +280,8 @@ class InstanceGroupManagerResizeRequestsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManagerResizeRequest(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       std::string const& resize_request, Options opts = {});
 
   // clang-format off
@@ -341,7 +339,7 @@ class InstanceGroupManagerResizeRequestsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   DeleteInstanceGroupManagerResizeRequest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           DeleteInstanceGroupManagerResizeRequestRequest const& request,
       Options opts = {});
@@ -357,7 +355,6 @@ class InstanceGroupManagerResizeRequestsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteInstanceGroupManagerResizeRequest(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
@@ -486,8 +483,8 @@ class InstanceGroupManagerResizeRequestsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManagerResizeRequest(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& instance_group_manager,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance_group_manager,
       google::cloud::cpp::compute::v1::InstanceGroupManagerResizeRequest const&
           instance_group_manager_resize_request_resource,
       Options opts = {});
@@ -546,7 +543,7 @@ class InstanceGroupManagerResizeRequestsClient {
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
   InsertInstanceGroupManagerResizeRequest(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::instance_group_manager_resize_requests::v1::
           InsertInstanceGroupManagerResizeRequestRequest const& request,
       Options opts = {});
@@ -562,7 +559,6 @@ class InstanceGroupManagerResizeRequestsClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertInstanceGroupManagerResizeRequest(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 

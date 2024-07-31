@@ -46,14 +46,13 @@ future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::CreateKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnection::CreateKey(
-    ExperimentalTag, NoAwaitTag,
-    google::api::apikeys::v2::CreateKeyRequest const&) {
+    NoAwaitTag, google::api::apikeys::v2::CreateKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::CreateKey(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::apikeys::v2::Key>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -85,14 +84,13 @@ future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::UpdateKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnection::UpdateKey(
-    ExperimentalTag, NoAwaitTag,
-    google::api::apikeys::v2::UpdateKeyRequest const&) {
+    NoAwaitTag, google::api::apikeys::v2::UpdateKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::UpdateKey(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::apikeys::v2::Key>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -106,14 +104,13 @@ future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::DeleteKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnection::DeleteKey(
-    ExperimentalTag, NoAwaitTag,
-    google::api::apikeys::v2::DeleteKeyRequest const&) {
+    NoAwaitTag, google::api::apikeys::v2::DeleteKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::DeleteKey(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::apikeys::v2::Key>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -127,14 +124,13 @@ future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::UndeleteKey(
 }
 
 StatusOr<google::longrunning::Operation> ApiKeysConnection::UndeleteKey(
-    ExperimentalTag, NoAwaitTag,
-    google::api::apikeys::v2::UndeleteKeyRequest const&) {
+    NoAwaitTag, google::api::apikeys::v2::UndeleteKeyRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>> ApiKeysConnection::UndeleteKey(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::api::apikeys::v2::Key>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

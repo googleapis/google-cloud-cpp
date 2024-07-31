@@ -69,17 +69,15 @@ InterconnectAttachmentsClient::DeleteInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsClient::DeleteInterconnectAttachment(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& interconnect_attachment,
-    Options opts) {
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& interconnect_attachment, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::interconnect_attachments::v1::
       DeleteInterconnectAttachmentRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_interconnect_attachment(interconnect_attachment);
-  return connection_->DeleteInterconnectAttachment(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->DeleteInterconnectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -93,22 +91,19 @@ InterconnectAttachmentsClient::DeleteInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsClient::DeleteInterconnectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         DeleteInterconnectAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInterconnectAttachment(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->DeleteInterconnectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsClient::DeleteInterconnectAttachment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInterconnectAttachment(ExperimentalTag{},
-                                                   operation);
+  return connection_->DeleteInterconnectAttachment(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -151,8 +146,7 @@ InterconnectAttachmentsClient::InsertInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsClient::InsertInterconnectAttachment(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::InterconnectAttachment const&
         interconnect_attachment_resource,
     Options opts) {
@@ -163,8 +157,7 @@ InterconnectAttachmentsClient::InsertInterconnectAttachment(
   request.set_region(region);
   *request.mutable_interconnect_attachment_resource() =
       interconnect_attachment_resource;
-  return connection_->InsertInterconnectAttachment(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->InsertInterconnectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -178,22 +171,19 @@ InterconnectAttachmentsClient::InsertInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsClient::InsertInterconnectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         InsertInterconnectAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInterconnectAttachment(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->InsertInterconnectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsClient::InsertInterconnectAttachment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInterconnectAttachment(ExperimentalTag{},
-                                                   operation);
+  return connection_->InsertInterconnectAttachment(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InterconnectAttachment>
@@ -236,8 +226,8 @@ InterconnectAttachmentsClient::PatchInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsClient::PatchInterconnectAttachment(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& interconnect_attachment,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& interconnect_attachment,
     google::cloud::cpp::compute::v1::InterconnectAttachment const&
         interconnect_attachment_resource,
     Options opts) {
@@ -249,8 +239,7 @@ InterconnectAttachmentsClient::PatchInterconnectAttachment(
   request.set_interconnect_attachment(interconnect_attachment);
   *request.mutable_interconnect_attachment_resource() =
       interconnect_attachment_resource;
-  return connection_->PatchInterconnectAttachment(ExperimentalTag{},
-                                                  NoAwaitTag{}, request);
+  return connection_->PatchInterconnectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -264,21 +253,19 @@ InterconnectAttachmentsClient::PatchInterconnectAttachment(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsClient::PatchInterconnectAttachment(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         PatchInterconnectAttachmentRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInterconnectAttachment(ExperimentalTag{},
-                                                  NoAwaitTag{}, request);
+  return connection_->PatchInterconnectAttachment(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsClient::PatchInterconnectAttachment(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->PatchInterconnectAttachment(ExperimentalTag{}, operation);
+  return connection_->PatchInterconnectAttachment(operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -301,8 +288,8 @@ InterconnectAttachmentsClient::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsClient::SetLabels(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& resource,
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& resource,
     google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
         region_set_labels_request_resource,
     Options opts) {
@@ -314,7 +301,7 @@ InterconnectAttachmentsClient::SetLabels(
   request.set_resource(resource);
   *request.mutable_region_set_labels_request_resource() =
       region_set_labels_request_resource;
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -328,20 +315,19 @@ InterconnectAttachmentsClient::SetLabels(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 InterconnectAttachmentsClient::SetLabels(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::interconnect_attachments::v1::
         SetLabelsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SetLabels(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectAttachmentsClient::SetLabels(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SetLabels(ExperimentalTag{}, operation);
+  return connection_->SetLabels(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

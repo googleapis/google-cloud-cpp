@@ -210,15 +210,13 @@ DataCatalogConnection::ReconcileTags(
 }
 
 StatusOr<google::longrunning::Operation> DataCatalogConnection::ReconcileTags(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
+    NoAwaitTag, google::cloud::datacatalog::v1::ReconcileTagsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-DataCatalogConnection::ReconcileTags(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+DataCatalogConnection::ReconcileTags(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -261,15 +259,13 @@ DataCatalogConnection::ImportEntries(
 }
 
 StatusOr<google::longrunning::Operation> DataCatalogConnection::ImportEntries(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
+    NoAwaitTag, google::cloud::datacatalog::v1::ImportEntriesRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-DataCatalogConnection::ImportEntries(ExperimentalTag,
-                                     google::longrunning::Operation const&) {
+DataCatalogConnection::ImportEntries(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

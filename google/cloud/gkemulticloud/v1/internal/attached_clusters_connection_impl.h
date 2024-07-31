@@ -58,13 +58,12 @@ class AttachedClustersConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   CreateAttachedCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -73,13 +72,12 @@ class AttachedClustersConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   UpdateAttachedCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
@@ -88,13 +86,12 @@ class AttachedClustersConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
   ImportAttachedCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -113,13 +110,12 @@ class AttachedClustersConnectionImpl
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
           request) override;
 
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
   DeleteAttachedCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>

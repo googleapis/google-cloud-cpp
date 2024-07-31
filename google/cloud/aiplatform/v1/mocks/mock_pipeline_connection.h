@@ -78,15 +78,14 @@ class MockPipelineServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTrainingPipeline,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeleteTrainingPipeline,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteTrainingPipeline, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -121,14 +120,13 @@ class MockPipelineServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeletePipelineJob,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
-      DeletePipelineJob,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeletePipelineJob, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -144,7 +142,7 @@ class MockPipelineServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeletePipelineJobs,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
            request),
       (override));
@@ -153,8 +151,7 @@ class MockPipelineServiceConnection
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>,
       BatchDeletePipelineJobs,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       Status, CancelPipelineJob,
@@ -174,7 +171,7 @@ class MockPipelineServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchCancelPipelineJobs,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
            request),
       (override));
@@ -183,8 +180,7 @@ class MockPipelineServiceConnection
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>,
       BatchCancelPipelineJobs,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

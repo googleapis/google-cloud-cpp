@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSCONFIG_V1_OS_CONFIG_ZONAL_CLIENT_H
 
 #include "google/cloud/osconfig/v1/os_config_zonal_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -160,7 +159,7 @@ class OsConfigZonalServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::osconfig::v1::OSPolicyAssignment const&
           os_policy_assignment,
       std::string const& os_policy_assignment_id, Options opts = {});
@@ -225,7 +224,7 @@ class OsConfigZonalServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateOSPolicyAssignment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request,
       Options opts = {});
@@ -240,8 +239,7 @@ class OsConfigZonalServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  CreateOSPolicyAssignment(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  CreateOSPolicyAssignment(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off
@@ -301,7 +299,7 @@ class OsConfigZonalServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::osconfig::v1::OSPolicyAssignment const&
           os_policy_assignment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -366,7 +364,7 @@ class OsConfigZonalServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateOSPolicyAssignment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request,
       Options opts = {});
@@ -381,8 +379,7 @@ class OsConfigZonalServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>>
-  UpdateOSPolicyAssignment(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  UpdateOSPolicyAssignment(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off
@@ -664,7 +661,7 @@ class OsConfigZonalServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -730,7 +727,7 @@ class OsConfigZonalServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteOSPolicyAssignment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request,
       Options opts = {});
@@ -746,8 +743,7 @@ class OsConfigZonalServiceClient {
   // clang-format on
   future<StatusOr<
       google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>>
-  DeleteOSPolicyAssignment(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  DeleteOSPolicyAssignment(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off

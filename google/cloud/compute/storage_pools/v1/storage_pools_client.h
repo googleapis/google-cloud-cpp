@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_STORAGE_POOLS_V1_STORAGE_POOLS_CLIENT_H
 
 #include "google/cloud/compute/storage_pools/v1/storage_pools_rest_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -220,9 +219,8 @@ class StoragePoolsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& storage_pool,
-      Options opts = {});
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& storage_pool, Options opts = {});
 
   // clang-format off
   ///
@@ -278,7 +276,7 @@ class StoragePoolsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteStoragePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           DeleteStoragePoolRequest const& request,
       Options opts = {});
@@ -293,8 +291,7 @@ class StoragePoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteStoragePool(ExperimentalTag,
-                    google::cloud::cpp::compute::v1::Operation const& operation,
+  DeleteStoragePool(google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -475,8 +472,7 @@ class StoragePoolsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone,
+      NoAwaitTag, std::string const& project, std::string const& zone,
       google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
       Options opts = {});
 
@@ -532,7 +528,7 @@ class StoragePoolsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertStoragePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           InsertStoragePoolRequest const& request,
       Options opts = {});
@@ -547,8 +543,7 @@ class StoragePoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertStoragePool(ExperimentalTag,
-                    google::cloud::cpp::compute::v1::Operation const& operation,
+  InsertStoragePool(google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -899,9 +894,8 @@ class StoragePoolsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
-      ExperimentalTag, NoAwaitTag, std::string const& project,
-      std::string const& zone, std::string const& storage_pool,
-      std::string const& update_mask,
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& storage_pool, std::string const& update_mask,
       google::cloud::cpp::compute::v1::StoragePool const& storage_pool_resource,
       Options opts = {});
 
@@ -960,7 +954,7 @@ class StoragePoolsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateStoragePool(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::storage_pools::v1::
           UpdateStoragePoolRequest const& request,
       Options opts = {});
@@ -975,8 +969,7 @@ class StoragePoolsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateStoragePool(ExperimentalTag,
-                    google::cloud::cpp::compute::v1::Operation const& operation,
+  UpdateStoragePool(google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
  private:

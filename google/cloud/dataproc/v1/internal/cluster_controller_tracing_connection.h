@@ -45,12 +45,11 @@ class ClusterControllerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> CreateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::CreateClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
@@ -58,34 +57,31 @@ class ClusterControllerTracingConnection
       override;
 
   StatusOr<google::longrunning::Operation> UpdateCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::UpdateClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
       google::cloud::dataproc::v1::StopClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StopCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::StopClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
       google::cloud::dataproc::v1::StartClusterRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> StartCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::StartClusterRequest const& request) override;
 
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
@@ -93,13 +89,12 @@ class ClusterControllerTracingConnection
                     request) override;
 
   StatusOr<google::longrunning::Operation> DeleteCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::DeleteClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
-  DeleteCluster(ExperimentalTag,
-                google::longrunning::Operation const& operation) override;
+  DeleteCluster(google::longrunning::Operation const& operation) override;
 
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
       google::cloud::dataproc::v1::GetClusterRequest const& request) override;
@@ -112,13 +107,12 @@ class ClusterControllerTracingConnection
                       request) override;
 
   StatusOr<google::longrunning::Operation> DiagnoseCluster(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dataproc::v1::DiagnoseClusterRequest const& request)
       override;
 
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
-  DiagnoseCluster(ExperimentalTag,
-                  google::longrunning::Operation const& operation) override;
+  DiagnoseCluster(google::longrunning::Operation const& operation) override;
 
  private:
   std::shared_ptr<dataproc_v1::ClusterControllerConnection> child_;

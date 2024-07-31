@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_FEATURE_ONLINE_STORE_ADMIN_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/feature_online_store_admin_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -153,7 +152,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::FeatureOnlineStore const&
           feature_online_store,
       std::string const& feature_online_store_id, Options opts = {});
@@ -210,7 +209,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
           request,
       Options opts = {});
@@ -225,8 +224,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  CreateFeatureOnlineStore(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  CreateFeatureOnlineStore(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off
@@ -427,7 +425,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::FeatureOnlineStore const&
           feature_online_store,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -484,7 +482,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
           request,
       Options opts = {});
@@ -499,8 +497,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  UpdateFeatureOnlineStore(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  UpdateFeatureOnlineStore(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off
@@ -554,8 +551,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag, std::string const& name, bool force,
-      Options opts = {});
+      NoAwaitTag, std::string const& name, bool force, Options opts = {});
 
   // clang-format off
   ///
@@ -610,7 +606,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
           request,
       Options opts = {});
@@ -625,8 +621,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureOnlineStore(ExperimentalTag,
-                           google::longrunning::Operation const& operation,
+  DeleteFeatureOnlineStore(google::longrunning::Operation const& operation,
                            Options opts = {});
 
   // clang-format off
@@ -686,7 +681,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeatureView(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::FeatureView const& feature_view,
       std::string const& feature_view_id, Options opts = {});
 
@@ -741,7 +736,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeatureView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
       Options opts = {});
 
@@ -755,8 +750,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  CreateFeatureView(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -953,7 +947,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeatureView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::FeatureView const& feature_view,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1008,7 +1002,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeatureView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
       Options opts = {});
 
@@ -1022,8 +1016,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateFeatureView(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1072,7 +1065,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeatureView(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1125,7 +1118,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeatureView(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
       Options opts = {});
 
@@ -1139,8 +1132,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureView(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteFeatureView(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off

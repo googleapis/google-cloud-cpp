@@ -22,7 +22,6 @@
 #include "google/cloud/config/v1/config_connection_idempotency_policy.h"
 #include "google/cloud/config/v1/internal/config_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -194,36 +193,33 @@ class ConfigConnection {
       google::cloud::config::v1::CreateDeploymentRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateDeployment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::config::v1::CreateDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  CreateDeployment(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  CreateDeployment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
   UpdateDeployment(
       google::cloud::config::v1::UpdateDeploymentRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateDeployment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::config::v1::UpdateDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  UpdateDeployment(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  UpdateDeployment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
   DeleteDeployment(
       google::cloud::config::v1::DeleteDeploymentRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteDeployment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::config::v1::DeleteDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  DeleteDeployment(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteDeployment(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::config::v1::Revision> ListRevisions(
       google::cloud::config::v1::ListRevisionsRequest request);
@@ -257,24 +253,22 @@ class ConfigConnection {
       google::cloud::config::v1::LockDeploymentRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> LockDeployment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::config::v1::LockDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  LockDeployment(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  LockDeployment(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
   UnlockDeployment(
       google::cloud::config::v1::UnlockDeploymentRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UnlockDeployment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::config::v1::UnlockDeploymentRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Deployment>>
-  UnlockDeployment(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  UnlockDeployment(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
       google::cloud::config::v1::ExportLockInfoRequest const& request);
@@ -283,11 +277,11 @@ class ConfigConnection {
       google::cloud::config::v1::CreatePreviewRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreatePreview(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::config::v1::CreatePreviewRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Preview>> CreatePreview(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::config::v1::Preview> GetPreview(
       google::cloud::config::v1::GetPreviewRequest const& request);
@@ -299,11 +293,11 @@ class ConfigConnection {
       google::cloud::config::v1::DeletePreviewRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeletePreview(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::config::v1::DeletePreviewRequest const& request);
 
   virtual future<StatusOr<google::cloud::config::v1::Preview>> DeletePreview(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
   ExportPreviewResult(

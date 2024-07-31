@@ -106,7 +106,7 @@ NodeGroupsRestConnectionImpl::AddNodes(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestConnectionImpl::AddNodes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -124,7 +124,6 @@ NodeGroupsRestConnectionImpl::AddNodes(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestConnectionImpl::AddNodes(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -281,7 +280,7 @@ NodeGroupsRestConnectionImpl::DeleteNodeGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestConnectionImpl::DeleteNodeGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -298,7 +297,6 @@ NodeGroupsRestConnectionImpl::DeleteNodeGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestConnectionImpl::DeleteNodeGroup(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -414,7 +412,7 @@ NodeGroupsRestConnectionImpl::DeleteNodes(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestConnectionImpl::DeleteNodes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -431,7 +429,6 @@ NodeGroupsRestConnectionImpl::DeleteNodes(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestConnectionImpl::DeleteNodes(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -579,7 +576,7 @@ NodeGroupsRestConnectionImpl::InsertNodeGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestConnectionImpl::InsertNodeGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -596,7 +593,6 @@ NodeGroupsRestConnectionImpl::InsertNodeGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestConnectionImpl::InsertNodeGroup(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -784,7 +780,7 @@ NodeGroupsRestConnectionImpl::PatchNodeGroup(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestConnectionImpl::PatchNodeGroup(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -801,7 +797,6 @@ NodeGroupsRestConnectionImpl::PatchNodeGroup(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestConnectionImpl::PatchNodeGroup(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -917,9 +912,8 @@ NodeGroupsRestConnectionImpl::PerformMaintenance(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestConnectionImpl::PerformMaintenance(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::node_groups::v1::
-        PerformMaintenanceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::
+                    PerformMaintenanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -934,7 +928,6 @@ NodeGroupsRestConnectionImpl::PerformMaintenance(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestConnectionImpl::PerformMaintenance(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1066,7 +1059,7 @@ NodeGroupsRestConnectionImpl::SetNodeTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestConnectionImpl::SetNodeTemplate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -1083,7 +1076,6 @@ NodeGroupsRestConnectionImpl::SetNodeTemplate(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestConnectionImpl::SetNodeTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -1199,9 +1191,8 @@ NodeGroupsRestConnectionImpl::SimulateMaintenanceEvent(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 NodeGroupsRestConnectionImpl::SimulateMaintenanceEvent(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::node_groups::v1::
-        SimulateMaintenanceEventRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::
+                    SimulateMaintenanceEventRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -1216,7 +1207,6 @@ NodeGroupsRestConnectionImpl::SimulateMaintenanceEvent(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestConnectionImpl::SimulateMaintenanceEvent(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

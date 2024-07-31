@@ -73,15 +73,13 @@ class MockRegionCommitmentsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               InsertCommitment,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_commitments::v1::
-                   InsertCommitmentRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                               InsertCommitmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               InsertCommitment,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Commitment>),
@@ -101,15 +99,13 @@ class MockRegionCommitmentsConnection
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
               UpdateCommitment,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::cpp::compute::region_commitments::v1::
-                   UpdateCommitmentRequest const& request),
+              (NoAwaitTag, google::cloud::cpp::compute::region_commitments::v1::
+                               UpdateCommitmentRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateCommitment,
-              (ExperimentalTag,
-               google::cloud::cpp::compute::v1::Operation const& operation),
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

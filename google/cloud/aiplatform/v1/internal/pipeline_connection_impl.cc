@@ -177,7 +177,7 @@ PipelineServiceConnectionImpl::DeleteTrainingPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::DeleteTrainingPipeline(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeleteTrainingPipelineRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -194,7 +194,7 @@ PipelineServiceConnectionImpl::DeleteTrainingPipeline(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceConnectionImpl::DeleteTrainingPipeline(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -351,7 +351,7 @@ PipelineServiceConnectionImpl::DeletePipelineJob(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::DeletePipelineJob(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::DeletePipelineJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
@@ -367,7 +367,7 @@ PipelineServiceConnectionImpl::DeletePipelineJob(
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 PipelineServiceConnectionImpl::DeletePipelineJob(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -446,7 +446,7 @@ PipelineServiceConnectionImpl::BatchDeletePipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::BatchDeletePipelineJobs(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::BatchDeletePipelineJobsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -464,7 +464,7 @@ PipelineServiceConnectionImpl::BatchDeletePipelineJobs(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchDeletePipelineJobsResponse>>
 PipelineServiceConnectionImpl::BatchDeletePipelineJobs(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::
@@ -557,7 +557,7 @@ PipelineServiceConnectionImpl::BatchCancelPipelineJobs(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceConnectionImpl::BatchCancelPipelineJobs(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::BatchCancelPipelineJobsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -575,7 +575,7 @@ PipelineServiceConnectionImpl::BatchCancelPipelineJobs(
 
 future<StatusOr<google::cloud::aiplatform::v1::BatchCancelPipelineJobsResponse>>
 PipelineServiceConnectionImpl::BatchCancelPipelineJobs(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::aiplatform::v1::

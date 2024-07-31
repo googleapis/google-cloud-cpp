@@ -55,12 +55,11 @@ class SnapshotsRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSnapshot(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Snapshot> GetSnapshot(
@@ -76,12 +75,11 @@ class SnapshotsRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSnapshot(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSnapshot(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Snapshot> ListSnapshots(
@@ -97,12 +95,11 @@ class SnapshotsRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

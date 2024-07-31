@@ -47,7 +47,7 @@ AnalyticsServiceConnection::ExportAnalyticsMetrics(
 
 StatusOr<google::longrunning::Operation>
 AnalyticsServiceConnection::ExportAnalyticsMetrics(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::retail::v2::ExportAnalyticsMetricsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -55,7 +55,7 @@ AnalyticsServiceConnection::ExportAnalyticsMetrics(
 
 future<StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>
 AnalyticsServiceConnection::ExportAnalyticsMetrics(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::retail::v2::ExportAnalyticsMetricsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

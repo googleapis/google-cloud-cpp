@@ -44,13 +44,13 @@ ModelServiceClient::CreateModel(std::string const& parent,
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceClient::CreateModel(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::retail::v2::Model const& model, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::CreateModelRequest request;
   request.set_parent(parent);
   *request.mutable_model() = model;
-  return connection_->CreateModel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::Model>>
@@ -62,19 +62,17 @@ ModelServiceClient::CreateModel(
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceClient::CreateModel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::CreateModelRequest const& request,
+    NoAwaitTag, google::cloud::retail::v2::CreateModelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateModel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::Model>>
-ModelServiceClient::CreateModel(ExperimentalTag,
-                                google::longrunning::Operation const& operation,
+ModelServiceClient::CreateModel(google::longrunning::Operation const& operation,
                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateModel(ExperimentalTag{}, operation);
+  return connection_->CreateModel(operation);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceClient::GetModel(
@@ -174,11 +172,11 @@ ModelServiceClient::TuneModel(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceClient::TuneModel(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::retail::v2::TuneModelRequest request;
   request.set_name(name);
-  return connection_->TuneModel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->TuneModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
@@ -189,18 +187,17 @@ ModelServiceClient::TuneModel(
 }
 
 StatusOr<google::longrunning::Operation> ModelServiceClient::TuneModel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::retail::v2::TuneModelRequest const& request, Options opts) {
+    NoAwaitTag, google::cloud::retail::v2::TuneModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TuneModel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->TuneModel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
-ModelServiceClient::TuneModel(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+ModelServiceClient::TuneModel(google::longrunning::Operation const& operation,
                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TuneModel(ExperimentalTag{}, operation);
+  return connection_->TuneModel(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INDEX_ENDPOINT_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/index_endpoint_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -140,7 +139,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::IndexEndpoint const& index_endpoint,
       Options opts = {});
 
@@ -195,7 +194,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateIndexEndpoint(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateIndexEndpointRequest const& request,
       Options opts = {});
 
@@ -209,8 +208,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>
-  CreateIndexEndpoint(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  CreateIndexEndpoint(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -452,7 +450,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -505,7 +503,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteIndexEndpoint(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const& request,
       Options opts = {});
 
@@ -519,8 +517,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteIndexEndpoint(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  DeleteIndexEndpoint(google::longrunning::Operation const& operation,
                       Options opts = {});
 
   // clang-format off
@@ -575,7 +572,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeployIndex(
-      ExperimentalTag, NoAwaitTag, std::string const& index_endpoint,
+      NoAwaitTag, std::string const& index_endpoint,
       google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
       Options opts = {});
 
@@ -631,7 +628,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeployIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeployIndexRequest const& request,
       Options opts = {});
 
@@ -645,7 +642,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>
-  DeployIndex(ExperimentalTag, google::longrunning::Operation const& operation,
+  DeployIndex(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -698,7 +695,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeployIndex(
-      ExperimentalTag, NoAwaitTag, std::string const& index_endpoint,
+      NoAwaitTag, std::string const& index_endpoint,
       std::string const& deployed_index_id, Options opts = {});
 
   // clang-format off
@@ -753,7 +750,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UndeployIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UndeployIndexRequest const& request,
       Options opts = {});
 
@@ -767,8 +764,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>
-  UndeployIndex(ExperimentalTag,
-                google::longrunning::Operation const& operation,
+  UndeployIndex(google::longrunning::Operation const& operation,
                 Options opts = {});
 
   // clang-format off
@@ -823,7 +819,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> MutateDeployedIndex(
-      ExperimentalTag, NoAwaitTag, std::string const& index_endpoint,
+      NoAwaitTag, std::string const& index_endpoint,
       google::cloud::aiplatform::v1::DeployedIndex const& deployed_index,
       Options opts = {});
 
@@ -878,7 +874,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> MutateDeployedIndex(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::MutateDeployedIndexRequest const& request,
       Options opts = {});
 
@@ -892,8 +888,7 @@ class IndexEndpointServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>
-  MutateDeployedIndex(ExperimentalTag,
-                      google::longrunning::Operation const& operation,
+  MutateDeployedIndex(google::longrunning::Operation const& operation,
                       Options opts = {});
 
  private:

@@ -48,16 +48,15 @@ RegionHealthChecksConnection::DeleteHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthChecksConnection::DeleteHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_health_checks::v1::
-        DeleteHealthCheckRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_health_checks::v1::
+                    DeleteHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksConnection::DeleteHealthCheck(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -81,16 +80,15 @@ RegionHealthChecksConnection::InsertHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthChecksConnection::InsertHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_health_checks::v1::
-        InsertHealthCheckRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_health_checks::v1::
+                    InsertHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksConnection::InsertHealthCheck(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -115,16 +113,15 @@ RegionHealthChecksConnection::PatchHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthChecksConnection::PatchHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_health_checks::v1::
-        PatchHealthCheckRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_health_checks::v1::
+                    PatchHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksConnection::PatchHealthCheck(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -141,16 +138,15 @@ RegionHealthChecksConnection::UpdateHealthCheck(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionHealthChecksConnection::UpdateHealthCheck(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_health_checks::v1::
-        UpdateHealthCheckRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::region_health_checks::v1::
+                    UpdateHealthCheckRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionHealthChecksConnection::UpdateHealthCheck(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

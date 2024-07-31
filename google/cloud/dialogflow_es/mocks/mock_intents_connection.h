@@ -81,15 +81,14 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchUpdateIntents,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::BatchUpdateIntentsRequest const& request),
       (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>,
-      BatchUpdateIntents,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchUpdateIntents, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -102,14 +101,12 @@ class MockIntentsConnection : public dialogflow_es::IntentsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchDeleteIntents,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::BatchDeleteIntentsRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchDeleteIntents,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

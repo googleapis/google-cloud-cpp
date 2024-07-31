@@ -23,7 +23,6 @@
 #include "google/cloud/compute/region_security_policies/v1/internal/region_security_policies_retry_traits.h"
 #include "google/cloud/compute/region_security_policies/v1/region_security_policies_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -201,12 +200,10 @@ class RegionSecurityPoliciesConnection {
           AddRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_security_policies::v1::
-          AddRuleRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_security_policies::v1::
+                      AddRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -214,13 +211,12 @@ class RegionSecurityPoliciesConnection {
                            v1::DeleteSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteSecurityPolicy(ExperimentalTag, NoAwaitTag,
+  DeleteSecurityPolicy(NoAwaitTag,
                        google::cloud::cpp::compute::region_security_policies::
                            v1::DeleteSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteSecurityPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -236,13 +232,12 @@ class RegionSecurityPoliciesConnection {
                            v1::InsertSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertSecurityPolicy(ExperimentalTag, NoAwaitTag,
+  InsertSecurityPolicy(NoAwaitTag,
                        google::cloud::cpp::compute::region_security_policies::
                            v1::InsertSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   InsertSecurityPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::SecurityPolicy>
@@ -255,13 +250,12 @@ class RegionSecurityPoliciesConnection {
                           v1::PatchSecurityPolicyRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PatchSecurityPolicy(ExperimentalTag, NoAwaitTag,
+  PatchSecurityPolicy(NoAwaitTag,
                       google::cloud::cpp::compute::region_security_policies::
                           v1::PatchSecurityPolicyRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PatchSecurityPolicy(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -269,26 +263,22 @@ class RegionSecurityPoliciesConnection {
                 PatchRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_security_policies::v1::
-          PatchRuleRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_security_policies::v1::
+                      PatchRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchRule(ExperimentalTag,
-            google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchRule(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveRule(google::cloud::cpp::compute::region_security_policies::v1::
                  RemoveRuleRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::region_security_policies::v1::
-          RemoveRuleRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::region_security_policies::v1::
+                      RemoveRuleRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveRule(ExperimentalTag,
-             google::cloud::cpp::compute::v1::Operation const& operation);
+  RemoveRule(google::cloud::cpp::compute::v1::Operation const& operation);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

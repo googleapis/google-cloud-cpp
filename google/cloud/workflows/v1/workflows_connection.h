@@ -22,7 +22,6 @@
 #include "google/cloud/workflows/v1/internal/workflows_retry_traits.h"
 #include "google/cloud/workflows/v1/workflows_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -197,36 +196,33 @@ class WorkflowsConnection {
       google::cloud::workflows::v1::CreateWorkflowRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateWorkflow(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workflows::v1::CreateWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
-  CreateWorkflow(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  CreateWorkflow(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
   DeleteWorkflow(
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteWorkflow(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workflows::v1::DeleteWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
-  DeleteWorkflow(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  DeleteWorkflow(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
   UpdateWorkflow(
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateWorkflow(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 
   virtual future<StatusOr<google::cloud::workflows::v1::Workflow>>
-  UpdateWorkflow(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  UpdateWorkflow(google::longrunning::Operation const& operation);
 };
 
 /**

@@ -22,7 +22,6 @@
 #include "google/cloud/compute/node_groups/v1/internal/node_groups_retry_traits.h"
 #include "google/cloud/compute/node_groups/v1/node_groups_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -190,12 +189,11 @@ class NodeGroupsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> AddNodes(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddNodes(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<std::pair<
@@ -208,13 +206,11 @@ class NodeGroupsConnection {
                       DeleteNodeGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodeGroup(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::
-          DeleteNodeGroupRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::
+                      DeleteNodeGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodeGroup(ExperimentalTag,
-                  google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteNodeGroup(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   DeleteNodes(
@@ -222,13 +218,12 @@ class NodeGroupsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteNodes(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteNodes(ExperimentalTag,
-              google::cloud::cpp::compute::v1::Operation const& operation);
+  DeleteNodes(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::NodeGroup> GetNodeGroup(
       google::cloud::cpp::compute::node_groups::v1::GetNodeGroupRequest const&
@@ -243,13 +238,11 @@ class NodeGroupsConnection {
                       InsertNodeGroupRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> InsertNodeGroup(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::
-          InsertNodeGroupRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::
+                      InsertNodeGroupRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertNodeGroup(ExperimentalTag,
-                  google::cloud::cpp::compute::v1::Operation const& operation);
+  InsertNodeGroup(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StreamRange<google::cloud::cpp::compute::v1::NodeGroup>
   ListNodeGroups(
@@ -265,26 +258,23 @@ class NodeGroupsConnection {
           request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> PatchNodeGroup(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PatchNodeGroup(ExperimentalTag,
-                 google::cloud::cpp::compute::v1::Operation const& operation);
+  PatchNodeGroup(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(google::cloud::cpp::compute::node_groups::v1::
                          PerformMaintenanceRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PerformMaintenance(ExperimentalTag, NoAwaitTag,
-                     google::cloud::cpp::compute::node_groups::v1::
-                         PerformMaintenanceRequest const& request);
+  PerformMaintenance(NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::
+                                     PerformMaintenanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   PerformMaintenance(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
@@ -296,26 +286,23 @@ class NodeGroupsConnection {
                       SetNodeTemplateRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation> SetNodeTemplate(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::node_groups::v1::
-          SetNodeTemplateRequest const& request);
+      NoAwaitTag, google::cloud::cpp::compute::node_groups::v1::
+                      SetNodeTemplateRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetNodeTemplate(ExperimentalTag,
-                  google::cloud::cpp::compute::v1::Operation const& operation);
+  SetNodeTemplate(google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SimulateMaintenanceEvent(google::cloud::cpp::compute::node_groups::v1::
                                SimulateMaintenanceEventRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SimulateMaintenanceEvent(ExperimentalTag, NoAwaitTag,
+  SimulateMaintenanceEvent(NoAwaitTag,
                            google::cloud::cpp::compute::node_groups::v1::
                                SimulateMaintenanceEventRequest const& request);
 
   virtual future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SimulateMaintenanceEvent(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation);
 
   virtual StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

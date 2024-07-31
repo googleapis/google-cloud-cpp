@@ -64,16 +64,14 @@ JobControllerClient::SubmitJobAsOperation(
 
 StatusOr<google::longrunning::Operation>
 JobControllerClient::SubmitJobAsOperation(
-    ExperimentalTag, NoAwaitTag, std::string const& project_id,
-    std::string const& region, google::cloud::dataproc::v1::Job const& job,
-    Options opts) {
+    NoAwaitTag, std::string const& project_id, std::string const& region,
+    google::cloud::dataproc::v1::Job const& job, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dataproc::v1::SubmitJobRequest request;
   request.set_project_id(project_id);
   request.set_region(region);
   *request.mutable_job() = job;
-  return connection_->SubmitJobAsOperation(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->SubmitJobAsOperation(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
@@ -86,20 +84,17 @@ JobControllerClient::SubmitJobAsOperation(
 
 StatusOr<google::longrunning::Operation>
 JobControllerClient::SubmitJobAsOperation(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::dataproc::v1::SubmitJobRequest const& request,
+    NoAwaitTag, google::cloud::dataproc::v1::SubmitJobRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SubmitJobAsOperation(ExperimentalTag{}, NoAwaitTag{},
-                                           request);
+  return connection_->SubmitJobAsOperation(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerClient::SubmitJobAsOperation(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SubmitJobAsOperation(ExperimentalTag{}, operation);
+  return connection_->SubmitJobAsOperation(operation);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::GetJob(

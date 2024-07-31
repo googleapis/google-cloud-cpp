@@ -107,9 +107,8 @@ RegionAutoscalersRestConnectionImpl::DeleteAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestConnectionImpl::DeleteAutoscaler(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_autoscalers::v1::
-        DeleteAutoscalerRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                    DeleteAutoscalerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -124,7 +123,6 @@ RegionAutoscalersRestConnectionImpl::DeleteAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersRestConnectionImpl::DeleteAutoscaler(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -256,9 +254,8 @@ RegionAutoscalersRestConnectionImpl::InsertAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestConnectionImpl::InsertAutoscaler(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_autoscalers::v1::
-        InsertAutoscalerRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                    InsertAutoscalerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -273,7 +270,6 @@ RegionAutoscalersRestConnectionImpl::InsertAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersRestConnectionImpl::InsertAutoscaler(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -429,9 +425,8 @@ RegionAutoscalersRestConnectionImpl::PatchAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestConnectionImpl::PatchAutoscaler(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_autoscalers::v1::
-        PatchAutoscalerRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                    PatchAutoscalerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -446,7 +441,6 @@ RegionAutoscalersRestConnectionImpl::PatchAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersRestConnectionImpl::PatchAutoscaler(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -562,9 +556,8 @@ RegionAutoscalersRestConnectionImpl::UpdateAutoscaler(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionAutoscalersRestConnectionImpl::UpdateAutoscaler(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::region_autoscalers::v1::
-        UpdateAutoscalerRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::region_autoscalers::v1::
+                    UpdateAutoscalerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -579,7 +572,6 @@ RegionAutoscalersRestConnectionImpl::UpdateAutoscaler(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionAutoscalersRestConnectionImpl::UpdateAutoscaler(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

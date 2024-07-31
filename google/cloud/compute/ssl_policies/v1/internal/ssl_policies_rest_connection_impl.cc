@@ -145,7 +145,7 @@ SslPoliciesRestConnectionImpl::DeleteSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesRestConnectionImpl::DeleteSslPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::ssl_policies::v1::DeleteSslPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -162,7 +162,6 @@ SslPoliciesRestConnectionImpl::DeleteSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesRestConnectionImpl::DeleteSslPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -290,7 +289,7 @@ SslPoliciesRestConnectionImpl::InsertSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesRestConnectionImpl::InsertSslPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::ssl_policies::v1::InsertSslPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -307,7 +306,6 @@ SslPoliciesRestConnectionImpl::InsertSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesRestConnectionImpl::InsertSslPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -472,7 +470,7 @@ SslPoliciesRestConnectionImpl::PatchSslPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 SslPoliciesRestConnectionImpl::PatchSslPolicy(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::ssl_policies::v1::PatchSslPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
@@ -489,7 +487,6 @@ SslPoliciesRestConnectionImpl::PatchSslPolicy(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 SslPoliciesRestConnectionImpl::PatchSslPolicy(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

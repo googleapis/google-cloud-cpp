@@ -57,12 +57,10 @@ class GlobalAddressesRestConnectionImpl
           DeleteAddressRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::
-          DeleteAddressRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                      DeleteAddressRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Address> GetAddress(
@@ -74,12 +72,10 @@ class GlobalAddressesRestConnectionImpl
           InsertAddressRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::global_addresses::v1::
-          InsertAddressRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::global_addresses::v1::
+                      InsertAddressRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::Address> ListGlobalAddresses(
@@ -91,12 +87,11 @@ class GlobalAddressesRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
@@ -104,12 +99,11 @@ class GlobalAddressesRestConnectionImpl
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
  private:

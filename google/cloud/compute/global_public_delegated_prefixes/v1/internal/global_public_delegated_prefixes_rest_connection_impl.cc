@@ -109,9 +109,8 @@ GlobalPublicDelegatedPrefixesRestConnectionImpl::DeletePublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalPublicDelegatedPrefixesRestConnectionImpl::DeletePublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        DeletePublicDelegatedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::global_public_delegated_prefixes::
+                    v1::DeletePublicDelegatedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -127,7 +126,6 @@ GlobalPublicDelegatedPrefixesRestConnectionImpl::DeletePublicDelegatedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestConnectionImpl::DeletePublicDelegatedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -256,9 +254,8 @@ GlobalPublicDelegatedPrefixesRestConnectionImpl::InsertPublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalPublicDelegatedPrefixesRestConnectionImpl::InsertPublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        InsertPublicDelegatedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::global_public_delegated_prefixes::
+                    v1::InsertPublicDelegatedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -274,7 +271,6 @@ GlobalPublicDelegatedPrefixesRestConnectionImpl::InsertPublicDelegatedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestConnectionImpl::InsertPublicDelegatedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -430,9 +426,8 @@ GlobalPublicDelegatedPrefixesRestConnectionImpl::PatchPublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 GlobalPublicDelegatedPrefixesRestConnectionImpl::PatchPublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::global_public_delegated_prefixes::v1::
-        PatchPublicDelegatedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::global_public_delegated_prefixes::
+                    v1::PatchPublicDelegatedPrefixRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -448,7 +443,6 @@ GlobalPublicDelegatedPrefixesRestConnectionImpl::PatchPublicDelegatedPrefix(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 GlobalPublicDelegatedPrefixesRestConnectionImpl::PatchPublicDelegatedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

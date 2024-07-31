@@ -56,7 +56,7 @@ RoutersConnection::DeleteRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersConnection::DeleteRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -64,7 +64,7 @@ RoutersConnection::DeleteRouter(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersConnection::DeleteRouter(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -103,7 +103,7 @@ RoutersConnection::InsertRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersConnection::InsertRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -111,7 +111,7 @@ RoutersConnection::InsertRouter(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersConnection::InsertRouter(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -135,7 +135,7 @@ RoutersConnection::PatchRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersConnection::PatchRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -143,7 +143,7 @@ RoutersConnection::PatchRouter(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersConnection::PatchRouter(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -165,7 +165,7 @@ RoutersConnection::UpdateRouter(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RoutersConnection::UpdateRouter(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -173,7 +173,7 @@ RoutersConnection::UpdateRouter(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RoutersConnection::UpdateRouter(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -117,19 +117,18 @@ VizierServiceClient::SuggestTrials(
 }
 
 StatusOr<google::longrunning::Operation> VizierServiceClient::SuggestTrials(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SuggestTrials(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->SuggestTrials(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
 VizierServiceClient::SuggestTrials(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->SuggestTrials(ExperimentalTag{}, operation);
+  return connection_->SuggestTrials(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceClient::CreateTrial(
@@ -221,23 +220,20 @@ VizierServiceClient::CheckTrialEarlyStoppingState(
 
 StatusOr<google::longrunning::Operation>
 VizierServiceClient::CheckTrialEarlyStoppingState(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CheckTrialEarlyStoppingState(ExperimentalTag{},
-                                                   NoAwaitTag{}, request);
+  return connection_->CheckTrialEarlyStoppingState(NoAwaitTag{}, request);
 }
 
 future<StatusOr<
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>
 VizierServiceClient::CheckTrialEarlyStoppingState(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CheckTrialEarlyStoppingState(ExperimentalTag{},
-                                                   operation);
+  return connection_->CheckTrialEarlyStoppingState(operation);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceClient::StopTrial(

@@ -45,8 +45,7 @@ MachineImagesClient::DeleteMachineImage(std::string const& project,
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
-MachineImagesClient::DeleteMachineImage(ExperimentalTag, NoAwaitTag,
-                                        std::string const& project,
+MachineImagesClient::DeleteMachineImage(NoAwaitTag, std::string const& project,
                                         std::string const& machine_image,
                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -54,8 +53,7 @@ MachineImagesClient::DeleteMachineImage(ExperimentalTag, NoAwaitTag,
       request;
   request.set_project(project);
   request.set_machine_image(machine_image);
-  return connection_->DeleteMachineImage(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DeleteMachineImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -69,21 +67,19 @@ MachineImagesClient::DeleteMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesClient::DeleteMachineImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::machine_images::v1::
         DeleteMachineImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMachineImage(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->DeleteMachineImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesClient::DeleteMachineImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteMachineImage(ExperimentalTag{}, operation);
+  return connection_->DeleteMachineImage(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
@@ -141,7 +137,7 @@ MachineImagesClient::InsertMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesClient::InsertMachineImage(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
+    NoAwaitTag, std::string const& project,
     google::cloud::cpp::compute::v1::MachineImage const& machine_image_resource,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -149,8 +145,7 @@ MachineImagesClient::InsertMachineImage(
       request;
   request.set_project(project);
   *request.mutable_machine_image_resource() = machine_image_resource;
-  return connection_->InsertMachineImage(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->InsertMachineImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -164,21 +159,19 @@ MachineImagesClient::InsertMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesClient::InsertMachineImage(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::machine_images::v1::
         InsertMachineImageRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertMachineImage(ExperimentalTag{}, NoAwaitTag{},
-                                         request);
+  return connection_->InsertMachineImage(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesClient::InsertMachineImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertMachineImage(ExperimentalTag{}, operation);
+  return connection_->InsertMachineImage(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::MachineImage>

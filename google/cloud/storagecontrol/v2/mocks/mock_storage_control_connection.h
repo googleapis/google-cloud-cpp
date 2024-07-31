@@ -75,14 +75,12 @@ class MockStorageControlConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, RenameFolder,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::storage::control::v2::RenameFolderRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::storage::control::v2::Folder>>,
-              RenameFolder,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              RenameFolder, (google::longrunning::Operation const& operation),
               (override));
 
   MOCK_METHOD(

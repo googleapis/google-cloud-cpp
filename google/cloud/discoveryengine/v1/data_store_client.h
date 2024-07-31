@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_DATA_STORE_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/data_store_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -157,7 +156,7 @@ class DataStoreServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataStore(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::discoveryengine::v1::DataStore const& data_store,
       std::string const& data_store_id, Options opts = {});
 
@@ -218,7 +217,7 @@ class DataStoreServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateDataStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::CreateDataStoreRequest const& request,
       Options opts = {});
 
@@ -232,8 +231,7 @@ class DataStoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DataStore>>
-  CreateDataStore(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  CreateDataStore(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off
@@ -437,7 +435,7 @@ class DataStoreServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataStore(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -491,7 +489,7 @@ class DataStoreServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteDataStore(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::discoveryengine::v1::DeleteDataStoreRequest const& request,
       Options opts = {});
 
@@ -505,8 +503,7 @@ class DataStoreServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteDataStoreMetadata>>
-  DeleteDataStore(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteDataStore(google::longrunning::Operation const& operation,
                   Options opts = {});
 
   // clang-format off

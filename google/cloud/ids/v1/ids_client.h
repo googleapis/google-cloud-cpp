@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IDS_V1_IDS_CLIENT_H
 
 #include "google/cloud/ids/v1/ids_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -270,7 +269,7 @@ class IDSClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::ids::v1::Endpoint const& endpoint,
       std::string const& endpoint_id, Options opts = {});
 
@@ -324,8 +323,7 @@ class IDSClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateEndpoint(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::ids::v1::CreateEndpointRequest const& request,
+      NoAwaitTag, google::cloud::ids::v1::CreateEndpointRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -338,8 +336,7 @@ class IDSClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::ids::v1::Endpoint>> CreateEndpoint(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -385,7 +382,7 @@ class IDSClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -437,8 +434,7 @@ class IDSClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteEndpoint(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::ids::v1::DeleteEndpointRequest const& request,
+      NoAwaitTag, google::cloud::ids::v1::DeleteEndpointRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -451,8 +447,7 @@ class IDSClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::ids::v1::OperationMetadata>> DeleteEndpoint(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<IDSConnection> connection_;

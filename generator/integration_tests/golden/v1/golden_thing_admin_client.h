@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_GOLDEN_THING_ADMIN_CLIENT_H
 
 #include "generator/integration_tests/golden/v1/golden_thing_admin_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"
@@ -227,7 +226,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  CreateDatabase(ExperimentalTag, NoAwaitTag, std::string const& parent, std::string const& create_statement, Options opts = {});
+  CreateDatabase(NoAwaitTag, std::string const& parent, std::string const& create_statement, Options opts = {});
 
   // clang-format off
   ///
@@ -289,7 +288,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  CreateDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request, Options opts = {});
+  CreateDatabase(NoAwaitTag, google::test::admin::database::v1::CreateDatabaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -301,7 +300,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::Database>>
-  CreateDatabase(ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
+  CreateDatabase(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -413,7 +412,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag, std::string const& database, std::vector<std::string> const& statements, Options opts = {});
+  UpdateDatabaseDdl(NoAwaitTag, std::string const& database, std::vector<std::string> const& statements, Options opts = {});
 
   // clang-format off
   ///
@@ -473,7 +472,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  UpdateDatabaseDdl(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options opts = {});
+  UpdateDatabaseDdl(NoAwaitTag, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -485,7 +484,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
+  UpdateDatabaseDdl(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -916,7 +915,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  CreateBackup(ExperimentalTag, NoAwaitTag, std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
+  CreateBackup(NoAwaitTag, std::string const& parent, google::test::admin::database::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
 
   // clang-format off
   ///
@@ -982,7 +981,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  CreateBackup(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request, Options opts = {});
+  CreateBackup(NoAwaitTag, google::test::admin::database::v1::CreateBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -994,7 +993,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::Backup>>
-  CreateBackup(ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
+  CreateBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1327,7 +1326,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  RestoreDatabase(ExperimentalTag, NoAwaitTag, std::string const& parent, std::string const& database_id, std::string const& backup, Options opts = {});
+  RestoreDatabase(NoAwaitTag, std::string const& parent, std::string const& database_id, std::string const& backup, Options opts = {});
 
   // clang-format off
   ///
@@ -1398,7 +1397,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  RestoreDatabase(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
+  RestoreDatabase(NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1410,7 +1409,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::Database>>
-  RestoreDatabase(ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
+  RestoreDatabase(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1645,7 +1644,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation>
-  LongRunningWithoutRouting(ExperimentalTag, NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
+  LongRunningWithoutRouting(NoAwaitTag, google::test::admin::database::v1::RestoreDatabaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1657,7 +1656,7 @@ class GoldenThingAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::test::admin::database::v1::Database>>
-  LongRunningWithoutRouting(ExperimentalTag, google::longrunning::Operation const& operation, Options opts = {});
+  LongRunningWithoutRouting(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

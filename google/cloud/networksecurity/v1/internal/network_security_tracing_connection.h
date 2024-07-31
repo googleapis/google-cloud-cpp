@@ -56,13 +56,11 @@ class NetworkSecurityTracingConnection
           CreateAuthorizationPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networksecurity::v1::
-          CreateAuthorizationPolicyRequest const& request) override;
+      NoAwaitTag, google::cloud::networksecurity::v1::
+                      CreateAuthorizationPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
   CreateAuthorizationPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
@@ -71,13 +69,11 @@ class NetworkSecurityTracingConnection
           UpdateAuthorizationPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networksecurity::v1::
-          UpdateAuthorizationPolicyRequest const& request) override;
+      NoAwaitTag, google::cloud::networksecurity::v1::
+                      UpdateAuthorizationPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>
   UpdateAuthorizationPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -86,13 +82,11 @@ class NetworkSecurityTracingConnection
           DeleteAuthorizationPolicyRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> DeleteAuthorizationPolicy(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::networksecurity::v1::
-          DeleteAuthorizationPolicyRequest const& request) override;
+      NoAwaitTag, google::cloud::networksecurity::v1::
+                      DeleteAuthorizationPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteAuthorizationPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>
@@ -111,13 +105,12 @@ class NetworkSecurityTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
   CreateServerTlsPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
@@ -126,13 +119,12 @@ class NetworkSecurityTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>
   UpdateServerTlsPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -141,13 +133,12 @@ class NetworkSecurityTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteServerTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteServerTlsPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>
@@ -166,13 +157,12 @@ class NetworkSecurityTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> CreateClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
   CreateClientTlsPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
@@ -181,13 +171,12 @@ class NetworkSecurityTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> UpdateClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>
   UpdateClientTlsPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
@@ -196,13 +185,12 @@ class NetworkSecurityTracingConnection
           request) override;
 
   StatusOr<google::longrunning::Operation> DeleteClientTlsPolicy(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
           request) override;
 
   future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>
   DeleteClientTlsPolicy(
-      ExperimentalTag,
       google::longrunning::Operation const& operation) override;
 
  private:

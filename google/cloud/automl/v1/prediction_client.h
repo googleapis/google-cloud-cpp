@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AUTOML_V1_PREDICTION_CLIENT_H
 
 #include "google/cloud/automl/v1/prediction_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -298,7 +297,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchPredict(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
+      NoAwaitTag, std::string const& name,
       google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
       google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
       std::map<std::string, std::string> const& params, Options opts = {});
@@ -370,8 +369,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> BatchPredict(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::automl::v1::BatchPredictRequest const& request,
+      NoAwaitTag, google::cloud::automl::v1::BatchPredictRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -384,8 +382,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<PredictionServiceConnection> connection_;

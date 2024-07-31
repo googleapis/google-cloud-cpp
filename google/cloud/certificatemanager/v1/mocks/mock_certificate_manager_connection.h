@@ -72,15 +72,14 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCertificate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::CreateCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>,
-      CreateCertificate,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateCertificate, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -95,15 +94,14 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCertificate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>,
-      UpdateCertificate,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateCertificate, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -119,7 +117,7 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCertificate,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
            request),
       (override));
@@ -127,8 +125,7 @@ class MockCertificateManagerConnection
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
-      DeleteCertificate,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteCertificate, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -157,15 +154,14 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateCertificateMap,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>,
-      CreateCertificateMap,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateCertificateMap, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -180,15 +176,14 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateCertificateMap,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>,
-      UpdateCertificateMap,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateCertificateMap, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -204,7 +199,7 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteCertificateMap,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
            request),
       (override));
@@ -212,8 +207,7 @@ class MockCertificateManagerConnection
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
-      DeleteCertificateMap,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteCertificateMap, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -243,17 +237,15 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateCertificateMapEntry,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   CreateCertificateMapEntryRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               CreateCertificateMapEntryRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>,
       CreateCertificateMapEntry,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UpdateCertificateMapEntry)` is now ambiguous. Use
@@ -268,17 +260,15 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               UpdateCertificateMapEntry,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   UpdateCertificateMapEntryRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               UpdateCertificateMapEntryRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>,
       UpdateCertificateMapEntry,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteCertificateMapEntry)` is now ambiguous. Use
@@ -293,17 +283,15 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteCertificateMapEntry,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   DeleteCertificateMapEntryRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               DeleteCertificateMapEntryRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
       DeleteCertificateMapEntry,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>),
@@ -330,15 +318,13 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, CreateDnsAuthorization,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   CreateDnsAuthorizationRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               CreateDnsAuthorizationRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>,
-      CreateDnsAuthorization,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateDnsAuthorization, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -352,15 +338,13 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateDnsAuthorization,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   UpdateDnsAuthorizationRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               UpdateDnsAuthorizationRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>,
-      UpdateDnsAuthorization,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateDnsAuthorization, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -375,16 +359,14 @@ class MockCertificateManagerConnection
       (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteDnsAuthorization,
-              (ExperimentalTag, NoAwaitTag,
-               google::cloud::certificatemanager::v1::
-                   DeleteDnsAuthorizationRequest const& request),
+              (NoAwaitTag, google::cloud::certificatemanager::v1::
+                               DeleteDnsAuthorizationRequest const& request),
               (override));
 
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
-      DeleteDnsAuthorization,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteDnsAuthorization, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -417,7 +399,7 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateCertificateIssuanceConfig,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::certificatemanager::v1::
                    CreateCertificateIssuanceConfigRequest const& request),
               (override));
@@ -426,8 +408,7 @@ class MockCertificateManagerConnection
       future<StatusOr<
           google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>,
       CreateCertificateIssuanceConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteCertificateIssuanceConfig)` is now ambiguous.
@@ -443,7 +424,7 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               DeleteCertificateIssuanceConfig,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::certificatemanager::v1::
                    DeleteCertificateIssuanceConfigRequest const& request),
               (override));
@@ -452,8 +433,7 @@ class MockCertificateManagerConnection
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
       DeleteCertificateIssuanceConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::certificatemanager::v1::TrustConfig>),
@@ -480,15 +460,14 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateTrustConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::CreateTrustConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
-      CreateTrustConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      CreateTrustConfig, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -503,15 +482,14 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateTrustConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::UpdateTrustConfigRequest const&
            request),
       (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::certificatemanager::v1::TrustConfig>>,
-      UpdateTrustConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      UpdateTrustConfig, (google::longrunning::Operation const& operation),
       (override));
 
   /// Due to additional overloads for this method
@@ -527,7 +505,7 @@ class MockCertificateManagerConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteTrustConfig,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::certificatemanager::v1::DeleteTrustConfigRequest const&
            request),
       (override));
@@ -535,8 +513,7 @@ class MockCertificateManagerConnection
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::certificatemanager::v1::OperationMetadata>>,
-      DeleteTrustConfig,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      DeleteTrustConfig, (google::longrunning::Operation const& operation),
       (override));
 };
 

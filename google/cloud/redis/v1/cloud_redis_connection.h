@@ -22,7 +22,6 @@
 #include "google/cloud/redis/v1/cloud_redis_connection_idempotency_policy.h"
 #include "google/cloud/redis/v1/internal/cloud_redis_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -200,85 +199,83 @@ class CloudRedisConnection {
       google::cloud::redis::v1::CreateInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::redis::v1::CreateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> CreateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
       google::cloud::redis::v1::UpdateInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpdateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::redis::v1::UpdateInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpdateInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
       google::cloud::redis::v1::UpgradeInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> UpgradeInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::redis::v1::UpgradeInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> UpgradeInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
       google::cloud::redis::v1::ImportInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ImportInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::redis::v1::ImportInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> ImportInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
       google::cloud::redis::v1::ExportInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> ExportInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::redis::v1::ExportInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> ExportInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
       google::cloud::redis::v1::FailoverInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> FailoverInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::redis::v1::FailoverInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>> FailoverInstance(
-      ExperimentalTag, google::longrunning::Operation const& operation);
+      google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
   DeleteInstance(
       google::cloud::redis::v1::DeleteInstanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::redis::v1::DeleteInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
-  DeleteInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  DeleteInstance(google::longrunning::Operation const& operation);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>>
   RescheduleMaintenance(
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
 
   virtual StatusOr<google::longrunning::Operation> RescheduleMaintenance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::redis::v1::RescheduleMaintenanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::redis::v1::Instance>>
-  RescheduleMaintenance(ExperimentalTag,
-                        google::longrunning::Operation const& operation);
+  RescheduleMaintenance(google::longrunning::Operation const& operation);
 };
 
 /**

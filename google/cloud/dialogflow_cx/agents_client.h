@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_AGENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/agents_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -465,7 +464,7 @@ class AgentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> ExportAgent(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
       Options opts = {});
 
@@ -479,7 +478,7 @@ class AgentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-  ExportAgent(ExperimentalTag, google::longrunning::Operation const& operation,
+  ExportAgent(google::longrunning::Operation const& operation,
               Options opts = {});
 
   // clang-format off
@@ -548,7 +547,7 @@ class AgentsClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> RestoreAgent(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
       Options opts = {});
 
@@ -562,8 +561,7 @@ class AgentsClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

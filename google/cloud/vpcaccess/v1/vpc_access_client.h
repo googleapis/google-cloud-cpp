@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_CLIENT_H
 
 #include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -140,8 +139,7 @@ class VpcAccessServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnector(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
-      std::string const& connector_id,
+      NoAwaitTag, std::string const& parent, std::string const& connector_id,
       google::cloud::vpcaccess::v1::Connector const& connector,
       Options opts = {});
 
@@ -195,7 +193,7 @@ class VpcAccessServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateConnector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
       Options opts = {});
 
@@ -209,8 +207,7 @@ class VpcAccessServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -389,7 +386,7 @@ class VpcAccessServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnector(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -443,7 +440,7 @@ class VpcAccessServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteConnector(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
       Options opts = {});
 
@@ -457,8 +454,7 @@ class VpcAccessServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
-  DeleteConnector(ExperimentalTag,
-                  google::longrunning::Operation const& operation,
+  DeleteConnector(google::longrunning::Operation const& operation,
                   Options opts = {});
 
  private:

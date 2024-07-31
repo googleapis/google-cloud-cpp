@@ -47,16 +47,15 @@ BackendServicesConnection::AddSignedUrlKey(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesConnection::AddSignedUrlKey(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::backend_services::v1::
-        AddSignedUrlKeyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    AddSignedUrlKeyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::AddSignedUrlKey(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -83,16 +82,15 @@ BackendServicesConnection::DeleteBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesConnection::DeleteBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::backend_services::v1::
-        DeleteBackendServiceRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    DeleteBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::DeleteBackendService(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -109,16 +107,15 @@ BackendServicesConnection::DeleteSignedUrlKey(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesConnection::DeleteSignedUrlKey(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::backend_services::v1::
-        DeleteSignedUrlKeyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    DeleteSignedUrlKeyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::DeleteSignedUrlKey(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -156,16 +153,15 @@ BackendServicesConnection::InsertBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesConnection::InsertBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::backend_services::v1::
-        InsertBackendServiceRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    InsertBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::InsertBackendService(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -198,16 +194,15 @@ BackendServicesConnection::PatchBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesConnection::PatchBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::backend_services::v1::
-        PatchBackendServiceRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    PatchBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::PatchBackendService(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -224,16 +219,15 @@ BackendServicesConnection::SetEdgeSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesConnection::SetEdgeSecurityPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::backend_services::v1::
-        SetEdgeSecurityPolicyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    SetEdgeSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::SetEdgeSecurityPolicy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -257,16 +251,15 @@ BackendServicesConnection::SetSecurityPolicy(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesConnection::SetSecurityPolicy(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::backend_services::v1::
-        SetSecurityPolicyRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    SetSecurityPolicyRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::SetSecurityPolicy(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -290,16 +283,15 @@ BackendServicesConnection::UpdateBackendService(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 BackendServicesConnection::UpdateBackendService(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::backend_services::v1::
-        UpdateBackendServiceRequest const&) {
+    NoAwaitTag, google::cloud::cpp::compute::backend_services::v1::
+                    UpdateBackendServiceRequest const&) {
   return StatusOr<google::cloud::cpp::compute::v1::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 BackendServicesConnection::UpdateBackendService(
-    ExperimentalTag, google::cloud::cpp::compute::v1::Operation const&) {
+    google::cloud::cpp::compute::v1::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::cpp::compute::v1::Operation>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

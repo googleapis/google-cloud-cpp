@@ -66,7 +66,7 @@ class MockMigrationServiceConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, BatchMigrateResources,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
            request),
       (override));
@@ -74,8 +74,7 @@ class MockMigrationServiceConnection
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>,
-      BatchMigrateResources,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
+      BatchMigrateResources, (google::longrunning::Operation const& operation),
       (override));
 };
 

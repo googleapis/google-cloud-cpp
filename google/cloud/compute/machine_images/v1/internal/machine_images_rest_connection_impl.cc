@@ -104,9 +104,8 @@ MachineImagesRestConnectionImpl::DeleteMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestConnectionImpl::DeleteMachineImage(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::machine_images::v1::
-        DeleteMachineImageRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::
+                    DeleteMachineImageRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -121,7 +120,6 @@ MachineImagesRestConnectionImpl::DeleteMachineImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestConnectionImpl::DeleteMachineImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<
@@ -265,9 +263,8 @@ MachineImagesRestConnectionImpl::InsertMachineImage(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 MachineImagesRestConnectionImpl::InsertMachineImage(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::machine_images::v1::
-        InsertMachineImageRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::machine_images::v1::
+                    InsertMachineImageRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -282,7 +279,6 @@ MachineImagesRestConnectionImpl::InsertMachineImage(
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestConnectionImpl::InsertMachineImage(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return rest_internal::AsyncRestAwaitLongRunningOperation<

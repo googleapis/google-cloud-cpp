@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_TENSORBOARD_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/tensorboard_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -140,7 +139,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTensorboard(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
       Options opts = {});
 
@@ -195,7 +194,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateTensorboard(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::CreateTensorboardRequest const& request,
       Options opts = {});
 
@@ -209,8 +208,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  CreateTensorboard(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  CreateTensorboard(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -325,8 +323,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTensorboard(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
+      NoAwaitTag, google::cloud::aiplatform::v1::Tensorboard const& tensorboard,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
@@ -380,7 +377,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateTensorboard(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::UpdateTensorboardRequest const& request,
       Options opts = {});
 
@@ -394,8 +391,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::Tensorboard>>
-  UpdateTensorboard(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  UpdateTensorboard(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -520,7 +516,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTensorboard(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -573,7 +569,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTensorboard(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardRequest const& request,
       Options opts = {});
 
@@ -587,8 +583,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboard(ExperimentalTag,
-                    google::longrunning::Operation const& operation,
+  DeleteTensorboard(google::longrunning::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -1031,7 +1026,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1085,7 +1080,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTensorboardExperiment(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardExperimentRequest const&
           request,
       Options opts = {});
@@ -1100,8 +1095,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardExperiment(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+  DeleteTensorboardExperiment(google::longrunning::Operation const& operation,
                               Options opts = {});
 
   // clang-format off
@@ -1485,7 +1479,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1538,7 +1532,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTensorboardRun(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardRunRequest const& request,
       Options opts = {});
 
@@ -1552,8 +1546,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardRun(ExperimentalTag,
-                       google::longrunning::Operation const& operation,
+  DeleteTensorboardRun(google::longrunning::Operation const& operation,
                        Options opts = {});
 
   // clang-format off
@@ -1947,7 +1940,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2001,7 +1994,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteTensorboardTimeSeries(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::aiplatform::v1::DeleteTensorboardTimeSeriesRequest const&
           request,
       Options opts = {});
@@ -2016,8 +2009,7 @@ class TensorboardServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteTensorboardTimeSeries(ExperimentalTag,
-                              google::longrunning::Operation const& operation,
+  DeleteTensorboardTimeSeries(google::longrunning::Operation const& operation,
                               Options opts = {});
 
   // clang-format off

@@ -53,15 +53,14 @@ ApplicationsConnection::CreateApplication(
 
 StatusOr<google::longrunning::Operation>
 ApplicationsConnection::CreateApplication(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::CreateApplicationRequest const&) {
+    NoAwaitTag, google::appengine::v1::CreateApplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnection::CreateApplication(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Application>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -77,15 +76,14 @@ ApplicationsConnection::UpdateApplication(
 
 StatusOr<google::longrunning::Operation>
 ApplicationsConnection::UpdateApplication(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::UpdateApplicationRequest const&) {
+    NoAwaitTag, google::appengine::v1::UpdateApplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnection::UpdateApplication(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Application>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -101,15 +99,14 @@ ApplicationsConnection::RepairApplication(
 
 StatusOr<google::longrunning::Operation>
 ApplicationsConnection::RepairApplication(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::RepairApplicationRequest const&) {
+    NoAwaitTag, google::appengine::v1::RepairApplicationRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnection::RepairApplication(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Application>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -46,7 +46,7 @@ LivestreamServiceClient::CreateChannel(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateChannel(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::video::livestream::v1::Channel const& channel,
     std::string const& channel_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -54,7 +54,7 @@ StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateChannel(
   request.set_parent(parent);
   *request.mutable_channel() = channel;
   request.set_channel_id(channel_id);
-  return connection_->CreateChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
@@ -66,19 +66,18 @@ LivestreamServiceClient::CreateChannel(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::CreateChannelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceClient::CreateChannel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateChannel(ExperimentalTag{}, operation);
+  return connection_->CreateChannel(operation);
 }
 
 StreamRange<google::cloud::video::livestream::v1::Channel>
@@ -122,11 +121,11 @@ LivestreamServiceClient::DeleteChannel(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::DeleteChannel(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::DeleteChannelRequest request;
   request.set_name(name);
-  return connection_->DeleteChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -138,19 +137,18 @@ LivestreamServiceClient::DeleteChannel(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::DeleteChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceClient::DeleteChannel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteChannel(ExperimentalTag{}, operation);
+  return connection_->DeleteChannel(operation);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
@@ -165,14 +163,13 @@ LivestreamServiceClient::UpdateChannel(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::UpdateChannel(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::video::livestream::v1::Channel const& channel,
+    NoAwaitTag, google::cloud::video::livestream::v1::Channel const& channel,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::UpdateChannelRequest request;
   *request.mutable_channel() = channel;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
@@ -184,19 +181,18 @@ LivestreamServiceClient::UpdateChannel(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::UpdateChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceClient::UpdateChannel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateChannel(ExperimentalTag{}, operation);
+  return connection_->UpdateChannel(operation);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -208,11 +204,11 @@ LivestreamServiceClient::StartChannel(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::StartChannel(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::StartChannelRequest request;
   request.set_name(name);
-  return connection_->StartChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->StartChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -224,19 +220,18 @@ LivestreamServiceClient::StartChannel(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::StartChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::StartChannelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->StartChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceClient::StartChannel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StartChannel(ExperimentalTag{}, operation);
+  return connection_->StartChannel(operation);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -248,11 +243,11 @@ LivestreamServiceClient::StopChannel(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::StopChannel(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::StopChannelRequest request;
   request.set_name(name);
-  return connection_->StopChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->StopChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
@@ -264,19 +259,18 @@ LivestreamServiceClient::StopChannel(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::StopChannel(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::StopChannelRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopChannel(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->StopChannel(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceClient::StopChannel(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->StopChannel(ExperimentalTag{}, operation);
+  return connection_->StopChannel(operation);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
@@ -293,7 +287,7 @@ LivestreamServiceClient::CreateInput(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateInput(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::video::livestream::v1::Input const& input,
     std::string const& input_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -301,7 +295,7 @@ StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateInput(
   request.set_parent(parent);
   *request.mutable_input() = input;
   request.set_input_id(input_id);
-  return connection_->CreateInput(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateInput(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
@@ -313,19 +307,18 @@ LivestreamServiceClient::CreateInput(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateInput(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::CreateInputRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInput(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateInput(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceClient::CreateInput(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateInput(ExperimentalTag{}, operation);
+  return connection_->CreateInput(operation);
 }
 
 StreamRange<google::cloud::video::livestream::v1::Input>
@@ -369,11 +362,11 @@ LivestreamServiceClient::DeleteInput(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::DeleteInput(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::DeleteInputRequest request;
   request.set_name(name);
-  return connection_->DeleteInput(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteInput(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -385,19 +378,18 @@ LivestreamServiceClient::DeleteInput(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::DeleteInput(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::DeleteInputRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInput(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteInput(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceClient::DeleteInput(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInput(ExperimentalTag{}, operation);
+  return connection_->DeleteInput(operation);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
@@ -412,14 +404,13 @@ LivestreamServiceClient::UpdateInput(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::UpdateInput(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::video::livestream::v1::Input const& input,
+    NoAwaitTag, google::cloud::video::livestream::v1::Input const& input,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::UpdateInputRequest request;
   *request.mutable_input() = input;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdateInput(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateInput(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
@@ -431,19 +422,18 @@ LivestreamServiceClient::UpdateInput(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::UpdateInput(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::UpdateInputRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateInput(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdateInput(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceClient::UpdateInput(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdateInput(ExperimentalTag{}, operation);
+  return connection_->UpdateInput(operation);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
@@ -560,7 +550,7 @@ LivestreamServiceClient::CreateClip(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateClip(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::video::livestream::v1::Clip const& clip,
     std::string const& clip_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -568,7 +558,7 @@ StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateClip(
   request.set_parent(parent);
   *request.mutable_clip() = clip;
   request.set_clip_id(clip_id);
-  return connection_->CreateClip(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateClip(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Clip>>
@@ -580,19 +570,18 @@ LivestreamServiceClient::CreateClip(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateClip(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::CreateClipRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateClip(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateClip(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Clip>>
 LivestreamServiceClient::CreateClip(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateClip(ExperimentalTag{}, operation);
+  return connection_->CreateClip(operation);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -604,11 +593,11 @@ LivestreamServiceClient::DeleteClip(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::DeleteClip(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::DeleteClipRequest request;
   request.set_name(name);
-  return connection_->DeleteClip(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteClip(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -620,19 +609,18 @@ LivestreamServiceClient::DeleteClip(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::DeleteClip(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::DeleteClipRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteClip(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteClip(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceClient::DeleteClip(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteClip(ExperimentalTag{}, operation);
+  return connection_->DeleteClip(operation);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
@@ -649,7 +637,7 @@ LivestreamServiceClient::CreateAsset(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateAsset(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     google::cloud::video::livestream::v1::Asset const& asset,
     std::string const& asset_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -657,7 +645,7 @@ StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateAsset(
   request.set_parent(parent);
   *request.mutable_asset() = asset;
   request.set_asset_id(asset_id);
-  return connection_->CreateAsset(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateAsset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
@@ -669,19 +657,18 @@ LivestreamServiceClient::CreateAsset(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::CreateAsset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::CreateAssetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAsset(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->CreateAsset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
 LivestreamServiceClient::CreateAsset(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->CreateAsset(ExperimentalTag{}, operation);
+  return connection_->CreateAsset(operation);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -693,11 +680,11 @@ LivestreamServiceClient::DeleteAsset(std::string const& name, Options opts) {
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::DeleteAsset(
-    ExperimentalTag, NoAwaitTag, std::string const& name, Options opts) {
+    NoAwaitTag, std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::DeleteAssetRequest request;
   request.set_name(name);
-  return connection_->DeleteAsset(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteAsset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -709,19 +696,18 @@ LivestreamServiceClient::DeleteAsset(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::DeleteAsset(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAsset(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->DeleteAsset(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceClient::DeleteAsset(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteAsset(ExperimentalTag{}, operation);
+  return connection_->DeleteAsset(operation);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
@@ -784,14 +770,13 @@ LivestreamServiceClient::UpdatePool(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::UpdatePool(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::video::livestream::v1::Pool const& pool,
+    NoAwaitTag, google::cloud::video::livestream::v1::Pool const& pool,
     google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::video::livestream::v1::UpdatePoolRequest request;
   *request.mutable_pool() = pool;
   *request.mutable_update_mask() = update_mask;
-  return connection_->UpdatePool(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdatePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Pool>>
@@ -803,19 +788,18 @@ LivestreamServiceClient::UpdatePool(
 }
 
 StatusOr<google::longrunning::Operation> LivestreamServiceClient::UpdatePool(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdatePool(ExperimentalTag{}, NoAwaitTag{}, request);
+  return connection_->UpdatePool(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Pool>>
 LivestreamServiceClient::UpdatePool(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UpdatePool(ExperimentalTag{}, operation);
+  return connection_->UpdatePool(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

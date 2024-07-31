@@ -49,7 +49,7 @@ AssuredWorkloadsServiceConnection::CreateWorkload(
 
 StatusOr<google::longrunning::Operation>
 AssuredWorkloadsServiceConnection::CreateWorkload(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -57,7 +57,7 @@ AssuredWorkloadsServiceConnection::CreateWorkload(
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnection::CreateWorkload(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::assuredworkloads::v1::Workload>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

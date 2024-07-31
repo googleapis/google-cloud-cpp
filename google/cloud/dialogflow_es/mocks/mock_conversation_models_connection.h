@@ -59,7 +59,7 @@ class MockConversationModelsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateConversationModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::CreateConversationModelRequest const&
            request),
       (override));
@@ -67,8 +67,7 @@ class MockConversationModelsConnection
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>,
       CreateConversationModel,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::ConversationModel>,
               GetConversationModel,
@@ -95,7 +94,7 @@ class MockConversationModelsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteConversationModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
            request),
       (override));
@@ -103,9 +102,7 @@ class MockConversationModelsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
                                   DeleteConversationModelOperationMetadata>>,
               DeleteConversationModel,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeployConversationModel)` is now ambiguous. Use
@@ -120,7 +117,7 @@ class MockConversationModelsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeployConversationModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::DeployConversationModelRequest const&
            request),
       (override));
@@ -128,9 +125,7 @@ class MockConversationModelsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
                                   DeployConversationModelOperationMetadata>>,
               DeployConversationModel,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, UndeployConversationModel)` is now ambiguous. Use
@@ -145,7 +140,7 @@ class MockConversationModelsConnection
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UndeployConversationModel,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
            request),
       (override));
@@ -153,9 +148,7 @@ class MockConversationModelsConnection
   MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
                                   UndeployConversationModelOperationMetadata>>,
               UndeployConversationModel,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>,
@@ -185,7 +178,7 @@ class MockConversationModelsConnection
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>,
               CreateConversationModelEvaluation,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::cloud::dialogflow::v2::
                    CreateConversationModelEvaluationRequest const& request),
               (override));
@@ -194,8 +187,7 @@ class MockConversationModelsConnection
       future<
           StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>,
       CreateConversationModelEvaluation,
-      (ExperimentalTag, google::longrunning::Operation const& operation),
-      (override));
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

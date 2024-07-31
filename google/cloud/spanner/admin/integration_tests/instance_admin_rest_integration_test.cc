@@ -274,21 +274,19 @@ TEST_F(InstanceAdminClientRestTest, CreateInstanceStartAwait) {
       });
   ASSERT_FALSE(config_name.empty()) << "could not get an instance config";
 
-  auto operation =
-      client_.CreateInstance(ExperimentalTag{}, NoAwaitTag{},
-                             CreateInstanceRequestBuilder(in, config_name)
-                                 .SetDisplayName("test-display-name")
-                                 .SetNodeCount(1)
-                                 .SetLabels({{"label-key", "label-value"}})
-                                 .Build());
+  auto operation = client_.CreateInstance(
+      NoAwaitTag{}, CreateInstanceRequestBuilder(in, config_name)
+                        .SetDisplayName("test-display-name")
+                        .SetNodeCount(1)
+                        .SetLabels({{"label-key", "label-value"}})
+                        .Build());
   ASSERT_STATUS_OK(operation);
   // Verify that an error is returned if there is a mismatch between the RPC
   // that returned the operation and the RPC in which is it used.
-  auto instance_config =
-      client_.CreateInstanceConfig(ExperimentalTag{}, *operation).get();
+  auto instance_config = client_.CreateInstanceConfig(*operation).get();
   EXPECT_THAT(instance_config, StatusIs(StatusCode::kInvalidArgument));
 
-  auto instance = client_.CreateInstance(ExperimentalTag{}, *operation).get();
+  auto instance = client_.CreateInstance(*operation).get();
   ASSERT_STATUS_OK(instance);
   EXPECT_EQ(instance->name(), in.FullName());
   EXPECT_EQ(instance->display_name(), "test-display-name");

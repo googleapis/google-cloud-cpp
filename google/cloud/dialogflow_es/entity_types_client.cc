@@ -173,20 +173,18 @@ EntityTypesClient::BatchUpdateEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesClient::BatchUpdateEntityTypes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchUpdateEntityTypes(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->BatchUpdateEntityTypes(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
 EntityTypesClient::BatchUpdateEntityTypes(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchUpdateEntityTypes(ExperimentalTag{}, operation);
+  return connection_->BatchUpdateEntityTypes(operation);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -203,15 +201,14 @@ EntityTypesClient::BatchDeleteEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesClient::BatchDeleteEntityTypes(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<std::string> const& entity_type_names, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest request;
   request.set_parent(parent);
   *request.mutable_entity_type_names() = {entity_type_names.begin(),
                                           entity_type_names.end()};
-  return connection_->BatchDeleteEntityTypes(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->BatchDeleteEntityTypes(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -224,20 +221,18 @@ EntityTypesClient::BatchDeleteEntityTypes(
 
 StatusOr<google::longrunning::Operation>
 EntityTypesClient::BatchDeleteEntityTypes(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeleteEntityTypes(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->BatchDeleteEntityTypes(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesClient::BatchDeleteEntityTypes(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeleteEntityTypes(ExperimentalTag{}, operation);
+  return connection_->BatchDeleteEntityTypes(operation);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -254,7 +249,7 @@ EntityTypesClient::BatchCreateEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchCreateEntities(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
         entities,
     Options opts) {
@@ -262,8 +257,7 @@ StatusOr<google::longrunning::Operation> EntityTypesClient::BatchCreateEntities(
   google::cloud::dialogflow::v2::BatchCreateEntitiesRequest request;
   request.set_parent(parent);
   *request.mutable_entities() = {entities.begin(), entities.end()};
-  return connection_->BatchCreateEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchCreateEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -281,7 +275,7 @@ EntityTypesClient::BatchCreateEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchCreateEntities(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
         entities,
     std::string const& language_code, Options opts) {
@@ -290,8 +284,7 @@ StatusOr<google::longrunning::Operation> EntityTypesClient::BatchCreateEntities(
   request.set_parent(parent);
   *request.mutable_entities() = {entities.begin(), entities.end()};
   request.set_language_code(language_code);
-  return connection_->BatchCreateEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchCreateEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -303,20 +296,18 @@ EntityTypesClient::BatchCreateEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchCreateEntities(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchCreateEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesClient::BatchCreateEntities(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchCreateEntities(ExperimentalTag{}, operation);
+  return connection_->BatchCreateEntities(operation);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -333,7 +324,7 @@ EntityTypesClient::BatchUpdateEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchUpdateEntities(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
         entities,
     Options opts) {
@@ -341,8 +332,7 @@ StatusOr<google::longrunning::Operation> EntityTypesClient::BatchUpdateEntities(
   google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest request;
   request.set_parent(parent);
   *request.mutable_entities() = {entities.begin(), entities.end()};
-  return connection_->BatchUpdateEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchUpdateEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -360,7 +350,7 @@ EntityTypesClient::BatchUpdateEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchUpdateEntities(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
         entities,
     std::string const& language_code, Options opts) {
@@ -369,8 +359,7 @@ StatusOr<google::longrunning::Operation> EntityTypesClient::BatchUpdateEntities(
   request.set_parent(parent);
   *request.mutable_entities() = {entities.begin(), entities.end()};
   request.set_language_code(language_code);
-  return connection_->BatchUpdateEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchUpdateEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -382,20 +371,18 @@ EntityTypesClient::BatchUpdateEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchUpdateEntities(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchUpdateEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchUpdateEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesClient::BatchUpdateEntities(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchUpdateEntities(ExperimentalTag{}, operation);
+  return connection_->BatchUpdateEntities(operation);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -411,15 +398,14 @@ EntityTypesClient::BatchDeleteEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchDeleteEntities(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<std::string> const& entity_values, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest request;
   request.set_parent(parent);
   *request.mutable_entity_values() = {entity_values.begin(),
                                       entity_values.end()};
-  return connection_->BatchDeleteEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchDeleteEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -436,7 +422,7 @@ EntityTypesClient::BatchDeleteEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchDeleteEntities(
-    ExperimentalTag, NoAwaitTag, std::string const& parent,
+    NoAwaitTag, std::string const& parent,
     std::vector<std::string> const& entity_values,
     std::string const& language_code, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -445,8 +431,7 @@ StatusOr<google::longrunning::Operation> EntityTypesClient::BatchDeleteEntities(
   *request.mutable_entity_values() = {entity_values.begin(),
                                       entity_values.end()};
   request.set_language_code(language_code);
-  return connection_->BatchDeleteEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchDeleteEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
@@ -458,20 +443,18 @@ EntityTypesClient::BatchDeleteEntities(
 }
 
 StatusOr<google::longrunning::Operation> EntityTypesClient::BatchDeleteEntities(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeleteEntities(ExperimentalTag{}, NoAwaitTag{},
-                                          request);
+  return connection_->BatchDeleteEntities(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::protobuf::Struct>>
 EntityTypesClient::BatchDeleteEntities(
-    ExperimentalTag, google::longrunning::Operation const& operation,
-    Options opts) {
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->BatchDeleteEntities(ExperimentalTag{}, operation);
+  return connection_->BatchDeleteEntities(operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

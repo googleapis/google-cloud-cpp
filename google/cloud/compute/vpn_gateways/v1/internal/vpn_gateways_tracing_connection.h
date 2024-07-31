@@ -51,12 +51,10 @@ class VpnGatewaysTracingConnection
           DeleteVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteVpnGateway(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::vpn_gateways::v1::
-          DeleteVpnGatewayRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::vpn_gateways::v1::
+                      DeleteVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteVpnGateway(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::VpnGateway> GetVpnGateway(
@@ -73,12 +71,10 @@ class VpnGatewaysTracingConnection
           InsertVpnGatewayRequest const& request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> InsertVpnGateway(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::cpp::compute::vpn_gateways::v1::
-          InsertVpnGatewayRequest const& request) override;
+      NoAwaitTag, google::cloud::cpp::compute::vpn_gateways::v1::
+                      InsertVpnGatewayRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertVpnGateway(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StreamRange<google::cloud::cpp::compute::v1::VpnGateway> ListVpnGateways(
@@ -90,12 +86,11 @@ class VpnGatewaysTracingConnection
           request) override;
 
   StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::cpp::compute::vpn_gateways::v1::SetLabelsRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
-      ExperimentalTag,
       google::cloud::cpp::compute::v1::Operation const& operation) override;
 
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>

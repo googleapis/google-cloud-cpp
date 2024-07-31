@@ -43,23 +43,21 @@ PipelineServiceTracingConnection::RunPipeline(
 
 StatusOr<google::longrunning::Operation>
 PipelineServiceTracingConnection::RunPipeline(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::contentwarehouse::v1::RunPipelineRequest const& request) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::PipelineServiceConnection::RunPipeline");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->RunPipeline(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RunPipeline(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::contentwarehouse::v1::RunPipelineResponse>>
 PipelineServiceTracingConnection::RunPipeline(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto span = internal::MakeSpan(
       "contentwarehouse_v1::PipelineServiceConnection::RunPipeline");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->RunPipeline(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->RunPipeline(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

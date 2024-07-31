@@ -120,8 +120,7 @@ PredictionServiceConnectionImpl::BatchPredict(
 
 StatusOr<google::longrunning::Operation>
 PredictionServiceConnectionImpl::BatchPredict(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::automl::v1::BatchPredictRequest const& request) {
+    NoAwaitTag, google::cloud::automl::v1::BatchPredictRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -135,7 +134,7 @@ PredictionServiceConnectionImpl::BatchPredict(
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceConnectionImpl::BatchPredict(
-    ExperimentalTag, google::longrunning::Operation const& operation) {
+    google::longrunning::Operation const& operation) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   if (!operation.metadata()
            .Is<typename google::cloud::automl::v1::OperationMetadata>()) {

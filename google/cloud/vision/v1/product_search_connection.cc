@@ -153,15 +153,14 @@ ProductSearchConnection::ImportProductSets(
 
 StatusOr<google::longrunning::Operation>
 ProductSearchConnection::ImportProductSets(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::vision::v1::ImportProductSetsRequest const&) {
+    NoAwaitTag, google::cloud::vision::v1::ImportProductSetsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchConnection::ImportProductSets(
-    ExperimentalTag, google::longrunning::Operation const&) {
+    google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -176,15 +175,13 @@ ProductSearchConnection::PurgeProducts(
 }
 
 StatusOr<google::longrunning::Operation> ProductSearchConnection::PurgeProducts(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::vision::v1::PurgeProductsRequest const&) {
+    NoAwaitTag, google::cloud::vision::v1::PurgeProductsRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
-ProductSearchConnection::PurgeProducts(ExperimentalTag,
-                                       google::longrunning::Operation const&) {
+ProductSearchConnection::PurgeProducts(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

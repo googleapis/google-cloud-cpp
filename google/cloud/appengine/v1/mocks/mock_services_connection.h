@@ -61,14 +61,12 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, UpdateService,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::UpdateServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Service>>, UpdateService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
-              (override));
+              (google::longrunning::Operation const& operation), (override));
 
   /// Due to additional overloads for this method
   /// `EXPECT_CALL(*mock, DeleteService)` is now ambiguous. Use
@@ -79,14 +77,12 @@ class MockServicesConnection : public appengine_v1::ServicesConnection {
               (override));
 
   MOCK_METHOD(StatusOr<google::longrunning::Operation>, DeleteService,
-              (ExperimentalTag, NoAwaitTag,
+              (NoAwaitTag,
                google::appengine::v1::DeleteServiceRequest const& request),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
-              DeleteService,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteService, (google::longrunning::Operation const& operation),
               (override));
 };
 

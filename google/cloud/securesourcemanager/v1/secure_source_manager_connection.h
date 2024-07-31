@@ -22,7 +22,6 @@
 #include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_retry_traits.h"
 #include "google/cloud/securesourcemanager/v1/secure_source_manager_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/no_await_tag.h"
@@ -205,13 +204,12 @@ class SecureSourceManagerConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
-  CreateInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  CreateInstance(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -220,14 +218,13 @@ class SecureSourceManagerConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteInstance(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteInstance(ExperimentalTag,
-                 google::longrunning::Operation const& operation);
+  DeleteInstance(google::longrunning::Operation const& operation);
 
   virtual StreamRange<google::cloud::securesourcemanager::v1::Repository>
   ListRepositories(
@@ -244,13 +241,12 @@ class SecureSourceManagerConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> CreateRepository(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
           request);
 
   virtual future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
-  CreateRepository(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  CreateRepository(google::longrunning::Operation const& operation);
 
   virtual future<
       StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -259,14 +255,13 @@ class SecureSourceManagerConnection {
           request);
 
   virtual StatusOr<google::longrunning::Operation> DeleteRepository(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request);
 
   virtual future<
       StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
-  DeleteRepository(ExperimentalTag,
-                   google::longrunning::Operation const& operation);
+  DeleteRepository(google::longrunning::Operation const& operation);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
       google::iam::v1::GetIamPolicyRequest const& request);

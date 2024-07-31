@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEHUB_V1_GKE_HUB_CLIENT_H
 
 #include "google/cloud/gkehub/v1/gke_hub_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -434,7 +433,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMembership(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::gkehub::v1::Membership const& resource,
       std::string const& membership_id, Options opts = {});
 
@@ -492,7 +491,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateMembership(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::CreateMembershipRequest const& request,
       Options opts = {});
 
@@ -506,8 +505,7 @@ class GkeHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Membership>> CreateMembership(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -558,7 +556,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeature(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::gkehub::v1::Feature const& resource,
       std::string const& feature_id, Options opts = {});
 
@@ -612,7 +610,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateFeature(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::CreateFeatureRequest const& request,
       Options opts = {});
 
@@ -626,8 +624,7 @@ class GkeHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Feature>> CreateFeature(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -678,7 +675,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMembership(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -735,7 +732,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteMembership(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::DeleteMembershipRequest const& request,
       Options opts = {});
 
@@ -749,8 +746,7 @@ class GkeHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
-  DeleteMembership(ExperimentalTag,
-                   google::longrunning::Operation const& operation,
+  DeleteMembership(google::longrunning::Operation const& operation,
                    Options opts = {});
 
   // clang-format off
@@ -798,7 +794,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      ExperimentalTag, NoAwaitTag, std::string const& name, Options opts = {});
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -850,7 +846,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> DeleteFeature(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::DeleteFeatureRequest const& request,
       Options opts = {});
 
@@ -864,8 +860,7 @@ class GkeHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>> DeleteFeature(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -923,7 +918,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMembership(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
+      NoAwaitTag, std::string const& name,
       google::cloud::gkehub::v1::Membership const& resource,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -977,7 +972,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateMembership(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::UpdateMembershipRequest const& request,
       Options opts = {});
 
@@ -991,8 +986,7 @@ class GkeHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Membership>> UpdateMembership(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1050,7 +1044,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeature(
-      ExperimentalTag, NoAwaitTag, std::string const& name,
+      NoAwaitTag, std::string const& name,
       google::cloud::gkehub::v1::Feature const& resource,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1104,7 +1098,7 @@ class GkeHubClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> UpdateFeature(
-      ExperimentalTag, NoAwaitTag,
+      NoAwaitTag,
       google::cloud::gkehub::v1::UpdateFeatureRequest const& request,
       Options opts = {});
 
@@ -1118,8 +1112,7 @@ class GkeHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkehub::v1::Feature>> UpdateFeature(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

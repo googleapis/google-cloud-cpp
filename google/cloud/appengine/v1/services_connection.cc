@@ -59,15 +59,13 @@ ServicesConnection::UpdateService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnection::UpdateService(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::UpdateServiceRequest const&) {
+    NoAwaitTag, google::appengine::v1::UpdateServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::Service>>
-ServicesConnection::UpdateService(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+ServicesConnection::UpdateService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::Service>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -82,15 +80,13 @@ ServicesConnection::DeleteService(
 }
 
 StatusOr<google::longrunning::Operation> ServicesConnection::DeleteService(
-    ExperimentalTag, NoAwaitTag,
-    google::appengine::v1::DeleteServiceRequest const&) {
+    NoAwaitTag, google::appengine::v1::DeleteServiceRequest const&) {
   return StatusOr<google::longrunning::Operation>(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
-ServicesConnection::DeleteService(ExperimentalTag,
-                                  google::longrunning::Operation const&) {
+ServicesConnection::DeleteService(google::longrunning::Operation const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::appengine::v1::OperationMetadataV1>>(
       Status(StatusCode::kUnimplemented, "not implemented"));

@@ -48,17 +48,15 @@ RegionInstanceTemplatesClient::DeleteInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesClient::DeleteInstanceTemplate(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region, std::string const& instance_template,
-    Options opts) {
+    NoAwaitTag, std::string const& project, std::string const& region,
+    std::string const& instance_template, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::compute::region_instance_templates::v1::
       DeleteInstanceTemplateRequest request;
   request.set_project(project);
   request.set_region(region);
   request.set_instance_template(instance_template);
-  return connection_->DeleteInstanceTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteInstanceTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -72,21 +70,19 @@ RegionInstanceTemplatesClient::DeleteInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesClient::DeleteInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_templates::v1::
         DeleteInstanceTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstanceTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->DeleteInstanceTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceTemplatesClient::DeleteInstanceTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DeleteInstanceTemplate(ExperimentalTag{}, operation);
+  return connection_->DeleteInstanceTemplate(operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>
@@ -128,8 +124,7 @@ RegionInstanceTemplatesClient::InsertInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesClient::InsertInstanceTemplate(
-    ExperimentalTag, NoAwaitTag, std::string const& project,
-    std::string const& region,
+    NoAwaitTag, std::string const& project, std::string const& region,
     google::cloud::cpp::compute::v1::InstanceTemplate const&
         instance_template_resource,
     Options opts) {
@@ -139,8 +134,7 @@ RegionInstanceTemplatesClient::InsertInstanceTemplate(
   request.set_project(project);
   request.set_region(region);
   *request.mutable_instance_template_resource() = instance_template_resource;
-  return connection_->InsertInstanceTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->InsertInstanceTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -154,21 +148,19 @@ RegionInstanceTemplatesClient::InsertInstanceTemplate(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 RegionInstanceTemplatesClient::InsertInstanceTemplate(
-    ExperimentalTag, NoAwaitTag,
+    NoAwaitTag,
     google::cloud::cpp::compute::region_instance_templates::v1::
         InsertInstanceTemplateRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInstanceTemplate(ExperimentalTag{}, NoAwaitTag{},
-                                             request);
+  return connection_->InsertInstanceTemplate(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 RegionInstanceTemplatesClient::InsertInstanceTemplate(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->InsertInstanceTemplate(ExperimentalTag{}, operation);
+  return connection_->InsertInstanceTemplate(operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_CLIENT_H
 
 #include "google/cloud/kms/v1/autokey_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
@@ -163,7 +162,7 @@ class AutokeyClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateKeyHandle(
-      ExperimentalTag, NoAwaitTag, std::string const& parent,
+      NoAwaitTag, std::string const& parent,
       google::cloud::kms::v1::KeyHandle const& key_handle,
       std::string const& key_handle_id, Options opts = {});
 
@@ -223,8 +222,7 @@ class AutokeyClient {
   ///
   // clang-format on
   StatusOr<google::longrunning::Operation> CreateKeyHandle(
-      ExperimentalTag, NoAwaitTag,
-      google::cloud::kms::v1::CreateKeyHandleRequest const& request,
+      NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request,
       Options opts = {});
 
   // clang-format off
@@ -237,8 +235,7 @@ class AutokeyClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
-      ExperimentalTag, google::longrunning::Operation const& operation,
-      Options opts = {});
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

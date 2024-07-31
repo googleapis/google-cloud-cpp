@@ -65,14 +65,12 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, CreateWorkflow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workflows::v1::CreateWorkflowRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
-              CreateWorkflow,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              CreateWorkflow, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -86,14 +84,12 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, DeleteWorkflow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
-              DeleteWorkflow,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              DeleteWorkflow, (google::longrunning::Operation const& operation),
               (override));
 
   /// Due to additional overloads for this method
@@ -106,14 +102,12 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
 
   MOCK_METHOD(
       StatusOr<google::longrunning::Operation>, UpdateWorkflow,
-      (ExperimentalTag, NoAwaitTag,
+      (NoAwaitTag,
        google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
-              UpdateWorkflow,
-              (ExperimentalTag,
-               google::longrunning::Operation const& operation),
+              UpdateWorkflow, (google::longrunning::Operation const& operation),
               (override));
 };
 

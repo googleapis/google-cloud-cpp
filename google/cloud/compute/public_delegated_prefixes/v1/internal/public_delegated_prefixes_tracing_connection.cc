@@ -66,27 +66,23 @@ PublicDelegatedPrefixesTracingConnection::Announce(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesTracingConnection::Announce(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        AnnounceRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                    AnnounceRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":Announce");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->Announce(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->Announce(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesTracingConnection::Announce(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":Announce");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->Announce(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->Announce(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -103,28 +99,25 @@ PublicDelegatedPrefixesTracingConnection::DeletePublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesTracingConnection::DeletePublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        DeletePublicDelegatedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                    DeletePublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":DeletePublicDelegatedPrefix");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->DeletePublicDelegatedPrefix(ExperimentalTag{},
-                                                 NoAwaitTag{}, request));
+      *span, child_->DeletePublicDelegatedPrefix(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesTracingConnection::DeletePublicDelegatedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":DeletePublicDelegatedPrefix");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->DeletePublicDelegatedPrefix(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->DeletePublicDelegatedPrefix(operation));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -152,28 +145,25 @@ PublicDelegatedPrefixesTracingConnection::InsertPublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesTracingConnection::InsertPublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        InsertPublicDelegatedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                    InsertPublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":InsertPublicDelegatedPrefix");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->InsertPublicDelegatedPrefix(ExperimentalTag{},
-                                                 NoAwaitTag{}, request));
+      *span, child_->InsertPublicDelegatedPrefix(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesTracingConnection::InsertPublicDelegatedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":InsertPublicDelegatedPrefix");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->InsertPublicDelegatedPrefix(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->InsertPublicDelegatedPrefix(operation));
 }
 
 StreamRange<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>
@@ -204,28 +194,25 @@ PublicDelegatedPrefixesTracingConnection::PatchPublicDelegatedPrefix(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesTracingConnection::PatchPublicDelegatedPrefix(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        PatchPublicDelegatedPrefixRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                    PatchPublicDelegatedPrefixRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":PatchPublicDelegatedPrefix");
   opentelemetry::trace::Scope scope(span);
   return internal::EndSpan(
-      *span, child_->PatchPublicDelegatedPrefix(ExperimentalTag{}, NoAwaitTag{},
-                                                request));
+      *span, child_->PatchPublicDelegatedPrefix(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesTracingConnection::PatchPublicDelegatedPrefix(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":PatchPublicDelegatedPrefix");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span), child_->PatchPublicDelegatedPrefix(
-                                                ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span),
+                           child_->PatchPublicDelegatedPrefix(operation));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -241,27 +228,23 @@ PublicDelegatedPrefixesTracingConnection::Withdraw(
 
 StatusOr<google::cloud::cpp::compute::v1::Operation>
 PublicDelegatedPrefixesTracingConnection::Withdraw(
-    ExperimentalTag, NoAwaitTag,
-    google::cloud::cpp::compute::public_delegated_prefixes::v1::
-        WithdrawRequest const& request) {
+    NoAwaitTag, google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                    WithdrawRequest const& request) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":Withdraw");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(
-      *span, child_->Withdraw(ExperimentalTag{}, NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->Withdraw(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 PublicDelegatedPrefixesTracingConnection::Withdraw(
-    ExperimentalTag,
     google::cloud::cpp::compute::v1::Operation const& operation) {
   auto span = internal::MakeSpan(
       "compute_public_delegated_prefixes_v1::PublicDelegatedPrefixesConnection:"
       ":Withdraw");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-                           child_->Withdraw(ExperimentalTag{}, operation));
+  return internal::EndSpan(std::move(span), child_->Withdraw(operation));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
