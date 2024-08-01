@@ -1738,7 +1738,8 @@ class FeaturestoreServiceClient {
   ///  @n
   ///    * `description`
   ///    * `labels`
-  ///    * `disable_monitoring` (Not supported for FeatureRegistry Feature)
+  ///    * `disable_monitoring` (Not supported for FeatureRegistryService Feature)
+  ///    * `point_of_contact` (Not supported for FeaturestoreService FeatureStore)
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -1819,7 +1820,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1268}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1269}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1870,7 +1871,7 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1268}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1269}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -2345,8 +2346,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1361}
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1418}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1362}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1419}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>
@@ -2405,8 +2406,8 @@ class FeaturestoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1361}
-  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1418}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1362}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1419}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteFeatureValuesResponse>>

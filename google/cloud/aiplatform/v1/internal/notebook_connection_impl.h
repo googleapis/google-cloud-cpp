@@ -162,6 +162,44 @@ class NotebookServiceConnectionImpl
   StartNotebookRuntime(
       google::longrunning::Operation const& operation) override;
 
+  future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+  CreateNotebookExecutionJob(
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> CreateNotebookExecutionJob(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>
+  CreateNotebookExecutionJob(
+      google::longrunning::Operation const& operation) override;
+
+  StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  GetNotebookExecutionJob(
+      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+          request) override;
+
+  StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>
+  ListNotebookExecutionJobs(
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request)
+      override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNotebookExecutionJob(
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) override;
+
+  StatusOr<google::longrunning::Operation> DeleteNotebookExecutionJob(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteNotebookExecutionJob(
+      google::longrunning::Operation const& operation) override;
+
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<aiplatform_v1_internal::NotebookServiceStub> stub_;

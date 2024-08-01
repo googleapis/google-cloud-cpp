@@ -78,6 +78,21 @@ class NotebookServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency StartNotebookRuntime(
       google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
           request);
+
+  virtual google::cloud::Idempotency CreateNotebookExecutionJob(
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+          request);
+
+  virtual google::cloud::Idempotency GetNotebookExecutionJob(
+      google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ListNotebookExecutionJobs(
+      google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request);
+
+  virtual google::cloud::Idempotency DeleteNotebookExecutionJob(
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+          request);
 };
 
 std::unique_ptr<NotebookServiceConnectionIdempotencyPolicy>

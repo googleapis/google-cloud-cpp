@@ -118,8 +118,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CreateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L323}
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.CreateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L324}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
@@ -173,8 +173,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CreateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L323}
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.CreateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L324}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> CreateRecognizer(
@@ -237,8 +237,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.ListRecognizersRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L436}
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.ListRecognizersRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L437}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
   StreamRange<google::cloud::speech::v2::Recognizer> ListRecognizers(
@@ -276,8 +276,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.ListRecognizersRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L436}
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.ListRecognizersRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L437}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
   StreamRange<google::cloud::speech::v2::Recognizer> ListRecognizers(
@@ -306,8 +306,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.GetRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L479}
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.GetRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L480}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
@@ -339,8 +339,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.GetRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L479}
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.GetRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L480}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
@@ -377,8 +377,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
-  /// [google.cloud.speech.v2.UpdateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L492}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
+  /// [google.cloud.speech.v2.UpdateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L493}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
@@ -430,8 +430,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
-  /// [google.cloud.speech.v2.UpdateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L492}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
+  /// [google.cloud.speech.v2.UpdateRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L493}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UpdateRecognizer(
@@ -492,8 +492,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.DeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L510}
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.DeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L511}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
@@ -543,8 +543,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.DeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L510}
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
+  /// [google.cloud.speech.v2.DeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L511}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> DeleteRecognizer(
@@ -605,8 +605,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
-  /// [google.cloud.speech.v2.UndeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L537}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
+  /// [google.cloud.speech.v2.UndeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L538}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
@@ -656,8 +656,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L558}
-  /// [google.cloud.speech.v2.UndeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L537}
+  /// [google.cloud.speech.v2.Recognizer]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L559}
+  /// [google.cloud.speech.v2.UndeleteRecognizerRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L538}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::Recognizer>> UndeleteRecognizer(
@@ -737,12 +737,12 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.RecognitionConfig]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L904}
-  /// [google.cloud.speech.v2.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L965}
-  /// [google.cloud.speech.v2.RecognizeRequest.config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L983}
-  /// [google.cloud.speech.v2.RecognizeRequest.config_mask]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L998}
-  /// [google.cloud.speech.v2.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1113}
-  /// [google.cloud.speech.v2.Recognizer.default_recognition_config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L630}
+  /// [google.cloud.speech.v2.RecognitionConfig]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L909}
+  /// [google.cloud.speech.v2.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L970}
+  /// [google.cloud.speech.v2.RecognizeRequest.config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L988}
+  /// [google.cloud.speech.v2.RecognizeRequest.config_mask]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1003}
+  /// [google.cloud.speech.v2.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1121}
+  /// [google.cloud.speech.v2.Recognizer.default_recognition_config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L631}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
@@ -775,8 +775,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L965}
-  /// [google.cloud.speech.v2.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1113}
+  /// [google.cloud.speech.v2.RecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L970}
+  /// [google.cloud.speech.v2.RecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1121}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
@@ -805,8 +805,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.StreamingRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1202}
-  /// [google.cloud.speech.v2.StreamingRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1567}
+  /// [google.cloud.speech.v2.StreamingRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1210}
+  /// [google.cloud.speech.v2.StreamingRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1575}
   ///
   // clang-format on
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -844,7 +844,7 @@ class SpeechClient {
   ///  overrides and replaces the config in the recognizer for this recognition
   ///  request.
   /// @param files  Audio files with file metadata for ASR.
-  ///  The maximum number of files allowed to be specified is 5.
+  ///  The maximum number of files allowed to be specified is 15.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -865,11 +865,11 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.BatchRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1229}
-  /// [google.cloud.speech.v2.BatchRecognizeRequest.config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1258}
-  /// [google.cloud.speech.v2.BatchRecognizeRequest.config_mask]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1273}
-  /// [google.cloud.speech.v2.BatchRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1348}
-  /// [google.cloud.speech.v2.Recognizer.default_recognition_config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L630}
+  /// [google.cloud.speech.v2.BatchRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1237}
+  /// [google.cloud.speech.v2.BatchRecognizeRequest.config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1266}
+  /// [google.cloud.speech.v2.BatchRecognizeRequest.config_mask]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1281}
+  /// [google.cloud.speech.v2.BatchRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1356}
+  /// [google.cloud.speech.v2.Recognizer.default_recognition_config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L631}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
@@ -932,8 +932,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.BatchRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1229}
-  /// [google.cloud.speech.v2.BatchRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1348}
+  /// [google.cloud.speech.v2.BatchRecognizeRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1237}
+  /// [google.cloud.speech.v2.BatchRecognizeResponse]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1356}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
@@ -990,8 +990,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1616}
-  /// [google.cloud.speech.v2.GetConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1650}
+  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1624}
+  /// [google.cloud.speech.v2.GetConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1658}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::Config> GetConfig(std::string const& name,
@@ -1020,8 +1020,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1616}
-  /// [google.cloud.speech.v2.GetConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1650}
+  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1624}
+  /// [google.cloud.speech.v2.GetConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1658}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::Config> GetConfig(
@@ -1050,8 +1050,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1616}
-  /// [google.cloud.speech.v2.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1662}
+  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1624}
+  /// [google.cloud.speech.v2.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1670}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
@@ -1081,8 +1081,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1616}
-  /// [google.cloud.speech.v2.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1662}
+  /// [google.cloud.speech.v2.Config]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1624}
+  /// [google.cloud.speech.v2.UpdateConfigRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1670}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
@@ -1121,8 +1121,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CreateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1907}
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
+  /// [google.cloud.speech.v2.CreateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1915}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
@@ -1176,8 +1176,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CreateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1907}
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
+  /// [google.cloud.speech.v2.CreateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1915}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> CreateCustomClass(
@@ -1240,8 +1240,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1934}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1942}
   ///
   // clang-format on
   StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
@@ -1279,8 +1279,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1934}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.ListCustomClassesRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1942}
   ///
   // clang-format on
   StreamRange<google::cloud::speech::v2::CustomClass> ListCustomClasses(
@@ -1307,8 +1307,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1978}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1986}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
@@ -1338,8 +1338,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1978}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.GetCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1986}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
@@ -1377,8 +1377,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1991}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1999}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
@@ -1430,8 +1430,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1991}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.UpdateCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1999}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UpdateCustomClass(
@@ -1493,8 +1493,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2010}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2018}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
@@ -1544,8 +1544,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2010}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.DeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2018}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> DeleteCustomClass(
@@ -1607,8 +1607,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.UndeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2038}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.UndeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2046}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
@@ -1658,8 +1658,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1676}
-  /// [google.cloud.speech.v2.UndeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2038}
+  /// [google.cloud.speech.v2.CustomClass]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1684}
+  /// [google.cloud.speech.v2.UndeleteCustomClassRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2046}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::CustomClass>> UndeleteCustomClass(
@@ -1726,8 +1726,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CreatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2061}
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
+  /// [google.cloud.speech.v2.CreatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2069}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
@@ -1781,8 +1781,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.CreatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2061}
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
+  /// [google.cloud.speech.v2.CreatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2069}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> CreatePhraseSet(
@@ -1845,8 +1845,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.ListPhraseSetsRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2088}
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
+  /// [google.cloud.speech.v2.ListPhraseSetsRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2096}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
   ///
   // clang-format on
   StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
@@ -1884,8 +1884,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.ListPhraseSetsRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2088}
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
+  /// [google.cloud.speech.v2.ListPhraseSetsRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2096}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
   ///
   // clang-format on
   StreamRange<google::cloud::speech::v2::PhraseSet> ListPhraseSets(
@@ -1912,8 +1912,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.GetPhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2131}
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
+  /// [google.cloud.speech.v2.GetPhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2139}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
@@ -1943,8 +1943,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.GetPhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2131}
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
+  /// [google.cloud.speech.v2.GetPhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2139}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
   ///
   // clang-format on
   StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
@@ -1981,8 +1981,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
-  /// [google.cloud.speech.v2.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2144}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
+  /// [google.cloud.speech.v2.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2152}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
@@ -2034,8 +2034,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
-  /// [google.cloud.speech.v2.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2144}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
+  /// [google.cloud.speech.v2.UpdatePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2152}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UpdatePhraseSet(
@@ -2096,8 +2096,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.DeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2162}
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
+  /// [google.cloud.speech.v2.DeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2170}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
@@ -2147,8 +2147,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.DeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2162}
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
+  /// [google.cloud.speech.v2.DeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2170}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> DeletePhraseSet(
@@ -2209,8 +2209,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
-  /// [google.cloud.speech.v2.UndeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2189}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
+  /// [google.cloud.speech.v2.UndeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2197}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(
@@ -2260,8 +2260,8 @@ class SpeechClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1779}
-  /// [google.cloud.speech.v2.UndeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2189}
+  /// [google.cloud.speech.v2.PhraseSet]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L1787}
+  /// [google.cloud.speech.v2.UndeletePhraseSetRequest]: @googleapis_reference_link{google/cloud/speech/v2/cloud_speech.proto#L2197}
   ///
   // clang-format on
   future<StatusOr<google::cloud::speech::v2::PhraseSet>> UndeletePhraseSet(

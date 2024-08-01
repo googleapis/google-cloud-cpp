@@ -299,6 +299,104 @@ DefaultNotebookServiceStub::StartNotebookRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultNotebookServiceStub::AsyncCreateNotebookExecutionJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::
+                 CreateNotebookExecutionJobRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateNotebookExecutionJob(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::CreateNotebookExecutionJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->CreateNotebookExecutionJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>
+DefaultNotebookServiceStub::GetNotebookExecutionJob(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+        request) {
+  google::cloud::aiplatform::v1::NotebookExecutionJob response;
+  auto status =
+      grpc_stub_->GetNotebookExecutionJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse>
+DefaultNotebookServiceStub::ListNotebookExecutionJobs(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest const&
+        request) {
+  google::cloud::aiplatform::v1::ListNotebookExecutionJobsResponse response;
+  auto status =
+      grpc_stub_->ListNotebookExecutionJobs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNotebookServiceStub::AsyncDeleteNotebookExecutionJob(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::cloud::aiplatform::v1::
+                 DeleteNotebookExecutionJobRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDeleteNotebookExecutionJob(context, request,
+                                                           cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::longrunning::Operation>
+DefaultNotebookServiceStub::DeleteNotebookExecutionJob(
+    grpc::ClientContext& context, Options,
+    google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+        request) {
+  google::longrunning::Operation response;
+  auto status =
+      grpc_stub_->DeleteNotebookExecutionJob(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,

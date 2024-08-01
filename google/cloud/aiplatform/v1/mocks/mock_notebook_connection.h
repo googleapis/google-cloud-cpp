@@ -210,6 +210,63 @@ class MockNotebookServiceConnection
                   google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>,
               StartNotebookRuntime,
               (google::longrunning::Operation const& operation), (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, CreateNotebookExecutionJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, CreateNotebookExecutionJob(::testing::_))` instead.
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>,
+      CreateNotebookExecutionJob,
+      (google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, CreateNotebookExecutionJob,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::CreateNotebookExecutionJobRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>>,
+      CreateNotebookExecutionJob,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::aiplatform::v1::NotebookExecutionJob>,
+      GetNotebookExecutionJob,
+      (google::cloud::aiplatform::v1::GetNotebookExecutionJobRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      (StreamRange<google::cloud::aiplatform::v1::NotebookExecutionJob>),
+      ListNotebookExecutionJobs,
+      (google::cloud::aiplatform::v1::ListNotebookExecutionJobsRequest request),
+      (override));
+
+  /// Due to additional overloads for this method
+  /// `EXPECT_CALL(*mock, DeleteNotebookExecutionJob)` is now ambiguous. Use
+  /// `EXPECT_CALL(*mock, DeleteNotebookExecutionJob(::testing::_))` instead.
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteNotebookExecutionJob,
+      (google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, DeleteNotebookExecutionJob,
+      (NoAwaitTag,
+       google::cloud::aiplatform::v1::DeleteNotebookExecutionJobRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      DeleteNotebookExecutionJob,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
