@@ -55,7 +55,7 @@ bugs or PRs to add any new `*.proto` files to existing libraries.
 
 ```shell
 bazel build //:grpc_utils
-googleapis="$(bazel info output_base)/external/com_google_googleapis/"
+googleapis="$(bazel info output_base)/external/googleapis~/"
 time comm -23 \
     <(git ls-files -- 'external/googleapis/protolists/*.list' | \
         xargs sed -e 's;@com_google_googleapis//;;' -e 's;:;/;' | \
