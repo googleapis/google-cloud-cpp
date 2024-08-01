@@ -32,9 +32,9 @@ set(PROJECT_VERSION_PRE_RELEASE "")
 
 #### Update the version info
 
-Run any CMake-based build to update `google/cloud/internal/version_info.h`. If
-you do not feel like waiting for a build, make the corresponding change in
-`google/cloud/internal/version_info.h` manually.
+Run any CMake-based build to update `google/cloud/internal/version_info.h` and
+`MODULE.bazel`. If you do not feel like waiting for a build, make the
+corresponding changes in these files manually.
 
 #### Update CHANGELOG.md
 
@@ -100,7 +100,7 @@ the PR for review against `main`. You need to:
 - Update the ABI baseline to include the new version numbers in the inline
   namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will leave
   the updated ABI files in `ci/abi-dumps`, and also update the
-  `google/cloud/internal/version_info.h` file.
+  `google/cloud/internal/version_info.h` and `MODULE.bazel` files.
 
 This will step will take a while. You can leave this and move onto step 3.
 
@@ -301,6 +301,7 @@ git push origin
 
 #### Make the PR with the following description
 
+<pre>
 Updates google-cloud-cpp to the latest release (vX.YZ.A)
 
 Tested locally (on x64-linux) with:
@@ -314,6 +315,7 @@ and
 ```
 ./vcpkg remove google-cloud-cpp && ./vcpkg install 'google-cloud-cpp[*]'
 ```
+</pre>
 
 ## 7. Monitor the automation on Conda
 
