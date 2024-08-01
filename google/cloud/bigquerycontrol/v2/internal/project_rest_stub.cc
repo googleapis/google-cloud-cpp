@@ -44,13 +44,15 @@ DefaultProjectServiceRestStub::GetServiceAccount(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::bigquery::v2::GetServiceAccountRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::bigquery::v2::GetServiceAccountResponse>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",
                    "projects", "/", request.project_id(), "/",
-                   "serviceAccount"));
+                   "serviceAccount"),
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

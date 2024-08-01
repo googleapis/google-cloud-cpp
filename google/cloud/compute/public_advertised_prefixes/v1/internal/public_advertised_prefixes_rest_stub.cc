@@ -60,6 +60,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncAnnounce(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -68,7 +69,8 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncAnnounce(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "publicAdvertisedPrefixes", "/",
                              request.public_advertised_prefix(), "/",
-                             "announce")));
+                             "announce"),
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -87,13 +89,15 @@ DefaultPublicAdvertisedPrefixesRestStub::Announce(
     Options const& options,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         AnnounceRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes", "/",
-                   request.public_advertised_prefix(), "/", "announce"));
+                   request.public_advertised_prefix(), "/", "announce"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -108,6 +112,10 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncDeletePublicAdvertisedPrefix(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -116,8 +124,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncDeletePublicAdvertisedPrefix(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "publicAdvertisedPrefixes", "/",
                              request.public_advertised_prefix()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -136,6 +143,10 @@ DefaultPublicAdvertisedPrefixesRestStub::DeletePublicAdvertisedPrefix(
     Options const& options,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         DeletePublicAdvertisedPrefixRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -143,8 +154,7 @@ DefaultPublicAdvertisedPrefixesRestStub::DeletePublicAdvertisedPrefix(
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes", "/",
                    request.public_advertised_prefix()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>
@@ -153,6 +163,7 @@ DefaultPublicAdvertisedPrefixesRestStub::GetPublicAdvertisedPrefix(
     Options const& options,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         GetPublicAdvertisedPrefixRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefix>(
       *service_, rest_context, request, false,
@@ -160,7 +171,8 @@ DefaultPublicAdvertisedPrefixesRestStub::GetPublicAdvertisedPrefix(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes", "/",
-                   request.public_advertised_prefix()));
+                   request.public_advertised_prefix()),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -175,6 +187,10 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncInsertPublicAdvertisedPrefix(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -183,8 +199,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncInsertPublicAdvertisedPrefix(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "publicAdvertisedPrefixes"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -203,6 +218,10 @@ DefaultPublicAdvertisedPrefixesRestStub::InsertPublicAdvertisedPrefix(
     Options const& options,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         InsertPublicAdvertisedPrefixRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.public_advertised_prefix_resource(),
       false,
@@ -210,8 +229,7 @@ DefaultPublicAdvertisedPrefixesRestStub::InsertPublicAdvertisedPrefix(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>
@@ -220,6 +238,16 @@ DefaultPublicAdvertisedPrefixesRestStub::ListPublicAdvertisedPrefixes(
     Options const& options,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         ListPublicAdvertisedPrefixesRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::PublicAdvertisedPrefixList>(
       *service_, rest_context, request, false,
@@ -227,13 +255,7 @@ DefaultPublicAdvertisedPrefixesRestStub::ListPublicAdvertisedPrefixes(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -248,6 +270,10 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncPatchPublicAdvertisedPrefix(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context,
@@ -257,8 +283,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncPatchPublicAdvertisedPrefix(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "publicAdvertisedPrefixes", "/",
                              request.public_advertised_prefix()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -277,6 +302,10 @@ DefaultPublicAdvertisedPrefixesRestStub::PatchPublicAdvertisedPrefix(
     Options const& options,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         PatchPublicAdvertisedPrefixRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.public_advertised_prefix_resource(),
       false,
@@ -285,8 +314,7 @@ DefaultPublicAdvertisedPrefixesRestStub::PatchPublicAdvertisedPrefix(
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes", "/",
                    request.public_advertised_prefix()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -301,6 +329,7 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncWithdraw(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -309,7 +338,8 @@ DefaultPublicAdvertisedPrefixesRestStub::AsyncWithdraw(
                              "/", "projects", "/", request.project(), "/",
                              "global", "/", "publicAdvertisedPrefixes", "/",
                              request.public_advertised_prefix(), "/",
-                             "withdraw")));
+                             "withdraw"),
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -328,13 +358,15 @@ DefaultPublicAdvertisedPrefixesRestStub::Withdraw(
     Options const& options,
     google::cloud::cpp::compute::public_advertised_prefixes::v1::
         WithdrawRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "global", "/",
                    "publicAdvertisedPrefixes", "/",
-                   request.public_advertised_prefix(), "/", "withdraw"));
+                   request.public_advertised_prefix(), "/", "withdraw"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

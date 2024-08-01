@@ -45,11 +45,13 @@ DefaultSqlOperationsServiceRestStub::Get(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlOperationsGetRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::sql::v1::Operation>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "operations", "/",
-                   request.operation()));
+                   request.operation()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::sql::v1::OperationsListResponse>
@@ -57,25 +59,31 @@ DefaultSqlOperationsServiceRestStub::List(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlOperationsListRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"instance", request.instance()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::sql::v1::OperationsListResponse>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "operations"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("instance", request.instance()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("page_token", request.page_token())}));
+      std::move(query_params));
 }
 
 Status DefaultSqlOperationsServiceRestStub::Cancel(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::sql::v1::SqlOperationsCancelRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::rest_internal::EmptyResponseType>(
       *service_, rest_context, request, true,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "operations", "/",
-                   request.operation(), "/", "cancel"));
+                   request.operation(), "/", "cancel"),
+      std::move(query_params));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -51,6 +51,20 @@ DefaultStoragePoolsRestStub::AggregatedListStoragePools(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::
         AggregatedListStoragePoolsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"include_all_scopes", (request.include_all_scopes() ? "1" : "0")});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params.push_back(
+      {"service_project_number", request.service_project_number()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::StoragePoolAggregatedList>(
       *service_, rest_context, request, false,
@@ -58,17 +72,7 @@ DefaultStoragePoolsRestStub::AggregatedListStoragePools(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "aggregated", "/",
                    "storagePools"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("include_all_scopes",
-                          (request.include_all_scopes() ? "1" : "0")),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0")),
-           std::make_pair("service_project_number",
-                          request.service_project_number())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -83,6 +87,10 @@ DefaultStoragePoolsRestStub::AsyncDeleteStoragePool(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
@@ -91,8 +99,7 @@ DefaultStoragePoolsRestStub::AsyncDeleteStoragePool(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "storagePools",
                              "/", request.storage_pool()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -111,6 +118,10 @@ DefaultStoragePoolsRestStub::DeleteStoragePool(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::
         DeleteStoragePoolRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -118,8 +129,7 @@ DefaultStoragePoolsRestStub::DeleteStoragePool(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools", "/",
                    request.storage_pool()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePool>
@@ -128,13 +138,15 @@ DefaultStoragePoolsRestStub::GetStoragePool(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::GetStoragePoolRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Get<google::cloud::cpp::compute::v1::StoragePool>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools", "/",
-                   request.storage_pool()));
+                   request.storage_pool()),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -143,6 +155,12 @@ DefaultStoragePoolsRestStub::GetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::GetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back(
+      {"options_requested_policy_version",
+       std::to_string(request.options_requested_policy_version())});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
@@ -150,9 +168,7 @@ DefaultStoragePoolsRestStub::GetIamPolicy(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools", "/", request.resource(),
                    "/", "getIamPolicy"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair(
-          "options_requested_policy_version",
-          std::to_string(request.options_requested_policy_version()))}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -167,6 +183,10 @@ DefaultStoragePoolsRestStub::AsyncInsertStoragePool(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.storage_pool_resource(), false,
@@ -174,8 +194,7 @@ DefaultStoragePoolsRestStub::AsyncInsertStoragePool(
                              rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "storagePools"),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -194,14 +213,17 @@ DefaultStoragePoolsRestStub::InsertStoragePool(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::
         InsertStoragePoolRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Post<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.storage_pool_resource(), false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id())}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolList>
@@ -210,19 +232,23 @@ DefaultStoragePoolsRestStub::ListStoragePools(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::
         ListStoragePoolsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<google::cloud::cpp::compute::v1::StoragePoolList>(
       *service_, rest_context, request, false,
       absl::StrCat("/", "compute", "/",
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::StoragePoolListDisks>
@@ -231,6 +257,16 @@ DefaultStoragePoolsRestStub::ListDisks(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::ListDisksRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"filter", request.filter()});
+  query_params.push_back(
+      {"max_results", std::to_string(request.max_results())});
+  query_params.push_back({"order_by", request.order_by()});
+  query_params.push_back({"page_token", request.page_token()});
+  query_params.push_back({"return_partial_success",
+                          (request.return_partial_success() ? "1" : "0")});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Get<
       google::cloud::cpp::compute::v1::StoragePoolListDisks>(
       *service_, rest_context, request, false,
@@ -239,13 +275,7 @@ DefaultStoragePoolsRestStub::ListDisks(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools", "/",
                    request.storage_pool(), "/", "listDisks"),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("filter", request.filter()),
-           std::make_pair("max_results", std::to_string(request.max_results())),
-           std::make_pair("order_by", request.order_by()),
-           std::make_pair("page_token", request.page_token()),
-           std::make_pair("return_partial_success",
-                          (request.return_partial_success() ? "1" : "0"))}));
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -254,6 +284,7 @@ DefaultStoragePoolsRestStub::SetIamPolicy(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::SetIamPolicyRequest const&
         request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<google::cloud::cpp::compute::v1::Policy>(
       *service_, rest_context, request.zone_set_policy_request_resource(),
       false,
@@ -261,7 +292,8 @@ DefaultStoragePoolsRestStub::SetIamPolicy(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools", "/", request.resource(),
-                   "/", "setIamPolicy"));
+                   "/", "setIamPolicy"),
+      std::move(query_params));
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -270,6 +302,7 @@ DefaultStoragePoolsRestStub::TestIamPermissions(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::
         TestIamPermissionsRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
   return rest_internal::Post<
       google::cloud::cpp::compute::v1::TestPermissionsResponse>(
       *service_, rest_context, request.test_permissions_request_resource(),
@@ -278,7 +311,8 @@ DefaultStoragePoolsRestStub::TestIamPermissions(
                    rest_internal::DetermineApiVersion("v1", options), "/",
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools", "/", request.resource(),
-                   "/", "testIamPermissions"));
+                   "/", "testIamPermissions"),
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -293,6 +327,11 @@ DefaultStoragePoolsRestStub::AsyncUpdateStoragePool(
       p.get_future();
   std::thread t{
       [](auto p, auto service, auto request, auto rest_context, auto options) {
+        std::vector<std::pair<std::string, std::string>> query_params;
+        query_params.push_back({"request_id", request.request_id()});
+        query_params.push_back({"update_mask", request.update_mask()});
+        query_params =
+            rest_internal::TrimEmptyQueryParameters(std::move(query_params));
         p.set_value(
             rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request.storage_pool_resource(), false,
@@ -301,9 +340,7 @@ DefaultStoragePoolsRestStub::AsyncUpdateStoragePool(
                              "/", "projects", "/", request.project(), "/",
                              "zones", "/", request.zone(), "/", "storagePools",
                              "/", request.storage_pool()),
-                rest_internal::TrimEmptyQueryParameters(
-                    {std::make_pair("request_id", request.request_id()),
-                     std::make_pair("update_mask", request.update_mask())})));
+                std::move(query_params)));
       },
       std::move(p),
       service_,
@@ -322,6 +359,11 @@ DefaultStoragePoolsRestStub::UpdateStoragePool(
     Options const& options,
     google::cloud::cpp::compute::storage_pools::v1::
         UpdateStoragePoolRequest const& request) {
+  std::vector<std::pair<std::string, std::string>> query_params;
+  query_params.push_back({"request_id", request.request_id()});
+  query_params.push_back({"update_mask", request.update_mask()});
+  query_params =
+      rest_internal::TrimEmptyQueryParameters(std::move(query_params));
   return rest_internal::Patch<google::cloud::cpp::compute::v1::Operation>(
       *service_, rest_context, request.storage_pool_resource(), false,
       absl::StrCat("/", "compute", "/",
@@ -329,9 +371,7 @@ DefaultStoragePoolsRestStub::UpdateStoragePool(
                    "projects", "/", request.project(), "/", "zones", "/",
                    request.zone(), "/", "storagePools", "/",
                    request.storage_pool()),
-      rest_internal::TrimEmptyQueryParameters(
-          {std::make_pair("request_id", request.request_id()),
-           std::make_pair("update_mask", request.update_mask())}));
+      std::move(query_params));
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>

@@ -112,7 +112,8 @@ std::string FormatQueryParameterCode(
     }
   }
 
-  auto format = [](auto* out, auto const& i) {
+  std::string code;
+  for (auto const& i : remaining_request_fields) {
     std::string field_access;
     if (i.second.cpp_type == protobuf::FieldDescriptor::CPPTYPE_STRING) {
       field_access = i.second.request_field_accessor;
@@ -125,21 +126,21 @@ std::string FormatQueryParameterCode(
     }
 
     if (i.second.check_presence) {
-      out->append(absl::StrFormat(
-          R"""(std::make_pair("%s", (request.has_%s() ? %s : "")))""", i.first,
-          i.first, field_access));
+      code += absl::StrFormat(
+          R"""(
+  query_params.push_back({"%s", (request.has_%s() ? %s : "")});)""",
+          i.first, i.first, field_access);
     } else {
-      out->append(absl::StrFormat(R"""(std::make_pair("%s", %s))""", i.first,
-                                  field_access));
+      code += absl::StrFormat(R"""(
+  query_params.push_back({"%s", %s});)""",
+                              i.first, field_access);
     }
-  };
-
-  if (remaining_request_fields.empty()) {
-    return "";
   }
-  return absl::StrCat(
-      ",\n      rest_internal::TrimEmptyQueryParameters({",
-      absl::StrJoin(remaining_request_fields, ",\n        ", format), "})");
+  if (!code.empty()) {
+    code += R"""(
+  query_params = rest_internal::TrimEmptyQueryParameters(std::move(query_params));)""";
+  }
+  return code;
 }
 
 }  // namespace
