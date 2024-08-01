@@ -4,7 +4,7 @@
 breaking changes in the upcoming 3.x release. This release is scheduled for
 2024-12 or 2025-01.
 
-## v2.27.0 - TBD
+## v2.27.0 - 2024-08
 
 - We now link our mocking libraries against GoogleTest in CMake.
 
@@ -51,6 +51,8 @@ RowAccessPolicy, and Table REST resources.
 
 ### [OpenTelemetry](/google/cloud/opentelemetry/README.md)
 
+- fix(otel): avoid crashes in tracing wrappers for streams ([#14477](https://github.com/googleapis/google-cloud-cpp/pull/14477))
+
 #### Bazel
 
 The `--io_opentelemetry_cpp//api:with_abseil` flag was marked as deprecated in
@@ -71,10 +73,24 @@ added to your `.bazelrc` file.
 build --@io_opentelemetry_cpp//api:with_abseil
 ```
 
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add samples for instance partitions ([#14574](https://github.com/googleapis/google-cloud-cpp/pull/14574))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): reset backoff after partial write ([#14473](https://github.com/googleapis/google-cloud-cpp/pull/14473))
+- feat(storage): single span for `ReadObject()` ([#14435](https://github.com/googleapis/google-cloud-cpp/pull/14435))
+- fix(storage): only backoff before resume attempts ([#14427](https://github.com/googleapis/google-cloud-cpp/pull/14427))
+
 ### [Common Libraries](/google/cloud/README.md)
 
 - Promoted to GA, functions to start a LRO (longrunning operation) in one
   function call, and then await the LRO to complete on a separate function.
+- feat(generator): include request in async streaming RPC logs ([#14565](https://github.com/googleapis/google-cloud-cpp/pull/14565))
+- fix(common): censor Bearer tokens over HTTP/2 ([#14564](https://github.com/googleapis/google-cloud-cpp/pull/14564))
+- fix(common): `json_fwd.h` is not always available ([#14439](https://github.com/googleapis/google-cloud-cpp/pull/14439))
+- fix: workaround missing SHA256 macros in MinGW-w64 ([#14437](https://github.com/googleapis/google-cloud-cpp/pull/14437))
 
 ## v2.26.0 - 2024-07
 
