@@ -49,40 +49,40 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["com_google_absl", "abseil/abseil-cpp"],
+      "matchPackageNames": ["com_google_absl", "abseil/abseil-cpp", "abseil-cpp"],
       "groupName": "Abseil",
       "versioning": "loose",
       "ignoreUnstable": false
     },
     {
-      "matchPackageNames": ["com_google_protobuf", "protocolbuffers/protobuf"],
+      "matchPackageNames": ["com_google_protobuf", "protocolbuffers/protobuf", "protobuf"],
       "groupName": "Protobuf",
       "versioning": "loose",
       "ignoreUnstable": false
     },
     {
-      "matchPackageNames": ["com_github_grpc_grpc", "grpc/grpc"],
+      "matchPackageNames": ["com_github_grpc_grpc", "grpc/grpc", "grpc"],
       "groupName": "gRPC",
       "versioning": "loose",
       "ignoreUnstable": false
     },
     {
-      "matchPackageNames": ["com_github_nlohmann_json", "nlohmann/json"],
+      "matchPackageNames": ["com_github_nlohmann_json", "nlohmann/json", "nlohmann_json"],
       "groupName": "JSON",
       "versioning": "loose"
     },
     {
-      "matchPackageNames": ["io_opentelemetry_cpp", "open-telemetry/opentelemetry-cpp"],
+      "matchPackageNames": ["io_opentelemetry_cpp", "open-telemetry/opentelemetry-cpp", "opentelemetry-cpp"],
       "groupName": "OpenTelemetry",
       "versioning": "loose"
     },
     {
-      "matchPackageNames": ["com_google_benchmark", "google/benchmark"],
+      "matchPackageNames": ["com_google_benchmark", "google/benchmark", "google_benchmark"],
       "groupName": "Benchmark",
       "versioning": "loose"
     },
     {
-      "matchPackageNames": ["com_google_googletest", "google/googletest"],
+      "matchPackageNames": ["com_google_googletest", "google/googletest", "googletest"],
       "groupName": "GoogleTest",
       "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
     }
